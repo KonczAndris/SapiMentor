@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet"  type="text/css" th:href="@{/css/register.css}">
+
+</head>
+<body>
+<div class="center">
+    <div class="left">
+        <img th:src="@{/img/student.png}" id="image" alt="image">
+    </div>
+
+    <div class="right">
+
+        <p class="register-text">Already registered? <a href="/" th:href="@{/login}">Login
+            here!</a></p>
+
+        <h1 id="login-text">Registration</h1>
+
+        <!-- error message -->
+        <div id="invalid-name" th:if="${param.nameError}" class="alert-danger">
+            Invalid first or last name.
+        </div>
+        <div id="invalid-email" th:if="${param.emailError}" class="alert-danger">
+            Invalid email.
+        </div>
+        <div id="invalid-password" th:if="${param.passwordError}" class="alert-danger">
+            Invalid password.
+        </div>
+        <div id="already-registered" th:if="${param.registrationError}" class="alert-danger">
+            User is already registered.
+        </div>
+        <!-- logout message -->
+        <div th:if="${param.success}" class="alert-info">
+            You've successfully registered!
+        </div>
+
+        <form th:action="@{/registration}" method="post" th:object="${user}">
+
+            <div class="form-group">
+                <input class="form-control" id="firstName" placeholder="Enter First Name" required autofocus="autofocus">
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" id="lastName" placeholder="Enter Last Name" required autofocus="autofocus">
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" id="email" placeholder="Enter Email" required autofocus="autofocus">
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-control" id="password" placeholder="Enter Password"  required autofocus="autofocus">
+            </div>
+        </form>
+
+        <div class="form-group">
+            <button type="submit" id="register-submit" class="btn btn-success">Register</button>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

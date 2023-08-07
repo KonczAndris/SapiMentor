@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Login</title>
+  <link rel="stylesheet"  type="text/css" th:href="@{/css/login.css}">
+
+</head>
+<body>
+  <div class="center">
+    <div class="left">
+        <img th:src="@{/img/student.png}" id="image" alt="image">
+    </div>
+
+    <div class="right">
+
+      <p class="register-text">Not a member? <a href="/" th:href="@{/register}"> Register now!</a></p>
+      <h1 id="login-text">SapiMentor</h1>
+
+      <form th:action="@{/login}" method="post">
+        <!-- error message -->
+        <div th:if="${param.error}" class="alert alert-danger">
+          Invalid username or password.
+        </div>
+        <!-- logout message -->
+        <div th:if="${param.logout}" class="alert  alert-info">
+          You have been logged out.
+        </div>
+
+
+        <div class="form-group">
+          <label for ="username"></label> <input type="text" class="form-control" id="username" name="username" placeholder="Enter Email" autofocus="autofocus">
+        </div>
+
+        <div class="form-group">
+          <label for="password"></label> <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+        </div>
+
+        <div class="form-group">
+            <p class="forgotpassword-text"> <a th:href="@{/forgotPassword}">Forgot password?</a> </p>
+          </div>
+
+        <div class="form-group">
+              <input type="submit" name="login-submit" id="login-submit" value="Log In" class="form-control btn btn-primary">
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
