@@ -1,5 +1,6 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,7 +11,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserService;
 
 //megkerdezni, hogy ez miert kell
 @Controller
-@RequestMapping("/registration")
+@RequestMapping("/register")
 public class UserRegistrationController {
     private UserService userService;
 
@@ -27,14 +28,20 @@ public class UserRegistrationController {
     //ezzel a getmappinggel a registration.html-t hivja meg
     @GetMapping
     public String showRegistrationForm(){
-        return "registration";
+        return "register";
     }
 
     //ezzel a postmappinggel a registration.html-ben levo formot tolti ki
     //es ha sikeres a regisztracio, akkor megjelenik a message
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto){
-        userService.save(registrationDto);
-        return "redirect:/registration?success";
+        try {
+            userService.save(registrationDto);
+        } catch (DataIntegrityViolationException ex) {
+            // Handle the duplicate email error
+            // You can redirect back to the registration form with an error message
+            return "redirect:/register?duplicateError";
+        }
+        return "redirect:/register?success";
     }
 }

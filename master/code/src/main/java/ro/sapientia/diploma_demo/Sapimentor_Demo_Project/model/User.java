@@ -2,7 +2,10 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model;
 
 import java.util.Collection;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 
 //megkerdezni chat-tol hogy ez pontosan miaz
@@ -32,10 +35,20 @@ public class User {
             )
     private Collection<Role> roles;
 
+    public User() {
+    }
+
     public User(String first_Name, String last_Name, String email, String password, Collection<Role> roles) {
         super();
         this.first_Name = first_Name;
         this.last_Name = last_Name;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public User(String email, String password, Collection<Role> roles) {
+        super();
         this.email = email;
         this.password = password;
         this.roles = roles;

@@ -1,10 +1,7 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.GenerationType;
+import javax.persistence.*;
+
 
 @Entity
 @Table(name = "role")
@@ -13,6 +10,9 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+
+    public Role() {
+    }
 
     public Role(String name) {
         this.name = name;

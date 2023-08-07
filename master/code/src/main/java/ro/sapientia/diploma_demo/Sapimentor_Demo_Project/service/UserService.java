@@ -4,8 +4,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UserRegistrationDto;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 
-//megkerdezni, hogy ez miert kell!!!!!
-public interface UserService {
+public interface UserService extends UserDetailsService{
     User save(UserRegistrationDto registrationDto);
 
 }

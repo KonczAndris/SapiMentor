@@ -1,0 +1,129 @@
+@font-face {
+    font-family: 'CustomFont';
+    src: url('../fonts/roundfont.ttf') format('truetype')}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgb(50, 189, 149);
+    font-family: 'CustomFont';
+    background-image: url('../img/pattern.png');
+    background-size: cover;
+    background-attachment:fixed;
+    overflow: hidden;
+
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    width: 75%;
+    height: 85%;
+    background-image: linear-gradient(to left, rgb(255, 255, 255), rgb(255, 255, 255));
+    border-radius: 30px;
+    border: 3px solid white;
+}
+
+.left, .right {
+    width: 100%;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.left{
+    overflow: hidden;
+}
+
+#image {
+    max-width: 100%;
+    height: 100%;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.register-text {
+    text-align: end;
+    margin-top: 10px;
+}
+
+.register-text a {
+    color: rgb(50, 189, 149);
+    text-decoration: none;
+}
+
+.register-text a:hover {
+    text-decoration: underline;
+}
+
+#login-text{
+    display: flex;
+    letter-spacing: 2px;
+    text-align: center;
+    justify-content: center;
+    margin: 25px;
+}
+
+.form-group{
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0 auto;
+}
+
+#firstName, #lastName, #email, #password {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 7px;
+    border: 2px solid rgb(0, 0, 0);
+    box-sizing: border-box; /* This includes padding and border in the element's total width */
+    padding: 20px;
+    margin: 5px;
+}
+
+#register-submit {
+    display: flex;
+    width: 100%;
+    border-radius: 7px;
+    border: none;
+    text-align: center;
+    justify-content: center;
+    font-size: 15px;
+    padding: 20px;
+    background-color: rgb(50, 189, 149);
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.alert-info{
+    color: rgb(50, 189, 149);
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 15px;
+
+}
+
+.alert-danger{
+    color: rgb(204, 80, 80);
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+    .center {
+        width: 100%;
+    }
+    .left {
+        display: none;
+    }
+}
