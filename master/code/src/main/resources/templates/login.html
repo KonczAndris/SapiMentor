@@ -20,8 +20,11 @@
 
       <form th:action="@{/login}" method="post">
         <!-- error message -->
+        <div id="error-message" class="alert alert-danger" style="display: none;">
+          Invalid email or password.
+        </div>
         <div th:if="${param.error}" class="alert alert-danger">
-          Invalid username or password.
+          Invalid email.
         </div>
         <!-- logout message -->
         <div th:if="${param.logout}" class="alert  alert-info">
@@ -30,11 +33,15 @@
 
 
         <div class="form-group">
-          <label for ="username"></label> <input type="text" class="form-control" id="username" name="username" placeholder="Enter Email" autofocus="autofocus">
+          <label for ="username"></label> <input type="text" class="form-control" id="username"
+                                                 name="username" placeholder="Enter Email" autofocus="autofocus"
+                                                 oninput="validateUsername()">
         </div>
 
         <div class="form-group">
-          <label for="password"></label> <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+          <label for="password"></label> <input type="password" id="password"
+                                                name="password" class="form-control" placeholder="Enter Password"
+                                                oninput="validatePassword()">
         </div>
 
         <div class="form-group">
@@ -47,6 +54,6 @@
       </form>
     </div>
   </div>
-
+  <script th:src="@{/js/login.js}"></script>
 </body>
 </html>

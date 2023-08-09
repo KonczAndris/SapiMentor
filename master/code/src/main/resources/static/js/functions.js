@@ -16,8 +16,6 @@ function toggleDivs() {
     leftDiv.classList.add('hidden');
     rightDiv.classList.remove('hidden');
   }
-  
-
   isLeftVisible = !isLeftVisible;
 }
 

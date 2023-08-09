@@ -20,20 +20,16 @@
 
         <h1 id="login-text">Registration</h1>
 
-        <!-- error message -->
-        <div id="duplicated-email" th:if="${param.duplicateError}" class="alert alert-danger">
-            Email address already exists. Please use a different email.
-        </div>
-        <div id="invalid-name" th:if="${param.nameError}" class="alert alert-danger">
+        <div id="invalid-name" class="alert alert-danger" style="display: none;">
             Invalid first or last name.
         </div>
-        <div id="invalid-email" th:if="${param.emailError}" class="alert alert-danger">
+        <div id="invalid-email" class="alert alert-danger" style="display: none;">
             Invalid email.
         </div>
-        <div id="invalid-password" th:if="${param.passwordError}" class="alert alert-danger">
+        <div id="invalid-password" class="alert alert-danger" style="display: none;">
             Invalid password.
         </div>
-        <div id="already-registered" th:if="${param.registrationError}" class="alert alert-danger">
+        <div id="already-registered" th:if="${param.duplicateError}" class="alert alert-danger">
             User is already registered.
         </div>
 
@@ -45,19 +41,23 @@
         <form th:action="@{/register}" method="post" th:object="${user}">
 
             <div class="form-group">
-                <input class="form-control" id="firstName" placeholder="Enter First Name" th:field="*{firstName}" required autofocus="autofocus">
+                <input class="form-control" id="firstName" placeholder="Enter First Name" th:field="*{firstName}"
+                       required autofocus="autofocus" oninput="validateFirstName()">
             </div>
 
             <div class="form-group">
-                <input class="form-control" id="lastName" placeholder="Enter Last Name" th:field="*{lastName}" required autofocus="autofocus">
+                <input class="form-control" id="lastName" placeholder="Enter Last Name" th:field="*{lastName}"
+                       required autofocus="autofocus" oninput="validateLastName()">
             </div>
 
             <div class="form-group">
-                <input class="form-control" id="email" placeholder="Enter Email" th:field="*{email}"  required autofocus="autofocus">
+                <input class="form-control" id="email" placeholder="Enter Email" th:field="*{email}"
+                       required autofocus="autofocus" oninput="validateEmail()">
             </div>
 
             <div class="form-group">
-                <input type="password" class="form-control" id="password" placeholder="Enter Password" th:field="*{password}" required autofocus="autofocus">
+                <input type="password" class="form-control" id="password" placeholder="Enter Password" th:field="*{password}"
+                       required autofocus="autofocus" oninput="validatePassword()">
             </div>
 
             <div class="form-group">
@@ -69,6 +69,6 @@
 
     </div>
 </div>
-
+<script th:src="@{/js/register.js}"></script>
 </body>
 </html>

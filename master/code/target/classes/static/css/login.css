@@ -24,6 +24,11 @@ body {
     border-radius: 30px;
     border: 3px solid white;
   }
+
+.right::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
   
 .left, .right {
     width: 100%;
@@ -35,6 +40,11 @@ body {
 .left{
     overflow: hidden;
   }
+
+.right{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
 #image {
     max-width: 100%;
@@ -127,11 +137,15 @@ body {
     margin-bottom: 15px;
   }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
     .center {
         width: 100%;
     }
     .left {
         display: none;
     }
+}
+
+.highlight {
+    background-color: #FFCCCC;
 }
