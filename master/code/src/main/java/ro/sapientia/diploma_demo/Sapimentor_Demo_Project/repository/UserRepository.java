@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 
 //megkerdezni, hogy ez miert kell
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);

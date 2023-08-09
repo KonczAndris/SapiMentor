@@ -6,5 +6,4 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 
 public interface UserService extends UserDetailsService{
     User save(UserRegistrationDto registrationDto);
-
 }
