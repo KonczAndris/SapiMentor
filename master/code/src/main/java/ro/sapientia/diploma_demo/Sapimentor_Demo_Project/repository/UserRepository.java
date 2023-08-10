@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 
-<<<<<<< HEAD
 import javax.transaction.Transactional;
 
 //megkerdezni, hogy ez miert kell
@@ -14,9 +13,6 @@ import javax.transaction.Transactional;
 
 @Transactional
 =======
->>>>>>> parent of a297d3b (Update)
-=======
-//megkerdezni, hogy ez miert kell
 >>>>>>> parent of a297d3b (Update)
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
