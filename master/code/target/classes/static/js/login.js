@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
         validatePassword();
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/check-authentication", true);
+        xhr.open("GET", "/check-authentication", true); // Replace with appropriate URL
         xhr.onload = function () {
             if (xhr.status === 200) {
                 var isRedirected = JSON.parse(xhr.responseText).redirected;
