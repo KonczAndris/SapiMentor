@@ -13,6 +13,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserService;
 @Controller
 @RequestMapping("/register")
 public class UserRegistrationController {
+
     private UserService userService;
 
     public UserRegistrationController(UserService userService) {
