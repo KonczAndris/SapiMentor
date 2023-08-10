@@ -30,7 +30,10 @@ public class User {
     private String last_Name;
     private String email;
     private String password;
+<<<<<<< HEAD
     private boolean enabled = true;
+=======
+>>>>>>> parent of a297d3b (Update)
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -108,13 +111,5 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 }

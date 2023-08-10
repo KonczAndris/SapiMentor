@@ -32,13 +32,15 @@ public class UserRegistrationController {
         return "register";
     }
 
-    //ezzel a postmappinggel a register.html-ben levo formot tolti ki
+    //ezzel a postmappinggel a registration.html-ben levo formot tolti ki
     //es ha sikeres a regisztracio, akkor megjelenik a message
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto){
         try {
             userService.save(registrationDto);
         } catch (DataIntegrityViolationException ex) {
+            // Handle the duplicate email error
+            // You can redirect back to the registration form with an error message
             return "redirect:/register?duplicateError";
         }
         return "redirect:/register?success";
