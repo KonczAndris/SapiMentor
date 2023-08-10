@@ -9,11 +9,8 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import javax.transaction.Transactional;
 
 //megkerdezni, hogy ez miert kell
-<<<<<<< HEAD
 
 @Transactional
-=======
->>>>>>> parent of a297d3b (Update)
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
