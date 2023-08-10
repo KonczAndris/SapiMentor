@@ -32,10 +32,7 @@ public class User {
     private String password;
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
     private boolean enabled = true;
-=======
->>>>>>> parent of a297d3b (Update)
 =======
 >>>>>>> parent of a297d3b (Update)
 =======
