@@ -9,26 +9,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UserRegistrationDto;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.token.ConfirmationToken;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 //megkerdezni, hogy ez miert kell!!!!!
 @Service
 public class UserServiceImpl implements UserService{
 
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
     private UserRegistrationDto UserRegistrationDto;
-
-    @Autowired
-    private  ConfirmationTokenService confirmationTokenService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -43,17 +37,6 @@ public class UserServiceImpl implements UserService{
         User user = new User(registrationDto.getFirstName(),
                 registrationDto.getLastName(), registrationDto.getEmail(),
                 passwordEncoder.encode(registrationDto.getPassword()), Arrays.asList(new Role("USER")));
-
-        String token = UUID.randomUUID().toString();
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
-                user
-                );
-
-        userRepository.save(user);
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
         return userRepository.save(user);
     }
 
@@ -71,8 +54,6 @@ public class UserServiceImpl implements UserService{
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-    public static int enableAppUser(String email) {
-        return UserRepository.enableAppUser(email);
-    }
+
 
 }

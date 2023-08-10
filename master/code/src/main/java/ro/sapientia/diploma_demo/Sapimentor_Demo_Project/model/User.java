@@ -14,15 +14,8 @@ import javax.persistence.Table;
 //user tablaba menti el az adatokat
 //ez a  user objektum
 public class User {
-
-    @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1)
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "first_name")
     private String first_Name;
@@ -30,7 +23,7 @@ public class User {
     private String last_Name;
     private String email;
     private String password;
-    private boolean enabled = true;
+    private boolean enabled = false;
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
