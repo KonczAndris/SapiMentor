@@ -20,4 +20,42 @@ function toggleDivs() {
 }
 
 
+function loadProfileContent(event) {
+    event.preventDefault();
+    const rightContent = document.getElementById("right-content");
+    rightContent.style.opacity = '0';
+    rightContent.style.visibility = 'hidden';
+
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                rightContent.innerHTML = xhr.responseText;
+                setTimeout(() => {
+                    rightContent.style.opacity = '1';
+                    rightContent.style.visibility = 'visible';
+                }, 20);
+            } else {
+                console.error('Error loading profile content:', xhr.status);
+            }
+        }
+    };
+    xhr.open("GET", "/profile", true);
+    xhr.send();
+}
+document.addEventListener("DOMContentLoaded", function() {
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -70,12 +70,15 @@ body {
 
 .right{
     margin-top: 0;
+    margin: auto;
+    margin-right: 2%;
     width: 80%;
-    height: 100vh;
+    height: 95%;
     background-color: white;
     overflow-y: auto;
     overflow-x: hidden;
     box-shadow:  2px 2px 20px rgb(10, 145, 107);
+    border-radius: 50px;
 }
 
 #index-text{
@@ -108,7 +111,6 @@ body {
     padding: 15px 15px;
   }
 
-  
 .menu-function a:hover {
     background-color: rgb(10, 145, 107);
     color: #ffffff; 
@@ -165,6 +167,7 @@ body {
         width: 100%;
         margin: 0;
         padding-left: 10%;
+        border-radius: 0;
     }
     .left {
       display: flex;

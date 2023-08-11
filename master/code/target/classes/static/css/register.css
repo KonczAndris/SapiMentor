@@ -114,6 +114,36 @@ body {
     margin: 5px;
 }
 
+.info-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.info-tooltip {
+    position: absolute;
+    color: white;
+    right: -5px;
+    top: -10px;
+    background-color: rgb(50, 189, 149);
+    padding: 5px 10px; /* Adjust padding to provide space around the text */
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap; /* Prevent line breaks */
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s, transform 0.2s; /* Added transform */
+
+}
+
+.form-group:hover .info-tooltip {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(-5px); /* Added translation animation */
+}
+
 .alert-info{
     color: rgb(50, 189, 149);
     text-align: center;
