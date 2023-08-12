@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SapiMentor</title>
   <link rel="stylesheet"  type="text/css" th:href="@{/css/index.css}">
-
 </head>
 <body>
   <div class="center">
@@ -15,8 +14,8 @@
     <div class="left hidden">
         <h1 id="index-text">SapiMentor</h1>
         <div class="form-group">
-            <p class="menu-function">  
-                <a href="/profile"> <img th:src="@{/img/profile.png}" alt="Icon" class="menu-icon"> Profile</a> </p>
+            <p class="menu-function">
+                <a href="/profile" onclick="loadProfileContent(event)"> <img th:src="@{/img/profile.png}" alt="Icon" class="menu-icon"> Profile</a>
         </div>
         <div class="form-group">
             <p class="menu-function">
@@ -41,10 +40,9 @@
 
     </div>
 
-    <div class="right show">
+    <div class="right show" id="right-content">
     </div>
   </div>
-
-<script th:src="@{/js/functions.js}"></script>
+  <script th:src="@{/js/functions.js}"></script>
 </body>
 </html>

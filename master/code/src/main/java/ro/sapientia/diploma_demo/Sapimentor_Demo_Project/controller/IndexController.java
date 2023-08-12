@@ -13,17 +13,10 @@ import org.springframework.ui.Model;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-
 @Controller
-public class UserLoginController {
-    @GetMapping("/login")
-    public String login() {
-        return "login";
+public class IndexController {
+    @GetMapping("/profile")
+    public String showProfilePage() {
+        return "profile"; // This maps to the "profile.html" template
     }
-
-    @GetMapping("/forgotPassword")
-    public String showForgotPasswordForm() {
-        return "forgotPassword";
-    }
-
 }

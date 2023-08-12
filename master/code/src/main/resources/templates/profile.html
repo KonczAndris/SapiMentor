@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet"  type="text/css" th:href="@{/css/profile.css}">
+  <link rel="stylesheet"  type="text/css" th:href="@{/css/index.css}">
+</head>
+
+<body>
+  <div class="profile-container">
+
+    <div class="profile-left">
+      <div class="section">
+      <div class="image-container">
+        <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
+        <div class="change-icon" id="change-image-icon">
+          <img th:src="@{/img/change.png}" alt="Change Icon">
+        </div>
+      </div>
+
+    <div class="status-box">
+    <div class="name-box">
+      <p class="first-name">FirstName</p>
+      </div>
+        <p class="status">User</p>
+      </div>
+
+      <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5" />
+        <label for="star5">&#9733;</label>
+        <input type="radio" id="star4" name="rating" value="4" />
+        <label for="star4">&#9733;</label>
+        <input type="radio" id="star3" name="rating" value="3" />
+        <label for="star3">&#9733;</label>
+        <input type="radio" id="star2" name="rating" value="2" />
+        <label for="star2">&#9733;</label>
+        <input type="radio" id="star1" name="rating" value="1" />
+        <label for="star1">&#9733;</label>
+      </div>
+      <div class="rating-text">
+        <span id="rating-number">100</span> Ratings
+      </div>
+
+    </div>
+    </div>
+
+    <div class="profile-right">
+
+      <div class="section">
+        <h2>ABOUT
+        <div class="edit-button">
+          <img th:src="@{/img/edit-profile.png}" alt="Edit Profile" />
+      </div>
+    </h2>
+        <div class="divider"></div>
+        <div class="details">
+          <div class="detail-row">
+            <p class="detail-label">Name:</p>
+            <p class="detail-value">FirstName</p> <p class="detail-value">LastName</p>
+          </div>
+          <div class="detail-row">
+            <p class="detail-label">Specialization:</p>
+            <p class="detail-value">Example</p>
+          </div>
+          <div class="detail-row">
+            <p class="detail-label">Year:</p>
+            <p class="detail-value">3.</p>
+          </div>
+          <div class="detail-row">
+            <p class="detail-label">E-mail:</p>
+            <p class="detail-value">example@gmail.com</p>
+          </div>
+          <div class="detail-row">
+            <p class="detail-label">Phone:</p>
+            <p class="detail-value">1234567890</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>SKILLS
+        <div class="edit-button">
+          <img th:src="@{/img/edit-profile.png}" alt="Edit Profile" />
+      </div>
+    </h2>
+        <div class="divider"></div>
+      </div>
+    </div>
+  </div>
+    <script th:src="@{/js/functions.js}"></script>
+</body>
+</html>
