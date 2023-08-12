@@ -50,10 +50,78 @@
 
       <div class="section">
         <h2>ABOUT
-        <div class="edit-button">
-          <img th:src="@{/img/edit-profile.png}" alt="Edit Profile" />
-      </div>
-    </h2>
+          <div class="edit-button">
+            <button id="myBtn"> <img th:src="@{/img/edit-profile.png}" alt="Edit Profile" /> </button>
+          </div>
+        </h2>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="details">
+
+              <div class="form-group-edit">
+                <div class="detail-row">
+                  <p class="detail-label">First Name:</p>
+                  <input type="text" class="edit-input" id="firstName-edit" placeholder=""
+                         required autofocus="autofocus" oninput="validateFirstName()">
+                  <div class="info-icon" data-tooltip="Tooltip text for First Name">
+                    <i class="fas fa-info-circle"></i>
+                  </div>
+                  <div class="info-tooltip">Enter your real name!</div>
+                </div> </div>
+
+              <div class="form-group-edit">
+                <div class="detail-row">
+                  <p class="detail-label">Last Name:</p>
+                  <input type="text" class="edit-input" id="lastName-edit" placeholder=""
+                         required autofocus="autofocus" oninput="validateLastName()">
+                  <div class="info-icon" data-tooltip="Tooltip text for Last Name">
+                    <i class="fas fa-info-circle"></i>
+                  </div>
+                  <div class="info-tooltip">Enter your real name!</div>
+                </div> </div>
+
+              <div class="form-group-edit">
+                <div class="detail-row">
+                  <p class="detail-label">Specialization:</p>
+                  <input type="text" class="edit-input" id="specialization-edit" placeholder=""
+                         required autofocus="autofocus" oninput="validateSpecialization()">
+                  <div class="info-icon" data-tooltip="Tooltip text for First Name">
+                    <i class="fas fa-info-circle"></i>
+                  </div>
+                  <div class="info-tooltip">Enter your specialization!</div>
+                </div> </div>
+
+              <div class="form-group-edit">
+                <div class="detail-row">
+                  <p class="detail-label">Year:</p>
+                  <input type="number" class="edit-input" id="year-edit" placeholder=""
+                         required autofocus="autofocus" oninput="validateYear()">
+                  <div class="info-icon" data-tooltip="Tooltip text for First Name">
+                    <i class="fas fa-info-circle"></i>
+                  </div>
+                  <div class="info-tooltip">Only 1-4 year is accepted!</div>
+                </div> </div>
+
+              <div class="form-group-edit">
+                <div class="detail-row">
+                  <p class="detail-label">Phone:</p>
+                  <input type="text" class="edit-input" id="phone-edit" placeholder=""
+                         required autofocus="autofocus" oninput="validatePhone()">
+                  <div class="info-icon" data-tooltip="Tooltip text for First Name">
+                    <i class="fas fa-info-circle"></i>
+                  </div>
+                  <div class="info-tooltip">Enter your 10-digit phone number!</div>
+                </div> </div>
+            </div>
+            <button type="submit" id="edit-save" class="btn btn-success">Save</button>
+          </div>
+        </div>
+
         <div class="divider"></div>
         <div class="details">
           <div class="detail-row">

@@ -1,3 +1,78 @@
+function setupModal() {
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("myBtn");
+    var span = document.getElementsByClassName("close")[0];
+
+    if (modal && btn && span) {
+        btn.onclick = function() {
+            modal.style.display = "block";
+        };
+        span.onclick = function() {
+            modal.style.display = "none";
+        };
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    }
+}
+
+function validateFirstName() {
+    var firstNameInput = document.getElementById("firstName-edit");
+    var firstNameValue = firstNameInput.value.trim();
+
+    if (!/^[a-zA-Z]{1,20}$/.test(firstNameValue)) {
+        firstNameInput.classList.add("highlight");
+    } else {
+        firstNameInput.classList.remove("highlight");
+    }
+}
+
+function validateLastName() {
+    var lastNameInput = document.getElementById("lastName-edit");
+    var lastNameValue = lastNameInput.value.trim();
+
+    if (!/^[a-zA-Zéáűúőíöü\s'-]{1,20}$/.test(lastNameValue)) {
+        lastNameInput.classList.add("highlight");
+    } else {
+        lastNameInput.classList.remove("highlight");
+    }
+}
+
+function validateSpecialization() {
+    var specializationInput = document.getElementById("specialization-edit");
+    var specializationValue = specializationInput.value.trim();
+
+    if (!/^[a-zA-Z]{4,20}$/.test(specializationValue)) {
+        specializationInput.classList.add("highlight");
+    } else {
+        specializationInput.classList.remove("highlight");
+    }
+}
+
+function validateYear() {
+    var yearInput = document.getElementById("year-edit");
+    var yearValue = yearInput.value.trim();
+
+    if (!/^[1-4]$/.test(yearValue)) {
+        yearInput.classList.add("highlight");
+    } else {
+        yearInput.classList.remove("highlight");
+    }
+}
+
+function validatePhone() {
+    var phoneInput = document.getElementById("phone-edit");
+    var phoneValue = phoneInput.value.trim();
+
+    if (!/^\d{10}$/.test(phoneValue)){
+        phoneInput.classList.add("highlight");
+    } else {
+        phoneInput.classList.remove("highlight");
+    }
+}
+
 window.onload = function() {
     toggleDivs();
 };
@@ -19,7 +94,6 @@ function toggleDivs() {
   isLeftVisible = !isLeftVisible;
 }
 
-
 function loadProfileContent(event) {
     event.preventDefault();
     const rightContent = document.getElementById("right-content");
@@ -35,6 +109,12 @@ function loadProfileContent(event) {
                     rightContent.style.opacity = '1';
                     rightContent.style.visibility = 'visible';
                 }, 20);
+                setupModal();
+                validateFirstName();
+                validateLastName();
+                validateSpecialization();
+                validateYear();
+                validatePhone();
             } else {
                 console.error('Error loading profile content:', xhr.status);
             }

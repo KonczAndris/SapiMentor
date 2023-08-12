@@ -111,7 +111,6 @@ body {
     padding: 15px 15px;
   }
 
-  
 .menu-function a:hover {
     background-color: rgb(10, 145, 107);
     color: #ffffff; 
@@ -157,7 +156,6 @@ body {
 .back-icon:active {
     transform: scale(0.95);
   }
-
 
 @media (max-width: 1000px) {
     .center {
