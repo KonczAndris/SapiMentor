@@ -63,7 +63,7 @@ body{
   }
   
   #change-image-icon img {
-    width: 75%; /* Make sure the image fills the icon container */
+    width: 75%;
     height: 75%;
   }
   
@@ -107,11 +107,11 @@ body{
 }
 
 .rating {
-  direction: rtl; /* Reverse direction to start from right to left */
+  direction: rtl;
 }
 
 .rating input[type="radio"] {
-  display: none; /* Hide the radio inputs */
+  display: none;
 }
 
 .rating label {
@@ -128,8 +128,8 @@ body{
 }
 
 .rating-text {
-  text-align: center; /* Center the text */
-  margin-top: 5px;   /* Adjust the margin to move it down */
+  text-align: center;
+  margin-top: 5px;
 }
 
 .profile-right{
@@ -150,10 +150,10 @@ body{
 
 
 .edit-button img {
-  width: 20px; /* Adjust the width of the edit button image */
-  height: 20px; /* Adjust the height of the edit button image */
+  width: 20px;
+  height: 20px;
   cursor: pointer;
-  margin-left: 10px; /* Add some space between h2 and edit button */
+  margin-left: 10px;
   margin-left: auto;
 }
 
@@ -168,8 +168,8 @@ body{
   h2 {
     font-size: 24px;
     margin: 0;
-    white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide overflowing content */
+    white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
   
@@ -189,23 +189,22 @@ body{
   .detail-label {
     width: 150px;
     font-weight: bold;
-    white-space: nowrap; /* Prevent text from wrapping */
-    overflow: hidden; /* Hide overflowing content */
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
   }
   
 .detail-value {
   display: inline-block; 
   flex: none;
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide overflowing content */
-  text-overflow: ellipsis; /* Add ellipsis (...) when text is truncated */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .detail-value + .detail-value {
-  margin-left: 5px; /* Add margin between elements */
+  margin-left: 5px;
 }
-
 
     @media (max-width: 1000px) {
       .profile-container {
@@ -226,9 +225,7 @@ body{
         padding: 3%;
         max-width: 65%;
         background-color: rgb(255, 255, 255);
-    }
-    
-    }    
+    } }
     
     
     

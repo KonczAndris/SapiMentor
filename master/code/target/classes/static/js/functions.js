@@ -43,10 +43,6 @@ function loadProfileContent(event) {
     xhr.open("GET", "/profile", true);
     xhr.send();
 }
-
-
-
-
 document.addEventListener("DOMContentLoaded", function() {
 });
 
