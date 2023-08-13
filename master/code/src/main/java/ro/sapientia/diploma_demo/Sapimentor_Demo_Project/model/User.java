@@ -1,11 +1,10 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model;
 
-import java.util.Collection;
-
 import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.util.Collection;
+
+
 
 
 //megkerdezni chat-tol hogy ez pontosan miaz

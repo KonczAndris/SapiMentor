@@ -1,7 +1,7 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model;
 
-import javax.persistence.*;
 
+import javax.persistence.*;
 
 @Entity
 @Table(name = "role")

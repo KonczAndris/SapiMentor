@@ -1,6 +1,7 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 
+import lombok.experimental.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,26 +10,35 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UserRegistrationDto;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.token.ConfirmationToken;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ConfirmationTokenRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 //megkerdezni, hogy ez miert kell!!!!!
 @Service
 public class UserServiceImpl implements UserService{
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     private UserRegistrationDto UserRegistrationDto;
+    private ConfirmationTokenRepository confirmationTokenRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 
     //ez a regisztraciohoz kell
@@ -38,6 +48,11 @@ public class UserServiceImpl implements UserService{
                 registrationDto.getLastName(), registrationDto.getEmail(),
                 passwordEncoder.encode(registrationDto.getPassword()), Arrays.asList(new Role("USER")));
         return userRepository.save(user);
+    }
+
+    public void saveUserVerificationToken(User theUser, String token) {
+        var verificationToken = new ConfirmationToken(token, theUser);
+        confirmationTokenRepository.save(verificationToken);
     }
 
     //bejelekezesnel kell

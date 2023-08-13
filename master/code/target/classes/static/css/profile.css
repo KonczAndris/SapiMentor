@@ -80,20 +80,7 @@ body {
     justify-content: center;
     align-items: center;
     opacity: 0.5;
-<<<<<<< HEAD
-  }
-  
-  #change-image-icon img {
-    width: 75%;
-    height: 75%;
-  }
-  
-  #change-image-icon:hover {
-    opacity: 1;
-  }
-=======
 }
->>>>>>> 712407119259b94045a00ebf7090de824a342cc0
 
 #change-image-icon img {
     width: 75%;
@@ -141,19 +128,11 @@ body {
 }
 
 .rating {
-<<<<<<< HEAD
-  direction: rtl;
-}
-
-.rating input[type="radio"] {
-  display: none;
-=======
     direction: rtl;
 }
 
 .rating input[type="radio"] {
     display: none;
->>>>>>> 712407119259b94045a00ebf7090de824a342cc0
 }
 
 .rating label {
@@ -170,13 +149,8 @@ body {
 }
 
 .rating-text {
-<<<<<<< HEAD
-  text-align: center;
-  margin-top: 5px;
-=======
     text-align: center;
     margin-top: 5px;
->>>>>>> 712407119259b94045a00ebf7090de824a342cc0
 }
 
 .profile-right {
@@ -196,19 +170,11 @@ body {
 }
 
 .edit-button img {
-<<<<<<< HEAD
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  margin-left: 10px;
-  margin-left: auto;
-=======
     width: 20px;
     height: 20px;
     cursor: pointer;
     margin-left: 10px;
     margin-left: auto;
->>>>>>> 712407119259b94045a00ebf7090de824a342cc0
 }
 
 .section {
@@ -223,13 +189,8 @@ h2 {
     font-size: 24px;
     margin: 0;
     white-space: nowrap;
-<<<<<<< HEAD
-  overflow: hidden;
-  text-overflow: ellipsis;
-=======
     overflow: hidden;
     text-overflow: ellipsis;
->>>>>>> 712407119259b94045a00ebf7090de824a342cc0
 }
 
 .divider {
@@ -254,21 +215,6 @@ h2 {
 }
 
 .detail-value {
-<<<<<<< HEAD
-  display: inline-block; 
-  flex: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.detail-value + .detail-value {
-  margin-left: 5px;
-}
-
-    @media (max-width: 1000px) {
-      .profile-container {
-=======
     display: inline-block;
     flex: none;
     white-space: nowrap;
@@ -437,7 +383,6 @@ h2 {
 
 @media (max-width: 1000px) {
     .profile-container {
->>>>>>> 712407119259b94045a00ebf7090de824a342cc0
         display: flex;
         flex-direction: column;
     }
@@ -454,14 +399,6 @@ h2 {
         padding: 3%;
         max-width: 65%;
         background-color: rgb(255, 255, 255);
-<<<<<<< HEAD
-    } }
-    
-    
-    
-    
-    
-=======
     }
 }
 
@@ -475,4 +412,3 @@ h2 {
     .detail-row {
         flex-direction: column;
     }}
->>>>>>> 712407119259b94045a00ebf7090de824a342cc0
