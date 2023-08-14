@@ -20,9 +20,9 @@ public class ConfirmationToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String token;
-
     private Date expirationTime;
-    private static final int EXPIRATION_TIME = 15;
+    private static final int EXPIRATION_HOUR_TIME = 3;
+    private static final int EXPIRATION_MINUTE_TIME = 15;
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "user_id")
@@ -40,12 +40,11 @@ public class ConfirmationToken {
         this.token = token;
         this.expirationTime = this.getTokenExpirationTime();
     }
-
     public Date getTokenExpirationTime() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(new Date().getTime());
-        calendar.add(Calendar.MINUTE, EXPIRATION_TIME);
+        calendar.add(Calendar.HOUR, EXPIRATION_HOUR_TIME);
+        calendar.add(Calendar.MINUTE, EXPIRATION_MINUTE_TIME);
         return new Date(calendar.getTime().getTime());
     }
-
 }

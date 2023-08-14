@@ -1,6 +1,7 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,25 +17,28 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ConfirmationTokenRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 //megkerdezni, hogy ez miert kell!!!!!
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private UserRegistrationDto UserRegistrationDto;
-    private ConfirmationTokenRepository confirmationTokenRepository;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+//    public UserServiceImpl(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
 
     @Override
     public List<User> getUsers() {
@@ -50,24 +54,41 @@ public class UserServiceImpl implements UserService{
         return userRepository.save(user);
     }
 
-    public void saveUserVerificationToken(User theUser, String token) {
+    public void saveUserVerificationToken(User theUser, String token){
         var verificationToken = new ConfirmationToken(token, theUser);
         confirmationTokenRepository.save(verificationToken);
     }
 
-    //bejelekezesnel kell
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username);
-        if(user == null || !user.isEnabled()) {
-            throw new UsernameNotFoundException("Invalid username or password.");
+    public String validateToken(String theToken) {
+        ConfirmationToken token = confirmationTokenRepository.findByToken(theToken);
+        if(token == null){
+            return "Invalid verification token";
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+        User user = token.getUser();
+        Calendar calendar = Calendar.getInstance();
+        if ((token.getExpirationTime().getTime()- calendar.getTime().getTime()) <= 0){
+            confirmationTokenRepository.delete(token);
+            return "Token already expired";
+        }
+        user.setEnabled(true);
+        userRepository.save(user);
+        return "valid";
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-    }
+//    //bejelekezesnel kell
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        User user = userRepository.findByEmail(username);
+//        if(user == null || !user.isEnabled()) {
+//            throw new UsernameNotFoundException("Invalid username or password.");
+//        }
+//        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+//    }
+//
+//    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
+//        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+//    }
 
 
 

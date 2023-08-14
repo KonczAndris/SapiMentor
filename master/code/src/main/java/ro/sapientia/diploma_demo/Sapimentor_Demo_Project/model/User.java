@@ -1,14 +1,21 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 import java.util.Collection;
-
-
+import java.util.Optional;
 
 
 //megkerdezni chat-tol hogy ez pontosan miaz
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 //user tablaba menti el az adatokat
 //ez a  user objektum
@@ -109,4 +116,5 @@ public class User {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
 }

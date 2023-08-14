@@ -2,12 +2,19 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.event.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.context.ApplicationListener;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.event.RegistrationCompleteEvent;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserService;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Slf4j
@@ -16,13 +23,16 @@ import java.util.UUID;
 public class RegistrationCompleteEventListener
         implements ApplicationListener<RegistrationCompleteEvent> {
 
-    private UserService userService;
+    private final UserService userService;
+    private final JavaMailSenderImpl mailSender;
+    private  User user;
 
     @Override
     public void onApplicationEvent(RegistrationCompleteEvent registrationCompleteEvent) {
         //Get the newly registered user
         User theUser = registrationCompleteEvent.getUser();
-        System.out.println("User:" + theUser);
+        this.user = theUser;
+        System.out.println("User:" + theUser.getEmail());
 
         //Generate a verification token
         String verificationToken = UUID.randomUUID().toString();
@@ -36,6 +46,28 @@ public class RegistrationCompleteEventListener
                 + "/register/verifyEmail?token=" + verificationToken;
 
         //Send the verification email
+        try {
+            sendVerificationEmail(Url);
+        } catch (MessagingException | UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         log.info("Click on the link below to verify your email address :  {}", Url);
+    }
+
+    public void sendVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
+        String subject = "Email Confirmation";
+        String senderName = "SapiMentor Registration Portal Service";
+        String mailContent = "<p> Hi, "+ user.getFirst_Name()+ ", </p>"+
+                "<p>Thank you for registering with us,"+"" +
+                "Please, follow the link below to complete your registration.</p>"+
+                "<a href=\"" +url+ "\">Verify your email to activate your account</a>"+
+                "<p> Thank you, <br> SapiMentor Registration Portal Service";
+        MimeMessage message = mailSender.createMimeMessage();
+        var messageHelper = new MimeMessageHelper(message);
+        messageHelper.setFrom("sapimentor@gmail.com", senderName);
+        messageHelper.setTo(user.getEmail());
+        messageHelper.setSubject(subject);
+        messageHelper.setText(mailContent, true);
+        mailSender.send(message);
     }
 }
