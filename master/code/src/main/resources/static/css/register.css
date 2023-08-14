@@ -135,7 +135,6 @@ body {
     white-space: nowrap;
     visibility: hidden;
     transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
-
 }
 
 .form-group:hover .info-tooltip {

@@ -1,26 +1,6 @@
-@-webkit-keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0
-    }
-
-    to {
-        top: 0;
-        opacity: 1
-    }
-}
-
-@keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0
-    }
-
-    to {
-        top: 0;
-        opacity: 1
-    }
-}
+@font-face {
+    font-family: 'CustomFont';
+    src: url('../fonts/roundfont.ttf') format('truetype')}
 
 .profile-container::-webkit-scrollbar {
     width: 0;
@@ -28,7 +8,7 @@
 }
 
 body {
-    font-family: 'CustomFont';
+    font-family: 'CustomFont', serif;
     align-items: center;
     justify-content: center;
 }
@@ -173,7 +153,6 @@ body {
     width: 20px;
     height: 20px;
     cursor: pointer;
-    margin-left: 10px;
     margin-left: auto;
 }
 
@@ -204,6 +183,9 @@ h2 {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .detail-label {
@@ -232,10 +214,95 @@ h2 {
     width: 300px;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.modal {
+
+@media (max-width: 1000px) {
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0;
+    }
+
+    .section-profile{
+        display: flex;
+        width: 90%;
+        flex-direction: row;
+    }
+
+    @media (max-width: 600px) {
+        .section-profile{
+            display: flex;
+            width: 90%;
+            flex-direction: column;
+        }}
+
+    .profile-right-box{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .status-box{
+        width: 100%;
+        margin: 0;
+    }
+
+    .image-container{
+        width: 100%;
+    }
+
+    .profile-right,
+    .profile-left {
+        padding: 3%;
+        width: 90%;
+        background-color: rgb(255, 255, 255);
+        box-sizing: border-box;
+        margin-right: 5%;
+    }
+
+    .detail-row{
+        align-items: start;
+    }
+
+    .profile-left {
+        margin-top: 5%;
+        padding: 3%;
+        max-width: 65%;
+        background-color: rgb(255, 255, 255);
+    }
+
+    .rating{
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@-webkit-keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+.modal, .modal-skills {
     display: none;
     position: fixed;
     z-index: 1;
@@ -249,7 +316,7 @@ h2 {
     overflow-x: scroll;
 }
 
-.modal-content {
+.modal-content, .modal-content-skills {
     position: relative;
     background-color: #fefefe;
     margin: auto;
@@ -271,12 +338,12 @@ h2 {
     animation-duration: 0.4s;
 }
 
-.modal-content::-webkit-scrollbar {
+.modal-content::-webkit-scrollbar, .modal-content-skills::-webkit-scrollbar {
     width: 0;
     background: transparent;
 }
 
-.close {
+.close, .close-skill {
     color: #aaaaaa;
     float: left;
     font-size: 28px;
@@ -287,7 +354,9 @@ h2 {
 }
 
 .close:hover,
-.close:focus {
+.close:focus,
+.close-skill:hover,
+.close-skill:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
@@ -298,6 +367,109 @@ h2 {
     border: none;
     margin: 0;
     padding: 0;
+}
+
+#mySkillBtn {
+    background: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-container{
+    display: flex;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 3%;
+}
+
+.dropbtn{
+    display: flex;
+    width: 100%;
+    min-width: 140px;
+    border: none;
+    text-align: center;
+    justify-content: center;
+    font-size: 15px;
+    padding: 10px;
+    background-color: rgb(50, 189, 149);
+    color: white;
+    cursor: pointer;
+    border-radius: 50px 50px 50px 50px;
+    box-sizing: border-box;
+    border: 0;
+    margin: 0;
+}
+
+.skills-input {
+    width: 100%;
+    min-width: 140px;
+    border-radius: 7px;
+    border: 2px solid rgb(0, 0, 0);
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 0;
+    margin-left: 20px;
+}
+
+#skills-add {
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    border-radius: 100px;
+    width: 100%;
+    min-width: 70px;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    margin: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#skills-add:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(30, 214, 162);
+    border: 2px solid white;
+}
+
+.dropdown {
+    position: relative;
+    flex-grow: 1;
+    border: 0;
+}
+
+.dropdown-content {
+    display: none;
+    background-color: rgb(101, 237, 198);
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 0 0 20px 20px;
+}
+
+.dropdown-content.active {
+    display: block;
+    margin-top: -5px;
+}
+
+.dropdown-content a {
+    color: rgb(255, 255, 255);
+    padding: 10px 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    font-weight: bold;
+}
+
+.modal-content-skills{
+    min-height: 400px;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .edit-input {
@@ -335,6 +507,7 @@ h2 {
     background-color: #FFCCCC;
 }
 
+
 .info-icon {
     position: absolute;
     right: 10px;
@@ -351,13 +524,13 @@ h2 {
     right: -5px;
     top: -10px;
     background-color: rgb(50, 189, 149);
-    padding: 5px 10px;
+    padding: 5px 10px; /* Adjust padding to provide space around the text */
     border-radius: 50px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    white-space: nowrap;
+    white-space: nowrap; /* Prevent line breaks */
     visibility: hidden;
-    transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
-    align-self: flex-start;
+    transition: opacity 0.2s, visibility 0.2s, transform 0.2s; /* Added transform */
+    align-self: flex-start; /* Align tooltip to the top of the detail row */
     margin-left: auto;
 
 }
@@ -371,44 +544,77 @@ h2 {
     position: relative;
 }
 
+
 .form-group-edit:hover .info-tooltip {
     visibility: visible;
     opacity: 1;
-    transform: translateY(-5px);
+    transform: translateY(-5px); /* Added translation animation */
+    z-index: 9999;
 }
 
-.detail-row {
-    position: relative;
+.detail-row-edit {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-@media (max-width: 1000px) {
-    .profile-container {
-        display: flex;
-        flex-direction: column;
-    }
-    .profile-right,
-    .profile-left {
-        padding: 3%;
-        width: 90%;
-        background-color: rgb(255, 255, 255);
-        box-sizing: border-box;
-        margin-right: 5%;
-    }
-
-    .profile-left {
-        padding: 3%;
-        max-width: 65%;
-        background-color: rgb(255, 255, 255);
-    }
-}
-
-@media (max-width: 700px) {
-    .modal-content{
-        width: 90%;
-    }
+.detail-label-edit {
+    width: 150px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media (max-width: 450px) {
     .detail-row {
         flex-direction: column;
-    }}
+    }
+
+    .modal-content, .modal-content-skills {
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+    .dropdown-container {
+        flex-direction: column;
+    }
+
+    .dropbtn {
+        margin: 0;
+        margin-bottom: 5%;
+    }
+
+    .skills-input {
+        width: 100%;
+        min-width: 140px;
+        border-radius: 7px;
+        border: 2px solid rgb(0, 0, 0);
+        box-sizing: border-box;
+        padding: 10px;
+        margin: 0;
+    }
+
+    .skills-add {
+        margin: 10px 0;
+    }
+
+    #skills-add {
+        color: rgb(255, 255, 255);
+        background-color: rgb(22, 175, 132);
+        border-radius: 100px;
+        width: 100%;
+        min-width: 70px;
+        cursor: pointer;
+        padding: 10px;
+        border: none;
+        margin: 10px 0;
+    }
+
+    .dropdown-content.active {
+        display: block;
+        margin-top: -10px;
+    }
+}
+
+

@@ -10,12 +10,49 @@ function setupModal() {
         span.onclick = function() {
             modal.style.display = "none";
         };
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        };
     }
+}
+
+// NEW
+function setupSkillsModal() {
+    var modal = document.getElementById("skillsModal");
+    var btn = document.getElementById("mySkillBtn");
+    var span = document.getElementsByClassName("close-skill")[0];
+
+    if (modal && btn && span) {
+    btn.onclick = function() {
+        modal.style.display = "flex";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }}
+}
+
+function toggleDropdown() {
+    var dropdownContent = document.getElementById("myDropdown");
+    dropdownContent.classList.toggle("active");
+
+    var dropbtn = document.querySelector(".dropbtn");
+    if (dropdownContent.classList.contains("active")) {
+        dropbtn.style.borderRadius = "20px 20px 0 0";
+    } else {
+        dropbtn.style.borderRadius = ""; // Reset to default value
+    }
+}
+
+
+function closeModalOnClickOutside() {
+    var modal1 = document.getElementById("skillsModal");
+    var modal2 = document.getElementById("myModal");
+
+    window.addEventListener("click", function(event) {
+        if (event.target == modal1) {
+            modal1.style.display = "none";
+        }
+        if (event.target == modal2) {
+            modal2.style.display = "none";
+        }
+    });
 }
 
 function validateFirstName() {
@@ -110,6 +147,8 @@ function loadProfileContent(event) {
                     rightContent.style.visibility = 'visible';
                 }, 20);
                 setupModal();
+                setupSkillsModal();
+                closeModalOnClickOutside();
                 validateFirstName();
                 validateLastName();
                 validateSpecialization();
