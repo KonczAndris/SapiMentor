@@ -17,6 +17,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ConfirmationTokenRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 
+import javax.persistence.Cacheable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService{
 //    public UserServiceImpl(UserRepository userRepository) {
 //        this.userRepository = userRepository;
 //    }
+
 
     @Override
     public List<User> getUsers() {
@@ -69,6 +71,7 @@ public class UserServiceImpl implements UserService{
         Calendar calendar = Calendar.getInstance();
         if ((token.getExpirationTime().getTime()- calendar.getTime().getTime()) <= 0){
             confirmationTokenRepository.delete(token);
+            userRepository.delete(user);
             return "Token already expired";
         }
         user.setEnabled(true);

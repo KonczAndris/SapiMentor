@@ -2,6 +2,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UserRegistrationDto;
@@ -46,25 +47,30 @@ public class UserRegistrationController {
                                       final HttpServletRequest request){
         try {
             User user = userService.save(registrationDto);
-            System.out.println("User: " + user.getEmail() + " has been registered successfully");
-            eventPublisher.publishEvent(new RegistrationCompleteEvent(user, appUrl(request)));
+            //System.out.println("User: " + user.getEmail() + " has been registered successfully");
+            sendRegistrationCompleteEventAsync(user, request);
         } catch (DataIntegrityViolationException ex) {
             return "redirect:/register?duplicateError";
         }
         return "redirect:/register?success";
     }
 
+    @Async
+    public void sendRegistrationCompleteEventAsync(User user, HttpServletRequest request) {
+        eventPublisher.publishEvent(new RegistrationCompleteEvent(user, appUrl(request)));
+    }
+
     @GetMapping("/verifyEmail")
     public String verifyEmail(@RequestParam("token") String token){
         ConfirmationToken theToken = confirmationTokenRepository.findByToken(token);
         if (theToken.getUser().isEnabled()){
-            return "This account has already been verified, please, login.";
+            return "redirect:/login?alreadyVerified";
         }
         String verificationResult = userService.validateToken(token);
         if (verificationResult.equalsIgnoreCase("valid")){
-            return "Email verified successfully. Now you can login to your account";
+            return "redirect:/login?verificationSuccess";
         }
-        return "Invalid verification token";
+        return "redirect:/login?verificationError";
     }
 
     public String appUrl(HttpServletRequest request) {

@@ -6,6 +6,7 @@ import lombok.var;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.event.RegistrationCompleteEvent;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
@@ -32,11 +33,11 @@ public class RegistrationCompleteEventListener
         //Get the newly registered user
         User theUser = registrationCompleteEvent.getUser();
         this.user = theUser;
-        System.out.println("User:" + theUser.getEmail());
+        //System.out.println("User:" + theUser.getEmail());
 
         //Generate a verification token
         String verificationToken = UUID.randomUUID().toString();
-        System.out.println("Token:" + verificationToken);
+        //System.out.println("Token:" + verificationToken);
 
         //Save the verification token
         userService.saveUserVerificationToken(theUser, verificationToken);
@@ -54,6 +55,7 @@ public class RegistrationCompleteEventListener
         log.info("Click on the link below to verify your email address :  {}", Url);
     }
 
+    @Async
     public void sendVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
         String subject = "Email Confirmation";
         String senderName = "SapiMentor Registration Portal Service";
