@@ -4,10 +4,6 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.var;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UserRegistrationDto;
@@ -16,14 +12,9 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ConfirmationTokenRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
-
-import javax.persistence.Cacheable;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 //megkerdezni, hogy ez miert kell!!!!!
 @Service
@@ -31,15 +22,16 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
-    private UserRegistrationDto UserRegistrationDto;
     private final ConfirmationTokenRepository confirmationTokenRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, ConfirmationTokenRepository confirmationTokenRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.confirmationTokenRepository = confirmationTokenRepository;
+    }
 
-//    public UserServiceImpl(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
 
 
     @Override
@@ -69,6 +61,9 @@ public class UserServiceImpl implements UserService{
         }
         User user = token.getUser();
         Calendar calendar = Calendar.getInstance();
+        System.out.println("calendar time: " + calendar.getTime().getMinutes());
+        System.out.println("token time: " + token.getExpirationTime().getMinutes());
+        System.out.println("time difference: " + (token.getExpirationTime().getTime()- calendar.getTime().getTime()));
         if ((token.getExpirationTime().getTime()- calendar.getTime().getTime()) <= 0){
             confirmationTokenRepository.delete(token);
             userRepository.delete(user);

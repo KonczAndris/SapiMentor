@@ -9,8 +9,6 @@ import java.util.List;
 public interface UserService{
     List<User> getUsers();
     User save(UserRegistrationDto registrationDto);
-
     void saveUserVerificationToken(User theUser, String verificationToken);
-
     String validateToken(String theToken);
 }

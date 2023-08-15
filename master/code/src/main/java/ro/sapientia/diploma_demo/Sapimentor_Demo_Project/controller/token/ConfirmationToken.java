@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,7 +20,7 @@ public class ConfirmationToken {
     private Long Id;
     private String token;
     private Date expirationTime;
-    private static final int EXPIRATION_HOUR_TIME = 3;
+
     private static final int EXPIRATION_MINUTE_TIME = 15;
 
     @ManyToOne
@@ -44,7 +42,8 @@ public class ConfirmationToken {
     public Date getTokenExpirationTime() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(new Date().getTime());
-        calendar.add(Calendar.HOUR, EXPIRATION_HOUR_TIME);
+        //elvileg nem kell csak a mysql-ben irja be rosszul az idot
+        //calendar.add(Calendar.HOUR, EXPIRATION_HOUR_TIME);
         calendar.add(Calendar.MINUTE, EXPIRATION_MINUTE_TIME);
         return new Date(calendar.getTime().getTime());
     }

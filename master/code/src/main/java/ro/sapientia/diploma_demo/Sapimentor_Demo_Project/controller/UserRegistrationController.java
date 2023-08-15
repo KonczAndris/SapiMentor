@@ -55,7 +55,7 @@ public class UserRegistrationController {
         return "redirect:/register?success";
     }
 
-    @Async
+
     public void sendRegistrationCompleteEventAsync(User user, HttpServletRequest request) {
         eventPublisher.publishEvent(new RegistrationCompleteEvent(user, appUrl(request)));
     }
@@ -63,7 +63,7 @@ public class UserRegistrationController {
     @GetMapping("/verifyEmail")
     public String verifyEmail(@RequestParam("token") String token){
         ConfirmationToken theToken = confirmationTokenRepository.findByToken(token);
-        if (theToken.getUser().isEnabled()){
+        if (theToken == null || theToken.getUser().isEnabled()) {
             return "redirect:/login?alreadyVerified";
         }
         String verificationResult = userService.validateToken(token);
