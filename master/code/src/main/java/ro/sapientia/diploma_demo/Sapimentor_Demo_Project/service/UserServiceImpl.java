@@ -2,7 +2,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.var;
+//import lombok.experimental.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -61,9 +61,9 @@ public class UserServiceImpl implements UserService{
         }
         User user = token.getUser();
         Calendar calendar = Calendar.getInstance();
-        System.out.println("calendar time: " + calendar.getTime().getMinutes());
-        System.out.println("token time: " + token.getExpirationTime().getMinutes());
-        System.out.println("time difference: " + (token.getExpirationTime().getTime()- calendar.getTime().getTime()));
+//        System.out.println("calendar time: " + calendar.getTime().getMinutes());
+//        System.out.println("token time: " + token.getExpirationTime().getMinutes());
+//        System.out.println("time difference: " + (token.getExpirationTime().getTime()- calendar.getTime().getTime()));
         if ((token.getExpirationTime().getTime()- calendar.getTime().getTime()) <= 0){
             confirmationTokenRepository.delete(token);
             userRepository.delete(user);

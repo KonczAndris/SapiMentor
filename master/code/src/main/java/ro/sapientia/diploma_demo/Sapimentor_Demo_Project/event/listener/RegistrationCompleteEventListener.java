@@ -2,8 +2,9 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.event.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
+//import lombok.var;
 import org.springframework.context.ApplicationListener;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -15,7 +16,6 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserService;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Slf4j
@@ -26,7 +26,7 @@ public class RegistrationCompleteEventListener
 
     private final UserService userService;
     private final JavaMailSenderImpl mailSender;
-    private  User user;
+    private User user;
 
     @Override
     public void onApplicationEvent(RegistrationCompleteEvent registrationCompleteEvent) {
@@ -59,11 +59,30 @@ public class RegistrationCompleteEventListener
     public void sendVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
         String subject = "Email Confirmation";
         String senderName = "SapiMentor Registration Portal Service";
-        String mailContent = "<p> Hi, "+ user.getFirst_Name()+ ", </p>"+
+        String mailContent = "<p> Hi "+ user.getFirst_Name()+ ", </p>"+
                 "<p>Thank you for registering with us,"+"" +
                 "Please, follow the link below to complete your registration.</p>"+
                 "<a href=\"" +url+ "\">Verify your email to activate your account</a>"+
                 "<p> Thank you, <br> SapiMentor Registration Portal Service";
+        emailMessage(subject, senderName, mailContent, mailSender, user);
+    }
+
+    @Async
+    public void sendPasswordResetVerificationEmail(User user,String url) throws MessagingException, UnsupportedEncodingException {
+        String subject = "Password Reset";
+        String senderName = "SapiMentor Forgot Password Portal Service";
+        String mailContent = "<p> Hi "+ user.getFirst_Name()+ ", </p>"+
+                "<p><b>You recently requested to reset your password,</b>"+"" +
+                "<br>Please, follow the link below to complete the action.</p>"+
+                "<a href=\"" +url+ "\">Reset password</a>"+
+                "<p> Thank you, <br> SapiMentor Forgot Password Portal Service";
+        emailMessage(subject, senderName, mailContent, mailSender, user);
+    }
+
+
+    private static void emailMessage(String subject, String senderName,
+                                     String mailContent, JavaMailSender mailSender, User user)
+            throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();
         var messageHelper = new MimeMessageHelper(message);
         messageHelper.setFrom("sapimentor@gmail.com", senderName);
@@ -72,4 +91,6 @@ public class RegistrationCompleteEventListener
         messageHelper.setText(mailContent, true);
         mailSender.send(message);
     }
+
+
 }

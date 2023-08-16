@@ -11,6 +11,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.event.RegistrationCompl
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ConfirmationTokenRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserService;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.Url;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,7 +58,7 @@ public class UserRegistrationController {
 
 
     public void sendRegistrationCompleteEventAsync(User user, HttpServletRequest request) {
-        eventPublisher.publishEvent(new RegistrationCompleteEvent(user, appUrl(request)));
+        eventPublisher.publishEvent(new RegistrationCompleteEvent(user, Url.getApplicationUrl(request)));
     }
 
     @GetMapping("/verifyEmail")
@@ -73,7 +74,7 @@ public class UserRegistrationController {
         return "redirect:/login?verificationError";
     }
 
-    public String appUrl(HttpServletRequest request) {
-        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-    } //ezzel a fuggvennyel tudja a regisztracio utan a linket megjeleniteni
+//    public String appUrl(HttpServletRequest request) {
+//        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+//    } //ezzel a fuggvennyel tudja a regisztracio utan a linket megjeleniteni
 }
