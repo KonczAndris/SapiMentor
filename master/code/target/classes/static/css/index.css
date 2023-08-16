@@ -11,26 +11,26 @@
         opacity: 1;
         transform: rotateX(0);
     }
-  }
+}
 
 .animate {
     animation: transitionIn 0.75s;
-  }
+}
 
 .left::-webkit-scrollbar {
     width: 0;
     background: transparent;
-  }
+}
 
 body::-webkit-scrollbar {
     width: 0;
     background: transparent;
-  }
+}
 
 .right::-webkit-scrollbar {
     width: 0;
     background: transparent;
-  }
+}
 
 body {
     display: flex;
@@ -46,31 +46,33 @@ body {
     overflow: hidden;
     margin: 0;
     padding: 0;
+    padding-top: 1%;
 }
-  
+
 .center {
     display: flex;
     position: fixed;
-    justify-content: center;
+    justify-content: start;
     width: 100%;
     height: 100%;
     background: transparent;
-    animation: transitionIn 0.75s; 
- }
-  
+    animation: transitionIn 0.75s;
+    padding-top: 5px;
+}
+
 .left{
-    width: 25%;
-    overflow-y: scroll;
+    width: 20%;
+    overflow-y: auto;
     overflow-x: hidden;
-    justify-content: flex-start;  
-    align-items: center;
+    justify-content: flex-start;
+    align-items: start;
     flex-direction: column;
     margin-top: 2%;
+    display: flex;
 }
 
 .right{
     margin-top: 0;
-    margin: auto;
     margin-right: 2%;
     width: 80%;
     height: 95%;
@@ -79,6 +81,7 @@ body {
     overflow-x: hidden;
     box-shadow:  2px 2px 20px rgb(10, 145, 107);
     border-radius: 50px;
+    display: flex;
 }
 
 #index-text{
@@ -87,93 +90,106 @@ body {
     margin: 25px;
     color: white;
     font-size: xx-large;
-    margin-left: 28%;
+    margin-left: 15%;
     user-select: none;
-  }
+}
 
 .form-group{
     display: flex;
-    width: 100%;
     flex-direction: column;
     align-items: baseline;
     justify-content:center;
-    position: relative;
-    margin-left: 23%;
-  }
+    margin-left: 10%;
+}
+
+.menu-function {
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+}
+
 
 .menu-function a {
     color: rgb(255, 255, 255);
     text-decoration: none;
-    font-size: 140%;
-    transition: background-color 0.2s;
+    font-size: 120%;
+    transition: font-size 0.2s;
     transition: box-shadow 0.2s;
     border-radius: 50px;
     padding: 15px 15px;
-  }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .menu-function a:hover {
     background-color: rgb(10, 145, 107);
-    color: #ffffff; 
+    color: #ffffff;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-  }
+    width: auto;
+}
 
 .menu-icon {
-    width: 9%;
+    width: 30px;
     margin-right: 10px;
     vertical-align:middle;
-  }  
+}
 
 .taskbar {
-    display: none;
-    background-color: transparent;
-    width: 10%;
     position: fixed;
-    height: 75%;
-    left: 0;
+    top: 0;
+    width: 100%;
+    display: flex;
     justify-content: center;
-    align-items: center;
-  } 
+    background-color: transparent;
+    z-index: 1000;
+    display: none;
+}
 
 .back-icon {
-    width: 70%;
-    margin: 2px;
-    margin-right: 10px;
-    margin-left: 10px;
+    max-width: 55px;
+    margin-top: -15px;
     align-self: center;
-    transition: box-shadow 0.2s;
-    padding: 15%;
+    transition: box-shadow 0.2s, transform 0.2s; /* Added transform transition */
+    padding: 10%;
     border-radius: 50px;
     overflow: hidden;
-    background-color: rgb(50, 189, 149);
     border: 3px solid white;
-  }
-  
+    cursor: pointer;
+    opacity: 0.5;
+}
+
 .back-icon:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5); 
-    background-color: rgb(10, 145, 107);
-  }
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    opacity: 1;
+}
 
 .back-icon:active {
     transform: scale(0.95);
-  }
+}
 
 @media (max-width: 1000px) {
     .center {
-      width: 100%;
-      flex-direction: column;
+        width: 100%;
+        flex-direction: column;
+        margin-top: 90px;
     }
     .right{
         display: flex;
         width: 100%;
         margin: 0;
-        padding-left: 10%;
         border-radius: 0;
     }
     .left {
-      display: flex;
-      width: 75%;
-      text-align: start;
-      padding-left: 10%;
+        display: flex;
+        width: 100%;
+        text-align: start;
+        padding-left: 10%;
+        padding-bottom: 10%;
+    }
+
+    .form-group{
+        margin-left: 0;
     }
 
     #index-text {
@@ -182,16 +198,16 @@ body {
         margin: 25px;
         color: white;
         font-size: xx-large;
-        margin-left: 0; 
-        margin-right: 18%; 
+        margin-left: 0;
+        margin-right: 18%;
         width: 50%;
-      }
-
-    .taskbar {
-      display: flex;
     }
+
     .hidden {
         display: none;
-      }
-  }
+    }
 
+    .taskbar{
+        display: flex;
+    }
+}
