@@ -15,8 +15,8 @@ import java.nio.charset.StandardCharsets;
 
 @Controller
 public class IndexController {
-    @GetMapping("/profile")
-    public String showProfilePage() {
-        return "profile"; // This maps to the "profile.html" template
-    }
+//    @GetMapping("/profile")
+//    public String showProfilePage() {
+//        return "profile"; // This maps to the "profile.html" template
+//    }
 }

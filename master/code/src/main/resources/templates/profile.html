@@ -57,9 +57,10 @@
 
           <div class="status-box">
             <div class="name-box">
-              <p class="first-name">FirstName</p>
+              <p class="first-name" th:text="${userRegistrationDetails.firstName}"></p>
             </div>
-            <p class="status">User</p>
+              <span class="status" th:text="${userRegistrationDetails.roles}"></span>
+
 
 
             <div class="rating">
@@ -102,7 +103,7 @@
                   <div class="detail-row">
                     <p class="detail-label">First Name:</p>
                     <input type="text" class="edit-input" id="firstName-edit" placeholder=""
-                           required autofocus="autofocus" oninput="validateFirstName()">
+                           required autofocus="autofocus" oninput="validateFirstName()" th:value="${userRegistrationDetails.firstName}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
@@ -113,7 +114,7 @@
                   <div class="detail-row">
                     <p class="detail-label">Last Name:</p>
                     <input type="text" class="edit-input" id="lastName-edit" placeholder=""
-                           required autofocus="autofocus" oninput="validateLastName()">
+                           required autofocus="autofocus" oninput="validateLastName()" th:value="${userRegistrationDetails.lastName}">
                     <div class="info-icon" data-tooltip="Tooltip text for Last Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
@@ -123,7 +124,7 @@
                 <div class="form-group-edit">
                   <div class="detail-row">
                     <p class="detail-label">Specialization:</p>
-                    <input type="text" class="edit-input" id="specialization-edit" placeholder=""
+                    <input type="text" class="edit-input" id="specialization-edit" placeholder="ex: Software Engineering"
                            required autofocus="autofocus" oninput="validateSpecialization()">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
@@ -134,7 +135,7 @@
                 <div class="form-group-edit">
                   <div class="detail-row">
                     <p class="detail-label">Year:</p>
-                    <input type="number" class="edit-input" id="year-edit" placeholder=""
+                    <input type="number" class="edit-input" id="year-edit" placeholder="ex: 3"
                            required autofocus="autofocus" oninput="validateYear()">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
@@ -145,7 +146,7 @@
                 <div class="form-group-edit">
                   <div class="detail-row">
                     <p class="detail-label">Phone:</p>
-                    <input type="text" class="edit-input" id="phone-edit" placeholder=""
+                    <input type="text" class="edit-input" id="phone-edit" placeholder="ex: 0734155510"
                            required autofocus="autofocus" oninput="validatePhone()">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
@@ -163,24 +164,24 @@
           <div class="details">
             <div class="detail-row">
               <p class="detail-label">Name:</p>
-              <p class="detail-value">FirstName</p>
-              <p class="detail-value">LastName</p>
+              <p class="detail-value" th:text="${userRegistrationDetails.firstName}"></p>
+              <p class="detail-value" th:text="${userRegistrationDetails.lastName}"></p>
             </div>
             <div class="detail-row">
               <p class="detail-label">Specialization:</p>
-              <p class="detail-value">Example</p>
+              <p class="detail-value">ex: Software Engineering</p>
             </div>
             <div class="detail-row">
               <p class="detail-label">Year:</p>
-              <p class="detail-value">3.</p>
+              <p class="detail-value">ex: 3</p>
             </div>
             <div class="detail-row">
               <p class="detail-label">E-mail:</p>
-              <p class="detail-value">example@gmail.com</p>
+              <p class="detail-value" th:text="${userRegistrationDetails.username}"></p>
             </div>
             <div class="detail-row">
               <p class="detail-label">Phone:</p>
-              <p class="detail-value">1234567890</p>
+              <p class="detail-value">ex: 0734155510</p>
             </div>
           </div>
           <!-- ABOUT INFO END -->

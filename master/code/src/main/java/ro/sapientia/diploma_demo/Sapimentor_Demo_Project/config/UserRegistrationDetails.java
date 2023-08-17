@@ -1,8 +1,10 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config;
 
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 
 import java.util.Arrays;
@@ -10,17 +12,26 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 @Data
 public class UserRegistrationDetails implements UserDetails {
     private String userName;
     private String password;
     private boolean isEnabled;
     private List<GrantedAuthority> authorities;
+    private List<String> roles;
+    private String firstName;
+    private String lastName;
 
     public UserRegistrationDetails(User user) {
         this.userName = user.getEmail();
         this.password = user.getPassword();
         this.isEnabled = user.isEnabled();
+        this.roles = user.getRoles().stream()
+                .map(Role::getName)
+                .collect(Collectors.toList());
+        this.firstName = user.getFirst_Name();
+        this.lastName = user.getLast_Name();
     }
 
     @Override
@@ -56,5 +67,9 @@ public class UserRegistrationDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+    public List<String> getRoles() {
+        return roles;
     }
 }
