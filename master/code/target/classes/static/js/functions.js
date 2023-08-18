@@ -1,3 +1,25 @@
+document.addEventListener("DOMContentLoaded", function() {
+    var h1Element = document.getElementById("index-text");
+    h1Element.addEventListener("click", function() {
+        window.location.href = "/";
+    });
+});
+
+function setupMentorModal() {
+    var mentorModal = document.getElementById("mentorModal");
+
+    var mentorBtn = document.getElementById("myMentorBtn");
+    var mentorClose = document.getElementsByClassName("close-mentor")[0];
+
+    mentorBtn.onclick = function() {
+        mentorModal.style.display = "flex";
+    };
+
+    mentorClose.onclick = function() {
+        mentorModal.style.display = "none";
+    };
+}
+
 function setupModal() {
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("myBtn");
@@ -39,10 +61,10 @@ function toggleDropdown() {
     }
 }
 
-
 function closeModalOnClickOutside() {
     var modal1 = document.getElementById("skillsModal");
     var modal2 = document.getElementById("myModal");
+    var modal3 = document.getElementById("mentorModal");
 
     window.addEventListener("click", function(event) {
         if (event.target == modal1) {
@@ -50,6 +72,9 @@ function closeModalOnClickOutside() {
         }
         if (event.target == modal2) {
             modal2.style.display = "none";
+        }
+        if (event.target == modal3) {
+            modal3.style.display = "none";
         }
     });
 }
@@ -141,6 +166,7 @@ function deleteRow(button) {
         row.remove();
     }}
 
+setupMentorModal();
 setupModal();
 setupSkillsModal();
 closeModalOnClickOutside();

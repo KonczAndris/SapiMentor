@@ -59,8 +59,40 @@
             <div class="name-box">
               <p class="first-name" th:text="${userRegistrationDetails.firstName}"></p>
             </div>
-              <span class="status" th:text="${userRegistrationDetails.roles}"></span>
 
+            <button class="status" th:text="${userRegistrationDetails.roles}" id="myMentorBtn">User</button>
+            <!-- MENTOR MODAL START -->
+            <div id="mentorModal" class="modal-mentor">
+              <div class="modal-content-mentor">
+
+                <span class="close-mentor">&times;</span>
+                <div class="details">
+                  <div class="form-group-mentor">
+                    <div class="detail-row-mentor">
+                      <div class="edit-input-mentor" id="role-edit" required>
+                        <label>
+                          <input type="radio" name="role" value="USER" required>
+                          <span class="checkbox-custom"></span>
+                          USER
+                        </label>
+                        <label>
+                          <input type="radio" name="role" value="MENTOR" required>
+                          <span class="checkbox-custom"></span>
+                          MENTOR
+                        </label>
+                        <label>
+                          <input type="radio" name="role" value="MENTEE" required>
+                          <span class="checkbox-custom"></span>
+                          MENTEE
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" id="mentor-save" class="btn btn-success">Save</button>
+              </div>
+            </div>
+            <!-- MENTOR MODAL END -->
 
 
             <div class="rating">
