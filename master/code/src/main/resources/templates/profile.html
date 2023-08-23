@@ -48,12 +48,52 @@
     <div class="profile-container">
       <div class="profile-left">
         <div class="section-profile">
-          <div class="image-container">
-            <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
-            <div class="change-icon" id="change-image-icon">
-              <img th:src="@{/img/change.png}" alt="Change Icon">
+<!--          <div class="image-container">-->
+<!--            <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">-->
+<!--            <div class="change-icon" id="change-image-icon">-->
+<!--              <img th:src="@{/img/change.png}" alt="Change Icon">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div th:if="${errorMessage}" style="color: red;">-->
+<!--            <p th:text="${errorMessage}"></p>-->
+<!--          </div>-->
+
+          <form th:action="@{/upload-profile-image}" method="post" enctype="multipart/form-data">
+            <!-- A kép megjelenítése itt -->
+            <div class="image-container">
+              <img th:if="${profileImageBase64 != ''}"
+                   th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+                   alt="Profile Image" class="profile-image"
+                   th:async="async"
+                   th:attr="data-cache='no-cache'">
+              <img th:unless="${profileImageBase64 != ''}"
+                   th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
+
+              <div class="change-icon" id="change-image-icon">
+                <label for="imageUpload">
+                  <img th:src="@{/img/change.png}" alt="Change Icon">
+                </label>
+                <input type="file" id="imageUpload" style="display: none;" accept="image/*" name="image">
+              </div>
             </div>
-          </div>
+            <button type="submit">Upload</button>
+          </form>
+
+
+
+
+
+
+<!--          <div class="image-container">-->
+<!--            <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">-->
+<!--            <div class="change-icon" id="change-image-icon">-->
+<!--              <label for="image-upload" class="upload-label">-->
+<!--                <img th:src="@{/img/change.png}" alt="Change Icon">-->
+<!--                <input type="file" id="image-upload" style="display:none">-->
+<!--              </label>-->
+<!--            </div>-->
+<!--          </div>-->
+
 
           <div class="status-box">
             <div class="name-box">
@@ -127,6 +167,7 @@
 
           <!-- ABOUT MODAL START -->
           <div id="myModal" class="modal">
+            <form id="edit-form" th:action="@{/profile/save}" method="post">
             <div class="modal-content">
               <span class="close">&times;</span>
               <div class="details">
@@ -134,7 +175,7 @@
                 <div class="form-group-edit">
                   <div class="detail-row">
                     <p class="detail-label">First Name:</p>
-                    <input type="text" class="edit-input" id="firstName-edit" placeholder=""
+                    <input type="text" class="edit-input" id="firstName-edit" placeholder="" name="firstName"
                            required autofocus="autofocus" oninput="validateFirstName()" th:value="${userRegistrationDetails.firstName}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
@@ -145,7 +186,7 @@
                 <div class="form-group-edit">
                   <div class="detail-row">
                     <p class="detail-label">Last Name:</p>
-                    <input type="text" class="edit-input" id="lastName-edit" placeholder=""
+                    <input type="text" class="edit-input" id="lastName-edit" placeholder="" name="lastName"
                            required autofocus="autofocus" oninput="validateLastName()" th:value="${userRegistrationDetails.lastName}">
                     <div class="info-icon" data-tooltip="Tooltip text for Last Name">
                       <i class="fas fa-info-circle"></i>
@@ -156,8 +197,8 @@
                 <div class="form-group-edit">
                   <div class="detail-row">
                     <p class="detail-label">Specialization:</p>
-                    <input type="text" class="edit-input" id="specialization-edit" placeholder="ex: Software Engineering"
-                           required autofocus="autofocus" oninput="validateSpecialization()">
+                    <input type="text" class="edit-input" id="specialization-edit" placeholder="ex: Software Engineering" name="specialization"
+                           required autofocus="autofocus" oninput="validateSpecialization()" th:value="${userRegistrationDetails.specialization ?: ''}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
@@ -167,8 +208,8 @@
                 <div class="form-group-edit">
                   <div class="detail-row">
                     <p class="detail-label">Year:</p>
-                    <input type="number" class="edit-input" id="year-edit" placeholder="ex: 3"
-                           required autofocus="autofocus" oninput="validateYear()">
+                    <input type="number" class="edit-input" id="year-edit" placeholder="ex: 3" name="year"
+                           required autofocus="autofocus" oninput="validateYear()" th:value="${userRegistrationDetails.year ?: ''}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
@@ -178,8 +219,8 @@
                 <div class="form-group-edit">
                   <div class="detail-row">
                     <p class="detail-label">Phone:</p>
-                    <input type="text" class="edit-input" id="phone-edit" placeholder="ex: 0734155510"
-                           required autofocus="autofocus" oninput="validatePhone()">
+                    <input type="tel" class="edit-input" id="phone-edit" placeholder="ex: 0734155510" name="phoneNumber"
+                           required autofocus="autofocus" oninput="validatePhone()" th:value="${userRegistrationDetails.phoneNumber ?: ''}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
@@ -188,9 +229,12 @@
               </div>
               <button type="submit" id="edit-save" class="btn btn-success">Save</button>
             </div>
+            </form>
             <div id="whitespace"> </div>
           </div>
           <!-- ABOUT MODAL END -->
+
+
           <!-- ABOUT INFO START -->
           <div class="divider"></div>
           <div class="details">
@@ -201,11 +245,11 @@
             </div>
             <div class="detail-row">
               <p class="detail-label">Specialization:</p>
-              <p class="detail-value">ex: Software Engineering</p>
+              <p th:text="${userRegistrationDetails.specialization ?: 'ex: Software Engineering'}"></p>
             </div>
             <div class="detail-row">
               <p class="detail-label">Year:</p>
-              <p class="detail-value">ex: 3</p>
+              <p th:text="${userRegistrationDetails.year ?: 'ex: 3'}"></p>
             </div>
             <div class="detail-row">
               <p class="detail-label">E-mail:</p>
@@ -213,7 +257,7 @@
             </div>
             <div class="detail-row">
               <p class="detail-label">Phone:</p>
-              <p class="detail-value">ex: 0734155510</p>
+              <p th:text="${userRegistrationDetails.phoneNumber ?: 'ex: 0734155510'}"></p>
             </div>
           </div>
           <!-- ABOUT INFO END -->
@@ -286,7 +330,6 @@
     </div>
   </div>
 </div>
-
 <script th:src="@{/js/functions.js}"></script>
 </body>
 </html>

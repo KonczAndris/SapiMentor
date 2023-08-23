@@ -7,7 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -30,6 +32,15 @@ public class User {
     private String email;
     private String password;
     private boolean enabled = false;
+    @Column(name = "specialization")
+    private String specialization;
+    @Column(name = "year")
+    private Integer year;
+    @Column(name = "phonenumber")
+    private String phoneNumber;
+    @Column(name = "profileimage")
+    @Lob
+    private byte[] profileImage;
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -41,6 +52,9 @@ public class User {
                     name="role_id", referencedColumnName = "id")
             )
     private Collection<Role> roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Skill> skills = new ArrayList<>();
 
     public User() {
     }
@@ -116,6 +130,15 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+
+    public void setPhone(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhone() {
+        return phoneNumber;
     }
 
 }

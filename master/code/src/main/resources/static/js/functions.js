@@ -105,12 +105,13 @@ function validateSpecialization() {
     var specializationInput = document.getElementById("specialization-edit");
     var specializationValue = specializationInput.value.trim();
 
-    if (!/^[a-zA-Z]{4,20}$/.test(specializationValue)) {
+    if (!/^[a-zA-Z\s]{4,20}$/.test(specializationValue)) {
         specializationInput.classList.add("highlight");
     } else {
         specializationInput.classList.remove("highlight");
     }
 }
+
 
 function validateYear() {
     var yearInput = document.getElementById("year-edit");
@@ -127,12 +128,13 @@ function validatePhone() {
     var phoneInput = document.getElementById("phone-edit");
     var phoneValue = phoneInput.value.trim();
 
-    if (!/^\d{10}$/.test(phoneValue)){
+    if (!/^\d{10,}$/.test(phoneValue)){
         phoneInput.classList.add("highlight");
     } else {
         phoneInput.classList.remove("highlight");
     }
 }
+
 
 window.onload = function() {
     toggleDivs();

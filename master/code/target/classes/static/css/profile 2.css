@@ -1,0 +1,866 @@
+@font-face {
+    font-family: 'CustomFont';
+    src: url('../fonts/roundfont.ttf') format('truetype')}
+
+/* PROFILE CONTAINER */
+.profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgb(255, 255, 255);
+    min-height: 100vh;
+    overflow: auto;
+}
+
+.profile-container::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+/* LEFT CONTAINTER */
+
+.profile-left {
+    text-align: center;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 35%;
+    background-color: rgb(255, 255, 255);
+    flex-direction: column;
+}
+
+.image-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-image {
+    display: block;
+    width: 80%;
+    height: auto;
+    border-radius: 5%;
+}
+
+.change-icon {
+    width: 20%;
+    height: 20%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(-35%, -5%);
+    background-color: transparent;
+    padding: 2px;
+    border-radius: 10%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.5;
+}
+#change-image-icon img {
+    width: 70%;
+
+}
+
+#change-image-icon:hover {
+    opacity: 1;
+}
+
+.status-box {
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 5%;
+}
+
+.name-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-direction: column;
+}
+
+.first-name,
+.last-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.status {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0;
+    text-transform: uppercase;
+    font-size: larger;
+    font-weight: bold;
+    color: green;
+}
+
+.rating {
+    direction: rtl;
+}
+
+.rating input[type="radio"] {
+    display: none;
+}
+
+.rating label {
+    display: inline-block;
+    font-size: 1.8rem;
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.rating label:hover,
+.rating input[type="radio"]:checked~label {
+    color: gold;
+}
+
+.rating-text {
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* RIGHT CONTAINER */
+.profile-right {
+    text-align: start;
+    padding: 3%;
+    width: 80%;
+    background-color: rgb(255, 255, 255);
+    flex: 1;
+}
+
+.section {
+    max-width: 100%;
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 24px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.divider {
+    width: 100%;
+    height: 2px;
+    background-color: #000000;
+    margin-bottom: 20px;
+}
+
+.edit-button {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+    cursor: pointer;
+    margin-bottom: 1px;
+}
+
+.edit-button img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.detail-label {
+    width: 150px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.detail-value {
+    display: inline-block;
+    flex: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.detail-value+.detail-value {
+    margin-left: 5px;
+}
+
+
+/* MODAL BOXES */
+.modal, .modal-skills, .modal-mentor {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    overflow-x: scroll;
+}
+
+.modal-content, .modal-content-skills, .modal-content-mentor {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    margin-top: 5%;
+    padding: 10px;
+    border: 1px solid #888;
+    border-radius: 25px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+.modal-content::-webkit-scrollbar,
+.modal-content-skills::-webkit-scrollbar,
+.modal-content-mentor::-webkit-scrollbar{
+    width: 0;
+    background: transparent;
+}
+
+.close,
+.close-skill,
+.close-mentor{
+    color: #aaaaaa;
+    float: left;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-right: 20px;
+    margin-left: auto;
+}
+
+.close:hover,
+.close:focus,
+.close-skill:hover,
+.close-skill:focus,
+.close-mentor:hover,
+.close-mentor:focus  {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#myBtn, #mySkillBtn {
+    background: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* MENTOR MODAL BOX */
+#myMentorBtn{
+    background: transparent;
+    border:none;
+    cursor: pointer;
+}
+.modal-content-mentor{
+    width: 300px;
+}
+
+.edit-input-mentor {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.edit-input-mentor label {
+    display: flex;
+    margin: 5px;
+    font-size: large;
+    align-items: center;
+}
+.edit-input-mentor label input[type="radio"] {
+    display: none;
+}
+
+.checkbox-custom {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border: 3px solid rgb(22, 175, 132);
+    border-radius: 3px;
+    margin-right: 10px;
+    position: relative;
+}
+
+.checkbox-custom::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 12px;
+    height: 6px;
+    border: solid rgb(22, 175, 132);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+}
+.edit-input-mentor input[type="radio"]:checked + .checkbox-custom::before {
+    opacity: 1;
+}
+
+#mentor-save {
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    border-radius: 100px;
+    width: 120px;
+    max-width: 55%;
+    cursor: pointer;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: none;
+    float: right;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+#mentor-save:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(30, 214, 162);
+    border: 2px solid white;
+}
+
+.form-group-mentor{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content:center;
+    position: relative;
+}
+
+.form-group-mentor:hover .info-tooltip {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(-5px);
+    z-index: 9999;
+}
+
+.detail-row-mentor {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.detail-label-mentor {
+    width: 150px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* MENTOR MODAL BOX END*/
+
+/* ABOUT MODAL BOX */
+.edit-input {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 7px;
+    border: 2px solid rgb(0, 0, 0);
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+#edit-save {
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    border-radius: 100px;
+    width: 100px;
+    max-width: 55%;
+    cursor: pointer;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: none;
+    float: right;
+    margin-left: auto;
+    margin-right: 21%;
+}
+
+#edit-save:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(30, 214, 162);
+    border: 2px solid white;
+}
+
+.highlight {
+    background-color: #FFCCCC;
+}
+
+.info-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.info-tooltip {
+    position: absolute;
+    color: white;
+    right: -5px;
+    top: -10px;
+    background-color: rgb(50, 189, 149);
+    padding: 5px 10px; /* Adjust padding to provide space around the text */
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap; /* Prevent line breaks */
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s, transform 0.2s; /* Added transform */
+    align-self: flex-start; /* Align tooltip to the top of the detail row */
+    margin-left: auto;
+
+}
+
+.form-group-edit{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content:center;
+    position: relative;
+}
+
+.form-group-edit:hover .info-tooltip {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(-5px);
+    z-index: 9999;
+}
+
+.detail-row-edit {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.detail-label-edit {
+    width: 150px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* SKILLS MODAL BOX */
+.dropdown-container{
+    display: flex;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 3%;
+}
+
+.dropbtn{
+    display: flex;
+    width: 100%;
+    min-width: 140px;
+    border: none;
+    text-align: center;
+    justify-content: center;
+    font-size: 15px;
+    padding: 10px;
+    background-color: rgb(50, 189, 149);
+    color: white;
+    cursor: pointer;
+    border-radius: 50px 50px 50px 50px;
+    box-sizing: border-box;
+    border: 0;
+    margin: 0;
+}
+
+.dropdown {
+    position: relative;
+    flex-grow: 1;
+    border: 0;
+}
+
+.dropdown-content {
+    display: none;
+    background-color: rgb(101, 237, 198);
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 0 0 20px 20px;
+}
+
+.dropdown-content.active {
+    display: block;
+    margin-top: -5px;
+}
+
+.dropdown-content a {
+    color: rgb(255, 255, 255);
+    padding: 10px 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    font-weight: bold;
+}
+
+.skills-input {
+    width: 100%;
+    min-width: 140px;
+    border-radius: 7px;
+    border: 2px solid rgb(0, 0, 0);
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 0;
+    margin-left: 20px;
+}
+
+#skills-add {
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    border-radius: 100px;
+    width: 100%;
+    min-width: 70px;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    margin: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#skills-add:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(30, 214, 162);
+    border: 2px solid white;
+}
+
+.modal-content-skills{
+    min-height: 400px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#skills-save {
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    border-radius: 100px;
+    width: 100px;
+    max-width: 55%;
+    cursor: pointer;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: none;
+    float: right;
+    margin-left: auto;
+    margin-right: 10%;
+}
+
+#skills-save:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(30, 214, 162);
+    border: 2px solid white;
+}
+
+/* TABLE IN SKILLS MODAL */
+.table-container {
+    max-height: 350px;
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 10px;
+}
+
+.table-container::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid #5c5c5c;
+}
+
+tr:hover {
+    background-color: rgb(208, 233, 226);
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+.scrollable-column {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.topic-tag{
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    border-radius: 100px;
+    cursor: pointer;
+    padding: 6px;
+    border: none;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2%;
+    text-align: center;
+}
+
+.topic-tag:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: #f07373;
+}
+
+.func-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.add-button, .delete-button {
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    border-radius: 100px;
+    width: 100%;
+    min-width: 70px;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    margin: 0;
+}
+
+.delete-button{
+    background-color: rgb(234, 80, 80);
+}
+
+.add-button:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(30, 214, 162);
+    border: 2px solid white;
+}
+
+.delete-button:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: #f07373;
+    border: 2px solid white;
+}
+
+/* TABLE IN SKILLS MODAL END */
+
+@media (max-width: 450px) {
+    .info-tooltip {
+        position: absolute;
+        color: white;
+        right: -55px;
+        top: 40px;}
+
+    .close, .close-skill {
+        position: relative;
+        color: #aaaaaa;
+        float: left;
+        font-size: 28px;
+        font-weight: bold;
+
+        margin-left: auto;
+    }
+
+    .detail-row {
+        flex-direction: column;
+    }
+
+    .modal-content, .modal-content-skills {
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+    .dropdown-container {
+        flex-direction: column;
+    }
+
+    .dropbtn {
+        margin: 0;
+        margin-bottom: 5%;
+    }
+
+    .skills-input {
+        width: 100%;
+        min-width: 140px;
+        border-radius: 7px;
+        border: 2px solid rgb(0, 0, 0);
+        box-sizing: border-box;
+        padding: 10px;
+        margin: 0;
+    }
+
+    .skills-add {
+        margin: 10px 0;
+    }
+
+    #skills-add {
+        color: rgb(255, 255, 255);
+        background-color: rgb(22, 175, 132);
+        border-radius: 100px;
+        width: 100%;
+        min-width: 70px;
+        cursor: pointer;
+        padding: 10px;
+        border: none;
+        margin: 10px 0;
+    }
+
+    .dropdown-content.active {
+        display: block;
+        margin-top: -10px;
+    }
+}
+
+@media (max-width: 1000px) {
+
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0;
+    }
+
+    .profile-right{
+        margin-left: -7%;
+
+    }
+
+    .section-profile{
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        margin-right: 0 !important;
+    }
+
+    .section{
+        margin: 0;
+        box-shadow: none;
+    }
+    @media (max-width: 600px) {
+        .section-profile{
+            display: flex;
+            width: 90%;
+            flex-direction: column;
+        }
+        .func-buttons {
+            display: block;
+            gap: 5px;
+        }
+
+        .add-button, .delete-button {
+            margin: 4%;
+            max-width: 60%;
+        }
+    }
+
+    .profile-right-box{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .status-box{
+        width: 100%;
+        margin: 0;
+    }
+
+    .image-container{
+        width: 100%;
+    }
+
+    .profile-right,
+    .profile-left {
+        padding-top: 2%;
+        padding-bottom: 2%;
+        width: 100%;
+        background-color: rgb(255, 255, 255);
+        box-sizing: border-box;
+        margin-right: -5%;
+    }
+
+    .detail-row{
+        align-items: start;
+    }
+
+    .profile-left {
+        margin-top: 5%;
+        padding: 3%;
+        max-width: 65%;
+        background-color: rgb(255, 255, 255);
+    }
+
+    .rating{
+        display: flex;
+        justify-content: center;
+    }
+
+    .modal-content, .modal-content-skills, .modal-content-mentor {
+        margin-top: 15%;
+    }
+
+}
+
+@-webkit-keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}

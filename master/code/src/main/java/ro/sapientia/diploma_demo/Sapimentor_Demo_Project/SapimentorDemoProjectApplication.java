@@ -9,7 +9,7 @@ public class SapimentorDemoProjectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SapimentorDemoProjectApplication.class, args);
-		System.out.println("Hello World!");
+		System.out.println("Run Successfully!");
 	}
 
 }
