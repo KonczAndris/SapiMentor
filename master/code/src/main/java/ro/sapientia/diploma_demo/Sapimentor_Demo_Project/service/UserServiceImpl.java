@@ -2,7 +2,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 
 import lombok.RequiredArgsConstructor;
-//import lombok.experimental.var;
+
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,7 +14,6 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ConfirmationTokenRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
-
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 import java.awt.image.BufferedImage;
@@ -33,8 +32,12 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    //private static final long MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2 MB
-    private static final long MAX_IMAGE_SIZE = 10 * 1024; // 10 KB
+
+    //Ezzel tudod beallitani hogy mekkora legyen a maximalis meret amit feltolthet a felhasznalo
+    private static final long MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2 MB
+    //private static final long MAX_IMAGE_SIZE = 10 * 1024; // 10 KB
+    //private static final long MAX_IMAGE_SIZE = 20 * 1024; // 20 KB
+    //private static final long MAX_IMAGE_SIZE = 40 * 1024; // 40 KB
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, ConfirmationTokenRepository confirmationTokenRepository) {
@@ -72,9 +75,6 @@ public class UserServiceImpl implements UserService{
         }
         User user = token.getUser();
         Calendar calendar = Calendar.getInstance();
-//        System.out.println("calendar time: " + calendar.getTime().getMinutes());
-//        System.out.println("token time: " + token.getExpirationTime().getMinutes());
-//        System.out.println("time difference: " + (token.getExpirationTime().getTime()- calendar.getTime().getTime()));
         if ((token.getExpirationTime().getTime()- calendar.getTime().getTime()) <= 0){
             confirmationTokenRepository.delete(token);
             userRepository.delete(user);
@@ -175,12 +175,20 @@ public class UserServiceImpl implements UserService{
 //        }
 //    }
 
-    public void uploadProfileImage(String email, MultipartFile image) {
+    public String uploadProfileImage(String email, MultipartFile image) {
         User user = userRepository.findByEmail(email);
-        if (user != null && !image.isEmpty() && image.getSize() <= MAX_IMAGE_SIZE) {
-            try {
-                byte[] originalImageBytes = image.getBytes();
+        if (user != null && !image.isEmpty() ) {
 
+            try {
+                System.out.println("Image size: " + image.getSize());
+                System.out.println("MAX_IMAGE_SIZE: " + MAX_IMAGE_SIZE);
+                //A regi verzional ez a sor nem kell !!!!
+                if (image.getSize() > MAX_IMAGE_SIZE) {
+                    return "The uploaded image is too large. Please choose a smaller image.";
+                }
+
+
+                byte[] originalImageBytes = image.getBytes();
                 // Skálázd a képet a megadott méretekre
                 BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
                 BufferedImage scaledImage = Thumbnails.of(originalImage)
@@ -192,33 +200,15 @@ public class UserServiceImpl implements UserService{
                 ImageIO.write(scaledImage, "jpg", baos);
                 byte[] scaledImageBytes = baos.toByteArray();
 
+
                 user.setProfileImage(scaledImageBytes);
                 userRepository.save(user);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //catch (IllegalArgumentException e) {
-//                // Beállítod az üzenetet, hogy túl nagy a kép mérete
-//                model.addAttribute("errorMessage", "The uploaded image is too large. Please choose a smaller image.");
-//            }
+
         }
+        //A regi verzional ez a sor nem kell !!!!
+        return null;
     }
-
-
-//    //bejelekezesnel kell
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user = userRepository.findByEmail(username);
-//        if(user == null || !user.isEnabled()) {
-//            throw new UsernameNotFoundException("Invalid username or password.");
-//        }
-//        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
-//    }
-//
-//    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
-//        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-//    }
-
-
-
 }

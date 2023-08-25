@@ -54,9 +54,13 @@
 <!--              <img th:src="@{/img/change.png}" alt="Change Icon">-->
 <!--            </div>-->
 <!--          </div>-->
-<!--          <div th:if="${errorMessage}" style="color: red;">-->
-<!--            <p th:text="${errorMessage}"></p>-->
-<!--          </div>-->
+
+          <!--/*@thymesVar id="errorMessage" type=""*/-->
+          <!--A hibaüzenet megjelenítése itt-->
+          <!--A regi verzioban ez nem kell-->
+          <div style="color: red;">
+            <p th:text="${errorMessage}"></p>
+          </div>
 
           <form th:action="@{/upload-profile-image}" method="post" enctype="multipart/form-data">
             <!-- A kép megjelenítése itt -->
