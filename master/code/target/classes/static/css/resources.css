@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'CustomFont';
+    src: url('../fonts/roundfont.ttf') format('truetype')}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.resource-menu {
+    width: 100%;
+    height: auto;
+    border-bottom: 3px solid rgb(22, 175, 132);
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 3px solid rgb(22, 175, 132);
+}
+
+.button-container button {
+    flex-grow: 1;
+    color: rgb(25, 150, 114);
+    font-weight: bold;
+    margin: 0;
+    font-size: 100%;
+    padding: 15px;
+    border: none;
+}
+
+
+.resource-menu button:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
+.selected{
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(22, 175, 132);
+    transition: background-color 0.3s, color 0.3s;
+    cursor: default !important;
+}
+
+
+.divider {
+    clear: both;
+    width: 100%;
+    height: 2px;
+    background-color: #000000;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 600px) {
+    .button-container {
+        display: none;
+    }
+
+
+}

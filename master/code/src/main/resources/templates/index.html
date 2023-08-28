@@ -10,33 +10,32 @@
 <div class="taskbar"> <p class="menu-function">
     <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p> </div>
 
-  <div class="center">
-
+<div class="center">
     <div class="left hidden">
         <h1 id="index-text">SapiMentor</h1>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/profile"> <img th:src="@{/img/profile.png}" alt="Icon" class="menu-icon"> Profile</a>
+                <a href="/" th:href="@{/profile}"> <img th:src="@{/img/profile.png}" alt="Icon" class="menu-icon"> Profile</a>
         </div>
         <div class="form-group">
             <p class="menu-function">
-             <a href="/my-group"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
-        </div>
-        <div class="form-group">
-            <p class="menu-function"> 
-                 <a href="/topics"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
-        </div>
-        <div class="form-group">
-            <p class="menu-function"> 
-                 <a href="/resource"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resource</a> </p>
-        </div>
-        <div class="form-group">
-            <p class="menu-function"> 
-                 <a href="/settings"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon"> Settings</a> </p>
+                <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
         </div>
         <div class="form-group">
             <p class="menu-function">
-                 <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
+                <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
+        </div>
+        <div class="form-group">
+            <p class="menu-function">
+                <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resource</a> </p>
+        </div>
+        <div class="form-group">
+            <p class="menu-function">
+                <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon"> Settings</a> </p>
+        </div>
+        <div class="form-group">
+            <p class="menu-function">
+                <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
         </div>
 
     </div>
