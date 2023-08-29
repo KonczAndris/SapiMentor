@@ -1,31 +1,29 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
 @Entity
-public class Skill {
+public class Topic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String skill;
-    @ManyToOne
-    @JoinColumn(name = "topic_id")
-    private Topic topic;
+    private String topic;
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+    private List<Skill> skills;
 
-    public Skill(String skill, Topic topic) {
-        this.skill = skill;
+    public Topic(String topic) {
         this.topic = topic;
+        this.skills = new ArrayList<>();
     }
 
-    public Skill() {
+    public Topic() {
 
     }
 }

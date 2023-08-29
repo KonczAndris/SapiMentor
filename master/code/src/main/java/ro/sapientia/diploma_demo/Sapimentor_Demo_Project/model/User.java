@@ -2,7 +2,6 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,7 +9,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 
 //megkerdezni chat-tol hogy ez pontosan miaz
@@ -54,7 +52,7 @@ public class User {
     private Collection<Role> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Skill> skills = new ArrayList<>();
+    private List<Profile_Topics> skills = new ArrayList<>();
 
     public User() {
     }

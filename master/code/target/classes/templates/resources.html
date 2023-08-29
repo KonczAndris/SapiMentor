@@ -34,7 +34,7 @@
         </div>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/" th:href="@{/resource}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resource</a> </p>
+                <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resource</a> </p>
         </div>
         <div class="form-group">
             <p class="menu-function">
@@ -55,6 +55,13 @@
                 <button id="diplomaTheses"> DIPLOMA THESES</button>
             </div>
 
+            <div class="dropdown">
+                <button class="dropbtn">RESOURCES</button>
+                <div class="dropdown-content">
+                    <a id="examExamplesDrop">EXAM EXAMPLES</a>
+                    <a id="diplomaThesesDrop">DIPLOMA THESES</a>
+                </div>
+            </div>
 
         </div>
         <!-- MENU END START-->
@@ -62,8 +69,6 @@
 </div>
 
 <script th:src="@{/js/functions.js}"></script>
-<script th:src="@{/js/resources.js}"></script>
-
 </body>
 
 </html>
