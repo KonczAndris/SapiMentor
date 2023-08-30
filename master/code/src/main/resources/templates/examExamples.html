@@ -50,16 +50,16 @@
         <!-- MENU BAR START-->
         <div class="resource-menu">
             <div class="button-container">
-                <button id="resources"> RESOURCES</button>
-                <button class="selected"> EXAM EXAMPLES</button>
-                <button id="diplomaTheses"> DIPLOMA THESES</button>
+                <a id="resources" th:href="@{/resources}"> RESOURCES</a>
+                <a class="selected" th:href="@{/resources/examexamples}"> EXAM EXAMPLES</a>
+                <a id="diplomaTheses" th:href="@{/resources/diplomatheses}"> DIPLOMA THESES</a>
             </div>
 
             <div class="dropdown">
                 <button class="dropbtn">EXAM EXAMPLES</button>
                 <div class="dropdown-content">
-                    <a id="resourcesDrop">RESOURCES</a>
-                    <a id="diplomaThesesDrop">DIPLOMA THESES</a>
+                    <a id="resourcesDrop" th:href="@{/resources}">RESOURCES</a>
+                    <a id="diplomaThesesDrop" th:href="@{/resources/diplomatheses}">DIPLOMA THESES</a>
                 </div>
             </div>
 

@@ -9,22 +9,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topic;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserServiceImpl;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.Base64;
+import java.util.List;
 
 @Controller
 public class ProfileController {
     private final UserRepository userRepository;
     private final UserServiceImpl userService;
+    private final TopicService topicService;
 
     @Autowired
-    public ProfileController(UserRepository userRepository, UserServiceImpl userService) {
+    public ProfileController(UserRepository userRepository, UserServiceImpl userService, TopicService topicService) {
         this.userRepository = userRepository;
         this.userService = userService;
+        this.topicService = topicService;
     }
 
     @GetMapping("/profile")
@@ -37,6 +42,9 @@ public class ProfileController {
 
         UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
         //System.out.println(userRegistrationDetails);
+
+        // Itt lekérem a témákat a service segítségével
+        List<Topic> topics = topicService.getAllTopics();
 
         //Profil kep megjelenitese
         // A profil kép byte tömbje
@@ -54,6 +62,9 @@ public class ProfileController {
         } else {
             model.addAttribute("profileImageBase64", "");
         }
+
+        // A témákat hozzáadod a modellhez
+        model.addAttribute("topics", topics);
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
 
         return "profile";

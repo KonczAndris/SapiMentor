@@ -192,7 +192,7 @@ public class UserServiceImpl implements UserService{
                 // Skálázd a képet a megadott méretekre
                 BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
                 BufferedImage scaledImage = Thumbnails.of(originalImage)
-                        .size(500, 500)
+                        .size(400, 400)
                         .asBufferedImage();
 
                 // Állítsd be a kimeneti fájltípust (pl. JPEG)

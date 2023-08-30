@@ -20,7 +20,7 @@ body {
     border-bottom: 3px solid rgb(22, 175, 132);
 }
 
-.button-container button {
+.button-container a {
     flex-grow: 1;
     color: rgb(25, 150, 114);
     font-weight: bold;
@@ -31,7 +31,7 @@ body {
 }
 
 
-.resource-menu button:hover {
+.resource-menu a:hover {
     color: rgb(255, 255, 255);
     background-color: rgb(22, 175, 132);
     transition: background-color 0.3s, color 0.3s;

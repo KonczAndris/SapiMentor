@@ -283,9 +283,7 @@
                 <div class="dropdown">
                   <button class="dropbtn" onclick="toggleDropdown()">Choose a topic</button>
                   <div class="dropdown-content" id="myDropdown">
-                    <a href="#">Informatics</a>
-                    <a href="#">Languages</a>
-                    <a href="#">Engineering</a>
+                    <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"></a>
                   </div>
                 </div>
                 <input type="text" class="skills-input" id="topic-input" placeholder="Selected Topic"
