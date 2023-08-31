@@ -62,6 +62,41 @@ function setupUploadModal() {
     }
 }
 
+function toggleKeywordsRow() {
+    const keywordsRow = document.querySelector('.tr-keywords');
+    keywordsRow.style.display = (keywordsRow.style.display === 'none' || keywordsRow.style.display === '') ? 'table-row' : 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const addButton = document.querySelector('.add-button');
+    addButton.addEventListener('click', toggleKeywordsRow);
+});
+
+function selectTopic(topic) {
+    const topicInput = document.getElementById('topic-input');
+    topicInput.value = topic.textContent;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const topicLinks = document.querySelectorAll('.dropdown-content a');
+
+    topicLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the link from navigating
+            selectTopic(link);
+        });
+    });
+});
+
+function selectTag(tag) {
+    tag.classList.add("topic-tag-display-selected");
+}
+
+function closeRow(button) {
+    const row = button.closest('tr'); // Find the closest parent row element
+    row.style.display = 'none'; // Hide the row
+}
+
 function toggleDropdown() {
     var dropdownContent = document.getElementById("myDropdown");
     dropdownContent.classList.toggle("active");

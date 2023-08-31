@@ -314,7 +314,7 @@
                   </div>
                 </div>
                 <input type="text" class="skills-input" id="topic-input" placeholder="Selected Topic"
-                       required autofocus="autofocus">
+                       required autofocus="autofocus" readonly >
                 <button type="submit" id="skills-add" class="btn btn-success">Add</button>
               </div>
               <div class="divider"></div>
@@ -340,6 +340,28 @@
                     </td>
                   </tr>
 
+                  <tr class="tr-keywords">
+                    <td colspan="2">
+                      <div class="topic-tag-display" onclick="selectTag(this)">C++ </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">Python </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">Java </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">HTML </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">CSS </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">Haskell </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">C++ </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">Python </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">Java </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">HTML </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">CSS </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">Haskell </div>
+                    </td>
+                    <td>
+                      <div class="func-buttons">
+                        <button class="add-button">Save</button>
+                        <button class="delete-button" onclick="closeRow(this)">Cancel</button>
+                      </div>
+                  </tr>
+
                   </tbody>
                 </table>
               </div>
@@ -356,8 +378,8 @@
               <tr>
                 <td> Informatics</td>
                 <td class="scrollable-column">
-                  <div class="topic-tag-display">Tag1 </div>
-                  <div class="topic-tag-display" >C++ </div>
+                  <div class="topic-tag-profile">Tag1 </div>
+                  <div class="topic-tag-profile" >C++ </div>
                 </td>
               </tr>
               </tbody>

@@ -707,7 +707,7 @@ table tr:last-child td {
     text-align: center;
 }
 
-.topic-tag-display{
+.topic-tag-profile{
     display: inline-block;
     color: rgb(255, 255, 255);
     background-color: rgb(22, 175, 132);
@@ -718,6 +718,35 @@ table tr:last-child td {
     margin-right: 2px;
     margin-top: 2%;
     text-align: center;
+}
+
+.tr-keywords{
+    display: none;
+}
+
+.topic-tag-display{
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    border-radius: 100px;
+    cursor: pointer;
+    padding: 6px;
+    border: none;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2%;
+    text-align: center;
+    opacity: 0.5;
+}
+
+.topic-tag-display-selected{
+    opacity: 1;
+}
+
+.topic-tag-display:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(22, 175, 132);
+    opacity:1;
 }
 
 .topic-tag:hover {
