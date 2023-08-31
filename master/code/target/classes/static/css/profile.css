@@ -52,7 +52,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    transform: translate(-35%, -5%);
+    transform: translate(0%, -5%);
     background-color: transparent;
     padding: 2px;
     border-radius: 10%;
@@ -216,7 +216,7 @@ h2 {
 
 
 /* MODAL BOXES */
-.modal, .modal-skills, .modal-mentor {
+.modal, .modal-skills, .modal-mentor, .modal-upload {
     display: none;
     position: fixed;
     z-index: 1;
@@ -230,7 +230,7 @@ h2 {
     overflow-x: scroll;
 }
 
-.modal-content, .modal-content-skills, .modal-content-mentor {
+.modal-content, .modal-content-skills, .modal-content-mentor, .modal-content-upload {
     position: relative;
     background-color: #fefefe;
     margin: auto;
@@ -254,14 +254,16 @@ h2 {
 
 .modal-content::-webkit-scrollbar,
 .modal-content-skills::-webkit-scrollbar,
-.modal-content-mentor::-webkit-scrollbar{
+.modal-content-mentor::-webkit-scrollbar,
+.modal-content-upload::-webkit-scrollbar{
     width: 0;
     background: transparent;
 }
 
 .close,
 .close-skill,
-.close-mentor{
+.close-mentor,
+.close-upload{
     color: #aaaaaa;
     float: left;
     font-size: 28px;
@@ -276,7 +278,9 @@ h2 {
 .close-skill:hover,
 .close-skill:focus,
 .close-mentor:hover,
-.close-mentor:focus  {
+.close-mentor:focus,
+.close-upload:hover,
+.close-upload:focus{
     color: #000;
     text-decoration: none;
     cursor: pointer;
@@ -288,6 +292,47 @@ h2 {
     margin: 0;
     padding: 0;
 }
+
+/* UPLOAD MODAL BOX */
+
+.modal-content-upload{
+    width: 400px;
+}
+
+.upload-buttons{
+    width: 100%;
+    justify-content: center;
+    display: inline-flex;
+    margin-top: 2%;
+    padding: none;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+#upload-save, #upload-upload {
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    border-radius: 100px;
+    max-width: 150px;
+    min-width: 120px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: none;
+    float: right;
+    margin: 3%;
+    font-size:medium;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+#upload-save:hover, #upload-upload:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(30, 214, 162);
+    border: 2px solid white;
+}
+
+/* UPLOAD MODAL BOX */
 
 /* MENTOR MODAL BOX */
 #myMentorBtn{
@@ -804,6 +849,13 @@ table tr:last-child td {
         }
     }
 
+    @media (max-width: 400px) {
+        .upload-buttons{
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
     .profile-right-box{
         display: flex;
         flex-direction: column;
@@ -844,8 +896,12 @@ table tr:last-child td {
         justify-content: center;
     }
 
-    .modal-content, .modal-content-skills, .modal-content-mentor {
+    .modal-content, .modal-content-skills, .modal-content-mentor, .modal-content-upload  {
         margin-top: 15%;
+    }
+
+    .modal-content-upload .profile-image{
+        width: 75%;
     }
 
 }

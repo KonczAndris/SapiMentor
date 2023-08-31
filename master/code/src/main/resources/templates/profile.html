@@ -62,7 +62,6 @@
             <p th:text="${errorMessage}"></p>
           </div>
 
-          <form th:action="@{/upload-profile-image}" method="post" enctype="multipart/form-data">
             <!-- A kép megjelenítése itt -->
             <div class="image-container">
               <img th:if="${profileImageBase64 != ''}"
@@ -74,18 +73,38 @@
                    th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
 
               <div class="change-icon" id="change-image-icon">
-                <label for="imageUpload">
                   <img th:src="@{/img/change.png}" alt="Change Icon">
-                </label>
-                <input type="file" id="imageUpload" style="display: none;" accept="image/*" name="image">
               </div>
             </div>
-            <button type="submit">Upload</button>
-          </form>
 
+            <!-- UPLOAD MODAL START -->
+            <div id="uploadModal" class="modal-upload">
+              <div class="modal-content-upload">
+                <span class="close-upload">&times;</span>
 
+                <div class="image-container">
+                  <img th:if="${profileImageBase64 != ''}"
+                       th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+                       alt="Profile Image" class="profile-image"
+                       th:async="async"
+                       th:attr="data-cache='no-cache'">
+                  <img th:unless="${profileImageBase64 != ''}"
+                       th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
+                </div>
 
+                <div class="upload-buttons">
 
+                  <div class="btn btn-success" id="upload-upload">
+                    <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"> Select
+                  </div>
+                  <form th:action="@{/upload-profile-image}" method="post" enctype="multipart/form-data">
+                    <input type="file" id="imageUpload" style="display: none;" accept="image/*" name="image">
+                    <button type="submit" id="upload-save" class="btn btn-success">Upload</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- UPLOAD MODAL END -->
 
 
 <!--          <div class="image-container">-->

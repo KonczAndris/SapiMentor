@@ -49,6 +49,19 @@ function setupSkillsModal() {
     }}
 }
 
+function setupUploadModal() {
+    var modal = document.getElementById("uploadModal");
+
+    var btn = document.getElementById("change-image-icon");
+    var span = document.getElementsByClassName("close-upload")[0];
+    btn.onclick = function() {
+        modal.style.display = "flex";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+}
+
 function toggleDropdown() {
     var dropdownContent = document.getElementById("myDropdown");
     dropdownContent.classList.toggle("active");
@@ -65,6 +78,7 @@ function closeModalOnClickOutside() {
     var modal1 = document.getElementById("skillsModal");
     var modal2 = document.getElementById("myModal");
     var modal3 = document.getElementById("mentorModal");
+    var modal4 = document.getElementById("uploadModal");
 
     window.addEventListener("click", function(event) {
         if (event.target == modal1) {
@@ -75,6 +89,9 @@ function closeModalOnClickOutside() {
         }
         if (event.target == modal3) {
             modal3.style.display = "none";
+        }
+        if (event.target == modal4) {
+            modal4.style.display = "none";
         }
     });
 }
@@ -168,9 +185,14 @@ function deleteRow(button) {
         row.remove();
     }}
 
+document.getElementById('upload-upload').addEventListener('click', function() {
+    document.getElementById('imageUpload').click();
+});
+
 setupMentorModal();
 setupModal();
 setupSkillsModal();
+setupUploadModal();
 closeModalOnClickOutside();
 validateFirstName();
 validateLastName();
