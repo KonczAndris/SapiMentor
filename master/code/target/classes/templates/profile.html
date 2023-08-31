@@ -82,6 +82,12 @@
               <div class="modal-content-upload">
                 <span class="close-upload">&times;</span>
 
+                <div class="info-tooltip-upload"><p> 1x1 picture is recommanded. </p></div>
+
+                <div id="error-message" class="alert alert-danger">
+                  The size of the image is too large.
+                </div>
+
                 <div class="image-container">
                   <img th:if="${profileImageBase64 != ''}"
                        th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"

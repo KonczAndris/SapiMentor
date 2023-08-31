@@ -305,6 +305,36 @@ h2 {
     width: 400px;
 }
 
+.info-tooltip-upload {
+    text-align: center;
+    color: white;
+    transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+    margin-left: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-tooltip-upload p{
+    display: flex;
+    max-width: 80%;
+    padding: 5px; /* Modified */
+    margin-bottom:2%;
+    background-color: rgb(50, 189, 149);
+    border-radius: 30px;
+    margin-top: 0;
+}
+
+.alert-danger{
+    color: rgb(204, 80, 80);
+    text-align: center;
+    padding: 5px;
+    margin-bottom:2%;
+    font-weight: bold;
+    display: none;
+}
+
 .upload-buttons{
     width: 100%;
     justify-content: center;
