@@ -82,6 +82,12 @@
               <div class="modal-content-upload">
                 <span class="close-upload">&times;</span>
 
+                <div class="info-tooltip-upload"><p> 1x1 picture is recommanded. </p></div>
+
+                <div id="error-message" class="alert alert-danger">
+                  The size of the image is too large.
+                </div>
+
                 <div class="image-container">
                   <img th:if="${profileImageBase64 != ''}"
                        th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
@@ -124,7 +130,15 @@
               <p class="first-name" th:text="${userRegistrationDetails.firstName}"></p>
             </div>
 
-            <button class="status" th:text="${userRegistrationDetails.roles}" id="myMentorBtn">User</button>
+
+            <div id="edit-role">
+              <h2 th:text="${userRegistrationDetails.roles}" class="status"> </h2>
+              <div class="edit-button">
+              <button id="myMentorBtn"> <img th:src="@{/img/edit-profile.png}" alt="Edit Role" /> </button>
+              </div>
+            </div>
+
+
             <!-- MENTOR MODAL START -->
             <div id="mentorModal" class="modal-mentor">
               <div class="modal-content-mentor">
@@ -307,7 +321,7 @@
                   </div>
                 </div>
                 <input type="text" class="skills-input" id="topic-input" placeholder="Selected Topic"
-                       required autofocus="autofocus">
+                       required autofocus="autofocus" readonly >
                 <button type="submit" id="skills-add" class="btn btn-success">Add</button>
               </div>
               <div class="divider"></div>
@@ -333,6 +347,28 @@
                     </td>
                   </tr>
 
+                  <tr class="tr-keywords">
+                    <td colspan="2">
+                      <div class="topic-tag-display" onclick="selectTag(this)">C++ </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">Python </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">Java </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">HTML </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">CSS </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">Haskell </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">C++ </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">Python </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">Java </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">HTML </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">CSS </div>
+                      <div class="topic-tag-display" onclick="selectTag(this)">Haskell </div>
+                    </td>
+                    <td>
+                      <div class="func-buttons">
+                        <button class="add-button">Save</button>
+                        <button class="delete-button" onclick="closeRow(this)">Cancel</button>
+                      </div>
+                  </tr>
+
                   </tbody>
                 </table>
               </div>
@@ -343,6 +379,20 @@
           <!-- SKILLS MODAL END -->
           <div class="divider"></div>
           <!-- SKILLS INFO START -->
+          <div class="table-container">
+            <table>
+              <tbody>
+              <tr>
+                <td> Informatics</td>
+                <td class="scrollable-column">
+                  <div class="topic-tag-profile">Tag1 </div>
+                  <div class="topic-tag-profile" >C++ </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="divider"></div>
           <!-- SKILLS INFO END -->
         </div>
         <!-- SKILLS CONTAINER END -->
