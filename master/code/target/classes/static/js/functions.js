@@ -89,7 +89,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function selectTag(tag) {
-    tag.classList.add("topic-tag-display-selected");
+    if (tag.classList.contains("topic-tag-display")) {
+        tag.classList.remove("topic-tag-display");
+        tag.classList.add("topic-tag-display-selected");
+    } else if (tag.classList.contains("topic-tag-display-selected")) {
+        tag.classList.remove("topic-tag-display-selected");
+        tag.classList.add("topic-tag-display");
+    }
 }
 
 function closeRow(button) {
