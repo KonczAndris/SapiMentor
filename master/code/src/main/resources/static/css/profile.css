@@ -10,7 +10,6 @@
     height: 100%;
     margin: 0;
     padding: 0;
-    flex-shrink: 0;
 }
 
 /* LEFT CONTAINTER */
@@ -22,8 +21,6 @@
     width: 35%;
     background-color: rgb(255, 255, 255);
     flex-direction: column;
-    overflow: hidden !important;
-    flex-shrink: 0;
     margin-top: 10%;
 }
 
@@ -837,10 +834,17 @@ table tr:last-child td {
         align-items: center;
         flex-direction: column;
         margin-left: 0;
+        overflow: auto;
+    }
+
+    .profile-container::-webkit-scrollbar {
+        width: 0;
+        background: transparent;
     }
 
     .profile-right{
         margin-left: -7%;
+        overflow-y: unset;
     }
 
     .profile-left{
