@@ -191,7 +191,14 @@ public class UserServiceImpl implements UserService{
                 byte[] originalImageBytes = image.getBytes();
                 // Skálázd a képet a megadott méretekre
                 BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
-                BufferedImage scaledImage = Thumbnails.of(originalImage)
+
+                int minDimension = Math.min(originalImage.getWidth(), originalImage.getHeight());
+                int x = (originalImage.getWidth() - minDimension) / 2;
+                int y = (originalImage.getHeight() - minDimension) / 2;
+
+                BufferedImage squareImage = originalImage.getSubimage(x, y, minDimension, minDimension);
+
+                BufferedImage scaledImage = Thumbnails.of(squareImage)
                         .size(400, 400)
                         .asBufferedImage();
 
