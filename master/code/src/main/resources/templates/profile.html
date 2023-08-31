@@ -123,7 +123,15 @@
               <p class="first-name" th:text="${userRegistrationDetails.firstName}"></p>
             </div>
 
-            <button class="status" th:text="${userRegistrationDetails.roles}" id="myMentorBtn">User</button>
+
+            <div id="edit-role">
+              <h2 th:text="${userRegistrationDetails.roles}" class="status"> </h2>
+              <div class="edit-button">
+              <button id="myMentorBtn"> <img th:src="@{/img/edit-profile.png}" alt="Edit Role" /> </button>
+              </div>
+            </div>
+
+
             <!-- MENTOR MODAL START -->
             <div id="mentorModal" class="modal-mentor">
               <div class="modal-content-mentor">

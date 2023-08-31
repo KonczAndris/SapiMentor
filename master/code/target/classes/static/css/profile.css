@@ -96,7 +96,6 @@
 }
 
 .status {
-    width: 100%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -104,7 +103,7 @@
     text-transform: uppercase;
     font-size: larger;
     font-weight: bold;
-    color: green;
+    color: rgb(22, 175, 132);
 }
 
 .rating {
@@ -133,6 +132,11 @@
     margin-top: 5px;
 }
 
+#edit-role{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 /* RIGHT CONTAINER */
 .show{
     padding-right: none;
