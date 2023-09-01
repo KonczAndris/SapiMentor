@@ -7,6 +7,7 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UserRegistrationDto;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.token.ConfirmationToken;
@@ -180,8 +181,8 @@ public class UserServiceImpl implements UserService{
         if (user != null && !image.isEmpty() ) {
 
             try {
-                System.out.println("Image size: " + image.getSize());
-                System.out.println("MAX_IMAGE_SIZE: " + MAX_IMAGE_SIZE);
+                //System.out.println("Image size: " + image.getSize());
+                //System.out.println("MAX_IMAGE_SIZE: " + MAX_IMAGE_SIZE);
                 //A regi verzional ez a sor nem kell !!!!
                 if (image.getSize() > MAX_IMAGE_SIZE) {
                     return "The uploaded image is too large. Please choose a smaller image.";
@@ -189,7 +190,7 @@ public class UserServiceImpl implements UserService{
 
 
                 byte[] originalImageBytes = image.getBytes();
-                // Skálázd a képet a megadott méretekre
+                // Skálázom a képet a megadott méretekre
                 BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
 
                 int minDimension = Math.min(originalImage.getWidth(), originalImage.getHeight());
@@ -202,7 +203,7 @@ public class UserServiceImpl implements UserService{
                         .size(400, 400)
                         .asBufferedImage();
 
-                // Állítsd be a kimeneti fájltípust (pl. JPEG)
+                //Be allitom a kimeneti fájltípust (pl. JPEG)
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(scaledImage, "jpg", baos);
                 byte[] scaledImageBytes = baos.toByteArray();

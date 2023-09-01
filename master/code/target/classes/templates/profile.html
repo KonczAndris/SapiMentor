@@ -6,6 +6,7 @@
   <title>SapiMentor</title>
   <link rel="stylesheet"  type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/profile.css}">
+
 </head>
 <body>
 
@@ -92,6 +93,7 @@
                   <img th:if="${profileImageBase64 != ''}"
                        th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
                        alt="Profile Image" class="profile-image"
+                       id="change-profile-image"
                        th:async="async"
                        th:attr="data-cache='no-cache'">
                   <img th:unless="${profileImageBase64 != ''}"
@@ -402,5 +404,15 @@
   </div>
 </div>
 <script th:src="@{/js/functions.js}"></script>
+<script>
+  const imageUploadInput = document.getElementById('imageUpload');
+  const profileImage = document.getElementById('change-profile-image');
+
+  imageUploadInput.addEventListener('change', (event) => {
+    const selectedImage = event.target.files[0];
+    const imageUrl = URL.createObjectURL(selectedImage);
+    profileImage.src = imageUrl;
+  });
+</script>
 </body>
 </html>
