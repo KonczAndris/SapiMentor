@@ -50,25 +50,71 @@
         <!-- MENU BAR START-->
         <div class="resource-menu">
             <div class="button-container">
-                    <a class="selected" th:href="@{/resources}">RESOURCES</a>
-                    <a id="examExamples" th:href="@{/resources/examexamples}">EXAM EXAMPLES</a>
-                    <a id="diplomaTheses" th:href="@{/resources/diplomatheses}">DIPLOMA THESES</a>
+                <button class="selected"> RESOURCES</button>
+                <button id="examExamples"> EXAM EXAMPLES</button>
+                <button id="diplomaTheses"> DIPLOMA THESES</button>
             </div>
 
             <div class="dropdown">
                 <button class="dropbtn">RESOURCES</button>
                 <div class="dropdown-content">
-                    <a id="examExamplesDrop" th:href="@{/resources/examexamples}">EXAM EXAMPLES</a>
-                    <a id="diplomaThesesDrop" th:href="@{/resources/diplomatheses}">DIPLOMA THESES</a>
+                    <a id="examExamplesDrop">EXAM EXAMPLES</a>
+                    <a id="diplomaThesesDrop">DIPLOMA THESES</a>
                 </div>
             </div>
 
         </div>
-        <!-- MENU END START-->
+        <!-- MENU BAR END-->
+
+        <div class="open-search-buttons">
+            <button class="search-button" id="myFilterBtn" onclick="showFilterContainer()">Search</button>
+            <button class="reverse-button" id="myReverseBtn"><img th:src="@{/img/reverse.png}" alt="Icon"
+                                                                  class="reverse-icon"></button></button>
+        </div>
+
+        <!-- FILTER BAR START-->
+        <div class="filter-container">
+            <input type="text" class="filter-input" id="filter-input" placeholder="Search..." required>
+
+            <div class="filter-ddowns">
+                <div class="topic-dropdown-container">
+                    <div class="topic-dropdown">
+                        <button class="topic-dropbtn" onclick="toggleDropdown()">Choose topics</button>
+                        <div class="topic-checkboxes" id="topic-myCheckboxes">
+                            <label><input type="checkbox" value="Informatics"> Informatics</label>
+                            <label><input type="checkbox" value="Languages"> Languages</label>
+                            <label><input type="checkbox" value="Engineering"> Engineering</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-dropdown-container">
+                    <div class="filter-dropdown">
+                        <button class="filter-dropbtn" onclick="toggleFilterDropdown()">Choose a filter</button>
+                        <input type="hidden" id="filter-selectedValue" value="Choose a filter">
+                        <div class="filter-dropdown-content" id="filter-myDropdown">
+                            <a href="#" onclick="closeDropdown('Choose a filter')">Choose a filter</a>
+                            <a href="#" onclick="closeDropdown('by Name')">by Name</a>
+                            <a href="#" onclick="closeDropdown('by Likes')">by Likes</a>
+                            <a href="#" onclick="closeDropdown('by Date')">by Date</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="func-buttons">
+                <button class="search-button">Search</button>
+                <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
+                <button class="reverse-button" id="reverseButton"><img th:src="@{/img/reverse.png}" alt="Icon"
+                                                                       class="reverse-icon"></button></button>
+            </div>
+        </div>
+        <div class="divider"></div>
     </div>
 </div>
 
 <script th:src="@{/js/functions.js}"></script>
+<script th:src="@{/js/resources.js}"></script>
 </body>
 
 </html>
