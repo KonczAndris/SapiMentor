@@ -6,7 +6,6 @@
   <title>SapiMentor</title>
   <link rel="stylesheet"  type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/profile.css}">
-
 </head>
 <body>
 
@@ -318,7 +317,8 @@
                 <div class="dropdown">
                   <button class="dropbtn" onclick="toggleDropdown()">Choose a topic</button>
                   <div class="dropdown-content" id="myDropdown">
-                    <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"></a>
+                    <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
+                       th:attr="onclick='closeDropdown(\'' + ${topic.topic} + '\')'"></a>
                   </div>
                 </div>
                 <input type="text" class="skills-input" id="topic-input" placeholder="Selected Topic"

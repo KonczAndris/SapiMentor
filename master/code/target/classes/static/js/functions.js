@@ -88,6 +88,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+function closeDropdown(selectedItem) {
+    var dropdownContent = document.getElementById("myDropdown");
+    dropdownContent.classList.remove("active");
+
+    var dropbtn = document.querySelector(".dropbtn");
+    dropbtn.style.borderRadius = "";
+}
+
 function selectTag(tag) {
     if (tag.classList.contains("topic-tag-display")) {
         tag.classList.remove("topic-tag-display");
