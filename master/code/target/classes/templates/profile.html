@@ -6,7 +6,6 @@
   <title>SapiMentor</title>
   <link rel="stylesheet"  type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/profile.css}">
-
 </head>
 <body>
 
@@ -150,17 +149,17 @@
                     <div class="detail-row-mentor">
                       <div class="edit-input-mentor" id="role-edit" required>
                         <label>
-                          <input type="radio" name="role" value="USER" required>
+                          <input type="radio" name="role" value="USER" th:checked="${userRegistrationDetails.roles == 'USER'}" required>
                           <span class="checkbox-custom"></span>
                           USER
                         </label>
                         <label>
-                          <input type="radio" name="role" value="MENTOR" required>
+                          <input type="radio" name="role" value="MENTOR" th:checked="${userRegistrationDetails.roles == 'MENTOR'}" required>
                           <span class="checkbox-custom"></span>
                           MENTOR
                         </label>
                         <label>
-                          <input type="radio" name="role" value="MENTEE" required>
+                          <input type="radio" name="role" value="MENTEE" th:checked="${userRegistrationDetails.roles == 'MENTEE'}" required>
                           <span class="checkbox-custom"></span>
                           MENTEE
                         </label>
@@ -323,58 +322,68 @@
                 </div>
                 <input type="text" class="skills-input" id="topic-input" placeholder="Selected Topic"
                        required autofocus="autofocus" readonly >
-                <button type="submit" id="skills-add" class="btn btn-success">Add</button>
+<!--           regi     <button type="submit" id="skills-add" class="btn btn-success">Add Topic</button>-->
+                <button type="submit" id="skills-add" class="btn btn-success" th:onclick="addSelectedTopic()">Add Topic</button>
+
               </div>
               <div class="divider"></div>
 
-              <div class="table-container">
+<!--              <div class="table-container">-->
+<!--                <table>-->
+<!--                  <tbody>-->
+<!--                  <tr>-->
+<!--                    <td> Informatics</td>-->
+<!--                    <td class="scrollable-column">-->
+<!--                      <div class="topic-tag" onclick="removeTag(this)">C++ </div>-->
+<!--                      <div class="topic-tag" onclick="removeTag(this)">Python </div>-->
+<!--                      <div class="topic-tag" onclick="removeTag(this)">Java </div>-->
+<!--                      <div class="topic-tag" onclick="removeTag(this)">HTML </div>-->
+<!--                      <div class="topic-tag" onclick="removeTag(this)">CSS </div>-->
+<!--                      <div class="topic-tag" onclick="removeTag(this)">Haskell </div>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                      <div class="func-buttons">-->
+<!--                        <button class="add-button">Add</button>-->
+<!--                        <button class="delete-button" onclick="deleteRow(this)">Delete</button>-->
+<!--                      </div>-->
+<!--                    </td>-->
+<!--                  </tr>-->
+
+<!--                  <tr class="tr-keywords">-->
+<!--                    <td colspan="2">-->
+<!--                      <div class="topic-tag-display" onclick="selectTag(this)">C++ </div>-->
+<!--                      <div class="topic-tag-display" onclick="selectTag(this)">Python </div>-->
+<!--                      <div class="topic-tag-display" onclick="selectTag(this)">Java </div>-->
+<!--                      <div class="topic-tag-display" onclick="selectTag(this)">HTML </div>-->
+<!--                      <div class="topic-tag-display" onclick="selectTag(this)">CSS </div>-->
+<!--                      <div class="topic-tag-display" onclick="selectTag(this)">Haskell </div>-->
+<!--                      <div class="topic-tag-display" onclick="selectTag(this)">C++ </div>-->
+<!--                      <div class="topic-tag-display" onclick="selectTag(this)">Python </div>-->
+<!--                      <div class="topic-tag-display" onclick="selectTag(this)">Java </div>-->
+<!--                      <div class="topic-tag-display" onclick="selectTag(this)">HTML </div>-->
+<!--                      <div class="topic-tag-display" onclick="selectTag(this)">CSS </div>-->
+<!--                      <div class="topic-tag-display" onclick="selectTag(this)">Haskell </div>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                      <div class="func-buttons">-->
+<!--                        <button class="add-button">Save</button>-->
+<!--                        <button class="delete-button" onclick="closeRow(this)">Cancel</button>-->
+<!--                      </div>-->
+<!--                  </tr>-->
+
+<!--                  </tbody>-->
+<!--                </table>-->
+<!--              </div>-->
+
+              <div id="skillsModalTableContainer" class="table-container">
                 <table>
                   <tbody>
-                  <tr>
-                    <td> Informatics</td>
-                    <td class="scrollable-column">
-                      <div class="topic-tag" onclick="removeTag(this)">C++ </div>
-                      <div class="topic-tag" onclick="removeTag(this)">Python </div>
-                      <div class="topic-tag" onclick="removeTag(this)">Java </div>
-                      <div class="topic-tag" onclick="removeTag(this)">HTML </div>
-                      <div class="topic-tag" onclick="removeTag(this)">CSS </div>
-                      <div class="topic-tag" onclick="removeTag(this)">Haskell </div>
-                    </td>
-                    <td>
-                      <div class="func-buttons">
-                        <button class="add-button">Add</button>
-                        <button class="delete-button" onclick="deleteRow(this)">Delete</button>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr class="tr-keywords">
-                    <td colspan="2">
-                      <div class="topic-tag-display" onclick="selectTag(this)">C++ </div>
-                      <div class="topic-tag-display" onclick="selectTag(this)">Python </div>
-                      <div class="topic-tag-display" onclick="selectTag(this)">Java </div>
-                      <div class="topic-tag-display" onclick="selectTag(this)">HTML </div>
-                      <div class="topic-tag-display" onclick="selectTag(this)">CSS </div>
-                      <div class="topic-tag-display" onclick="selectTag(this)">Haskell </div>
-                      <div class="topic-tag-display" onclick="selectTag(this)">C++ </div>
-                      <div class="topic-tag-display" onclick="selectTag(this)">Python </div>
-                      <div class="topic-tag-display" onclick="selectTag(this)">Java </div>
-                      <div class="topic-tag-display" onclick="selectTag(this)">HTML </div>
-                      <div class="topic-tag-display" onclick="selectTag(this)">CSS </div>
-                      <div class="topic-tag-display" onclick="selectTag(this)">Haskell </div>
-                    </td>
-                    <td>
-                      <div class="func-buttons">
-                        <button class="add-button">Save</button>
-                        <button class="delete-button" onclick="closeRow(this)">Cancel</button>
-                      </div>
-                  </tr>
-
                   </tbody>
                 </table>
               </div>
+
               <div class="divider"></div>
-              <button type="submit" id="skills-save" class="btn btn-success">Save</button>
+              <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>
             </div>
           </div>
           <!-- SKILLS MODAL END -->
@@ -413,6 +422,9 @@
     const imageUrl = URL.createObjectURL(selectedImage);
     profileImage.src = imageUrl;
   });
+
+
+
 </script>
 </body>
 </html>

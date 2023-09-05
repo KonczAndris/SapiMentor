@@ -21,7 +21,7 @@ public class UserRegistrationDetails implements UserDetails {
     private String password;
     private boolean isEnabled;
     private List<GrantedAuthority> authorities;
-    private List<String> roles;
+    private String roles;
     private String firstName;
     private String lastName;
     private String specialization;
@@ -35,7 +35,7 @@ public class UserRegistrationDetails implements UserDetails {
         this.isEnabled = user.isEnabled();
         this.roles = user.getRoles().stream()
                 .map(Role::getName)
-                .collect(Collectors.toList());
+                .collect(Collectors.joining(", ")); // Szerepek vesszővel elválasztva
         this.firstName = user.getFirst_Name();
         this.lastName = user.getLast_Name();
         this.specialization = user.getSpecialization();
@@ -79,7 +79,8 @@ public class UserRegistrationDetails implements UserDetails {
         return isEnabled;
     }
 
-    public List<String> getRoles() {
+    public String getRoles() {
         return roles;
     }
+
 }

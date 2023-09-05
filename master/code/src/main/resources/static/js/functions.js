@@ -62,15 +62,15 @@ function setupUploadModal() {
     }
 }
 
-function toggleKeywordsRow() {
-    const keywordsRow = document.querySelector('.tr-keywords');
-    keywordsRow.style.display = (keywordsRow.style.display === 'none' || keywordsRow.style.display === '') ? 'table-row' : 'none';
-}
+// function toggleKeywordsRow() {
+//     const keywordsRow = document.querySelector('.tr-keywords');
+//     keywordsRow.style.display = (keywordsRow.style.display === 'none' || keywordsRow.style.display === '') ? 'table-row' : 'none';
+// }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const addButton = document.querySelector('.add-button');
-    addButton.addEventListener('click', toggleKeywordsRow);
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//     const addButton = document.querySelector('.add-button');
+//     addButton.addEventListener('click', toggleKeywordsRow);
+// });
 
 function selectTopic(topic) {
     const topicInput = document.getElementById('topic-input');
@@ -211,6 +211,20 @@ function toggleDivs() {
 
 function removeTag(element) {
     element.remove();
+
+    var elementText = element.textContent;
+    var selectedTags = document.querySelectorAll(".topic-tag-display");
+    selectedTags.forEach(function(tag) {
+        var tagName = tag.textContent;
+        if (tagName === elementText) {
+            tag.style.removeProperty("display");
+        }
+        //console.log(tagName); // A név kiírása a konzolra
+    });
+    //console.log(selectedTags);
+    // if(selectedTags.style.display === "none") {
+    //     selectedTags.style.display = "block";
+    // }
 }
 
 function deleteRow(button) {
@@ -220,9 +234,247 @@ function deleteRow(button) {
         row.remove();
     }}
 
+function saveSkills(button,skillCell,topicId) {
+    var selectedTags = document.querySelectorAll(".topic-tag-display-selected");
+
+    selectedTags.forEach(function(tag) {
+        if (tag.classList.contains("topic-tag-display-selected")) {
+            tag.style.display = "none";
+        }
+    });
+
+    //console.log("1:" + selectedTags);
+    // Fűzd össze az összes tartalmat egy szövegként
+    var selectedTagText = Array.from(selectedTags).map(function(tag) {
+        return tag.textContent;
+    }).join(", "); // Vesszővel elválasztva a tag-eket
+    //console.log("2:" + selectedTagText);
+
+    for (var i = 0; i < selectedTags.length; i++) {
+        var skillTag = document.createElement("div");
+        skillTag.className = "topic-tag";
+        skillTag.textContent = selectedTags[i].textContent;
+        skillTag.onclick = function() {
+            removeTag(this);
+        }
+        skillCell.appendChild(skillTag);
+    }
+    //console.log(skillCell);
+    selectedTags.forEach(function(tag) {
+        tag.classList.remove("topic-tag-display-selected");
+    });
+
+    //console.log("3:" + selectedTags)
+}
+
 document.getElementById('upload-upload').addEventListener('click', function() {
     document.getElementById('imageUpload').click();
 });
+
+// Egyedi témák számolására
+var topicCounter = 0;
+
+//JavaScript rész a Skills Modal-hoz
+function addSelectedTopic() {
+    //var selectedTopic = document.getElementById("topic-input").value;
+    //console.log(selectedTopic.type);
+    var selectedTopic = document.getElementById("topic-input").value;
+    //console.log(typeof selectedTopic);
+
+    if (selectedTopic !== "") {
+        var topicTag = document.createElement("div");
+        topicTag.className = "topic-tag";
+        topicTag.textContent = selectedTopic;
+        topicTag.onclick = function() {
+            removeTag(this);
+        };
+
+        var tagocska = document.createElement("div");
+        tagocska.className = "topic-tag";
+        tagocska.textContent = "igen";
+        tagocska.onclick = function() {
+            removeTag(this);
+        };
+
+
+        var row = document.createElement("tr");
+        var topicId = "topic-" + topicCounter; // Egyedi témának egyedi azonosító
+
+        var topicCell = document.createElement("td");
+        topicCell.textContent = selectedTopic;
+
+        var skillCell = document.createElement("td");
+        skillCell.className = "scrollable-column";
+        skillCell.appendChild(tagocska);
+        skillCell.appendChild(topicTag);
+
+        var funcButtons = document.createElement("div");
+        funcButtons.className = "func-buttons";
+
+        var topicSkills = document.createElement("tr");
+        topicSkills.className = "tr-keywords " + topicId; // Egyedi azonosító hozzáadása a class-hoz
+
+        var skillContainerTdElement = document.createElement("td");
+        skillContainerTdElement.colSpan = 2;
+
+
+
+        var addButton = document.createElement("button");
+        addButton.className = "add-button";
+        addButton.textContent = "Add";
+        addButton.onclick = function() {
+            addSkillToTopic(selectedTopic,skillContainerTdElement, topicId, skillCell);
+            // Az egyedi azonosító alapján keresünk rá a sorra
+            const keywordsRow = document.querySelector('.' + topicId);
+            keywordsRow.style.display = (keywordsRow.style.display === 'none' || keywordsRow.style.display === '') ? 'table-row' : 'none';
+        };
+
+        var deleteButton = document.createElement("button");
+        deleteButton.className = "delete-button";
+        deleteButton.textContent = "Delete";
+        deleteButton.onclick = function() {
+            deleteRow(this);
+            closeRow(this);
+        };
+
+        funcButtons.appendChild(addButton);
+        funcButtons.appendChild(deleteButton);
+
+        var funcButtonsCell = document.createElement("td");
+        funcButtonsCell.appendChild(funcButtons);
+
+        //console.log(topicSkills)
+        var topicSkillsFuncButtons = document.createElement("div");
+        topicSkillsFuncButtons.className = "func-buttons";
+
+        var saveButton = document.createElement("button");
+        saveButton.className = "add-button";
+        saveButton.id = "save-button";
+        saveButton.textContent = "Save";
+        saveButton.onclick = function() {
+            saveSkills(this,skillCell, topicId);
+        }
+
+        var cancelButton = document.createElement("button");
+        cancelButton.className = "delete-button";
+        cancelButton.textContent = "Cancel";
+        cancelButton.onclick = function() {
+            closeRow(this);
+        };
+
+        topicSkillsFuncButtons.appendChild(saveButton);
+        topicSkillsFuncButtons.appendChild(cancelButton);
+
+        var TopicSkillsfuncButtonsCell = document.createElement("td");
+        TopicSkillsfuncButtonsCell.appendChild(topicSkillsFuncButtons);
+
+        row.appendChild(topicCell);
+        row.appendChild(skillCell);
+        row.appendChild(funcButtonsCell);
+
+        topicSkills.appendChild(skillContainerTdElement);
+        topicSkills.appendChild(TopicSkillsfuncButtonsCell);
+
+
+
+        var tableContainer = document.querySelector(".table-container table tbody");
+
+        tableContainer.appendChild(row);
+        tableContainer.appendChild(topicSkills);
+
+        topicCounter++; // Növeljük az egyedi azonosító számot
+    }
+}
+
+
+
+
+//leges legszenvedosebb resz
+function addSkillToTopic(selectedTopic, skillContainer, topicId, skillCell) {
+    // Először törölom a korábban megjelenített skilleket
+    while (skillContainer.firstChild) {
+        skillContainer.removeChild(skillContainer.firstChild);
+    }
+
+    var divs = skillCell.querySelectorAll("div");
+
+    // Itt lekérdezem a kiválasztott témához tartozó skilleket a szerverről
+    fetch(`/getSkills?selectedTopic=${selectedTopic}`)
+        .then(response => response.json())
+        .then(data => {
+            //console.log(data);
+            // Itt dolgozom fel a visszakapott skilleket
+            if (data && data.length > 0) {
+                data.forEach(skill => {
+                    var skillTagDisplay = document.createElement("div");
+                    skillTagDisplay.className = "topic-tag-display";
+                    skillTagDisplay.textContent = skill.skill;
+                    skillTagDisplay.onclick = function() {
+                        selectTag(this);
+                    }
+                    divs.forEach(function(div) {
+                        if (div.textContent === skill.skill) {
+                            skillTagDisplay.style.display = "none";
+                        }
+                    });
+                    skillContainer.appendChild(skillTagDisplay);
+                });
+
+                //console.log(skillContainer);
+            } else {
+                // Ha nincs találat, akkor kiir egy üzenetet
+                var noSkillsMessage = document.createElement("p");
+                noSkillsMessage.textContent = "There are no skills under the selected topic.";
+                skillContainer.appendChild(noSkillsMessage);
+            }
+        })
+        .catch(error => {
+            console.error('An error occurred while querying skills:', error);
+        });
+}
+
+function saveDataToServer() {
+    // Gyűjtsd össze az adatokat a táblából
+    var tableRows = document.querySelectorAll("#skillsModalTableContainer table tbody tr");
+    var data = [];
+
+    //console.log(tableRows);
+
+    tableRows.forEach(function(row) {
+        var topic = row.querySelector("td:first-child").textContent;
+        var skills = [];
+        row.querySelectorAll(".topic-tag").forEach(function(tag) {
+            skills.push(tag.textContent);
+        });
+        // console.log("Skillek:" + skills);
+        // console.log("Topic:" + topic);
+
+        if (topic !== '' || skills.length > 0) {
+            data.push({ topic: topic, skills: skills });
+        }
+    });
+    console.log(data);
+
+    //innen folytatni holnap
+
+    // // Elküldés a szervernek (példa)
+    // fetch('/saveDataToServer', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(data)
+    // })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log('Sikerült elmenteni az adatokat a szerverre', data);
+    //         // További műveletek, ha szükséges
+    //     })
+    //     .catch(error => {
+    //         console.error('Hiba történt az adatok mentése során', error);
+    //     });
+}
+
 
 setupMentorModal();
 setupModal();
@@ -234,6 +486,9 @@ validateLastName();
 validateSpecialization();
 validateYear();
 validatePhone();
+addSelectedTopic();
+saveDataToServer();
+
 
 
 

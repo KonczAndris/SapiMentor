@@ -1,5 +1,6 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,10 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String skill;
-    @ManyToOne
+
+    @JsonIgnore
     @JoinColumn(name = "topic_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Topic topic;
 
     public Skill(String skill, Topic topic) {
