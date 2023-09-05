@@ -88,8 +88,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+function closeDropdown(selectedItem) {
+    var dropdownContent = document.getElementById("myDropdown");
+    dropdownContent.classList.remove("active");
+
+    var dropbtn = document.querySelector(".dropbtn");
+    dropbtn.style.borderRadius = "";
+}
+
 function selectTag(tag) {
-    tag.classList.add("topic-tag-display-selected");
+    if (tag.classList.contains("topic-tag-display")) {
+        tag.classList.remove("topic-tag-display");
+        tag.classList.add("topic-tag-display-selected");
+    } else if (tag.classList.contains("topic-tag-display-selected")) {
+        tag.classList.remove("topic-tag-display-selected");
+        tag.classList.add("topic-tag-display");
+    }
 }
 
 function closeRow(button) {
