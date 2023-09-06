@@ -376,15 +376,18 @@
 <!--                </table>-->
 <!--              </div>-->
 
-              <div id="skillsModalTableContainer" class="table-container">
-                <table>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
+                <div id="skillsModalTableContainer" class="table-container">
+                  <table>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
 
-              <div class="divider"></div>
-              <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>
+                <div class="divider"></div>
+              <form id="skills-form"  th:action="@{/saveProfileTopics}" method="post" >
+                <input type="hidden" name="profileTopicsDataItems" id="profileTopicsDataItems" value="">
+                <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>
+              </form>
             </div>
           </div>
           <!-- SKILLS MODAL END -->

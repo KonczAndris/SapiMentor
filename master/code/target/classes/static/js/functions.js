@@ -230,6 +230,9 @@ function removeTag(element) {
     var selectedTags = document.querySelectorAll(".topic-tag-display");
     selectedTags.forEach(function(tag) {
         var tagName = tag.textContent;
+        console.log(tagName);
+        console.log(elementText);
+        console.log(tag)
         if (tagName === elementText) {
             tag.style.removeProperty("display");
         }
@@ -245,8 +248,16 @@ function deleteRow(button) {
     var row = button.closest('tr');
 
     if (row) {
+        var nextRow = row.nextElementSibling;
+
+        if (nextRow) {
+            nextRow.remove();
+        }
+
         row.remove();
-    }}
+    }
+}
+
 
 function saveSkills(button,skillCell,topicId) {
     var selectedTags = document.querySelectorAll(".topic-tag-display-selected");
@@ -254,6 +265,7 @@ function saveSkills(button,skillCell,topicId) {
     selectedTags.forEach(function(tag) {
         if (tag.classList.contains("topic-tag-display-selected")) {
             tag.style.display = "none";
+            tag.classList.add("topic-tag-display")
         }
     });
 
@@ -348,7 +360,6 @@ function addSelectedTopic() {
         deleteButton.textContent = "Delete";
         deleteButton.onclick = function() {
             deleteRow(this);
-            closeRow(this);
         };
 
         funcButtons.appendChild(addButton);
@@ -426,8 +437,11 @@ function addSkillToTopic(selectedTopic, skillContainer, topicId, skillCell) {
                     skillTagDisplay.onclick = function() {
                         selectTag(this);
                     }
+                    // console.log(skillTagDisplay);
+                    // console.log(divs);
                     divs.forEach(function(div) {
                         if (div.textContent === skill.skill) {
+                            //skillTagDisplay.classList.add("topic-tag-display");
                             skillTagDisplay.style.display = "none";
                         }
                     });
@@ -460,32 +474,31 @@ function saveDataToServer() {
         row.querySelectorAll(".topic-tag").forEach(function(tag) {
             skills.push(tag.textContent);
         });
-        // console.log("Skillek:" + skills);
-        // console.log("Topic:" + topic);
+         console.log("Skillek:" + skills);
+         console.log("Topic:" + topic);
 
-        if (topic !== '' || skills.length > 0) {
+        if (topic !== '' && skills.length > 0) {
             data.push({ topic: topic, skills: skills });
         }
     });
     console.log(data);
-
-    // // Elküldés a szervernek (példa)
-    // fetch('/saveDataToServer', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(data)
-    // })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log('Sikerült elmenteni az adatokat a szerverre', data);
-    //         // További műveletek, ha szükséges
-    //     })
-    //     .catch(error => {
-    //         console.error('Hiba történt az adatok mentése során', error);
-    //     });
+    // Elküldjük az adatokat a szervernek
+    sendDataToServer(data);
 }
+
+var username = 'szotyori.csongor@student.ms.sapientia.ro';
+var password = 'proba1234';
+
+function sendDataToServer(data) {
+    // Állítsd be a rejtett mező értékét adataid alapján
+    var profileTopicsDataItems = JSON.stringify(data);
+    document.getElementById("profileTopicsDataItems").value = profileTopicsDataItems;
+    console.log(profileTopicsDataItems);
+
+    // Most küldd el az űrlapot
+    document.getElementById("skills-form").submit();
+}
+
 
 
 setupMentorModal();
@@ -499,8 +512,27 @@ validateSpecialization();
 validateYear();
 validatePhone();
 addSelectedTopic();
-saveDataToServer();
+// function handleSaveClick() {
+//     saveDataToServer();
+// }
 
+
+// // Elküldés a szervernek (példa)
+// fetch('/saveProfileTopics', {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(data)
+// })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log('Sikerült elmenteni az adatokat a szerverre', data);
+//         // További műveletek, ha szükséges
+//     })
+//     .catch(error => {
+//         console.error('Hiba történt az adatok mentése során', error);
+//     });
 
 
 

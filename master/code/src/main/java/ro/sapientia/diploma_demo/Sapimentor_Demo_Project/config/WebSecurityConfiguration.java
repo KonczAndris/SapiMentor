@@ -27,6 +27,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .antMatchers("/profile")
                 .authenticated()
+                .antMatchers("/saveProfileTopics")
+                .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
