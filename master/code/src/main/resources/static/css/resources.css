@@ -112,20 +112,28 @@ body {
 }
 
 
+.topic-dropdown{
+    position: relative;
+    z-index: 1;
+}
+
 .topic-checkboxes {
     display: none;
     flex-direction: column;
     display: none;
     border: 2px solid rgb(0, 0, 0);
     box-sizing: border-box;
-    width: 100%;
     margin: 0;
+    width: max-content;
     padding: 0;
+    width: 100%;
     position: relative;
     margin-top: -9px;
     background-color: white;
     border-end-start-radius: 10px;
     border-end-end-radius: 10px;
+    position: absolute; /* Keep this as 'absolute' */
+    z-index: 2;
 }
 
 .topic-checkboxes label {
