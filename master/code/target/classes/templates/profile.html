@@ -317,64 +317,18 @@
                 <div class="dropdown">
                   <button class="dropbtn" onclick="toggleDropdown()">Choose a topic</button>
                   <div class="dropdown-content" id="myDropdown">
+
                     <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
                        th:attr="onclick='closeDropdown(\'' + ${topic.topic} + '\')'"></a>
+
                   </div>
                 </div>
                 <input type="text" class="skills-input" id="topic-input" placeholder="Selected Topic"
                        required autofocus="autofocus" readonly >
-<!--           regi     <button type="submit" id="skills-add" class="btn btn-success">Add Topic</button>-->
                 <button type="submit" id="skills-add" class="btn btn-success" th:onclick="addSelectedTopic()">Add Topic</button>
 
               </div>
               <div class="divider"></div>
-
-<!--              <div class="table-container">-->
-<!--                <table>-->
-<!--                  <tbody>-->
-<!--                  <tr>-->
-<!--                    <td> Informatics</td>-->
-<!--                    <td class="scrollable-column">-->
-<!--                      <div class="topic-tag" onclick="removeTag(this)">C++ </div>-->
-<!--                      <div class="topic-tag" onclick="removeTag(this)">Python </div>-->
-<!--                      <div class="topic-tag" onclick="removeTag(this)">Java </div>-->
-<!--                      <div class="topic-tag" onclick="removeTag(this)">HTML </div>-->
-<!--                      <div class="topic-tag" onclick="removeTag(this)">CSS </div>-->
-<!--                      <div class="topic-tag" onclick="removeTag(this)">Haskell </div>-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                      <div class="func-buttons">-->
-<!--                        <button class="add-button">Add</button>-->
-<!--                        <button class="delete-button" onclick="deleteRow(this)">Delete</button>-->
-<!--                      </div>-->
-<!--                    </td>-->
-<!--                  </tr>-->
-
-<!--                  <tr class="tr-keywords">-->
-<!--                    <td colspan="2">-->
-<!--                      <div class="topic-tag-display" onclick="selectTag(this)">C++ </div>-->
-<!--                      <div class="topic-tag-display" onclick="selectTag(this)">Python </div>-->
-<!--                      <div class="topic-tag-display" onclick="selectTag(this)">Java </div>-->
-<!--                      <div class="topic-tag-display" onclick="selectTag(this)">HTML </div>-->
-<!--                      <div class="topic-tag-display" onclick="selectTag(this)">CSS </div>-->
-<!--                      <div class="topic-tag-display" onclick="selectTag(this)">Haskell </div>-->
-<!--                      <div class="topic-tag-display" onclick="selectTag(this)">C++ </div>-->
-<!--                      <div class="topic-tag-display" onclick="selectTag(this)">Python </div>-->
-<!--                      <div class="topic-tag-display" onclick="selectTag(this)">Java </div>-->
-<!--                      <div class="topic-tag-display" onclick="selectTag(this)">HTML </div>-->
-<!--                      <div class="topic-tag-display" onclick="selectTag(this)">CSS </div>-->
-<!--                      <div class="topic-tag-display" onclick="selectTag(this)">Haskell </div>-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                      <div class="func-buttons">-->
-<!--                        <button class="add-button">Save</button>-->
-<!--                        <button class="delete-button" onclick="closeRow(this)">Cancel</button>-->
-<!--                      </div>-->
-<!--                  </tr>-->
-
-<!--                  </tbody>-->
-<!--                </table>-->
-<!--              </div>-->
 
                 <div id="skillsModalTableContainer" class="table-container">
                   <table>

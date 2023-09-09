@@ -62,15 +62,6 @@ function setupUploadModal() {
     }
 }
 
-// function toggleKeywordsRow() {
-//     const keywordsRow = document.querySelector('.tr-keywords');
-//     keywordsRow.style.display = (keywordsRow.style.display === 'none' || keywordsRow.style.display === '') ? 'table-row' : 'none';
-// }
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     const addButton = document.querySelector('.add-button');
-//     addButton.addEventListener('click', toggleKeywordsRow);
-// });
 
 function selectTopic(topic) {
     const topicInput = document.getElementById('topic-input');
@@ -178,7 +169,6 @@ function validateSpecialization() {
     }
 }
 
-
 function validateYear() {
     var yearInput = document.getElementById("year-edit");
     var yearValue = yearInput.value.trim();
@@ -200,7 +190,6 @@ function validatePhone() {
         phoneInput.classList.remove("highlight");
     }
 }
-
 
 window.onload = function() {
     toggleDivs();
@@ -257,7 +246,6 @@ function deleteRow(button) {
         row.remove();
     }
 }
-
 
 function saveSkills(button,skillCell,topicId) {
     var selectedTags = document.querySelectorAll(".topic-tag-display-selected");
@@ -412,8 +400,6 @@ function addSelectedTopic() {
 }
 
 
-
-
 //leges legszenvedosebb resz
 function addSkillToTopic(selectedTopic, skillContainer, topicId, skillCell) {
     // Először törölom a korábban megjelenített skilleket
@@ -498,8 +484,6 @@ function sendDataToServer(data) {
     // Most küldd el az űrlapot
     document.getElementById("skills-form").submit();
 }
-
-
 
 setupMentorModal();
 setupModal();
