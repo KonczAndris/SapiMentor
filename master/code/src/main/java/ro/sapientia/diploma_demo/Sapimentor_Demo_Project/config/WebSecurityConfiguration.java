@@ -20,7 +20,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf()
+                .and()
+                .authorizeRequests()
                 .antMatchers("/register/**", "/js/**", "/css/**", "/img/**", "/fonts/**", "/forgotPassword/**")
                 .permitAll()
                 .antMatchers("/")
@@ -28,6 +30,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/profile")
                 .authenticated()
                 .antMatchers("/saveProfileTopics")
+                .authenticated()
+                .antMatchers("/deleteTopicAndSkills")
                 .authenticated()
                 .and()
                 .formLogin()
@@ -44,5 +48,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login?logout")
                 .permitAll();
     }
+
 
 }

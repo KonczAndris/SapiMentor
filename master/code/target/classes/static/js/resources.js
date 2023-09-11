@@ -1,17 +1,17 @@
 document.getElementById("diplomaTheses").addEventListener("click", function () {
-    window.location.href = "diplomaTheses.html";
+    window.location.href = "/resources/diplomatheses";
 });
 
 document.getElementById("examExamples").addEventListener("click", function () {
-    window.location.href = "examExamples.html";
+    window.location.href = "/resources/examexamples";
 });
 
 document.getElementById("diplomaThesesDrop").addEventListener("click", function () {
-    window.location.href = "diplomaTheses.html";
+    window.location.href = "/resources/diplomatheses";
 });
 
 document.getElementById("examExamplesDrop").addEventListener("click", function () {
-    window.location.href = "examExamples.html";
+    window.location.href = "/resources/examexamples";
 });
 
 
