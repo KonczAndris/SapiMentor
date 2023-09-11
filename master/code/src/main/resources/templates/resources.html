@@ -115,6 +115,30 @@
         </div>
         <div class="divider"></div>
         <!-- FILTER BAR END-->
+        <!-- LINK TABLE START -->
+        <div class="table-container" id="table-container">
+            <table class="link-table">
+                <thead id="link-table-head">
+                <tr>
+                    <th class="table-number">NR</th>
+                    <th class="table-link">Link</th>
+                    <th class="table-topic">Topic</th>
+                    <th class="table-user">User</th>
+                    <th class="table-likes">Likes</th>
+                    <th class="table-actions">Actions</th>
+                </tr>
+                </thead>
+                <tbody id="link-table-body">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination-container">
+            <button id="prev-page-button">Previous</button>
+            <div id="page-counter"></div>
+            <button id="next-page-button">Next</button>
+        </div>
+        <!-- LINK TABLE END -->
     </div>
 
     <!-- RESOURCE MODAL START -->
@@ -124,7 +148,7 @@
                 <div class="detail-row">
                     <p class="detail-label">Link:</p>
                     <input type="text" class="edit-input" id="resourceLink-edit" placeholder="" required
-                           autofocus="autofocus" oninput="validateResourceLink()">
+                           autofocus="autofocus" th:oninput="validateLink()">
                     <div class="info-icon" data-tooltip="">
                         <i class="fas fa-info-circle"></i>
                     </div>
@@ -135,8 +159,8 @@
             <div class="form-group-edit">
                 <div class="detail-row">
                     <p class="detail-label">Name:</p>
-                    <input type="text" class="edit-input" id="resourceLName-edit" placeholder="" required
-                           autofocus="autofocus" oninput="validateResourceName()">
+                    <input type="text" class="edit-input" id="resourceName-edit" placeholder="" required
+                           autofocus="autofocus" th:oninput="validateName()">
                     <div class="info-icon" data-tooltip="">
                         <i class="fas fa-info-circle"></i>
                     </div>
@@ -161,7 +185,10 @@
             </div>
 
             <div class="func-buttons-modal">
-                <button class="upload-button-modal">Upload</button>
+                <!--<form id="resource-form"  th:action="@{/saveResourceLinks}" method="post" >-->
+                    <!--<input type="hidden" name="resourceDataItems" id="resourceDataItems" value="">-->
+                <button class="upload-button-modal" id="upload-button-modal" th:onclick="addLinkRow()" >Upload</button>
+                <!--</form>-->
                 <button class="cancel-button-modal close-resource">Cancel</button>
             </div>
 
