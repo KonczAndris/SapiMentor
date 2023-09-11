@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
   <title>SapiMentor</title>
   <link rel="stylesheet"  type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/profile.css}">
@@ -329,6 +331,61 @@
               </div>
               <div class="divider"></div>
 
+                <div id="skillsModalTableContainer" class="table-container">
+                  <table id="myTable">
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="divider"></div>
+              <form id="skills-form"  th:action="@{/saveProfileTopics}" method="post" >
+                <input type="hidden" name="profileTopicsDataItems" id="profileTopicsDataItems" value="">
+                <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>
+              </form>
+            </div>
+          </div>
+          <!-- SKILLS MODAL END -->
+          <div class="divider"></div>
+          <!-- SKILLS INFO START -->
+          <div class="table-container">
+            <table>
+              <tbody>
+              <tr th:each="topic : ${userTopics}" >
+                <td th:text="${topic.topic}"></td>
+                <td class="scrollable-column">
+                  <div th:each="tag : ${topic.tags}" class="topic-tag-profile" th:text="${tag}"></div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="divider"></div>
+          <!-- SKILLS INFO END -->
+        </div>
+        <!-- SKILLS CONTAINER END -->
+      </div>
+      <!-- RIGHT CONTAINER  END -->
+
+    </div>
+  </div>
+</div>
+<script th:src="@{/js/functions.js}"></script>
+<script>
+  const imageUploadInput = document.getElementById('imageUpload');
+  const profileImage = document.getElementById('change-profile-image');
+
+  imageUploadInput.addEventListener('change', (event) => {
+    const selectedImage = event.target.files[0];
+    const imageUrl = URL.createObjectURL(selectedImage);
+    profileImage.src = imageUrl;
+  });
+</script>
+<!-- jQuery beolvasása CDN-ről -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
+
 <!--              <div class="table-container">-->
 <!--                <table>-->
 <!--                  <tbody>-->
@@ -376,59 +433,128 @@
 <!--                </table>-->
 <!--              </div>-->
 
-                <div id="skillsModalTableContainer" class="table-container">
-                  <table>
-                    <tbody>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="divider"></div>
-              <form id="skills-form"  th:action="@{/saveProfileTopics}" method="post" >
-                <input type="hidden" name="profileTopicsDataItems" id="profileTopicsDataItems" value="">
-                <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>
-              </form>
-            </div>
-          </div>
-          <!-- SKILLS MODAL END -->
-          <div class="divider"></div>
-          <!-- SKILLS INFO START -->
-          <div class="table-container">
-            <table>
-              <tbody>
-              <tr>
-                <td> Informatics</td>
-                <td class="scrollable-column">
-                  <div class="topic-tag-profile">Tag1 </div>
-                  <div class="topic-tag-profile" >C++ </div>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="divider"></div>
-          <!-- SKILLS INFO END -->
-        </div>
-        <!-- SKILLS CONTAINER END -->
-      </div>
-      <!-- RIGHT CONTAINER  END -->
-
-    </div>
-  </div>
-</div>
-<script th:src="@{/js/functions.js}"></script>
-<script>
-  const imageUploadInput = document.getElementById('imageUpload');
-  const profileImage = document.getElementById('change-profile-image');
-
-  imageUploadInput.addEventListener('change', (event) => {
-    const selectedImage = event.target.files[0];
-    const imageUrl = URL.createObjectURL(selectedImage);
-    profileImage.src = imageUrl;
-  });
 
 
 
-</script>
-</body>
-</html>
+<!--                    <tr th:each="topic : ${userTopics}" >-->
+<!--                      <td th:text="${topic.topic}"></td>-->
+<!--                      <td class="scrollable-column">-->
+<!--                        <div th:each="tag : ${topic.tags}" class="topic-tag" onclick="removeTag(this)" th:text="${tag}"></div>-->
+<!--                      </td>-->
+<!--                      <td>-->
+<!--                        <div class="func-buttons">-->
+<!--                          <button class="add-button">Add</button>-->
+<!--                          <button class="delete-button" onclick="deleteRow(this)">Delete</button>-->
+<!--                        </div>-->
+<!--                      </td>-->
+<!--                    </tr>-->
+
+
+
+
+
+
+<!--var topicTag = document.createElement("div");-->
+<!--topicTag.className = "topic-tag";-->
+<!--topicTag.textContent = selectedTopic;-->
+<!--topicTag.onclick = function() {-->
+<!--removeTag(this);-->
+<!--};-->
+
+<!--var tagocska = document.createElement("div");-->
+<!--tagocska.className = "topic-tag";-->
+<!--tagocska.textContent = "igen";-->
+<!--tagocska.onclick = function() {-->
+<!--removeTag(this);-->
+<!--};-->
+
+
+<!--var row = document.createElement("tr");-->
+<!--var topicId = "topic-" + topicCounter; // Egyedi témának egyedi azonosító-->
+
+<!--var topicCell = document.createElement("td");-->
+<!--topicCell.textContent = selectedTopic;-->
+
+<!--var skillCell = document.createElement("td");-->
+<!--skillCell.className = "scrollable-column";-->
+<!--skillCell.appendChild(tagocska);-->
+<!--skillCell.appendChild(topicTag);-->
+
+<!--var funcButtons = document.createElement("div");-->
+<!--funcButtons.className = "func-buttons";-->
+
+<!--var topicSkills = document.createElement("tr");-->
+<!--topicSkills.className = "tr-keywords " + topicId; // Egyedi azonosító hozzáadása a class-hoz-->
+
+<!--var skillContainerTdElement = document.createElement("td");-->
+<!--skillContainerTdElement.colSpan = 2;-->
+
+
+
+<!--var addButton = document.createElement("button");-->
+<!--addButton.className = "add-button";-->
+<!--addButton.textContent = "Add";-->
+<!--addButton.onclick = function() {-->
+<!--addSkillToTopic(selectedTopic,skillContainerTdElement, topicId, skillCell);-->
+<!--// Az egyedi azonosító alapján keresünk rá a sorra-->
+<!--const keywordsRow = document.querySelector('.' + topicId);-->
+<!--keywordsRow.style.display = (keywordsRow.style.display === 'none' || keywordsRow.style.display === '') ? 'table-row' : 'none';-->
+<!--};-->
+
+<!--var deleteButton = document.createElement("button");-->
+<!--deleteButton.className = "delete-button";-->
+<!--deleteButton.textContent = "Delete";-->
+<!--deleteButton.onclick = function() {-->
+<!--deleteRow(this);-->
+<!--};-->
+
+<!--funcButtons.appendChild(addButton);-->
+<!--funcButtons.appendChild(deleteButton);-->
+
+<!--var funcButtonsCell = document.createElement("td");-->
+<!--funcButtonsCell.appendChild(funcButtons);-->
+
+<!--//console.log(topicSkills)-->
+<!--var topicSkillsFuncButtons = document.createElement("div");-->
+<!--topicSkillsFuncButtons.className = "func-buttons";-->
+
+<!--var saveButton = document.createElement("button");-->
+<!--saveButton.className = "add-button";-->
+<!--saveButton.id = "save-button";-->
+<!--saveButton.textContent = "Save";-->
+<!--saveButton.onclick = function() {-->
+<!--saveSkills(this,skillCell, topicId);-->
+<!--}-->
+
+<!--var cancelButton = document.createElement("button");-->
+<!--cancelButton.className = "delete-button";-->
+<!--cancelButton.textContent = "Cancel";-->
+<!--cancelButton.onclick = function() {-->
+<!--closeRow(this);-->
+<!--};-->
+
+<!--topicSkillsFuncButtons.appendChild(saveButton);-->
+<!--topicSkillsFuncButtons.appendChild(cancelButton);-->
+
+<!--var TopicSkillsfuncButtonsCell = document.createElement("td");-->
+<!--TopicSkillsfuncButtonsCell.appendChild(topicSkillsFuncButtons);-->
+
+<!--row.appendChild(topicCell);-->
+<!--row.appendChild(skillCell);-->
+<!--row.appendChild(funcButtonsCell);-->
+
+<!--topicSkills.appendChild(skillContainerTdElement);-->
+<!--topicSkills.appendChild(TopicSkillsfuncButtonsCell);-->
+
+
+
+<!--var tableContainer = document.querySelector(".table-container table tbody");-->
+
+<!--tableContainer.appendChild(row);-->
+<!--tableContainer.appendChild(topicSkills);-->
+
+<!--topicCounterDatabase++; // Növeljük az egyedi azonosító számot-->
+
+
+
+

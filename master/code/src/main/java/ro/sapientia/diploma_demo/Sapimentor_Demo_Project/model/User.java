@@ -1,5 +1,6 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name = "first_name")
     private String first_Name;
     @Column(name = "last_name")
@@ -51,6 +52,7 @@ public class User {
             )
     private Collection<Role> roles;
 
+    @JsonManagedReference // Forward irányú referencia
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Profile_Topics> skills = new ArrayList<>();
 
@@ -74,11 +76,11 @@ public class User {
     }
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

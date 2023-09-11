@@ -1,6 +1,9 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProfileController {
@@ -58,6 +62,15 @@ public class ProfileController {
 
         // Itt lekérem a témákat a service segítségével
         List<Topic> topics = topicService.getAllTopics();
+
+        List<Profile_Topics> userTopics = profileTopicsRepository.findByUserId(user.getId());
+
+        if (!userTopics.isEmpty()) {
+            //System.out.println("User topics: " + userTopics);
+            //System.out.println("User topics: " + userTopics.get(0).getTags());
+            model.addAttribute("userTopics", userTopics);
+        }
+
 
         //Profil kep megjelenitese
         // A profil kép byte tömbje
@@ -152,56 +165,98 @@ public class ProfileController {
         return topicService.getSkillsByTopic(selectedTopic);
     }
 
-
-//    @PostMapping("/saveProfileTopics")
-//    public String saveDataToServer(@RequestBody List<Profile_Topics_DataItem> profileTopicsDataItems) {
-//        System.out.println("HELLO");
-//        System.out.println("Profile topics data items: " + profileTopicsDataItems);
-//
-//
-//        return "hello";
-//    }
-
-    //holnap innen folytatni es megcsinalni a mentest plusz  megjeleniteni az adatokat a /profile oldalon
-    @PostMapping("/saveProfileTopics")
-    public String saveProfileTopics(@RequestParam("profileTopicsDataItems") String profileTopicsDataItems) {
-
-        //System.out.println("HELLO");
-        System.out.println("Profile topics data items: " + profileTopicsDataItems);
-        // Kezeld itt a kapott adatokat
-        // profileTopicsDataItems tartalmazza az űrlapról érkező értéket
-
-        return "redirect:/profile";
+    @GetMapping("/getUserTopicsAndSkills")
+    @ResponseBody
+    public List<Profile_Topics> getUserTopicsAndSkills(Principal principal) {
+        // Bejelentkezett felhasználó neve
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        List<Profile_Topics> userTopicsAndSkills = profileTopicsRepository.findByUserId(user.getId());
+        //System.out.println("User topics: " + userTopics);
+        return userTopicsAndSkills;
     }
 
 
+
+    //holnap innen folytatni es megcsinalni a mentest plusz  megjeleniteni az adatokat a /profile oldalon
+    @PostMapping("/saveProfileTopics")
+    public String saveProfileTopics(@RequestParam("profileTopicsDataItems") String profileTopicsDataItems,
+                                    Principal principal) {
+        //ez a objectMapper a json stringet alakitja at objektumokka
+        ObjectMapper objectMapper = new ObjectMapper();
+        //System.out.println("HELLO");
+        System.out.println("Profile topics data items: " + profileTopicsDataItems);
+        try {
+            // JSON string deszerializálása objektumokká
+            Profile_Topics_DataItem[] dataItems = objectMapper.readValue(profileTopicsDataItems, Profile_Topics_DataItem[].class);
+            //System.out.println("Data items: " + dataItems);
+
+            for (Profile_Topics_DataItem dataItem : dataItems) {
+                String id = dataItem.getId();
+                String topic = dataItem.getTopic();
+                List<String> skills = dataItem.getSkills();
+                System.out.println("Id: " + id);
+                System.out.println("Topic: " + topic);
+                System.out.println("Skills: " + skills);
+
+                if(!id.equals("")){
+                    //Frissiti az adatokat a Profile_Topics entitasban
+                    //Es frissiti az adatokat az adatbazisban is
+                    //System.out.println("ID NEM NULL");
+                    Profile_Topics existingProfileTopic = profileTopicsRepository.findById(Long.parseLong(id)).orElse(null);
+                    if(existingProfileTopic != null){
+                        System.out.println("Existing profile topic: " + existingProfileTopic);
+                        existingProfileTopic.setTopic(topic);
+                        existingProfileTopic.setTags(skills);
+                        profileTopicsRepository.save(existingProfileTopic);
+                    }
+
+                }else{
+                    //System.out.println("ID NULL");
+                    // Mentsd el az adatokat a Profile_Topics entitásban
+                    Profile_Topics profileTopics = new Profile_Topics();
+                    profileTopics.setTopic(topic);
+                    profileTopics.setTags(skills);
+                    //System.out.println("Profile topics: " + profileTopics.getTopic());
+
+                    // Hozd létre az összekapcsolást a felhasználóval (amelyet a Principal-ból kaphatsz meg)
+                    // Bejelentkezett felhasználó neve
+                    String email = principal.getName();
+                    User user = userRepository.findByEmail(email);
+                    profileTopics.setUser(user);
+
+                    // Mentsd el a Profile_Topics entitást az adatbázisban
+                    profileTopicsRepository.save(profileTopics);
+                }
+            }
+            return "redirect:/profile";
+        }catch (Exception e) {
+            e.printStackTrace();
+            return "errorPage";
+        }
+    }
+
+    
+    @CrossOrigin(origins = "http://localhost:8080") // Engedélyezi a CORS-t csak a http://localhost:3000 eredetű kérések számára
+    @PostMapping("/deleteTopicAndSkills")
+    public ResponseEntity<String> deleteTopicAndSkills(@RequestParam("topicId") Long topicId) {
+        try {
+            Profile_Topics topicToDelete = profileTopicsRepository.findById(topicId).orElse(null);
+            if(topicToDelete != null){
+                profileTopicsRepository.delete(topicToDelete);
+            }else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("A témát nem találtuk.");
+            }
+
+            //System.out.println("Topic id " + topicId + " torolve");
+            return ResponseEntity.ok("Sikeres törlés");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a törlés során");
+        }
+    }
+
 }
 
-//        try {
-//            // Iterálj végig az adatokon és mentsd el őket a Profile_Topics entitásban
-//            for (Profile_Topics_DataItem dataItem : profileTopicsDataItems) {
-//                String topic = dataItem.getTopic();
-//                List<String> skills = dataItem.getSkills();
-//
-//                System.out.println("Topic: " + topic);
-//                System.out.println("Skills: " + skills);
-//
-////                // Mentsd el az adatokat a Profile_Topics entitásban
-////                Profile_Topics profileTopics = new Profile_Topics();
-////                profileTopics.setTopic(topic);
-////                profileTopics.setTags(skills);
-////
-////                // Hozd létre az összekapcsolást a felhasználóval (amelyet a Principal-ból kaphatsz meg)
-////                String email = principal.getName(); // Bejelentkezett felhasználó neve
-////                User user = userRepository.findByEmail(email);
-////                profileTopics.setUser(user);
-////
-////                // Mentsd el a Profile_Topics entitást az adatbázisban
-////                profileTopicsRepository.save(profileTopics);
-//            }
-//
-//            return "Adatok sikeresen elmentve a szerverre";
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return "Hiba történt az adatok mentése során";
-//        }
+
+
