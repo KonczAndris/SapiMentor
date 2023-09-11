@@ -69,7 +69,9 @@
         <div class="open-search-buttons">
             <button class="search-button" id="myFilterBtn" onclick="showFilterContainer()">Search</button>
             <button class="reverse-button" id="myReverseBtn"><img th:src="@{/img/reverse.png}" alt="Icon"
-                                                                  class="reverse-icon"></button></button>
+                                                                  class="reverse-icon"></button>
+            <button type="button" id="upload-hidden" class="btn btn-success">
+                <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
         </div>
 
         <!-- FILTER BAR START-->
@@ -106,11 +108,68 @@
                 <button class="search-button">Search</button>
                 <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
                 <button class="reverse-button" id="reverseButton"><img th:src="@{/img/reverse.png}" alt="Icon"
-                                                                       class="reverse-icon"></button></button>
+                                                                       class="reverse-icon"></button>
+                <button type="button" id="upload-upload" class="btn btn-success">
+                    <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
             </div>
         </div>
         <div class="divider"></div>
+        <!-- FILTER BAR END-->
     </div>
+
+    <!-- RESOURCE MODAL START -->
+    <div id="resourceModal" class="modal-resource">
+        <div class="modal-content-resource">
+            <div class="form-group-edit">
+                <div class="detail-row">
+                    <p class="detail-label">Link:</p>
+                    <input type="text" class="edit-input" id="resourceLink-edit" placeholder="" required
+                           autofocus="autofocus" oninput="validateResourceLink()">
+                    <div class="info-icon" data-tooltip="">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="info-tooltip">Enter a real link!</div>
+                </div>
+            </div>
+
+            <div class="form-group-edit">
+                <div class="detail-row">
+                    <p class="detail-label">Name:</p>
+                    <input type="text" class="edit-input" id="resourceLName-edit" placeholder="" required
+                           autofocus="autofocus" oninput="validateResourceName()">
+                    <div class="info-icon" data-tooltip="">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="info-tooltip">Enter an accurate name!</div>
+                </div>
+            </div>
+
+            <div class="form-group-edit">
+                <div class="detail-row">
+                    <p class="detail-label">Topic:</p>
+
+                    <div class="topic-dropdown-modal">
+                        <button class="topic-dropbtn-modal" onclick="toggleDropdownModal()">Choose a topic</button>
+                        <input type="hidden" id="topic-selected-modal" value="Choose a topic">
+                        <div class="topic-dropdown-content" id="topic-myDropdown">
+                        </div>
+
+                        <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
+                                 th:attr="onclick='closeDropdown(\'' + ${topic.topic} + '\')'"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="func-buttons-modal">
+                <button class="upload-button-modal">Upload</button>
+                <button class="cancel-button-modal close-resource">Cancel</button>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- RESOURCE MODAL END -->
+
 </div>
 
 <script th:src="@{/js/functions.js}"></script>

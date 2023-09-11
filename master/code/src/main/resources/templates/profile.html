@@ -319,20 +319,25 @@
                 <div class="dropdown">
                   <button class="dropbtn" onclick="toggleDropdown()">Choose a topic</button>
                   <div class="dropdown-content" id="myDropdown">
+
                     <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
                        th:attr="onclick='closeDropdown(\'' + ${topic.topic} + '\')'"></a>
+
                   </div>
                 </div>
                 <input type="text" class="skills-input" id="topic-input" placeholder="Selected Topic"
                        required autofocus="autofocus" readonly >
-<!--           regi     <button type="submit" id="skills-add" class="btn btn-success">Add Topic</button>-->
                 <button type="submit" id="skills-add" class="btn btn-success" th:onclick="addSelectedTopic()">Add Topic</button>
 
               </div>
               <div class="divider"></div>
 
                 <div id="skillsModalTableContainer" class="table-container">
+<<<<<<< HEAD
                   <table id="myTable">
+=======
+                  <table>
+>>>>>>> 2b81ede48b94675385b2b9590b40c88fc7e5f87b
                     <tbody>
                     </tbody>
                   </table>
@@ -351,10 +356,18 @@
           <div class="table-container">
             <table>
               <tbody>
+<<<<<<< HEAD
               <tr th:each="topic : ${userTopics}" >
                 <td th:text="${topic.topic}"></td>
                 <td class="scrollable-column">
                   <div th:each="tag : ${topic.tags}" class="topic-tag-profile" th:text="${tag}"></div>
+=======
+              <tr>
+                <td> Informatics</td>
+                <td class="scrollable-column">
+                  <div class="topic-tag-profile">Tag1 </div>
+                  <div class="topic-tag-profile" >C++ </div>
+>>>>>>> 2b81ede48b94675385b2b9590b40c88fc7e5f87b
                 </td>
               </tr>
               </tbody>
@@ -380,6 +393,7 @@
     const imageUrl = URL.createObjectURL(selectedImage);
     profileImage.src = imageUrl;
   });
+<<<<<<< HEAD
 </script>
 <!-- jQuery beolvasása CDN-ről -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -433,6 +447,8 @@
 <!--                </table>-->
 <!--              </div>-->
 
+=======
+>>>>>>> 2b81ede48b94675385b2b9590b40c88fc7e5f87b
 
 
 
