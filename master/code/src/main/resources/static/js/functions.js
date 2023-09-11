@@ -242,7 +242,7 @@ function deleteRow(button) {
     }
 }
 
-<<<<<<< HEAD
+
 
 function deleteRowAndDatabase(button) {
     var row = button.closest('tr');
@@ -296,8 +296,6 @@ function deleteTopicAndSkills(topicId) {
     });
 }
 
-=======
->>>>>>> 2b81ede48b94675385b2b9590b40c88fc7e5f87b
 function saveSkills(button,skillCell,topicId) {
     var selectedTags = document.querySelectorAll(".topic-tag-display-selected");
 
@@ -363,19 +361,19 @@ function addSelectedTopic() {
     if (selectedTopic !== "") {
         if (!isTopicAlreadyAdded(selectedTopic)) {
             //console.log("Elso: " + topicCounter)
-            var topicTag = document.createElement("div");
-            topicTag.className = "topic-tag";
-            topicTag.textContent = selectedTopic;
-            topicTag.onclick = function() {
-                removeTag(this);
-            };
-
-            var tagocska = document.createElement("div");
-            tagocska.className = "topic-tag";
-            tagocska.textContent = "igen";
-            tagocska.onclick = function() {
-                removeTag(this);
-            };
+            // var topicTag = document.createElement("div");
+            // topicTag.className = "topic-tag";
+            // topicTag.textContent = selectedTopic;
+            // topicTag.onclick = function() {
+            //     removeTag(this);
+            // };
+            //
+            // var tagocska = document.createElement("div");
+            // tagocska.className = "topic-tag";
+            // tagocska.textContent = "igen";
+            // tagocska.onclick = function() {
+            //     removeTag(this);
+            // };
 
 
             var row = document.createElement("tr");
@@ -386,8 +384,8 @@ function addSelectedTopic() {
 
             var skillCell = document.createElement("td");
             skillCell.className = "scrollable-column";
-            skillCell.appendChild(tagocska);
-            skillCell.appendChild(topicTag);
+            // skillCell.appendChild(tagocska);
+            // skillCell.appendChild(topicTag);
 
             var funcButtons = document.createElement("div");
             funcButtons.className = "func-buttons";
@@ -561,7 +559,6 @@ function sendDataToServer(data) {
     document.getElementById("skills-form").submit();
 }
 
-<<<<<<< HEAD
 
 function showTopicsAndSkillsInModal() {
     //console.log(topicCounter)
@@ -686,8 +683,6 @@ function showTopicsAndSkillsInModal() {
 }
 
 
-=======
->>>>>>> 2b81ede48b94675385b2b9590b40c88fc7e5f87b
 setupMentorModal();
 setupModal();
 setupSkillsModal();
