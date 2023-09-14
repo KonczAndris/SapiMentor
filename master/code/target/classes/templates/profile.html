@@ -98,7 +98,7 @@
                        th:async="async"
                        th:attr="data-cache='no-cache'">
                   <img th:unless="${profileImageBase64 != ''}"
-                       th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
+                       th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image" id="change-profile-image-sec">
                 </div>
 
                 <div class="upload-buttons">
@@ -373,14 +373,24 @@
 </div>
 <script th:src="@{/js/functions.js}"></script>
 <script>
-  const imageUploadInput = document.getElementById('imageUpload');
-  const profileImage = document.getElementById('change-profile-image');
+  document.addEventListener('DOMContentLoaded', function () {
+    const imageUploadInput = document.getElementById('imageUpload');
+    const profileImageFirst = document.getElementById('change-profile-image');
+    const profileImageSecond = document.getElementById('change-profile-image-sec');
 
-  imageUploadInput.addEventListener('change', (event) => {
-    const selectedImage = event.target.files[0];
-    const imageUrl = URL.createObjectURL(selectedImage);
-    profileImage.src = imageUrl;
+    // console.log("First: " + profileImageFirst)
+    // console.log("Second: " + profileImageSecond)
+    imageUploadInput.addEventListener('change', (event) => {
+      const selectedImage = event.target.files[0];
+      //console.log(selectedImage)
+      if(profileImageFirst != null){
+        profileImageFirst.src = URL.createObjectURL(selectedImage);
+      }else{
+       profileImageSecond.src = URL.createObjectURL(selectedImage);
+      }
+    });
   });
+
 </script>
 <!-- jQuery beolvasása CDN-ről -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

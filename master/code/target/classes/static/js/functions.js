@@ -384,8 +384,8 @@ function addSelectedTopic() {
 
             var skillCell = document.createElement("td");
             skillCell.className = "scrollable-column";
-            skillCell.appendChild(tagocska);
-            skillCell.appendChild(topicTag);
+            // skillCell.appendChild(tagocska);
+            // skillCell.appendChild(topicTag);
 
             var funcButtons = document.createElement("div");
             funcButtons.className = "func-buttons";
