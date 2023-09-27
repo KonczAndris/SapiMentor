@@ -106,6 +106,12 @@ public class UserServiceImpl implements UserService{
         }
     }
 
+    public boolean isAtLeastSecondYear(Long userId){
+        User user = userRepository.findById(userId).orElse(null);
+        Integer year = user.getYear();
+        return year != null && year >= 2;
+    }
+
 
 //    public void uploadProfileImage(String email, MultipartFile image) {
 //        User user = userRepository.findByEmail(email);

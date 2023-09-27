@@ -1,5 +1,6 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +20,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserServiceImpl;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class ProfileController {
@@ -58,7 +57,25 @@ public class ProfileController {
         User user = userRepository.findByEmail(email);
 
         UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
-        //System.out.println("UJ ERTEK" + userRegistrationDetails);
+        System.out.println("UJ ERTEK" + userRegistrationDetails);
+
+        List<String> rolesToDisplay = new ArrayList<>();
+        boolean hasOtherRoles = false;
+
+        for (Role role : user.getRoles()) {
+            if (!role.getName().equals("USER")) {
+                rolesToDisplay.add(role.getName());
+                hasOtherRoles = true;
+            }
+        }
+
+        if (!hasOtherRoles) {
+            rolesToDisplay.add("USER");
+        }
+
+        String rolesAsString = String.join(", ", rolesToDisplay);
+        model.addAttribute("userRolesToDisplay", rolesAsString);
+
 
         // Itt lekérem a témákat a service segítségével
         List<Topic> topics = topicService.getAllTopics();
@@ -254,6 +271,39 @@ public class ProfileController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a törlés során");
         }
+    }
+
+    @CrossOrigin(origins = "http://localhost:8080")
+    @PostMapping("/updateUserRoleStatus")
+    public ResponseEntity<String> updateUserRoleStatus(@RequestParam("selectedRole") String selectedRole,
+                                                       Principal principal) throws JsonProcessingException {
+        //System.out.println("Selected role: " + selectedRole);
+        String email = principal.getName();
+        //System.out.println("Email: " + email);
+
+        Long userId = userRepository.findByEmail(email).getId();
+        //System.out.println("User id: " + userId);
+
+        if(!userService.isAtLeastSecondYear(userId)){
+            //System.out.println("Nem masodik ev");
+            Map<String, String> responsee = new HashMap<>();
+            responsee.put("message", "Nem masod eves legalabb!"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
+            return ResponseEntity.ok(new ObjectMapper().writeValueAsString(responsee));
+        }else{
+            //System.out.println("Tobb/Vagy mint masodik ev");
+            User user = userRepository.findByEmail(email);
+            Role newRole = new Role(selectedRole);
+            //System.out.println("New role: " + newRole);
+            user.addRole(newRole);
+            userRepository.save(user);
+        }
+
+        // Az eredmény JSON objektum létrehozása
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Szerep módosítva!"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
+
+        // JSON objektum visszaadása a ResponseEntity segítségével
+        return ResponseEntity.ok(new ObjectMapper().writeValueAsString(response));
     }
 
 }

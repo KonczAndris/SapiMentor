@@ -141,4 +141,33 @@ public class User {
         return phoneNumber;
     }
 
+    public void addRole(Role newRole) {
+        if (this.roles == null) {
+            this.roles = new ArrayList<>();
+        }
+
+        System.out.println("New role: " + newRole.getName());
+        System.out.println("Roles: ");
+        var i = 0;
+        for (Role role : this.roles) {
+            if(role.getName().equals(newRole.getName())){
+                System.out.println("Role already exists");
+                i = 1;
+                return;
+            }else{
+                i = 0;
+                System.out.println("i2 : " + i);
+                System.out.println("Role does not exist");
+            }
+            System.out.println(role.getName());
+        }
+
+        if(i == 0){
+            System.out.println("Role added");
+            this.roles.add(newRole);
+        }else{
+            System.out.println("Role not added");
+        }
+    }
+
 }
