@@ -17,7 +17,7 @@
             <p class="menu-function">
                 <a href="/" th:href="@{/profile}"> <img th:src="@{/img/profile.png}" alt="Icon" class="menu-icon"> Profile</a>
         </div>
-        <div class="form-group">
+        <div class="form-group" th:if="${userRolesToDisplayIndex.contains('MENTOR') or userRolesToDisplayIndex.contains('MENTEE')}">
             <p class="menu-function">
                 <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
         </div>

@@ -219,9 +219,9 @@ function removeTag(element) {
     var selectedTags = document.querySelectorAll(".topic-tag-display");
     selectedTags.forEach(function(tag) {
         var tagName = tag.textContent;
-        console.log(tagName);
-        console.log(elementText);
-        console.log(tag)
+        //console.log(tagName);
+        //console.log(elementText);
+        //console.log(tag)
         if (tagName === elementText) {
             tag.style.removeProperty("display");
         }
@@ -553,7 +553,7 @@ function sendDataToServer(data) {
     // Állítsd be a rejtett mező értékét adataid alapján
     var profileTopicsDataItems = JSON.stringify(data);
     document.getElementById("profileTopicsDataItems").value = profileTopicsDataItems;
-    console.log("Adatok: " + profileTopicsDataItems);
+    //console.log("Adatok: " + profileTopicsDataItems);
 
     // Most küldd el az űrlapot
     document.getElementById("skills-form").submit();
@@ -684,7 +684,7 @@ function showTopicsAndSkillsInModal() {
 
 function updateRoleStatus(){
     var selectedRole = document.querySelector('input[name="role"]:checked').value;
-    console.log(selectedRole);
+    //console.log(selectedRole);
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
