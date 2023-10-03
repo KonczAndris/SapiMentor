@@ -706,29 +706,11 @@ function updateRoleStatus(){
         .then(data => {
             // Kezeljük a választ, és jelenítsük meg az üzenetet
             console.log(data.message);
+            location.reload();
         })
         .catch(error => {
             console.error('Hiba történt:', error);
         });
-
-    // fetch('updateUserRoleStatus', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'X-CSRF-TOKEN': token
-    //     },
-    //     body: JSON.stringify({
-    //         role: selectedRole, // Kiválasztott szerep
-    //     }),
-    // })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         // Kezeld a választ (pl. megjeleníts egy üzenetet)
-    //     })
-    //     .catch(error => {
-    //         console.error('Hiba történt:', error);
-    //     });
-
 }
 
 

@@ -21,11 +21,11 @@
       <p class="menu-function">
         <a href="/" th:href="@{/profile}"> <img th:src="@{/img/profile.png}" alt="Icon" class="menu-icon"> Profile</a>
     </div>
-    <div class="form-group">
+    <div class="form-group" th:if="${userRolesToDisplay.contains('MENTOR') or userRolesToDisplay.contains('MENTEE')}">
       <p class="menu-function">
         <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
     </div>
-    <div class="form-group">
+    <div class="form-group" >
       <p class="menu-function">
         <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
     </div>
@@ -132,14 +132,12 @@
               <p class="first-name" th:text="${userRegistrationDetails.firstName}"></p>
             </div>
 
-
             <div id="edit-role">
               <h2 th:text="${userRolesToDisplay}" class="status"> </h2>
               <div class="edit-button">
               <button id="myMentorBtn"> <img th:src="@{/img/edit-profile.png}" alt="Edit Role" /> </button>
               </div>
             </div>
-
 
             <!-- MENTOR MODAL START -->
             <div id="mentorModal" class="modal-mentor">
@@ -169,7 +167,7 @@
                     </div>
                   </div>
                 </div>
-                <button type="button" id="mentor-save" class="btn btn-success" th:onclick="updateRoleStatus()">Save</button>
+                <button type="submit" id="mentor-save" class="btn btn-success" th:onclick="updateRoleStatus()">Save</button>
               </div>
             </div>
             <!-- MENTOR MODAL END -->
