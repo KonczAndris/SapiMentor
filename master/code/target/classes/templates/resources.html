@@ -68,10 +68,10 @@
 
         <div class="open-search-buttons">
             <button class="search-button" id="myFilterBtn" onclick="showFilterContainer()">Search</button>
-            <button class="reverse-button" id="myReverseBtn"><img th:src="@{/img/reverse.png}" alt="Icon"
-                                                                  class="reverse-icon"></button>
-            <button type="button" id="upload-hidden" class="btn btn-success">
+            <button class="reverse-button" id="myReverseBtn"><img th:src="@{/img/reverse.png}" alt="Icon" class="reverse-icon"></button>
+            <button type="button" id="upload-hidden" class="btn btn-success" >
                 <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
+
         </div>
 
         <!-- FILTER BAR START-->
@@ -83,9 +83,13 @@
                     <div class="topic-dropdown">
                         <button class="topic-dropbtn" onclick="toggleDropdown()">Choose topics</button>
                         <div class="topic-checkboxes" id="topic-myCheckboxes">
-                            <label><input type="checkbox" value="Informatics"> Informatics</label>
-                            <label><input type="checkbox" value="Languages"> Languages</label>
-                            <label><input type="checkbox" value="Engineering"> Engineering</label>
+                            <label th:each="topic : ${topics}">
+                                <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">
+                                <span th:text="${topic.topic}"></span>
+                            </label>
+<!--                            <label><input type="checkbox" value="Informatics"> Informatics</label>-->
+<!--                            <label><input type="checkbox" value="Languages"> Languages</label>-->
+<!--                            <label><input type="checkbox" value="Engineering"> Engineering</label>-->
                         </div>
                     </div>
                 </div>
@@ -109,7 +113,7 @@
                 <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
                 <button class="reverse-button" id="reverseButton"><img th:src="@{/img/reverse.png}" alt="Icon"
                                                                        class="reverse-icon"></button>
-                <button type="button" id="upload-upload" class="btn btn-success">
+                <button type="button" id="upload-upload" class="btn btn-success" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
                     <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
             </div>
         </div>
@@ -125,7 +129,7 @@
                     <th class="table-topic">Topic</th>
                     <th class="table-user">User</th>
                     <th class="table-likes">Likes</th>
-                    <th class="table-actions">Actions</th>
+                    <th class="table-actions" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">Actions</th>
                 </tr>
                 </thead>
                 <tbody id="link-table-body">
@@ -176,10 +180,11 @@
                         <button class="topic-dropbtn-modal" onclick="toggleDropdownModal()">Choose a topic</button>
                         <input type="hidden" id="topic-selected-modal" value="Choose a topic">
                         <div class="topic-dropdown-content" id="topic-myDropdown">
+                            <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
+                               th:attr="onclick='closeDropdown(\'' + ${topic.topic} + '\')'"></a>
                         </div>
 
-                        <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
-                                 th:attr="onclick='closeDropdown(\'' + ${topic.topic} + '\')'"></a>
+
                     </div>
                 </div>
             </div>
