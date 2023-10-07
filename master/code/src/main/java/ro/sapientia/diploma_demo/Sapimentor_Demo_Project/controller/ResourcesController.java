@@ -66,12 +66,12 @@ public class ResourcesController {
         showTopicsToDisplayResources(model, principal);
         return "resources";
     }
-    @GetMapping("/resources/examexamples")
+    @GetMapping("/resources/examExamples")
     public String showExamExamples(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
         return "examExamples";
     }
-    @GetMapping("/resources/diplomatheses")
+    @GetMapping("/resources/diplomaTheses")
     public String showDiplomaTheses(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
         return "diplomaTheses";

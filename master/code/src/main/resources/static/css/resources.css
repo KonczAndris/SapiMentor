@@ -592,7 +592,6 @@ body {
     font-size: 15px;
     margin: 15px;
     align-items: start;
-    opacity: 0.5;
 }
 
 .upload-button-modal:hover {
@@ -634,23 +633,25 @@ body {
 }
 
 .topic-dropdown-modal {
-    position: relative;
-    z-index: 9999;
     width: 200px;
 }
 
 .topic-dropdown-content {
     display: none;
-    width: auto;
+    width: 197px;
     border: 2px solid rgb(0, 0, 0);
     background-color: #ffffff;
     z-index: 1000;
-    transform: translateY(-15px);
+    transform: translateY(-20px);
+    top: 100%;
+    position: absolute;
 }
 
 .topic-dropdown-content.active {
     display: block;
+    margin-top: 0;
     margin-top: -45px;
+    z-index: 10000;
 }
 
 .topic-dropdown-content a {
