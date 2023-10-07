@@ -1,9 +1,12 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topic;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
@@ -47,7 +50,7 @@ public class ResourcesController {
         }
 
         String rolesAsString = String.join(",", rolesToDisplayResources);
-        System.out.println("Roles: " + rolesAsString);
+        //System.out.println("Roles: " + rolesAsString);
         model.addAttribute("userRolesToDisplayResources", rolesAsString);
     }
 
@@ -56,7 +59,7 @@ public class ResourcesController {
         User user = userRepository.findByEmail(email);
         // Itt lekérem a témákat a service segítségével
         List<Topic> topics = topicService.getAllTopics();
-        System.out.println("Topics: " + topics);
+        //System.out.println("Topics: " + topics);
         model.addAttribute("topics", topics);
     }
 
@@ -66,14 +69,27 @@ public class ResourcesController {
         showTopicsToDisplayResources(model, principal);
         return "resources";
     }
-    @GetMapping("/resources/examexamples")
+    @GetMapping("/resources/examExamples")
     public String showExamExamples(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
         return "examExamples";
     }
-    @GetMapping("/resources/diplomatheses")
+    @GetMapping("/resources/diplomaTheses")
     public String showDiplomaTheses(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
         return "diplomaTheses";
     }
+
+    @PostMapping("/resources/uploadResources")
+    public ResponseEntity<String> uploadResources(){
+        try{
+
+            return ResponseEntity.ok("Success");
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
+        }
+    }
+
+
 }

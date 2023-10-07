@@ -197,24 +197,24 @@ public class ProfileController {
 
     //holnap innen folytatni es megcsinalni a mentest plusz  megjeleniteni az adatokat a /profile oldalon
     @PostMapping("/saveProfileTopics")
-    public String saveProfileTopics(@RequestParam("profileTopicsDataItems") String profileTopicsDataItems,
+    public ResponseEntity<String> saveProfileTopics(String profileTopicsDataItems,
                                     Principal principal) {
         //ez a objectMapper a json stringet alakitja at objektumokka
         ObjectMapper objectMapper = new ObjectMapper();
         //System.out.println("HELLO");
-        System.out.println("Profile topics data items: " + profileTopicsDataItems);
+//        System.out.println("Profile topics data items: " + profileTopicsDataItems);
         try {
             // JSON string deszerializálása objektumokká
             Profile_Topics_DataItem[] dataItems = objectMapper.readValue(profileTopicsDataItems, Profile_Topics_DataItem[].class);
-            //System.out.println("Data items: " + dataItems);
+//            System.out.println("Data items: " + dataItems);
 
             for (Profile_Topics_DataItem dataItem : dataItems) {
                 String id = dataItem.getId();
                 String topic = dataItem.getTopic();
                 List<String> skills = dataItem.getSkills();
-                System.out.println("Id: " + id);
-                System.out.println("Topic: " + topic);
-                System.out.println("Skills: " + skills);
+//                System.out.println("Id: " + id);
+//                System.out.println("Topic: " + topic);
+//                System.out.println("Skills: " + skills);
 
                 if(!id.equals("")){
                     //Frissiti az adatokat a Profile_Topics entitasban
@@ -246,10 +246,10 @@ public class ProfileController {
                     profileTopicsRepository.save(profileTopics);
                 }
             }
-            return "redirect:/profile";
+            return ResponseEntity.ok("Sikeres mentés");
         }catch (Exception e) {
             e.printStackTrace();
-            return "errorPage";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a törlés során");
         }
     }
 
@@ -275,9 +275,9 @@ public class ProfileController {
 
     @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/updateUserRoleStatus")
-    public ResponseEntity<String> updateUserRoleStatus(@RequestParam("selectedRole") String selectedRole,
+    public ResponseEntity<String> updateUserRoleStatus(String selectedRole,
                                                        Principal principal) throws JsonProcessingException {
-        //System.out.println("Selected role: " + selectedRole);
+        System.out.println("Selected role: " + selectedRole);
         String email = principal.getName();
         //System.out.println("Email: " + email);
 

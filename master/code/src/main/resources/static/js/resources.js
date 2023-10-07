@@ -1,17 +1,17 @@
 document.getElementById("diplomaTheses").addEventListener("click", function () {
-    window.location.href = "/resources/diplomatheses";
+    window.location.href = "/resources/diplomaTheses";
 });
 
 document.getElementById("examExamples").addEventListener("click", function () {
-    window.location.href = "/resources/examexamples";
+    window.location.href = "/resources/examExamples";
 });
 
 document.getElementById("diplomaThesesDrop").addEventListener("click", function () {
-    window.location.href = "/resources/diplomatheses";
+    window.location.href = "/resources/diplomaTheses";
 });
 
 document.getElementById("examExamplesDrop").addEventListener("click", function () {
-    window.location.href = "/resources/examexamples";
+    window.location.href = "/resources/examExamples";
 });
 
 
@@ -101,7 +101,6 @@ function setupResourceModal() {
     var modal = document.getElementById("myResourceModal");
 
     var btn1 = document.getElementById("upload-upload");
-    //var btn2 = document.getElementById("upload-hidden");
     var span = document.getElementsByClassName("close-resource")[0];
     btn1.onclick = function() {
         modal.style.display = "flex";
@@ -349,13 +348,21 @@ function saveResourceDataToServer() {
         });
     });
 
-    sendDataToServer(data);
+    console.log(data);
+    sendResourcesDataToServer(data);
 }
 
-function sendDataToServer(data) {
+
+function sendResourcesDataToServer(data) {
     var profileTopicsDataItems = JSON.stringify(data);
     document.getElementById("resourceDataItems").value = profileTopicsDataItems;
     console.log(profileTopicsDataItems);
+
+function sendDataToServer(data) {
+    var resourceDataItems = JSON.stringify(data);
+    document.getElementById("resourceDataItems").value = resourceDataItems;
+    console.log(resourceDataItems);
+
 
     // Most küldd el az űrlapot
     document.getElementById("resource-form").submit();

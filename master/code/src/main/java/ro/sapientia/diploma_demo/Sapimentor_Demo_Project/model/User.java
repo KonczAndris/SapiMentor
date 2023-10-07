@@ -146,8 +146,8 @@ public class User {
             this.roles = new ArrayList<>();
         }
 
-        System.out.println("New role: " + newRole.getName());
-        System.out.println("Roles: ");
+//        System.out.println("New role: " + newRole.getName());
+//        System.out.println("Roles: ");
         var i = 0;
         for (Role role : this.roles) {
             if(role.getName().equals(newRole.getName())){

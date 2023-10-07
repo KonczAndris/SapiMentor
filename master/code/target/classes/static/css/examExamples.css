@@ -134,7 +134,8 @@ body {
     border-end-start-radius: 10px;
     border-end-end-radius: 10px;
     position: absolute;
-    z-index: 1000;
+    /* Keep this as 'absolute' */
+    z-index: 2;
 }
 
 .topic-checkboxes label {
@@ -368,8 +369,8 @@ body {
         margin-right: 0;
     }
 
-    #upload-upload{
-        display:none;
+    .upload-hidden {
+        display: none;
     }
 
     .search-button {
@@ -435,7 +436,7 @@ body {
 }
 
 /* RESOURCE MODAL */
-.modal-resource {
+.modal-examExamples {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -449,13 +450,12 @@ body {
     overflow-x: scroll;
 }
 
-.modal-content-resource {
+.modal-content-examExamples {
     position: relative;
     background-color: #fefefe;
     margin: auto;
     margin-top: 5%;
     padding: 10px;
-    padding-top: 20px;
     border: 1px solid #888;
     border-radius: 25px;
     width: 600px;
@@ -472,9 +472,26 @@ body {
     animation-duration: 0.4s;
 }
 
-.modal-content-resource::-webkit-scrollbar {
+.modal-content-examExamples::-webkit-scrollbar {
     width: 0;
     background: transparent;
+}
+
+.close-examExamples {
+    color: #aaaaaa;
+    float: left;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-right: 20px;
+    margin-left: auto;
+}
+
+.close-examExamples:hover,
+.close-examExamples:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .detail-row {
@@ -485,6 +502,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 
 .detail-label {
     width: 150px;
@@ -513,6 +531,34 @@ body {
     box-sizing: border-box;
     padding: 10px;
     margin: 5px 0;
+}
+
+#examExampleFileName-edit{
+    width: 100px;
+}
+
+.upload-button{
+    width: 90px;
+    border-radius: 7px;
+    border: 2px solid rgb(0, 0, 0);
+    box-sizing: border-box;
+    background: rgb(40, 152, 200);
+    color: white;
+    font-weight: 550;
+    padding: 10px;
+    margin: 5px 0;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.upload-button:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(1, 187, 255);
+    border: 2px solid white;
+}
+
+.fileUpload-row{
+    flex-direction: row;
 }
 
 .edit-input label {
@@ -663,6 +709,7 @@ body {
     color: rgb(50, 189, 149);
     display: block;
     font-size: small;
+    z-index: 9999;
 }
 
 .topic-dropdown-content a:hover {
@@ -676,6 +723,16 @@ body {
         color: white;
         right: 75px;
         top: 40px;
+    }
+
+    .close-resource {
+        position: relative;
+        color: #aaaaaa;
+        float: left;
+        font-size: 28px;
+        font-weight: bold;
+
+        margin-left: auto;
     }
 
     .detail-row {
@@ -724,6 +781,8 @@ thead{
     background: rgb(22, 175, 132);
     height: 40px;
     color: white;
+    position: sticky;
+    top: 0; /* Stick the header to the top */
     z-index: 1; /* Ensure the header appears above the table body */
 }
 
@@ -771,7 +830,7 @@ tr {
     border-radius: 20px;
     width: 90px;
     max-width: 55%;
-    min-width: 70px;
+    min-width: 85px;
     cursor: pointer;
     padding: 10px;
     border: none;
@@ -792,7 +851,7 @@ tr {
     background-color: rgb(238, 84, 76);
     border-radius: 20px;
     width: 90px;
-    min-width: 70px;
+    min-width: 85px;
     max-width: 55%;
     cursor: pointer;
     padding: 10px;
@@ -810,6 +869,30 @@ tr {
     background-color: rgb(233, 99, 81);
     border: 2px solid white;
     opacity: 1;
+}
+
+.download-button{
+    color: rgb(255, 255, 255);
+    background-color: rgb(40, 152, 200);
+    border-radius: 20px;
+    width: 90px;
+    min-width: 85px;
+    max-width: 55%;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    height: 35px;
+    font-size: 15px;
+    text-align: center;
+    justify-content: center;
+    opacity: 1;
+    margin-top: 4px;
+}
+
+.download-button:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(1, 187, 255);
+    border: 2px solid white;
 }
 
 .like-active{
@@ -854,7 +937,3 @@ tr {
     opacity: 1;
 }
 /* LINK TABLE END */
-
-.highlight {
-    background-color: #FFCCCC;
-}

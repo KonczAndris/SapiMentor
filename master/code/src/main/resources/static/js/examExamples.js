@@ -2,16 +2,16 @@ document.getElementById("diplomaTheses").addEventListener("click", function () {
     window.location.href = "/resources/diplomaTheses";
 });
 
-document.getElementById("examExamples").addEventListener("click", function () {
-    window.location.href = "/resources/examExamples";
+document.getElementById("resources").addEventListener("click", function () {
+    window.location.href = "/resources";
 });
 
 document.getElementById("diplomaThesesDrop").addEventListener("click", function () {
     window.location.href = "/resources/diplomaTheses";
 });
 
-document.getElementById("examExamplesDrop").addEventListener("click", function () {
-    window.location.href = "/resources/examExamples";
+document.getElementById("resourcesDrop").addEventListener("click", function () {
+    window.location.href = "/resources";
 });
 
 
@@ -24,6 +24,13 @@ function toggleFilterDropdown() {
 function closeDropdown(selectedItem) {
     var dropdownContent = document.getElementById("filter-myDropdown");
     dropdownContent.classList.remove("active");
+}
+
+function cancelFilterWindow(){
+    const filterContainer = document.querySelector(".filter-container");
+    const openSearchButtons = document.querySelector(".open-search-buttons");
+    filterContainer.style.display = "none";
+    openSearchButtons.style.display = "flex";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -94,14 +101,16 @@ function adjustLayout() {
     }
 }
 
+
 adjustLayout();
 window.addEventListener("resize", adjustLayout);
 
-function setupResourceModal() {
-    var modal = document.getElementById("myResourceModal");
+
+function setupExamExamplesModal() {
+    var modal = document.getElementById("examExamplesModal");
 
     var btn1 = document.getElementById("upload-upload");
-    var span = document.getElementsByClassName("close-resource")[0];
+    var span = document.getElementsByClassName("close-examExamples")[0];
     btn1.onclick = function() {
         modal.style.display = "flex";
     }
@@ -110,9 +119,11 @@ function setupResourceModal() {
     }
 }
 
+setupExamExamplesModal();
+
 
 function closeModalOnClickOutside() {
-    var modal1 = document.getElementById("myResourceModal");
+    var modal1 = document.getElementById("examExamplesModal");
 
     window.addEventListener("click", function(event) {
         if (event.target == modal1) {
@@ -121,7 +132,6 @@ function closeModalOnClickOutside() {
     });
 }
 
-setupResourceModal();
 closeModalOnClickOutside();
 
 function toggleDropdownModal() {
@@ -165,11 +175,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function setupSkillsModal() {
-    var modal = document.getElementById("resourceModal");
+    var modal = document.getElementById("examExamplesModal");
 
     var btn1 = document.getElementById("upload-upload");
     var btn2 = document.getElementById("upload-hidden");
-    var span = document.getElementsByClassName("close-resource")[0];
+    var span = document.getElementsByClassName("close-examExamples")[0];
     btn1.onclick = function() {
         modal.style.display = "flex";
     }
@@ -181,9 +191,17 @@ function setupSkillsModal() {
     }
 }
 
+function closeModal() {
+    var modal = document.getElementById('examExamplesModal');
+    modal.style.display = 'none';
+}
+
+// Add click event listener to the "Cancel" button
+var cancelButton = document.querySelector('.cancel-button-modal.close-examExamples');
+cancelButton.addEventListener('click', closeModal);
 
 function closeModalOnClickOutside() {
-    var modal1 = document.getElementById("resourceModal");
+    var modal1 = document.getElementById("examExamplesModal");
 
     window.addEventListener("click", function(event) {
         if (event.target == modal1) {
@@ -194,6 +212,7 @@ function closeModalOnClickOutside() {
 
 setupSkillsModal();
 closeModalOnClickOutside();
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const table = document.querySelector(".link-table");
@@ -259,15 +278,35 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-//NEW
+// Function to handle file selection and update the input field
+document.getElementById("fileUpload").addEventListener("change", function() {
+    const fileInput = document.getElementById("fileUpload");
+    const fileNameInput = document.getElementById("examExampleFileName-edit");
+
+    if (fileInput.files.length > 0) {
+        // Get the selected file
+        const selectedFile = fileInput.files[0];
+
+        // Update the input field with the file name
+        fileNameInput.value = selectedFile.name;
+    }
+});
+
+// Function to trigger the file input when the upload button is clicked
+document.getElementById("fileUploadButton").addEventListener("click", function() {
+    const fileInput = document.getElementById("fileUpload");
+    fileInput.click();
+});
+
 var linkCounter = 0;
 function addLinkRow() {
     try {
-        var selectedLink = document.getElementById("resourceLink-edit").value;
-        var selectedName = document.getElementById("resourceName-edit").value;
+        // var selectedFile = ...
+        var selectedFileName = document.getElementById("examExampleFileName-edit").value;
+        var selectedName = document.getElementById("examExampleName-edit").value;
         var selectedTopic = document.getElementById("topic-selected-modal").value;
 
-        if (selectedTopic !== "" && selectedLink !== "" && selectedName !== "") {
+        if (selectedTopic !== "" && selectedFileName !== "" && selectedName !== "") {
             var tableContainer = document.querySelector(".table-container table tbody");
 
             // Create a new row
@@ -279,10 +318,7 @@ function addLinkRow() {
 
             // Create a clickable link (anchor) for linkName
             var linkName = document.createElement("td");
-            var linkNameAnchor = document.createElement("a");
-            linkNameAnchor.textContent = selectedName;
-            linkNameAnchor.href = selectedLink;
-            linkName.appendChild(linkNameAnchor);
+            linkName = selectedName;
 
             var linkTopic = document.createElement("td");
             linkTopic.textContent = selectedTopic;
@@ -304,9 +340,14 @@ function addLinkRow() {
             dislikeButton.textContent = "Dislike";
             dislikeButton.className = "dislike-button-link";
 
+            var downloadButton = document.createElement("button");
+            downloadButton.textContent = "Download";
+            downloadButton.className = "download-button";
+
             // Append Like and Dislike buttons to the linkButtons cell
             linkButtons.appendChild(likeButton);
             linkButtons.appendChild(dislikeButton);
+            linkButtons.appendChild(downloadButton);
 
             // Append cells to the row
             row.appendChild(linkNumber);
@@ -327,7 +368,7 @@ function addLinkRow() {
     }
 }
 
-function saveResourceDataToServer() {
+function saveExamExamplesDataToServer() {
     var tableRows = document.querySelectorAll(".table-container table tbody tr");
     var data = [];
 
@@ -348,55 +389,16 @@ function saveResourceDataToServer() {
         });
     });
 
-    console.log(data);
-    sendResourcesDataToServer(data);
+    sendDataToServer(data);
 }
 
-<<<<<<< HEAD
-function sendResourcesDataToServer(data) {
-    var profileTopicsDataItems = JSON.stringify(data);
-    document.getElementById("resourceDataItems").value = profileTopicsDataItems;
-    console.log(profileTopicsDataItems);
-=======
 function sendDataToServer(data) {
-    var resourceDataItems = JSON.stringify(data);
-    document.getElementById("resourceDataItems").value = resourceDataItems;
-    console.log(resourceDataItems);
->>>>>>> 13eda77bde69328087afea133b3e1cd42800eb6a
+    var examExamplesDataItems = JSON.stringify(data);
+    document.getElementById("examExamplesDataItems").value = examExamplesDataItems;
+    console.log(examExamplesDataItems);
 
     // Most küldd el az űrlapot
-    document.getElementById("resource-form").submit();
+    document.getElementById("examExamples-form").submit();
 }
 
-function validateLink() {
-    var linkInput = document.getElementById("resourceLink-edit");
-    var linkValue = linkInput.value.trim();
-    var urlRegex = /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}([:][0-9]+)?)(\/[^\s]*)?$/;
-    var uploadButton = document.getElementById("upload-button-modal");
 
-    if (!urlRegex.test(linkValue)) {
-        linkInput.classList.add("highlight");
-        uploadButton.disabled = true;
-    } else {
-        linkInput.classList.remove("highlight");
-        uploadButton.disabled = false;
-        uploadButton.opacity = 1;
-    }
-}
-
-function validateName() {
-    var nameInput = document.getElementById("resourceName-edit");
-    var nameValue = nameInput.value.trim();
-    var uploadButton = document.getElementById("upload-button-modal");
-
-    // The regular expression checks for at least 5 letters followed by an optional number
-    if (!/^[a-zA-Zéáűúőíöü\s'-]{5,}(?:\d)?$/.test(nameValue)) {
-        nameInput.classList.add("highlight");
-        uploadButton.disabled = true;
-        uploadButton.cursor = "not-allowed";
-    } else {
-        nameInput.classList.remove("highlight");
-        uploadButton.disabled = false;
-        uploadButton.opacity = 1;
-    }
-}

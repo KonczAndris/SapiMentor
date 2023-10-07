@@ -336,10 +336,11 @@
                 </div>
 
                 <div class="divider"></div>
-              <form id="skills-form"  th:action="@{/saveProfileTopics}" method="post" >
-                <input type="hidden" name="profileTopicsDataItems" id="profileTopicsDataItems" value="">
-                <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>
-              </form>
+              <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>
+<!--              <form id="skills-form"  th:action="@{/saveProfileTopics}" method="post" >-->
+<!--                <input type="hidden" name="profileTopicsDataItems" id="profileTopicsDataItems" value="">-->
+<!--                <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>-->
+<!--              </form>-->
             </div>
           </div>
           <!-- SKILLS MODAL END -->
