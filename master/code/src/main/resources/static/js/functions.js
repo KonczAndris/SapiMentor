@@ -567,7 +567,7 @@ function sendDataToServer(data) {
         body: 'profileTopicsDataItems=' + encodeURIComponent(profileTopicsDataItems)
     }).then(data => {
             // Kezeljük a választ, és jelenítsük meg az üzenetet
-            console.log(data);
+            //console.log(data);
             location.reload();
         })
         .catch(error => {
