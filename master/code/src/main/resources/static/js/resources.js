@@ -357,6 +357,14 @@ function sendResourcesDataToServer(data) {
     var profileTopicsDataItems = JSON.stringify(data);
     document.getElementById("resourceDataItems").value = profileTopicsDataItems;
     console.log(profileTopicsDataItems);
+}
+
+function sendDataToServer(data) {
+    var resourceDataItems = JSON.stringify(data);
+    document.getElementById("resourceDataItems").value = resourceDataItems;
+    console.log(resourceDataItems);
+}
+
 
 function sendDataToServer(data) {
     var resourceDataItems = JSON.stringify(data);

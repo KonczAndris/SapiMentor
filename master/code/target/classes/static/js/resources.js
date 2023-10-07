@@ -352,17 +352,25 @@ function saveResourceDataToServer() {
     sendResourcesDataToServer(data);
 }
 
-<<<<<<< HEAD
+
 function sendResourcesDataToServer(data) {
     var profileTopicsDataItems = JSON.stringify(data);
     document.getElementById("resourceDataItems").value = profileTopicsDataItems;
     console.log(profileTopicsDataItems);
-=======
+}
+
 function sendDataToServer(data) {
     var resourceDataItems = JSON.stringify(data);
     document.getElementById("resourceDataItems").value = resourceDataItems;
     console.log(resourceDataItems);
->>>>>>> 13eda77bde69328087afea133b3e1cd42800eb6a
+}
+
+
+function sendDataToServer(data) {
+    var resourceDataItems = JSON.stringify(data);
+    document.getElementById("resourceDataItems").value = resourceDataItems;
+    console.log(resourceDataItems);
+
 
     // Most küldd el az űrlapot
     document.getElementById("resource-form").submit();
