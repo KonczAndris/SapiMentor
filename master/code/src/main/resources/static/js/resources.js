@@ -1,5 +1,5 @@
 document.getElementById("diplomaTheses").addEventListener("click", function () {
-    window.location.href = "/resources/diplomatheses";
+    window.location.href = "/resources/diplomaTheses";
 });
 
 document.getElementById("examExamples").addEventListener("click", function () {
@@ -7,7 +7,7 @@ document.getElementById("examExamples").addEventListener("click", function () {
 });
 
 document.getElementById("diplomaThesesDrop").addEventListener("click", function () {
-    window.location.href = "/resources/diplomatheses";
+    window.location.href = "/resources/diplomaTheses";
 });
 
 document.getElementById("examExamplesDrop").addEventListener("click", function () {

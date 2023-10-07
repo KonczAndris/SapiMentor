@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SapiMentor</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/resources.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/diplomaTheses.css}">
 
 </head>
 
@@ -50,25 +50,160 @@
     <!-- MENU BAR START-->
     <div class="resource-menu">
       <div class="button-container">
-        <a id="resources" th:href="@{/resources}"> RESOURCES</a>
-        <a id="examExamples" th:href="@{/resources/examexamples}"> EXAM EXAMPLES</a>
-        <a class="selected" th:href="@{/resources/diplomatheses}"> DIPLOMA THESES</a>
+        <button id="resources"> RESOURCES</button>
+        <button id="examExamples"> EXAM EXAMPLES</button>
+        <button class="selected"> DIPLOMA THESES</button>
       </div>
 
       <div class="dropdown">
-        <button class="dropbtn">DIPLOMA RESOURCES</button>
+        <button class="dropbtn">DIPLOMA THESES</button>
         <div class="dropdown-content">
-          <a id="resourcesDrop" th:href="@{/resources}">RESOURCES</a>
-          <a id="examExamplesDrop" th:href="@{/resources/examexamples}">EXAM EXAMPLES</a>
+          <a id="resourcesDrop">RESOURCES</a>
+          <a id="examExamplesDrop">EXAM EXAMPLES</a>
         </div>
       </div>
 
     </div>
-    <!-- MENU END START-->
+    <!-- MENU BAR END-->
+
+
+    <!-- SEARCH BUTTON BAR START-->
+    <div class="open-search-buttons">
+      <button class="search-button" id="myFilterBtn" onclick="showFilterContainer()">Search</button>
+      <button class="reverse-button" id="myReverseBtn"><img th:src="@{/img/reverse.png}" alt="Icon"
+                                                            class="reverse-icon"> </button>
+      <button type="button" id="upload-hidden" class="btn btn-success">
+        <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
+    </div>
+    <!-- SEARCH BUTTON BAR END-->
+
+    <!-- FILTER BAR START-->
+    <div class="filter-container">
+      <input type="text" class="filter-input" id="filter-input" placeholder="Search..." required>
+      <div class="filter-ddowns">
+        <div class="topic-dropdown-container">
+          <div class="topic-dropdown">
+            <button class="topic-dropbtn" onclick="toggleDropdown()">Choose topics</button>
+            <div class="topic-checkboxes" id="topic-myCheckboxes">
+              <label th:each="topic : ${topics}">
+                <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">
+                <span th:text="${topic.topic}"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-dropdown-container">
+          <div class="filter-dropdown">
+            <button class="filter-dropbtn" onclick="toggleFilterDropdown()">Choose a filter</button>
+            <input type="hidden" id="filter-selectedValue" value="Choose a filter">
+            <div class="filter-dropdown-content" id="filter-myDropdown">
+              <a href="#" onclick="closeDropdown('Choose a filter')">Choose a filter</a>
+              <a href="#" onclick="closeDropdown('by Name')">by Name</a>
+              <a href="#" onclick="closeDropdown('by Likes')">by Likes</a>
+              <a href="#" onclick="closeDropdown('by Date')">by Date</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="func-buttons">
+        <button class="search-button">Search</button>
+        <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
+        <button class="reverse-button" id="reverseButton"><img th:src="@{/img/reverse.png}" alt="Icon"
+                                                               class="reverse-icon"></button></button>
+        <button type="button" class="upload-hidden btn btn-success" id="upload-upload">
+          <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- FILTER BAR END-->
+
+    <!-- LINK TABLE START -->
+    <!-- LINK TABLE START -->
+    <div class="table-container" id="table-container">
+      <table class="link-table">
+        <thead id="link-table-head">
+        <tr>
+          <th class="table-number">NR</th>
+          <th class="table-link">Name</th>
+          <th class="table-topic">Topic</th>
+          <th class="table-user">User</th>
+          <th class="table-likes">Likes</th>
+          <th class="table-actions" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">Actions</th>
+        </tr>
+        </thead>
+        <tbody id="link-table-body">
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination-container">
+      <button id="prev-page-button">Previous</button>
+      <div id="page-counter"></div>
+      <button id="next-page-button">Next</button>
+    </div>
+    <!-- LINK TABLE END -->
   </div>
+
+  <!-- RESOURCE MODAL START -->
+  <div id="diplomaThesesModal" class="modal-diplomaTheses">
+    <div class="modal-content-diplomaTheses">
+      <span class="close-diplomaTheses">&times;</span>
+
+      <div class="form-group-edit">
+        <div class="detail-row">
+          <label for="fileUpload" class="detail-label">Upload File:</label>
+          <div class="fileUpload-row">
+            <input type="file" class="edit-input" id="fileUpload" accept=".jpg, .jpeg, .png, .pdf" style="display: none;">
+            <button type="button" class="upload-button" id="fileUploadButton">Upload</button>
+            <input type="text" class="edit-input" id="diplomaThesesFileName-edit" placeholder="" required autofocus="autofocus" readonly>
+          </div> </div>
+      </div>
+
+
+      <div class="form-group-edit">
+        <div class="detail-row">
+          <p class="detail-label">Name:</p>
+          <input type="text" class="edit-input" id="diplomaTheses-edit" placeholder="" required
+                 autofocus="autofocus">
+          <div class="info-icon" data-tooltip="">
+            <i class="fas fa-info-circle"></i>
+          </div>
+          <div class="info-tooltip">Enter an accurate name!</div>
+        </div>
+      </div>
+
+      <div class="form-group-edit" id="topicDD-edit">
+        <div class="detail-row">
+          <p class="detail-label">Topic:</p>
+          <div class="topic-dropdown-modal">
+            <button class="topic-dropbtn-modal" onclick="toggleDropdownModal()">Choose a topic</button>
+            <input type="hidden" id="topic-selected-modal" value="Choose a topic">
+            <div class="topic-dropdown-content" id="topic-myDropdown">
+              <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
+                 th:attr="onclick='closeDropdown(\'' + ${topic.topic} + '\')'"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="func-buttons-modal">
+        <!--<form id="diplomaTheses-form"  th:action="@{/saveResourceLinks}" method="post" >-->
+        <!--<input type="hidden" name="diplomaThesesDataItems" id="diplomaThesesDataItems" value="">-->
+        <button class="upload-button-modal" id="upload-button-modal" th:onclick="addLinkRow()" >Upload</button>
+        <!--</form>-->
+        <button class="cancel-button-modal close-diplomaTheses">Cancel</button>
+      </div>
+
+
+    </div>
+  </div>
+  <!-- RESOURCE MODAL END -->
+
 </div>
 
 <script th:src="@{/js/functions.js}"></script>
+<script th:src="@{/js/diplomaTheses.js}"></script>
 </body>
 
 </html>
