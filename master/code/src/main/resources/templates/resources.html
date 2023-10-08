@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SapiMentor</title>
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/resources.css}">
 
@@ -134,6 +134,18 @@
                 </tr>
                 </thead>
                 <tbody id="link-table-body">
+
+                <tr th:each="resource, stat : ${resourcesData}" th:id="'resource-row-' + ${resource.id}">
+                    <td th:text="${stat.index + 1}"></td>
+                    <td><a th:href="${resource.link}" target="_blank" th:text="${resource.name}"></a></td>
+                    <td th:text="${resource.topic_name}"></td>
+                    <td th:text="${resource.user_name}"></td>
+                    <td><span class="like-dislike-count" th:text="${resource.like + '/' + resource.dislike}"></span></td>
+                    <td>
+                        <button class="like-button-link">Like</button>
+                        <button class="dislike-button-link">Dislike</button>
+                    </td>
+                </tr>
 
                 </tbody>
             </table>

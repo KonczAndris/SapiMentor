@@ -222,7 +222,7 @@ public class ProfileController {
                     //System.out.println("ID NEM NULL");
                     Profile_Topics existingProfileTopic = profileTopicsRepository.findById(Long.parseLong(id)).orElse(null);
                     if(existingProfileTopic != null){
-                        System.out.println("Existing profile topic: " + existingProfileTopic);
+                        //System.out.println("Existing profile topic: " + existingProfileTopic);
                         existingProfileTopic.setTopic(topic);
                         existingProfileTopic.setTags(skills);
                         profileTopicsRepository.save(existingProfileTopic);
@@ -254,7 +254,7 @@ public class ProfileController {
     }
 
     
-    @CrossOrigin(origins = "http://localhost:8080") // Engedélyezi a CORS-t csak a http://localhost:3000 eredetű kérések számára
+    @CrossOrigin(origins = "http://localhost:8080") // Engedélyezi a CORS-t csak a http://localhost:8080 eredetű kérések számára
     @PostMapping("/deleteTopicAndSkills")
     public ResponseEntity<String> deleteTopicAndSkills(@RequestParam("topicId") Long topicId) {
         try {
