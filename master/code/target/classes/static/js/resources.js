@@ -328,25 +328,36 @@ function addLinkRow() {
 }
 
 function saveResourceDataToServer() {
-    var tableRows = document.querySelectorAll(".table-container table tbody tr");
-    var data = [];
+    // var tableRows = document.querySelectorAll(".table-container table tbody tr");
+     var data = [];
+    //
+    // tableRows.forEach(function (row) {
+    //     var linkNumber = row.querySelector("td:first-child").textContent;
+    //     var linkName = row.querySelector("td:nth-child(2)").textContent;
+    //     var linkTopic = row.querySelector("td:nth-child(3)").textContent;
+    //
+    //     // Assuming you have an array for storing likes and dislikes for each row
+    //     var linkLikes = row.querySelector("td:nth-child(4)").textContent;
+    //
+    //     // Push the data into the 'data' array
+    //     data.push({
+    //         linkNumber: linkNumber,
+    //         linkName: linkName,
+    //         linkTopic: linkTopic,
+    //         linkLikes: linkLikes,
+    //     });
+    // });
 
-    tableRows.forEach(function (row) {
-        var linkNumber = row.querySelector("td:first-child").textContent;
-        var linkName = row.querySelector("td:nth-child(2)").textContent;
-        var linkTopic = row.querySelector("td:nth-child(3)").textContent;
+    var link = document.getElementById("resourceLink-edit").value;
+    var linkName = document.getElementById("resourceName-edit").value;
+    var linkTopic = document.getElementById("topic-selected-modal").value;
 
-        // Assuming you have an array for storing likes and dislikes for each row
-        var linkLikes = row.querySelector("td:nth-child(4)").textContent;
-
-        // Push the data into the 'data' array
-        data.push({
-            linkNumber: linkNumber,
-            linkName: linkName,
-            linkTopic: linkTopic,
-            linkLikes: linkLikes,
-        });
+    data.push({
+        name: linkName,
+        link: link,
+        topic_name: linkTopic,
     });
+
 
     console.log(data);
     sendResourcesDataToServer(data);
@@ -354,9 +365,27 @@ function saveResourceDataToServer() {
 
 
 function sendResourcesDataToServer(data) {
-    var profileTopicsDataItems = JSON.stringify(data);
-    document.getElementById("resourceDataItems").value = profileTopicsDataItems;
-    console.log(profileTopicsDataItems);
+    var resourcesUploadDataItems = JSON.stringify(data);
+    //document.getElementById("resourceDataItems").value = profileTopicsDataItems;
+    console.log("Adatok: " + resourcesUploadDataItems);
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    fetch('http://localhost:8080/resources/uploadResources', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        },
+        body: 'resourcesUploadDataItems=' + encodeURIComponent(resourcesUploadDataItems)
+    }).then(data => {
+        // Kezeljük a választ, és jelenítsük meg az üzenetet
+        //console.log(data);
+        //location.reload();
+    })
+        .catch(error => {
+            console.error('Hiba történt:', error);
+        });
 }
 
 

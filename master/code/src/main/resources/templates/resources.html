@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SapiMentor</title>
-<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/resources.css}">
 
@@ -130,7 +130,7 @@
                     <th class="table-topic">Topic</th>
                     <th class="table-user">User</th>
                     <th class="table-likes">Likes</th>
-                    <th class="table-actions" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">Actions</th>
+                    <th class="table-actions">Actions</th>
                 </tr>
                 </thead>
                 <tbody id="link-table-body">
@@ -205,7 +205,7 @@
             <div class="func-buttons-modal">
                 <!--<form id="resource-form"  th:action="@{/saveResourceLinks}" method="post" >-->
                     <!--<input type="hidden" name="resourceDataItems" id="resourceDataItems" value="">-->
-                <button class="upload-button-modal" id="upload-button-modal" th:onclick="addLinkRow()" >Upload</button>
+                <button type="submit" class="upload-button-modal" id="upload-button-modal" th:onclick="saveResourceDataToServer()" >Upload</button>
                 <!--</form>-->
                 <button class="cancel-button-modal close-resource">Cancel</button>
             </div>
@@ -216,7 +216,7 @@
     <!-- RESOURCE MODAL END -->
 
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{/js/functions.js}"></script>
 <script th:src="@{/js/resources.js}"></script>
 </body>
