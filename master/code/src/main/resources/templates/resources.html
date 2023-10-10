@@ -216,9 +216,23 @@
     <!-- RESOURCE MODAL END -->
 
 </div>
+<script>
+    // const eventSource = new EventSource('/sse/subscribe');
+    //
+    // eventSource.onmessage = (event) => {
+    //     const message = event.data;
+    //     console.log(`Received SSE message: ${message}`);
+    //     // Itt frissitsd a like/dislike ertekeket a DOM-ban
+    //     const likeDislikeCountElement = document.querySelector('.like-dislike-count');
+    //     console.log(likeDislikeCountElement);
+    //     likeDislikeCountElement.textContent = message;
+    // };
+
+</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{/js/functions.js}"></script>
 <script th:src="@{/js/resources.js}"></script>
+
 </body>
 
 </html>

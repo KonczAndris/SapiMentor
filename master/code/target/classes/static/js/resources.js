@@ -381,7 +381,7 @@ function sendResourcesDataToServer(data) {
     }).then(data => {
         // Kezeljük a választ, és jelenítsük meg az üzenetet
         //console.log(data);
-        //location.reload();
+        location.reload();
     })
         .catch(error => {
             console.error('Hiba történt:', error);
@@ -431,3 +431,105 @@ function validateName() {
         uploadButton.opacity = 1;
     }
 }
+
+const eventSource = new EventSource('/sse/subscribe');
+
+eventSource.onmessage = (event) => {
+    const message = event.data;
+    console.log(`Received SSE message: ${message}`);
+    // Itt frissitsd a like/dislike ertekeket a DOM-ban
+    const likeDislikeCountElement = document.querySelector('.like-dislike-count');
+    console.log(likeDislikeCountElement);
+    likeDislikeCountElement.textContent = message;
+};
+
+// A függvény, amely elküldi a like vagy dislike kérést a szervernek
+function sendLikeOrDislike(resourceId, action) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    // URL, ahol az SSE események érkeznek (ezt a megfelelő szerveroldali végpontra kell állítani)
+    const likeSseUrl = "/sse/send-like";
+    const dislikeSseUrl = "/sse/send-dislike";
+
+    // Elküldjük az AJAX kérést a szervernek
+    // A resourceId az adott forrás azonosítója, action pedig a "like" vagy "dislike"
+    // Például: /resources/like?resourceId=123 vagy /resources/dislike?resourceId=123
+    console.log("Resource: " + resourceId);
+    console.log("Action: " + action);
+    const url = `/resources/${action}?resourceId=${resourceId}`;
+    console.log("URL: " + url);
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                // Sikeres kérés esetén elküldjük két külön SSE üzenetet a like és dislike értékekről
+                const message = `${action}:${resourceId}`;
+                console.log("Message: " + message);
+                if (action === "like") {
+                    fetch(likeSseUrl, {
+                        method: 'POST',
+                        body: JSON.stringify({ message }),
+                        headers: {
+                            'Content-Type': 'text/plain',
+                            'X-CSRF-TOKEN': token
+                        },
+                    });
+                } else if (action === "dislike") {
+                    fetch(dislikeSseUrl, {
+                        method: 'POST',
+                        body: JSON.stringify({ message }),
+                        headers: {
+                            'Content-Type': 'text/plain',
+                            'X-CSRF-TOKEN': token
+                        },
+                    });
+                }
+                console.log("Response: " + response);
+                return response.text();
+            } else {
+                throw new Error('Request failed');
+            }
+        })
+        .then(data => {
+            // A válaszban érkező adatokat kezelheted itt (opcionális)
+            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+
+
+// A like gomb eseménykezelője
+document.querySelectorAll('.like-button-link').forEach(likeButton => {
+    likeButton.addEventListener('click', () => {
+        // Az adott sor azonosítójának megszerzése
+        const rowId = likeButton.closest('tr').id;
+        const resourceId = rowId.replace('resource-row-', '');
+        // console.log("Resource: " + resourceId);
+        // console.log("Row: " + rowId);
+
+        // Like küldése a szervernek
+        sendLikeOrDislike(resourceId, 'like');
+    });
+});
+
+// A dislike gomb eseménykezelője
+document.querySelectorAll('.dislike-button-link').forEach(dislikeButton => {
+    dislikeButton.addEventListener('click', () => {
+        // Az adott sor azonosítójának megszerzése
+        const rowId = dislikeButton.closest('tr').id;
+        const resourceId = rowId.replace('resource-row-', '');
+
+        // Dislike küldése a szervernek
+        sendLikeOrDislike(resourceId, 'dislike');
+    });
+});
+

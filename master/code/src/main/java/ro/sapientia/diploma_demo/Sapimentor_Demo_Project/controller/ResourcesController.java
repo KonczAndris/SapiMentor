@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Resources;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topic;
@@ -21,6 +23,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequestMapping("/resources")
 @Controller
 public class ResourcesController {
     private final UserRepository userRepository;
@@ -28,16 +31,19 @@ public class ResourcesController {
     private final ResourcesRepository resourcesRepository;
 
     private final ResourceServices resourceServices;
+    private final SseController sseController;
 
     @Autowired
     public ResourcesController(UserRepository userRepository,
                                TopicService topicService,
                                ResourcesRepository resourcesRepository,
-                               ResourceServices resourceServices) {
+                               ResourceServices resourceServices,
+                               SseController sseController) {
         this.userRepository = userRepository;
         this.topicService = topicService;
         this.resourcesRepository = resourcesRepository;
         this.resourceServices = resourceServices;
+        this.sseController = sseController;
     }
 
     private void showUserRolesToDisplayResources(Model model, Principal principal){
@@ -74,7 +80,7 @@ public class ResourcesController {
         model.addAttribute("topics", topics);
     }
 
-    @GetMapping("/resources")
+    @GetMapping("")
     public String showResources(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
@@ -84,18 +90,20 @@ public class ResourcesController {
 
         return "resources";
     }
-    @GetMapping("/resources/examExamples")
+    @GetMapping("/examExamples")
     public String showExamExamples(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
+        showTopicsToDisplayResources(model, principal);
         return "examExamples";
     }
-    @GetMapping("/resources/diplomaTheses")
+    @GetMapping("/diplomaTheses")
     public String showDiplomaTheses(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
+        showTopicsToDisplayResources(model, principal);
         return "diplomaTheses";
     }
 
-    @PostMapping("/resources/uploadResources")
+    @PostMapping("/uploadResources")
     public ResponseEntity<String> uploadResources(String resourcesUploadDataItems,
                                                   Principal principal){
         //ez a objectMapper a json stringet alakitja at objektumokka
@@ -110,7 +118,7 @@ public class ResourcesController {
             Resources[] resources_dataItems = objectMapper.readValue(resourcesUploadDataItems, Resources[].class);
             //System.out.println("Resources data items: " + resources_dataItems);
 
-            for (Resources resourcesData :resources_dataItems){
+            for (Resources resourcesData : resources_dataItems){
                 String name = resourcesData.getName();
                 String link = resourcesData.getLink();
                 String topic_name = resourcesData.getTopic_name();
@@ -136,6 +144,9 @@ public class ResourcesController {
                 // Resources entitas elmentese az adatbazisba
                 resourcesRepository.save(resources);
 
+                sseController.sendSseMessage(resources.getLike() + "/" + resources.getDislike());
+
+
             }
 
             return ResponseEntity.ok("Sikeres Feltoltes");
@@ -145,5 +156,17 @@ public class ResourcesController {
         }
     }
 
+    @PostMapping("/like")
+    public ResponseEntity<String> likeResource(@RequestParam Long resourceId) {
+        System.out.println("Resource ID: " + resourceId);
+        resourceServices.likeResource(resourceId); // Hívjuk meg a service rétegben lévő likeResource metódust
+        return ResponseEntity.ok("Liked resource with ID: " + resourceId);
+    }
+
+    @PostMapping("/dislike")
+    public ResponseEntity<String> dislikeResource(@RequestParam Long resourceId) {
+        resourceServices.dislikeResource(resourceId); // Hívjuk meg a service rétegben lévő dislikeResource metódust
+        return ResponseEntity.ok("Disliked resource with ID: " + resourceId);
+    }
 
 }
