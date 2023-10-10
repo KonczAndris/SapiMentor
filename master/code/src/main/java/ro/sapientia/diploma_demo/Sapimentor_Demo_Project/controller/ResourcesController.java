@@ -143,10 +143,6 @@ public class ResourcesController {
 
                 // Resources entitas elmentese az adatbazisba
                 resourcesRepository.save(resources);
-
-                sseController.sendSseMessage(resources.getLike() + "/" + resources.getDislike());
-
-
             }
 
             return ResponseEntity.ok("Sikeres Feltoltes");
