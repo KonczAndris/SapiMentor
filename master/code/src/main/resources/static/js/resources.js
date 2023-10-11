@@ -497,8 +497,29 @@ function validateName() {
 //         });
 // }
 $(document).ready(function (){
+
+    // SSE
     var urlEndpoint = "/sse/subscribe";
-    var eventSource = new EventSource(urlEndpoint);
+    //itt az eventsource a szerver oldalon lévő végpontot figyeli
+    const eventSource = new EventSource(urlEndpoint);
+
+    eventSource.onopen = function(event) {
+        console.log('SSE connection opened.');
+    };
+
+    eventSource.onerror = function(event) {
+        console.error('SSE error:', event);
+    };
+
+    eventSource.addEventListener('LikeOrDislike', function(event) {
+        const data = JSON.parse(event.data);
+        console.log('Received SSE message:', data);
+        // Itt frissitsd a like/dislike ertekeket a DOM-ban
+        const likeDislikeCountElement = document.querySelector('.like-dislike-count');
+        console.log(likeDislikeCountElement);
+        likeDislikeCountElement.textContent = data.like + "/" + data.dislike;
+    });
+
 
     function sendLikeOrDislike(resourceId, action){
         var token = $("meta[name='_csrf']").attr("content");
@@ -508,7 +529,43 @@ $(document).ready(function (){
 
         const url = `/resources/${action}?resourceId=${resourceId}`;
         console.log("URL: " + url);
-
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
+                // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
+                fetch(sseUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({ message: `${action}:${resourceId}` }), // Konvertáljuk JSON formátumra
+                    headers: {
+                        'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
+                        'X-CSRF-TOKEN': token
+                    },
+                })
+                response.text().then(data => {
+                    // Kezeld itt a szöveget (data)
+                    console.log(data);
+                    // Például: frissítheted a DOM-ot adataink alapján
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                throw new Error('Request failed');
+            }
+        })
+        .then(data => {
+            // A válaszban érkező adatokat kezelheted itt (opcionális)
+            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 
 // A like gomb eseménykezelője

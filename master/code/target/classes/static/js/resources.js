@@ -498,17 +498,96 @@ function validateName() {
 // }
 $(document).ready(function (){
     var urlEndpoint = "/sse/subscribe";
-    var eventSource = new EventSource(urlEndpoint);
+    const eventSource = new EventSource('/sse/subscribe');
+
+    eventSource.onopen = function(event) {
+        console.log('SSE connection opened.');
+    };
+
+    eventSource.onerror = function(event) {
+        console.error('SSE error:', event);
+    };
+
+    eventSource.addEventListener('LikeOrDislike', function(event) {
+        const data = JSON.parse(event.data);
+        console.log('Received SSE message:', data);
+        // Itt frissitsd a like/dislike ertekeket a DOM-ban
+        const likeDislikeCountElement = document.querySelector('.like-dislike-count');
+        console.log(likeDislikeCountElement);
+        likeDislikeCountElement.textContent = data.like + "/" + data.dislike;
+    });
+
+
+    // eventSource.onmessage = ("likeOrDislike", function (event) {
+    //   var data = JSON.parse(event.data);
+    //
+    //   console.log(data);
+    //   var likeCount = data.like;
+    //   var dislikeCount = data.dislike;
+    //
+    //   var likeDislikeElement = document.querySelector(".like-dislike-count");
+    //   likeDislikeElement.textContent = likeCount + "/" + dislikeCount;
+    // });
+
+    // eventSource.onerror = function(event) {
+    //     console.error("EventSource failed:", event);
+    //     eventSource.close();
+    // };
+    //
+    //
+    // eventSource.onmessage = function(event) {
+    //     // Itt kezeled az érkező üzenetet
+    //     var data = JSON.parse(event.data);
+    //     console.log("Érkező adatok: " + JSON.stringify(data));
+    // };
+
+
 
     function sendLikeOrDislike(resourceId, action){
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
 
-        const sseUrl = "/sse/send"; // Módosítottuk a SSE URL-t send-re
+        const sseUrl = "/sse/sendLikeOrDislike"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
 
         const url = `/resources/${action}?resourceId=${resourceId}`;
         console.log("URL: " + url);
-
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
+                // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
+                fetch(sseUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({ message: `${action}:${resourceId}` }), // Konvertáljuk JSON formátumra
+                    headers: {
+                        'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
+                        'X-CSRF-TOKEN': token
+                    },
+                })
+                response.text().then(data => {
+                    // Kezeld itt a szöveget (data)
+                    console.log(data);
+                    // Például: frissítheted a DOM-ot adataink alapján
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                throw new Error('Request failed');
+            }
+        })
+        .then(data => {
+            // A válaszban érkező adatokat kezelheted itt (opcionális)
+            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 
 // A like gomb eseménykezelője
@@ -536,7 +615,7 @@ $(document).ready(function (){
             sendLikeOrDislike(resourceId, 'dislike');
         });
     });
-    
+
 })
 // var urlEndpoint = "/sse/subscribe";
 // var eventSource = new EventSource(urlEndpoint);

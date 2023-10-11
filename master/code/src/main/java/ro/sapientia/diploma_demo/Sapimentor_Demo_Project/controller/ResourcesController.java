@@ -161,7 +161,7 @@ public class ResourcesController {
 
     @PostMapping("/dislike")
     public ResponseEntity<String> dislikeResource(@RequestParam Long resourceId) {
-        resourceServices.dislikeResource(resourceId); // Hívjuk meg a service rétegben lévő dislikeResource metódust
+        //resourceServices.dislikeResource(resourceId); // Hívjuk meg a service rétegben lévő dislikeResource metódust
         return ResponseEntity.ok("Disliked resource with ID: " + resourceId);
     }
 
