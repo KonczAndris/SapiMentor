@@ -497,8 +497,11 @@ function validateName() {
 //         });
 // }
 $(document).ready(function (){
+
+    // SSE
     var urlEndpoint = "/sse/subscribe";
-    const eventSource = new EventSource('/sse/subscribe');
+    //itt az eventsource a szerver oldalon lévő végpontot figyeli
+    const eventSource = new EventSource(urlEndpoint);
 
     eventSource.onopen = function(event) {
         console.log('SSE connection opened.');
@@ -516,31 +519,6 @@ $(document).ready(function (){
         console.log(likeDislikeCountElement);
         likeDislikeCountElement.textContent = data.like + "/" + data.dislike;
     });
-
-
-    // eventSource.onmessage = ("likeOrDislike", function (event) {
-    //   var data = JSON.parse(event.data);
-    //
-    //   console.log(data);
-    //   var likeCount = data.like;
-    //   var dislikeCount = data.dislike;
-    //
-    //   var likeDislikeElement = document.querySelector(".like-dislike-count");
-    //   likeDislikeElement.textContent = likeCount + "/" + dislikeCount;
-    // });
-
-    // eventSource.onerror = function(event) {
-    //     console.error("EventSource failed:", event);
-    //     eventSource.close();
-    // };
-    //
-    //
-    // eventSource.onmessage = function(event) {
-    //     // Itt kezeled az érkező üzenetet
-    //     var data = JSON.parse(event.data);
-    //     console.log("Érkező adatok: " + JSON.stringify(data));
-    // };
-
 
 
     function sendLikeOrDislike(resourceId, action){

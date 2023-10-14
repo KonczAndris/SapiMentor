@@ -43,7 +43,7 @@ public class SseController {
         emitters.add(sseEmitter);
         return sseEmitter;
     }
-
+    //exeption handler vagy global exception handler
 
     // SSE endpoint
     // itt a szerver elkuldi a kliensnek az uzenetet
