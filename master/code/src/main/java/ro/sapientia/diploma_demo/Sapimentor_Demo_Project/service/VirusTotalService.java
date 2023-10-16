@@ -1,0 +1,145 @@
+package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+@Service
+public class VirusTotalService {
+
+    //@Value("${virustotal.api.key}")
+    private final String apiKey = "7806c278ec2b1b0cf2a451eaf26d0a4e76d317569281c351640c9cee147dfb66";
+    private final String virusTotalApiUrl = "https://www.virustotal.com/api/v2/url/report?apikey={apiKey}&resource={url}";
+    private final RestTemplate restTemplate;
+
+    public VirusTotalService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+//    public String checkUrlSafety(String url) {
+//        String requestUrl = "https://www.virustotal.com/api/v3/urls";
+//        HttpRequest request = HttpRequest.newBuilder()
+//                .uri(URI.create(requestUrl))
+//                .header("accept", "application/json")
+//                .header("x-apikey", apiKey)
+//                .header("content-type", "application/x-www-form-urlencoded")
+//                .method("POST", HttpRequest.BodyPublishers.ofString("url=" + url))
+//                .build();
+//
+//        try {
+//            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+//            System.out.println("Response body: " + response.body());
+//            // Ide tedd az URL biztonsági ellenőrzés logikáját
+//            return response.body();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
+    // A VirusTotal API v3-at hasznalom mert a v2 mar nem tamogatott.
+
+    public String checkUrlSafety(String url) {
+        try {
+            // itt a requestUrl-ben megadott URL-re kell POST kérést küldeni a VirusTotal API-nak
+            // A requestUrl-ben megadott URL-t a "url" paraméterben kell megadni.
+            // ez a resz azt csinalja, hogy a requestUrl-ben megadott URL-re POST kerest kuldd a VirusTotal API-nak
+            String requestUrl = "https://www.virustotal.com/api/v3/urls";
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(requestUrl))
+                    .header("accept", "application/json")
+                    .header("x-apikey", apiKey)
+                    .header("content-type", "application/x-www-form-urlencoded")
+                    .method("POST", HttpRequest.BodyPublishers.ofString("url=" + url))
+                    .build();
+
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            //System.out.println("Response body: " + response.body());
+
+            // itt a response body-bol kell kinyerni az "analysisId"-t
+            String analysisId = extractAnalysisId(response.body());
+
+            // itt a response body-bol kinyert "analysisId"-t kell hasznalni a safety ellenorzeshez
+            String safetyResult = checkSafety(analysisId);
+
+            return safetyResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Hiba történt az URL ellenőrzése közben";
+        }
+    }
+
+    //itt a response body-bol kinyerem az "analysisId"-t
+    private String extractAnalysisId(String responseBody) {
+        try {
+            // Az adott JSON választ egy JSON objektumként kell feldolgozni.
+            JSONObject jsonObject = new JSONObject(responseBody);
+
+            // A "data" objektumból az "id" kulcs értéke a keresett "analysisId".
+            JSONObject dataObject = jsonObject.getJSONObject("data");
+            String analysisId = dataObject.getString("id");
+
+            return analysisId;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null; // Vagy valamilyen hiba kezelése, például null visszaadása
+        }
+    }
+
+    // itt a response body-bol kinyert "analysisId"-t kell hasznalni a safety ellenorzeshez
+    // a "checkSafety" fuggveny visszaterese egy JSON stringgel, amiben benne van az URL biztonsagi erteke
+    private String checkSafety(String analysisId) {
+        try {
+            String requestUrl = "https://www.virustotal.com/api/v3/analyses/" + analysisId;
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(requestUrl))
+                    .header("accept", "application/json")
+                    .header("x-apikey", apiKey)
+                    .method("GET", HttpRequest.BodyPublishers.noBody())
+                    .build();
+
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            //System.out.println("Safety Response body: " + response.body());
+
+            return response.body();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Hiba történt az URL biztonság ellenőrzése közben";
+        }
+    }
+
+}
+
+
+
+//package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
+//
+//import org.springframework.stereotype.Service;
+//import org.springframework.web.client.RestTemplate;
+//
+//@Service
+//public class VirusTotalService {
+//
+//    //@Value("${virustotal.api.key}")
+//    private final String apiKey = "7806c278ec2b1b0cf2a451eaf26d0a4e76d317569281c351640c9cee147dfb66";
+//    private final String virusTotalApiUrl = "https://www.virustotal.com/vtapi/v2/url/report?apikey={apiKey}&resource={url}";
+//    private final RestTemplate restTemplate;
+//
+//    public VirusTotalService(RestTemplate restTemplate) {
+//        this.restTemplate = restTemplate;
+//    }
+//
+//    public String checkUrlSafety(String url) {
+//        String urlToCheck = url.replace("http://", "").replace("https://", "");
+//        String apiUrl = virusTotalApiUrl.replace("{apiKey}", apiKey).replace("{url}", urlToCheck);
+//        String response = restTemplate.getForObject(apiUrl, String.class);
+//        return response;
+//    }
+//}

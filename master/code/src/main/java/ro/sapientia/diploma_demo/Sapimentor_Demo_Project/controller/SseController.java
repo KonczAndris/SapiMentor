@@ -50,13 +50,13 @@ public class SseController {
     // a kliensnek a SSE objektumot kell hasznalnia a kliens es a szerver kozotti kommunikaciohoz
     @PostMapping("/sendLikeOrDislike")
     public ResponseEntity<String> sendSseMessage(@RequestBody Map<String, String> data) {
-        System.out.println("SSE message sent(data): " + data);
+        //System.out.println("SSE message sent(data): " + data);
         String message = data.get("message");
-        System.out.println("SSE message sent1(message): " + message);
+        //System.out.println("SSE message sent1(message): " + message);
         if (message == null || message.isEmpty()) {
             return ResponseEntity.badRequest().body("Invalid message");
         }
-        System.out.println("SSE message sent2(message): " + message);
+        //System.out.println("SSE message sent2(message): " + message);
 
         //A message-t elvalasztjuk a ":" karakterrel
         String[] messageParts = message.split(":");
@@ -64,14 +64,14 @@ public class SseController {
         if (messageParts.length == 2) {
             //Action kinyerese a message-bol
             String action = messageParts[0];
-            System.out.println("SSE message sent(action): " + action);
+            //System.out.println("SSE message sent(action): " + action);
 
             //Resource ID kinyerese a message-bol
             Long resourceId = Long.parseLong(messageParts[1]);
-            System.out.println("SSE message sent(resourceId): " + resourceId);
+            //System.out.println("SSE message sent(resourceId): " + resourceId);
 
             Map<String, Integer> likeAndDislikeCounts = resourceServices.getLikeAndDislikeCounts(resourceId);
-            System.out.println("SSE message sent(likeAndDislikeCounts): " + likeAndDislikeCounts);
+            //System.out.println("SSE message sent(likeAndDislikeCounts): " + likeAndDislikeCounts);
 
             for (SseEmitter emitter : emitters) {
                 try {

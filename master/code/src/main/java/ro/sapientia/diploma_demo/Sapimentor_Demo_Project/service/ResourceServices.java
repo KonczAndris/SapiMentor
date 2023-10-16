@@ -30,6 +30,7 @@ public class ResourceServices {
         Map<String, Integer> likeAndDislikeCounts = new HashMap<>();
         likeAndDislikeCounts.put("like", resource.getLike());
         likeAndDislikeCounts.put("dislike", resource.getDislike());
+        likeAndDislikeCounts.put("rowId", resource.getId().intValue());
 
         return likeAndDislikeCounts;
     }
@@ -38,10 +39,10 @@ public class ResourceServices {
         Resources resource = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
 
-        // Növeljük a like számot
+        // Noveljuk a like erteket
         resource.setLike(resource.getLike() + 1);
 
-        // Mentjük az új értéket az adatbázisba
+        // Elmentjuk az uj like erteket az adatbazisba
         resourcesRepository.save(resource);
     }
 
@@ -49,10 +50,32 @@ public class ResourceServices {
         Resources resource = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
 
-        // Növeljük a dislike számot
+        // Noveljuk a dislike erteket
         resource.setDislike(resource.getDislike() + 1);
 
-        // Mentjük az új értéket az adatbázisba
+        // Elmentjuk az uj dislike erteket az adatbazisba
+        resourcesRepository.save(resource);
+    }
+
+    public void revokeLike(Long resourceId){
+        Resources resource = resourcesRepository.findById(resourceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
+
+        // Csokkentjuk a like erteket
+        resource.setLike(resource.getLike() - 1);
+
+        // Elmentjuk az uj like erteket az adatbazisba
+        resourcesRepository.save(resource);
+    }
+
+    public void revokeDislike(Long resourceId){
+        Resources resource = resourcesRepository.findById(resourceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
+
+        // Csokkentjuk a dislike erteket
+        resource.setDislike(resource.getDislike() - 1);
+
+        // Elmentjuk az uj dislike erteket az adatbazisba
         resourcesRepository.save(resource);
     }
 }
