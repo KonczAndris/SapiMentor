@@ -462,7 +462,8 @@ function addSelectedTopic() {
 
             topicCounter++; // Növeljük az egyedi azonosító számot
         } else {
-            // Vagy használhatsz egy másféle visszajelzést is
+
+            // itt kell andrisnak a hibauzenetet elhelyezze ugy ahogy o szeretne
             alert("Ez a téma már hozzá van adva!");
         }
     }

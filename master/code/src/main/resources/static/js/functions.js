@@ -462,7 +462,8 @@ function addSelectedTopic() {
 
             topicCounter++; // Növeljük az egyedi azonosító számot
         } else {
-            // Vagy használhatsz egy másféle visszajelzést is
+
+            // itt kell andrisnak a hibauzenetet elhelyezze ugy ahogy o szeretne
             alert("Ez a téma már hozzá van adva!");
         }
     }
@@ -565,10 +566,20 @@ function sendDataToServer(data) {
             'X-CSRF-TOKEN': token
         },
         body: 'profileTopicsDataItems=' + encodeURIComponent(profileTopicsDataItems)
-    }).then(data => {
-            // Kezeljük a választ, és jelenítsük meg az üzenetet
-            //console.log(data);
-            location.reload();
+    }).then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                return response.text();
+                // throw new Error('Hiba történt a válaszban');
+            }
+        }).then(data => {
+            // ezt is andrisnak
+            // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
+            console.log(data);
+            if (data === "success") {
+                location.reload();
+            }
         })
         .catch(error => {
             console.error('Hiba történt:', error);
@@ -719,7 +730,7 @@ function updateRoleStatus(){
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Hiba történt a kérés során.');
+                throw new Error('Error occurred while updating user role status');
             }
             return response.json(); // Várunk egy JSON választ
         })

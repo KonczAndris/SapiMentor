@@ -153,7 +153,7 @@ public class ResourcesController {
                             resources.setDislike(dislike);
 
                             // Resources entitas elmentese az adatbazisba
-                             resourcesRepository.save(resources);
+                            // resourcesRepository.save(resources);
                         } else {
                             // link biztonsagos-e vagy karos
                             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NotSafe");
@@ -212,7 +212,7 @@ public class ResourcesController {
     private boolean isURLSafe(String url) {
         //System.out.println("URL to check: " + url);
         String response = virusTotalService.checkUrlSafety(url);
-        //System.out.println("VirusTotal response: " + response);
+        System.out.println("VirusTotal response: " + response);
 //        JSONObject jsonObject = null;
 //        try {
 //            jsonObject = new JSONObject(response);
