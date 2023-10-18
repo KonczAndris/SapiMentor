@@ -1,8 +1,6 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +20,6 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ResourceService
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.VirusTotalService;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -139,10 +134,10 @@ public class ResourcesController {
                 //System.out.println("IsURLSafe: " + isURLSafe(link));
 
                 // link ervenyessegenek ellenorzese
-                if (isLinkAccessible(link)){
+                if (resourceServices.isLinkAccessible(link)){
                     // linkben talalhato-e karterek
-                    if(!containsMaliciousContent(link)){
-                        if(isURLSafe(link)){
+                    if(!resourceServices.containsMaliciousContent(link)){
+                        if(resourceServices.isURLSafe(link)){
                             // Adatok elmentese a Resources entitasba
                             Resources resources = new Resources();
                             resources.setName(name);
@@ -153,7 +148,7 @@ public class ResourcesController {
                             resources.setDislike(dislike);
 
                             // Resources entitas elmentese az adatbazisba
-                            // resourcesRepository.save(resources);
+                             resourcesRepository.save(resources);
                         } else {
                             // link biztonsagos-e vagy karos
                             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NotSafe");
@@ -175,76 +170,76 @@ public class ResourcesController {
     }
 
 
-    // link letezesenek ellenorzese
-    // Ez fontos ez majd kell a link ellenorzesehez
-    private boolean isLinkAccessible(String url){
-        try{
-            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-            int responseCode = connection.getResponseCode();
-            return (responseCode == 200);
-        } catch (IOException e){
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-    // linkben talalhato-e karterek
-    private boolean containsMaliciousContent(String url){
-        String[] maliciousContent = {"<script>", "</script>", "<iframe>", "</iframe>"};
-        for (String content : maliciousContent){
-            if(url.contains(content)){
-                // ez a jsoup a html kodot tisztitja meg a karterektol
-                String cleanedUrl = Jsoup.clean(url, Whitelist.basic());
-                if(cleanedUrl.contains(content)){
-                    //System.out.println("Cleaned URL: " + cleanedUrl);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    // API kulcs VirusTotal:
-    // 7806c278ec2b1b0cf2a451eaf26d0a4e76d317569281c351640c9cee147dfb66
-    // Uj metodus: URL-ellenorzes VirusTotal segitsegevel
-    // itt a requestUrl-ben megadott URL-re kell POST kérést küldeni a VirusTotal API-nak
-    private boolean isURLSafe(String url) {
-        //System.out.println("URL to check: " + url);
-        String response = virusTotalService.checkUrlSafety(url);
-        System.out.println("VirusTotal response: " + response);
-//        JSONObject jsonObject = null;
-//        try {
-//            jsonObject = new JSONObject(response);
-//        } catch (JSONException e) {
-//            throw new RuntimeException(e);
+//    // link letezesenek ellenorzese
+//    // Ez fontos ez majd kell a link ellenorzesehez
+//    private boolean isLinkAccessible(String url){
+//        try{
+//            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+//            int responseCode = connection.getResponseCode();
+//            return (responseCode == 200);
+//        } catch (IOException e){
+//            e.printStackTrace();
+//            return false;
 //        }
-//        if (jsonObject.has("data")){
-//            try {
-//                JSONObject dataObject = jsonObject.getJSONObject("data");
-//                if (dataObject.has("attributes")){
-//                    JSONObject attributesObject = dataObject.getJSONObject("attributes");
-//                    if(attributesObject.has("stats")){
-//                        JSONObject statsObject = attributesObject.getJSONObject("stats");
-//                        // Itt jelenítheted meg az "attributes"-bol a "stats" rész tartalmát
-//                        System.out.println(statsObject.toString());
-//                    }
+//    }
+
+
+//    // linkben talalhato-e karterek
+//    private boolean containsMaliciousContent(String url){
+//        String[] maliciousContent = {"<script>", "</script>", "<iframe>", "</iframe>"};
+//        for (String content : maliciousContent){
+//            if(url.contains(content)){
+//                // ez a jsoup a html kodot tisztitja meg a karterektol
+//                String cleanedUrl = Jsoup.clean(url, Whitelist.basic());
+//                if(cleanedUrl.contains(content)){
+//                    //System.out.println("Cleaned URL: " + cleanedUrl);
+//                    return true;
 //                }
-//            } catch (JSONException e) {
-//                throw new RuntimeException(e);
 //            }
 //        }
+//        return false;
+//    }
 
-        // ha a malicious erteke 0 es a harmless erteke nem 0, akkor a link biztonsagos
-        // ha a malicious erteke nem 0, akkor a link karos vagyis nem biztonsagos
-        // ha a harmless erteke 0, akkor nem sikerult a linket ellenorizni es ujra kell probalkozni
-        if (response != null
-                && response.contains("\"malicious\": 0")
-                && !response.contains("\"harmless\": 0")) {
-            return true;
-        }
-        return false;
-    }
+//    // API kulcs VirusTotal:
+//    // 7806c278ec2b1b0cf2a451eaf26d0a4e76d317569281c351640c9cee147dfb66
+//    // Uj metodus: URL-ellenorzes VirusTotal segitsegevel
+//    // itt a requestUrl-ben megadott URL-re kell POST kérést küldeni a VirusTotal API-nak
+//    private boolean isURLSafe(String url) {
+//        //System.out.println("URL to check: " + url);
+//        String response = virusTotalService.checkUrlSafety(url);
+//        System.out.println("VirusTotal response: " + response);
+////        JSONObject jsonObject = null;
+////        try {
+////            jsonObject = new JSONObject(response);
+////        } catch (JSONException e) {
+////            throw new RuntimeException(e);
+////        }
+////        if (jsonObject.has("data")){
+////            try {
+////                JSONObject dataObject = jsonObject.getJSONObject("data");
+////                if (dataObject.has("attributes")){
+////                    JSONObject attributesObject = dataObject.getJSONObject("attributes");
+////                    if(attributesObject.has("stats")){
+////                        JSONObject statsObject = attributesObject.getJSONObject("stats");
+////                        // Itt jelenítheted meg az "attributes"-bol a "stats" rész tartalmát
+////                        System.out.println(statsObject.toString());
+////                    }
+////                }
+////            } catch (JSONException e) {
+////                throw new RuntimeException(e);
+////            }
+////        }
+//
+//        // ha a malicious erteke 0 es a harmless erteke nem 0, akkor a link biztonsagos
+//        // ha a malicious erteke nem 0, akkor a link karos vagyis nem biztonsagos
+//        // ha a harmless erteke 0, akkor nem sikerult a linket ellenorizni es ujra kell probalkozni
+//        if (response != null
+//                && response.contains("\"malicious\": 0")
+//                && !response.contains("\"harmless\": 0")) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     // idaig kell haladni
 

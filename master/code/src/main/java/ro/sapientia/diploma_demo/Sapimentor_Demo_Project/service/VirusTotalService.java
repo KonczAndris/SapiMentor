@@ -17,7 +17,7 @@ public class VirusTotalService {
 
     //@Value("${virustotal.api.key}")
     private final String apiKey = "7806c278ec2b1b0cf2a451eaf26d0a4e76d317569281c351640c9cee147dfb66";
-    private final String virusTotalApiUrl = "https://www.virustotal.com/api/v2/url/report?apikey={apiKey}&resource={url}";
+    //private final String virusTotalApiUrl = "https://www.virustotal.com/api/v2/url/report?apikey={apiKey}&resource={url}";
     private final RestTemplate restTemplate;
 
     public VirusTotalService(RestTemplate restTemplate) {
