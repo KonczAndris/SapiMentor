@@ -12,18 +12,38 @@
 <body>
 
 <div class="taskbar">
+  <p class="menu-function-top">
+    <a href="/" th:href="@{/profile}">
+      <img th:if="${profileImageBase64 != ''}"
+           th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+           alt="Profile Image" class="menu-icon rounded-icon-top"
+           th:async="async"
+           th:attr="data-cache='no-cache'">
+      <img th:unless="${profileImageBase64 != ''}"
+           th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
+      <!-- <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> --> </a> </p>
   <p class="menu-function">
-    <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()">
-  </p>
+    <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
 </div>
 
 <div class="center">
   <div class="left hidden">
     <h1 id="index-text">SapiMentor</h1>
-    <div class="form-group">
-      <p class="menu-function">
-        <a href="/" th:href="@{/profile}"> <img th:src="@{/img/profile.png}" alt="Icon" class="menu-icon"> Profile</a>
+
+    <div class="form-group form-group-profile">
+      <p class="menu-function menu-function-profile">
+        <a href="/" th:href="@{/profile}">
+          <img th:if="${profileImageBase64 != ''}"
+               th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+               alt="Profile Image" class="menu-icon rounded-icon"
+               th:async="async"
+               th:attr="data-cache='no-cache'">
+          <img th:unless="${profileImageBase64 != ''}"
+               th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
+          <!-- <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> --> </a>
     </div>
+    <div class="menu-divider"></div>
+
     <div class="form-group" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
       <p class="menu-function">
         <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
