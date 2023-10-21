@@ -544,7 +544,7 @@ function saveDataToServer() {
             data.push({id:'', topic: topic, skills: skills });
         }
     });
-    //console.log(data);
+    console.log(data);
     // Elküldjük az adatokat a szervernek
     sendDataToServer(data);
 }
@@ -552,11 +552,30 @@ function saveDataToServer() {
 function sendDataToServer(data) {
     // Állítsd be a rejtett mező értékét adataid alapján
     var profileTopicsDataItems = JSON.stringify(data);
-    document.getElementById("profileTopicsDataItems").value = profileTopicsDataItems;
-    //console.log("Adatok: " + profileTopicsDataItems);
+
+    //document.getElementById("profileTopicsDataItems").value = profileTopicsDataItems;
+    console.log("Adatok: " + profileTopicsDataItems);
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    fetch('http://localhost:8080/saveProfileTopics', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        },
+        body: 'profileTopicsDataItems=' + encodeURIComponent(profileTopicsDataItems)
+    }).then(data => {
+            // Kezeljük a választ, és jelenítsük meg az üzenetet
+            //console.log(data);
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Hiba történt:', error);
+        });
 
     // Most küldd el az űrlapot
-    document.getElementById("skills-form").submit();
+    //document.getElementById("skills-form").submit();
 }
 
 
@@ -687,6 +706,7 @@ function updateRoleStatus(){
     //console.log(selectedRole);
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
+    console.log(token);
 
 // Elküldjük a kérést az '/updateUserRoleStatus' végpontra
     fetch('http://localhost:8080/updateUserRoleStatus', {

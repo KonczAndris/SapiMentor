@@ -2,16 +2,16 @@ document.getElementById("diplomaTheses").addEventListener("click", function () {
     window.location.href = "/resources/diplomaTheses";
 });
 
-document.getElementById("examExamples").addEventListener("click", function () {
-    window.location.href = "/resources/examExamples";
+document.getElementById("resources").addEventListener("click", function () {
+    window.location.href = "/resources";
 });
 
 document.getElementById("diplomaThesesDrop").addEventListener("click", function () {
     window.location.href = "/resources/diplomaTheses";
 });
 
-document.getElementById("examExamplesDrop").addEventListener("click", function () {
-    window.location.href = "/resources/examExamples";
+document.getElementById("resourcesDrop").addEventListener("click", function () {
+    window.location.href = "/resources";
 });
 
 
@@ -24,6 +24,13 @@ function toggleFilterDropdown() {
 function closeDropdown(selectedItem) {
     var dropdownContent = document.getElementById("filter-myDropdown");
     dropdownContent.classList.remove("active");
+}
+
+function cancelFilterWindow(){
+    const filterContainer = document.querySelector(".filter-container");
+    const openSearchButtons = document.querySelector(".open-search-buttons");
+    filterContainer.style.display = "none";
+    openSearchButtons.style.display = "flex";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -94,14 +101,16 @@ function adjustLayout() {
     }
 }
 
+
 adjustLayout();
 window.addEventListener("resize", adjustLayout);
 
-function setupResourceModal() {
-    var modal = document.getElementById("myResourceModal");
+
+function setupExamExamplesModal() {
+    var modal = document.getElementById("examExamplesModal");
 
     var btn1 = document.getElementById("upload-upload");
-    var span = document.getElementsByClassName("close-resource")[0];
+    var span = document.getElementsByClassName("close-examExamples")[0];
     btn1.onclick = function() {
         modal.style.display = "flex";
     }
@@ -110,9 +119,11 @@ function setupResourceModal() {
     }
 }
 
+setupExamExamplesModal();
+
 
 function closeModalOnClickOutside() {
-    var modal1 = document.getElementById("myResourceModal");
+    var modal1 = document.getElementById("examExamplesModal");
 
     window.addEventListener("click", function(event) {
         if (event.target == modal1) {
@@ -121,7 +132,6 @@ function closeModalOnClickOutside() {
     });
 }
 
-setupResourceModal();
 closeModalOnClickOutside();
 
 function toggleDropdownModal() {
@@ -165,11 +175,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function setupSkillsModal() {
-    var modal = document.getElementById("resourceModal");
+    var modal = document.getElementById("examExamplesModal");
 
     var btn1 = document.getElementById("upload-upload");
     var btn2 = document.getElementById("upload-hidden");
-    var span = document.getElementsByClassName("close-resource")[0];
+    var span = document.getElementsByClassName("close-examExamples")[0];
     btn1.onclick = function() {
         modal.style.display = "flex";
     }
@@ -181,9 +191,17 @@ function setupSkillsModal() {
     }
 }
 
+function closeModal() {
+    var modal = document.getElementById('examExamplesModal');
+    modal.style.display = 'none';
+}
+
+// Add click event listener to the "Cancel" button
+var cancelButton = document.querySelector('.cancel-button-modal.close-examExamples');
+cancelButton.addEventListener('click', closeModal);
 
 function closeModalOnClickOutside() {
-    var modal1 = document.getElementById("resourceModal");
+    var modal1 = document.getElementById("examExamplesModal");
 
     window.addEventListener("click", function(event) {
         if (event.target == modal1) {
@@ -194,6 +212,7 @@ function closeModalOnClickOutside() {
 
 setupSkillsModal();
 closeModalOnClickOutside();
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const table = document.querySelector(".link-table");
@@ -259,15 +278,35 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-//NEW
+// Function to handle file selection and update the input field
+document.getElementById("fileUpload").addEventListener("change", function() {
+    const fileInput = document.getElementById("fileUpload");
+    const fileNameInput = document.getElementById("examExampleFileName-edit");
+
+    if (fileInput.files.length > 0) {
+        // Get the selected file
+        const selectedFile = fileInput.files[0];
+
+        // Update the input field with the file name
+        fileNameInput.value = selectedFile.name;
+    }
+});
+
+// Function to trigger the file input when the upload button is clicked
+document.getElementById("fileUploadButton").addEventListener("click", function() {
+    const fileInput = document.getElementById("fileUpload");
+    fileInput.click();
+});
+
 var linkCounter = 0;
 function addLinkRow() {
     try {
-        var selectedLink = document.getElementById("resourceLink-edit").value;
-        var selectedName = document.getElementById("resourceName-edit").value;
+        // var selectedFile = ...
+        var selectedFileName = document.getElementById("examExampleFileName-edit").value;
+        var selectedName = document.getElementById("examExampleName-edit").value;
         var selectedTopic = document.getElementById("topic-selected-modal").value;
 
-        if (selectedTopic !== "" && selectedLink !== "" && selectedName !== "") {
+        if (selectedTopic !== "" && selectedFileName !== "" && selectedName !== "") {
             var tableContainer = document.querySelector(".table-container table tbody");
 
             // Create a new row
@@ -279,10 +318,7 @@ function addLinkRow() {
 
             // Create a clickable link (anchor) for linkName
             var linkName = document.createElement("td");
-            var linkNameAnchor = document.createElement("a");
-            linkNameAnchor.textContent = selectedName;
-            linkNameAnchor.href = selectedLink;
-            linkName.appendChild(linkNameAnchor);
+            linkName = selectedName;
 
             var linkTopic = document.createElement("td");
             linkTopic.textContent = selectedTopic;
@@ -304,9 +340,14 @@ function addLinkRow() {
             dislikeButton.textContent = "Dislike";
             dislikeButton.className = "dislike-button-link";
 
+            var downloadButton = document.createElement("button");
+            downloadButton.textContent = "Download";
+            downloadButton.className = "download-button";
+
             // Append Like and Dislike buttons to the linkButtons cell
             linkButtons.appendChild(likeButton);
             linkButtons.appendChild(dislikeButton);
+            linkButtons.appendChild(downloadButton);
 
             // Append cells to the row
             row.appendChild(linkNumber);
@@ -327,239 +368,37 @@ function addLinkRow() {
     }
 }
 
-function saveResourceDataToServer() {
-    // var tableRows = document.querySelectorAll(".table-container table tbody tr");
-     var data = [];
-    //
-    // tableRows.forEach(function (row) {
-    //     var linkNumber = row.querySelector("td:first-child").textContent;
-    //     var linkName = row.querySelector("td:nth-child(2)").textContent;
-    //     var linkTopic = row.querySelector("td:nth-child(3)").textContent;
-    //
-    //     // Assuming you have an array for storing likes and dislikes for each row
-    //     var linkLikes = row.querySelector("td:nth-child(4)").textContent;
-    //
-    //     // Push the data into the 'data' array
-    //     data.push({
-    //         linkNumber: linkNumber,
-    //         linkName: linkName,
-    //         linkTopic: linkTopic,
-    //         linkLikes: linkLikes,
-    //     });
-    // });
+function saveExamExamplesDataToServer() {
+    var tableRows = document.querySelectorAll(".table-container table tbody tr");
+    var data = [];
 
-    var link = document.getElementById("resourceLink-edit").value;
-    var linkName = document.getElementById("resourceName-edit").value;
-    var linkTopic = document.getElementById("topic-selected-modal").value;
+    tableRows.forEach(function (row) {
+        var linkNumber = row.querySelector("td:first-child").textContent;
+        var linkName = row.querySelector("td:nth-child(2)").textContent;
+        var linkTopic = row.querySelector("td:nth-child(3)").textContent;
 
-    data.push({
-        name: linkName,
-        link: link,
-        topic_name: linkTopic,
+        // Assuming you have an array for storing likes and dislikes for each row
+        var linkLikes = row.querySelector("td:nth-child(4)").textContent;
+
+        // Push the data into the 'data' array
+        data.push({
+            linkNumber: linkNumber,
+            linkName: linkName,
+            linkTopic: linkTopic,
+            linkLikes: linkLikes,
+        });
     });
 
-
-    //console.log(data);
-    sendResourcesDataToServer(data);
+    sendDataToServer(data);
 }
-
-// ezt is andrisnak
-// function showLoadingModal() {
-//     var modal = document.getElementById("loading-modal");
-//     modal.style.display = "block"; // Megjelenítjük a modal ablakot
-// }
-
-// ezt is andrisnak
-// function hideLoadingModal() {
-//     var modal = document.getElementById("loading-modal");
-//     modal.style.display = "none"; // Elrejtjük a modal ablakot
-// }
-
-// link feltoltese a szerverre (JSON)
-function sendResourcesDataToServer(data) {
-    // ezt is andrisnak
-    //showLoadingModal(); // Megjelenítjük a modal ablakot
-
-
-    var resourcesUploadDataItems = JSON.stringify(data);
-    //document.getElementById("resourceDataItems").value = profileTopicsDataItems;
-    //console.log("Adatok: " + resourcesUploadDataItems);
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
-
-    fetch('http://localhost:8080/resources/uploadResources', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token,
-        },
-        body: 'resourcesUploadDataItems=' + encodeURIComponent(resourcesUploadDataItems)
-    }).then(response => {
-        if (response.ok) {
-            return response.text();
-        } else {
-            return response.text();
-            // throw new Error('Hiba történt a válaszban');
-        }
-    }).then(data => {
-        // ezt is andrisnak
-        //hideLoadingModal(); // Elrejtjük a modal ablakot
-        // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-        console.log(data);
-        if (data === "Success") {
-            location.reload();
-        }
-    }).catch(error => {
-            // ezt is andrisnak
-            //hideLoadingModal(); // Elrejtjük a modal ablakot
-            console.error('Hiba történt:', error);
-    });
-}
-
 
 function sendDataToServer(data) {
-    var resourceDataItems = JSON.stringify(data);
-    document.getElementById("resourceDataItems").value = resourceDataItems;
-    console.log(resourceDataItems);
-
+    var examExamplesDataItems = JSON.stringify(data);
+    document.getElementById("examExamplesDataItems").value = examExamplesDataItems;
+    console.log(examExamplesDataItems);
 
     // Most küldd el az űrlapot
-    document.getElementById("resource-form").submit();
+    document.getElementById("examExamples-form").submit();
 }
 
-function validateLink() {
-    var linkInput = document.getElementById("resourceLink-edit");
-    var linkValue = linkInput.value.trim();
-    var urlRegex = /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}([:][0-9]+)?)(\/[^\s]*)?$/;
-    var uploadButton = document.getElementById("upload-button-modal");
-
-    if (!urlRegex.test(linkValue)) {
-        linkInput.classList.add("highlight");
-        uploadButton.disabled = true;
-    } else {
-        linkInput.classList.remove("highlight");
-        uploadButton.disabled = false;
-        uploadButton.opacity = 1;
-    }
-}
-
-function validateName() {
-    var nameInput = document.getElementById("resourceName-edit");
-    var nameValue = nameInput.value.trim();
-    var uploadButton = document.getElementById("upload-button-modal");
-
-    // The regular expression checks for at least 5 letters followed by an optional number
-    if (!/^[a-zA-Zéáűúőíöü\s'-]{5,}(?:\d)?$/.test(nameValue)) {
-        nameInput.classList.add("highlight");
-        uploadButton.disabled = true;
-        uploadButton.cursor = "not-allowed";
-    } else {
-        nameInput.classList.remove("highlight");
-        uploadButton.disabled = false;
-        uploadButton.opacity = 1;
-    }
-}
-
-$(document).ready(function (){
-
-    // SSE
-    var urlEndpoint = "/sse/subscribe";
-    //itt az eventsource a szerver oldalon lévő végpontot figyeli
-    const eventSource = new EventSource(urlEndpoint);
-
-    eventSource.onopen = function(event) {
-        console.log('SSE connection opened.');
-    };
-
-    eventSource.onerror = function(event) {
-        console.error('SSE error:', event);
-    };
-
-    eventSource.addEventListener('LikeOrDislike', function(event) {
-        const data = JSON.parse(event.data);
-        const rowId = data.rowId;
-        //console.log('Received SSE message:', data.rowId);
-        // Itt frissitsd a like/dislike ertekeket a DOM-ban
-        const likeDislikeCountElement = document.querySelector(`#resource-row-${rowId} .like-dislike-count`);
-        //console.log(likeDislikeCountElement);
-        likeDislikeCountElement.textContent = data.like + "/" + data.dislike;
-    });
-
-
-    function sendLikeOrDislike(resourceId, action){
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-
-        const sseUrl = "/sse/sendLikeOrDislike"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
-
-        const url = `/resources/${action}?resourceId=${resourceId}`;
-        //console.log("URL: " + url);
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        },
-    })
-        .then(response => {
-            if (response.ok) {
-                // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
-                // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
-                fetch(sseUrl, {
-                    method: 'POST',
-                    body: JSON.stringify({ message: `${action}:${resourceId}` }), // Konvertáljuk JSON formátumra
-                    headers: {
-                        'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
-                        'X-CSRF-TOKEN': token
-                    },
-                })
-                response.text().then(data => {
-                    // Kezeld itt a szöveget (data)
-                    //console.log('Response:', data);
-                    //console.log(data);
-                    // Például: frissítheted a DOM-ot adataink alapján
-                }).catch(error => {
-                    console.error('Error:', error);
-                });
-            } else {
-                throw new Error('Request failed');
-            }
-        })
-        .then(data => {
-            //console.log('Response:', data);
-            // A válaszban érkező adatokat kezelheted itt (opcionális)
-            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-
-// A like gomb eseménykezelője
-    document.querySelectorAll('.like-button-link').forEach(likeButton => {
-        likeButton.addEventListener('click', () => {
-            // Az adott sor azonosítójának megszerzése
-            const rowId = likeButton.closest('tr').id;
-            const resourceId = rowId.replace('resource-row-', '');
-            // console.log("Resource: " + resourceId);
-            // console.log("Row: " + rowId);
-
-            // Like küldése a szervernek
-            sendLikeOrDislike(resourceId, 'like');
-        });
-    });
-
-// A dislike gomb eseménykezelője
-    document.querySelectorAll('.dislike-button-link').forEach(dislikeButton => {
-        dislikeButton.addEventListener('click', () => {
-            // Az adott sor azonosítójának megszerzése
-            const rowId = dislikeButton.closest('tr').id;
-            const resourceId = rowId.replace('resource-row-', '');
-
-            // Dislike küldése a szervernek
-            sendLikeOrDislike(resourceId, 'dislike');
-        });
-    });
-
-})
 

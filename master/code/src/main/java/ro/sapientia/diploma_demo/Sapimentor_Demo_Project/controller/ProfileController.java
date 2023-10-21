@@ -246,10 +246,10 @@ public class ProfileController {
                     profileTopicsRepository.save(profileTopics);
                 }
             }
-            return ResponseEntity.ok("Sikeres mentés");
+            return ResponseEntity.ok("Success");
         }catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a törlés során");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error");
         }
     }
 

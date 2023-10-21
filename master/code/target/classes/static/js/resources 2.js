@@ -1,17 +1,17 @@
 document.getElementById("diplomaTheses").addEventListener("click", function () {
-    window.location.href = "/resources/diplomatheses";
+    window.location.href = "/resources/diplomaTheses";
 });
 
 document.getElementById("examExamples").addEventListener("click", function () {
-    window.location.href = "/resources/examexamples";
+    window.location.href = "/resources/examExamples";
 });
 
 document.getElementById("diplomaThesesDrop").addEventListener("click", function () {
-    window.location.href = "/resources/diplomatheses";
+    window.location.href = "/resources/diplomaTheses";
 });
 
 document.getElementById("examExamplesDrop").addEventListener("click", function () {
-    window.location.href = "/resources/examexamples";
+    window.location.href = "/resources/examExamples";
 });
 
 
@@ -101,7 +101,6 @@ function setupResourceModal() {
     var modal = document.getElementById("myResourceModal");
 
     var btn1 = document.getElementById("upload-upload");
-    //var btn2 = document.getElementById("upload-hidden");
     var span = document.getElementsByClassName("close-resource")[0];
     btn1.onclick = function() {
         modal.style.display = "flex";
@@ -329,33 +328,72 @@ function addLinkRow() {
 }
 
 function saveResourceDataToServer() {
-    var tableRows = document.querySelectorAll(".table-container table tbody tr");
-    var data = [];
+    // var tableRows = document.querySelectorAll(".table-container table tbody tr");
+     var data = [];
+    //
+    // tableRows.forEach(function (row) {
+    //     var linkNumber = row.querySelector("td:first-child").textContent;
+    //     var linkName = row.querySelector("td:nth-child(2)").textContent;
+    //     var linkTopic = row.querySelector("td:nth-child(3)").textContent;
+    //
+    //     // Assuming you have an array for storing likes and dislikes for each row
+    //     var linkLikes = row.querySelector("td:nth-child(4)").textContent;
+    //
+    //     // Push the data into the 'data' array
+    //     data.push({
+    //         linkNumber: linkNumber,
+    //         linkName: linkName,
+    //         linkTopic: linkTopic,
+    //         linkLikes: linkLikes,
+    //     });
+    // });
 
-    tableRows.forEach(function (row) {
-        var linkNumber = row.querySelector("td:first-child").textContent;
-        var linkName = row.querySelector("td:nth-child(2)").textContent;
-        var linkTopic = row.querySelector("td:nth-child(3)").textContent;
+    var link = document.getElementById("resourceLink-edit").value;
+    var linkName = document.getElementById("resourceName-edit").value;
+    var linkTopic = document.getElementById("topic-selected-modal").value;
 
-        // Assuming you have an array for storing likes and dislikes for each row
-        var linkLikes = row.querySelector("td:nth-child(4)").textContent;
-
-        // Push the data into the 'data' array
-        data.push({
-            linkNumber: linkNumber,
-            linkName: linkName,
-            linkTopic: linkTopic,
-            linkLikes: linkLikes,
-        });
+    data.push({
+        name: linkName,
+        link: link,
+        topic_name: linkTopic,
     });
 
-    sendDataToServer(data);
+
+    console.log(data);
+    sendResourcesDataToServer(data);
 }
 
+
+function sendResourcesDataToServer(data) {
+    var resourcesUploadDataItems = JSON.stringify(data);
+    //document.getElementById("resourceDataItems").value = profileTopicsDataItems;
+    console.log("Adatok: " + resourcesUploadDataItems);
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    fetch('http://localhost:8080/resources/uploadResources', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        },
+        body: 'resourcesUploadDataItems=' + encodeURIComponent(resourcesUploadDataItems)
+    }).then(data => {
+        // Kezeljük a választ, és jelenítsük meg az üzenetet
+        //console.log(data);
+        location.reload();
+    })
+        .catch(error => {
+            console.error('Hiba történt:', error);
+        });
+}
+
+
 function sendDataToServer(data) {
-    var profileTopicsDataItems = JSON.stringify(data);
-    document.getElementById("resourceDataItems").value = profileTopicsDataItems;
-    console.log(profileTopicsDataItems);
+    var resourceDataItems = JSON.stringify(data);
+    document.getElementById("resourceDataItems").value = resourceDataItems;
+    console.log(resourceDataItems);
+
 
     // Most küldd el az űrlapot
     document.getElementById("resource-form").submit();
@@ -393,3 +431,105 @@ function validateName() {
         uploadButton.opacity = 1;
     }
 }
+
+$(document).ready(function (){
+
+    // SSE
+    var urlEndpoint = "/sse/subscribe";
+    //itt az eventsource a szerver oldalon lévő végpontot figyeli
+    const eventSource = new EventSource(urlEndpoint);
+
+    eventSource.onopen = function(event) {
+        console.log('SSE connection opened.');
+    };
+
+    eventSource.onerror = function(event) {
+        console.error('SSE error:', event);
+    };
+
+    eventSource.addEventListener('LikeOrDislike', function(event) {
+        const data = JSON.parse(event.data);
+        const rowId = data.rowId;
+        //console.log('Received SSE message:', data.rowId);
+        // Itt frissitsd a like/dislike ertekeket a DOM-ban
+        const likeDislikeCountElement = document.querySelector(`#resource-row-${rowId} .like-dislike-count`);
+        //console.log(likeDislikeCountElement);
+        likeDislikeCountElement.textContent = data.like + "/" + data.dislike;
+    });
+
+
+    function sendLikeOrDislike(resourceId, action){
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        const sseUrl = "/sse/sendLikeOrDislike"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
+
+        const url = `/resources/${action}?resourceId=${resourceId}`;
+        //console.log("URL: " + url);
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
+                // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
+                fetch(sseUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({ message: `${action}:${resourceId}` }), // Konvertáljuk JSON formátumra
+                    headers: {
+                        'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
+                        'X-CSRF-TOKEN': token
+                    },
+                })
+                response.text().then(data => {
+                    // Kezeld itt a szöveget (data)
+                    //console.log(data);
+                    // Például: frissítheted a DOM-ot adataink alapján
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                throw new Error('Request failed');
+            }
+        })
+        .then(data => {
+            // A válaszban érkező adatokat kezelheted itt (opcionális)
+            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+// A like gomb eseménykezelője
+    document.querySelectorAll('.like-button-link').forEach(likeButton => {
+        likeButton.addEventListener('click', () => {
+            // Az adott sor azonosítójának megszerzése
+            const rowId = likeButton.closest('tr').id;
+            const resourceId = rowId.replace('resource-row-', '');
+            // console.log("Resource: " + resourceId);
+            // console.log("Row: " + rowId);
+
+            // Like küldése a szervernek
+            sendLikeOrDislike(resourceId, 'like');
+        });
+    });
+
+// A dislike gomb eseménykezelője
+    document.querySelectorAll('.dislike-button-link').forEach(dislikeButton => {
+        dislikeButton.addEventListener('click', () => {
+            // Az adott sor azonosítójának megszerzése
+            const rowId = dislikeButton.closest('tr').id;
+            const resourceId = rowId.replace('resource-row-', '');
+
+            // Dislike küldése a szervernek
+            sendLikeOrDislike(resourceId, 'dislike');
+        });
+    });
+
+})
+
