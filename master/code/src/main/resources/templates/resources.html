@@ -158,7 +158,12 @@
                     <td><a th:href="${resource.link}" target="_blank" th:text="${resource.name}"></a></td>
                     <td th:text="${resource.topic_name}"></td>
                     <td th:text="${resource.user_name}"></td>
-                    <td><span class="like-dislike-count" th:text="${resource.like + '/' + resource.dislike}"></span></td>
+                    <td>
+                        <span class="like-dislike-count">
+                          <span class="like-color-text like-count" th:text="${resource.like}"></span>
+                            <span class="like-dislike-space">  </span>
+                          <span class="dislike-color-text dislike-count" th:text="${resource.dislike}"></span></span>
+                    </td>
                     <td>
                         <button class="like-button-link">Like</button>
                         <button class="dislike-button-link">Dislike</button>

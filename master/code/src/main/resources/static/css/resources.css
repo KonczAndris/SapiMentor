@@ -760,12 +760,24 @@ tr {
     max-width: 50px;
 }
 
+.like-color-text {
+    color: rgb(50, 189, 149);
+}
+
+.dislike-color-text {
+    color: rgb(238, 84, 76);
+}
+
+.like-dislike-space {
+    margin-right: 1em;
+}
+
 .table-actions{
     min-width: 120px;
     max-width: 120px;
 }
 
-.like-button-link{
+.like-button-link, .like-button-link-active {
     color: rgb(255, 255, 255);
     background-color: rgb(22, 175, 132);
     border-radius: 20px;
@@ -780,6 +792,10 @@ tr {
     opacity: 0.5;
 }
 
+.like-button-link-active{
+    opacity: 1;
+}
+
 .like-button-link:hover {
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
     background-color: rgb(30, 214, 162);
@@ -787,7 +803,7 @@ tr {
     opacity: 1;
 }
 
-.dislike-button-link{
+.dislike-button-link, .dislike-button-link-active{
     color: rgb(255, 255, 255);
     background-color: rgb(238, 84, 76);
     border-radius: 20px;
@@ -803,6 +819,10 @@ tr {
     justify-content: center;
     opacity: 0.5;
     margin-top: 4px;
+}
+
+.dislike-button-link-active{
+    opacity: 1;
 }
 
 .dislike-button-link:hover {
