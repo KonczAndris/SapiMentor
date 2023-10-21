@@ -39,6 +39,8 @@ public class ResourceServices {
         likeAndDislikeCounts.put("dislike", resource.getDislike());
         likeAndDislikeCounts.put("rowId", resource.getId().intValue());
 
+        System.out.println("likeAndDislikeCounts: " + likeAndDislikeCounts);
+
         return likeAndDislikeCounts;
     }
 
@@ -48,7 +50,7 @@ public class ResourceServices {
 
         // Noveljuk a like erteket
         resource.setLike(resource.getLike() + 1);
-
+        resource.setDislike(resource.getDislike());
         // Elmentjuk az uj like erteket az adatbazisba
         resourcesRepository.save(resource);
     }
@@ -82,7 +84,37 @@ public class ResourceServices {
         // Csokkentjuk a dislike erteket
         resource.setDislike(resource.getDislike() - 1);
 
+        System.out.println("Dislike: " + resource.getDislike());
+
         // Elmentjuk az uj dislike erteket az adatbazisba
+        resourcesRepository.save(resource);
+    }
+
+    public void likeResourceAndRevokeDislike(Long resourceId){
+        Resources resource = resourcesRepository.findById(resourceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
+
+        // Noveljuk a like erteket
+        resource.setLike(resource.getLike() + 1);
+
+        // Csokkentjuk a dislike erteket
+        resource.setDislike(resource.getDislike() - 1);
+
+        // Elmentjuk az uj like es dislike erteket az adatbazisba
+        resourcesRepository.save(resource);
+    }
+
+    public void dislikeResourceAndRevokeLike(Long resourceId){
+        Resources resource = resourcesRepository.findById(resourceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
+
+        // Noveljuk a dislike erteket
+        resource.setDislike(resource.getDislike() + 1);
+
+        // Csokkentjuk a like erteket
+        resource.setLike(resource.getLike() - 1);
+
+        // Elmentjuk az uj like es dislike erteket az adatbazisba
         resourcesRepository.save(resource);
     }
 

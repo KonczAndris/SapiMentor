@@ -22,7 +22,7 @@
                  th:attr="data-cache='no-cache'">
             <img th:unless="${profileImageBase64 != ''}"
                  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
-            <!-- <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> --> </a> </p>
+            <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
    <p class="menu-function">
        <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
 </div>
@@ -40,7 +40,7 @@
                         th:attr="data-cache='no-cache'">
                    <img th:unless="${profileImageBase64 != ''}"
                         th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
-                   <!-- <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> --></a>
+                   <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
        </div>
        <div class="menu-divider"></div>
        <div class="form-group" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
@@ -160,9 +160,9 @@
                     <td th:text="${resource.user_name}"></td>
                     <td>
                         <span class="like-dislike-count">
-                          <span class="like-color-text like-count" th:text="${resource.like}"></span>
+                          <span class="like-color-text like-count" id="likeButton" th:text="${resource.like}"></span>
                             <span class="like-dislike-space">  </span>
-                          <span class="dislike-color-text dislike-count" th:text="${resource.dislike}"></span></span>
+                          <span class="dislike-color-text dislike-count" id="dislikeButton" th:text="${resource.dislike}"></span></span>
                     </td>
                     <td>
                         <button class="like-button-link">Like</button>

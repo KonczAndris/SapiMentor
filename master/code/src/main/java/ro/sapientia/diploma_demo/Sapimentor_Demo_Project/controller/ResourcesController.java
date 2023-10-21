@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Resources;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topic;
@@ -22,6 +23,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.VirusTotalServi
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @RequestMapping("/resources")
@@ -84,6 +86,23 @@ public class ResourcesController {
         model.addAttribute("topics", topics);
     }
 
+    private void showProfileImageAndName(Model model, Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
+        System.out.println("User: " + userRegistrationDetails.getFirstName());
+
+        byte[] profileImage = user.getProfileImage();
+        if(profileImage != null){
+            String profileImageBase64 = Base64.getEncoder().encodeToString(profileImage);
+            model.addAttribute("profileImageBase64", profileImageBase64);
+        } else {
+            model.addAttribute("profileImageBase64", "");
+        }
+
+        model.addAttribute("userRegistrationDetails", userRegistrationDetails);
+    }
+
     @GetMapping("")
     public String showResources(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
@@ -91,6 +110,7 @@ public class ResourcesController {
         List<Resources> resources = resourceServices.getAllResources();
         //System.out.println("Resources: " + resources);
         model.addAttribute("resourcesData", resources);
+        showProfileImageAndName(model, principal);
 
         return "resources";
     }
@@ -98,12 +118,14 @@ public class ResourcesController {
     public String showExamExamples(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
+        showProfileImageAndName(model, principal);
         return "examExamples";
     }
     @GetMapping("/diplomaTheses")
     public String showDiplomaTheses(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
+        showProfileImageAndName(model, principal);
         return "diplomaTheses";
     }
 
@@ -266,6 +288,25 @@ public class ResourcesController {
     public ResponseEntity<String> RevokeDislike(@RequestParam Long resourceId) {
         resourceServices.revokeDislike(resourceId);
         return ResponseEntity.ok("Revoke Dislike resource with ID: " + resourceId);
+    }
+
+    @PostMapping("/likeResourceAndRevokeDislike")
+    public ResponseEntity<String> likeResourceAndRevokeDislike(@RequestParam Long resourceId) {
+        resourceServices.likeResourceAndRevokeDislike(resourceId);
+        return ResponseEntity.ok("Like resource and revoke dislike with ID: " + resourceId);
+    }
+
+    @PostMapping("/dsilikeResourceAndRevokeLike")
+    public ResponseEntity<String> dislikeResourceAndRevokeLike(@RequestParam Long resourceId) {
+        resourceServices.dislikeResourceAndRevokeLike(resourceId);
+        return ResponseEntity.ok("Dislike resource and revoke like with ID: " + resourceId);
+    }
+
+    @GetMapping("/getUserId")
+    public ResponseEntity<Long> getUserId(Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        return ResponseEntity.ok(user.getId());
     }
 
 }

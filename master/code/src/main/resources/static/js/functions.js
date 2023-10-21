@@ -577,7 +577,7 @@ function sendDataToServer(data) {
             // ezt is andrisnak
             // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
             console.log(data);
-            if (data === "success") {
+            if (data === "Success") {
                 location.reload();
             }
         })

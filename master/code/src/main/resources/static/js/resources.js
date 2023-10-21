@@ -478,8 +478,8 @@ $(document).ready(function (){
     eventSource.addEventListener('LikeOrDislike', function(event) {
         const data = JSON.parse(event.data);
         const rowId = data.rowId;
-        const likeCountElement = document.querySelector(`#resource-row-${rowId} .like-count`);
-        const dislikeCountElement = document.querySelector(`#resource-row-${rowId} .dislike-count`);
+        const likeCountElement = document.querySelector(`#resource-row-${rowId} #likeButton`);
+        const dislikeCountElement = document.querySelector(`#resource-row-${rowId} #dislikeButton`);
 
         //console.log('Received SSE message:', data.rowId);
         // Itt frissitsd a like/dislike ertekeket a DOM-ban
@@ -519,7 +519,7 @@ $(document).ready(function (){
                 })
                 response.text().then(data => {
                     // Kezeld itt a szöveget (data)
-                    //console.log('Response:', data);
+                    console.log('sendLikeOrDislike Response:', data);
                     //console.log(data);
                     // Például: frissítheted a DOM-ot adataink alapján
                 }).catch(error => {
@@ -539,33 +539,126 @@ $(document).ready(function (){
         });
     }
 
+
+    function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(resourceId, action){
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        const sseUrl = "/sse/sendLikeOrDislike"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
+
+        const url = `/resources/${action}?resourceId=${resourceId}`;
+        //console.log("URL: " + url);
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
+                    // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
+                    fetch(sseUrl, {
+                        method: 'POST',
+                        body: JSON.stringify({ message: `${action}:${resourceId}` }), // Konvertáljuk JSON formátumra
+                        headers: {
+                            'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
+                            'X-CSRF-TOKEN': token
+                        },
+                    })
+                    response.text().then(data => {
+                        // Kezeld itt a szöveget (data)
+                        console.log('sendLikeOrDislike Response:', data);
+                        //console.log(data);
+                        // Például: frissítheted a DOM-ot adataink alapján
+                    }).catch(error => {
+                        console.error('Error:', error);
+                    });
+                } else {
+                    throw new Error('Request failed');
+                }
+            })
+            .then(data => {
+                //console.log('Response:', data);
+                // A válaszban érkező adatokat kezelheted itt (opcionális)
+                // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function getUserId(callback){
+        let userData;
+        fetch("/resources/getUserId")
+            .then(response => {
+                if (response.ok) {
+                    //console.log(response.text());
+                    return response.text();
+                } else {
+                    throw new Error('Request failed');
+                }
+            })
+            .then(data => {
+                //console.log(data);
+                callback(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            })
+    }
+
 // A like gomb eseménykezelője
     document.querySelectorAll('.like-button-link').forEach(likeButton => {
         likeButton.addEventListener('click', () => {
             // Az adott sor azonosítójának megszerzése
             const rowId = likeButton.closest('tr').id;
             const resourceId = rowId.replace('resource-row-', '');
+            getUserId(userId => {
+                //console.log('Felhasználó ID:', userId);
+                const UserId = userId;
+
+                if (likeButton.classList.contains('like-button-link-active')) {
+                    // Like visszavonása
+                    sendLikeOrDislike(resourceId, 'revokelike');
+
+                    likeButton.classList.remove('like-button-link-active');
+                    // Távolítsuk el az aktív like gomb állapotát a helyi tárolóból is
+                    localStorage.removeItem(`likeButtonState_${UserId}_${resourceId}`);
+                } else {
+                    const activeDislikeButton = document.querySelector(`#${rowId} .dislike-button-link.dislike-button-link-active`);
+                    if (activeDislikeButton) {
+                        activeDislikeButton.classList.remove('dislike-button-link-active');
+                        localStorage.removeItem(`dislikeButtonState_${UserId}_${resourceId}`);
+                        sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(resourceId, 'likeResourceAndRevokeDislike');
+                        // Módosítsuk az osztályt a "like-button-link-active"-ra
+                        likeButton.classList.add('like-button-link-active');
+
+                        // Mentsük el az aktív like gomb állapotát a helyi tárolóban
+                        localStorage.setItem(`likeButtonState_${UserId}_${resourceId}`, 'active');
+                    }else{
+                        // Like küldése a szervernek
+                        sendLikeOrDislike(resourceId, 'like');
+
+                        // Módosítsuk az osztályt a "like-button-link-active"-ra
+                        likeButton.classList.add('like-button-link-active');
+
+                        // Mentsük el az aktív like gomb állapotát a helyi tárolóban
+                        localStorage.setItem(`likeButtonState_${UserId}_${resourceId}`, 'active');
+                    }
+                }
+            });
 
             // Ellenőrizze, hogy az adott sorban már van aktív dislike gomb
-            const activeDislikeButton = document.querySelector(`#${rowId} .dislike-button-link.dislike-button-link-active`);
-            if (activeDislikeButton) {
-                activeDislikeButton.classList.remove('dislike-button-link-active');
-            }
+            // const activeDislikeButton = document.querySelector(`#${rowId} .dislike-button-link.dislike-button-link-active`);
+            // if (activeDislikeButton) {
+            //     sendRevokeLikeOrDislike(resourceId, 'revokedislike');
+            //     activeDislikeButton.classList.remove('dislike-button-link-active');
+            //     localStorage.removeItem(`dislikeButtonState_${resourceId}`);
+            // }
 
-            if (likeButton.classList.contains('like-button-link-active')) {
-                likeButton.classList.remove('like-button-link-active');
-                // Távolítsuk el az aktív like gomb állapotát a helyi tárolóból is
-                localStorage.removeItem(`likeButtonState_${resourceId}`);
-            } else {
-                // Like küldése a szervernek
-                sendLikeOrDislike(resourceId, 'like');
 
-                // Módosítsuk az osztályt a "like-button-link-active"-ra
-                likeButton.classList.add('like-button-link-active');
-
-                // Mentsük el az aktív like gomb állapotát a helyi tárolóban
-                localStorage.setItem(`likeButtonState_${resourceId}`, 'active');
-            }
         });
     });
 
@@ -574,28 +667,51 @@ $(document).ready(function (){
         dislikeButton.addEventListener('click', () => {
             // Az adott sor azonosítójának megszerzése
             const rowId = dislikeButton.closest('tr').id;
-            const resourceId = rowId.replace('resource-row-', );
+            const resourceId = rowId.replace('resource-row-', '');
 
             // Ellenőrizze, hogy az adott sorban már van aktív like gomb
-            const activeLikeButton = document.querySelector(`#${rowId} .like-button-link.like-button-link-active`);
-            if (activeLikeButton) {
-                activeLikeButton.classList.remove('like-button-link-active');
-            }
+            // const activeLikeButton = document.querySelector(`#${rowId} .like-button-link.like-button-link-active`);
+            // if (activeLikeButton) {
+            //     sendRevokeLikeOrDislike(resourceId, 'revokelike');
+            //     activeLikeButton.classList.remove('like-button-link-active');
+            //     localStorage.removeItem(`likeButtonState_${resourceId}`);
+            // }
 
-            if (dislikeButton.classList.contains('dislike-button-link-active')) {
-                dislikeButton.classList.remove('dislike-button-link-active');
-                // Távolítsuk el az aktív dislike gomb állapotát a helyi tárolóból is
-                localStorage.removeItem(`dislikeButtonState_${resourceId}`);
-            } else {
-                // Dislike küldése a szervernek
-                sendLikeOrDislike(resourceId, 'dislike');
+            getUserId(userId => {
+                const UserId = userId;
+                if (dislikeButton.classList.contains('dislike-button-link-active')) {
+                    // Dislike visszavonása
+                    sendLikeOrDislike(resourceId, 'revokedislike');
 
-                // Módosítsuk az osztályt a "dislike-button-link-active"-ra
-                dislikeButton.classList.add('dislike-button-link-active');
+                    dislikeButton.classList.remove('dislike-button-link-active');
+                    // Távolítsuk el az aktív dislike gomb állapotát a helyi tárolóból is
+                    localStorage.removeItem(`dislikeButtonState_${UserId}_${resourceId}`);
+                } else {
+                    const activeLikeButton = document.querySelector(`#${rowId} .like-button-link.like-button-link-active`);
+                    if (activeLikeButton) {
+                        activeLikeButton.classList.remove('like-button-link-active');
+                        localStorage.removeItem(`likeButtonState_${UserId}_${resourceId}`);
+                        sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(resourceId, 'dsilikeResourceAndRevokeLike');
+                        // Módosítsuk az osztályt a "dislike-button-link-active"-ra
+                        dislikeButton.classList.add('dislike-button-link-active');
 
-                // Mentsük el az aktív dislike gomb állapotát a helyi tárolóban
-                localStorage.setItem(`dislikeButtonState_${resourceId}`, 'active');
-            }
+                        // Mentsük el az aktív dislike gomb állapotát a helyi tárolóban
+                        localStorage.setItem(`dislikeButtonState_${UserId}_${resourceId}`, 'active');
+                    }else{
+                        // Dislike küldése a szervernek
+                        sendLikeOrDislike(resourceId, 'dislike');
+
+                        // Módosítsuk az osztályt a "dislike-button-link-active"-ra
+                        dislikeButton.classList.add('dislike-button-link-active');
+
+                        // Mentsük el az aktív dislike gomb állapotát a helyi tárolóban
+                        localStorage.setItem(`dislikeButtonState_${UserId}_${resourceId}`, 'active');
+                    }
+
+                }
+            });
+
+
         });
     });
 
@@ -604,17 +720,21 @@ $(document).ready(function (){
         document.querySelectorAll('.like-button-link').forEach(likeButton => {
             const rowId = likeButton.closest('tr').id;
             const resourceId = rowId.replace('resource-row-', '');
-            if (localStorage.getItem(`likeButtonState_${resourceId}`) === 'active') {
-                likeButton.classList.add('like-button-link-active');
-            }
+            getUserId(userId => {
+                if (localStorage.getItem(`likeButtonState_${userId}_${resourceId}`) === 'active') {
+                    likeButton.classList.add('like-button-link-active');
+                }
+            });
         });
 
         document.querySelectorAll('.dislike-button-link').forEach(dislikeButton => {
             const rowId = dislikeButton.closest('tr').id;
             const resourceId = rowId.replace('resource-row-', '');
-            if (localStorage.getItem(`dislikeButtonState_${resourceId}`) === 'active') {
-                dislikeButton.classList.add('dislike-button-link-active');
-            }
+            getUserId(userId => {
+                if (localStorage.getItem(`dislikeButtonState_${userId}_${resourceId}`) === 'active') {
+                    dislikeButton.classList.add('dislike-button-link-active');
+                }
+            });
         });
     });
 })
