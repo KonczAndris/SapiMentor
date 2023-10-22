@@ -19,6 +19,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ResourcesRep
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ResourceServices;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserResourceLikeDislikeService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.VirusTotalService;
 
 import java.security.Principal;
@@ -36,6 +37,7 @@ public class ResourcesController {
     private final ResourceServices resourceServices;
     private final SseController sseController;
     private final VirusTotalService virusTotalService;
+    private final UserResourceLikeDislikeService userResourceLikeDislikeService;
 
     @Autowired
     public ResourcesController(UserRepository userRepository,
@@ -43,13 +45,15 @@ public class ResourcesController {
                                ResourcesRepository resourcesRepository,
                                ResourceServices resourceServices,
                                SseController sseController,
-                               VirusTotalService virusTotalService) {
+                               VirusTotalService virusTotalService,
+                               UserResourceLikeDislikeService userResourceLikeDislikeService) {
         this.userRepository = userRepository;
         this.topicService = topicService;
         this.resourcesRepository = resourcesRepository;
         this.resourceServices = resourceServices;
         this.sseController = sseController;
         this.virusTotalService = virusTotalService;
+        this.userResourceLikeDislikeService = userResourceLikeDislikeService;
     }
 
     private void showUserRolesToDisplayResources(Model model, Principal principal){
@@ -307,6 +311,67 @@ public class ResourcesController {
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
         return ResponseEntity.ok(user.getId());
+    }
+
+    @PostMapping("/setLikeToActive")
+    public ResponseEntity<String> setLikeToActive(@RequestParam Long resourceId, Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        Long userId = user.getId();
+        System.out.println("User ID: " + userId);
+        userResourceLikeDislikeService.ChangeLikeStatusToActive(resourceId, userId);
+        return ResponseEntity.ok("Like set to active with ID: " + resourceId);
+    }
+
+    @PostMapping("/setLikeToInactive")
+    public ResponseEntity<String> setLikeToInactive(@RequestParam Long resourceId, Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        Long userId = user.getId();
+        System.out.println("User ID: " + userId);
+        userResourceLikeDislikeService.ChangeLikeStatusToInactive(resourceId, userId);
+        return ResponseEntity.ok("Like set to inactive with ID: " + resourceId);
+    }
+
+    @PostMapping("/setDislikeToActive")
+    public ResponseEntity<String> setDislikeToActive(@RequestParam Long resourceId, Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        Long userId = user.getId();
+        System.out.println("User ID: " + userId);
+        userResourceLikeDislikeService.ChangeDislikeStatusToActive(resourceId, userId);
+        return ResponseEntity.ok("Dislike set to active with ID: " + resourceId);
+    }
+
+
+    @PostMapping("/setDislikeToInactive")
+    public ResponseEntity<String> setDislikeToInactive(@RequestParam Long resourceId, Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        Long userId = user.getId();
+        //System.out.println("User ID: " + userId);
+        userResourceLikeDislikeService.ChangeDislikeStatusToInactive(resourceId, userId);
+        return ResponseEntity.ok("Dislike set to inactive with ID: " + resourceId);
+    }
+
+    @GetMapping("/getLikeStatus")
+    public ResponseEntity<String> getLikeStatus(@RequestParam Long resourceId, Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        Long userId = user.getId();
+        //System.out.println("User ID: " + userId);
+        String likeStatus = userResourceLikeDislikeService.getLikeStatus(resourceId, userId);
+        return ResponseEntity.ok(likeStatus);
+    }
+
+
+    @GetMapping("/getDislikeStatus")
+    public ResponseEntity<String> getDislikeStatus(@RequestParam Long resourceId, Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        Long userId = user.getId();
+        String dislikeStatus = userResourceLikeDislikeService.getDislikeStatus(resourceId, userId);
+        return ResponseEntity.ok(dislikeStatus);
     }
 
 }
