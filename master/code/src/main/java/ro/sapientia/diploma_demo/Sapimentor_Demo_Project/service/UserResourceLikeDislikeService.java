@@ -44,11 +44,11 @@ public class UserResourceLikeDislikeService {
             newactivelike.setUser(user_Id);
             newactivelike.setResources(resource_Id);
             newactivelike.setLike(1);
-            newactivelike.setDislike(0);
+            //newactivelike.setDislike(0);
             userResourceLikeDislikeRepository.save(newactivelike);
         } else {
             existingactivelike.setLike(1);
-            existingactivelike.setDislike(0);
+            //existingactivelike.setDislike(0);
             userResourceLikeDislikeRepository.save(existingactivelike);
         }
     }
@@ -69,11 +69,11 @@ public class UserResourceLikeDislikeService {
             newinactivelike.setUser(user_Id);
             newinactivelike.setResources(resource_Id);
             newinactivelike.setLike(0);
-            newinactivelike.setDislike(0);
+            //newinactivelike.setDislike(0);
             userResourceLikeDislikeRepository.save(newinactivelike);
         } else {
             existinginactivelike.setLike(0);
-            existinginactivelike.setDislike(0);
+            //existinginactivelike.setDislike(0);
             userResourceLikeDislikeRepository.save(existinginactivelike);
         }
     }
@@ -94,11 +94,11 @@ public class UserResourceLikeDislikeService {
             UserResourceLikeDislike newactivedislike = new UserResourceLikeDislike();
             newactivedislike.setUser(user_Id);
             newactivedislike.setResources(resource_Id);
-            newactivedislike.setLike(0);
+            //newactivedislike.setLike(0);
             newactivedislike.setDislike(1);
             userResourceLikeDislikeRepository.save(newactivedislike);
         } else {
-            existingactivedislike.setLike(0);
+            //existingactivedislike.setLike(0);
             existingactivedislike.setDislike(1);
             userResourceLikeDislikeRepository.save(existingactivedislike);
         }
@@ -119,13 +119,61 @@ public class UserResourceLikeDislikeService {
             UserResourceLikeDislike newinactivedislike = new UserResourceLikeDislike();
             newinactivedislike.setUser(user_Id);
             newinactivedislike.setResources(resource_Id);
-            newinactivedislike.setLike(0);
+            //newinactivedislike.setLike(0);
             newinactivedislike.setDislike(0);
             userResourceLikeDislikeRepository.save(newinactivedislike);
         } else {
-            existinginactivedislike.setLike(0);
+            //existinginactivedislike.setLike(0);
             existinginactivedislike.setDislike(0);
             userResourceLikeDislikeRepository.save(existinginactivedislike);
+        }
+    }
+
+    public void ChangeLikeStatusToActiveAndDislikeToInactive(Long resourceId, Long userId){
+        // itt meg keresem a resource-t, hogy letezike-e
+        Resources resource_Id = resourcesRepository.findById(resourceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
+        // itt meg keresem a user-t, hogy letezik-e
+        User user_Id = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
+
+        UserResourceLikeDislike existingLikeAndDislike = userResourceLikeDislikeRepository.findByUserAndResources(user_Id, resource_Id);
+
+        if (existingLikeAndDislike == null){
+            UserResourceLikeDislike newLikeAndDislike = new UserResourceLikeDislike();
+            newLikeAndDislike.setUser(user_Id);
+            newLikeAndDislike.setResources(resource_Id);
+            newLikeAndDislike.setLike(1);
+            newLikeAndDislike.setDislike(0);
+            userResourceLikeDislikeRepository.save(newLikeAndDislike);
+        } else {
+            existingLikeAndDislike.setLike(1);
+            existingLikeAndDislike.setDislike(0);
+            userResourceLikeDislikeRepository.save(existingLikeAndDislike);
+        }
+    }
+
+    public void ChangeDislikeStatusToActiveAndLikeToInactive(Long resourceId, Long userId){
+        // itt meg keresem a resource-t, hogy letezike-e
+        Resources resource_Id = resourcesRepository.findById(resourceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
+        // itt meg keresem a user-t, hogy letezik-e
+        User user_Id = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
+
+        UserResourceLikeDislike existingLikeAndDislike = userResourceLikeDislikeRepository.findByUserAndResources(user_Id, resource_Id);
+
+        if (existingLikeAndDislike == null){
+            UserResourceLikeDislike newLikeAndDislike = new UserResourceLikeDislike();
+            newLikeAndDislike.setUser(user_Id);
+            newLikeAndDislike.setResources(resource_Id);
+            newLikeAndDislike.setLike(0);
+            newLikeAndDislike.setDislike(1);
+            userResourceLikeDislikeRepository.save(newLikeAndDislike);
+        } else {
+            existingLikeAndDislike.setLike(0);
+            existingLikeAndDislike.setDislike(1);
+            userResourceLikeDislikeRepository.save(existingLikeAndDislike);
         }
     }
 

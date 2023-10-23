@@ -300,7 +300,7 @@ public class ResourcesController {
         return ResponseEntity.ok("Like resource and revoke dislike with ID: " + resourceId);
     }
 
-    @PostMapping("/dsilikeResourceAndRevokeLike")
+    @PostMapping("/dislikeResourceAndRevokeLike")
     public ResponseEntity<String> dislikeResourceAndRevokeLike(@RequestParam Long resourceId) {
         resourceServices.dislikeResourceAndRevokeLike(resourceId);
         return ResponseEntity.ok("Dislike resource and revoke like with ID: " + resourceId);
@@ -352,6 +352,26 @@ public class ResourcesController {
         //System.out.println("User ID: " + userId);
         userResourceLikeDislikeService.ChangeDislikeStatusToInactive(resourceId, userId);
         return ResponseEntity.ok("Dislike set to inactive with ID: " + resourceId);
+    }
+
+    @PostMapping("/setLikeToActiveAndDislikeToInactive")
+    public ResponseEntity<String> setLikeToActiveAndDislikeToInactive(@RequestParam Long resourceId, Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        Long userId = user.getId();
+        //System.out.println("User ID: " + userId);
+        userResourceLikeDislikeService.ChangeLikeStatusToActiveAndDislikeToInactive(resourceId, userId);
+        return ResponseEntity.ok("Like set to active and dislike set to inactive with ID: " + resourceId);
+    }
+
+    @PostMapping("/setDislikeToActiveAndLikeToInactive")
+    public ResponseEntity<String> setDislikeToActiveAndLikeToInactive(@RequestParam Long resourceId, Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        Long userId = user.getId();
+        //System.out.println("User ID: " + userId);
+        userResourceLikeDislikeService.ChangeDislikeStatusToActiveAndLikeToInactive(resourceId, userId);
+        return ResponseEntity.ok("Dislike set to active and like set to inactive with ID: " + resourceId);
     }
 
     @GetMapping("/getLikeStatus")
