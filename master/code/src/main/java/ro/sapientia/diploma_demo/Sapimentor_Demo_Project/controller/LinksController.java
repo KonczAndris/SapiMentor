@@ -29,7 +29,7 @@ import java.util.List;
 
 @RequestMapping("/resources")
 @Controller
-public class ResourcesController {
+public class LinksController {
     private final UserRepository userRepository;
     private final TopicService topicService;
     private final ResourcesRepository resourcesRepository;
@@ -40,13 +40,13 @@ public class ResourcesController {
     private final UserResourceLikeDislikeService userResourceLikeDislikeService;
 
     @Autowired
-    public ResourcesController(UserRepository userRepository,
-                               TopicService topicService,
-                               ResourcesRepository resourcesRepository,
-                               ResourceServices resourceServices,
-                               SseController sseController,
-                               VirusTotalService virusTotalService,
-                               UserResourceLikeDislikeService userResourceLikeDislikeService) {
+    public LinksController(UserRepository userRepository,
+                           TopicService topicService,
+                           ResourcesRepository resourcesRepository,
+                           ResourceServices resourceServices,
+                           SseController sseController,
+                           VirusTotalService virusTotalService,
+                           UserResourceLikeDislikeService userResourceLikeDislikeService) {
         this.userRepository = userRepository;
         this.topicService = topicService;
         this.resourcesRepository = resourcesRepository;
@@ -94,7 +94,7 @@ public class ResourcesController {
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
         UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
-        System.out.println("User: " + userRegistrationDetails.getFirstName());
+        //System.out.println("User: " + userRegistrationDetails.getFirstName());
 
         byte[] profileImage = user.getProfileImage();
         if(profileImage != null){
@@ -118,20 +118,27 @@ public class ResourcesController {
 
         return "resources";
     }
-    @GetMapping("/examExamples")
-    public String showExamExamples(Model model, Principal principal) {
-        showUserRolesToDisplayResources(model, principal);
-        showTopicsToDisplayResources(model, principal);
-        showProfileImageAndName(model, principal);
-        return "examExamples";
-    }
-    @GetMapping("/diplomaTheses")
-    public String showDiplomaTheses(Model model, Principal principal) {
-        showUserRolesToDisplayResources(model, principal);
-        showTopicsToDisplayResources(model, principal);
-        showProfileImageAndName(model, principal);
-        return "diplomaTheses";
-    }
+
+
+
+//    @GetMapping("/examExamples")
+//    public String showExamExamples(Model model, Principal principal) {
+//        showUserRolesToDisplayResources(model, principal);
+//        showTopicsToDisplayResources(model, principal);
+//        showProfileImageAndName(model, principal);
+//        return "examExamples";
+//    }
+
+
+
+
+//    @GetMapping("/diplomaTheses")
+//    public String showDiplomaTheses(Model model, Principal principal) {
+//        showUserRolesToDisplayResources(model, principal);
+//        showTopicsToDisplayResources(model, principal);
+//        showProfileImageAndName(model, principal);
+//        return "diplomaTheses";
+//    }
 
     @PostMapping("/uploadResources")
     public ResponseEntity<String> uploadResources(String resourcesUploadDataItems,
@@ -196,79 +203,6 @@ public class ResourcesController {
     }
 
 
-//    // link letezesenek ellenorzese
-//    // Ez fontos ez majd kell a link ellenorzesehez
-//    private boolean isLinkAccessible(String url){
-//        try{
-//            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-//            int responseCode = connection.getResponseCode();
-//            return (responseCode == 200);
-//        } catch (IOException e){
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
-
-
-//    // linkben talalhato-e karterek
-//    private boolean containsMaliciousContent(String url){
-//        String[] maliciousContent = {"<script>", "</script>", "<iframe>", "</iframe>"};
-//        for (String content : maliciousContent){
-//            if(url.contains(content)){
-//                // ez a jsoup a html kodot tisztitja meg a karterektol
-//                String cleanedUrl = Jsoup.clean(url, Whitelist.basic());
-//                if(cleanedUrl.contains(content)){
-//                    //System.out.println("Cleaned URL: " + cleanedUrl);
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
-
-//    // API kulcs VirusTotal:
-//    // 7806c278ec2b1b0cf2a451eaf26d0a4e76d317569281c351640c9cee147dfb66
-//    // Uj metodus: URL-ellenorzes VirusTotal segitsegevel
-//    // itt a requestUrl-ben megadott URL-re kell POST kérést küldeni a VirusTotal API-nak
-//    private boolean isURLSafe(String url) {
-//        //System.out.println("URL to check: " + url);
-//        String response = virusTotalService.checkUrlSafety(url);
-//        System.out.println("VirusTotal response: " + response);
-////        JSONObject jsonObject = null;
-////        try {
-////            jsonObject = new JSONObject(response);
-////        } catch (JSONException e) {
-////            throw new RuntimeException(e);
-////        }
-////        if (jsonObject.has("data")){
-////            try {
-////                JSONObject dataObject = jsonObject.getJSONObject("data");
-////                if (dataObject.has("attributes")){
-////                    JSONObject attributesObject = dataObject.getJSONObject("attributes");
-////                    if(attributesObject.has("stats")){
-////                        JSONObject statsObject = attributesObject.getJSONObject("stats");
-////                        // Itt jelenítheted meg az "attributes"-bol a "stats" rész tartalmát
-////                        System.out.println(statsObject.toString());
-////                    }
-////                }
-////            } catch (JSONException e) {
-////                throw new RuntimeException(e);
-////            }
-////        }
-//
-//        // ha a malicious erteke 0 es a harmless erteke nem 0, akkor a link biztonsagos
-//        // ha a malicious erteke nem 0, akkor a link karos vagyis nem biztonsagos
-//        // ha a harmless erteke 0, akkor nem sikerult a linket ellenorizni es ujra kell probalkozni
-//        if (response != null
-//                && response.contains("\"malicious\": 0")
-//                && !response.contains("\"harmless\": 0")) {
-//            return true;
-//        }
-//        return false;
-//    }
-
-    // idaig kell haladni
-
     @PostMapping("/like")
     public ResponseEntity<String> likeResource(@RequestParam Long resourceId) {
         //System.out.println("Resource ID: " + resourceId);
@@ -318,7 +252,7 @@ public class ResourcesController {
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
         Long userId = user.getId();
-        System.out.println("User ID: " + userId);
+        //System.out.println("User ID: " + userId);
         userResourceLikeDislikeService.ChangeLikeStatusToActive(resourceId, userId);
         return ResponseEntity.ok("Like set to active with ID: " + resourceId);
     }
@@ -328,7 +262,7 @@ public class ResourcesController {
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
         Long userId = user.getId();
-        System.out.println("User ID: " + userId);
+        //System.out.println("User ID: " + userId);
         userResourceLikeDislikeService.ChangeLikeStatusToInactive(resourceId, userId);
         return ResponseEntity.ok("Like set to inactive with ID: " + resourceId);
     }
@@ -338,7 +272,7 @@ public class ResourcesController {
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
         Long userId = user.getId();
-        System.out.println("User ID: " + userId);
+        //System.out.println("User ID: " + userId);
         userResourceLikeDislikeService.ChangeDislikeStatusToActive(resourceId, userId);
         return ResponseEntity.ok("Dislike set to active with ID: " + resourceId);
     }
@@ -381,6 +315,7 @@ public class ResourcesController {
         Long userId = user.getId();
         //System.out.println("User ID: " + userId);
         String likeStatus = userResourceLikeDislikeService.getLikeStatus(resourceId, userId);
+        //System.out.println("Like status: " + likeStatus);
         return ResponseEntity.ok(likeStatus);
     }
 
@@ -391,6 +326,7 @@ public class ResourcesController {
         User user = userRepository.findByEmail(email);
         Long userId = user.getId();
         String dislikeStatus = userResourceLikeDislikeService.getDislikeStatus(resourceId, userId);
+        //System.out.println("Dislike status: " + dislikeStatus);
         return ResponseEntity.ok(dislikeStatus);
     }
 

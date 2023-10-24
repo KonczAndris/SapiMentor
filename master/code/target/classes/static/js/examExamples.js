@@ -369,27 +369,80 @@ function addLinkRow() {
 }
 
 function saveExamExamplesDataToServer() {
-    var tableRows = document.querySelectorAll(".table-container table tbody tr");
+    //var tableRows = document.querySelectorAll(".table-container table tbody tr");
     var data = [];
 
-    tableRows.forEach(function (row) {
-        var linkNumber = row.querySelector("td:first-child").textContent;
-        var linkName = row.querySelector("td:nth-child(2)").textContent;
-        var linkTopic = row.querySelector("td:nth-child(3)").textContent;
+    // tableRows.forEach(function (row) {
+    //     var linkNumber = row.querySelector("td:first-child").textContent;
+    //     var linkName = row.querySelector("td:nth-child(2)").textContent;
+    //     var linkTopic = row.querySelector("td:nth-child(3)").textContent;
+    //
+    //     // Assuming you have an array for storing likes and dislikes for each row
+    //     var linkLikes = row.querySelector("td:nth-child(4)").textContent;
+    //
+    //     // Push the data into the 'data' array
+    //     data.push({
+    //         linkNumber: linkNumber,
+    //         linkName: linkName,
+    //         linkTopic: linkTopic,
+    //         linkLikes: linkLikes,
+    //     });
+    // });
+    var image = document.getElementById("fileUpload").files[0];
+    var imageFileName = document.getElementById("examExampleFileName-edit").value;
+    var imageTopic = document.getElementById("topic-selected-modal").value;
 
-        // Assuming you have an array for storing likes and dislikes for each row
-        var linkLikes = row.querySelector("td:nth-child(4)").textContent;
+    data.push({
+       name: imageFileName,
+       image: image,
+       topic: imageTopic,
 
-        // Push the data into the 'data' array
-        data.push({
-            linkNumber: linkNumber,
-            linkName: linkName,
-            linkTopic: linkTopic,
-            linkLikes: linkLikes,
-        });
     });
+    //console.log(data);
+    sendExamsDataToServer(data);
+}
 
-    sendDataToServer(data);
+function sendExamsDataToServer(data) {
+    // ide kell majd hogy behozza a toltokepernyot
+
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    var formData = new FormData();
+    formData.append("image", data[0].image);
+    formData.append("name", data[0].name);
+    formData.append("topic", data[0].topic);
+    //console.log(formData);
+    // for (var pair of formData.entries()) {
+    //     console.log(pair[0] + ': ' + pair[1]);
+    // }
+
+    fetch('/resources/examExamples/uploadExams', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': token,
+        },
+        body: formData
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            return response.text();
+            // throw new Error('Hiba történt a válaszban');
+        }
+    }).then(data => {
+        // ezt is andrisnak
+        //hideLoadingModal(); // Elrejtjük a modal ablakot
+        // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
+        //console.log(data);
+        if (data === "Success") {
+            location.reload();
+        }
+    }).catch(error => {
+        // ezt is andrisnak
+        //hideLoadingModal(); // Elrejtjük a modal ablakot
+        console.error('Hiba történt:', error);
+    });
 }
 
 function sendDataToServer(data) {

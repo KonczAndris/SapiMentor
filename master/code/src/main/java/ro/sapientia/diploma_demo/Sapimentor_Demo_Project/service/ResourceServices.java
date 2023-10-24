@@ -4,6 +4,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Resources;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ResourcesRepository;
 
@@ -186,5 +187,32 @@ public class ResourceServices {
             return true;
         }
         return false;
+    }
+
+    //Ezzel tudod beallitani hogy mekkora legyen a maximalis meret amit feltolthet a felhasznalo
+    private static final long MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2 MB
+    //private static final long MAX_IMAGE_SIZE = 10 * 1024; // 10 KB
+    //private static final long MAX_IMAGE_SIZE = 20 * 1024; // 20 KB
+    //private static final long MAX_IMAGE_SIZE = 40 * 1024; // 40 KB
+
+    // innen folytatni holnap 
+    public String uploadExamImage(MultipartFile image,
+                                  String name,
+                                  String topic,
+                                  String user_name){
+
+        if (!image.isEmpty()){
+            try{
+                System.out.println("Image size: " + image.getSize());
+                System.out.println("MAX_IMAGE_SIZE: " + MAX_IMAGE_SIZE);
+
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+
+        return null;
     }
 }

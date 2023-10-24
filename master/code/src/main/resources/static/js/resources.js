@@ -100,15 +100,24 @@ window.addEventListener("resize", adjustLayout);
 function setupResourceModal() {
     var modal = document.getElementById("myResourceModal");
 
-    var btn1 = document.getElementById("upload-upload");
-    var span = document.getElementsByClassName("close-resource")[0];
-    btn1.onclick = function() {
-        modal.style.display = "flex";
-    }
-    span.onclick = function() {
-        modal.style.display = "none";
+    if (modal) {
+        var btn1 = document.getElementById("upload-upload");
+        var span = document.getElementsByClassName("close-resource")[0];
+
+        if (btn1) {
+            btn1.onclick = function() {
+                modal.style.display = "flex";
+            }
+        }
+
+        if (span) {
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+        }
     }
 }
+
 
 
 function closeModalOnClickOutside() {
@@ -170,16 +179,26 @@ function setupSkillsModal() {
     var btn1 = document.getElementById("upload-upload");
     var btn2 = document.getElementById("upload-hidden");
     var span = document.getElementsByClassName("close-resource")[0];
-    btn1.onclick = function() {
-        modal.style.display = "flex";
+
+    if (btn1) {
+        btn1.onclick = function() {
+            modal.style.display = "flex";
+        }
     }
-    btn2.onclick = function() {
-        modal.style.display = "flex";
+
+    if (btn2) {
+        btn2.onclick = function() {
+            modal.style.display = "flex";
+        }
     }
-    span.onclick = function() {
-        modal.style.display = "none";
+
+    if (span) {
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
     }
 }
+
 
 
 function closeModalOnClickOutside() {
@@ -387,7 +406,7 @@ function sendResourcesDataToServer(data) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
-    fetch('http://localhost:8080/resources/uploadResources', {
+    fetch('/resources/uploadResources', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -405,7 +424,7 @@ function sendResourcesDataToServer(data) {
         // ezt is andrisnak
         //hideLoadingModal(); // Elrejtjük a modal ablakot
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-        console.log(data);
+        //console.log(data);
         if (data === "Success") {
             location.reload();
         }
@@ -420,7 +439,7 @@ function sendResourcesDataToServer(data) {
 function sendDataToServer(data) {
     var resourceDataItems = JSON.stringify(data);
     document.getElementById("resourceDataItems").value = resourceDataItems;
-    console.log(resourceDataItems);
+    //console.log(resourceDataItems);
 
 
     // Most küldd el az űrlapot
@@ -519,7 +538,7 @@ $(document).ready(async function () {
                     })
                     response.text().then(data => {
                         // Kezeld itt a szöveget (data)
-                        console.log('sendLikeOrDislike Response:', data);
+                        //console.log('sendLikeOrDislike Response:', data);
                         //console.log(data);
                         // Például: frissítheted a DOM-ot adataink alapján
                     }).catch(error => {
@@ -632,7 +651,7 @@ $(document).ready(async function () {
                 throw new Error('Request failed');
             }
         }).then(data => {
-            console.log(data);
+            //console.log(data);
         }).catch(error => {
             console.error('Error:', error);
         });
@@ -811,31 +830,27 @@ $(document).ready(async function () {
 // Az oldal betöltésekor állítsuk vissza az aktív gombok állapotát a helyi tárolóból
     window.addEventListener('load', async () => {
         const likeButtons = document.querySelectorAll('.like-button-link');
-        const dislikeButtons = document.querySelectorAll('.dislike-button-link');
         for (const likeButton of likeButtons) {
             const rowId = likeButton.closest('tr').id;
             const resourceId = rowId.replace('resource-row-', '');
             const likeStatusData = await getLikeAndDislikeStatus(resourceId, 'getLikeStatus');
-             //console.log('Igen: ',likeStatusData);
-
+            //console.log('likeStatusData: ', likeStatusData);
              if (likeStatusData === '1') {
                  likeButton.classList.add('like-button-link-active');
              }
-            // if (localStorage.getItem(`likeButtonState_${userId}_${resourceId}`) === 'active') {
-            //     likeButton.classList.add('like-button-link-active');
-            // }
         }
+    });
 
+    window.addEventListener('load', async () => {
+        const dislikeButtons = document.querySelectorAll('.dislike-button-link');
         for (const dislikeButton of dislikeButtons) {
             const rowId = dislikeButton.closest('tr').id;
             const resourceId = rowId.replace('resource-row-', '');
             const dislikeStatusData = await getLikeAndDislikeStatus(resourceId, 'getDislikeStatus');
+            //console.log('dislikeStatusData: ', dislikeStatusData);
             if (dislikeStatusData === '1') {
                 dislikeButton.classList.add('dislike-button-link-active');
             }
-            // if (localStorage.getItem(`dislikeButtonState_${userId}_${resourceId}`) === 'active') {
-            //     dislikeButton.classList.add('dislike-button-link-active');
-            // }
         }
     });
 })
