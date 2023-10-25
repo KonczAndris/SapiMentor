@@ -588,7 +588,7 @@ $(document).ready(async function () {
                     })
                     response.text().then(data => {
                         // Kezeld itt a szöveget (data)
-                        console.log('sendLikeOrDislike Response:', data);
+                        //console.log('sendLikeOrDislike Response:', data);
                         //console.log(data);
                         // Például: frissítheted a DOM-ot adataink alapján
                     }).catch(error => {

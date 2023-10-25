@@ -555,11 +555,11 @@ function sendDataToServer(data) {
     var profileTopicsDataItems = JSON.stringify(data);
 
     //document.getElementById("profileTopicsDataItems").value = profileTopicsDataItems;
-    console.log("Adatok: " + profileTopicsDataItems);
+    //console.log("Adatok: " + profileTopicsDataItems);
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
-    fetch('http://localhost:8080/saveProfileTopics', {
+    fetch('/saveProfileTopics', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -720,7 +720,7 @@ function updateRoleStatus(){
     console.log(token);
 
 // Elküldjük a kérést az '/updateUserRoleStatus' végpontra
-    fetch('http://localhost:8080/updateUserRoleStatus', {
+    fetch('/updateUserRoleStatus', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
