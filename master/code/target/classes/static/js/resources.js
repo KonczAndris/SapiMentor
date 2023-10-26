@@ -868,8 +868,8 @@ $(document).ready(async function () {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-CSRF-TOKEN': token,
-                        'Cache-Control': 'no-cache'
+                        'X-CSRF-TOKEN': token
+                        //'Cache-Control': 'no-cache'
                     }
                 }).then(response => {
                     if (response.ok) {
