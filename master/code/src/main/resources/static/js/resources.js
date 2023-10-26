@@ -795,6 +795,8 @@ $(document).ready(async function () {
     //     }
     // }
 
+    // itt van az ujitas ('Cache-Control': 'no-cache' es ez az ujitas )
+    // a UserResourceLikeDislikeService-ben is van egy ujitas a chacheable annotacioval
     async function getLikeAndDislikeStatus(resourceId, action) {
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
@@ -804,7 +806,8 @@ $(document).ready(async function () {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-CSRF-TOKEN': token
+                    'X-CSRF-TOKEN': token,
+                    'Cache-Control': 'no-cache'
                 }
             });
 

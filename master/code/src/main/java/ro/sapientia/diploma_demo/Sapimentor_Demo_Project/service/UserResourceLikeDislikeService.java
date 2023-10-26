@@ -1,7 +1,6 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 import org.apache.velocity.exception.ResourceNotFoundException;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Resources;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
@@ -178,7 +177,7 @@ public class UserResourceLikeDislikeService {
     }
 
     // itt kerem le a like statuszt
-    @Cacheable(value = "likeStatus")
+    //@Cacheable(value = "likeStatus")
     public String getLikeStatus(Long resourceId, Long userId){
         // itt meg keresem a resource-t, hogy letezike-e
         Resources resource_Id = resourcesRepository.findById(resourceId)
@@ -197,7 +196,7 @@ public class UserResourceLikeDislikeService {
     }
 
     // itt kerem le a dislike statuszt
-    @Cacheable(value = "dislikeStatus")
+    //@Cacheable(value = "dislikeStatus")
     public String getDislikeStatus(Long resourceId, Long userId){
         // itt meg keresem a resource-t, hogy letezike-e
         Resources resource_Id = resourcesRepository.findById(resourceId)

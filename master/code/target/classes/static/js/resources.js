@@ -804,7 +804,8 @@ $(document).ready(async function () {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-CSRF-TOKEN': token
+                    'X-CSRF-TOKEN': token,
+                    'Cache-Control': 'no-cache'
                 }
             });
 
@@ -828,7 +829,7 @@ $(document).ready(async function () {
     // const likeStatusData = await getLikeAndDislikeStatus(2, 'getLikeStatus');
     // console.log('likeStatusData: ', likeStatusData);
 // Az oldal betöltésekor állítsuk vissza az aktív gombok állapotát a helyi tárolóból
-    window.addEventListener('load', async () => {
+    window.addEventListener("load", async () => {
         const likeButtons = document.querySelectorAll('.like-button-link');
         for (const likeButton of likeButtons) {
             const rowId = likeButton.closest('tr').id;
