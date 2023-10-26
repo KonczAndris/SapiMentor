@@ -588,7 +588,7 @@ $(document).ready(async function () {
                     })
                     response.text().then(data => {
                         // Kezeld itt a szöveget (data)
-                        console.log('sendLikeOrDislike Response:', data);
+                        //console.log('sendLikeOrDislike Response:', data);
                         //console.log(data);
                         // Például: frissítheted a DOM-ot adataink alapján
                     }).catch(error => {
@@ -810,7 +810,7 @@ $(document).ready(async function () {
 
             if (response.ok) {
                 const data = await response.text();
-                //console.log("Data1: ",data)
+                console.log("Data1: ",data)
                 return data;
             } else {
                 const errorText = await response.text();
@@ -841,7 +841,7 @@ $(document).ready(async function () {
         }
     });
 
-    window.addEventListener('load', async () => {
+    window.addEventListener("load", async () => {
         const dislikeButtons = document.querySelectorAll('.dislike-button-link');
         for (const dislikeButton of dislikeButtons) {
             const rowId = dislikeButton.closest('tr').id;

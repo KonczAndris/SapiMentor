@@ -810,7 +810,7 @@ $(document).ready(async function () {
 
             if (response.ok) {
                 const data = await response.text();
-                //console.log("Data1: ",data)
+                console.log("Data1: ",data)
                 return data;
             } else {
                 const errorText = await response.text();
@@ -828,7 +828,7 @@ $(document).ready(async function () {
     // const likeStatusData = await getLikeAndDislikeStatus(2, 'getLikeStatus');
     // console.log('likeStatusData: ', likeStatusData);
 // Az oldal betöltésekor állítsuk vissza az aktív gombok állapotát a helyi tárolóból
-    window.addEventListener('load', async () => {
+    window.addEventListener("load", async () => {
         const likeButtons = document.querySelectorAll('.like-button-link');
         for (const likeButton of likeButtons) {
             const rowId = likeButton.closest('tr').id;
@@ -841,7 +841,7 @@ $(document).ready(async function () {
         }
     });
 
-    window.addEventListener('load', async () => {
+    window.addEventListener("load", async () => {
         const dislikeButtons = document.querySelectorAll('.dislike-button-link');
         for (const dislikeButton of dislikeButtons) {
             const rowId = dislikeButton.closest('tr').id;
