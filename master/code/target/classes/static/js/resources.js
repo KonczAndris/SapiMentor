@@ -795,65 +795,142 @@ $(document).ready(async function () {
     //     }
     // }
 
-    async function getLikeAndDislikeStatus(resourceId, action) {
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-        try {
-            const url = `/resources/${action}?resourceId=${resourceId}`;
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-CSRF-TOKEN': token,
-                    'Cache-Control': 'no-cache'
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.text();
-                console.log("Data1: ",data)
-                return data;
-            } else {
-                const errorText = await response.text();
-                console.error(`Hiba a kérésben: ${response.status} - ${response.statusText}. Hibaüzenet: ${errorText}`);
-                throw new Error(`Hiba a kérésben: ${response.status} - ${response.statusText}`);
-            }
-        } catch (error) {
-            console.error('An error occurred:', error);
-            throw error;
-        }
-    }
+    // itt van az ujitas ('Cache-Control': 'no-cache' es ez az ujitas )
+    // a UserResourceLikeDislikeService-ben is van egy ujitas a chacheable annotacioval
+    // async function getLikeAndDislikeStatus(resourceId, action) {
+    //     var token = $("meta[name='_csrf']").attr("content");
+    //     var header = $("meta[name='_csrf_header']").attr("content");
+    //     try {
+    //         const url = `/resources/${action}?resourceId=${resourceId}`;
+    //         const response = await fetch(url, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/x-www-form-urlencoded',
+    //                 'X-CSRF-TOKEN': token,
+    //                 'Cache-Control': 'no-cache'
+    //             }
+    //         });
+    //
+    //         if (response.ok) {
+    //             const data = await response.text();
+    //             console.log("Data1: ",data)
+    //             return data;
+    //         } else {
+    //             const errorText = await response.text();
+    //             console.error(`Hiba a kérésben: ${response.status} - ${response.statusText}. Hibaüzenet: ${errorText}`);
+    //             throw new Error(`Hiba a kérésben: ${response.status} - ${response.statusText}`);
+    //         }
+    //     } catch (error) {
+    //         console.error('An error occurred:', error);
+    //         throw error;
+    //     }
+    // }
 
 
     // ide azt hogy jelenitsuk meg a dislike gomb statuszanak az erteket a DOM-ban
     // const likeStatusData = await getLikeAndDislikeStatus(2, 'getLikeStatus');
     // console.log('likeStatusData: ', likeStatusData);
 // Az oldal betöltésekor állítsuk vissza az aktív gombok állapotát a helyi tárolóból
-    window.addEventListener("load", async () => {
-        const likeButtons = document.querySelectorAll('.like-button-link');
-        for (const likeButton of likeButtons) {
-            const rowId = likeButton.closest('tr').id;
-            const resourceId = rowId.replace('resource-row-', '');
-            const likeStatusData = await getLikeAndDislikeStatus(resourceId, 'getLikeStatus');
-            //console.log('likeStatusData: ', likeStatusData);
-             if (likeStatusData === '1') {
-                 likeButton.classList.add('like-button-link-active');
-             }
-        }
-    });
+//     window.addEventListener("load", async () => {
+//         const likeButtons = document.querySelectorAll('.like-button-link');
+//         for (const likeButton of likeButtons) {
+//             const rowId = likeButton.closest('tr').id;
+//             const resourceId = rowId.replace('resource-row-', '');
+//             const likeStatusData = await getLikeAndDislikeStatus(resourceId, 'getLikeStatus');
+//             //console.log('likeStatusData: ', likeStatusData);
+//              if (likeStatusData === '1') {
+//                  likeButton.classList.add('like-button-link-active');
+//              }
+//         }
+//     });
+//
+//     window.addEventListener("load", async () => {
+//         const dislikeButtons = document.querySelectorAll('.dislike-button-link');
+//         for (const dislikeButton of dislikeButtons) {
+//             const rowId = dislikeButton.closest('tr').id;
+//             const resourceId = rowId.replace('resource-row-', '');
+//             const dislikeStatusData = await getLikeAndDislikeStatus(resourceId, 'getDislikeStatus');
+//             //console.log('dislikeStatusData: ', dislikeStatusData);
+//             if (dislikeStatusData === '1') {
+//                 dislikeButton.classList.add('dislike-button-link-active');
+//             }
+//         }
+//     });
 
-    window.addEventListener("load", async () => {
+
+    // innentol lefele mind proba egesszen a .&*-ig
+    function getLikeAndDislikeStatus(resourceId, action) {
+        return new Promise((resolve, reject) => {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+                const url = `/resources/${action}?resourceId=${resourceId}`;
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRF-TOKEN': token,
+                        'Cache-Control': 'no-cache'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Request failed');
+                    }
+                }).then(data => {
+                    console.log("Data: ",data)
+                    resolve(data);
+                }).catch(error => {
+                    console.error('Error:', error);
+                    reject(error);
+                });
+        });
+    }
+
+
+    window.addEventListener("load", () => {
+       const likeButtons = document.querySelectorAll('.like-button-link');
+         for (const likeButton of likeButtons) {
+                const rowId = likeButton.closest('tr').id;
+                const resourceId = rowId.replace('resource-row-', '');
+                getLikeAndDislikeStatus(resourceId, 'getLikeStatus').then(likeStatusData => {
+                    //console.log('likeStatusData: ', likeStatusData);
+                    if (likeStatusData === '1') {
+                        likeButton.classList.add('like-button-link-active');
+                    }
+                });
+         }
+
         const dislikeButtons = document.querySelectorAll('.dislike-button-link');
         for (const dislikeButton of dislikeButtons) {
             const rowId = dislikeButton.closest('tr').id;
             const resourceId = rowId.replace('resource-row-', '');
-            const dislikeStatusData = await getLikeAndDislikeStatus(resourceId, 'getDislikeStatus');
-            //console.log('dislikeStatusData: ', dislikeStatusData);
-            if (dislikeStatusData === '1') {
-                dislikeButton.classList.add('dislike-button-link-active');
-            }
+            getLikeAndDislikeStatus(resourceId, 'getDislikeStatus').then(dislikeStatusData => {
+                //console.log('dislikeStatusData: ', dislikeStatusData);
+                if (dislikeStatusData === '1') {
+                    dislikeButton.classList.add('dislike-button-link-active');
+                }
+            });
         }
     });
+
+    // window.addEventListener("load", () => {
+    //     const dislikeButtons = document.querySelectorAll('.dislike-button-link');
+    //     for (const dislikeButton of dislikeButtons) {
+    //         const rowId = dislikeButton.closest('tr').id;
+    //         const resourceId = rowId.replace('resource-row-', '');
+    //         getLikeAndDislikeStatus(resourceId, 'getDislikeStatus').then(dislikeStatusData => {
+    //             //console.log('dislikeStatusData: ', dislikeStatusData);
+    //             if (dislikeStatusData === '1') {
+    //                 dislikeButton.classList.add('dislike-button-link-active');
+    //             }
+    //         });
+    //     }
+    // });
+
+    // szoval proba .&*-idaig
+
+
 })
 
 
