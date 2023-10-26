@@ -894,7 +894,7 @@ $(document).ready(async function () {
                 const rowId = likeButton.closest('tr').id;
                 const resourceId = rowId.replace('resource-row-', '');
                 getLikeAndDislikeStatus(resourceId, 'getLikeStatus').then(likeStatusData => {
-                    //console.log('likeStatusData: ', likeStatusData);
+                    console.log('likeStatusData: ', likeStatusData);
                     if (likeStatusData === '1') {
                         likeButton.classList.add('like-button-link-active');
                     }
@@ -906,7 +906,7 @@ $(document).ready(async function () {
             const rowId = dislikeButton.closest('tr').id;
             const resourceId = rowId.replace('resource-row-', '');
             getLikeAndDislikeStatus(resourceId, 'getDislikeStatus').then(dislikeStatusData => {
-                //console.log('dislikeStatusData: ', dislikeStatusData);
+                console.log('dislikeStatusData: ', dislikeStatusData);
                 if (dislikeStatusData === '1') {
                     dislikeButton.classList.add('dislike-button-link-active');
                 }

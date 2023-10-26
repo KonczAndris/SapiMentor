@@ -1,6 +1,7 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Resources;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
@@ -177,7 +178,7 @@ public class UserResourceLikeDislikeService {
     }
 
     // itt kerem le a like statuszt
-    //@Cacheable(value = "likeStatus")
+    @Cacheable(value = "likeStatus")
     public String getLikeStatus(Long resourceId, Long userId){
         // itt meg keresem a resource-t, hogy letezike-e
         Resources resource_Id = resourcesRepository.findById(resourceId)
@@ -187,8 +188,9 @@ public class UserResourceLikeDislikeService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
         UserResourceLikeDislike existinglike = userResourceLikeDislikeRepository.findByUserAndResources(user_Id, resource_Id);
-        //System.out.println("existinglike: " + existinglike.getLike());
+
         if (existinglike != null){
+            System.out.println("existinglike: " + existinglike.getLike());
             return existinglike.getLike().toString();
         } else {
             return "0";
@@ -196,7 +198,7 @@ public class UserResourceLikeDislikeService {
     }
 
     // itt kerem le a dislike statuszt
-    //@Cacheable(value = "dislikeStatus")
+    @Cacheable(value = "dislikeStatus")
     public String getDislikeStatus(Long resourceId, Long userId){
         // itt meg keresem a resource-t, hogy letezike-e
         Resources resource_Id = resourcesRepository.findById(resourceId)
@@ -206,8 +208,9 @@ public class UserResourceLikeDislikeService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
         UserResourceLikeDislike existingdislike = userResourceLikeDislikeRepository.findByUserAndResources(user_Id, resource_Id);
-        //System.out.println("existinglike: " + existinglike.getLike());
+
         if (existingdislike != null){
+            System.out.println("existingdislike: " + existingdislike.getLike());
             return existingdislike.getDislike().toString();
         } else {
             return "0";

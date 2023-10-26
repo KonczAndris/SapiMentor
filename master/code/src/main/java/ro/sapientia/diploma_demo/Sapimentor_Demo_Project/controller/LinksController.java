@@ -315,7 +315,7 @@ public class LinksController {
         Long userId = user.getId();
         //System.out.println("User ID: " + userId);
         String likeStatus = userResourceLikeDislikeService.getLikeStatus(resourceId, userId);
-        //System.out.println("Like status: " + likeStatus);
+        System.out.println("Like status: " + likeStatus);
         return ResponseEntity.ok(likeStatus);
     }
 
@@ -326,7 +326,7 @@ public class LinksController {
         User user = userRepository.findByEmail(email);
         Long userId = user.getId();
         String dislikeStatus = userResourceLikeDislikeService.getDislikeStatus(resourceId, userId);
-        //System.out.println("Dislike status: " + dislikeStatus);
+        System.out.println("Dislike status: " + dislikeStatus);
         return ResponseEntity.ok(dislikeStatus);
     }
 
