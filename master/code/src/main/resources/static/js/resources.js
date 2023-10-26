@@ -480,6 +480,7 @@ function validateName() {
 }
 
 $(document).ready(async function () {
+    $(document).trigger('myCustomLoadEvent');
 
     // SSE
     var urlEndpoint = "/sse/subscribe";
@@ -795,6 +796,8 @@ $(document).ready(async function () {
     //     }
     // }
 
+    // ELSO VERZIO
+
     // itt van az ujitas ('Cache-Control': 'no-cache' es ez az ujitas )
     // a UserResourceLikeDislikeService-ben is van egy ujitas a chacheable annotacioval
     // async function getLikeAndDislikeStatus(resourceId, action) {
@@ -859,47 +862,113 @@ $(document).ready(async function () {
 
 
     // innentol lefele mind proba egesszen a .&*-ig
+
+    // MASODIK VERZIO
+
+    // function getLikeAndDislikeStatus(resourceId, action) {
+    //     return new Promise((resolve, reject) => {
+    //         var token = $("meta[name='_csrf']").attr("content");
+    //         var header = $("meta[name='_csrf_header']").attr("content");
+    //         const url = `/resources/${action}?resourceId=${resourceId}`;
+    //         fetch(url, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/x-www-form-urlencoded',
+    //                 'X-CSRF-TOKEN': token
+    //                 //'Cache-Control': 'no-cache'
+    //             }
+    //         }).then(response => {
+    //             if (response.ok) {
+    //                 return response.text();
+    //             } else {
+    //                 throw new Error('Request failed');
+    //             }
+    //         }).then(data => {
+    //             console.log("Data: ",data)
+    //             resolve(data);
+    //         }).catch(error => {
+    //             console.error('Error:', error);
+    //             reject(error);
+    //         });
+    //     });
+    // }
+    //
+    //
+    // window.addEventListener("load", () => {
+    //     const likeButtons = document.querySelectorAll('.like-button-link');
+    //     for (const likeButton of likeButtons) {
+    //         const rowId = likeButton.closest('tr').id;
+    //         const resourceId = rowId.replace('resource-row-', '');
+    //         getLikeAndDislikeStatus(resourceId, 'getLikeStatus').then(likeStatusData => {
+    //             console.log('likeStatusData: ', likeStatusData);
+    //             if (likeStatusData === '1') {
+    //                 likeButton.classList.add('like-button-link-active');
+    //             }
+    //         });
+    //     }
+    //
+    //     const dislikeButtons = document.querySelectorAll('.dislike-button-link');
+    //     for (const dislikeButton of dislikeButtons) {
+    //         const rowId = dislikeButton.closest('tr').id;
+    //         const resourceId = rowId.replace('resource-row-', '');
+    //         getLikeAndDislikeStatus(resourceId, 'getDislikeStatus').then(dislikeStatusData => {
+    //             console.log('dislikeStatusData: ', dislikeStatusData);
+    //             if (dislikeStatusData === '1') {
+    //                 dislikeButton.classList.add('dislike-button-link-active');
+    //             }
+    //         });
+    //     }
+    // });
+    // szoval proba .&*-idaig
+
+
+})
+
+
+// HARMADIK VERZIO
+$(document).on('myCustomLoadEvent', function () {
+    console.log('Saját oldalbetöltési esemény kiváltva.');
     function getLikeAndDislikeStatus(resourceId, action) {
         return new Promise((resolve, reject) => {
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
-                const url = `/resources/${action}?resourceId=${resourceId}`;
-                fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-CSRF-TOKEN': token
-                        //'Cache-Control': 'no-cache'
-                    }
-                }).then(response => {
-                    if (response.ok) {
-                        return response.text();
-                    } else {
-                        throw new Error('Request failed');
-                    }
-                }).then(data => {
-                    console.log("Data: ",data)
-                    resolve(data);
-                }).catch(error => {
-                    console.error('Error:', error);
-                    reject(error);
-                });
+            const url = `/resources/${action}?resourceId=${resourceId}`;
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRF-TOKEN': token
+                    //'Cache-Control': 'no-cache'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Request failed');
+                }
+            }).then(data => {
+                console.log("Data: ",data)
+                resolve(data);
+            }).catch(error => {
+                console.error('Error:', error);
+                reject(error);
+            });
         });
     }
 
 
     window.addEventListener("load", () => {
-       const likeButtons = document.querySelectorAll('.like-button-link');
-         for (const likeButton of likeButtons) {
-                const rowId = likeButton.closest('tr').id;
-                const resourceId = rowId.replace('resource-row-', '');
-                getLikeAndDislikeStatus(resourceId, 'getLikeStatus').then(likeStatusData => {
-                    console.log('likeStatusData: ', likeStatusData);
-                    if (likeStatusData === '1') {
-                        likeButton.classList.add('like-button-link-active');
-                    }
-                });
-         }
+        const likeButtons = document.querySelectorAll('.like-button-link');
+        for (const likeButton of likeButtons) {
+            const rowId = likeButton.closest('tr').id;
+            const resourceId = rowId.replace('resource-row-', '');
+            getLikeAndDislikeStatus(resourceId, 'getLikeStatus').then(likeStatusData => {
+                console.log('likeStatusData: ', likeStatusData);
+                if (likeStatusData === '1') {
+                    likeButton.classList.add('like-button-link-active');
+                }
+            });
+        }
 
         const dislikeButtons = document.querySelectorAll('.dislike-button-link');
         for (const dislikeButton of dislikeButtons) {
@@ -913,25 +982,7 @@ $(document).ready(async function () {
             });
         }
     });
-
-    // window.addEventListener("load", () => {
-    //     const dislikeButtons = document.querySelectorAll('.dislike-button-link');
-    //     for (const dislikeButton of dislikeButtons) {
-    //         const rowId = dislikeButton.closest('tr').id;
-    //         const resourceId = rowId.replace('resource-row-', '');
-    //         getLikeAndDislikeStatus(resourceId, 'getDislikeStatus').then(dislikeStatusData => {
-    //             //console.log('dislikeStatusData: ', dislikeStatusData);
-    //             if (dislikeStatusData === '1') {
-    //                 dislikeButton.classList.add('dislike-button-link-active');
-    //             }
-    //         });
-    //     }
-    // });
-
-    // szoval proba .&*-idaig
-
-
-})
+});
 
 
 
