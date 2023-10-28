@@ -5,10 +5,14 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Resources;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.UserLikeAndDislikeData;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.UserResourceLikeDislike;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ResourcesRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserResourceLikeDislikeRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserResourceLikeDislikeService {
@@ -215,5 +219,28 @@ public class UserResourceLikeDislikeService {
         } else {
             return "0";
         }
+    }
+
+    public List<UserLikeAndDislikeData> getLikeAndDislikeStatus(Long userId){
+        // itt meg keresem a user-t, hogy letezik-e
+        User user_Id = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
+
+        List<UserResourceLikeDislike> userLikesAndDislikes = userResourceLikeDislikeRepository.findAllByUser(user_Id);
+        //System.out.println("userLikesAndDislikes: " + userLikesAndDislikes.size());
+        List<UserLikeAndDislikeData> ResourcesLikeAndDislikeDataList = new ArrayList<>();
+
+        for (UserResourceLikeDislike userLikeAndDislike : userLikesAndDislikes) {
+            //System.out.println("userLikeAndDislike: " + userLikeAndDislike);
+            Long resourceId = userLikeAndDislike.getResources().getId();
+            Long userId1 = userLikeAndDislike.getUser().getId();
+            int like = userLikeAndDislike.getLike();
+            int dislike = userLikeAndDislike.getDislike();
+            UserLikeAndDislikeData userLikeAndDislikeData = new UserLikeAndDislikeData(resourceId,userId1 , like, dislike);
+            //System.out.println("UserId: " + userId);
+            ResourcesLikeAndDislikeDataList.add(userLikeAndDislikeData);
+            //System.out.println("likeAndDislikeDataList: " + ResourcesLikeAndDislikeDataList);
+        }
+        return ResourcesLikeAndDislikeDataList;
     }
 }

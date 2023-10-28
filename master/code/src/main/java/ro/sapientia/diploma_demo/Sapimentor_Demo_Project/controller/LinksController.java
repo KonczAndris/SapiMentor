@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Resources;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topic;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ResourcesRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ResourceServices;
@@ -23,9 +20,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserResourceLik
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.VirusTotalService;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 
 @RequestMapping("/resources")
 @Controller
@@ -328,6 +323,17 @@ public class LinksController {
         String dislikeStatus = userResourceLikeDislikeService.getDislikeStatus(resourceId, userId);
         System.out.println("Dislike status: " + dislikeStatus);
         return ResponseEntity.ok(dislikeStatus);
+    }
+
+    @GetMapping("/getLikeAndDislikeStatuses")
+    public ResponseEntity<Map<String,Object>> getLikeAndDislikeStatus( Principal principal){
+        Map<String, Object> response = new HashMap<>();
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        Long userId = user.getId();
+        List<UserLikeAndDislikeData> likeanddislike = userResourceLikeDislikeService.getLikeAndDislikeStatus(userId);
+        response.put("likeanddislike", likeanddislike);
+        return ResponseEntity.ok(response);
     }
 
 }

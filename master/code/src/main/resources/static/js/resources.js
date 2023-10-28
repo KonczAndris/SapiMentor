@@ -924,65 +924,117 @@ $(document).ready(async function () {
 
 })
 
-
-// HARMADIK VERZIO
-$(document).on('myCustomLoadEvent', function () {
-    console.log('Saját oldalbetöltési esemény kiváltva.');
-    function getLikeAndDislikeStatus(resourceId, action) {
-        return new Promise((resolve, reject) => {
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
-            const url = `/resources/${action}?resourceId=${resourceId}`;
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-CSRF-TOKEN': token
-                    //'Cache-Control': 'no-cache'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error('Request failed');
-                }
-            }).then(data => {
-                console.log("Data: ",data)
-                resolve(data);
-            }).catch(error => {
-                console.error('Error:', error);
-                reject(error);
-            });
-        });
-    }
-
-
-    window.addEventListener("load", () => {
-        const likeButtons = document.querySelectorAll('.like-button-link');
-        for (const likeButton of likeButtons) {
-            const rowId = likeButton.closest('tr').id;
-            const resourceId = rowId.replace('resource-row-', '');
-            getLikeAndDislikeStatus(resourceId, 'getLikeStatus').then(likeStatusData => {
-                console.log('likeStatusData: ', likeStatusData);
-                if (likeStatusData === '1') {
-                    likeButton.classList.add('like-button-link-active');
-                }
-            });
+// lekerni az osszes like es dislike allasat az adatbazisbol
+let likeAndDislikeStatuses = [];
+document.addEventListener('DOMContentLoaded', function () {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    //const url = `/resources/${action}?resourceId=${resourceId}`
+    fetch("/resources/getLikeAndDislikeStatuses", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
         }
-
-        const dislikeButtons = document.querySelectorAll('.dislike-button-link');
-        for (const dislikeButton of dislikeButtons) {
-            const rowId = dislikeButton.closest('tr').id;
-            const resourceId = rowId.replace('resource-row-', '');
-            getLikeAndDislikeStatus(resourceId, 'getDislikeStatus').then(dislikeStatusData => {
-                console.log('dislikeStatusData: ', dislikeStatusData);
-                if (dislikeStatusData === '1') {
-                    dislikeButton.classList.add('dislike-button-link-active');
-                }
-            });
-        }
-    });
+    }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Request failed');
+            }
+        })
+        .then(data => {
+            likeAndDislikeStatuses = data.likeanddislike;
+            handleLikeAndDislikeStatuses();
+            //console.log(likeAndDislikeStatuses);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
 });
+
+function handleLikeAndDislikeStatuses() {
+    // Itt már rendelkezésre állnak az adatok
+    //console.log(likeAndDislikeStatuses);
+
+    // Most már kezelheted az adatokat
+    for (let i = 0; i < likeAndDislikeStatuses.length; i++) {
+        const likeAndDislikeData = likeAndDislikeStatuses[i];
+        const resourceId = likeAndDislikeData.resourceId;
+        const like = likeAndDislikeData.like;
+        const dislike = likeAndDislikeData.dislike;
+
+        // Itt kezeld az adatokat vagy végezz velük bármit, amit szeretnél
+        //console.log(`Resource ID: ${resourceId}, Like: ${like}, Dislike: ${dislike}`);
+        const likeCountElement = document.querySelector(`#resource-row-${resourceId} .like-button-link`);
+        const dislikeCountElement = document.querySelector(`#resource-row-${resourceId} .dislike-button-link`);
+        //console.log(likeCountElement);
+        //console.log(dislikeCountElement);
+        if (like === 1) {
+            likeCountElement.classList.add('like-button-link-active');
+        } else {
+            dislikeCountElement.classList.add('dislike-button-link-active');
+        }
+
+    }
+}
+
+// // HARMADIK VERZIO
+// $(document).on('myCustomLoadEvent', function () {
+//     console.log('Saját oldalbetöltési esemény kiváltva.');
+//     function getLikeAndDislikeStatus(resourceId, action) {
+//         return new Promise((resolve, reject) => {
+//             var token = $("meta[name='_csrf']").attr("content");
+//             var header = $("meta[name='_csrf_header']").attr("content");
+//             const url = `/resources/${action}?resourceId=${resourceId}`;
+//             fetch(url, {
+//                 method: 'GET',
+//                 headers: {
+//                     'Content-Type': 'application/x-www-form-urlencoded',
+//                     'X-CSRF-TOKEN': token
+//                     //'Cache-Control': 'no-cache'
+//                 }
+//             }).then(response => {
+//                 if (response.ok) {
+//                     return response.text();
+//                 } else {
+//                     throw new Error('Request failed');
+//                 }
+//             }).then(data => {
+//                 console.log("Data: ",data)
+//                 resolve(data);
+//             }).catch(error => {
+//                 console.error('Error:', error);
+//                 reject(error);
+//             });
+//         });
+//     }
+//
+//
+//         const likeButtons = document.querySelectorAll('.like-button-link');
+//         for (const likeButton of likeButtons) {
+//             const rowId = likeButton.closest('tr').id;
+//             const resourceId = rowId.replace('resource-row-', '');
+//             getLikeAndDislikeStatus(resourceId, 'getLikeStatus').then(likeStatusData => {
+//                 console.log('likeStatusData: ', likeStatusData);
+//                 if (likeStatusData === '1') {
+//                     likeButton.classList.add('like-button-link-active');
+//                 }
+//             });
+//         }
+//
+//         const dislikeButtons = document.querySelectorAll('.dislike-button-link');
+//         for (const dislikeButton of dislikeButtons) {
+//             const rowId = dislikeButton.closest('tr').id;
+//             const resourceId = rowId.replace('resource-row-', '');
+//             getLikeAndDislikeStatus(resourceId, 'getDislikeStatus').then(dislikeStatusData => {
+//                 console.log('dislikeStatusData: ', dislikeStatusData);
+//                 if (dislikeStatusData === '1') {
+//                     dislikeButton.classList.add('dislike-button-link-active');
+//                 }
+//             });
+//         }
+// });
 
 
 
