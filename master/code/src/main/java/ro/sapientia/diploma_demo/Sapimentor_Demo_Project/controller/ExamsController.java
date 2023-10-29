@@ -110,6 +110,7 @@ public class ExamsController {
             String user_name = user.getFirst_Name() + " " + user.getLast_Name();
             try {
                 String errorMessage = resourceServices.uploadExamImage(image, name, topic, user_name);
+                System.out.println("Error message: " + errorMessage);
                 if(errorMessage != null){
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
                 }

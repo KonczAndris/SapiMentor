@@ -924,6 +924,7 @@ $(document).ready(async function () {
 
 })
 
+// NEGYEDIK VERZIO (vegleges)
 // lekerni az osszes like es dislike allasat az adatbazisbol
 let likeAndDislikeStatuses = [];
 document.addEventListener('DOMContentLoaded', function () {

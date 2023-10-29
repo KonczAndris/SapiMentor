@@ -389,7 +389,7 @@ function saveExamExamplesDataToServer() {
     //     });
     // });
     var image = document.getElementById("fileUpload").files[0];
-    var imageFileName = document.getElementById("examExampleFileName-edit").value;
+    var imageFileName = document.getElementById("examExampleName-edit").value;
     var imageTopic = document.getElementById("topic-selected-modal").value;
 
     data.push({
@@ -434,9 +434,11 @@ function sendExamsDataToServer(data) {
         // ezt is andrisnak
         //hideLoadingModal(); // Elrejtjük a modal ablakot
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-        //console.log(data);
+
         if (data === "Success") {
             location.reload();
+        } else if(data === "Too large"){
+            alert("The file is too large!");
         }
     }).catch(error => {
         // ezt is andrisnak

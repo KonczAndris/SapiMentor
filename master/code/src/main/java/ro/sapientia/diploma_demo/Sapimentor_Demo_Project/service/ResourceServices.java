@@ -1,13 +1,20 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Exams;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Resources;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ExamsRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ResourcesRepository;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -19,11 +26,14 @@ import java.util.Map;
 public class ResourceServices {
     private final ResourcesRepository resourcesRepository;
     private final VirusTotalService virusTotalService;
+    private final ExamsRepository examsRepository;
 
     public ResourceServices(ResourcesRepository resourcesRepository,
-                            VirusTotalService virusTotalService) {
+                            VirusTotalService virusTotalService,
+                            ExamsRepository examsRepository) {
         this.resourcesRepository = resourcesRepository;
         this.virusTotalService = virusTotalService;
+        this.examsRepository = examsRepository;
     }
 
     public List<Resources> getAllResources() {
@@ -203,16 +213,52 @@ public class ResourceServices {
 
         if (!image.isEmpty()){
             try{
-                System.out.println("Image size: " + image.getSize());
-                System.out.println("MAX_IMAGE_SIZE: " + MAX_IMAGE_SIZE);
+//                System.out.println("Image size: " + image.getSize());
+//                System.out.println("MAX_IMAGE_SIZE: " + MAX_IMAGE_SIZE);
+//                System.out.println("Image name: " + name);
+//                System.out.println("Image topic: " + topic);
+//                System.out.println("Image user_name: " + user_name);
+                if (image.getSize() > MAX_IMAGE_SIZE){
+                    return "Too large";
+                }
 
+                byte[] originalImageBytes = image.getBytes();
+
+                // itt hozom letre az Exams objektumot
+                // es teszem bele a megadott adatokat
+                Exams exam = new Exams();
+                exam.setName(name);
+                exam.setTopic_name(topic);
+                exam.setUser_name(user_name);
+                exam.setLike(0);
+                exam.setDislike(0);
+
+                // itt skalazom a kepet a megadott meretekre
+                BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
+
+                int minDimension = Math.min(originalImage.getWidth(), originalImage.getHeight());
+                int x = (originalImage.getWidth() - minDimension) / 2;
+                int y = (originalImage.getHeight() - minDimension) / 2;
+
+                BufferedImage croppedImage = originalImage.getSubimage(x, y, minDimension, minDimension);
+
+                BufferedImage scaledImage = Thumbnails.of(croppedImage)
+                        .size(400, 400)
+                        .asBufferedImage();
+
+                // be allitom a kimeneti fajltipust (pl. jpg)
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(scaledImage, "jpg", baos);
+                byte[] scaledImageBytes = baos.toByteArray();
+
+                // itt hozza adom a kepet az Exams objektumhoz
+                exam.setExamImage(scaledImageBytes);
+                examsRepository.save(exam);
 
             } catch (Exception e){
                 e.printStackTrace();
             }
-
         }
-
         return null;
     }
 }

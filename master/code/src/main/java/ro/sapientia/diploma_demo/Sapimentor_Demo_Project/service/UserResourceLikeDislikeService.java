@@ -194,7 +194,7 @@ public class UserResourceLikeDislikeService {
         UserResourceLikeDislike existinglike = userResourceLikeDislikeRepository.findByUserAndResources(user_Id, resource_Id);
 
         if (existinglike != null){
-            System.out.println("existinglike: " + existinglike.getLike());
+            //System.out.println("existinglike: " + existinglike.getLike());
             return existinglike.getLike().toString();
         } else {
             return "0";
@@ -214,7 +214,7 @@ public class UserResourceLikeDislikeService {
         UserResourceLikeDislike existingdislike = userResourceLikeDislikeRepository.findByUserAndResources(user_Id, resource_Id);
 
         if (existingdislike != null){
-            System.out.println("existingdislike: " + existingdislike.getLike());
+            //System.out.println("existingdislike: " + existingdislike.getLike());
             return existingdislike.getDislike().toString();
         } else {
             return "0";
