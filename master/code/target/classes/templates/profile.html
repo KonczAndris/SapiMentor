@@ -236,7 +236,7 @@
                   <div class="detail-row">
                     <p class="detail-label">First Name:</p>
                     <input type="text" class="edit-input" id="firstName-edit" placeholder="" name="firstName"
-                           required autofocus="autofocus" oninput="validateFirstName()" th:value="${userRegistrationDetails.firstName}">
+                           required autofocus="autofocus" oninput="validateFirstName(), checkValidationAndSetOpacity()" th:value="${userRegistrationDetails.firstName}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
@@ -247,7 +247,7 @@
                   <div class="detail-row">
                     <p class="detail-label">Last Name:</p>
                     <input type="text" class="edit-input" id="lastName-edit" placeholder="" name="lastName"
-                           required autofocus="autofocus" oninput="validateLastName()" th:value="${userRegistrationDetails.lastName}">
+                           required autofocus="autofocus" oninput="validateLastName(), checkValidationAndSetOpacity()" th:value="${userRegistrationDetails.lastName}">
                     <div class="info-icon" data-tooltip="Tooltip text for Last Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
@@ -258,7 +258,7 @@
                   <div class="detail-row">
                     <p class="detail-label">Specialization:</p>
                     <input type="text" class="edit-input" id="specialization-edit" placeholder="ex: Software Engineering" name="specialization"
-                           required autofocus="autofocus" oninput="validateSpecialization()" th:value="${userRegistrationDetails.specialization ?: ''}">
+                           required autofocus="autofocus" oninput="validateSpecialization(), checkValidationAndSetOpacity()" th:value="${userRegistrationDetails.specialization ?: ''}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
@@ -269,7 +269,7 @@
                   <div class="detail-row">
                     <p class="detail-label">Year:</p>
                     <input type="number" class="edit-input" id="year-edit" placeholder="ex: 3" name="year"
-                           required autofocus="autofocus" oninput="validateYear()" th:value="${userRegistrationDetails.year ?: ''}">
+                           required autofocus="autofocus" oninput="validateYear(), checkValidationAndSetOpacity()" th:value="${userRegistrationDetails.year ?: ''}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
@@ -280,7 +280,7 @@
                   <div class="detail-row">
                     <p class="detail-label">Phone:</p>
                     <input type="tel" class="edit-input" id="phone-edit" placeholder="ex: 0734155510" name="phoneNumber"
-                           required autofocus="autofocus" oninput="validatePhone()" th:value="${userRegistrationDetails.phoneNumber ?: ''}">
+                           autofocus="autofocus" oninput="validatePhone()" th:value="${userRegistrationDetails.phoneNumber ?: ''}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
                     </div>

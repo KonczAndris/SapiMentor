@@ -684,11 +684,11 @@ body {
 
 .topic-dropdown-content {
     display: none;
-    width: 197px;
+    width: 196px;
     border: 2px solid rgb(0, 0, 0);
     background-color: #ffffff;
     z-index: 1000;
-    transform: translateY(-20px);
+    transform: translateY(-24px);
     top: 100%;
     position: absolute;
 }
@@ -781,7 +781,6 @@ thead{
     background: rgb(22, 175, 132);
     height: 40px;
     color: white;
-    position: sticky;
     top: 0; /* Stick the header to the top */
     z-index: 1; /* Ensure the header appears above the table body */
 }

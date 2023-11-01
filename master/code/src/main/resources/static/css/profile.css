@@ -362,9 +362,19 @@ h2 {
     text-align: center;
 }
 
-#upload-save:hover, #upload-upload:hover {
+#upload-upload {
+    background-color: rgb(40, 152, 200);
+}
+
+#upload-save:hover {
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
     background-color: rgb(30, 214, 162);
+    border: 2px solid white;
+}
+
+#upload-upload:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(1, 187, 255);
     border: 2px solid white;
 }
 
@@ -498,12 +508,15 @@ h2 {
     float: right;
     margin-left: auto;
     margin-right: 21%;
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 #edit-save:hover {
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
     background-color: rgb(30, 214, 162);
     border: 2px solid white;
+    cursor: pointer;
 }
 
 .highlight {
@@ -566,6 +579,7 @@ h2 {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 
 /* SKILLS MODAL BOX */
 .dropdown-container{
@@ -898,6 +912,9 @@ table tr:last-child td {
 }
 
 @media (max-width: 1000px) {
+    .hidden{
+        display: none;
+    }
 
     .profile-container {
         display: flex;

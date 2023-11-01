@@ -184,10 +184,35 @@ function validatePhone() {
     var phoneInput = document.getElementById("phone-edit");
     var phoneValue = phoneInput.value.trim();
 
-    if (!/^\d{10,}$/.test(phoneValue)){
+    if (/^\d{1,9}$|^\d{11,}$/.test(phoneValue)) {
         phoneInput.classList.add("highlight");
     } else {
         phoneInput.classList.remove("highlight");
+    }
+}
+
+function checkValidationAndSetOpacity() {
+    var firstNameInput = document.getElementById("firstName-edit");
+    var lastNameInput = document.getElementById("lastName-edit");
+    var specializationInput = document.getElementById("specialization-edit");
+    var yearInput = document.getElementById("year-edit");
+    var phoneInput = document.getElementById("phone-edit");
+    var editSaveButton = document.getElementById("edit-save");
+
+    // Check if any field is highlighted or empty (except for the phone number)
+    var isHighlighted = firstNameInput.classList.contains("highlight") ||
+        lastNameInput.classList.contains("highlight") ||
+        specializationInput.classList.contains("highlight") ||
+        yearInput.classList.contains("highlight") ||
+        phoneInput.classList.contains("highlight");
+
+    // Set opacity of the edit-save button
+    if (isHighlighted) {
+        editSaveButton.style.opacity = "0.5";
+        editSaveButton.style.pointerEvents = 'none';
+    } else {
+        editSaveButton.style.opacity = "1";
+        editSaveButton.style.pointerEvents = 'all';
     }
 }
 
