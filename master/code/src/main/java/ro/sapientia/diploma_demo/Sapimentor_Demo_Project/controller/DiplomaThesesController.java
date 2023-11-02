@@ -1,15 +1,21 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topic;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.DiplomaServices;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 
 import java.security.Principal;
@@ -17,17 +23,21 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-@RequestMapping("/resources")
+@RequestMapping("/resources/diplomaTheses")
 @Controller
 public class DiplomaThesesController {
 
     private final UserRepository userRepository;
     private final TopicService topicService;
+    private final DiplomaServices diplomaServices;
 
     @Autowired
-    public DiplomaThesesController(UserRepository userRepository, TopicService topicService) {
+    public DiplomaThesesController(UserRepository userRepository,
+                                   TopicService topicService,
+                                   DiplomaServices diplomaServices) {
         this.userRepository = userRepository;
         this.topicService = topicService;
+        this.diplomaServices = diplomaServices;
     }
     private void showUserRolesToDisplayResources(Model model, Principal principal){
         String email = principal.getName();
@@ -80,11 +90,38 @@ public class DiplomaThesesController {
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
     }
 
-    @GetMapping("/diplomaTheses")
+    @GetMapping("")
     public String showDiplomaTheses(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
         showProfileImageAndName(model, principal);
         return "diplomaTheses";
+    }
+
+    @PostMapping("/uploadDiplomaTheses")
+    public ResponseEntity<String> uploadDiplomaTheses(@RequestParam("pdf") MultipartFile pdf,
+                                                      @RequestParam("name") String name,
+                                                      @RequestParam("topic") String topic,
+                                                      Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        //System.out.println("User: " + user.getEmail());
+
+        if (user != null){
+            String user_name = user.getFirst_Name() + " " + user.getLast_Name();
+            try {
+                String errorMessage = diplomaServices.uploadDiplomaThesesPdf(pdf, name, topic, user_name);
+                System.out.println("Error message: " + errorMessage);
+                if (errorMessage != null){
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+                }
+
+                return ResponseEntity.ok("Success");
+            } catch (Exception e){
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
     }
 }

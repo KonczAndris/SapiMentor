@@ -14,15 +14,21 @@ public class Exams {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "examname")
     private String name;
+
     @Column(name = "examimage")
     @Lob
     private byte[] examImage;
+
     private String topic_name;
+
     private String user_name;
+
     @Column(name = "exam_like")
     private Integer like;
+
     @Column(name = "exam_dislike")
     private Integer dislike;
 

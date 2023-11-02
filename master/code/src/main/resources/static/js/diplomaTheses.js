@@ -369,36 +369,82 @@ function addLinkRow() {
 }
 
 function saveDiplomaThesesDataToServer() {
-    var tableRows = document.querySelectorAll(".table-container table tbody tr");
+    //var tableRows = document.querySelectorAll(".table-container table tbody tr");
     var data = [];
 
-    tableRows.forEach(function (row) {
-        var linkNumber = row.querySelector("td:first-child").textContent;
-        var linkName = row.querySelector("td:nth-child(2)").textContent;
-        var linkTopic = row.querySelector("td:nth-child(3)").textContent;
+    // tableRows.forEach(function (row) {
+    //     var linkNumber = row.querySelector("td:first-child").textContent;
+    //     var linkName = row.querySelector("td:nth-child(2)").textContent;
+    //     var linkTopic = row.querySelector("td:nth-child(3)").textContent;
+    //
+    //     // Assuming you have an array for storing likes and dislikes for each row
+    //     var linkLikes = row.querySelector("td:nth-child(4)").textContent;
+    //
+    //     // Push the data into the 'data' array
+    //     data.push({
+    //         linkNumber: linkNumber,
+    //         linkName: linkName,
+    //         linkTopic: linkTopic,
+    //         linkLikes: linkLikes,
+    //     });
+    // });
+    var pdfFile = document.getElementById("fileUpload").files[0];
+    var pdfFileName = document.getElementById("diplomaTheses-edit").value;
+    var pdfTopic = document.getElementById("topic-selected-modal").value;
 
-        // Assuming you have an array for storing likes and dislikes for each row
-        var linkLikes = row.querySelector("td:nth-child(4)").textContent;
-
-        // Push the data into the 'data' array
-        data.push({
-            linkNumber: linkNumber,
-            linkName: linkName,
-            linkTopic: linkTopic,
-            linkLikes: linkLikes,
-        });
+    data.push({
+        name: pdfFileName,
+        pdf: pdfFile,
+        topic: pdfTopic,
     });
 
-    sendDataToServer(data);
+    console.log(data);
+    sendDiplomaThesesDataToServer(data);
 }
 
-function sendDataToServer(data) {
-    var diplomaThesesDataItems = JSON.stringify(data);
-    document.getElementById("diplomaThesesDataItems").value = diplomaThesesDataItems;
-    console.log(diplomaThesesDataItems);
+function sendDiplomaThesesDataToServer(data) {
+    // ide kell majd hogy behozza a toltokepernyot
 
-    // Most küldd el az űrlapot
-    document.getElementById("diplomaTheses-form").submit();
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    var formData = new FormData();
+    formData.append("pdf", data[0].pdf);
+    formData.append("name", data[0].name);
+    formData.append("topic", data[0].topic);
+    // for (var pair of formData.entries()) {
+    //     console.log(pair[0] + ': ' + pair[1]);
+    // }
+
+    fetch('/resources/diplomaTheses/uploadDiplomaTheses', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        body: formData
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            return response.text();
+            // throw new Error('Hiba történt a válaszban');
+        }
+    }).then(data => {
+        // ezt is andrisnak
+        //hideLoadingModal(); // Elrejtjük a modal ablakot
+        // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
+
+        if (data === "Success") {
+            location.reload();
+        } else if(data === "Too large"){
+            alert("The file is too large!");
+        }
+    }).catch(error => {
+        // ezt is andrisnak
+        //hideLoadingModal(); // Elrejtjük a modal ablakot
+        console.error('Hiba történt:', error);
+    });
+
 }
 
 

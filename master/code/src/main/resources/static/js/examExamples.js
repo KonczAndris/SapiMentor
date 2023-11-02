@@ -447,13 +447,5 @@ function sendExamsDataToServer(data) {
     });
 }
 
-function sendDataToServer(data) {
-    var examExamplesDataItems = JSON.stringify(data);
-    document.getElementById("examExamplesDataItems").value = examExamplesDataItems;
-    console.log(examExamplesDataItems);
-
-    // Most küldd el az űrlapot
-    document.getElementById("examExamples-form").submit();
-}
 
 
