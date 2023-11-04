@@ -447,5 +447,24 @@ function sendExamsDataToServer(data) {
     });
 }
 
+//NEW
+// Get the elements
+var examImageContainer = document.querySelector(".exam-image-image-container");
+var examImageModal = document.querySelector(".exam-image-modal");
+var examImageCloseButton = document.querySelector(".exam-image-close-button");
+
+// Show the modal on hover
+examImageContainer.addEventListener("click", function() {
+    examImageModal.style.display = "block";
+    examImageModal.style.cursor = "default";
+});
+
+// Hide the modal when clicking outside of it
+window.addEventListener("click", function(event) {
+    if (event.target == examImageModal) {
+        examImageModal.style.display = "none";
+    }
+});
+
 
 

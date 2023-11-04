@@ -14,12 +14,10 @@ document.getElementById("examExamplesDrop").addEventListener("click", function (
     window.location.href = "/resources/examExamples";
 });
 
-
 function toggleFilterDropdown() {
     var dropdownContent = document.getElementById("filter-myDropdown");
     dropdownContent.classList.toggle("active");
 }
-
 
 function closeDropdown(selectedItem) {
     var dropdownContent = document.getElementById("filter-myDropdown");
@@ -48,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
-
 
 function toggleDropdown() {
     const checkboxContainer = document.getElementById("topic-myCheckboxes");
@@ -117,8 +114,6 @@ function setupResourceModal() {
         }
     }
 }
-
-
 
 function closeModalOnClickOutside() {
     var modal1 = document.getElementById("myResourceModal");
@@ -198,8 +193,6 @@ function setupSkillsModal() {
         }
     }
 }
-
-
 
 function closeModalOnClickOutside() {
     var modal1 = document.getElementById("resourceModal");
@@ -399,7 +392,6 @@ function sendResourcesDataToServer(data) {
     // ezt is andrisnak
     //showLoadingModal(); // Megjelenítjük a modal ablakot
 
-
     var resourcesUploadDataItems = JSON.stringify(data);
     //document.getElementById("resourceDataItems").value = profileTopicsDataItems;
     //console.log("Adatok: " + resourcesUploadDataItems);
@@ -421,7 +413,6 @@ function sendResourcesDataToServer(data) {
             // throw new Error('Hiba történt a válaszban');
         }
     }).then(data => {
-        // ezt is andrisnak
         //hideLoadingModal(); // Elrejtjük a modal ablakot
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
         //console.log(data);
@@ -434,7 +425,6 @@ function sendResourcesDataToServer(data) {
             console.error('Hiba történt:', error);
     });
 }
-
 
 function sendDataToServer(data) {
     var resourceDataItems = JSON.stringify(data);
