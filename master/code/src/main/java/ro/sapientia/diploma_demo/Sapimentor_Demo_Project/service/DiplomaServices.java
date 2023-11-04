@@ -1,6 +1,7 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 import com.itextpdf.kernel.pdf.*;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses;
@@ -92,11 +93,11 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
                                      String user_name){
     if(!pdf.isEmpty()) {
         try {
-            System.out.println("Pdf size: " + pdf.getSize());
-            System.out.println("MAX_PDF_SIZE: " + MAX_PDF_SIZE);
-            System.out.println("Pdf name: " + name);
-            System.out.println("Pdf topic: " + topic);
-            System.out.println("Pdf user_name: " + user_name);
+//            System.out.println("Pdf size: " + pdf.getSize());
+//            System.out.println("MAX_PDF_SIZE: " + MAX_PDF_SIZE);
+//            System.out.println("Pdf name: " + name);
+//            System.out.println("Pdf topic: " + topic);
+//            System.out.println("Pdf user_name: " + user_name);
 
             if (pdf.getSize() > MAX_PDF_SIZE) {
                 return "Too large";
@@ -161,5 +162,70 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
     }
     return null;
 }
+
+    // TODO: likeDiploma
+    public void likeDiploma(Long diplomaId) {
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
+
+        diploma_theses.setLike(diploma_theses.getLike() + 1);
+        diploma_theses.setDislike(diploma_theses.getDislike());
+
+        diplomaThesesRepository.save(diploma_theses);
+    }
+
+    // TODO: dislikeDiploma
+    public void dislikeDiploma(Long diplomaId) {
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
+
+        diploma_theses.setDislike(diploma_theses.getDislike() + 1);
+
+        diplomaThesesRepository.save(diploma_theses);
+    }
+
+    // TODO: revokeLike
+    public void revokeLike(Long diplomaId) {
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
+
+        diploma_theses.setLike(diploma_theses.getLike() - 1);
+
+        diplomaThesesRepository.save(diploma_theses);
+    }
+
+    // TODO: revokeDislike
+    public void revokeDislike(Long diplomaId) {
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
+
+        diploma_theses.setDislike(diploma_theses.getDislike() - 1);
+
+        diplomaThesesRepository.save(diploma_theses);
+    }
+
+    // TODO: likeDiplomaAndRevokeDislike
+    public void likeDiplomaAndRevokeDislike(Long diplomaId) {
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
+
+        diploma_theses.setLike(diploma_theses.getLike() + 1);
+
+        diploma_theses.setDislike(diploma_theses.getDislike() - 1);
+
+        diplomaThesesRepository.save(diploma_theses);
+    }
+
+    // TODO: dislikeDiplomaAndRevokeLike
+    public void dislikeDiplomaAndRevokeLike(Long diplomaId) {
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
+
+        diploma_theses.setDislike(diploma_theses.getDislike() + 1);
+
+        diploma_theses.setLike(diploma_theses.getLike() - 1);
+
+        diplomaThesesRepository.save(diploma_theses);
+    }
 
 }
