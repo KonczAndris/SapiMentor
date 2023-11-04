@@ -304,9 +304,10 @@ function addLinkRow() {
         // var selectedFile = ...
         var selectedFileName = document.getElementById("diplomaThesesFileName-edit").value;
         var selectedName = document.getElementById("diplomaThesesName-edit").value;
+        var selectedYear = document.getElementById("diplomaTheses-edit-year").value;
         var selectedTopic = document.getElementById("topic-selected-modal").value;
 
-        if (selectedTopic !== "" && selectedFileName !== "" && selectedName !== "") {
+        if (selectedTopic !== "" && selectedFileName !== "" && selectedName !== "" && selectedYear !== "") {
             var tableContainer = document.querySelector(".table-container table tbody");
 
             // Create a new row
@@ -319,6 +320,9 @@ function addLinkRow() {
             // Create a clickable link (anchor) for linkName
             var linkName = document.createElement("td");
             linkName = selectedName;
+
+            var linkYear = document.createElement("td");
+            linkYear = selectedYear;
 
             var linkTopic = document.createElement("td");
             linkTopic.textContent = selectedTopic;
@@ -352,6 +356,7 @@ function addLinkRow() {
             // Append cells to the row
             row.appendChild(linkNumber);
             row.appendChild(linkName);
+            row.appendChild(linkYear);
             row.appendChild(linkTopic);
             row.appendChild(linkUser);
             row.appendChild(linkLikes);
@@ -390,12 +395,14 @@ function saveDiplomaThesesDataToServer() {
     // });
     var pdfFile = document.getElementById("fileUpload").files[0];
     var pdfFileName = document.getElementById("diplomaTheses-edit").value;
+    var pdfFileYear = document.getElementById("diplomaTheses-edit-year").value;
     var pdfTopic = document.getElementById("topic-selected-modal").value;
 
     data.push({
         name: pdfFileName,
         pdf: pdfFile,
         topic: pdfTopic,
+        year: pdfFileYear
     });
 
     console.log(data);
@@ -411,6 +418,7 @@ function sendDiplomaThesesDataToServer(data) {
     var formData = new FormData();
     formData.append("pdf", data[0].pdf);
     formData.append("name", data[0].name);
+    formData.append("year", data[0].year);
     formData.append("topic", data[0].topic);
     // for (var pair of formData.entries()) {
     //     console.log(pair[0] + ': ' + pair[1]);
@@ -447,4 +455,20 @@ function sendDiplomaThesesDataToServer(data) {
 
 }
 
+//NEW
+// Get the elements
+var pdfImageContainer = document.querySelector(".pdf-image-image-container");
+var pdfImageModal = document.querySelector(".pdf-image-modal");
+// Show the modal on hover
+pdfImageContainer.addEventListener("click", function() {
+    pdfImageModal.style.display = "block";
+    pdfImageModal.style.cursor = "default";
+});
+
+// Hide the modal when clicking outside of it
+window.addEventListener("click", function(event) {
+    if (event.target == pdfImageModal) {
+        pdfImageModal.style.display = "none";
+    }
+});
 
