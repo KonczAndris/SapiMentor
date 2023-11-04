@@ -155,13 +155,15 @@
                 </thead>
                 <tbody id="link-table-body">
 
+                <!--
                 <tr>
                     <td>1</td>
-                    <td>
+                    <td class="image-container-column">
                         <div class="exam-image-image-container">
-                            Kép
+                            Numerikus módszerek vizsga 2021
                             <img class="table-pic" th:src="@{/img/anonym.jpg}" alt="Kép leírás" />
-                            <div class="exam-image-modal">
+                            <span class="zoom-icon">&#128269;</span>
+                            <div class="exam-image-modal">/
                                 <img class="exam-image-modal-content" th:src="@{/img/anonym.jpg}" alt="Kép leírás" />
                             </div>
                         </div>
@@ -172,26 +174,37 @@
                     <td>
                         <button class="like-button-link">Like</button>
                         <button class="dislike-button-link">Dislike</button>
-                        <button class="like-button-link">Like</button>
                     </td>
                 </tr>
-
+                -->
+                
                 <tr th:each="exam, stat : ${examData}" th:id="'exam-row-' + ${exam.id}">
                     <td th:text="${stat.index + 1}"></td>
-                    <td><img th:src="${exam.examimage}" th:alt="${exam.name}" /></td>
+                    <td class="image-container-column">
+                        <div class="exam-image-image-container">
+                            <span th:text="${exam.name}"></span>
+                            <img class="table-pic" th:src="${exam.examimage}" th:alt="${exam.name}" />
+                            <span class="zoom-icon">&#128269;</span>
+                            <div class="exam-image-modal">
+                                <img class="exam-image-modal-content" th:src="${exam.examimage}" th:alt="${exam.name}" />
+                            </div>
+                        </div>
+                    </td>
                     <td th:text="${exam.topic_name}"></td>
                     <td th:text="${exam.user_name}"></td>
                     <td>
-                        <span class="like-dislike-count">
-                          <span class="like-color-text like-count" id="likeButton" th:text="${exam.like}"></span>
-                            <span class="like-dislike-space">  </span>
-                          <span class="dislike-color-text dislike-count" id="dislikeButton" th:text="${exam.dislike}"></span></span>
+                    <span class="like-dislike-count">
+                        <span class="like-color-text like-count" id="likeButton" th:text="${exam.like}"></span>
+                        <span class="like-dislike-space"></span>
+                        <span class="dislike-color-text dislike-count" id="dislikeButton" th:text="${exam.dislike}"></span>
+                    </span>
                     </td>
                     <td>
                         <button class="like-button-link">Like</button>
                         <button class="dislike-button-link">Dislike</button>
                     </td>
                 </tr>
+
 
                 </tbody>
             </table>
