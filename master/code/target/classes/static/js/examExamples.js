@@ -453,7 +453,7 @@ function sendExamsDataToServer(data) {
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
 
         if (data === "Success") {
-            //location.reload();
+            location.reload();
         } else if(data === "Too large"){
             alert("The file is too large!");
         } else if(data === "Wrong type"){
