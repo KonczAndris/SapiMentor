@@ -17,7 +17,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<itext.version>8.0.2</itext.version>
+<!--		<itext.version>8.0.2</itext.version>-->
 	</properties>
 
 	<dependencies>
