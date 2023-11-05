@@ -5,7 +5,7 @@ COPY . .
 
 # Run the application
 FROM openjdk:17.0.1-jdk-slim
-COPY --from=build /target/registration-login-spring-boot-security-thymeleaf-0.0.2-SNAPSHOT.jar Sapimentor_Demo_Project.jar
+COPY --from=build /target/registration-login-spring-boot-security-thymeleaf-0.0.1-SNAPSHOT.jar Sapimentor_Demo_Project.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","Sapimentor_Demo_Project.jar"]
 
