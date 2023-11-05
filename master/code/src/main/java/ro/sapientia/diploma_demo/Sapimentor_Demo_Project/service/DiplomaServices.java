@@ -90,7 +90,8 @@ public class DiplomaServices {
 public String uploadDiplomaThesesPdf(MultipartFile pdf,
                                      String name,
                                      String topic,
-                                     String user_name){
+                                     String user_name,
+                                     String year){
     if(!pdf.isEmpty()) {
         try {
 //            System.out.println("Pdf size: " + pdf.getSize());
@@ -145,6 +146,7 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
             diploma_theses.setName(name);
             diploma_theses.setTopic_name(topic);
             diploma_theses.setUser_name(user_name);
+            diploma_theses.setYear(year);
             diploma_theses.setLike(0);
             diploma_theses.setDislike(0);
 

@@ -132,7 +132,7 @@
                 <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
                 <button class="reverse-button" id="reverseButton"><img th:src="@{/img/reverse.png}" alt="Icon"
                                                                        class="reverse-icon"></button></button>
-                <button type="button" class="upload-hidden btn btn-success" id="upload-upload">
+                <button type="button" class="upload-hidden btn btn-success" id="upload-upload" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
                     <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
             </div>
         </div>
@@ -150,7 +150,7 @@
                     <th class="table-topic">Topic</th>
                     <th class="table-user">User</th>
                     <th class="table-likes">Likes</th>
-                    <th class="table-actions" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">Actions</th>
+                    <th class="table-actions">Actions</th>
                 </tr>
                 </thead>
                 <tbody id="link-table-body">
@@ -178,15 +178,23 @@
                 </tr>
                 -->
 
-                <tr th:each="exam, stat : ${examData}" th:id="'exam-row-' + ${exam.id}">
+                <tr th:each="exam, stat : ${examsData}" th:id="'exam-row-' + ${exam.id}">
                     <td th:text="${stat.index + 1}"></td>
                     <td class="image-container-column">
                         <div class="exam-image-image-container">
                             <span th:text="${exam.name}"></span>
-                            <img class="table-pic" th:src="${exam.examimage}" th:alt="${exam.name}" />
+<!--                            th:if="${examImageBase64List[__${stat.index}__] != ''}"-->
+                            <img
+                                 class="table-pic"
+                                 th:src="@{|data:image/jpeg;base64,${examImageBase64List[__${stat.index}__]}|}"
+                                 th:alt="${exam.name}" />
                             <span class="zoom-icon">&#128269;</span>
                             <div class="exam-image-modal">
-                                <img class="exam-image-modal-content" th:src="${exam.examimage}" th:alt="${exam.name}" />
+<!--                                th:if="${examImageBase64List[__${stat.index}__] != ''}"-->
+                                <img
+                                     class="exam-image-modal-content"
+                                     th:src="@{|data:image/jpeg;base64,${examImageBase64List[__${stat.index}__]}|}"
+                                     th:alt="${exam.name}" />
                             </div>
                         </div>
                     </td>
@@ -226,7 +234,7 @@
                 <div class="detail-row">
                     <label for="fileUpload" class="detail-label">Choose Image:</label>
                     <div class="fileUpload-row">
-                        <input type="file" class="edit-input" id="fileUpload" accept=".jpg, .jpeg, .png" style="display: none;">
+                        <input type="file" class="edit-input" id="fileUpload" accept=".jpg, .jpeg, .png, .heic " style="display: none;">
                         <button type="button" class="upload-button" id="fileUploadButton">Select</button>
                         <input type="text" class="edit-input" id="examExampleFileName-edit" placeholder="" required autofocus="autofocus" readonly>
                     </div> </div>

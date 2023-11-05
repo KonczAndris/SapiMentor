@@ -31,18 +31,22 @@ public class Diploma_Theses {
 
     private String user_name;
 
+    private String year;
+
     public Diploma_Theses(String name,
-                  byte[] diploma_theses_file,
-                  String topic_name,
-                  String user_name,
-                  Integer like,
-                  Integer dislike) {
+                          byte[] diploma_theses_file,
+                          String topic_name,
+                          String user_name,
+                          Integer like,
+                          Integer dislike,
+                          String year) {
         this.name = name;
         this.diploma_theses_file = diploma_theses_file;
         this.topic_name = topic_name;
         this.user_name = user_name;
         this.like = like;
         this.dislike = dislike;
+        this.year = year;
     }
 
     public Diploma_Theses() {

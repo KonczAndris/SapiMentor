@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topic;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.UserLikeAndDislikeData;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ExamServices;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ResourceServices;
@@ -101,9 +98,26 @@ public class ExamsController {
     public String showExamExamples(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
+        List<Exams> exams = examServices.getAllExams();
+
+        List<String> examImageBase64List = new ArrayList<>();
+        for (Exams exam : exams) {
+            byte[] examImageBytes = exam.getExamImage();
+            if (examImageBytes != null) {
+                String examImageBase64 = Base64.getEncoder().encodeToString(examImageBytes);
+                examImageBase64List.add(examImageBase64);
+            } else {
+                examImageBase64List.add("");
+            }
+        }
+
+        model.addAttribute("examsData", exams);
+        //System.out.println("examImageBase64List: " + examImageBase64List);
+        model.addAttribute("examImageBase64List", examImageBase64List);
         showProfileImageAndName(model, principal);
         return "examExamples";
     }
+
 
     @PostMapping("/uploadExams")
     public ResponseEntity<String> uploadExams(@RequestParam("image") MultipartFile image,

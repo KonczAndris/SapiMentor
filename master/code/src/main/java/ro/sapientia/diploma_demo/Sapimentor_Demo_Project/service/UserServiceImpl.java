@@ -198,23 +198,49 @@ public class UserServiceImpl implements UserService{
                 // Skálázom a képet a megadott méretekre
                 BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
 
-                int minDimension = Math.min(originalImage.getWidth(), originalImage.getHeight());
-                int x = (originalImage.getWidth() - minDimension) / 2;
-                int y = (originalImage.getHeight() - minDimension) / 2;
+                // ez az uj verzio
+                if (originalImage != null) {
+                    int minDimension = Math.min(originalImage.getWidth(), originalImage.getHeight());
+                    int x = (originalImage.getWidth() - minDimension) / 2;
+                    int y = (originalImage.getHeight() - minDimension) / 2;
 
-                BufferedImage squareImage = originalImage.getSubimage(x, y, minDimension, minDimension);
+                    BufferedImage squareImage = originalImage.getSubimage(x, y, minDimension, minDimension);
 
-                BufferedImage scaledImage = Thumbnails.of(squareImage)
-                        .size(400, 400)
-                        .asBufferedImage();
+                    BufferedImage scaledImage = Thumbnails.of(squareImage)
+                            .size(400, 400)
+                            .outputQuality(0.6)
+                            .asBufferedImage();
 
-                //Be allitom a kimeneti fájltípust (pl. jpg)
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(scaledImage, "jpg", baos);
-                byte[] scaledImageBytes = baos.toByteArray();
+                    //Be allitom a kimeneti fájltípust (pl. jpg)
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(scaledImage, "jpg", baos);
+                    byte[] scaledImageBytes = baos.toByteArray();
 
-
-                user.setProfileImage(scaledImageBytes);
+                    if (scaledImageBytes.length == 0) {
+                        return "Wrong type";
+                    } else {
+                        user.setProfileImage(scaledImageBytes);
+                    }
+                }
+                // ez a regiverzio
+//                int minDimension = Math.min(originalImage.getWidth(), originalImage.getHeight());
+//                int x = (originalImage.getWidth() - minDimension) / 2;
+//                int y = (originalImage.getHeight() - minDimension) / 2;
+//
+//                BufferedImage squareImage = originalImage.getSubimage(x, y, minDimension, minDimension);
+//
+//                BufferedImage scaledImage = Thumbnails.of(squareImage)
+//                        .size(400, 400)
+//                        .outputQuality(0.7)
+//                        .asBufferedImage();
+//
+//                //Be allitom a kimeneti fájltípust (pl. jpg)
+//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                ImageIO.write(scaledImage, "jpg", baos);
+//                byte[] scaledImageBytes = baos.toByteArray();
+//
+//
+//                user.setProfileImage(scaledImageBytes);
                 userRepository.save(user);
             } catch (IOException e) {
                 e.printStackTrace();

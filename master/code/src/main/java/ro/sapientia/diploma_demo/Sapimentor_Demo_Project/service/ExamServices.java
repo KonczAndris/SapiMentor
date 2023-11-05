@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 @Service
 public class ExamServices {
@@ -18,6 +19,10 @@ public class ExamServices {
 
     public ExamServices(ExamsRepository examsRepository) {
         this.examsRepository = examsRepository;
+    }
+
+    public List<Exams> getAllExams() {
+        return examsRepository.findAll();
     }
 
     //Ezzel tudod beallitani hogy mekkora legyen a maximalis meret amit feltolthet a felhasznalo
@@ -54,26 +59,58 @@ public class ExamServices {
                 exam.setLike(0);
                 exam.setDislike(0);
 
-                // itt skalazom a kepet a megadott meretekre
+//                // itt skalazom a kepet a megadott meretekre
+//                BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
+//
+//                int minDimension = Math.min(originalImage.getWidth(), originalImage.getHeight());
+//                int x = (originalImage.getWidth() - minDimension) / 2;
+//                int y = (originalImage.getHeight() - minDimension) / 2;
+//
+//                BufferedImage croppedImage = originalImage.getSubimage(x, y, minDimension, minDimension);
+//
+//                BufferedImage scaledImage = Thumbnails.of(croppedImage)
+//                        .scale(1.0) // 100%-os méretarány (eredeti méret megtartva)
+//                        .outputQuality(0.8)  // Itt állítsd be a kívánt minőséget
+//                        .asBufferedImage();
+
                 BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
+//                System.out.println("Original image size: " + originalImageBytes.length);
 
-                int minDimension = Math.min(originalImage.getWidth(), originalImage.getHeight());
-                int x = (originalImage.getWidth() - minDimension) / 2;
-                int y = (originalImage.getHeight() - minDimension) / 2;
+                if (originalImage != null) {
+                    // itt folytathatod a képfeldolgozást
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    BufferedImage scaledImage = Thumbnails.of(originalImage)
+                            .scale(0.85) // itt allitom be hogy mennyire legyen kicsinyitve a kep
+                            .outputQuality(0.7)  // itt allitom be a kivant minoseget
+                            .asBufferedImage();
+                    ImageIO.write(scaledImage, "jpg", baos);
+                    byte[] scaledImageBytes = baos.toByteArray();
+//                    System.out.println("Scaled image size: " + scaledImageBytes.length);
+                    if (scaledImageBytes.length == 0) {
+//                        ByteArrayOutputStream pngBaos = new ByteArrayOutputStream();
+//                        BufferedImage scaledImage2 = Thumbnails.of(originalImage)
+//                                .scale(0.85) // itt allitom be hogy mennyire legyen kicsinyitve a kep
+//                                .outputQuality(0.7)  // itt allitom be a kivant minoseget
+//                                .outputFormat("png") // Megőrzi az eredeti PNG formátumot
+//                                .asBufferedImage();
+//                        ImageIO.write(scaledImage2, "png", pngBaos);
+//
+//                        byte[] scaledImageBytesJPEG = pngBaos.toByteArray();
+//
+//                        System.out.println("Scaled image size2: " + scaledImageBytesJPEG.length);
+                        //exam.setExamImage(scaledImageBytesJPEG);
 
-                BufferedImage croppedImage = originalImage.getSubimage(x, y, minDimension, minDimension);
+                        return "Wrong type";
+                    } else {
+                        exam.setExamImage(scaledImageBytes);
+                    }
 
-                BufferedImage scaledImage = Thumbnails.of(croppedImage)
-                        .size(400, 400)
-                        .asBufferedImage();
-
-                // be allitom a kimeneti fajltipust (pl. jpg)
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(scaledImage, "jpg", baos);
-                byte[] scaledImageBytes = baos.toByteArray();
+                } else {
+                    System.out.println("Hiba a kép betöltésekor.");
+                }
 
                 // itt hozza adom a kepet az Exams objektumhoz
-                exam.setExamImage(scaledImageBytes);
+
                 examsRepository.save(exam);
 
             } catch (Exception e){

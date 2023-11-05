@@ -105,6 +105,7 @@ public class DiplomaThesesController {
     public ResponseEntity<String> uploadDiplomaTheses(@RequestParam("pdf") MultipartFile pdf,
                                                       @RequestParam("name") String name,
                                                       @RequestParam("topic") String topic,
+                                                      @RequestParam("year") String year,
                                                       Principal principal){
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
@@ -113,7 +114,7 @@ public class DiplomaThesesController {
         if (user != null){
             String user_name = user.getFirst_Name() + " " + user.getLast_Name();
             try {
-                String errorMessage = diplomaServices.uploadDiplomaThesesPdf(pdf, name, topic, user_name);
+                String errorMessage = diplomaServices.uploadDiplomaThesesPdf(pdf, name, topic, user_name, year);
                 System.out.println("Error message: " + errorMessage);
                 if (errorMessage != null){
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);

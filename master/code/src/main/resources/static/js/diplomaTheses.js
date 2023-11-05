@@ -109,14 +109,23 @@ window.addEventListener("resize", adjustLayout);
 function setupDiplomaThesesModal() {
     var modal = document.getElementById("diplomaThesesModal");
 
-    var btn1 = document.getElementById("upload-upload");
-    var span = document.getElementsByClassName("close-diplomaTheses")[0];
-    btn1.onclick = function() {
-        modal.style.display = "flex";
+    if (modal) {
+        var btn1 = document.getElementById("upload-upload");
+        var span = document.getElementsByClassName("close-diplomaTheses")[0];
+
+        if (btn1) {
+            btn1.onclick = function () {
+                modal.style.display = "flex";
+            }
+        }
+
+        if (span) {
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+        }
     }
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
+
 }
 
 setupDiplomaThesesModal();
@@ -180,14 +189,23 @@ function setupSkillsModal() {
     var btn1 = document.getElementById("upload-upload");
     var btn2 = document.getElementById("upload-hidden");
     var span = document.getElementsByClassName("close-diplomaTheses")[0];
-    btn1.onclick = function() {
-        modal.style.display = "flex";
+
+    if (btn1) {
+        btn1.onclick = function() {
+            modal.style.display = "flex";
+        }
     }
-    btn2.onclick = function() {
-        modal.style.display = "flex";
+
+    if (btn2) {
+        btn2.onclick = function () {
+            modal.style.display = "flex";
+        }
     }
-    span.onclick = function() {
-        modal.style.display = "none";
+
+    if (span) {
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
     }
 }
 

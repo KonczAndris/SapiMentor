@@ -108,14 +108,22 @@ window.addEventListener("resize", adjustLayout);
 
 function setupExamExamplesModal() {
     var modal = document.getElementById("examExamplesModal");
+    if (modal) {
+        var btn1 = document.getElementById("upload-upload");
+        var span = document.getElementsByClassName("close-examExamples")[0];
 
-    var btn1 = document.getElementById("upload-upload");
-    var span = document.getElementsByClassName("close-examExamples")[0];
-    btn1.onclick = function() {
-        modal.style.display = "flex";
-    }
-    span.onclick = function() {
-        modal.style.display = "none";
+        if (btn1) {
+            btn1.onclick = function() {
+                modal.style.display = "flex";
+            }
+        }
+
+        if (span) {
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+        }
+
     }
 }
 
@@ -180,14 +188,23 @@ function setupSkillsModal() {
     var btn1 = document.getElementById("upload-upload");
     var btn2 = document.getElementById("upload-hidden");
     var span = document.getElementsByClassName("close-examExamples")[0];
-    btn1.onclick = function() {
-        modal.style.display = "flex";
+
+    if (btn1) {
+        btn1.onclick = function() {
+            modal.style.display = "flex";
+        }
     }
-    btn2.onclick = function() {
-        modal.style.display = "flex";
+
+    if (btn2) {
+        btn2.onclick = function() {
+            modal.style.display = "flex";
+        }
     }
-    span.onclick = function() {
-        modal.style.display = "none";
+
+    if (span) {
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
     }
 }
 
@@ -436,9 +453,11 @@ function sendExamsDataToServer(data) {
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
 
         if (data === "Success") {
-            location.reload();
+            //location.reload();
         } else if(data === "Too large"){
             alert("The file is too large!");
+        } else if(data === "Wrong type"){
+            alert("This type png is not supported!");
         }
     }).catch(error => {
         // ezt is andrisnak
@@ -454,17 +473,33 @@ var examImageModal = document.querySelector(".exam-image-modal");
 var examImageCloseButton = document.querySelector(".exam-image-close-button");
 
 // Show the modal on hover
-examImageContainer.addEventListener("click", function() {
-    examImageModal.style.display = "block";
-    examImageModal.style.cursor = "default";
-});
+// examImageContainer.addEventListener("click", function() {
+//     examImageModal.style.display = "block";
+//     examImageModal.style.cursor = "default";
+// });
 
 // Hide the modal when clicking outside of it
-window.addEventListener("click", function(event) {
-    if (event.target == examImageModal) {
-        examImageModal.style.display = "none";
-    }
-});
+
+// Eltároljuk az összes sor és modális ablak elemet
+const examImageContainers = document.querySelectorAll('.exam-image-image-container');
+const examImageModals = document.querySelectorAll('.exam-image-modal');
+// Az egyes sorokhoz rendelt modális ablakok kezelése
+for (let i = 0; i < examImageContainers.length; i++) {
+    const examImageContainer = examImageContainers[i];
+    const examImageModal = examImageModals[i];
+
+    examImageContainer.addEventListener("click", function() {
+        examImageModal.style.display = "block";
+        examImageModal.style.cursor = "default";
+    });
+
+    // Az egyes modális ablakok elrejtése, ha a modális ablakon kívülre kattintunk
+    window.addEventListener("click", function(event) {
+        if (event.target == examImageModal) {
+            examImageModal.style.display = "none";
+        }
+    });
+}
 
 
 

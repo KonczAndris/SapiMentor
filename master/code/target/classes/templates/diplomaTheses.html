@@ -134,7 +134,7 @@
         <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
         <button class="reverse-button" id="reverseButton"><img th:src="@{/img/reverse.png}" alt="Icon"
                                                                class="reverse-icon"></button></button>
-        <button type="button" class="upload-hidden btn btn-success" id="upload-upload">
+        <button type="button" class="upload-hidden btn btn-success" id="upload-upload" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
           <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
       </div>
     </div>
