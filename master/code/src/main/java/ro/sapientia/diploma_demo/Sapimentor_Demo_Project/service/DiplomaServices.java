@@ -141,7 +141,7 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
 
             byte[] compressedPdfBytes = compressedPdfStream.toByteArray();
 
-            System.out.println("Compressed PDF size: " + compressedPdfBytes.length);
+            //System.out.println("Compressed PDF size: " + compressedPdfBytes.length);
 
             // itt hozom letre a Diploma_Theses objektumot
             // es teszem bele a megadott adatokat

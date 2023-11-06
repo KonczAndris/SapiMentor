@@ -88,7 +88,7 @@
         <div class="open-search-buttons">
             <button class="search-button" id="myFilterBtn" onclick="showFilterContainer()">Search</button>
             <button class="reverse-button" id="myReverseBtn"><img th:src="@{/img/reverse.png}" alt="Icon" class="reverse-icon"></button>
-            <button type="button" id="upload-hidden" class="btn btn-success" >
+            <button type="button" id="upload-hidden" class="btn btn-success" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
                 <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
 
         </div>
