@@ -2,6 +2,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Exams;
@@ -11,7 +12,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ExamServices {
@@ -21,9 +24,26 @@ public class ExamServices {
         this.examsRepository = examsRepository;
     }
 
+    @Cacheable(value = "examsCache")
     public List<Exams> getAllExams() {
         return examsRepository.findAll();
     }
+
+    public Map<String, Integer> getLikeAndDislikeCounts(Long examId) {
+        Exams exam = examsRepository.findById(examId)
+                .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
+
+        // Készíts egy Map objektumot a like és dislike értékekkel
+        Map<String, Integer> likeAndDislikeCounts = new HashMap<>();
+        likeAndDislikeCounts.put("like", exam.getLike());
+        likeAndDislikeCounts.put("dislike", exam.getDislike());
+        likeAndDislikeCounts.put("rowId", exam.getId().intValue());
+
+        //System.out.println("likeAndDislikeCounts: " + likeAndDislikeCounts);
+
+        return likeAndDislikeCounts;
+    }
+
 
     //Ezzel tudod beallitani hogy mekkora legyen a maximalis meret amit feltolthet a felhasznalo
     private static final long MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2 MB
@@ -119,6 +139,8 @@ public class ExamServices {
         }
         return null;
     }
+
+
 
     public void likeExam(Long examId) {
         Exams exam = examsRepository.findById(examId)

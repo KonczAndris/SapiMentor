@@ -12,6 +12,9 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.DiplomaThese
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -20,6 +23,25 @@ public class DiplomaServices {
 
     public DiplomaServices(DiplomaThesesRepository diplomaThesesRepository) {
         this.diplomaThesesRepository = diplomaThesesRepository;
+    }
+
+    public List<Diploma_Theses> getAllDiplomaTheses() {
+        return diplomaThesesRepository.findAll();
+    }
+
+    public Map<String, Integer> getLikeAndDislikeCounts(Long diplomaId) {
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with ID: " + diplomaId));
+
+        // Készíts egy Map objektumot a like és dislike értékekkel
+        Map<String, Integer> likeAndDislikeCounts = new HashMap<>();
+        likeAndDislikeCounts.put("like", diploma_theses.getLike());
+        likeAndDislikeCounts.put("dislike", diploma_theses.getDislike());
+        likeAndDislikeCounts.put("rowId", diploma_theses.getId().intValue());
+
+        //System.out.println("likeAndDislikeCounts: " + likeAndDislikeCounts);
+
+        return likeAndDislikeCounts;
     }
 
     private static final long MAX_PDF_SIZE = 10 * 1024 * 1024; // 10 MB(10485760)

@@ -501,5 +501,19 @@ for (let i = 0; i < examImageContainers.length; i++) {
     });
 }
 
+// function clearBrowserCache() {
+//     if ('caches' in window) {
+//         caches.keys().then(function(names) {
+//             names.forEach(function(name) {
+//                 caches.delete(name);
+//             });
+//         });
+//     }
+// }
+// window.addEventListener("beforeunload", function(event) {
+//     // Itt töröld a böngésző gyorsítárát, amikor a felhasználó elhagyja az oldalt
+//     clearBrowserCache();
+// });
+
 
 

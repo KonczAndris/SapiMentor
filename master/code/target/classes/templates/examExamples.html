@@ -184,17 +184,18 @@
                         <div class="exam-image-image-container">
                             <span th:text="${exam.name}"></span>
 <!--                            th:if="${examImageBase64List[__${stat.index}__] != ''}"-->
-                            <img
-                                 class="table-pic"
-                                 th:src="@{|data:image/jpeg;base64,${examImageBase64List[__${stat.index}__]}|}"
-                                 th:alt="${exam.name}" />
+<!--                            <img-->
+<!--                                 class="table-pic"-->
+<!--                                 th:src="@{|data:image/jpeg;base64,${examImageBase64List[__${stat.index}__]}|}"-->
+<!--                                 th:alt="${exam.name}" />-->
                             <span class="zoom-icon">&#128269;</span>
                             <div class="exam-image-modal">
 <!--                                th:if="${examImageBase64List[__${stat.index}__] != ''}"-->
                                 <img
                                      class="exam-image-modal-content"
                                      th:src="@{|data:image/jpeg;base64,${examImageBase64List[__${stat.index}__]}|}"
-                                     th:alt="${exam.name}" />
+                                     th:alt="${exam.name}"
+                                     loading="lazy"/>
                             </div>
                         </div>
                     </td>

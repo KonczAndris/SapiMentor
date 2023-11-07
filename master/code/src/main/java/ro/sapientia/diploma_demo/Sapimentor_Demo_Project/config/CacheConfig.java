@@ -4,6 +4,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.cache.interceptor.CacheResolver;
 import org.springframework.cache.interceptor.SimpleCacheResolver;
 import org.springframework.cache.support.SimpleCacheManager;
@@ -29,6 +30,12 @@ public abstract class CacheConfig implements CachingConfigurer {
         cacheManager.setCaches(Collections.singletonList(new ConcurrentMapCache("dislikeStatus"))); // default cache
         return cacheManager;
     }
+
+    @Bean
+    public CacheManager examcacheManager() {
+        return new ConcurrentMapCacheManager("examsCache");
+    }
+
 
     @Bean
     public CacheResolver cacheResolver() {

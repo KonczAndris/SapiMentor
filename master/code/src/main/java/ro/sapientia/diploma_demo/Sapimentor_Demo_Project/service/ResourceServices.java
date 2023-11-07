@@ -43,7 +43,7 @@ public class ResourceServices {
         likeAndDislikeCounts.put("dislike", resource.getDislike());
         likeAndDislikeCounts.put("rowId", resource.getId().intValue());
 
-        System.out.println("likeAndDislikeCounts: " + likeAndDislikeCounts);
+        //System.out.println("likeAndDislikeCounts: " + likeAndDislikeCounts);
 
         return likeAndDislikeCounts;
     }
@@ -192,66 +192,4 @@ public class ResourceServices {
         return false;
     }
 
-//    //Ezzel tudod beallitani hogy mekkora legyen a maximalis meret amit feltolthet a felhasznalo
-//    private static final long MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2 MB
-//    //private static final long MAX_IMAGE_SIZE = 10 * 1024; // 10 KB
-//    //private static final long MAX_IMAGE_SIZE = 20 * 1024; // 20 KB
-//    //private static final long MAX_IMAGE_SIZE = 40 * 1024; // 40 KB
-//
-//    // innen folytatni holnap
-//    public String uploadExamImage(MultipartFile image,
-//                                  String name,
-//                                  String topic,
-//                                  String user_name){
-//
-//        if (!image.isEmpty()){
-//            try{
-////                System.out.println("Image size: " + image.getSize());
-////                System.out.println("MAX_IMAGE_SIZE: " + MAX_IMAGE_SIZE);
-////                System.out.println("Image name: " + name);
-////                System.out.println("Image topic: " + topic);
-////                System.out.println("Image user_name: " + user_name);
-//                if (image.getSize() > MAX_IMAGE_SIZE){
-//                    return "Too large";
-//                }
-//
-//                byte[] originalImageBytes = image.getBytes();
-//
-//                // itt hozom letre az Exams objektumot
-//                // es teszem bele a megadott adatokat
-//                Exams exam = new Exams();
-//                exam.setName(name);
-//                exam.setTopic_name(topic);
-//                exam.setUser_name(user_name);
-//                exam.setLike(0);
-//                exam.setDislike(0);
-//
-//                // itt skalazom a kepet a megadott meretekre
-//                BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
-//
-//                int minDimension = Math.min(originalImage.getWidth(), originalImage.getHeight());
-//                int x = (originalImage.getWidth() - minDimension) / 2;
-//                int y = (originalImage.getHeight() - minDimension) / 2;
-//
-//                BufferedImage croppedImage = originalImage.getSubimage(x, y, minDimension, minDimension);
-//
-//                BufferedImage scaledImage = Thumbnails.of(croppedImage)
-//                        .size(400, 400)
-//                        .asBufferedImage();
-//
-//                // be allitom a kimeneti fajltipust (pl. jpg)
-//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                ImageIO.write(scaledImage, "jpg", baos);
-//                byte[] scaledImageBytes = baos.toByteArray();
-//
-//                // itt hozza adom a kepet az Exams objektumhoz
-//                exam.setExamImage(scaledImageBytes);
-//                examsRepository.save(exam);
-//
-//            } catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-//        return null;
-//    }
 }

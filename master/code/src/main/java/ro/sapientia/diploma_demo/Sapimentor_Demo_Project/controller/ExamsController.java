@@ -95,7 +95,9 @@ public class ExamsController {
     }
 
     @GetMapping("")
-    public String showExamExamples(Model model, Principal principal) {
+    public String showExamExamples(Model model,
+                                   Principal principal) {
+
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
         List<Exams> exams = examServices.getAllExams();
@@ -115,8 +117,68 @@ public class ExamsController {
         //System.out.println("examImageBase64List: " + examImageBase64List);
         model.addAttribute("examImageBase64List", examImageBase64List);
         showProfileImageAndName(model, principal);
+
         return "examExamples";
     }
+
+
+//    @GetMapping("")
+//    public String showExamExamples(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) {
+//
+//
+//        // ETag generálása a felhasználó és az oldal tartalma alapján
+//        String eTag = generateETagForUserAndContent(principal);
+//
+//        String requestETag = request.getHeader("If-None-Match");
+//
+//        if (requestETag != null && requestETag.equals(eTag)) {
+//            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+//        } else {
+//            // Az ETag fejléc beállítása
+//            response.setHeader("ETag", eTag);
+//
+//            // Cache-Control fejléc beállítása
+//            response.setHeader("Cache-Control", "public, max-age=3600");
+//            showUserRolesToDisplayResources(model, principal);
+//            showTopicsToDisplayResources(model, principal);
+//
+//            List<Exams> exams = examServices.getAllExams();
+//
+//            List<String> examImageBase64List = new ArrayList<>();
+//            for (Exams exam : exams) {
+//                byte[] examImageBytes = exam.getExamImage();
+//                if (examImageBytes != null) {
+//                    String examImageBase64 = Base64.getEncoder().encodeToString(examImageBytes);
+//                    examImageBase64List.add(examImageBase64);
+//                } else {
+//                    examImageBase64List.add("");
+//                }
+//            }
+//
+//            model.addAttribute("examsData", exams);
+//            model.addAttribute("examImageBase64List", examImageBase64List);
+//            showProfileImageAndName(model, principal);
+//        }
+//
+//        return "examExamples";
+//    }
+//
+//    private String generateETagForUserAndContent(Principal principal) {
+//        // Itt generálj egy egyedi ETag-et, ami a felhasználót és az oldal tartalmától függ
+//        // Például használhatsz egy hash függvényt az oldal tartalmára
+//        List<Exams> exams = examServices.getAllExams();
+//        String pageContentHash = generateHashForPageContent(exams);
+//        return principal.getName() + "_" + pageContentHash;
+//    }
+//
+//    private String generateHashForPageContent(List<Exams> exams) {
+//        // Példa hash generálásra, használd a megfelelő logikát
+//        // Például, ha van egy exams lista, akkor hozz létre egy függvényt, amely hasheli ezt a listát
+//        return Integer.toString(Objects.hash(exams));
+//    }
+
+
+
 
 
     @PostMapping("/uploadExams")
