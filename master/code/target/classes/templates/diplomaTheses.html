@@ -158,7 +158,6 @@
         </thead>
         <tbody id="link-table-body">
 
-        <!--
         <tr>
           <td>1</td>
           <td class="pdf-container-column">
@@ -183,7 +182,7 @@
             <button class="dislike-button-link">Dislike</button>
           </td>
         </tr>
-        -->
+
 
         <tr th:each="diploma, stat : ${diplomaData}" th:id="'exam-row-' + ${diploma.id}">
           <td th:text="${stat.index + 1}"></td>
