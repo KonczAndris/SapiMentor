@@ -17,4 +17,7 @@ public interface ExamsRepository extends JpaRepository<Exams, Long> {
     @Query("SELECT e.examImage FROM Exams e WHERE e.id = :examId")
     byte[] findExamImageById(@Param("examId") Long examId);
 
+    @Query("SELECT e.examImage, e.id FROM Exams e")
+    List<Object[]> findAllExamImageById();
+
 }

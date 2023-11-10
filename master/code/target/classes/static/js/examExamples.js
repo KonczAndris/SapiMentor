@@ -810,28 +810,28 @@ $(document).ready(async function () {
 //         });
 // }
 
-function showImage(examId) {
-    //console.log(examId);
-    // AJAX kérés a kép letöltéséhez
-    fetch(`/resources/examExamples/getexamimage?examId=${examId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.text();
-        })
-        .then(base64Image => {
-            //console.log(base64Image);
-            var modal = document.getElementById('myModal-' + examId);
-            var modalImg = document.getElementById('modalImg-' + examId);
-
-            modal.style.display = 'block';
-            modalImg.src = 'data:image/jpeg;base64,' + base64Image;
-        })
-        .catch(error => {
-            console.error('Error fetching exam image:', error);
-        });
-}
+// function showImage(examId) {
+//     //console.log(examId);
+//     // AJAX kérés a kép letöltéséhez
+//     fetch(`/resources/examExamples/getexamimage?examId=${examId}`)
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error(`HTTP error! Status: ${response.status}`);
+//             }
+//             return response.text();
+//         })
+//         .then(base64Image => {
+//             //console.log(base64Image);
+//             var modal = document.getElementById('myModal-' + examId);
+//             var modalImg = document.getElementById('modalImg-' + examId);
+//
+//             //modal.style.display = 'block';
+//             modalImg.src = 'data:image/jpeg;base64,' + base64Image;
+//         })
+//         .catch(error => {
+//             console.error('Error fetching exam image:', error);
+//         });
+// }
 
 
 // NEGYEDIK VERZIO (vegleges)
@@ -887,6 +887,56 @@ function handleLikeAndDislikeStatuses() {
         } else {
             dislikeCountElement.classList.add('dislike-button-link-active');
         }
+
+    }
+}
+
+let examimages = [];
+document.addEventListener('DOMContentLoaded', function () {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    //const url = `/resources/${action}?resourceId=${resourceId}`
+    fetch("/resources/examExamples/getallexamimage", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Request failed');
+        }
+    })
+        .then(data => {
+            //console.log(data.igenigen);
+            examimages = data.examimagesandid;
+            handlerexmaimages();
+            //console.log(likeAndDislikeStatuses);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
+});
+
+function handlerexmaimages() {
+    // Itt már rendelkezésre állnak az adatok
+    //console.log(likeAndDislikeStatuses);
+
+    // Most már kezelheted az adatokat
+    for (let i = 0; i < examimages.length; i++) {
+        const likeAndDislikeData = examimages[i];
+        //console.log(likeAndDislikeData[1]);
+        const image = likeAndDislikeData[0];
+        const examId = likeAndDislikeData[1];
+
+        //console.log(base64Image);
+        var modal = document.getElementById('myModal-' + examId);
+        var modalImg = document.getElementById('modalImg-' + examId);
+
+        //modal.style.display = 'block';
+        modalImg.src = 'data:image/jpeg;base64,' + image;
 
     }
 }

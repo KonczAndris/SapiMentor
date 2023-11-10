@@ -166,6 +166,22 @@ public class ExamsController {
         }
     }
 
+    @GetMapping("/getallexamimage")
+    public ResponseEntity<Map<String,Object>> getAllExamImage() {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            List<Object[]> examImageBytesList = examServices.getAllExamImageById();
+            response.put("examimagesandid", examImageBytesList);
+            //System.out.println("examImageBytesList: " + examImageBytesList);
+
+            //System.out.println("examImageBase64List: " + examImageBase64List);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 
 
 //    @GetMapping("")

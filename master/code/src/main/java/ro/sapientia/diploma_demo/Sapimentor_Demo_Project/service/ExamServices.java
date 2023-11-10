@@ -45,6 +45,11 @@ public class ExamServices {
 //                .collect(Collectors.toList());
 //    }
 
+    @Cacheable("getAllExamImageById")
+    public List<Object[]> getAllExamImageById() {
+        return examsRepository.findAllExamImageById();
+    }
+
     @Cacheable("getExamImage")
     public byte[] getExamImage(Long examId) {
         System.out.println("examId: " + examId);
