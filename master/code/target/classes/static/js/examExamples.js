@@ -820,6 +820,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
 });
 
+
 function handleLikeAndDislikeStatuses() {
     // Itt már rendelkezésre állnak az adatok
     //console.log(likeAndDislikeStatuses);
@@ -846,18 +847,18 @@ function handleLikeAndDislikeStatuses() {
     }
 }
 
-function clearBrowserCache() {
-    if ('caches' in window) {
-        // Törlés az összes gyorsítótári tárhelyből
-        caches.keys().then(function(cacheNames) {
-            cacheNames.forEach(function(cacheName) {
-                caches.delete(cacheName);
-            });
-        });
-    }
-
-    // Törlés az összes böngésző cache-tól
-    window.location.reload(true);
-}
+// function clearBrowserCache() {
+//     if ('caches' in window) {
+//         // Törlés az összes gyorsítótári tárhelyből
+//         caches.keys().then(function(cacheNames) {
+//             cacheNames.forEach(function(cacheName) {
+//                 caches.delete(cacheName);
+//             });
+//         });
+//     }
+//
+//     // Törlés az összes böngésző cache-tól
+//     window.location.reload(true);
+// }
 
 

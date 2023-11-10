@@ -36,6 +36,10 @@ public abstract class CacheConfig implements CachingConfigurer {
         return new ConcurrentMapCacheManager("examsCache");
     }
 
+    @Bean
+    public CacheManager likeanddislikecacheManager() {
+        return new ConcurrentMapCacheManager("likeanddislike");
+    }
 
     @Bean
     public CacheResolver cacheResolver() {

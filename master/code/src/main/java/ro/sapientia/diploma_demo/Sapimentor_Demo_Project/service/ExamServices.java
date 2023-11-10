@@ -3,6 +3,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Exams;
@@ -24,11 +25,13 @@ public class ExamServices {
         this.examsRepository = examsRepository;
     }
 
-    @Cacheable(value = "examsCache")
+    @Cacheable("getAllExams")
+    @Async
     public List<Exams> getAllExams() {
         return examsRepository.findAll();
     }
 
+    @Cacheable("getlikeanddislikecounts")
     public Map<String, Integer> getLikeAndDislikeCounts(Long examId) {
         Exams exam = examsRepository.findById(examId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
