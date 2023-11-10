@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.ExamsDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ExamServices;
@@ -20,7 +21,6 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserExamLikeDis
 
 import java.security.Principal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RequestMapping("/resources/examExamples")
 @Controller
@@ -131,23 +131,56 @@ public class ExamsController {
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
 
-        List<Exams> exams = examServices.getAllExams();
+        List<ExamsDTO> exams = examServices.getExamsWithSelectedFields();
+        System.out.println("Exams: " + exams);
 
-        List<String> examImageBase64List = exams.stream()
-                .map(exam -> Optional.ofNullable(exam.getExamImage())
-                        .map(imageBytes -> Base64.getEncoder().encodeToString(imageBytes))
-                        .orElse(""))
-                .collect(Collectors.toList());
+//        List<String> examImageBase64List = exams.stream()
+//                .map(exam -> Optional.ofNullable(exam.getExamImage())
+//                        .map(imageBytes -> Base64.getEncoder().encodeToString(imageBytes))
+//                        .orElse(""))
+//                .collect(Collectors.toList());
 
         model.addAllAttributes(Map.of(
-                "examsData", exams,
-                "examImageBase64List", examImageBase64List
+                "examsData", exams
+                //"examImageBase64List", examImageBase64List
         ));
 
         showProfileImageAndName(model, principal);
 
         return "examExamples";
     }
+
+
+//    @GetMapping("")
+//    public String showExamExamples(
+//            Model model,
+//            Principal principal,
+//            @RequestParam(name = "page", defaultValue = "0") int page,
+//            @RequestParam(name = "size", defaultValue = "14") int size
+//    ) {
+//        showUserRolesToDisplayResources(model, principal);
+//        showTopicsToDisplayResources(model, principal);
+//
+//        // Az adott oldalszám és méret alapján kérjük le az adatokat
+//        Page<Exams> examsPage = examServices.getExamsByPageAndSize(page, size);
+//        List<Exams> exams = examsPage.getContent();
+//
+////        // Képek Base64 kódolása
+////        List<String> examImageBase64List = exams.stream()
+////                .map(exam -> Optional.ofNullable(exam.getExamImage())
+////                        .map(imageBytes -> Base64.getEncoder().encodeToString(imageBytes))
+////                        .orElse(""))
+////                .collect(Collectors.toList());
+//
+//        model.addAllAttributes(Map.of(
+//                "examsData", exams
+////                "examImageBase64List", examImageBase64List
+//        ));
+//
+//        showProfileImageAndName(model, principal);
+//
+//        return "examExamples";
+//    }
 
 
 

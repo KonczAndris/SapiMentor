@@ -114,6 +114,8 @@ public class ProfileController {
         return "profile";
     }
 
+
+
     @PostMapping("/profile/save")
     public String saveProfileData(@RequestParam("firstName") String firstName,
                                   @RequestParam("lastName") String lastName,

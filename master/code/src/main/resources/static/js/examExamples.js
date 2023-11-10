@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const table = document.querySelector(".link-table");
     const tableBody = table.querySelector("tbody");
     const rows = Array.from(tableBody.querySelectorAll("tr"));
-    const rowsPerPage = 8;
+    const rowsPerPage = 14;
     let currentPage = 1;
 
     function updatePageCounter() {
@@ -792,60 +792,60 @@ $(document).ready(async function () {
 
 // NEGYEDIK VERZIO (vegleges)
 // lekerni az osszes like es dislike allasat az adatbazisbol
-let likeAndDislikeStatuses = [];
-document.addEventListener('DOMContentLoaded', function () {
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
-    //const url = `/resources/${action}?resourceId=${resourceId}`
-    fetch("/resources/examExamples/getLikeAndDislikeStatuses", {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Request failed');
-        }
-    })
-        .then(data => {
-            likeAndDislikeStatuses = data.likeanddislike;
-            handleLikeAndDislikeStatuses();
-            //console.log(likeAndDislikeStatuses);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        })
-});
-
-
-function handleLikeAndDislikeStatuses() {
-    // Itt már rendelkezésre állnak az adatok
-    //console.log(likeAndDislikeStatuses);
-
-    // Most már kezelheted az adatokat
-    for (let i = 0; i < likeAndDislikeStatuses.length; i++) {
-        const likeAndDislikeData = likeAndDislikeStatuses[i];
-        const examId = likeAndDislikeData.resourceId;
-        const like = likeAndDislikeData.like;
-        const dislike = likeAndDislikeData.dislike;
-
-        // Itt kezeld az adatokat vagy végezz velük bármit, amit szeretnél
-        //console.log(`Resource ID: ${resourceId}, Like: ${like}, Dislike: ${dislike}`);
-        const likeCountElement = document.querySelector(`#exam-row-${examId} .like-button-link`);
-        const dislikeCountElement = document.querySelector(`#exam-row-${examId} .dislike-button-link`);
-        //console.log(likeCountElement);
-        //console.log(dislikeCountElement);
-        if (like === 1) {
-            likeCountElement.classList.add('like-button-link-active');
-        } else {
-            dislikeCountElement.classList.add('dislike-button-link-active');
-        }
-
-    }
-}
+// let likeAndDislikeStatuses = [];
+// document.addEventListener('DOMContentLoaded', function () {
+//     var token = $("meta[name='_csrf']").attr("content");
+//     var header = $("meta[name='_csrf_header']").attr("content");
+//     //const url = `/resources/${action}?resourceId=${resourceId}`
+//     fetch("/resources/examExamples/getLikeAndDislikeStatuses", {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded',
+//             'X-CSRF-TOKEN': token
+//         }
+//     }).then(response => {
+//         if (response.ok) {
+//             return response.json();
+//         } else {
+//             throw new Error('Request failed');
+//         }
+//     })
+//         .then(data => {
+//             likeAndDislikeStatuses = data.likeanddislike;
+//             handleLikeAndDislikeStatuses();
+//             //console.log(likeAndDislikeStatuses);
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         })
+// });
+//
+//
+// function handleLikeAndDislikeStatuses() {
+//     // Itt már rendelkezésre állnak az adatok
+//     //console.log(likeAndDislikeStatuses);
+//
+//     // Most már kezelheted az adatokat
+//     for (let i = 0; i < likeAndDislikeStatuses.length; i++) {
+//         const likeAndDislikeData = likeAndDislikeStatuses[i];
+//         const examId = likeAndDislikeData.resourceId;
+//         const like = likeAndDislikeData.like;
+//         const dislike = likeAndDislikeData.dislike;
+//
+//         // Itt kezeld az adatokat vagy végezz velük bármit, amit szeretnél
+//         //console.log(`Resource ID: ${resourceId}, Like: ${like}, Dislike: ${dislike}`);
+//         const likeCountElement = document.querySelector(`#exam-row-${examId} .like-button-link`);
+//         const dislikeCountElement = document.querySelector(`#exam-row-${examId} .dislike-button-link`);
+//         //console.log(likeCountElement);
+//         //console.log(dislikeCountElement);
+//         if (like === 1) {
+//             likeCountElement.classList.add('like-button-link-active');
+//         } else {
+//             dislikeCountElement.classList.add('dislike-button-link-active');
+//         }
+//
+//     }
+// }
 
 // function clearBrowserCache() {
 //     if ('caches' in window) {

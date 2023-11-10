@@ -2,10 +2,15 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.ExamsDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Exams;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ExamsRepository;
 
@@ -16,19 +21,38 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ExamServices {
     private final ExamsRepository examsRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     public ExamServices(ExamsRepository examsRepository) {
         this.examsRepository = examsRepository;
     }
 
     @Cacheable("getAllExams")
-    @Async
     public List<Exams> getAllExams() {
         return examsRepository.findAll();
+    }
+
+    public List<ExamsDTO> getExamsWithSelectedFields() {
+        List<Exams> exams = examsRepository.findAll();
+        return exams.stream()
+                .map(exam -> modelMapper.map(exam, ExamsDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public Page<Exams> getExamsByPageAndSize(int page, int size) {
+        // Oldalszám nullától indul, de a felhasználói interfészről származó oldalszámok általában 1-ről indulnak,
+        // ezért szükség lehet egy átalakításra az adatbázis lekérdezés során
+        Pageable pageable = PageRequest.of(page > 0 ? page - 1 : page, size);
+
+        // Adatok lekérdezése az adatbázisból oldalazva
+        return examsRepository.findAll(pageable);
     }
 
     @Cacheable("getlikeanddislikecounts")
