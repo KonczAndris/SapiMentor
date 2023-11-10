@@ -160,13 +160,14 @@
                     <td class="image-container-column">
                         <div class="exam-image-image-container">
                             <span th:text="${exam.name}"></span>
-                            <span class="zoom-icon">&#128269;</span>
-                            <div class="exam-image-modal">
+                            <span id="zoomIcon" class="zoom-icon" th:onclick="'showImage(' + ${exam.id} + ')'">&#128269;</span>
+                            <div class="exam-image-modal" th:id="'myModal-' + ${exam.id}">
 <!--                                <img-->
 <!--                                     class="exam-image-modal-content"-->
 <!--                                     th:src="@{|data:image/jpeg;base64,${examImageBase64List[__${stat.index}__]}|}"-->
 <!--                                     th:alt="${exam.name}"-->
 <!--                                     loading="lazy"/>-->
+                                <img class="exam-image-modal-content" th:id="'modalImg-' + ${exam.id}" th:alt="${exam.name}" loading="lazy"/>
                             </div>
                         </div>
                     </td>

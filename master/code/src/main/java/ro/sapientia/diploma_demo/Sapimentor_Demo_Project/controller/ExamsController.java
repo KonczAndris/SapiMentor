@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.ExamsDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ExamServices;
@@ -131,8 +130,8 @@ public class ExamsController {
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
 
-        List<ExamsDTO> exams = examServices.getExamsWithSelectedFields();
-        System.out.println("Exams: " + exams);
+        List<Exams> exams = examServices.getExamsWithSelectedFields();
+        //System.out.println("Exams: " + exams);
 
 //        List<String> examImageBase64List = exams.stream()
 //                .map(exam -> Optional.ofNullable(exam.getExamImage())
@@ -149,6 +148,24 @@ public class ExamsController {
 
         return "examExamples";
     }
+
+
+    @GetMapping("/getexamimage")
+    public ResponseEntity<String> getExamImage(@RequestParam Long examId) {
+        try {
+            byte[] examImageBytes = examServices.getExamImage(examId);
+            if (examImageBytes != null) {
+                String examImageBase64 = Base64.getEncoder().encodeToString(examImageBytes);
+                return ResponseEntity.ok(examImageBase64);
+            } else {
+                return ResponseEntity.ok("");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
+        }
+    }
+
 
 
 //    @GetMapping("")
