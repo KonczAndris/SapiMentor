@@ -166,11 +166,14 @@
               <embed  class="table-pic" th:src="@{/pdf/teszt.pdf}" type="application/pdf" alt="Kép leírás" />
               <span class="zoom-icon">&#128269;</span>
               <div class="pdf-image-modal">
+
                 <object class="pdf-image-modal-content" th:data="${'pdf/teszt.pdf'}" data="pdf/teszt.pdf" type="application/pdf" width="100%" height="800">
                   <p>It appears you don't have a PDF plugin for this browser.
                     You can <a th:href="@{/pdf/teszt.pdf}" href="/pdf/teszt.pdf" target="_blank">download the PDF file here.</a>
                   </p>
                 </object>
+                <!-- <iframe th:src="@{/pdf/teszt.pdf}" width="100%" height="800"></iframe> -->
+
               </div>
             </div>
           </td>
