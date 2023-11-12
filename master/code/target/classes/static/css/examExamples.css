@@ -819,12 +819,35 @@ tr {
 }
 
 .exam-image-modal-content {
-    max-width: 80%;
-    max-height: 80%;
-    position: absolute;
+    height: 60%;
+    width:100%;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+}
+
+.close-exam-image-modal {
+    position: relative;
+    top: 10px;
+    right: 10px;
+    font-size: 50px;
+    cursor: pointer;
+    color: #fff;
+    z-index: 9999;
+}
+
+.dynamic-resize {
+    width: auto;
+    height: auto;
+    max-width: 60%;
+    max-height: 80%;
 }
 
 .image-container-column{

@@ -163,15 +163,9 @@
           <td class="pdf-container-column">
             <div class="pdf-image-image-container">
               Majom Majon - Számítástechnika
-<!--              <embed  class="table-pic" th:src="@{/pdf/teszt.pdf}" type="application/pdf" alt="Kép leírás" />-->
               <span class="zoom-icon">&#128269;</span>
               <div class="pdf-image-modal">
-<!--                <object class="pdf-image-modal-content" th:data="${'pdf/teszt.pdf'}" data="pdf/teszt.pdf" type="application/pdf" width="100%" height="800">-->
-<!--                  <p>It appears you don't have a PDF plugin for this browser.-->
-<!--                    You can <a th:href="@{/pdf/teszt.pdf}" href="/pdf/teszt.pdf" target="_blank">download the PDF file here.</a>-->
-<!--                  </p>-->
-<!--                </object>-->
-                <embed  src="/pdf/teszt.pdf" width="500" height="375" type='application/pdf'>
+                <embed class="pdf-image-modal-content" src="/pdf/teszt.pdf" type='application/pdf'>
               </div>
             </div>
           </td>
@@ -183,38 +177,6 @@
             <button class="dislike-button-link">Dislike</button>
           </td>
         </tr>
-
-
-<!--        <tr th:each="diploma, stat : ${diplomaData}" th:id="'exam-row-' + ${diploma.id}">-->
-<!--          <td th:text="${stat.index + 1}"></td>-->
-<!--          <td class="pdf-container-column">-->
-<!--            <div class="pdf-image-container">-->
-<!--              <span th:text="${diploma.name}"></span>-->
-<!--              <span class="zoom-icon">&#128269;</span>-->
-<!--              <div class="pdf-image-modal">-->
-
-<!--                <object class="pdf-image-modal-content" th:data="${diploma.examimage}" type="application/pdf">-->
-<!--                  <p>It appears you don't have a PDF plugin for this browser.-->
-<!--                    You can <a th:href="${diploma.examimage}" target="_blank"> download the PDF file here.</a>-->
-<!--                  </p>-->
-<!--                </object>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td th:text="${diploma.topic_name}"></td>-->
-<!--          <td th:text="${diploma.user_name}"></td>-->
-<!--          <td>-->
-<!--                    <span class="like-dislike-count">-->
-<!--                        <span class="like-color-text like-count" id="likeButton" th:text="${diploma.like}"></span>-->
-<!--                        <span class="like-dislike-space"></span>-->
-<!--                        <span class="dislike-color-text dislike-count" id="dislikeButton" th:text="${diploma.dislike}"></span>-->
-<!--                    </span>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <button class="like-button-link">Like</button>-->
-<!--            <button class="dislike-button-link">Dislike</button>-->
-<!--          </td>-->
-<!--        </tr>-->
 
         </tbody>
       </table>

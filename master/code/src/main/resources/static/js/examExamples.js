@@ -955,4 +955,18 @@ function handlerexmaimages() {
 //     window.location.reload(true);
 // }
 
+$(document).ready(function() {
+    $(".dynamic-resize").each(function() {
+        var img = $(this);
 
+        img.on('load', function() {
+            if (img.width() > img.height()) {
+                img.css('width', '60%');
+                img.css('height', 'auto');
+            } else {
+                img.css('height', '80%');
+                img.css('width', 'auto');
+            }
+        });
+    });
+});

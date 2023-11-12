@@ -133,7 +133,7 @@
                 <button class="reverse-button" id="reverseButton"><img th:src="@{/img/reverse.png}" alt="Icon"
                                                                        class="reverse-icon"></button></button>
                 <button type="button" class="upload-hidden btn btn-success" id="upload-upload" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
-                    <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
+                    <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon "></button>
             </div>
         </div>
         <div class="divider"></div>
@@ -162,12 +162,9 @@
                             <span th:text="${exam.name}"></span>
                             <span id="zoomIcon" class="zoom-icon" th:onclick="'showImage(' + ${exam.id} + ')'">&#128269;</span>
                             <div class="exam-image-modal" th:id="'myModal-' + ${exam.id}">
-<!--                                <img-->
-<!--                                     class="exam-image-modal-content"-->
-<!--                                     th:src="@{|data:image/jpeg;base64,${examImageBase64List[__${stat.index}__]}|}"-->
-<!--                                     th:alt="${exam.name}"-->
-<!--                                     loading="lazy"/>-->
-                                <img class="exam-image-modal-content" th:id="'modalImg-' + ${exam.id}" th:alt="${exam.name}" />
+                                <div class="exam-image-modal-content">
+                                    <img th:id="'modalImg-' + ${exam.id}" th:alt="${exam.name}" class="dynamic-resize" />
+                                </div>
                             </div>
                         </div>
                     </td>
