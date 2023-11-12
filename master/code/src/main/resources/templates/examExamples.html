@@ -62,7 +62,7 @@
         </div>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
+                <a href="/logout" > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
         </div>
     </div>
 
@@ -155,47 +155,19 @@
                 </thead>
                 <tbody id="link-table-body">
 
-                <!--
-                <tr>
-                    <td>1</td>
-                    <td class="image-container-column">
-                        <div class="exam-image-image-container">
-                            Numerikus módszerek vizsga 2021
-                            <img class="table-pic" th:src="@{/img/anonym.jpg}" alt="Kép leírás" />
-                            <span class="zoom-icon">&#128269;</span>
-                            <div class="exam-image-modal">/
-                                <img class="exam-image-modal-content" th:src="@{/img/anonym.jpg}" alt="Kép leírás" />
-                            </div>
-                        </div>
-                    </td>
-                    <td> Info</td>
-                    <td> Majom</td>
-                    <td>1</td>
-                    <td>
-                        <button class="like-button-link">Like</button>
-                        <button class="dislike-button-link">Dislike</button>
-                    </td>
-                </tr>
-                -->
-
                 <tr th:each="exam, stat : ${examsData}" th:id="'exam-row-' + ${exam.id}">
                     <td th:text="${stat.index + 1}"></td>
                     <td class="image-container-column">
                         <div class="exam-image-image-container">
                             <span th:text="${exam.name}"></span>
-<!--                            th:if="${examImageBase64List[__${stat.index}__] != ''}"-->
-<!--                            <img-->
-<!--                                 class="table-pic"-->
-<!--                                 th:src="@{|data:image/jpeg;base64,${examImageBase64List[__${stat.index}__]}|}"-->
-<!--                                 th:alt="${exam.name}" />-->
-                            <span class="zoom-icon">&#128269;</span>
-                            <div class="exam-image-modal">
-<!--                                th:if="${examImageBase64List[__${stat.index}__] != ''}"-->
-                                <img
-                                     class="exam-image-modal-content"
-                                     th:src="@{|data:image/jpeg;base64,${examImageBase64List[__${stat.index}__]}|}"
-                                     th:alt="${exam.name}"
-                                     loading="lazy"/>
+                            <span id="zoomIcon" class="zoom-icon" th:onclick="'showImage(' + ${exam.id} + ')'">&#128269;</span>
+                            <div class="exam-image-modal" th:id="'myModal-' + ${exam.id}">
+<!--                                <img-->
+<!--                                     class="exam-image-modal-content"-->
+<!--                                     th:src="@{|data:image/jpeg;base64,${examImageBase64List[__${stat.index}__]}|}"-->
+<!--                                     th:alt="${exam.name}"-->
+<!--                                     loading="lazy"/>-->
+                                <img class="exam-image-modal-content" th:id="'modalImg-' + ${exam.id}" th:alt="${exam.name}" />
                             </div>
                         </div>
                     </td>

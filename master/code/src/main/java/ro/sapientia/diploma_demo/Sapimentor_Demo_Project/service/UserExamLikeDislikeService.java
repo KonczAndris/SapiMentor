@@ -170,7 +170,7 @@ public class UserExamLikeDislikeService {
 
     // TODO: lekerni a like statuszt
     // itt kerem le a like statuszt
-    @Cacheable(value = "likeStatus")
+    @Cacheable("getLikeStatus")
     public String getLikeStatus(Long examId, Long userId){
         Exams exam_Id = examsRepository.findById(examId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
@@ -189,7 +189,7 @@ public class UserExamLikeDislikeService {
 
     // TODO: lekerni a dislike statuszt
     // itt kerem le a dislike statuszt
-    @Cacheable(value = "dislikeStatus")
+    @Cacheable("getDislikeStatus")
     public String getDislikeStatus(Long examId, Long userId){
         Exams exam_Id = examsRepository.findById(examId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
@@ -208,6 +208,7 @@ public class UserExamLikeDislikeService {
     }
 
     // TODO: lekerni a like es dislike statuszt
+    @Cacheable("getLikeAndDislikeStatus")
     public List<UserLikeAndDislikeData> getLikeAndDislikeStatus(Long userId) {
         User user_Id = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));

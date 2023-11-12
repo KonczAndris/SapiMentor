@@ -2,7 +2,12 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Exams;
@@ -12,6 +17,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,15 +26,65 @@ import java.util.Map;
 public class ExamServices {
     private final ExamsRepository examsRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     public ExamServices(ExamsRepository examsRepository) {
         this.examsRepository = examsRepository;
     }
 
-    @Cacheable(value = "examsCache")
+    @Cacheable("getAllExams")
     public List<Exams> getAllExams() {
         return examsRepository.findAll();
     }
 
+//    public List<ExamsDTO> getExamsWithSelectedFields() {
+//        List<Exams> exams = examsRepository.findAll();
+//        return exams.stream()
+//                .map(exam -> modelMapper.map(exam, ExamsDTO.class))
+//                .collect(Collectors.toList());
+//    }
+
+    @Cacheable("getAllExamImageById")
+    public List<Object[]> getAllExamImageById() {
+        return examsRepository.findAllExamImageById();
+    }
+
+    @Cacheable("getExamImage")
+    public byte[] getExamImage(Long examId) {
+        System.out.println("examId: " + examId);
+        return examsRepository.findExamImageById(examId);
+    }
+
+    @Cacheable("getExamsWithSelectedFields")
+    public List<Exams> getExamsWithSelectedFields() {
+        List<Object[]> results = examsRepository.findProjectedBy();
+        List<Exams> exams = new ArrayList<>();
+
+        for (Object[] result : results) {
+            Exams exam = new Exams();
+            exam.setId((Long) result[0]);
+            exam.setName((String) result[1]);
+            exam.setTopic_name((String) result[2]);
+            exam.setUser_name((String) result[3]);
+            exam.setLike((Integer) result[4]);
+            exam.setDislike((Integer) result[5]);
+            exams.add(exam);
+        }
+
+        return exams;
+    }
+
+    public Page<Exams> getExamsByPageAndSize(int page, int size) {
+        // Oldalszám nullától indul, de a felhasználói interfészről származó oldalszámok általában 1-ről indulnak,
+        // ezért szükség lehet egy átalakításra az adatbázis lekérdezés során
+        Pageable pageable = PageRequest.of(page > 0 ? page - 1 : page, size);
+
+        // Adatok lekérdezése az adatbázisból oldalazva
+        return examsRepository.findAll(pageable);
+    }
+
+    @Cacheable("getlikeanddislikecounts")
     public Map<String, Integer> getLikeAndDislikeCounts(Long examId) {
         Exams exam = examsRepository.findById(examId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));

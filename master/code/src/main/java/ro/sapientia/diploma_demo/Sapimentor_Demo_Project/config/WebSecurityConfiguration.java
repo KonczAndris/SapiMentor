@@ -23,6 +23,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 //.and()
+                .headers()
+                .frameOptions()
+                .sameOrigin()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/register/**", "/js/**", "/css/**", "/img/**", "/fonts/**", "/forgotPassword/**", "/pdf/**")
                 .permitAll()
@@ -50,7 +54,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
                 .permitAll();
+
     }
+
+    // Statikus erőforrások kezelése a gyorsítótárazáshoz
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/resources/**")
+//                .addResourceLocations("classpath:/templates/")
+//                .setCachePeriod(3600); // Gyorsítótár időtartama másodpercben
+//    }
 
 
 }

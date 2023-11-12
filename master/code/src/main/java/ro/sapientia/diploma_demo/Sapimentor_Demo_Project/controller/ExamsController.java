@@ -94,89 +94,126 @@ public class ExamsController {
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
     }
 
-    @GetMapping("")
-    public String showExamExamples(Model model,
-                                   Principal principal) {
+//    @GetMapping("")
+//    public String showExamExamples(Model model,
+//                                   Principal principal) {
+//
+//        showUserRolesToDisplayResources(model, principal);
+//        showTopicsToDisplayResources(model, principal);
+//        List<Exams> exams = examServices.getAllExams();
+//
+//        List<String> examImageBase64List = new ArrayList<>();
+//        for (Exams exam : exams) {
+//            byte[] examImageBytes = exam.getExamImage();
+//            if (examImageBytes != null) {
+//                String examImageBase64 = Base64.getEncoder().encodeToString(examImageBytes);
+//                examImageBase64List.add(examImageBase64);
+//            } else {
+//                examImageBase64List.add("");
+//            }
+//        }
+//
+//        model.addAttribute("examsData", exams);
+//        //System.out.println("examImageBase64List: " + examImageBase64List);
+//        model.addAttribute("examImageBase64List", examImageBase64List);
+////        model.addAllAttributes(Map.of(
+////                "examsData", exams,
+////                "examImageBase64List", examImageBase64List
+////        ));
+//        showProfileImageAndName(model, principal);
+//
+//        return "examExamples";
+//    }
 
+    @GetMapping("")
+    public String showExamExamples(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
-        List<Exams> exams = examServices.getAllExams();
 
-        List<String> examImageBase64List = new ArrayList<>();
-        for (Exams exam : exams) {
-            byte[] examImageBytes = exam.getExamImage();
-            if (examImageBytes != null) {
-                String examImageBase64 = Base64.getEncoder().encodeToString(examImageBytes);
-                examImageBase64List.add(examImageBase64);
-            } else {
-                examImageBase64List.add("");
-            }
-        }
+        List<Exams> exams = examServices.getExamsWithSelectedFields();
+        //System.out.println("Exams: " + exams);
 
-        model.addAttribute("examsData", exams);
-        //System.out.println("examImageBase64List: " + examImageBase64List);
-        model.addAttribute("examImageBase64List", examImageBase64List);
+//        List<String> examImageBase64List = exams.stream()
+//                .map(exam -> Optional.ofNullable(exam.getExamImage())
+//                        .map(imageBytes -> Base64.getEncoder().encodeToString(imageBytes))
+//                        .orElse(""))
+//                .collect(Collectors.toList());
+
+        model.addAllAttributes(Map.of(
+                "examsData", exams
+                //"examImageBase64List", examImageBase64List
+        ));
+
         showProfileImageAndName(model, principal);
 
         return "examExamples";
     }
 
 
+    @GetMapping("/getexamimage")
+    public ResponseEntity<String> getExamImage(@RequestParam Long examId) {
+        try {
+            byte[] examImageBytes = examServices.getExamImage(examId);
+            if (examImageBytes != null) {
+                String examImageBase64 = Base64.getEncoder().encodeToString(examImageBytes);
+                return ResponseEntity.ok(examImageBase64);
+            } else {
+                return ResponseEntity.ok("");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
+        }
+    }
+
+    @GetMapping("/getallexamimage")
+    public ResponseEntity<Map<String,Object>> getAllExamImage() {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            List<Object[]> examImageBytesList = examServices.getAllExamImageById();
+            response.put("examimagesandid", examImageBytesList);
+            //System.out.println("examImageBytesList: " + examImageBytesList);
+
+            //System.out.println("examImageBase64List: " + examImageBase64List);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+
+
 //    @GetMapping("")
-//    public String showExamExamples(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) {
+//    public String showExamExamples(
+//            Model model,
+//            Principal principal,
+//            @RequestParam(name = "page", defaultValue = "0") int page,
+//            @RequestParam(name = "size", defaultValue = "14") int size
+//    ) {
+//        showUserRolesToDisplayResources(model, principal);
+//        showTopicsToDisplayResources(model, principal);
 //
+//        // Az adott oldalszám és méret alapján kérjük le az adatokat
+//        Page<Exams> examsPage = examServices.getExamsByPageAndSize(page, size);
+//        List<Exams> exams = examsPage.getContent();
 //
-//        // ETag generálása a felhasználó és az oldal tartalma alapján
-//        String eTag = generateETagForUserAndContent(principal);
+////        // Képek Base64 kódolása
+////        List<String> examImageBase64List = exams.stream()
+////                .map(exam -> Optional.ofNullable(exam.getExamImage())
+////                        .map(imageBytes -> Base64.getEncoder().encodeToString(imageBytes))
+////                        .orElse(""))
+////                .collect(Collectors.toList());
 //
-//        String requestETag = request.getHeader("If-None-Match");
+//        model.addAllAttributes(Map.of(
+//                "examsData", exams
+////                "examImageBase64List", examImageBase64List
+//        ));
 //
-//        if (requestETag != null && requestETag.equals(eTag)) {
-//            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-//        } else {
-//            // Az ETag fejléc beállítása
-//            response.setHeader("ETag", eTag);
-//
-//            // Cache-Control fejléc beállítása
-//            response.setHeader("Cache-Control", "public, max-age=3600");
-//            showUserRolesToDisplayResources(model, principal);
-//            showTopicsToDisplayResources(model, principal);
-//
-//            List<Exams> exams = examServices.getAllExams();
-//
-//            List<String> examImageBase64List = new ArrayList<>();
-//            for (Exams exam : exams) {
-//                byte[] examImageBytes = exam.getExamImage();
-//                if (examImageBytes != null) {
-//                    String examImageBase64 = Base64.getEncoder().encodeToString(examImageBytes);
-//                    examImageBase64List.add(examImageBase64);
-//                } else {
-//                    examImageBase64List.add("");
-//                }
-//            }
-//
-//            model.addAttribute("examsData", exams);
-//            model.addAttribute("examImageBase64List", examImageBase64List);
-//            showProfileImageAndName(model, principal);
-//        }
+//        showProfileImageAndName(model, principal);
 //
 //        return "examExamples";
 //    }
-//
-//    private String generateETagForUserAndContent(Principal principal) {
-//        // Itt generálj egy egyedi ETag-et, ami a felhasználót és az oldal tartalmától függ
-//        // Például használhatsz egy hash függvényt az oldal tartalmára
-//        List<Exams> exams = examServices.getAllExams();
-//        String pageContentHash = generateHashForPageContent(exams);
-//        return principal.getName() + "_" + pageContentHash;
-//    }
-//
-//    private String generateHashForPageContent(List<Exams> exams) {
-//        // Példa hash generálásra, használd a megfelelő logikát
-//        // Például, ha van egy exams lista, akkor hozz létre egy függvényt, amely hasheli ezt a listát
-//        return Integer.toString(Objects.hash(exams));
-//    }
-
 
 
 
