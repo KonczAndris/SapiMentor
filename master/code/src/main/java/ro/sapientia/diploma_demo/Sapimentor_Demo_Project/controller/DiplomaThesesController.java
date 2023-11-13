@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topic;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.UserLikeAndDislikeData;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.DiplomaServices;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
@@ -97,8 +94,30 @@ public class DiplomaThesesController {
     public String showDiplomaTheses(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
+
+        List<Diploma_Theses> diplomaTheses = diplomaServices.getAllDiplomaThesesWithSelectedFields();
+
+        model.addAllAttributes(Map.of(
+                "diplomaThesesData", diplomaTheses
+        ));
+
         showProfileImageAndName(model, principal);
+
         return "diplomaTheses";
+    }
+
+    @GetMapping("/getalldiplomapdf")
+    public ResponseEntity<Map<String,Object>> getAllDiplomaPdf() {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            List<Object[]> diplomaPdfByteList = diplomaServices.getAllDiplomaPdfById();
+            response.put("diplomaPdfsandid", diplomaPdfByteList);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PostMapping("/uploadDiplomaTheses")

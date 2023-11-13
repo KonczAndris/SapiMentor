@@ -153,30 +153,57 @@
           <th class="table-topic">Topic</th>
           <th class="table-user">User</th>
           <th class="table-likes">Likes</th>
-          <th class="table-actions" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">Actions</th>
+          <th class="table-actions">Actions</th>
         </tr>
         </thead>
         <tbody id="link-table-body">
 
-        <tr>
-          <td>1</td>
-          <td class="pdf-container-column">
-            <div class="pdf-image-image-container">
-              Majom Majon - Számítástechnika
-              <span class="zoom-icon">&#128269;</span>
-              <div class="pdf-image-modal">
-                <embed class="pdf-image-modal-content" src="/pdf/teszt.pdf" type='application/pdf'>
+<!--        <tr>-->
+<!--          <td>1</td>-->
+<!--          <td class="pdf-container-column">-->
+<!--            <div class="pdf-image-image-container">-->
+<!--              Majom Majon - Számítástechnika-->
+<!--              <span class="zoom-icon">&#128269;</span>-->
+<!--              <div class="pdf-image-modal">-->
+<!--                <embed class="pdf-image-modal-content" src="/pdf/teszt.pdf" type='application/pdf'>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--          <td> Info</td>-->
+<!--          <td> Majom</td>-->
+<!--          <td>1</td>-->
+<!--          <td>-->
+<!--            <button class="like-button-link">Like</button>-->
+<!--            <button class="dislike-button-link">Dislike</button>-->
+<!--          </td>-->
+<!--        </tr>-->
+
+          <tr th:each="diploma, stat : ${diplomaThesesData}" th:id="'diploma-row-' + ${diploma.id}">
+            <td th:text="${stat.index + 1}"></td>
+            <td class="pdf-container-column">
+              <div class="pdf-image-image-container">
+                <span th:text="${diploma.name}"></span>
+                <span id="zoomIcon" class="zoom-icon" >&#128269;</span>
+                <div class="pdf-image-modal" th:id="'myModal-' + ${diploma.id}">
+                  <embed th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content"  type='application/pdf'>
+                </div>
               </div>
-            </div>
-          </td>
-          <td> Info</td>
-          <td> Majom</td>
-          <td>1</td>
-          <td>
-            <button class="like-button-link">Like</button>
-            <button class="dislike-button-link">Dislike</button>
-          </td>
-        </tr>
+            </td>
+            <td th:text="${diploma.year}"></td>
+            <td th:text="${diploma.topic_name}"></td>
+            <td th:text="${diploma.user_name}"></td>
+            <td>
+              <span class="like-dislike-count">
+                  <span class="like-color-text like-count" id="likeButton" th:text="${diploma.like}"></span>
+                  <span class="like-dislike-space"></span>
+                  <span class="dislike-color-text dislike-count" id="dislikeButton" th:text="${diploma.dislike}"></span>
+              </span>
+            </td>
+            <td>
+              <button class="like-button-link">Like</button>
+              <button class="dislike-button-link">Dislike</button>
+            </td>
+          </tr>
 
         </tbody>
       </table>

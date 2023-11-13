@@ -5,6 +5,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 import com.itextpdf.kernel.pdf.*;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses;
@@ -12,6 +13,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.DiplomaThese
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,32 @@ public class DiplomaServices {
 
     public List<Diploma_Theses> getAllDiplomaTheses() {
         return diplomaThesesRepository.findAll();
+    }
+
+    @Cacheable("getAllDiplomaPdfById")
+    public List<Object[]> getAllDiplomaPdfById() {
+        return diplomaThesesRepository.findAllDiplomaPDFById();
+    }
+
+    @Cacheable("getAllDiplomaThesesWithSelectedFields")
+    public List<Diploma_Theses> getAllDiplomaThesesWithSelectedFields() {
+        List<Object[]> results = diplomaThesesRepository.findProjectedBy();
+        List<Diploma_Theses> diploma_theses = new ArrayList<>();
+
+        //System.out.println("results: " + results);
+        for (Object[] result : results) {
+            Diploma_Theses diplomas = new Diploma_Theses();
+            diplomas.setId((Long) result[0]);
+            diplomas.setName((String) result[1]);
+            diplomas.setYear((String) result[2]);
+            diplomas.setTopic_name((String) result[3]);
+            diplomas.setUser_name((String) result[4]);
+            diplomas.setLike((Integer) result[5]);
+            diplomas.setDislike((Integer) result[6]);
+            diploma_theses.add(diplomas);
+        }
+
+        return diploma_theses;
     }
 
     public Map<String, Integer> getLikeAndDislikeCounts(Long diplomaId) {

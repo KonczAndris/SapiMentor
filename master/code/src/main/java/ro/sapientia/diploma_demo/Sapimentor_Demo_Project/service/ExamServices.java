@@ -52,7 +52,7 @@ public class ExamServices {
 
     @Cacheable("getExamImage")
     public byte[] getExamImage(Long examId) {
-        System.out.println("examId: " + examId);
+        //System.out.println("examId: " + examId);
         return examsRepository.findExamImageById(examId);
     }
 
