@@ -186,7 +186,8 @@
                 <span id="zoomIcon" class="zoom-icon" >&#128269;</span>
                 <div class="pdf-image-modal" th:id="'myModal-' + ${diploma.id}">
 <!--                  <embed th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content"  type='application/pdf'>-->
-                  <iframe th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content" width="100%" height="600px"></iframe>
+<!--                  <iframe th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content" ></iframe>-->
+                  <a th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content"  target="_blank"></a>
                 </div>
               </div>
             </td>

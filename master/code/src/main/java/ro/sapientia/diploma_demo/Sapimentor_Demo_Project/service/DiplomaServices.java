@@ -31,7 +31,8 @@ public class DiplomaServices {
         return diplomaThesesRepository.findAll();
     }
 
-    @Cacheable("getAllDiplomaPdfById")
+
+    @Cacheable(value = "getAllDiplomaPdfById")
     public List<Object[]> getAllDiplomaPdfById() {
         return diplomaThesesRepository.findAllDiplomaPDFById();
     }

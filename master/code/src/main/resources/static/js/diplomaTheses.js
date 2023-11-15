@@ -848,7 +848,8 @@ function handlerdiplomaPDFs() {
         console.log(modalPDF);
 
         //modal.style.display = 'block';
-        modalPDF.src = blobUrl;
+        //modalPDF.src = blobUrl;
+        modalPDF.href = blobUrl;
         //console.log(modalPDF.src);
         
 
