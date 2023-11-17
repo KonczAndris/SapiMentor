@@ -8,18 +8,18 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_T_DTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.DiplomaThesesRepository;
 
+import javax.transaction.Transactional;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Service
+@Transactional
 public class DiplomaServices {
     private final DiplomaThesesRepository diplomaThesesRepository;
 
@@ -32,12 +32,23 @@ public class DiplomaServices {
     }
 
 
-    @Cacheable(value = "getAllDiplomaPdfById")
-    public List<Object[]> getAllDiplomaPdfById() {
-        return diplomaThesesRepository.findAllDiplomaPDFById();
-    }
+//    @Async
+//    @Cacheable(value = "getAllDiplomaPdfById")
+//    public List<Object[]> getAllDiplomaPdfById() {
+//        return diplomaThesesRepository.findAllDiplomaPDFById();
+//    }
+//
+//    ///////////
+//    @Async
+//    @Cacheable(value = "getDiplomaPdfById")
+//    public byte[] getDiplomaPdfById(Long diplomaId) {
+//        return diplomaThesesRepository.findDiplomaPDFById(diplomaId);
+//    }
+//    ///////////
 
-    @Cacheable("getAllDiplomaThesesWithSelectedFields")
+
+
+    //@Cacheable("getAllDiplomaThesesWithSelectedFields")
     public List<Diploma_Theses> getAllDiplomaThesesWithSelectedFields() {
         List<Object[]> results = diplomaThesesRepository.findProjectedBy();
         List<Diploma_Theses> diploma_theses = new ArrayList<>();
@@ -58,17 +69,27 @@ public class DiplomaServices {
         return diploma_theses;
     }
 
+    @Cacheable("getLikeAndDislikeCounts")
     public Map<String, Integer> getLikeAndDislikeCounts(Long diplomaId) {
-        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
-                .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with ID: " + diplomaId));
+        //System.out.println("diplomaId: " + diplomaId);
+//        Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeDislikeById(diplomaId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with ID: " + diplomaId));
+
+        List<Diploma_T_DTO> userLikeAndDislikes = diplomaThesesRepository.findLikeDislikeById(diplomaId);
 
         // Készíts egy Map objektumot a like és dislike értékekkel
         Map<String, Integer> likeAndDislikeCounts = new HashMap<>();
-        likeAndDislikeCounts.put("like", diploma_theses.getLike());
-        likeAndDislikeCounts.put("dislike", diploma_theses.getDislike());
-        likeAndDislikeCounts.put("rowId", diploma_theses.getId().intValue());
-
-        //System.out.println("likeAndDislikeCounts: " + likeAndDislikeCounts);
+        for (Diploma_T_DTO dto : userLikeAndDislikes) {
+//            System.out.println("ID: " + dto.getId());
+//            System.out.println("User ID: " + dto.getUser_id());
+//            System.out.println("Diploma ID: " + dto.getDiploma_id());
+//            System.out.println("Like: " + dto.getLike());
+//            System.out.println("Dislike: " + dto.getDislike());
+//            System.out.println("------------------------");
+            likeAndDislikeCounts.put("like", dto.getLike());
+            likeAndDislikeCounts.put("dislike", dto.getDislike());
+            likeAndDislikeCounts.put("rowId", Math.toIntExact(dto.getId()));
+        }
 
         return likeAndDislikeCounts;
     }
@@ -221,67 +242,68 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
 
     // TODO: likeDiploma
     public void likeDiploma(Long diplomaId) {
-        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeAndDislikeById(diplomaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
 
         diploma_theses.setLike(diploma_theses.getLike() + 1);
         diploma_theses.setDislike(diploma_theses.getDislike());
 
-        diplomaThesesRepository.save(diploma_theses);
+        diplomaThesesRepository.update(diploma_theses);
     }
 
     // TODO: dislikeDiploma
     public void dislikeDiploma(Long diplomaId) {
-        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeAndDislikeById(diplomaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
 
+        diploma_theses.setLike(diploma_theses.getLike());
         diploma_theses.setDislike(diploma_theses.getDislike() + 1);
 
-        diplomaThesesRepository.save(diploma_theses);
+        diplomaThesesRepository.update(diploma_theses);
     }
 
     // TODO: revokeLike
     public void revokeLike(Long diplomaId) {
-        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeAndDislikeById(diplomaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
 
         diploma_theses.setLike(diploma_theses.getLike() - 1);
+        diploma_theses.setDislike(diploma_theses.getDislike());
 
-        diplomaThesesRepository.save(diploma_theses);
+        diplomaThesesRepository.update(diploma_theses);
     }
 
     // TODO: revokeDislike
     public void revokeDislike(Long diplomaId) {
-        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeAndDislikeById(diplomaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
 
+        diploma_theses.setLike(diploma_theses.getLike());
         diploma_theses.setDislike(diploma_theses.getDislike() - 1);
 
-        diplomaThesesRepository.save(diploma_theses);
+        diplomaThesesRepository.update(diploma_theses);
     }
 
     // TODO: likeDiplomaAndRevokeDislike
     public void likeDiplomaAndRevokeDislike(Long diplomaId) {
-        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeAndDislikeById(diplomaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
 
         diploma_theses.setLike(diploma_theses.getLike() + 1);
-
         diploma_theses.setDislike(diploma_theses.getDislike() - 1);
 
-        diplomaThesesRepository.save(diploma_theses);
+        diplomaThesesRepository.update(diploma_theses);
     }
 
     // TODO: dislikeDiplomaAndRevokeLike
     public void dislikeDiplomaAndRevokeLike(Long diplomaId) {
-        Diploma_Theses diploma_theses = diplomaThesesRepository.findById(diplomaId)
+        Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeAndDislikeById(diplomaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
 
         diploma_theses.setDislike(diploma_theses.getDislike() + 1);
-
         diploma_theses.setLike(diploma_theses.getLike() - 1);
 
-        diplomaThesesRepository.save(diploma_theses);
+        diplomaThesesRepository.update(diploma_theses);
     }
 
 }

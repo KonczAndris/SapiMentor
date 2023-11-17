@@ -3,6 +3,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +40,9 @@ public class DiplomaThesesController {
         this.diplomaServices = diplomaServices;
         this.userDiplomaLikeDislikeService = userDiplomaLikeDislikeService;
     }
-    private void showUserRolesToDisplayResources(Model model, Principal principal){
+
+    @Async
+    protected void showUserRolesToDisplayResources(Model model, Principal principal){
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
 
@@ -64,7 +67,8 @@ public class DiplomaThesesController {
         model.addAttribute("userRolesToDisplayResources", rolesAsString);
     }
 
-    private void showTopicsToDisplayResources(Model model, Principal principal){
+    @Async
+    protected void showTopicsToDisplayResources(Model model, Principal principal){
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
         // Itt lekérem a témákat a service segítségével
@@ -73,7 +77,8 @@ public class DiplomaThesesController {
         model.addAttribute("topics", topics);
     }
 
-    private void showProfileImageAndName(Model model, Principal principal){
+    @Async
+    protected void showProfileImageAndName(Model model, Principal principal){
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
         UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
@@ -94,6 +99,7 @@ public class DiplomaThesesController {
     public String showDiplomaTheses(Model model, Principal principal) {
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
+        showProfileImageAndName(model, principal);
 
         List<Diploma_Theses> diplomaTheses = diplomaServices.getAllDiplomaThesesWithSelectedFields();
 
@@ -101,24 +107,46 @@ public class DiplomaThesesController {
                 "diplomaThesesData", diplomaTheses
         ));
 
-        showProfileImageAndName(model, principal);
+
 
         return "diplomaTheses";
     }
 
-    @GetMapping("/getalldiplomapdf")
-    public ResponseEntity<Map<String,Object>> getAllDiplomaPdf() {
-        try {
-            Map<String, Object> response = new HashMap<>();
-            List<Object[]> diplomaPdfByteList = diplomaServices.getAllDiplomaPdfById();
-            response.put("diplomaPdfsandid", diplomaPdfByteList);
+//    @GetMapping("/getalldiplomapdf")
+//    public ResponseEntity<Map<String,Object>> getAllDiplomaPdf() {
+//        try {
+//            Map<String, Object> response = new HashMap<>();
+//            List<Object[]> diplomaPdfByteList = diplomaServices.getAllDiplomaPdfById();
+//            response.put("diplomaPdfsandid", diplomaPdfByteList);
+//
+//            return ResponseEntity.ok(response);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
 
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
+//    @GetMapping("/getdiplomabyid")
+//    public ResponseEntity<byte[]> getDiplomaById(@RequestParam Long diplomaId) {
+//        try {
+//            byte[] diplomaPdfByte = diplomaServices.getDiplomaPdfById(diplomaId);
+//            if (diplomaPdfByte != null) {
+//                HttpHeaders headers = new HttpHeaders();
+//                headers.setContentType(MediaType.APPLICATION_PDF);
+//                headers.setContentLength(diplomaPdfByte.length);
+//                headers.setContentDispositionFormData("attachment", "diploma.pdf");
+//
+//                return new ResponseEntity<>(diplomaPdfByte, headers, HttpStatus.OK);
+//            } else {
+//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
+
+
 
     @PostMapping("/uploadDiplomaTheses")
     public ResponseEntity<String> uploadDiplomaTheses(@RequestParam("pdf") MultipartFile pdf,
@@ -353,13 +381,13 @@ public class DiplomaThesesController {
             User user = userRepository.findByEmail(email);
             Long userId = user.getId();
             List<UserLikeAndDislikeData> likeanddislike = userDiplomaLikeDislikeService.getLikeAndDislikeStatus(userId);
+            //System.out.println("Like and dislike: " + likeanddislike);
             response.put("likeanddislike", likeanddislike);
             return ResponseEntity.ok(response);
         } catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-
     }
 
 }

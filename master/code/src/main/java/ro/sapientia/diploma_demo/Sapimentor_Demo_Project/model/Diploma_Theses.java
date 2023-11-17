@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "diploma_theses")
+@Table(name = "diploma_theses", uniqueConstraints = @UniqueConstraint(columnNames = "id"))
 public class Diploma_Theses {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +19,7 @@ public class Diploma_Theses {
 
     @Column(name = "diploma_theses_file")
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] diploma_theses_file;
 
     @Column(name = "diploma_theses_like")
@@ -47,6 +48,14 @@ public class Diploma_Theses {
         this.like = like;
         this.dislike = dislike;
         this.year = year;
+    }
+
+    public Diploma_Theses(Long id,
+                          Integer like,
+                          Integer dislike) {
+        this.id = id;
+        this.like = like;
+        this.dislike = dislike;
     }
 
     public Diploma_Theses() {

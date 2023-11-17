@@ -1,19 +1,33 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository;
 
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_T_DTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DiplomaThesesRepository extends JpaRepository<Diploma_Theses, Long> {
     Diploma_Theses save(Diploma_Theses diploma_theses);
 
+    @Modifying
+    @Query("UPDATE Diploma_Theses dt SET dt.like = :#{#diploma_theses.like}, dt.dislike = :#{#diploma_theses.dislike} WHERE dt.id = :#{#diploma_theses.id}")
+    void update(@Param("diploma_theses") Diploma_Theses diploma_theses);
+
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_T_DTO(dt.id, dt.like, dt.dislike)  FROM Diploma_Theses dt WHERE dt.id = :diplomaId")
+    List<Diploma_T_DTO> findLikeDislikeById(Long diplomaId);
+
     @Query("SELECT d.id, d.name, d.year, d.topic_name,d.user_name,d.like,d.dislike FROM Diploma_Theses d")
     List<Object[]> findProjectedBy();
 
-    @Query("SELECT d.diploma_theses_file, d.id FROM Diploma_Theses d")
-    List<Object[]> findAllDiplomaPDFById();
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses(d.id, d.like, d.dislike) FROM Diploma_Theses d WHERE d.id = :diplomaId")
+    Optional<Diploma_Theses> findLikeAndDislikeById(Long diplomaId);
+
+
+
 }

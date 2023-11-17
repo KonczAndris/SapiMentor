@@ -491,26 +491,26 @@ var pdfImageModal = document.querySelector(".pdf-image-modal");
 // });
 
 // Eltároljuk az összes sor és modális ablak elemet
-const pdfImageContainers = document.querySelectorAll('.pdf-image-image-container');
-const pdfImageModals = document.querySelectorAll('.pdf-image-modal');
-// Az egyes sorokhoz rendelt modális ablakok kezelése
-for (let i = 0; i < pdfImageContainers.length; i++) {
-    const pdfImageContainer = pdfImageContainers[i];
-    const pdfImageModal = pdfImageModals[i];
-
-    pdfImageContainer.addEventListener("click", function() {
-        pdfImageModal.style.display = "block";
-        pdfImageModal.style.cursor = "default";
-    });
-
-    // Az egyes modális ablakok elrejtése, ha a modális ablakon kívülre kattintunk
-    window.addEventListener("click", function(event) {
-        if (event.target == pdfImageModal) {
-            pdfImageModal.style.display = "none";
-        }
-    });
-}
-
+// const pdfImageContainers = document.querySelectorAll('.pdf-image-image-container');
+// const pdfImageModals = document.querySelectorAll('.pdf-image-modal');
+// // Az egyes sorokhoz rendelt modális ablakok kezelése
+// for (let i = 0; i < pdfImageContainers.length; i++) {
+//     const pdfImageContainer = pdfImageContainers[i];
+//     const pdfImageModal = pdfImageModals[i];
+//
+//     pdfImageContainer.addEventListener("click", function() {
+//         pdfImageModal.style.display = "block";
+//         pdfImageModal.style.cursor = "default";
+//     });
+//
+//     // Az egyes modális ablakok elrejtése, ha a modális ablakon kívülre kattintunk
+//     window.addEventListener("click", function(event) {
+//         if (event.target == pdfImageModal) {
+//             pdfImageModal.style.display = "none";
+//         }
+//     });
+// }
+//
 $(document).ready(async function () {
     $(document).trigger('myCustomLoadEvent');
 
@@ -559,6 +559,7 @@ $(document).ready(async function () {
         })
             .then(response => {
                 if (response.ok) {
+                    console.log("Lassu vagyok");
                     // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
                     // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
                     fetch(sseUrl, {
@@ -782,76 +783,190 @@ $(document).ready(async function () {
             }
         });
     });
-
-
-})
-
-
-let diplomaPDF = [];
-
-document.addEventListener("DOMContentLoaded", function () {
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
-
-    fetch("/resources/diplomaTheses/getalldiplomapdf", {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Request failed');
-        }
-    })
-        .then(data => {
-            //console.log(data.igenigen);
-            diplomaPDF = data.diplomaPdfsandid;
-            //console.log(diplomaPDF);
-            handlerdiplomaPDFs();
-            //console.log(likeAndDislikeStatuses);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        })
 });
 
-function handlerdiplomaPDFs() {
+////////ezt kell megnezni mert ez ker le egy csomo mindent valamiert
+// NEGYEDIK VERZIO (vegleges)
+//lekerni az osszes like es dislike allasat az adatbazisbol
+let likeAndDislikeStatuses = [];
+document.addEventListener('DOMContentLoaded', async function () {
+    try {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        const response = await fetch("/resources/diplomaTheses/getLikeAndDislikeStatuses", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Request failed');
+        }
+
+        const data = await response.json();
+        likeAndDislikeStatuses = data.likeanddislike;
+        console.log(likeAndDislikeStatuses);
+        handleLikeAndDislikeStatuses();
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+
+function handleLikeAndDislikeStatuses() {
     // Itt már rendelkezésre állnak az adatok
     //console.log(likeAndDislikeStatuses);
 
     // Most már kezelheted az adatokat
-    for (let i = 0; i < diplomaPDF.length; i++) {
-        const diplomaThesesData = diplomaPDF[i];
-        //console.log(likeAndDislikeData[1]);
-        const PDF = diplomaThesesData[0];
-        const diplomaId = diplomaThesesData[1];
+    for (let i = 0; i < likeAndDislikeStatuses.length; i++) {
+        const likeAndDislikeData = likeAndDislikeStatuses[i];
+        const diplomaId = likeAndDislikeData.resourceId;
+        const like = likeAndDislikeData.like;
+        const dislike = likeAndDislikeData.dislike;
 
-        // A base64 kódolt adatok dekódolása
-        var binaryPDF = atob(PDF);
-        var arrayPDF = new Uint8Array(binaryPDF.length);
-        for (var j = 0; j < binaryPDF.length; j++) {
-            arrayPDF[j] = binaryPDF.charCodeAt(j);
+
+        // Itt kezeld az adatokat vagy végezz velük bármit, amit szeretnél
+        //console.log(`Resource ID: ${resourceId}, Like: ${like}, Dislike: ${dislike}`);
+        const likeCountElement = document.querySelector(`#diploma-row-${diplomaId} .like-button-link`);
+        const dislikeCountElement = document.querySelector(`#diploma-row-${diplomaId} .dislike-button-link`);
+        //console.log(likeCountElement);
+        //console.log(dislikeCountElement);
+        if (like === 1) {
+            likeCountElement.classList.add('like-button-link-active');
+        } else if (dislike === 1){
+            dislikeCountElement.classList.add('dislike-button-link-active');
         }
-
-        // Blob létrehozása a PDF adatokból
-        var pdfBlob = new Blob([arrayPDF], { type: 'application/pdf;charset=utf-8' });
-
-        // Blob URL létrehozása
-        var blobUrl = URL.createObjectURL(pdfBlob);
-
-        //console.log(base64Image);
-        var modal = document.getElementById('myModal-' + diplomaId);
-        var modalPDF = document.getElementById('modalPDF-' + diplomaId);
-        console.log(modalPDF);
-
-        //modal.style.display = 'block';
-        //modalPDF.src = blobUrl;
-        modalPDF.href = blobUrl;
-        //console.log(modalPDF.src);
-        
 
     }
 }
+
+
+
+// let diplomaPDF = [];
+// document.addEventListener("DOMContentLoaded", function () {
+//     var token = $("meta[name='_csrf']").attr("content");
+//     var header = $("meta[name='_csrf_header']").attr("content");
+//
+//     fetch("/resources/diplomaTheses/getalldiplomapdf", {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded',
+//             'X-CSRF-TOKEN': token
+//         }
+//     }).then(response => {
+//         if (response.ok) {
+//             return response.json();
+//         } else {
+//             throw new Error('Request failed');
+//         }
+//     })
+//         .then(data => {
+//             //console.log(data.igenigen);
+//             diplomaPDF = data.diplomaPdfsandid;
+//             //console.log(diplomaPDF);
+//             // Elindítjuk a PDF fájlok egyenkénti betöltését
+//             for (let i = 0; i < diplomaPDF.length; i++) {
+//                 const diplomaThesesData = diplomaPDF[i];
+//                 const PDF = diplomaThesesData[0];
+//                 const diplomaId = diplomaThesesData[1];
+//
+//                 loadAndDisplayPDF(PDF, diplomaId);
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         })
+//     function loadAndDisplayPDF(pdfContent, diplomaId) {
+//         //console.log('PDF Content:', pdfContent); // Logoljuk az adatot
+//         // A base64 kódolt adatok dekódolása
+//         var binaryPDF = atob(pdfContent);
+//         var arrayPDF = new Uint8Array(binaryPDF.length);
+//         for (var j = 0; j < binaryPDF.length; j++) {
+//             arrayPDF[j] = binaryPDF.charCodeAt(j);
+//         }
+//
+//         // Blob létrehozása a PDF adatokból
+//         var pdfBlob = new Blob([arrayPDF], { type: 'application/pdf;charset=utf-8' });
+//
+//         // Blob URL létrehozása
+//         var blobUrl = URL.createObjectURL(pdfBlob);
+//
+//         var modalPDF = document.getElementById('modalPDF-' + diplomaId);
+//         console.log(modalPDF);
+//
+//         // PDF megjelenítése
+//         modalPDF.href = blobUrl;
+//     }
+// });
+//
+// function getDiplomaId (diplomaId) {
+//     var token = $("meta[name='_csrf']").attr("content");
+//     var header = $("meta[name='_csrf_header']").attr("content");
+//
+//     const url = `/resources/diplomaTheses/getdiplomabyid?diplomaId=${diplomaId}`;
+//
+//     fetch(url, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded',
+//             'X-CSRF-TOKEN': token
+//         }
+//     }).then(response => {
+//         if (response.ok) {
+//             return response.json();
+//         } else {
+//             throw new Error('Request failed');
+//         }
+//     })
+//         .then(data => {
+//             console.log(data);
+//             //console.log(data.igenigen);
+//             //diplomaPDF = data.diplomaPdfsandid;
+//             //console.log(diplomaPDF);
+//             // Elindítjuk a PDF fájlok egyenkénti betöltését
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         })
+//
+// }
+//
+// function handlerdiplomaPDFs() {
+//     // Itt már rendelkezésre állnak az adatok
+//     //console.log(likeAndDislikeStatuses);
+//
+//     // Most már kezelheted az adatokat
+//     for (let i = 0; i < diplomaPDF.length; i++) {
+//         const diplomaThesesData = diplomaPDF[i];
+//         //console.log(likeAndDislikeData[1]);
+//         const PDF = diplomaThesesData[0];
+//         const diplomaId = diplomaThesesData[1];
+//
+//         // A base64 kódolt adatok dekódolása
+//         var binaryPDF = atob(PDF);
+//         var arrayPDF = new Uint8Array(binaryPDF.length);
+//         for (var j = 0; j < binaryPDF.length; j++) {
+//             arrayPDF[j] = binaryPDF.charCodeAt(j);
+//         }
+//
+//         // Blob létrehozása a PDF adatokból
+//         var pdfBlob = new Blob([arrayPDF], { type: 'application/pdf;charset=utf-8' });
+//
+//         // Blob URL létrehozása
+//         var blobUrl = URL.createObjectURL(pdfBlob);
+//
+//         //console.log(base64Image);
+//         var modal = document.getElementById('myModal-' + diplomaId);
+//         var modalPDF = document.getElementById('modalPDF-' + diplomaId);
+//         console.log(modalPDF);
+//
+//         //modal.style.display = 'block';
+//         //modalPDF.src = blobUrl;
+//         modalPDF.href = blobUrl;
+//         //console.log(modalPDF.src);
+//
+//
+//     }
+// }

@@ -36,4 +36,12 @@ public class UserDiploma_TLikeDislike {
         public UserDiploma_TLikeDislike() {
 
         }
+
+        public UserDiploma_TLikeDislike(Long id,
+                                        Integer like,
+                                        Integer dislike) {
+                this.id = id;
+                this.like = like;
+                this.dislike = dislike;
+        }
 }
