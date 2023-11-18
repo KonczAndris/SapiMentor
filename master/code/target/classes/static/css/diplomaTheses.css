@@ -341,6 +341,7 @@ body {
     .filter-ddowns {
         margin-top: 15px;
         margin-bottom: 15px;
+        flex-direction: row;
     }
 
     .open-search-buttons {
@@ -852,6 +853,19 @@ tr {
     max-width: 50px;
 }
 
+
+.like-color-text {
+    color: rgb(50, 189, 149);
+}
+
+.dislike-color-text {
+    color: rgb(238, 84, 76);
+}
+
+.like-dislike-space {
+    margin-right: 1em;
+}
+
 .table-actions{
     min-width: 120px;
     max-width: 120px;
@@ -978,3 +992,7 @@ tr {
     opacity: 1;
 }
 /* LINK TABLE END */
+
+.sortable{
+    cursor: pointer;
+}

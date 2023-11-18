@@ -280,19 +280,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const reverseButton = document.getElementById("reverseButton");
     const reverseButton2 = document.getElementById("myReverseBtn");
+
     reverseButton.addEventListener("click", function () {
-        rows.reverse();
-        rows.forEach(row => tableBody.removeChild(row));
-        rows.forEach(row => tableBody.appendChild(row));
-        updatePageCounter();
-        showRowsForCurrentPage();
+        const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+        const rows = Array.from(tableBody.getElementsByTagName('tr'));
+        const visibleRows = rows.filter(row => row.style.display !== 'none');
+
+        visibleRows.reverse();
+        visibleRows.forEach(row => tableBody.appendChild(row));
     });
+
     reverseButton2.addEventListener("click", function () {
-        rows.reverse();
-        rows.forEach(row => tableBody.removeChild(row));
-        rows.forEach(row => tableBody.appendChild(row));
-        updatePageCounter();
-        showRowsForCurrentPage();
+        const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+        const rows = Array.from(tableBody.getElementsByTagName('tr'));
+        const visibleRows = rows.filter(row => row.style.display !== 'none');
+
+        visibleRows.reverse();
+        visibleRows.forEach(row => tableBody.appendChild(row));
     });
 });
 
@@ -970,3 +974,117 @@ function handleLikeAndDislikeStatuses() {
 //
 //     }
 // }
+
+let originalRows = []; // Változó az eredeti sorok tárolásához
+
+function saveOriginalRows() {
+    const table = document.getElementById('dataTable');
+    originalRows = Array.from(table.getElementsByTagName('tr'));
+}
+
+function restoreOriginalTable() {
+    const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+    tableBody.innerHTML = '';
+
+    originalRows.forEach(row => tableBody.appendChild(row.cloneNode(true)));
+}
+
+function searchTable() {
+    if (originalRows.length === 0) {
+        saveOriginalRows();
+    } else {
+        restoreOriginalTable();
+    }
+
+    const input = document.getElementById('filter-input');
+    const filter = input.value.toUpperCase();
+    const selectedValues = [];
+    const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
+
+    checkboxes.forEach((checkbox) => {
+        selectedValues.push(checkbox.value);
+    });
+
+    const table = document.getElementById('dataTable');
+    const rows = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        let nameFound = false;
+        let topicFound = false;
+
+        const cell = cells[1];
+
+        if (cell) {
+            const cellText = cell.textContent || cell.innerText;
+            if (cellText.toUpperCase().indexOf(filter) > -1) {
+                nameFound = true;
+            }
+        }
+
+        const topicCell = cells[3];
+
+        if (topicCell) {
+            const cellContent = topicCell.textContent || topicCell.innerText;
+            if (selectedValues.includes(cellContent.trim())) {
+                topicFound = true;
+            }
+        }
+
+        if (nameFound && topicFound) {
+            rows[i].style.display = '';
+        } else {
+            rows[i].style.display = 'none';
+        }
+    }
+}
+
+document.getElementById('search-button').addEventListener('click', searchTable);
+
+document.querySelectorAll('.sortable').forEach(headerCell => {
+    headerCell.addEventListener('click', () => {
+        const table = document.getElementById('dataTable');
+        const tbody = table.querySelector('tbody');
+        const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        const sortType = headerCell.dataset.sort || 'string';
+        const column = headerCell.dataset.column;
+
+        const currentSortOrder = headerCell.getAttribute('data-order');
+        const isAscending = currentSortOrder === 'asc';
+
+        const sortedRows = rows.sort((a, b) => {
+            let valueA = a.children[headerIndex].innerText.trim();
+            let valueB = b.children[headerIndex].innerText.trim();
+
+            if (column === 'likes') {
+                valueA = parseFloat(valueA.split(' ')[0]); // Csak a like szám
+                valueB = parseFloat(valueB.split(' ')[0]); // Csak a like szám
+            } else if (sortType === 'number') {
+                valueA = parseFloat(valueA);
+                valueB = parseFloat(valueB);
+            }
+
+            // Kis- és nagybetűk figyelmen kívül hagyása az ABC szerinti rendezésnél
+            if (typeof valueA === 'string' && typeof valueB === 'string') {
+                return isAscending ? valueA.localeCompare(valueB, 'en', { sensitivity: 'base' }) : valueB.localeCompare(valueA, 'en', { sensitivity: 'base' });
+            }
+
+            if (isAscending) {
+                return valueA > valueB ? 1 : -1;
+            } else {
+                return valueA < valueB ? 1 : -1;
+            }
+        });
+
+        // Fordítsa meg a rendezési sorrendet
+        headerCell.setAttribute('data-order', isAscending ? 'desc' : 'asc');
+
+        // Törölje a rendezetlen sorokat és tegye a rendezetteket a tbody-ba
+        tbody.innerHTML = '';
+        sortedRows.forEach(row => {
+            tbody.appendChild(row);
+        });
+    });
+});

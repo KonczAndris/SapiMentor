@@ -101,8 +101,8 @@
 
     <!-- FILTER BAR START-->
     <div class="filter-container">
-      <input type="text" class="filter-input" id="filter-input" placeholder="Search..." required>
       <div class="filter-ddowns">
+      <input type="text" class="filter-input" id="filter-input" placeholder="Search..." required>
         <div class="topic-dropdown-container">
           <div class="topic-dropdown">
             <button class="topic-dropbtn" onclick="toggleDropdown()">Choose topics</button>
@@ -115,22 +115,10 @@
           </div>
         </div>
 
-        <div class="filter-dropdown-container">
-          <div class="filter-dropdown">
-            <button class="filter-dropbtn" onclick="toggleFilterDropdown()">Choose a filter</button>
-            <input type="hidden" id="filter-selectedValue" value="Choose a filter">
-            <div class="filter-dropdown-content" id="filter-myDropdown">
-              <a href="#" onclick="closeDropdown('Choose a filter')">Choose a filter</a>
-              <a href="#" onclick="closeDropdown('by Name')">by Name</a>
-              <a href="#" onclick="closeDropdown('by Likes')">by Likes</a>
-              <a href="#" onclick="closeDropdown('by Date')">by Date</a>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div class="func-buttons">
-        <button class="search-button">Search</button>
+        <button class="search-button" id="search-button">Search</button>
         <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
         <button class="reverse-button" id="reverseButton"><img th:src="@{/img/reverse.png}" alt="Icon"
                                                                class="reverse-icon"></button></button>
@@ -144,15 +132,15 @@
     <!-- LINK TABLE START -->
     <!-- LINK TABLE START -->
     <div class="table-container" id="table-container">
-      <table class="link-table">
+      <table class="link-table" id="dataTable">
         <thead id="link-table-head">
         <tr>
           <th class="table-number">NR</th>
-          <th class="table-link">Name</th>
-          <th class="table-number">Year</th>
-          <th class="table-topic">Topic</th>
-          <th class="table-user">User</th>
-          <th class="table-likes">Likes</th>
+          <th class="table-link sortable" data-column="name">Name</th>
+          <th class="table-number sortable" data-column="year">Year</th>
+          <th class="table-topic sortable" data-column="topic">Topic</th>
+          <th class="table-user sortable" data-column="user">User</th>
+          <th class="table-likes sortable" data-column="likes">Likes</th>
           <th class="table-actions">Actions</th>
         </tr>
         </thead>
