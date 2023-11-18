@@ -814,8 +814,8 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(data => {
             likeAndDislikeStatuses = data.likeanddislike;
-            handleLikeAndDislikeStatuses();
-            //console.log(likeAndDislikeStatuses);
+            console.log(likeAndDislikeStatuses);
+            //handleLikeAndDislikeStatuses();
         })
         .catch(error => {
             console.error('Error:', error);
@@ -842,7 +842,7 @@ function handleLikeAndDislikeStatuses() {
         //console.log(dislikeCountElement);
         if (like === 1) {
             likeCountElement.classList.add('like-button-link-active');
-        } else {
+        } else if (dislike === 1) {
             dislikeCountElement.classList.add('dislike-button-link-active');
         }
 

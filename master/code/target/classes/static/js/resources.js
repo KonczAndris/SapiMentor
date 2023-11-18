@@ -812,7 +812,7 @@ function handleLikeAndDislikeStatuses() {
         //console.log(dislikeCountElement);
         if (like === 1) {
             likeCountElement.classList.add('like-button-link-active');
-        } else {
+        } else if (dislike === 1) {
             dislikeCountElement.classList.add('dislike-button-link-active');
         }
 

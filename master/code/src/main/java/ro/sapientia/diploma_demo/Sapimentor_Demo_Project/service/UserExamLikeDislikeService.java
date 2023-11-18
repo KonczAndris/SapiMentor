@@ -3,6 +3,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.ExamsLikeDislikeDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Exams;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.UserExamLikeDislike;
@@ -208,18 +209,18 @@ public class UserExamLikeDislikeService {
     }
 
     // TODO: lekerni a like es dislike statuszt
-    @Cacheable("getLikeAndDislikeStatus")
+    @Cacheable(value = "getLikeAndDislikeStatus")
     public List<UserLikeAndDislikeData> getLikeAndDislikeStatus(Long userId) {
         User user_Id = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
-        List<UserExamLikeDislike> userLikeAndDislikes = userExamLikeDislikeRepository.findAllByUser(user_Id);
+        List<ExamsLikeDislikeDTO> userLikeAndDislikes = userExamLikeDislikeRepository.findAllByUserId(user_Id);
 
         List<UserLikeAndDislikeData> ExamsLikeAndDislikeDataList = new ArrayList<>();
 
-        for (UserExamLikeDislike userLikeAndDislike : userLikeAndDislikes) {
-            Long examId = userLikeAndDislike.getExams().getId();
-            Long userId1 = userLikeAndDislike.getUser().getId();
+        for (ExamsLikeDislikeDTO userLikeAndDislike : userLikeAndDislikes) {
+            Long examId = userLikeAndDislike.getUser_id();
+            Long userId1 = userLikeAndDislike.getExam_id();
             int like = userLikeAndDislike.getLike();
             int dislike = userLikeAndDislike.getDislike();
             UserLikeAndDislikeData userLikeAndDislikeData = new UserLikeAndDislikeData(examId, userId1, like, dislike);

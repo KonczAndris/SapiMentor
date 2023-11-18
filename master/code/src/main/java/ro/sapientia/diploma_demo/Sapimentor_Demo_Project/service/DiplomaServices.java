@@ -8,7 +8,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_T_DTO;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_TLikeDislike_DTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.DiplomaThesesRepository;
 
@@ -75,11 +75,11 @@ public class DiplomaServices {
 //        Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeDislikeById(diplomaId)
 //                .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with ID: " + diplomaId));
 
-        List<Diploma_T_DTO> userLikeAndDislikes = diplomaThesesRepository.findLikeDislikeById(diplomaId);
+        List<Diploma_TLikeDislike_DTO> userLikeAndDislikes = diplomaThesesRepository.findLikeDislikeById(diplomaId);
 
         // Készíts egy Map objektumot a like és dislike értékekkel
         Map<String, Integer> likeAndDislikeCounts = new HashMap<>();
-        for (Diploma_T_DTO dto : userLikeAndDislikes) {
+        for (Diploma_TLikeDislike_DTO dto : userLikeAndDislikes) {
 //            System.out.println("ID: " + dto.getId());
 //            System.out.println("User ID: " + dto.getUser_id());
 //            System.out.println("Diploma ID: " + dto.getDiploma_id());

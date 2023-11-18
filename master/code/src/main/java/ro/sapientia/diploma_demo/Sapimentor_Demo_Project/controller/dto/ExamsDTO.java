@@ -12,4 +12,5 @@ public class ExamsDTO {
     private String user_name;
     private int like;
     private int dislike;
+    
 }

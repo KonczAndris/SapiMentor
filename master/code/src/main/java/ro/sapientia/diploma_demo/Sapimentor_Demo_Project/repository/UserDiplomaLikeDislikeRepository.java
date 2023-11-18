@@ -4,7 +4,7 @@ import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_T_DTO;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_TLikeDislike_DTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.UserDiploma_TLikeDislike;
@@ -41,8 +41,8 @@ public interface UserDiplomaLikeDislikeRepository extends JpaRepository<UserDipl
 //    @Query("SELECT dt.id , dt.user.id , dt.diplomaTheses.id, dt.like, dt.dislike  FROM UserDiploma_TLikeDislike dt WHERE dt.user = :userId")
 //    List<Diploma_T_DTO> findAllByUserId(User userId);
 
-    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_T_DTO(dt.id, dt.user.id, dt.diplomaTheses.id, dt.like, dt.dislike) FROM UserDiploma_TLikeDislike dt WHERE dt.user = :userId")
-    List<Diploma_T_DTO> findAllByUserId(User userId);
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_TLikeDislike_DTO(dt.id, dt.user.id, dt.diplomaTheses.id, dt.like, dt.dislike) FROM UserDiploma_TLikeDislike dt WHERE dt.user = :userId")
+    List<Diploma_TLikeDislike_DTO> findAllByUserId(User userId);
 
 
 }
