@@ -28,6 +28,7 @@ public interface DiplomaThesesRepository extends JpaRepository<Diploma_Theses, L
     @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses(d.id, d.like, d.dislike) FROM Diploma_Theses d WHERE d.id = :diplomaId")
     Optional<Diploma_Theses> findLikeAndDislikeById(Long diplomaId);
 
-
+    @Query("SELECT d.id, d.diploma_theses_file FROM Diploma_Theses d WHERE d.id = :diplomaId")
+    List<Object[]> findDiplomaPDFById(Long diplomaId);
 
 }

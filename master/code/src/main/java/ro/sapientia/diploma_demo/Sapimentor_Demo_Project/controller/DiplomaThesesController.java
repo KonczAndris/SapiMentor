@@ -126,26 +126,16 @@ public class DiplomaThesesController {
 //        }
 //    }
 
-//    @GetMapping("/getdiplomabyid")
-//    public ResponseEntity<byte[]> getDiplomaById(@RequestParam Long diplomaId) {
-//        try {
-//            byte[] diplomaPdfByte = diplomaServices.getDiplomaPdfById(diplomaId);
-//            if (diplomaPdfByte != null) {
-//                HttpHeaders headers = new HttpHeaders();
-//                headers.setContentType(MediaType.APPLICATION_PDF);
-//                headers.setContentLength(diplomaPdfByte.length);
-//                headers.setContentDispositionFormData("attachment", "diploma.pdf");
-//
-//                return new ResponseEntity<>(diplomaPdfByte, headers, HttpStatus.OK);
-//            } else {
-//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
-
+    @GetMapping("/getdiplomabyid")
+    public ResponseEntity<List<Object[]>> getDiplomaById(@RequestParam Long diplomaId) {
+        try {
+            List<Object[]> diplomas = diplomaServices.getDiplomaById(diplomaId);
+            return ResponseEntity.ok(diplomas);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 
 
     @PostMapping("/uploadDiplomaTheses")

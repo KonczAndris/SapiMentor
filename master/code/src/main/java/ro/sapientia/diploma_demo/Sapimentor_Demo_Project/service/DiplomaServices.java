@@ -306,4 +306,8 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
         diplomaThesesRepository.update(diploma_theses);
     }
 
+    public List<Object[]> getDiplomaById(Long diplomaId) {
+        return diplomaThesesRepository.findDiplomaPDFById(diplomaId);
+    }
+
 }
