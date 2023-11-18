@@ -340,6 +340,7 @@ body {
     .filter-ddowns {
         margin-top: 15px;
         margin-bottom: 15px;
+        flex-direction: row;
     }
 
     .open-search-buttons {
@@ -877,6 +878,10 @@ tr {
 
 .highlight {
     background-color: #FFCCCC;
+}
+
+.sortable{
+    cursor: pointer;
 }
 
 /* ezt is andrisnak */
