@@ -36,4 +36,12 @@ public class UserExamLikeDislike {
     public UserExamLikeDislike() {
 
     }
+
+    public UserExamLikeDislike(Long id,
+                               Integer like,
+                               Integer dislike) {
+        this.id = id;
+        this.like = like;
+        this.dislike = dislike;
+    }
 }

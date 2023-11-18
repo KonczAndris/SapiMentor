@@ -12,7 +12,11 @@ public class Diploma_TLikeDislike_DTO {
     private Integer like;
     private Integer dislike;
 
-    public Diploma_TLikeDislike_DTO(Long id, Long user_id, Long diploma_id, Integer like, Integer dislike) {
+    public Diploma_TLikeDislike_DTO(Long id,
+                                    Long user_id,
+                                    Long diploma_id,
+                                    Integer like,
+                                    Integer dislike) {
         this.id = id;
         this.user_id = user_id;
         this.diploma_id = diploma_id;
@@ -20,7 +24,9 @@ public class Diploma_TLikeDislike_DTO {
         this.dislike = dislike;
     }
 
-    public Diploma_TLikeDislike_DTO(Long id, Integer like, Integer dislike) {
+    public Diploma_TLikeDislike_DTO(Long id,
+                                    Integer like,
+                                    Integer dislike) {
         this.id = id;
         this.like = like;
         this.dislike = dislike;

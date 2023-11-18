@@ -818,8 +818,8 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(data => {
             likeAndDislikeStatuses = data.likeanddislike;
-            console.log(likeAndDislikeStatuses);
-            //handleLikeAndDislikeStatuses();
+            //console.log(likeAndDislikeStatuses);
+            handleLikeAndDislikeStatuses();
         })
         .catch(error => {
             console.error('Error:', error);
@@ -839,7 +839,7 @@ function handleLikeAndDislikeStatuses() {
         const dislike = likeAndDislikeData.dislike;
 
         // Itt kezeld az adatokat vagy végezz velük bármit, amit szeretnél
-        //console.log(`Resource ID: ${resourceId}, Like: ${like}, Dislike: ${dislike}`);
+        //console.log(`Exam ID: ${examId}, Like: ${like}, Dislike: ${dislike}`);
         const likeCountElement = document.querySelector(`#exam-row-${examId} .like-button-link`);
         const dislikeCountElement = document.querySelector(`#exam-row-${examId} .dislike-button-link`);
         //console.log(likeCountElement);

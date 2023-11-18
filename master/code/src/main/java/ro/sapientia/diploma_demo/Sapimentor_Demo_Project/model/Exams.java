@@ -46,6 +46,14 @@ public class Exams {
         this.dislike = dislike;
     }
 
+    public Exams(Long id,
+                 Integer like,
+                 Integer dislike) {
+        this.id = id;
+        this.like = like;
+        this.dislike = dislike;
+    }
+
     public Exams() {
 
     }

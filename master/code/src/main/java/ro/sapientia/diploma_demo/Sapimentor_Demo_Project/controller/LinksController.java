@@ -327,13 +327,18 @@ public class LinksController {
 
     @GetMapping("/getLikeAndDislikeStatuses")
     public ResponseEntity<Map<String,Object>> getLikeAndDislikeStatus( Principal principal){
-        Map<String, Object> response = new HashMap<>();
-        String email = principal.getName();
-        User user = userRepository.findByEmail(email);
-        Long userId = user.getId();
-        List<UserLikeAndDislikeData> likeanddislike = userResourceLikeDislikeService.getLikeAndDislikeStatus(userId);
-        response.put("likeanddislike", likeanddislike);
-        return ResponseEntity.ok(response);
+        try {
+            Map<String, Object> response = new HashMap<>();
+            String email = principal.getName();
+            User user = userRepository.findByEmail(email);
+            Long userId = user.getId();
+            List<UserLikeAndDislikeData> likeanddislike = userResourceLikeDislikeService.getLikeAndDislikeStatus(userId);
+            response.put("likeanddislike", likeanddislike);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
 }

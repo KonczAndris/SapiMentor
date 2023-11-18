@@ -10,10 +10,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.ExamsLikeDislikeDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Exams;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ExamsRepository;
 
 import javax.imageio.ImageIO;
+import javax.transaction.Transactional;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional
 public class ExamServices {
     private final ExamsRepository examsRepository;
 
@@ -86,14 +89,18 @@ public class ExamServices {
 
     @Cacheable("getlikeanddislikecounts")
     public Map<String, Integer> getLikeAndDislikeCounts(Long examId) {
-        Exams exam = examsRepository.findById(examId)
-                .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
+//        Exams exam = examsRepository.findById(examId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
+
+        List<ExamsLikeDislikeDTO> userLikeAndDislikes = examsRepository.findLikeDislikeById(examId);
 
         // Készíts egy Map objektumot a like és dislike értékekkel
         Map<String, Integer> likeAndDislikeCounts = new HashMap<>();
-        likeAndDislikeCounts.put("like", exam.getLike());
-        likeAndDislikeCounts.put("dislike", exam.getDislike());
-        likeAndDislikeCounts.put("rowId", exam.getId().intValue());
+        for (ExamsLikeDislikeDTO userLikeAndDislike : userLikeAndDislikes) {
+            likeAndDislikeCounts.put("like", userLikeAndDislike.getLike());
+            likeAndDislikeCounts.put("dislike", userLikeAndDislike.getDislike());
+            likeAndDislikeCounts.put("rowId", Math.toIntExact(userLikeAndDislike.getId()));
+        }
 
         //System.out.println("likeAndDislikeCounts: " + likeAndDislikeCounts);
 
@@ -199,48 +206,51 @@ public class ExamServices {
 
 
     public void likeExam(Long examId) {
-        Exams exam = examsRepository.findById(examId)
+        Exams exam = examsRepository.findLikeAndDislikeById(examId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
 
         // Noveljuk a like-ok szamat
         exam.setLike(exam.getLike() + 1);
         exam.setDislike(exam.getDislike());
         // Elmentjuk az uj like erteket az adatbazisba
-        examsRepository.save(exam);
+        examsRepository.update(exam);
     }
 
     public void dislikeExam(Long examId) {
-        Exams exam = examsRepository.findById(examId)
+        Exams exam = examsRepository.findLikeAndDislikeById(examId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
 
         // Noveljuk a dislike-ok szamat
+        exam.setLike(exam.getLike());
         exam.setDislike(exam.getDislike() + 1);
         // Elmentjuk az uj dislike erteket az adatbazisba
-        examsRepository.save(exam);
+        examsRepository.update(exam);
     }
 
     public void revokeLike(Long examId) {
-        Exams exam = examsRepository.findById(examId)
+        Exams exam = examsRepository.findLikeAndDislikeById(examId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
 
         // Csokkentjuk a like-ok szamat
         exam.setLike(exam.getLike() - 1);
+        exam.setDislike(exam.getDislike());
         // Elmentjuk az uj like erteket az adatbazisba
-        examsRepository.save(exam);
+        examsRepository.update(exam);
     }
 
     public void revokeDislike(Long examId) {
-        Exams exam = examsRepository.findById(examId)
+        Exams exam = examsRepository.findLikeAndDislikeById(examId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
 
         // Csokkentjuk a dislike-ok szamat
+        exam.setLike(exam.getLike());
         exam.setDislike(exam.getDislike() - 1);
         // Elmentjuk az uj dislike erteket az adatbazisba
-        examsRepository.save(exam);
+        examsRepository.update(exam);
     }
 
     public void likeExamAndRevokeDislike(Long examId) {
-        Exams exam = examsRepository.findById(examId)
+        Exams exam = examsRepository.findLikeAndDislikeById(examId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
 
         // Noveljuk a like-ok szamat
@@ -250,11 +260,11 @@ public class ExamServices {
         exam.setDislike(exam.getDislike() - 1);
 
         // Elmentjuk az uj like es dislike erteket az adatbazisba
-        examsRepository.save(exam);
+        examsRepository.update(exam);
     }
 
     public void dislikeExamAndRevokeLike(Long examId) {
-        Exams exam = examsRepository.findById(examId)
+        Exams exam = examsRepository.findLikeAndDislikeById(examId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
 
         // Noveljuk a dislike-ok szamat
@@ -264,7 +274,7 @@ public class ExamServices {
         exam.setLike(exam.getLike() - 1);
 
         // Elmentjuk az uj like es dislike erteket az adatbazisba
-        examsRepository.save(exam);
+        examsRepository.update(exam);
     }
 
 

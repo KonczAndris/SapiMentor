@@ -12,10 +12,12 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ExamsReposit
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserExamLikeDislikeRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserExamLikeDislikeService {
     private final UserExamLikeDislikeRepository userExamLikeDislikeRepository;
     private final ExamsRepository examsRepository;
@@ -32,140 +34,108 @@ public class UserExamLikeDislikeService {
     // TODO: beallitani a like statuszat aktivra
     // itt allitom at a like statuszt aktivra vagyis 1-re
     public void ChangeLikeStatusToActive(Long examId, Long userId) {
-        Exams exam_Id = examsRepository.findById(examId)
-                .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
 
-        User user_Id = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
+        UserExamLikeDislike userExamLikeStatus = userExamLikeDislikeRepository.findByUserAndExamsId(userId, examId)
+                .orElse(null);
 
-        UserExamLikeDislike existingactivelike = userExamLikeDislikeRepository.findByUserAndExams(user_Id, exam_Id);
-
-        if (existingactivelike == null){
+        if (userExamLikeStatus == null){
             UserExamLikeDislike newactivelike = new UserExamLikeDislike();
-            newactivelike.setExams(exam_Id);
-            newactivelike.setUser(user_Id);
+            newactivelike.setUser(userRepository.findById(userId)
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId)));
+            newactivelike.setExams(examsRepository.findById(examId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId)));
             newactivelike.setLike(1);
             userExamLikeDislikeRepository.save(newactivelike);
         } else {
-            existingactivelike.setLike(1);
-            userExamLikeDislikeRepository.save(existingactivelike);
+            userExamLikeStatus.setLike(1);
+            userExamLikeDislikeRepository.updateLike(userExamLikeStatus);
         }
     }
 
     // TODO: beallitani a like statuszat inaktivra
     // itt allitom at a like statuszt inaktivra vagyis 0-ra
     public void ChangeLikeStatusToInactive(Long examId, Long userId) {
-        Exams exam_Id = examsRepository.findById(examId)
-                .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
+        UserExamLikeDislike userExamLikeStatus = userExamLikeDislikeRepository.findByUserAndExamsId(userId, examId)
+                .orElse(null);
 
-        User user_Id = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
-        UserExamLikeDislike existinginactivelike = userExamLikeDislikeRepository.findByUserAndExams(user_Id, exam_Id);
-
-        if (existinginactivelike == null){
+        if (userExamLikeStatus == null){
             UserExamLikeDislike newinactivelike = new UserExamLikeDislike();
-            newinactivelike.setExams(exam_Id);
-            newinactivelike.setUser(user_Id);
             newinactivelike.setLike(0);
             userExamLikeDislikeRepository.save(newinactivelike);
         } else {
-            existinginactivelike.setLike(0);
-            userExamLikeDislikeRepository.save(existinginactivelike);
+            userExamLikeStatus.setLike(0);
+            userExamLikeDislikeRepository.updateLike(userExamLikeStatus);
         }
     }
 
     // TODO: beallitani a dislike statuszat aktivra
     // itt allitom at a dislike statuszt aktivra vagyis 1-re
-    public void ChangeDislikeStatusToActive(Long exmaId, Long userId) {
-        Exams exam_Id = examsRepository.findById(exmaId)
-                .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + exmaId));
+    public void ChangeDislikeStatusToActive(Long examId, Long userId) {
+        UserExamLikeDislike userExamDislikeStatus = userExamLikeDislikeRepository.findByUserAndExamsId(userId, examId)
+                .orElse(null);
 
-        User user_Id = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
-
-        UserExamLikeDislike existingactivedislike = userExamLikeDislikeRepository.findByUserAndExams(user_Id, exam_Id);
-
-        if (existingactivedislike == null){
+        if (userExamDislikeStatus == null){
             UserExamLikeDislike newactivedislike = new UserExamLikeDislike();
-            newactivedislike.setExams(exam_Id);
-            newactivedislike.setUser(user_Id);
+            newactivedislike.setUser(userRepository.findById(userId)
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId)));
+            newactivedislike.setExams(examsRepository.findById(examId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId)));
             newactivedislike.setDislike(1);
             userExamLikeDislikeRepository.save(newactivedislike);
         } else {
-            existingactivedislike.setDislike(1);
-            userExamLikeDislikeRepository.save(existingactivedislike);
+            userExamDislikeStatus.setDislike(1);
+            userExamLikeDislikeRepository.updateDislike(userExamDislikeStatus);
         }
     }
 
     // TODO: beallitani a dislike statuszat inaktivra
     //itt allitom at a dislike statuszt inaktivra vagyis 0-ra
-    public void ChangeDislikeStatusToInactive(Long exmaId, Long userId) {
-        Exams exam_Id = examsRepository.findById(exmaId)
-                .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + exmaId));
+    public void ChangeDislikeStatusToInactive(Long examId, Long userId) {
+        UserExamLikeDislike userExamDislikeStatus = userExamLikeDislikeRepository.findByUserAndExamsId(userId, examId)
+                .orElse(null);
 
-        User user_Id = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
-
-        UserExamLikeDislike existinginactivedislike = userExamLikeDislikeRepository.findByUserAndExams(user_Id, exam_Id);
-
-        if (existinginactivedislike == null ){
+        if (userExamDislikeStatus == null ){
             UserExamLikeDislike newinactivedislike = new UserExamLikeDislike();
-            newinactivedislike.setExams(exam_Id);
-            newinactivedislike.setUser(user_Id);
             newinactivedislike.setDislike(0);
             userExamLikeDislikeRepository.save(newinactivedislike);
         } else {
-            existinginactivedislike.setDislike(0);
-            userExamLikeDislikeRepository.save(existinginactivedislike);
+            userExamDislikeStatus.setDislike(0);
+            userExamLikeDislikeRepository.updateDislike(userExamDislikeStatus);
         }
     }
 
     // TODO: beallitani a like statuszat aktivra es a dislike statuszat inaktivra
     public void ChangeLikeStatusToActiveAndDislikeToInactive(Long examId, Long userId) {
-        Exams exam_Id = examsRepository.findById(examId)
-                .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
+        UserExamLikeDislike userExamLikeAndDislikeStatus = userExamLikeDislikeRepository.findByUserAndExamsId(userId, examId)
+                .orElse(null);
 
-        User user_Id = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
-
-        UserExamLikeDislike existingLikeAndDislike = userExamLikeDislikeRepository.findByUserAndExams(user_Id, exam_Id);
-
-        if (existingLikeAndDislike == null){
+        if (userExamLikeAndDislikeStatus == null){
             UserExamLikeDislike newLikeAndDislike = new UserExamLikeDislike();
-            newLikeAndDislike.setExams(exam_Id);
-            newLikeAndDislike.setUser(user_Id);
             newLikeAndDislike.setLike(1);
             newLikeAndDislike.setDislike(0);
             userExamLikeDislikeRepository.save(newLikeAndDislike);
         } else {
-            existingLikeAndDislike.setLike(1);
-            existingLikeAndDislike.setDislike(0);
-            userExamLikeDislikeRepository.save(existingLikeAndDislike);
+            userExamLikeAndDislikeStatus.setLike(1);
+            userExamLikeAndDislikeStatus.setDislike(0);
+            userExamLikeDislikeRepository.updateLikeAndDislike(userExamLikeAndDislikeStatus);
         }
     }
 
     // TODO: beallitani a dislike statuszat aktivra es a like statuszat inaktivra
     public void ChangeDislikeStatusToActiveAndLikeToInactive(Long examId, Long userId) {
-        Exams exam_Id = examsRepository.findById(examId)
-                .orElseThrow(() -> new ResourceNotFoundException("Exam not found with ID: " + examId));
+        UserExamLikeDislike userExamLikeAndDislikeStatus = userExamLikeDislikeRepository.findByUserAndExamsId(userId, examId)
+                .orElse(null);
 
-        User user_Id = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
-
-        UserExamLikeDislike existingLikeAndDislike = userExamLikeDislikeRepository.findByUserAndExams(user_Id, exam_Id);
-
-        if (existingLikeAndDislike == null) {
+        if (userExamLikeAndDislikeStatus == null) {
             UserExamLikeDislike newLikeAndDislike = new UserExamLikeDislike();
-            newLikeAndDislike.setUser(user_Id);
-            newLikeAndDislike.setExams(exam_Id);
             newLikeAndDislike.setLike(0);
             newLikeAndDislike.setDislike(1);
             userExamLikeDislikeRepository.save(newLikeAndDislike);
         } else {
-            existingLikeAndDislike.setLike(0);
-            existingLikeAndDislike.setDislike(1);
-            userExamLikeDislikeRepository.save(existingLikeAndDislike);
+            userExamLikeAndDislikeStatus.setLike(0);
+            userExamLikeAndDislikeStatus.setDislike(1);
+            userExamLikeDislikeRepository.updateLikeAndDislike(userExamLikeAndDislikeStatus);
         }
     }
 
@@ -219,8 +189,8 @@ public class UserExamLikeDislikeService {
         List<UserLikeAndDislikeData> ExamsLikeAndDislikeDataList = new ArrayList<>();
 
         for (ExamsLikeDislikeDTO userLikeAndDislike : userLikeAndDislikes) {
-            Long examId = userLikeAndDislike.getUser_id();
-            Long userId1 = userLikeAndDislike.getExam_id();
+            Long examId = userLikeAndDislike.getExam_id();
+            Long userId1 = userLikeAndDislike.getUser_id();
             int like = userLikeAndDislike.getLike();
             int dislike = userLikeAndDislike.getDislike();
             UserLikeAndDislikeData userLikeAndDislikeData = new UserLikeAndDislikeData(examId, userId1, like, dislike);

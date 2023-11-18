@@ -1,6 +1,8 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.LinksLikeDislikeDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Resources;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.UserResourceLikeDislike;
@@ -10,5 +12,6 @@ import java.util.List;
 public interface UserResourceLikeDislikeRepository extends JpaRepository<UserResourceLikeDislike, Long> {
     UserResourceLikeDislike save(UserResourceLikeDislike userResourceLikeDislike);
     UserResourceLikeDislike findByUserAndResources(User userId, Resources resourceId);
-    List<UserResourceLikeDislike> findAllByUser(User userId);
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.LinksLikeDislikeDTO(urld.id, urld.user.id, urld.resources.id, urld.like, urld.dislike) FROM UserResourceLikeDislike urld WHERE urld.user = :userId")
+    List<LinksLikeDislikeDTO> findAllByUserId(User userId);
 }

@@ -812,7 +812,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         const data = await response.json();
         likeAndDislikeStatuses = data.likeanddislike;
-        console.log(likeAndDislikeStatuses);
+        //console.log(likeAndDislikeStatuses);
         handleLikeAndDislikeStatuses();
     } catch (error) {
         console.error('Error:', error);
