@@ -953,14 +953,14 @@ function getDiplomaId (diplomaId) {
 function handlerdiplomaPDFs() {
     // Itt már rendelkezésre állnak az adatok
     //console.log(likeAndDislikeStatuses);
-    console.log(diplomaPDF.length);
+    //console.log(diplomaPDF.length);
     // Most már kezelheted az adatokat
     for (let i = 0; i < diplomaPDF.length; i++) {
         const diplomaThesesData = diplomaPDF[i];
         const PDF = diplomaThesesData.diplomaThesesFile;
         const diplomaId = diplomaThesesData.id;
-        console.log("PDF ADAT:" + PDF)
-        console.log("DIPLOMA ID:" + diplomaId)
+        //console.log("PDF ADAT:" + PDF)
+        //console.log("DIPLOMA ID:" + diplomaId)
 
         // A base64 kódolt adatok dekódolása
         var binaryPDF = atob(PDF);
@@ -973,13 +973,13 @@ function handlerdiplomaPDFs() {
         var pdfBlob = new Blob([arrayPDF], { type: 'application/pdf;charset=utf-8' });
         // Blob URL létrehozása
         var blobUrl = URL.createObjectURL(pdfBlob);
-        console.log(blobUrl);
+        //console.log(blobUrl);
 
         //console.log(base64Image);
         var modal = document.getElementById('myModal-' + diplomaId);
         var modalPDF = document.getElementById('modalPDF-' + diplomaId);
         var modalPDFMobile = document.getElementById('modalPDFMobile-' + diplomaId);
-        console.log(modalPDF);
+        //console.log(modalPDF);
 
         // modal.style.display = 'block';
         // modalPDF.src = blobUrl;
