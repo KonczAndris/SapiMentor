@@ -463,16 +463,17 @@ function sendDiplomaThesesDataToServer(data) {
         // ezt is andrisnak
         //hideLoadingModal(); // Elrejtjük a modal ablakot
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-
+        //console.log(data)
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){
             alert("The file is too large!");
+        } else if (data === "TOO LARGE FILE"){
+            alert("The file size exceeds the maximum limit of 10 MB!");
         }
     }).catch(error => {
-        // ezt is andrisnak
-        //hideLoadingModal(); // Elrejtjük a modal ablakot
-        console.error('Hiba történt:', error);
+        console.error('An error occurred:', error);
+        //alert("An error occurred. Please try again later.");
     });
 
 }

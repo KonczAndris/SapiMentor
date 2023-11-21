@@ -15,7 +15,10 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.DiplomaThese
 import javax.transaction.Transactional;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -94,7 +97,7 @@ public class DiplomaServices {
         return likeAndDislikeCounts;
     }
 
-    private static final long MAX_PDF_SIZE = 10 * 1024 * 1024; // 10 MB(10485760)
+    private static final long MAX_PDF_SIZE = 10 * 1024 * 1024; // 10 MB(11500000)
     //private static final long MAX_PDF_SIZE = 5 * 1024 * 1024; // 5 MB
     //private static final long MAX_PDF_SIZE = 3 * 1024 * 1024; // 3 MB
 
@@ -169,11 +172,11 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
                                      String year){
     if(!pdf.isEmpty()) {
         try {
-//            System.out.println("Pdf size: " + pdf.getSize());
-//            System.out.println("MAX_PDF_SIZE: " + MAX_PDF_SIZE);
-//            System.out.println("Pdf name: " + name);
-//            System.out.println("Pdf topic: " + topic);
-//            System.out.println("Pdf user_name: " + user_name);
+            System.out.println("Pdf size: " + pdf.getSize());
+            System.out.println("MAX_PDF_SIZE: " + MAX_PDF_SIZE);
+            System.out.println("Pdf name: " + name);
+            System.out.println("Pdf topic: " + topic);
+            System.out.println("Pdf user_name: " + user_name);
 
             if (pdf.getSize() > MAX_PDF_SIZE) {
                 return "Too large";

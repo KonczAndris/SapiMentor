@@ -150,17 +150,19 @@ public class DiplomaThesesController {
 
         if (user != null){
             String user_name = user.getFirst_Name() + " " + user.getLast_Name();
+            //System.out.println("Szia1");
             try {
+                //System.out.println("Szia");
                 String errorMessage = diplomaServices.uploadDiplomaThesesPdf(pdf, name, topic, user_name, year);
-                System.out.println("Error message: " + errorMessage);
+                //System.out.println("Error message: " + errorMessage);
                 if (errorMessage != null){
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
                 }
 
                 return ResponseEntity.ok("Success");
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a fájl feltöltése közben.");
             }
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
