@@ -1003,6 +1003,7 @@ function searchTable() {
             rows[i].style.display = 'none';
         }
     }
+    originalRows = [];
 }
 
 document.getElementById('search-button').addEventListener('click', searchTable);
