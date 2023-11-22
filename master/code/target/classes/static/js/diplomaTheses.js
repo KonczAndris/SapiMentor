@@ -463,7 +463,7 @@ function sendDiplomaThesesDataToServer(data) {
         // ezt is andrisnak
         //hideLoadingModal(); // Elrejtjük a modal ablakot
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-        console.log(data)
+        //console.log(data)
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){
