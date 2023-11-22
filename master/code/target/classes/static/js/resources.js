@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const table = document.querySelector(".link-table");
     const tableBody = table.querySelector("tbody");
     const rows = Array.from(tableBody.querySelectorAll("tr"));
-    const rowsPerPage = 25;
+    const rowsPerPage = 20;
     let currentPage = 1;
 
     function updatePageCounter() {

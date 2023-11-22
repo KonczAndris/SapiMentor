@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const table = document.querySelector(".link-table");
     const tableBody = table.querySelector("tbody");
     const rows = Array.from(tableBody.querySelectorAll("tr"));
-    const rowsPerPage = 14;
+    const rowsPerPage = 20;
     let currentPage = 1;
 
     function updatePageCounter() {
@@ -281,21 +281,31 @@ document.addEventListener("DOMContentLoaded", function () {
     const reverseButton2 = document.getElementById("myReverseBtn");
 
     reverseButton.addEventListener("click", function () {
-        const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-        const rows = Array.from(tableBody.getElementsByTagName('tr'));
-        const visibleRows = rows.filter(row => row.style.display !== 'none');
+        const tableBody2 = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+        const rows2 = Array.from(tableBody2.getElementsByTagName('tr'));
+        const visibleRows = rows2.filter(row => row.style.display !== 'none');
 
+        rows.reverse();
+        rows.forEach(row => tableBody.removeChild(row));
+        rows.forEach(row => tableBody.appendChild(row));
         visibleRows.reverse();
-        visibleRows.forEach(row => tableBody.appendChild(row));
+        visibleRows.forEach(row => tableBody2.appendChild(row));
+        showRowsForCurrentPage(); // Frissítsük a jelenlegi oldalt
+        updatePageCounter();
     });
 
     reverseButton2.addEventListener("click", function () {
-        const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-        const rows = Array.from(tableBody.getElementsByTagName('tr'));
-        const visibleRows = rows.filter(row => row.style.display !== 'none');
+        const tableBody2 = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+        const rows2 = Array.from(tableBody2.getElementsByTagName('tr'));
+        const visibleRows = rows2.filter(row => row.style.display !== 'none');
 
+        rows.reverse();
+        rows.forEach(row => tableBody.removeChild(row));
+        rows.forEach(row => tableBody.appendChild(row));
         visibleRows.reverse();
-        visibleRows.forEach(row => tableBody.appendChild(row));
+        visibleRows.forEach(row => tableBody2.appendChild(row));
+        showRowsForCurrentPage();
+        updatePageCounter();
     });
 });
 
@@ -874,6 +884,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             //console.log(data.igenigen);
             examimages = data.examimagesandid;
+            console.log(examimages);
             handlerexmaimages();
             //console.log(likeAndDislikeStatuses);
         })
@@ -904,6 +915,8 @@ function handlerexmaimages() {
 }
 
 
+
+
 $(document).ready(function() {
     $(".dynamic-resize").each(function() {
         var img = $(this);
@@ -923,7 +936,7 @@ $(document).ready(function() {
 let originalRows = []; // Változó az eredeti sorok tárolásához
 
 function saveOriginalRows() {
-    const table = document.getElementById('dataTable');
+    const table = document.querySelector(".link-table");
     originalRows = Array.from(table.getElementsByTagName('tr'));
 }
 
@@ -982,6 +995,8 @@ function searchTable() {
             rows[i].style.display = 'none';
         }
     }
+    originalRows = [];
+    console.log(examimages);
 }
 
 document.getElementById('search-button').addEventListener('click', searchTable);
@@ -1033,3 +1048,20 @@ document.querySelectorAll('.sortable').forEach(headerCell => {
         });
     });
 });
+
+// A kép megnyitásáért felelős függvény
+function openImageModal(event) {
+    const clickedImage = event.target; // A kattintott kép elem
+    const modal = clickedImage.nextElementSibling; // A kép melletti modális elem
+
+    // Ellenőrizze, hogy a kattintott elem valóban egy kép-e
+    if (clickedImage.tagName === 'IMG' && modal.classList.contains('exam-image-modal')) {
+        modal.style.display = "block";
+    }
+}
+
+// Kép megnyitásának eseménykezelője
+document.querySelectorAll('.exam-image-image-container').forEach(imageContainer => {
+    imageContainer.addEventListener("click", openImageModal);
+});
+

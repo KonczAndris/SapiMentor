@@ -150,21 +150,16 @@ public class ExamsController {
     }
 
 
-    @GetMapping("/getexamimage")
-    public ResponseEntity<String> getExamImage(@RequestParam Long examId) {
-        try {
-            byte[] examImageBytes = examServices.getExamImage(examId);
-            if (examImageBytes != null) {
-                String examImageBase64 = Base64.getEncoder().encodeToString(examImageBytes);
-                return ResponseEntity.ok(examImageBase64);
-            } else {
-                return ResponseEntity.ok("");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
-        }
-    }
+//    @GetMapping("/getexambyId")
+//    public ResponseEntity<List<Object[]>> getExamImage(@RequestParam Long examId) {
+//        try {
+//            List<Object[]> images = examServices.getExamImage(examId);
+//            return ResponseEntity.ok(images);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
 
     @GetMapping("/getallexamimage")
     public ResponseEntity<Map<String,Object>> getAllExamImage() {

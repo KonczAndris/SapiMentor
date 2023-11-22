@@ -173,7 +173,8 @@
                 <span th:text="${diploma.name}"></span>
                 <span id="zoomIcon" class="zoom-icon" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'">&#128269;</span>
                 <div class="pdf-image-modal" th:id="'myModal-' + ${diploma.id}">
-<!--                  <embed th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content"  type='application/pdf'>-->
+                  <span class="close-modal-btn" th:id="'closeModalBtn-' + ${diploma.id}">&times;</span>
+                  <!--                  <embed th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content"  type='application/pdf'>-->
                   <iframe th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content" ></iframe>
                   <a th:id="'modalPDFMobile-' + ${diploma.id}" th:alt="${diploma.name}" target="_blank"></a>
                 </div>

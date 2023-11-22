@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const table = document.querySelector(".link-table");
     const tableBody = table.querySelector("tbody");
     const rows = Array.from(tableBody.querySelectorAll("tr"));
-    const rowsPerPage = 14;
+    const rowsPerPage = 20;
     let currentPage = 1;
 
     function updatePageCounter() {
@@ -680,7 +680,9 @@ $(document).ready(async function () {
 
 // A like gomb eseménykezelője
     document.querySelectorAll('.like-button-link').forEach(likeButton => {
+
         likeButton.addEventListener('click', () => {
+            console.log("likeButtonelso", likeButton);
             // Az adott sor azonosítójának megszerzése
             const rowId = likeButton.closest('tr').id;
             const diplomaId = rowId.replace('diploma-row-', '');
@@ -907,7 +909,6 @@ function handleLikeAndDislikeStatuses() {
 // });
 //
 let diplomaPDF = [];
-
 function getDiplomaId (diplomaId) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -1068,6 +1069,7 @@ function searchTable() {
             rows[i].style.display = 'none';
         }
     }
+    originalRows = [];
 }
 
 document.getElementById('search-button').addEventListener('click', searchTable);
@@ -1117,5 +1119,17 @@ document.querySelectorAll('.sortable').forEach(headerCell => {
         sortedRows.forEach(row => {
             tbody.appendChild(row);
         });
+    });
+});
+
+// Az eseménykezelő, ami bezárja a modalt a bezáró gombra kattintva
+// Bezáró gomb eseménykezelője a modal bezárására
+document.querySelectorAll('.close-modal-btn').forEach(closeBtn => {
+    closeBtn.addEventListener('click', function() {
+        const modalId = closeBtn.parentNode.id;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'none';
+        }
     });
 });
