@@ -17,8 +17,8 @@ public interface ExamsRepository extends JpaRepository<Exams, Long> {
     @Query("SELECT e.id, e.name, e.topic_name,e.user_name,e.like,e.dislike FROM Exams e")
     List<Object[]> findProjectedBy();
 
-    @Query("SELECT e.examImage FROM Exams e WHERE e.id = :examId")
-    byte[] findExamImageById(@Param("examId") Long examId);
+//    @Query("SELECT e.id, e.examImage FROM Exams e WHERE e.id = :examId")
+//    List<Object[]> findExamImageById(Long examId);
 
     @Query("SELECT e.examImage, e.id FROM Exams e")
     List<Object[]> findAllExamImageById();

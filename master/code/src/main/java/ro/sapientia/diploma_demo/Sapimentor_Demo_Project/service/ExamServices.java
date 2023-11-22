@@ -53,11 +53,11 @@ public class ExamServices {
         return examsRepository.findAllExamImageById();
     }
 
-    @Cacheable("getExamImage")
-    public byte[] getExamImage(Long examId) {
-        //System.out.println("examId: " + examId);
-        return examsRepository.findExamImageById(examId);
-    }
+    //@Cacheable("getExamImage")
+//    public List<Object[]> getExamImage(Long examId) {
+//        //System.out.println("examId: " + examId);
+//        return examsRepository.findExamImageById(examId);
+//    }
 
     @Cacheable("getExamsWithSelectedFields")
     public List<Exams> getExamsWithSelectedFields() {

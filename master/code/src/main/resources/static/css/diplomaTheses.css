@@ -996,3 +996,21 @@ tr {
 .sortable{
     cursor: pointer;
 }
+
+/* Bezáró gomb stílusának meghatározása */
+/* Bezáró gomb stílusának meghatározása a jobb felső sarokban */
+.close-modal-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff; /* Például fehér színűre állítva, hogy látható legyen a sötét háttéren */
+    z-index: 10000; /* Azért, hogy mindig a legfelső rétegben jelenjen meg */
+}
+
+
+/* Opcionális: Ha szeretnéd stilizálni a gombot a felhasználó interakcióihoz */
+.close-modal-btn:hover {
+    color: #999; /* Például szürkére változtathatod a színt a hover eseményre */
+}
