@@ -196,20 +196,20 @@
 
 
             <div class="rating">
-              <input type="radio" id="star5" name="rating" value="5" />
+              <input type="radio" id="star5" name="rating" value="5" th:checked="${averageOfRating >= 4.5 && averageOfRating <= 5}" disabled />
               <label for="star5">&#9733;</label>
-              <input type="radio" id="star4" name="rating" value="4" />
+              <input type="radio" id="star4" name="rating" value="4" th:checked="${averageOfRating >= 3.5 && averageOfRating < 4.5}" disabled />
               <label for="star4">&#9733;</label>
-              <input type="radio" id="star3" name="rating" value="3" />
+              <input type="radio" id="star3" name="rating" value="3" th:checked="${averageOfRating >= 2.5 && averageOfRating < 3.5}" disabled />
               <label for="star3">&#9733;</label>
-              <input type="radio" id="star2" name="rating" value="2" />
+              <input type="radio" id="star2" name="rating" value="2" th:checked="${averageOfRating >= 1.5 && averageOfRating < 2.5}" disabled />
               <label for="star2">&#9733;</label>
-              <input type="radio" id="star1" name="rating" value="1" />
+              <input type="radio" id="star1" name="rating" value="1" th:checked="${averageOfRating >= 0.5 && averageOfRating < 1.5}" disabled />
               <label for="star1">&#9733;</label>
             </div>
 
             <div class="rating-text">
-              <span id="rating-number">100</span> Ratings
+              <span id="rating-number" th:text="${countOfRating}"></span> Ratings
             </div>
           </div>
         </div>

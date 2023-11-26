@@ -16,6 +16,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ProfileTopic
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.SkillRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.TopicRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.RatingService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserServiceImpl;
 import java.nio.charset.StandardCharsets;
@@ -30,6 +31,7 @@ public class ProfileController {
     private final SkillRepository skillRepository;
     private final TopicRepository topicRepository;
     private final ProfileTopicsRepository profileTopicsRepository;
+    private final RatingService ratingService;
 
 
     @Autowired
@@ -38,13 +40,15 @@ public class ProfileController {
                              TopicService topicService,
                              SkillRepository skillRepository,
                              TopicRepository topicRepository,
-                             ProfileTopicsRepository profileTopicsRepository) {
+                             ProfileTopicsRepository profileTopicsRepository,
+                             RatingService ratingService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.topicService = topicService;
         this.skillRepository = skillRepository;
         this.topicRepository = topicRepository;
         this.profileTopicsRepository = profileTopicsRepository;
+        this.ratingService = ratingService;
     }
 
     @GetMapping("/profile")
@@ -105,11 +109,15 @@ public class ProfileController {
         } else {
             model.addAttribute("profileImageBase64", "");
         }
-
         // A témákat hozzáadod a modellhez
         model.addAttribute("topics", topics);
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
-        //System.out.println("User details: " + userRegistrationDetails);
+
+        Map<String, Double> ratingData = ratingService.getAverageRating(user.getId());
+        double average = ratingData.get("average");
+        int count = ratingData.get("count").intValue();
+        model.addAttribute("averageOfRating", average);
+        model.addAttribute("countOfRating", count);
 
         return "profile";
     }

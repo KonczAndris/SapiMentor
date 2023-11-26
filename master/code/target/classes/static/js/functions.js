@@ -797,5 +797,3 @@ window.onload = showTopicsAndSkillsInModal;
 
 
 
-
-
