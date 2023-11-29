@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    var h1Element = document.getElementById("index-text");
+    var h1Element = document.getElementById("sapimentor-logo");
     h1Element.addEventListener("click", function() {
         window.location.href = "/";
     });
@@ -768,6 +768,7 @@ function updateRoleStatus(){
             console.error('Hiba történt:', error);
         });
 }
+
 
 
 

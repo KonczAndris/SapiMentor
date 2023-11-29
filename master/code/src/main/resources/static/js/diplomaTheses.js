@@ -430,10 +430,20 @@ function saveDiplomaThesesDataToServer() {
     console.log(data);
     sendDiplomaThesesDataToServer(data);
 }
+// ezt is andrisnak
+function showLoadingModal() {
+    var modal = document.getElementById("loading-modal");
+    modal.style.display = "block"; // Megjelenítjük a modal ablakot
+}
 
+// ezt is andrisnak
+function hideLoadingModal() {
+    var modal = document.getElementById("loading-modal");
+    modal.style.display = "none"; // Elrejtjük a modal ablakot
+}
 function sendDiplomaThesesDataToServer(data) {
     // ide kell majd hogy behozza a toltokepernyot
-
+    showLoadingModal()
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -464,6 +474,7 @@ function sendDiplomaThesesDataToServer(data) {
         //hideLoadingModal(); // Elrejtjük a modal ablakot
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
         //console.log(data)
+        hideLoadingModal()
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){
@@ -472,6 +483,7 @@ function sendDiplomaThesesDataToServer(data) {
             alert("The file size exceeds the maximum limit of 10 MB!");
         }
     }).catch(error => {
+        hideLoadingModal()
         console.error('An error occurred:', error);
         //alert("An error occurred. Please try again later.");
     });
@@ -912,7 +924,7 @@ let diplomaPDF = [];
 function getDiplomaId (diplomaId) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-
+    showLoadingModal()
     const url = `/resources/diplomaTheses/getdiplomabyid?diplomaId=${diplomaId}`;
 
     fetch(url, {
@@ -939,13 +951,14 @@ function getDiplomaId (diplomaId) {
                     diplomaThesesFile: diplomaThesesFile
                 });
             }
-
+            hideLoadingModal()
             // diplomaPDF = data.diploma;
             //console.log(diplomaPDF);
             handlerdiplomaPDFs();
 
         })
         .catch(error => {
+            hideLoadingModal()
             console.error('Error:', error);
         })
 

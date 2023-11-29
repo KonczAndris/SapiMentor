@@ -432,10 +432,20 @@ function saveExamExamplesDataToServer() {
     //console.log(data);
     sendExamsDataToServer(data);
 }
+// ezt is andrisnak
+function showLoadingModal() {
+    var modal = document.getElementById("loading-modal");
+    modal.style.display = "block"; // Megjelenítjük a modal ablakot
+}
 
+// ezt is andrisnak
+function hideLoadingModal() {
+    var modal = document.getElementById("loading-modal");
+    modal.style.display = "none"; // Elrejtjük a modal ablakot
+}
 function sendExamsDataToServer(data) {
     // ide kell majd hogy behozza a toltokepernyot
-
+    showLoadingModal()
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -465,7 +475,7 @@ function sendExamsDataToServer(data) {
         // ezt is andrisnak
         //hideLoadingModal(); // Elrejtjük a modal ablakot
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-
+        hideLoadingModal()
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){
@@ -474,6 +484,7 @@ function sendExamsDataToServer(data) {
             alert("This type png is not supported!");
         }
     }).catch(error => {
+        hideLoadingModal()
         // ezt is andrisnak
         //hideLoadingModal(); // Elrejtjük a modal ablakot
         console.error('Hiba történt:', error);

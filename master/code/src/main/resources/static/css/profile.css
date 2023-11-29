@@ -222,7 +222,7 @@ h2 {
 
 
 /* MODAL BOXES */
-.modal, .modal-skills, .modal-mentor, .modal-upload {
+.modal-profile, .modal-skills, .modal-mentor, .modal-upload {
     display: none;
     position: fixed;
     z-index: 1;
@@ -236,7 +236,7 @@ h2 {
     overflow-x: scroll;
 }
 
-.modal-content, .modal-content-skills, .modal-content-mentor, .modal-content-upload {
+.modal-content-profile, .modal-content-skills, .modal-content-mentor, .modal-content-upload {
     position: relative;
     background-color: #fefefe;
     margin: auto;
@@ -258,7 +258,7 @@ h2 {
     animation-duration: 0.4s;
 }
 
-.modal-content::-webkit-scrollbar,
+.modal-content-profile::-webkit-scrollbar,
 .modal-content-skills::-webkit-scrollbar,
 .modal-content-mentor::-webkit-scrollbar,
 .modal-content-upload::-webkit-scrollbar{
@@ -865,7 +865,7 @@ table tr:last-child td {
         flex-direction: column;
     }
 
-    .modal-content, .modal-content-skills {
+    .modal-content-profile, .modal-content-skills {
         max-width: 90%;
         max-height: 90%;
     }
@@ -1012,7 +1012,7 @@ table tr:last-child td {
         justify-content: center;
     }
 
-    .modal-content, .modal-content-skills, .modal-content-mentor, .modal-content-upload  {
+    .modal-content-profile, .modal-content-skills, .modal-content-mentor, .modal-content-upload  {
         margin-top: 15%;
     }
 
