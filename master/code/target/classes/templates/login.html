@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Login</title>
   <link rel="stylesheet"  type="text/css" th:href="@{/css/login.css}">
+  <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
+  <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 
 </head>
 <body>
@@ -16,7 +18,9 @@
     <div class="right">
 
       <p class="register-text">Not a member? <a href="/" th:href="@{/register}"> Register now!</a></p>
-      <h1 id="login-text">SapiMentor</h1>
+      <div class="center-image">
+      <img th:src="@{/img/sm_logo.png}" id="sapimentor-logo" alt="image">
+      </div>
 
       <form th:action="@{/login}" method="post">
         <!-- error message -->

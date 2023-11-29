@@ -44,6 +44,8 @@ body {
 .right{
     overflow-y: auto;
     overflow-x: hidden;
+    align-items: center;
+    justify-content: center;
 }
 
 #image {
@@ -69,13 +71,17 @@ body {
     text-decoration: underline;
   }
 
-#login-text{
-    display: flex;
+.center-image {
+    text-align: center;
+}
+
+#sapimentor-logo{
     letter-spacing: 2px;
     text-align: center;
     justify-content: center;
     margin: 25px;
-  }
+    width: 40%;
+}
 
 .form-group{
     display: flex;
