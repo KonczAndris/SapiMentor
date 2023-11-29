@@ -380,21 +380,21 @@ function saveResourceDataToServer() {
 }
 
 // ezt is andrisnak
-// function showLoadingModal() {
-//     var modal = document.getElementById("loading-modal");
-//     modal.style.display = "block"; // Megjelenítjük a modal ablakot
-// }
+function showLoadingModal() {
+    var modal = document.getElementById("loading-modal");
+    modal.style.display = "block"; // Megjelenítjük a modal ablakot
+}
 
 // ezt is andrisnak
-// function hideLoadingModal() {
-//     var modal = document.getElementById("loading-modal");
-//     modal.style.display = "none"; // Elrejtjük a modal ablakot
-// }
+function hideLoadingModal() {
+    var modal = document.getElementById("loading-modal");
+    modal.style.display = "none"; // Elrejtjük a modal ablakot
+}
 
 // link feltoltese a szerverre (JSON)
 function sendResourcesDataToServer(data) {
     // ezt is andrisnak
-    //showLoadingModal(); // Megjelenítjük a modal ablakot
+    showLoadingModal(); // Megjelenítjük a modal ablakot
 
     var resourcesUploadDataItems = JSON.stringify(data);
     //document.getElementById("resourceDataItems").value = profileTopicsDataItems;
@@ -417,7 +417,7 @@ function sendResourcesDataToServer(data) {
             // throw new Error('Hiba történt a válaszban');
         }
     }).then(data => {
-        //hideLoadingModal(); // Elrejtjük a modal ablakot
+        hideLoadingModal(); // Elrejtjük a modal ablakot
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
         //console.log(data);
         if (data === "Success") {
@@ -425,7 +425,7 @@ function sendResourcesDataToServer(data) {
         }
     }).catch(error => {
             // ezt is andrisnak
-            //hideLoadingModal(); // Elrejtjük a modal ablakot
+            hideLoadingModal(); // Elrejtjük a modal ablakot
             console.error('Hiba történt:', error);
     });
 }
