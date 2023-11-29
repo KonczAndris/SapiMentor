@@ -269,3 +269,8 @@ body {
     margin: 25px;
     width: 40%;
 }
+
+.loading-gif {
+    margin: 20px;
+    border-radius: 100px;
+}
