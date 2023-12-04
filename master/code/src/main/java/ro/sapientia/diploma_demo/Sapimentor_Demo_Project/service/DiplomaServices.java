@@ -323,6 +323,7 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
         diplomaThesesRepository.update(diploma_theses);
     }
 
+    @Cacheable("getDiplomaById")
     public List<Object[]> getDiplomaById(Long diplomaId) {
         return diplomaThesesRepository.findDiplomaPDFById(diplomaId);
     }
