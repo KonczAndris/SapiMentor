@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.RatingService;
 
 import java.security.Principal;
+import java.util.Base64;
 
 @RequestMapping("/mygroup")
 @Controller
@@ -30,8 +33,27 @@ public class MyGroupController {
         this.ratingService = ratingService;
     }
 
+    //TODO: Implement showProfileImageAndName
+    private void showProfileImageAndName(Model model, Principal principal) {
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+        UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
+
+        byte[] profileImage = user.getProfileImage();
+        if (profileImage != null) {
+            String profileImageBase64 = Base64.getEncoder().encodeToString(profileImage);
+            model.addAttribute("profileImageBase64", profileImageBase64);
+        } else {
+            model.addAttribute("profileImageBase64", "");
+        }
+
+        model.addAttribute("userRegistrationDetails", userRegistrationDetails);
+    }
+
+
     @GetMapping("")
     public String showMyGroup(Model model, Principal principal) {
+        showProfileImageAndName(model, principal);
         return "myGroup";
     }
 
