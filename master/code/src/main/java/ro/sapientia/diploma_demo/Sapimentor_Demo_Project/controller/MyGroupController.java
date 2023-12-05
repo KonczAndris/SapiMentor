@@ -30,7 +30,7 @@ public class MyGroupController {
         this.ratingService = ratingService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public String showMyGroup(Model model, Principal principal) {
         return "myGroup";
     }
