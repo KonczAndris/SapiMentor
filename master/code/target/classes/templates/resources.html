@@ -23,7 +23,7 @@
                  th:async="async"
                  th:attr="data-cache='no-cache'">
             <img th:unless="${profileImageBase64 != ''}"
-                 th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
+                 th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
             <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
    <p class="menu-function">
        <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
