@@ -17,7 +17,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.RatingService;
 import java.security.Principal;
 import java.util.Base64;
 
-@RequestMapping("/mygroup")
+@RequestMapping("/myGroup")
 @Controller
 public class MyGroupController {
 
