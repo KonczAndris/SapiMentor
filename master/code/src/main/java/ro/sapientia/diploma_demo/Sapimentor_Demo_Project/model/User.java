@@ -40,7 +40,8 @@ public class User {
     @Column(name = "profileimage")
     @Lob
     private byte[] profileImage;
-    //private Integer status = 0;
+    @Column(name = "status")
+    private Integer status = 0;
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

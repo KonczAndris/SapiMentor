@@ -6,16 +6,31 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+
+//    @Autowired
+//    private UserRepository userRepository;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+//    @Bean
+//    public MyCustomSessionInformationExpiredStrategy customSessionInformationExpiredStrategy() {
+//        return new MyCustomSessionInformationExpiredStrategy();
+//    }
+//
+//    @Bean
+//    public HttpSessionEventPublisher httpSessionEventPublisher() {
+//        return new HttpSessionEventPublisher();
+//    }
 
 
     @Override
@@ -27,43 +42,48 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .frameOptions()
                 .sameOrigin()
                 .and()
+                // idaig a session kezeles
                 .authorizeRequests()
-                .antMatchers("/register/**", "/js/**", "/css/**", "/img/**", "/fonts/**", "/forgotPassword/**", "/pdf/**", "/gif/**")
-                .permitAll()
-                .antMatchers("/")
-                .authenticated()
-                .antMatchers("/profile/**")
-                .authenticated()
-                .antMatchers("/saveProfileTopics")
-                .authenticated()
-                .antMatchers("/deleteTopicAndSkills")
-                .authenticated()
-                .antMatchers("/resources/**")
-                .authenticated()
+                    .antMatchers("/register/**", "/js/**", "/css/**", "/img/**", "/fonts/**", "/forgotPassword/**", "/pdf/**", "/gif/**")
+                    .permitAll()
+                    .antMatchers("/")
+                    .authenticated()
+                    .antMatchers("/profile/**")
+                    .authenticated()
+                    .antMatchers("/saveProfileTopics")
+                    .authenticated()
+                    .antMatchers("/deleteTopicAndSkills")
+                    .authenticated()
+                    .antMatchers("/resources/**")
+                    .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .failureUrl("/login?error")
-                .permitAll()
+                    .loginPage("/login")
+                    .loginProcessingUrl("/login")
+                    .failureUrl("/login?error")
+                    .permitAll()
                 .and()
                 .logout()
                 //.logoutUrl("/logout")
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
-                .permitAll();
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll();
+                //.and()
+                //innentol a session kezeles
+//                .sessionManagement()
+//                    .maximumSessions(1)
+//                    .maxSessionsPreventsLogin(false)
+//                    .expiredUrl("/login?expiredSession")
+//                    .and()
+//                    .invalidSessionUrl("/login");
 
     }
 
-    // Statikus erőforrások kezelése a gyorsítótárazáshoz
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/resources/**")
-//                .addResourceLocations("classpath:/templates/")
-//                .setCachePeriod(3600); // Gyorsítótár időtartama másodpercben
-//    }
-
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
 
 }

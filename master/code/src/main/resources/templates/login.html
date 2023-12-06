@@ -32,8 +32,11 @@
           Invalid email or password.
         </div>
         <!-- logout message -->
-        <div th:if="${param.logout}" class="alert  alert-info">
+        <div th:if="${param.logout}" class="alert  alert-warning">
           You have been logged out.
+        </div>
+        <div th:if="${param.expiredSession}" class="alert alert-warning">
+          You're session time has expired! Please login again.
         </div>
 
         <div th:if="${param.alreadyVerified}" class="alert  alert-info">
