@@ -134,6 +134,7 @@ body {
     overflow: hidden;
     margin-top: 4%;
     justify-content: center;
+    border-radius: 9px;
 }
 
 .role-button button {

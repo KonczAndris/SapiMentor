@@ -97,6 +97,9 @@ public class DiplomaThesesController {
 
     @GetMapping("")
     public String showDiplomaTheses(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
         showProfileImageAndName(model, principal);

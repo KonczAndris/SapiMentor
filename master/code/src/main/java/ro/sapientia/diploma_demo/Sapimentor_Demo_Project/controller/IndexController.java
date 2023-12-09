@@ -23,6 +23,9 @@ public class IndexController {
 
     @GetMapping("/")
     public String showIndex(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
 

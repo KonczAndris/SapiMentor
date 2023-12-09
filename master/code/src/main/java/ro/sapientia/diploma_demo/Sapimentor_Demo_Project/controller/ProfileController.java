@@ -55,6 +55,9 @@ public class ProfileController {
     public String showProfile(Model model, Principal principal,
                               @RequestParam(value = "errorMessage", required = false) String errorMessage,
                               @RequestParam(value = "selectedTopic", required = false) String selectedTopic) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
         String email = principal.getName(); // Bejelentkezett felhasználó neve
 
         // Felhasználó lekérdezése az adatbázisból a felhasználónév alapján

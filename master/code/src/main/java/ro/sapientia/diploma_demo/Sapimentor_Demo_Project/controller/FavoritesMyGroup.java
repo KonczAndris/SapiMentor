@@ -42,6 +42,9 @@ public class FavoritesMyGroup {
 
     @GetMapping("")
     public String showFavoritesMyGroup(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
         showProfileImageAndName(model, principal);
         return "favorites";
     }

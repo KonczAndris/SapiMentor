@@ -104,6 +104,9 @@ public class LinksController {
 
     @GetMapping("")
     public String showResources(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
         List<Resources> resources = resourceServices.getAllResources();

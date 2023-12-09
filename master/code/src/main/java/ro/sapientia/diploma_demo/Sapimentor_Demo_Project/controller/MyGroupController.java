@@ -53,6 +53,9 @@ public class MyGroupController {
 
     @GetMapping("")
     public String showMyGroup(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
         showProfileImageAndName(model, principal);
         return "myGroup";
     }

@@ -127,6 +127,9 @@ public class ExamsController {
 
     @GetMapping("")
     public String showExamExamples(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
         showUserRolesToDisplayResources(model, principal);
         showTopicsToDisplayResources(model, principal);
 
