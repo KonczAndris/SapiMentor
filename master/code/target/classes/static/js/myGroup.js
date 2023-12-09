@@ -57,3 +57,24 @@ window.addEventListener("resize", function() {
 
 // Initial check on page load
 handleWindowResize();
+
+let selectedSide = '';
+
+function selectSide(side) {
+    if (selectedSide === side) {
+        selectedSide = '';
+    } else {
+        selectedSide = side;
+        if (side === 'left') {
+            document.querySelector('.mentor-side').style.backgroundColor = 'rgb(22, 175, 132)';
+            document.querySelector('.mentor-side').style.color = 'white';
+            document.querySelector('.mentee-side').style.backgroundColor = 'white';
+            document.querySelector('.mentee-side').style.color = 'rgb(22, 175, 132)';
+        } else {
+            document.querySelector('.mentor-side').style.backgroundColor = 'white';
+            document.querySelector('.mentee-side').style.backgroundColor = 'rgb(22, 175, 132)';
+            document.querySelector('.mentee-side').style.color = 'white';
+            document.querySelector('.mentor-side').style.color = 'rgb(22, 175, 132)';
+        }
+    }
+}

@@ -92,6 +92,68 @@ body {
     font-weight: bold;
 }
 
+
+.year-box, .topic-box {
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: medium;
+}
+
+.year-box .checkbox-container {
+    display: inline-block;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.year-box .checkbox-container input[type="checkbox"],
+.year-box .checkbox-container label {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 5px;
+}
+
+.topic-box{
+    display: block;
+    margin-bottom: 5px;
+}
+
+.topic-checkboxes label {
+    margin-bottom: 5px;
+}
+
+.left-search-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.role-button {
+    display: flex;
+    overflow: hidden;
+    margin-top: 4%;
+    justify-content: center;
+}
+
+.role-button button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    color: rgb(22, 175, 132);
+    font-weight: bold;
+    height: 100%;
+}
+
+.mentor-side {
+    background-color: white;
+}
+
+.mentee-side {
+    background-color: white;
+}
+
 .search-button {
     color: rgb(255, 255, 255);
     background-color: rgb(22, 175, 132);
