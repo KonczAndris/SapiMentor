@@ -65,6 +65,85 @@ body {
     display: none;
 }
 
+.button-box {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    width: 100%;
+    padding: 25px;
+}
+
+#myFilterBtn {
+    display: none;
+    width: 100%;
+    background: white;
+    color: rgb(22, 175, 132);
+    border: none;
+    padding: 10px;
+    font-size: 15px;
+    border: 3px solid;
+    border-radius: 20px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+#myFilterBtn:hover {
+    background-color: rgb(204, 252, 234);
+    font-weight: bold;
+}
+
+.search-button {
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    border-radius: 20px;
+    width: 100px;
+    max-width: 55%;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    height: 40px;
+    font-size: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+    align-items: start;
+    display: none;
+    justify-content: center;
+}
+
+#search-button {
+    display: flex;
+}
+
+.search-button:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(30, 214, 162);
+    border: 2px solid white;
+}
+
+.cancel-button {
+    display: none;
+    color: rgb(255, 255, 255);
+    background-color: rgb(238, 84, 76);
+    border-radius: 20px;
+    width: 100px;
+    max-width: 55%;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    height: 40px;
+    font-size: 15px;
+    text-align: center;
+    justify-content: center;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.cancel-button:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(233, 99, 81);
+    border: 2px solid white;
+}
+
 /*SEARCH DIV START*/
 .large-search-box{
     display: flex;
@@ -75,9 +154,9 @@ body {
     background-color: rgb(255, 255, 255);
 }
 
-.right-search-box{
+.left-search-box{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 30%;
     height: 95%;
@@ -85,9 +164,16 @@ body {
     border-radius: 50px;
     left: 5px;
     right: 5px;
+    background-image: url('../img/pattern2.png');
+    background-attachment: local;
+    background-size: cover;
 }
 
-.left-search-box{
+.search-content {
+    flex-grow: 1;
+}
+
+.right-search-box{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,12 +185,43 @@ body {
 
 
 @media screen and (max-width: 1000px) {
-
+    .search-button {
+        display: flex;
+    }
 }
 
 
 @media screen and (max-width: 600px) {
+    .left-search-box{
+        min-height: 100px;
+        height: fit-content;
+        width: 100%;
+        border-radius: 0px;
+        order: -1;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
 
+    .right-search-box{
+        height: fit-content;
+        width: 100%;
+        border-radius: 0px;
+    }
+
+    .large-search-box{
+        display: flex;
+        align-items: start;
+        flex-direction: column;
+        justify-content: start;
+    }
+
+    .cancel-button{
+        display: flex;
+    }
+
+    .button-box {
+        padding: 10px;
+    }
 }
 
 @media (max-width: 450px) {

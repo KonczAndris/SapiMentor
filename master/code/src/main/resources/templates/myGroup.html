@@ -96,10 +96,20 @@
     </div>
 
 <!--     SEARCH DIV START -->
+        <div class="open-search-buttons">
+            <button id="myFilterBtn" onclick="showFilterContainer()">OPEN THE SEARCH MENU</button>
+        </div>
         <div class="large-search-box">
-            <div class="right-search-box">
+            <div class="left-search-box" id="searchDiv">
+                <div class="search-content">
+                    <!-- Other content if any -->
+                </div>
+                <div class="button-box">
+                <button class="search-button" id="search-button">Search</button>
+                <button class="cancel-button" id="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
+                </div>
             </div>
-            <div class="left-search-box">
+            <div class="right-search-box">
             </div>
         </div>
 <!--        SEARCH DIV END-->
