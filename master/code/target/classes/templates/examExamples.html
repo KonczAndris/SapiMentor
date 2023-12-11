@@ -193,8 +193,11 @@
     <!-- RESOURCE MODAL START -->
     <div id="examExamplesModal" class="modal-examExamples">
         <div class="modal-content-examExamples">
-            <span class="close-examExamples">&times;</span>
-
+<!--            <span class="close-examExamples">&times;</span>-->
+            <!-- Új rész hozzáadása a modalhoz -->
+            <div class="message-exam-modal-content-container">
+                <p class="error-message-exam-modal-content" id="error-message-exam-modal-content"></p>
+            </div>
             <div class="form-group-edit">
                 <div class="detail-row">
                     <label for="fileUpload" class="detail-label">Choose Image:</label>
@@ -226,7 +229,7 @@
                         <input type="hidden" id="topic-selected-modal" value="Choose a topic">
                         <div class="topic-dropdown-content" id="topic-myDropdown">
                             <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
-                               th:attr="onclick='closeDropdown(\'' + ${topic.topic} + '\')'"></a>
+                               th:attr="onclick='closeDropdownTopics(\'' + ${topic.topic} + '\')'"></a>
                         </div>
                     </div>
                 </div>

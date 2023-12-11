@@ -1014,3 +1014,14 @@ tr {
 .close-modal-btn:hover {
     color: #999; /* Például szürkére változtathatod a színt a hover eseményre */
 }
+
+.message-diploma-modal-content-container {
+    text-align: center;
+    margin-bottom: 9px /* Igazítsd az elhelyezést igény szerint */
+}
+
+.error-message-diploma-modal-content {
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+}

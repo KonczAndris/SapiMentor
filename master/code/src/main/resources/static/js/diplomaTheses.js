@@ -26,6 +26,12 @@ function closeDropdown(selectedItem) {
     dropdownContent.classList.remove("active");
 }
 
+// ez az uj amivel bezarja a dropdownot
+function closeDropdownTopics(selectedItem) {
+    var dropdownContent = document.getElementById("topic-myDropdown");
+    dropdownContent.style.display = "none";
+}
+
 function cancelFilterWindow(){
     const filterContainer = document.querySelector(".filter-container");
     const openSearchButtons = document.querySelector(".open-search-buttons");
@@ -478,9 +484,11 @@ function sendDiplomaThesesDataToServer(data) {
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){
-            alert("The file is too large!");
+            //alert("The file is too large!");
+            showErrorMessageInExam("The file is too large!");
         } else if (data === "TOO LARGE FILE"){
-            alert("The file size exceeds the maximum limit of 10 MB!");
+            //alert("The file size exceeds the maximum limit of 10 MB!");
+            showErrorMessageInExam("The file size exceeds the maximum limit of 10 MB!"); // Egyéb hiba esetén
         }
     }).catch(error => {
         hideLoadingModal()
@@ -488,6 +496,12 @@ function sendDiplomaThesesDataToServer(data) {
         //alert("An error occurred. Please try again later.");
     });
 
+}
+
+function showErrorMessageInDiploma(message) {
+    var errorMessageElement = document.getElementById('error-message-diploma-modal-content');
+    errorMessageElement.innerText = message;
+    // További stílusok vagy műveletek hozzáadhatók a látványosság érdekében
 }
 
 //NEW

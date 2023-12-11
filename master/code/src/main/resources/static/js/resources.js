@@ -24,6 +24,12 @@ function closeDropdown(selectedItem) {
     dropdownContent.classList.remove("active");
 }
 
+// ez az uj amivel bezarja a dropdownot
+function closeDropdownTopics(selectedItem) {
+    var dropdownContent = document.getElementById("topic-myDropdown");
+    dropdownContent.style.display = "none";
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const dropdownLinks = document.querySelectorAll(".filter-dropdown-content a");
     const dropdownButton = document.querySelector(".filter-dropbtn");
@@ -419,15 +425,29 @@ function sendResourcesDataToServer(data) {
     }).then(data => {
         hideLoadingModal(); // Elrejtjük a modal ablakot
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-        //console.log(data);
+        console.log(data);
+        // itt kell majd andrisnak megmondani hogy mit csinaljon
         if (data === "Success") {
             location.reload();
+        } else if (data === "NotSafe") {
+            showErrorMessage("The link is not safe!");
+        } else {
+            showErrorMessage("An error occurred." +
+                " Please try again later."); // Egyéb hiba esetén
         }
+
     }).catch(error => {
             // ezt is andrisnak
             hideLoadingModal(); // Elrejtjük a modal ablakot
             console.error('Hiba történt:', error);
     });
+}
+
+// Funkció a piros szöveg megjelenítésére
+function showErrorMessage(message) {
+    var errorMessageElement = document.getElementById('error-message-modal-content');
+    errorMessageElement.innerText = message;
+    // További stílusok vagy műveletek hozzáadhatók a látványosság érdekében
 }
 
 function sendDataToServer(data) {

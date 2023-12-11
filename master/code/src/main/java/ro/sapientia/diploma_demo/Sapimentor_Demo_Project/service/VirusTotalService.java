@@ -174,7 +174,7 @@ public class VirusTotalService {
             JSONObject jsonObject = new JSONObject(response.body());
 
             JSONObject dataObject = jsonObject.getJSONObject("data");
-            System.out.println("Analysis status: " + dataObject.getString("attributes"));
+            //System.out.println("Analysis status: " + dataObject.getString("attributes"));
             return dataObject.getJSONObject("attributes").getString("status");
         } catch (Exception e) {
             e.printStackTrace();

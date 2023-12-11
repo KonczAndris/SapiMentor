@@ -262,7 +262,7 @@
             <input type="hidden" id="topic-selected-modal" value="Choose a topic">
             <div class="topic-dropdown-content" id="topic-myDropdown">
               <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
-                 th:attr="onclick='closeDropdown(\'' + ${topic.topic} + '\')'"></a>
+                 th:attr="onclick='closeDropdownTopics(\'' + ${topic.topic} + '\')'"></a>
             </div>
           </div>
         </div>

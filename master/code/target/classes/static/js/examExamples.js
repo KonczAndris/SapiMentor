@@ -26,6 +26,12 @@ function closeDropdown(selectedItem) {
     dropdownContent.classList.remove("active");
 }
 
+// ez az uj amivel bezarja a dropdownot
+function closeDropdownTopics(selectedItem) {
+    var dropdownContent = document.getElementById("topic-myDropdown");
+    dropdownContent.style.display = "none";
+}
+
 function cancelFilterWindow(){
     const filterContainer = document.querySelector(".filter-container");
     const openSearchButtons = document.querySelector(".open-search-buttons");
@@ -479,9 +485,13 @@ function sendExamsDataToServer(data) {
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){
-            alert("The file is too large!");
+            //alert("The file is too large!");
+            showErrorMessageInExam("The file is too large!" +
+                "The maximum file size is 2MB!");
         } else if(data === "Wrong type"){
-            alert("This type png is not supported!");
+            //alert("This type png is not supported!");
+            showErrorMessageInExam("This type of png is not supported!\n" +
+                "The maximum file size is 2MB!"); // Egyéb hiba esetén
         }
     }).catch(error => {
         hideLoadingModal()
@@ -489,6 +499,12 @@ function sendExamsDataToServer(data) {
         //hideLoadingModal(); // Elrejtjük a modal ablakot
         console.error('Hiba történt:', error);
     });
+}
+
+function showErrorMessageInExam(message) {
+    var errorMessageElement = document.getElementById('error-message-exam-modal-content');
+    errorMessageElement.innerText = message;
+    // További stílusok vagy műveletek hozzáadhatók a látványosság érdekében
 }
 
 //NEW

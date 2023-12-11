@@ -26,6 +26,12 @@ function closeDropdown(selectedItem) {
     dropdownContent.classList.remove("active");
 }
 
+// ez az uj amivel bezarja a dropdownot
+function closeDropdownTopics(selectedItem) {
+    var dropdownContent = document.getElementById("topic-myDropdown");
+    dropdownContent.style.display = "none";
+}
+
 function cancelFilterWindow(){
     const filterContainer = document.querySelector(".filter-container");
     const openSearchButtons = document.querySelector(".open-search-buttons");

@@ -146,8 +146,16 @@ public class LinksController {
         //System.out.println("Resources upload data items: " + resourcesUploadDataItems);
 
         String email = principal.getName();
-        User user = userRepository.findByEmail(email);
+        // Regi megoldas
+       // User user = userRepository.findByEmail(email);
+
+        // Uj megoldas (probalkozas)
+        Long user_id = userRepository.findIdByEmail(email);
         //System.out.println("User_Name: " + user.getFirst_Name());
+        String User_name = userRepository.findNameById(user_id);
+        //System.out.println("User_Name: " + User_name);
+        String Full_User_Name = User_name.replace(",", " ");
+        //System.out.println("Full_User_Name: " + Full_User_Name);
         try{
             // JSON string deszerializálása objektumokká
             Resources[] resources_dataItems = objectMapper.readValue(resourcesUploadDataItems, Resources[].class);
@@ -157,7 +165,12 @@ public class LinksController {
                 String name = resourcesData.getName();
                 String link = resourcesData.getLink();
                 String topic_name = resourcesData.getTopic_name();
-                String user_name = user.getFirst_Name() + " " + user.getLast_Name();
+                // Regi megoldas
+                // String user_name = user.getFirst_Name() + " " + user.getLast_Name();
+
+                // Uj megoldas (probalkozas)
+                String user_name = Full_User_Name;
+
                 Integer like = 0;
                 Integer dislike = 0;
 //                System.out.println("IsLinkAccessible: " + isLinkAccessible(link));

@@ -109,10 +109,6 @@
                                 <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">
                                 <span th:text="${topic.topic}"></span>
                             </label>
-                            <label><input type="checkbox" value="Informatics"> Informatics</label>
-                            <label><input type="checkbox" value="Languages"> Languages</label>
-                            <label><input type="checkbox" value="Engineering"> Engineering</label>
-
                         </div>
                     </div>
 
@@ -196,6 +192,10 @@
     <!-- RESOURCE MODAL START -->
     <div id="resourceModal" class="modal-resource">
         <div class="modal-content-resource">
+            <!-- Új rész hozzáadása a modalhoz -->
+            <div class="message-modal-content-container">
+                <p class="error-message-modal-content" id="error-message-modal-content"></p>
+            </div>
             <div class="form-group-edit">
                 <div class="detail-row">
                     <p class="detail-label">Link:</p>
@@ -229,7 +229,7 @@
                         <input type="hidden" id="topic-selected-modal" value="Choose a topic">
                         <div class="topic-dropdown-content" id="topic-myDropdown">
                             <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
-                               th:attr="onclick='closeDropdown(\'' + ${topic.topic} + '\')'"></a>
+                               th:attr="onclick='closeDropdownTopics(\'' + ${topic.topic} + '\')'"></a>
                         </div>
 
 
