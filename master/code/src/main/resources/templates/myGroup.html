@@ -114,28 +114,11 @@
                     <div class="topic-box"> <p>Topic</p>
 
                         <div class="checkbox-container" th:each="topic : ${topics}">
-                            <label class="container-checkbox-myGroup"><input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">
-                            <span class="checkmark-myGroup" th:text="${topic.topic}"></span> </label>
+                            <label class="container-checkbox-myGroup">
+                                <span th:text="${topic.topic}"></span>
+                                <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">
+                            <span class="checkmark-myGroup"></span> </label>
                         </div>
-
-                        <div class="checkbox-container">
-                            <label class="container-checkbox-myGroup">
-                                Informatics
-                                <input type="checkbox" value="Informatics">
-                                <span class="checkmark-myGroup "></span>
-                            </label></div>
-                        <div class="checkbox-container">
-                            <label class="container-checkbox-myGroup">
-                                enignereerer
-                                <input type="checkbox" value="Informatics">
-                                <span class="checkmark-myGroup "></span>
-                            </label></div>
-                        <div class="checkbox-container">
-                            <label class="container-checkbox-myGroup">
-                                Informfdgfdgfdgfdatics
-                                <input type="checkbox" value="Informatics">
-                                <span class="checkmark-myGroup "></span>
-                            </label></div>
 
                     </div>
 
@@ -167,25 +150,16 @@
 
                 <div class="dropdown-myGroup">
                     <button onclick="toggleDropdown()" class="dropbtn-myGroup">Select Tags</button>
+
                     <div id="checkboxDropdown-myGroup" class="dropdown-content-myGroup">
-                        <div class="checkbox-container">
+                        <div class="checkbox-container" th:each="skill : ${skills}">
                             <label class="container-checkbox-myGroup">
-                                Informatics
-                                <input type="checkbox" value="Informatics" class="dropdown-checkbox">
+                                <span th:text="${skill.skill}"></span>
+                                <input type="checkbox" th:value="${skill.skill}" th:id="${'checkbox-' + skill}"
+                                       class="dropdown-checkbox">
                                 <span class="checkmark-myGroup "></span>
                             </label></div>
-                        <div class="checkbox-container">
-                            <label class="container-checkbox-myGroup">
-                                enignereerer
-                                <input type="checkbox" value="Informatics" class="dropdown-checkbox">
-                                <span class="checkmark-myGroup "></span>
-                            </label></div>
-                        <div class="checkbox-container">
-                            <label class="container-checkbox-myGroup">
-                                Informfdgfdgfdgfdatics
-                                <input type="checkbox" value="Informatics" class="dropdown-checkbox">
-                                <span class="checkmark-myGroup "></span>
-                            </label></div>
+
                     </div>
                 </div>
                 </div>
