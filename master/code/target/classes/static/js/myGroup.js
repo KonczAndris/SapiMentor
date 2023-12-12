@@ -78,3 +78,43 @@ function selectSide(side) {
         }
     }
 }
+
+function toggleDropdown() {
+    document.getElementById("checkboxDropdown-myGroup").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn-myGroup')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxContainers = document.querySelectorAll('.checkbox-container');
+
+    checkboxContainers.forEach(container => {
+        const label = container.querySelector('label');
+        const checkbox = label.querySelector('input[class="dropdown-checkbox"]');
+        const labelText = label.textContent.trim();
+
+        const checkboxElement = document.createElement('div');
+        checkboxElement.classList.add('checkbox-item');
+
+        checkboxElement.innerHTML = `
+            <label>
+                <input type="checkbox" value="${checkbox.value}">
+                <span class="checkmark"></span>
+                ${labelText}
+            </label>
+        `;
+
+        document.getElementById('checkboxDropdown-myGroup').appendChild(checkboxElement);
+    });
+});
