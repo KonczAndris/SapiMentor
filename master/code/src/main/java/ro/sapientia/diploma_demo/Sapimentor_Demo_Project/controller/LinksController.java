@@ -51,6 +51,8 @@ public class LinksController {
         this.userResourceLikeDislikeService = userResourceLikeDislikeService;
     }
 
+
+    // TODO: optimize this method
     private void showUserRolesToDisplayResources(Model model, Principal principal){
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
@@ -76,9 +78,7 @@ public class LinksController {
         model.addAttribute("userRolesToDisplayResources", rolesAsString);
     }
 
-    private void showTopicsToDisplayResources(Model model, Principal principal){
-        String email = principal.getName();
-        User user = userRepository.findByEmail(email);
+    private void showTopicsToDisplayResources(Model model){
         // Itt lekérem a témákat a service segítségével
         List<Topic> topics = topicService.getAllTopics();
         //System.out.println("Topics: " + topics);
@@ -108,7 +108,7 @@ public class LinksController {
             return "redirect:/login";
         }
         showUserRolesToDisplayResources(model, principal);
-        showTopicsToDisplayResources(model, principal);
+        showTopicsToDisplayResources(model);
         List<Resources> resources = resourceServices.getAllResources();
         //System.out.println("Resources: " + resources);
         model.addAttribute("resourcesData", resources);
