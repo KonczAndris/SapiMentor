@@ -65,12 +65,23 @@ function selectSide(side) {
         selectedSide = '';
     } else {
         selectedSide = side;
+        var mentorbutton =  document.querySelector('.mentor-side');
+        var menteebutton =  document.querySelector('.mentee-side');
         if (side === 'left') {
+            if (menteebutton.classList.contains('active')) {
+                menteebutton.classList.remove('active');
+            }
+            mentorbutton.classList.add('active');
             document.querySelector('.mentor-side').style.backgroundColor = 'rgb(22, 175, 132)';
             document.querySelector('.mentor-side').style.color = 'white';
             document.querySelector('.mentee-side').style.backgroundColor = 'white';
             document.querySelector('.mentee-side').style.color = 'rgb(22, 175, 132)';
+
         } else {
+            if (mentorbutton.classList.contains('active')) {
+                mentorbutton.classList.remove('active');
+            }
+            menteebutton.classList.add('active');
             document.querySelector('.mentor-side').style.backgroundColor = 'white';
             document.querySelector('.mentee-side').style.backgroundColor = 'rgb(22, 175, 132)';
             document.querySelector('.mentee-side').style.color = 'white';

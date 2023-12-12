@@ -1,10 +1,14 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository;
 
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
+
+import java.util.Collection;
 
 //megkerdezni, hogy ez miert kell
 
@@ -22,4 +26,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u.first_Name, u.last_Name FROM User u WHERE u.id = :id")
     String findNameById(Long id);
+
+    @Query("SELECT u.roles FROM User u WHERE u.id = :userId")
+    Collection<Role> findRolesByUserId(@Param("userId") Long userId);
 }

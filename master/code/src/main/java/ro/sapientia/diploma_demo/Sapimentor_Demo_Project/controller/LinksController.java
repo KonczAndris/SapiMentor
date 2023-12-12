@@ -54,27 +54,43 @@ public class LinksController {
 
     // TODO: optimize this method
     private void showUserRolesToDisplayResources(Model model, Principal principal){
-        String email = principal.getName();
-        User user = userRepository.findByEmail(email);
 
-        //System.out.println("User: " + user.getEmail());
+        String email = principal.getName();
+
+        // Eredeti megoldas
+        // User user = userRepository.findByEmail(email);
+
+        // Uj megoldas (probalkozas)
+        Long userId = userRepository.findIdByEmail(email);
+        Collection<Role> roles = userRepository.findRolesByUserId(userId);
+
 
         List<String> rolesToDisplayResources = new ArrayList<>();
         boolean hasOtherRole = false;
 
-        for (Role role : user.getRoles()){
+        // Eredeti megoldas
+//        for (Role role : user.getRoles()){
+//            if(!role.getName().equals("USER")){
+//                rolesToDisplayResources.add(role.getName());
+//                hasOtherRole = true;
+//            }
+//        }
+
+        // Uj megoldas (probalkozas)
+        for (Role role : roles){
             if(!role.getName().equals("USER")){
                 rolesToDisplayResources.add(role.getName());
                 hasOtherRole = true;
             }
         }
 
+
         if(!hasOtherRole){
             rolesToDisplayResources.add("USER");
         }
 
         String rolesAsString = String.join(",", rolesToDisplayResources);
-        //System.out.println("Roles: " + rolesAsString);
+        System.out.println("Roles: " + rolesAsString);
         model.addAttribute("userRolesToDisplayResources", rolesAsString);
     }
 
