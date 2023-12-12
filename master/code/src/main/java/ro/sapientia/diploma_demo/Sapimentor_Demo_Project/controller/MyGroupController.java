@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Skill;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topic;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.RatingService;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.SkillService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 
 import java.security.Principal;
@@ -27,16 +29,19 @@ public class MyGroupController {
     private final UserRepository userRepository;
     private final RatingService ratingService;
     private final TopicService topicService;
+    private final SkillService skillService;
 
 
 
     @Autowired
     public MyGroupController(UserRepository userRepository,
                              RatingService ratingService,
-                             TopicService topicService) {
+                             TopicService topicService,
+                             SkillService skillService) {
         this.userRepository = userRepository;
         this.ratingService = ratingService;
         this.topicService = topicService;
+        this.skillService = skillService;
     }
 
     //TODO: Implement showProfileImageAndName
@@ -56,11 +61,17 @@ public class MyGroupController {
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
     }
 
-    private void showTopicsToDisplayUsersTypes(Model model){
+    private void showTopicsToMyGroupPage(Model model){
         // Itt lekérem a témákat a service segítségével
         List<Topic> topics = topicService.getAllTopics();
         //System.out.println("Topics: " + topics);
         model.addAttribute("topics", topics);
+    }
+
+    private void showSkillsToMyGroupPage(Model model){
+        List<Skill> skills = skillService.getAllSkills();
+        //System.out.println("Skills: " + skills.toString());
+        model.addAttribute("skills", skills);
     }
 
 
@@ -69,7 +80,8 @@ public class MyGroupController {
         if (principal == null) {
             return "redirect:/login";
         }
-        showTopicsToDisplayUsersTypes(model);
+        showTopicsToMyGroupPage(model);
+        showSkillsToMyGroupPage(model);
         showProfileImageAndName(model, principal);
         return "myGroup";
     }
