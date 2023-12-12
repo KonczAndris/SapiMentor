@@ -105,6 +105,7 @@
                     <div class="role-button">
                         <div class="role-button">
                             <button class="mentor-side" onclick="selectSide('left')">MENTOR</button>
+                            <div class="button-divider"></div>
                             <button class="mentee-side" onclick="selectSide('right')">MENTEE</button>
                         </div>
                     </div>
@@ -113,40 +114,85 @@
                     <div class="topic-box"> <p>Topic</p>
 
                         <div class="checkbox-container" th:each="topic : ${topics}">
-                            <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">
-                            <span th:text="${topic.topic}"></span>
+                            <label class="container-checkbox-myGroup"><input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">
+                            <span class="checkmark-myGroup" th:text="${topic.topic}"></span> </label>
                         </div>
 
                         <div class="checkbox-container">
-                            <label><input type="checkbox" value="Informatics"> Informatics</label></div>
+                            <label class="container-checkbox-myGroup">
+                                Informatics
+                                <input type="checkbox" value="Informatics">
+                                <span class="checkmark-myGroup "></span>
+                            </label></div>
                         <div class="checkbox-container">
-                            <label><input type="checkbox" value="Informatics"> Informatics</label> </div>
+                            <label class="container-checkbox-myGroup">
+                                enignereerer
+                                <input type="checkbox" value="Informatics">
+                                <span class="checkmark-myGroup "></span>
+                            </label></div>
+                        <div class="checkbox-container">
+                            <label class="container-checkbox-myGroup">
+                                Informfdgfdgfdgfdatics
+                                <input type="checkbox" value="Informatics">
+                                <span class="checkmark-myGroup "></span>
+                            </label></div>
 
                     </div>
 
                     <div class="year-box">
                         <p>Year</p>
                         <div class="checkbox-container">
+                            <label class="container-checkbox-myGroup">1
                             <input type="checkbox" id="year1-box" name="year" value="1">
-                            <label>1</label>
+                            <span class="checkmark-myGroup "></span>
+                            </label>
                         </div>
                         <div class="checkbox-container">
+                            <label class="container-checkbox-myGroup">2
                             <input type="checkbox" id="year2-box" name="year" value="2">
-                            <label>2</label>
+                            <span class="checkmark-myGroup "></span>
+                            </label>
                         </div>
                         <div class="checkbox-container">
+                            <label class="container-checkbox-myGroup">3
                             <input type="checkbox" id="year3-box" name="year" value="3">
-                            <label>3</label>
+                            <span class="checkmark-myGroup "></span></label>
                         </div>
                         <div class="checkbox-container">
+                            <label class="container-checkbox-myGroup">4
                             <input type="checkbox" id="year4-box" name="year" value="4">
-                            <label>4</label>
+                           <span class="checkmark-myGroup "></span> </label>
                         </div>
                     </div>
+
+                <div class="dropdown-myGroup">
+                    <button onclick="toggleDropdown()" class="dropbtn-myGroup">Select Tags</button>
+                    <div id="checkboxDropdown-myGroup" class="dropdown-content-myGroup">
+                        <div class="checkbox-container">
+                            <label class="container-checkbox-myGroup">
+                                Informatics
+                                <input type="checkbox" value="Informatics" class="dropdown-checkbox">
+                                <span class="checkmark-myGroup "></span>
+                            </label></div>
+                        <div class="checkbox-container">
+                            <label class="container-checkbox-myGroup">
+                                enignereerer
+                                <input type="checkbox" value="Informatics" class="dropdown-checkbox">
+                                <span class="checkmark-myGroup "></span>
+                            </label></div>
+                        <div class="checkbox-container">
+                            <label class="container-checkbox-myGroup">
+                                Informfdgfdgfdgfdatics
+                                <input type="checkbox" value="Informatics" class="dropdown-checkbox">
+                                <span class="checkmark-myGroup "></span>
+                            </label></div>
+                    </div>
                 </div>
+                </div>
+
                 <div class="button-box">
                 <button class="search-button" id="search-button">Search</button>
-                <button class="cancel-button" id="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
+                    <button class="cancel-button" id="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
                 </div>
             </div>
             <div class="right-search-box">

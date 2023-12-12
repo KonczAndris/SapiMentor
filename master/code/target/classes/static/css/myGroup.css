@@ -97,7 +97,6 @@ body {
     width: 100%;
     text-align: center;
     color: white;
-    font-weight: bold;
     font-size: medium;
 }
 
@@ -117,10 +116,72 @@ body {
 .topic-box{
     display: block;
     margin-bottom: 5px;
+    text-align: start;
+    margin-left: 15px;
 }
 
 .topic-checkboxes label {
     margin-bottom: 5px;
+}
+.container-checkbox-myGroup {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 12px;
+    cursor: pointer;
+    padding-left: 30px; /* Adjust as needed */
+}
+
+.container-checkbox-myGroup input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark-myGroup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 3px;
+}
+
+.container-checkbox-myGroup input:checked ~ .checkmark-myGroup {
+    background-color: #2196F3;
+}
+
+
+.container-checkbox-myGroup:hover input ~ .checkmark-myGroup {
+    background-color: rgb(204, 252, 234);
+}
+
+.container-checkbox-myGroup input:checked ~ .checkmark-myGroup {
+    background-color: rgb(22, 175, 132);
+}
+
+.checkmark-myGroup:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.container-checkbox-myGroup input:checked ~ .checkmark-myGroup:after {
+    display: block;
+}
+
+.container-checkbox-myGroup .checkmark-myGroup:after {
+    left: 7px;
+    top: 3px;
+    width: 4px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .left-search-box {
@@ -129,12 +190,21 @@ body {
     align-items: center;
 }
 
-.role-button {
+.role-button{
     display: flex;
     overflow: hidden;
     margin-top: 4%;
     justify-content: center;
     border-radius: 9px;
+}
+
+.role-button {
+    display: flex;
+}
+
+.role-button .button-divider {
+    flex: 0 0 2px; /* Width of the border */
+    background-color: rgb(22, 175, 132); /* Green color */
 }
 
 .role-button button {
@@ -153,6 +223,56 @@ body {
 
 .mentee-side {
     background-color: white;
+}
+
+/* Style the dropdown button */
+.dropbtn-myGroup {
+    background-color: #f1f1f1;
+    color: black;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn-myGroup:hover, .dropbtn-myGroup:focus {
+    background-color: #ddd;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown-myGroup {
+    position: relative;
+    display: inline-block;
+    margin-top:10%;
+    width: 100%
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content-myGroup {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    min-width: 100%;
+    border-radius: 9%;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown-myGroup:hover .dropdown-content-myGroup {
+    display: block;
+}
+
+.dropbtn-myGroup{
+    color: rgb(22, 175, 132);
+    background-color: white;
+    display: flex;
+    overflow: hidden;
+    margin-top: 4%;
+    justify-content: center;
+    border-radius: 9px;
+    width: 100%;
 }
 
 .search-button {

@@ -486,12 +486,11 @@ function sendExamsDataToServer(data) {
             location.reload();
         } else if(data === "Too large"){
             //alert("The file is too large!");
-            showErrorMessageInExam("The file is too large!" +
+            showErrorMessageInExam("The file is too large!\n" +
                 "The maximum file size is 2MB!");
         } else if(data === "Wrong type"){
             //alert("This type png is not supported!");
-            showErrorMessageInExam("This type of png is not supported!\n" +
-                "The maximum file size is 2MB!"); // Egyéb hiba esetén
+            showErrorMessageInExam("This type of png is not supported!\n"); // Egyéb hiba esetén
         }
     }).catch(error => {
         hideLoadingModal()
