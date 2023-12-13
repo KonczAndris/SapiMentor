@@ -345,6 +345,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgb(255, 255, 255);
+    padding-left:5%;
 }
 
 .left-search-box{
@@ -370,13 +371,50 @@ body {
 .right-search-box{
     display: flex;
     justify-content: center;
-    align-items: center;
     width: 65%;
     height: 95%;
     background-color: rgb(253, 253, 253);
-
+    overflow-y: auto;
+    max-height: calc(100vh - 60px);
+    margin: auto;
+    align-items: start;
 }
 
+.scrollable-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 5px;
+    max-width: 100%;
+}
+
+.image-cell {
+    flex: 0 0 calc(25% - 10px);
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px;
+}
+
+.rounded-image {
+    width: 80%;
+    border-radius: 10%;
+}
+
+.myGroupName{
+    margin-top: 2%;
+}
+
+@media screen and (max-width: 768px) {
+    .image-cell {
+        flex: 0 0 calc(33.333% - 10px);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .image-cell {
+        flex: 0 0 calc(50% - 10px);
+    }
+}
 
 @media screen and (max-width: 1000px) {
     .search-button {
@@ -387,13 +425,13 @@ body {
 
 @media screen and (max-width: 600px) {
     .left-search-box{
-        min-height: 100px;
         height: fit-content;
         width: 100%;
         border-radius: 0px;
         order: -1;
         border-bottom-left-radius: 15px;
         border-bottom-right-radius: 15px;
+        padding-left: 0;
     }
 
     .right-search-box{
@@ -407,6 +445,7 @@ body {
         align-items: start;
         flex-direction: column;
         justify-content: start;
+        padding-left: 0;
     }
 
     .cancel-button{
@@ -443,4 +482,31 @@ body {
 
 .highlight {
     background-color: #FFCCCC;
+}
+
+.rating {
+    direction: rtl;
+}
+
+.rating input[type="radio"] {
+    display: none;
+}
+
+.rating label {
+    display: inline-block;
+    font-size: 1rem;
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding-bottom: 2.5%;
+}
+
+.rating label:hover,
+.rating input[type="radio"]:checked~label {
+    color: gold;
+}
+
+.rating-text {
+    text-align: center;
+    margin-top: 5px;
 }

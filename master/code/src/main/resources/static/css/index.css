@@ -244,6 +244,7 @@ body {
 }
 
 @media (max-width: 1000px) {
+
     .menu-function-profile{
         display: none !important;
     }
