@@ -171,39 +171,49 @@
             </div>
             <div class="right-search-box">
                 <div class="scrollable-div">
-                    <div class="image-cell">
-                        <img th:src="@{/img/anonym.jpg}" alt="Vezetéknév Keresztnév" class="rounded-image">
-                        <div class="rating">
-                            <input type="radio" id="star5" name="rating" value="5"  disabled />
-                            <label for="star5">&#9733;</label>
-                            <input type="radio" id="star4" name="rating" value="4" disabled />
-                            <label for="star4">&#9733;</label>
-                            <input type="radio" id="star3" name="rating" value="3"  disabled />
-                            <label for="star3">&#9733;</label>
-                            <input type="radio" id="star2" name="rating" value="2"  disabled />
-                            <label for="star2">&#9733;</label>
-                            <input type="radio" id="star1" name="rating" value="1"  disabled />
-                            <label for="star1">&#9733;</label>
-                        </div>
-                        <span class="myGroupName" >Vezetéknév Keresztnév</span>
-                    </div>
-                    <div class="image-cell">
-                        <img th:src="@{/img/anonym.jpg}" alt="Vezetéknév Keresztnév" class="rounded-image">
-                        <span class="myGroupName" >Vezetéknév Keresztnév</span>                    </div>
-                    <div class="image-cell">
-                        <img th:src="@{/img/anonym.jpg}" alt="Vezetéknév Keresztnév" class="rounded-image">
-                        <span class="myGroupName" >Vezetéknév Keresztnév</span>                    </div><div class="image-cell">
-                    <img th:src="@{/img/anonym.jpg}" alt="Vezetéknév Keresztnév" class="rounded-image">
-                    <p>Vezetéknév Keresztnév</p>
-                </div><div class="image-cell">
-                    <img th:src="@{/img/anonym.jpg}" alt="Vezetéknév Keresztnév" class="rounded-image">
-                    <span class="myGroupName" >Vezetéknév Keresztnév</span>                </div><div class="image-cell">
-                    <img th:src="@{/img/anonym.jpg}" alt="Vezetéknév Keresztnév" class="rounded-image">
-                    <span class="myGroupName" >Vezetéknév Keresztnév</span>                </div><div class="image-cell">
-                    <img th:src="@{/img/anonym.jpg}" alt="Vezetéknév Keresztnév" class="rounded-image">
-                    <span class="myGroupName" >Vezetéknév Keresztnév</span>                </div>
 
-                </div>
+                    <div class="image-cell" th:id="${'image-cell-' + pic}" th:each="pic : ${allUsers}" >
+<!--                            <img th:if="${profileImageBase64 != ''}"-->
+<!--                                 th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"-->
+<!--                                 alt="Profile Image" class="rounded-image"-->
+<!--                                 th:async="async"-->
+<!--                                 th:attr="data-cache='no-cache'">-->
+<!--                            <img th:unless="${profileImageBase64 != ''}"-->
+<!--                                 th:src="@{/img/anonym.jpg}" alt="Profile Image" class="rounded-image">-->
+
+<!--                        <div class="rating">-->
+<!--                            <input type="radio"  name="rating" value="5" th:checked="${averageRatingsByUserId. >= 4.5 && averageRatingsByUserId <= 5}" disabled />-->
+<!--                            <label>&#9733;</label>-->
+<!--                            <input type="radio"  name="rating" value="4" th:checked="${averageRatingsByUserId >= 3.5 && averageRatingsByUserId < 4.5}" disabled />-->
+<!--                            <label>&#9733;</label>-->
+<!--                            <input type="radio"  name="rating" value="3" th:checked="${averageRatingsByUserId >= 2.5 && averageRatingsByUserId < 3.5}" disabled />-->
+<!--                            <label>&#9733;</label>-->
+<!--                            <input type="radio" name="rating" value="2" th:checked="${averageRatingsByUserId >= 1.5 && averageRatingsByUserId < 2.5}" disabled />-->
+<!--                            <label>&#9733;</label>-->
+<!--                            <input type="radio" name="rating" value="1" th:checked="${averageRatingsByUserId >= 0.5 && averageRatingsByUserId < 1.5}" disabled />-->
+<!--                            <label>&#9733;</label>-->
+<!--                        </div>-->
+
+                        <span  class="myGroupName" th:text="${pic.first_Name + ' ' + pic.last_Name}"></span>
+                    </div>
+
+
+<!--                    <div class="image-cell">-->
+<!--                        <img th:src="@{/img/anonym.jpg}" alt="Vezetéknév Keresztnév" class="rounded-image">-->
+<!--                        <div class="rating">-->
+<!--                            <input type="radio" id="star5" name="rating" value="5"  disabled />-->
+<!--                            <label for="star5">&#9733;</label>-->
+<!--                            <input type="radio" id="star4" name="rating" value="4" disabled />-->
+<!--                            <label for="star4">&#9733;</label>-->
+<!--                            <input type="radio" id="star3" name="rating" value="3"  disabled />-->
+<!--                            <label for="star3">&#9733;</label>-->
+<!--                            <input type="radio" id="star2" name="rating" value="2"  disabled />-->
+<!--                            <label for="star2">&#9733;</label>-->
+<!--                            <input type="radio" id="star1" name="rating" value="1"  disabled />-->
+<!--                            <label for="star1">&#9733;</label>-->
+<!--                        </div>-->
+<!--                        <span class="myGroupName" >Vezetéknév Keresztnév</span>-->
+<!--                    </div>-->
 
             </div>
         </div>
