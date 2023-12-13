@@ -34,6 +34,7 @@ public class LinksController {
     private final VirusTotalService virusTotalService;
     private final UserResourceLikeDislikeService userResourceLikeDislikeService;
 
+
     @Autowired
     public LinksController(UserRepository userRepository,
                            TopicService topicService,
@@ -133,26 +134,6 @@ public class LinksController {
         return "resources";
     }
 
-
-
-//    @GetMapping("/examExamples")
-//    public String showExamExamples(Model model, Principal principal) {
-//        showUserRolesToDisplayResources(model, principal);
-//        showTopicsToDisplayResources(model, principal);
-//        showProfileImageAndName(model, principal);
-//        return "examExamples";
-//    }
-
-
-
-
-//    @GetMapping("/diplomaTheses")
-//    public String showDiplomaTheses(Model model, Principal principal) {
-//        showUserRolesToDisplayResources(model, principal);
-//        showTopicsToDisplayResources(model, principal);
-//        showProfileImageAndName(model, principal);
-//        return "diplomaTheses";
-//    }
 
     @PostMapping("/uploadResources")
     public ResponseEntity<String> uploadResources(String resourcesUploadDataItems,

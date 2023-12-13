@@ -107,7 +107,10 @@ window.onclick = function(event) {
     }
 };
 
+
 document.addEventListener('DOMContentLoaded', function() {
+
+
     const checkboxContainers = document.querySelectorAll('.checkbox-container');
 
     checkboxContainers.forEach(container => {
@@ -129,3 +132,4 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('checkboxDropdown-myGroup').appendChild(checkboxElement);
     });
 });
+

@@ -9,6 +9,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 
 import java.util.Collection;
+import java.util.List;
 
 //megkerdezni, hogy ez miert kell
 
@@ -29,4 +30,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u.roles FROM User u WHERE u.id = :userId")
     Collection<Role> findRolesByUserId(@Param("userId") Long userId);
+
+    @Query("SELECT u FROM User u WHERE u.id != :userId")
+    List<User> findAllOtherUser(@Param("userId") Long userId);
 }

@@ -211,7 +211,7 @@ body {
 
 .role-button button {
     flex: 1;
-    padding: 10px;
+    padding: 14px;
     border: none;
     cursor: pointer;
     color: rgb(22, 175, 132);
@@ -501,12 +501,12 @@ body {
     padding-bottom: 2.5%;
 }
 
-.rating label:hover,
-.rating input[type="radio"]:checked~label {
-    color: gold;
-}
+
 
 .rating-text {
     text-align: center;
     margin-top: 5px;
 }
+
+
+

@@ -158,8 +158,8 @@
                                 <input type="checkbox" th:value="${skill.skill}" th:id="${'checkbox-' + skill}"
                                        class="dropdown-checkbox">
                                 <span class="checkmark-myGroup "></span>
-                            </label></div>
-
+                            </label>
+                        </div>
                     </div>
                 </div>
                 </div>
@@ -172,33 +172,42 @@
             <div class="right-search-box">
                 <div class="scrollable-div">
 
-                    <div class="image-cell" th:id="${'image-cell-' + pic}" th:each="pic : ${allUsers}" >
-<!--                            <img th:if="${profileImageBase64 != ''}"-->
-<!--                                 th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"-->
-<!--                                 alt="Profile Image" class="rounded-image"-->
-<!--                                 th:async="async"-->
-<!--                                 th:attr="data-cache='no-cache'">-->
-<!--                            <img th:unless="${profileImageBase64 != ''}"-->
-<!--                                 th:src="@{/img/anonym.jpg}" alt="Profile Image" class="rounded-image">-->
+                    <div class="image-cell" th:id="${'image-cell-' + pic}" th:each="pic : ${allUsers}">
+                        <!-- Profilkép megjelenítése -->
+                        <img th:if="${profileImagesByUserId[pic.id] ne null and profileImagesByUserId[pic.id] ne ''}"
+                             th:src="@{|data:image/jpeg;base64,${profileImagesByUserId[pic.id]}|}"
+                             alt="Profile Image" class="rounded-image"
+                             th:async="async" th:attr="data-cache='no-cache'">
+                        <img th:unless="${profileImagesByUserId[pic.id] ne null and profileImagesByUserId[pic.id] ne ''}"
+                             th:src="@{/img/anonym.jpg}" alt="Profile Image" class="rounded-image">
 
-<!--                        <div class="rating">-->
-<!--                            <input type="radio"  name="rating" value="5" th:checked="${averageRatingsByUserId. >= 4.5 && averageRatingsByUserId <= 5}" disabled />-->
-<!--                            <label>&#9733;</label>-->
-<!--                            <input type="radio"  name="rating" value="4" th:checked="${averageRatingsByUserId >= 3.5 && averageRatingsByUserId < 4.5}" disabled />-->
-<!--                            <label>&#9733;</label>-->
-<!--                            <input type="radio"  name="rating" value="3" th:checked="${averageRatingsByUserId >= 2.5 && averageRatingsByUserId < 3.5}" disabled />-->
-<!--                            <label>&#9733;</label>-->
-<!--                            <input type="radio" name="rating" value="2" th:checked="${averageRatingsByUserId >= 1.5 && averageRatingsByUserId < 2.5}" disabled />-->
-<!--                            <label>&#9733;</label>-->
-<!--                            <input type="radio" name="rating" value="1" th:checked="${averageRatingsByUserId >= 0.5 && averageRatingsByUserId < 1.5}" disabled />-->
-<!--                            <label>&#9733;</label>-->
-<!--                        </div>-->
 
-                        <span  class="myGroupName" th:text="${pic.first_Name + ' ' + pic.last_Name}"></span>
+                        <!-- Értékelés megjelenítése -->
+                        <div class="rating">
+                            <input type="radio" th:id="${'star5_'+pic.id}" name="rating" value="5" th:checked="${averageRatingsByUserId[pic.id] >= 4.5}" disabled />
+                            <label th:for="${'star5_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 4.5} ? 'color: gold;' : ''">&#9733;</label>
+
+                            <input type="radio" th:id="${'star4_'+pic.id}" name="rating" value="4" th:checked="${averageRatingsByUserId[pic.id] >= 3.5 and averageRatingsByUserId[pic.id] < 4.5}" disabled />
+                            <label th:for="${'star4_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 3.5} ? 'color: gold;' : ''">&#9733;</label>
+
+                            <input type="radio" th:id="${'star3_'+pic.id}" name="rating" value="3" th:checked="${averageRatingsByUserId[pic.id] >= 2.5 and averageRatingsByUserId[pic.id] < 3.5}" disabled />
+                            <label th:for="${'star3_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 2.5} ? 'color: gold;' : ''">&#9733;</label>
+
+                            <input type="radio" th:id="${'star2_'+pic.id}" name="rating" value="2" th:checked="${averageRatingsByUserId[pic.id] >= 1.5 and averageRatingsByUserId[pic.id] < 2.5}" disabled />
+                            <label th:for="${'star2_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 1.5} ? 'color: gold;' : ''">&#9733;</label>
+
+                            <input type="radio" th:id="${'star1_'+pic.id}" name="rating" value="1" th:checked="${averageRatingsByUserId[pic.id] >= 0.5 and averageRatingsByUserId[pic.id] < 1.5}" disabled />
+                            <label th:for="${'star1_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 0.5} ? 'color: gold;' : ''">&#9733;</label>
+                        </div>
+
+
+
+                        <span class="myGroupName" th:text="${pic.first_Name + ' ' + pic.last_Name}"></span>
                     </div>
 
 
-<!--                    <div class="image-cell">-->
+
+                    <!--                    <div class="image-cell">-->
 <!--                        <img th:src="@{/img/anonym.jpg}" alt="Vezetéknév Keresztnév" class="rounded-image">-->
 <!--                        <div class="rating">-->
 <!--                            <input type="radio" id="star5" name="rating" value="5"  disabled />-->
