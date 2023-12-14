@@ -108,9 +108,76 @@ window.onclick = function(event) {
 };
 
 
+// profilkepek megjelenitese
+let profileimages = [];
 document.addEventListener('DOMContentLoaded', function() {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    console.log("Helloka");
+    fetch("/myGroup/getallprofileimage", {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }).then(data => {
+        profileimages = data.profileimagesandid;
+        console.log(profileimages);
+        handlereprofileimages();
+    }).catch(error => {
+        console.log("Error: ", error);
+    });
+
+});
+
+function handlereprofileimages() {
+    for (let i = 0; i < profileimages.length; i++) {
+        const profilData = profileimages[i];
+        const profilImage = profilData[0];
+        const profilId = profilData[1];
+
+        var profileImg  = document.getElementById('myGroupProfileImg-' + profilId);
+        if (profilImage != null) {
+            profileImg.src = 'data:image/jpeg;base64,' + profilImage;
+        }
+
+    }
+}
 
 
+// document.addEventListener('DOMContentLoaded', function() {
+//
+//
+//     const checkboxContainers = document.querySelectorAll('.checkbox-container');
+//
+//     checkboxContainers.forEach(container => {
+//         const label = container.querySelector('label');
+//         const checkbox = label.querySelector('input[class="dropdown-checkbox"]');
+//         const labelText = label.textContent.trim();
+//
+//         const checkboxElement = document.createElement('div');
+//         checkboxElement.classList.add('checkbox-item');
+//
+//         checkboxElement.innerHTML = `
+//             <label>
+//                 <input type="checkbox" value="${checkbox.value}">
+//                 <span class="checkmark"></span>
+//                 ${labelText}
+//             </label>
+//         `;
+//
+//         document.getElementById('checkboxDropdown-myGroup').appendChild(checkboxElement);
+//     });
+// });
+
+document.addEventListener('DOMContentLoaded', function() {
     const checkboxContainers = document.querySelectorAll('.checkbox-container');
 
     checkboxContainers.forEach(container => {
@@ -121,9 +188,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const checkboxElement = document.createElement('div');
         checkboxElement.classList.add('checkbox-item');
 
+        const checkboxValue = checkbox ? checkbox.value : ''; // Ellenőrizzük, hogy a checkbox változó létezik-e
         checkboxElement.innerHTML = `
             <label>
-                <input type="checkbox" value="${checkbox.value}">
+                <input type="checkbox" value="${checkboxValue}">
                 <span class="checkmark"></span>
                 ${labelText}
             </label>
@@ -132,4 +200,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('checkboxDropdown-myGroup').appendChild(checkboxElement);
     });
 });
+
+
 

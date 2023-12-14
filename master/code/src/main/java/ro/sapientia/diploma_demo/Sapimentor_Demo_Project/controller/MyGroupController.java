@@ -1,6 +1,7 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,17 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.MyGroupProfileDetailDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Rating;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.RatingRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.MyGroupService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.RatingService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.SkillService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UtilityForSomeCotroller;
 
 import java.security.Principal;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ public class MyGroupController {
     private final SkillService skillService;
     private final RatingRepository ratingRepository;
     private final UtilityForSomeCotroller utilityForSomeCotroller;
+    private  final MyGroupService myGroupService;
 
 
 
@@ -43,13 +45,15 @@ public class MyGroupController {
                              TopicService topicService,
                              SkillService skillService,
                              RatingRepository ratingRepository,
-                             UtilityForSomeCotroller utilityForSomeCotroller) {
+                             UtilityForSomeCotroller utilityForSomeCotroller,
+                             MyGroupService myGroupService) {
         this.userRepository = userRepository;
         this.ratingService = ratingService;
         this.topicService = topicService;
         this.skillService = skillService;
         this.ratingRepository = ratingRepository;
         this.utilityForSomeCotroller = utilityForSomeCotroller;
+        this.myGroupService = myGroupService;
     }
 
     //TODO: Implement showProfileImageAndName
@@ -146,35 +150,57 @@ public class MyGroupController {
         // csinalni hogy a felhasznalo sajat magat ne lassa es
         // hogy mentor vagy mentoraltakat keressen
 
+
+        // ezeknek majd kell kulon controller es service es repository
+        // es fetch - el kell lekerni
         // uj verzio
         String email = principal.getName();
         Long userId = userRepository.findIdByEmail(email);
-        List<User> allUsers = userRepository.findAllOtherUser(userId);
-        model.addAttribute("allUsers", allUsers);
-
-        Map<Long, String> profileImagesByUserId = new HashMap<>();
-        for (User user : allUsers) {
-            byte[] profileImageBytes = user.getProfileImage();
-            if (profileImageBytes != null) {
-                String profileImageBase64 = Base64.getEncoder().encodeToString(profileImageBytes);
-                profileImagesByUserId.put(user.getId(), profileImageBase64);
-            } else {
-                profileImagesByUserId.put(user.getId(), "");
-            }
-        }
-        model.addAttribute("profileImagesByUserId", profileImagesByUserId);
-
+        List<MyGroupProfileDetailDTO> allUsers = userRepository.findAllOtherUser(userId);
+        //System.out.println("allUsers: " + allUsers);
         List<Rating> allRatings = ratingRepository.findAll();
-        model.addAttribute("allRatings", allRatings);
 
+        // Map<Long, String> profileImagesByUserId = new HashMap<>();
         Map<Long, Double> averageRatingsByUserId = new HashMap<>();
-        for (User user : allUsers) {
-            double averageRating = ratingService.getAverageRating(user.getId()).get("average");
-            averageRatingsByUserId.put(user.getId(), averageRating);
+        for (MyGroupProfileDetailDTO user : allUsers) {
+            Long user_Id = user.getId();
+            double averageRating = ratingService.getAverageRating(user_Id).get("average");
+            averageRatingsByUserId.put(user_Id, averageRating);
         }
+
+
+//        List<Rating> allRatings = ratingRepository.findAll();
+//
+//        Map<Long, Double> averageRatingsByUserId = new HashMap<>();
+//        for (User user : allUsers) {
+//            double averageRating = ratingService.getAverageRating(user.getId()).get("average");
+//            averageRatingsByUserId.put(user.getId(), averageRating);
+//        }
+
+        model.addAttribute("allUsers", allUsers);
+        // model.addAttribute("profileImagesByUserId", profileImagesByUserId);
+        model.addAttribute("allRatings", allRatings);
         model.addAttribute("averageRatingsByUserId", averageRatingsByUserId);
 
         return "myGroup";
+    }
+
+    @Cacheable("getallprofileimage")
+    @GetMapping("/getallprofileimage")
+    public ResponseEntity<Map<String,Object>> getAllProfileImage(Principal principal) {
+        try {
+            String email = principal.getName();
+            Long userId = userRepository.findIdByEmail(email);
+            Map<String, Object> response = new HashMap<>();
+            List<Object[]> profileImageBytesList = myGroupService.getAllProfileImageById(userId);
+            response.put("profileimagesandid", profileImageBytesList);
+            System.out.println("profileImageBytesList: " + profileImageBytesList);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
 

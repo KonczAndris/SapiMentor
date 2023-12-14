@@ -910,7 +910,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             //console.log(data.igenigen);
             examimages = data.examimagesandid;
-            console.log(examimages);
+            //console.log(examimages);
             handlerexmaimages();
             //console.log(likeAndDislikeStatuses);
         })
