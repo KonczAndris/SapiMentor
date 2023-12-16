@@ -104,7 +104,7 @@
                 <div class="search-content">
                     <div class="role-button">
                         <div class="role-button">
-                            <button class="mentor-side" onclick="selectSide('left')">MENTOR</button>
+                            <button class="mentor-side " onclick="selectSide('left')">MENTOR</button>
                             <div class="button-divider"></div>
                             <button class="mentee-side" onclick="selectSide('right')">MENTEE</button>
                         </div>
@@ -165,13 +165,18 @@
                 </div>
 
                 <div class="button-box">
-                <button class="search-button" id="search-button">Search</button>
+                    <button class="search-button" id="search-button" th:onclick="fuggveny()">Search</button>
                     <button class="cancel-button" id="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
                 </div>
             </div>
             <div class="right-search-box">
+<!--                 proba  ide esetleg valami udvozlo es informalo szoveg
+                     es hogy jol nezzen ki hogy ne legyen ures div -->
+                <div th:id="information-box">
+                    <h1>Search for a mentor or mentee</h1>
+                    <p>Ide valami szoveg vagy valami</p>
+                </div>
                 <div class="scrollable-div">
-
                     <div class="image-cell" th:id="${'image-cell-' + pic}" th:each="pic : ${allUsers}">
                         <!-- Profilkép megjelenítése -->
 <!--                        <img th:if="${profileImagesByUserId[pic.id] ne null and profileImagesByUserId[pic.id] ne ''}"-->
@@ -206,30 +211,12 @@
 
                         <span class="myGroupName" th:text="${pic.firstName + ' ' + pic.lastName}"></span>
                     </div>
-
-
-
-                    <!--                    <div class="image-cell">-->
-<!--                        <img th:src="@{/img/anonym.jpg}" alt="Vezetéknév Keresztnév" class="rounded-image">-->
-<!--                        <div class="rating">-->
-<!--                            <input type="radio" id="star5" name="rating" value="5"  disabled />-->
-<!--                            <label for="star5">&#9733;</label>-->
-<!--                            <input type="radio" id="star4" name="rating" value="4" disabled />-->
-<!--                            <label for="star4">&#9733;</label>-->
-<!--                            <input type="radio" id="star3" name="rating" value="3"  disabled />-->
-<!--                            <label for="star3">&#9733;</label>-->
-<!--                            <input type="radio" id="star2" name="rating" value="2"  disabled />-->
-<!--                            <label for="star2">&#9733;</label>-->
-<!--                            <input type="radio" id="star1" name="rating" value="1"  disabled />-->
-<!--                            <label for="star1">&#9733;</label>-->
-<!--                        </div>-->
-<!--                        <span class="myGroupName" >Vezetéknév Keresztnév</span>-->
-<!--                    </div>-->
-
+                </div>
             </div>
         </div>
-<!--        SEARCH DIV END-->
+    </div>
 
+<!--        SEARCH DIV END-->
 
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

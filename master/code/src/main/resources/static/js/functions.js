@@ -737,40 +737,138 @@ function showTopicsAndSkillsInModal() {
         });
 }
 
+let selectedRole = [];
 function updateRoleStatus(){
-    var selectedRole = document.querySelector('input[name="role"]:checked').value;
-    //console.log(selectedRole);
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-    console.log(token);
 
-// Elküldjük a kérést az '/updateUserRoleStatus' végpontra
-    fetch('/updateUserRoleStatus', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        },
-        body: 'selectedRole=' + encodeURIComponent(selectedRole)
-    })
-        .then(response => {
+
+    var selectedRoles = document.querySelectorAll('input[name="role"]:checked');
+    var selectedRolesLabels = document.querySelectorAll('label.unchecked');
+    let associatedInputs = [];
+
+    if (selectedRolesLabels.length > 0) {
+        selectedRolesLabels.forEach(function(label) {
+            let associatedInputValue = label.querySelector('input[name="role"]').value;
+            associatedInputs.push(associatedInputValue);
+            //console.log(associatedInputValue);
+        });
+        console.log("associatedInputs: " +  associatedInputs.toString());
+
+        fetch('/deleteUserRoleStatus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            },
+            body: 'selectedRoleToDelete=' + encodeURIComponent(associatedInputs.toString())
+        }).then(response => {
             if (!response.ok) {
                 throw new Error('Error occurred while updating user role status');
             }
             return response.json(); // Várunk egy JSON választ
-        })
-        .then(data => {
+        }).then(data => {
             // Kezeljük a választ, és jelenítsük meg az üzenetet
             console.log(data.message);
-            location.reload();
-        })
-        .catch(error => {
+            console.log("igen1" + selectedRoles);
+            var selectedRoleValues = Array.from(selectedRoles).map(role => role.value).join(',');
+            // selectedRoles.forEach(function(role) {
+            //     selectedRole.push(role.value);
+            //     //console.log(role.value);
+            // });
+            console.log("igen2" +selectedRoleValues);
+
+
+// Elküldjük a kérést az '/updateUserRoleStatus' végpontra
+            fetch('/updateUserRoleStatus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRF-TOKEN': token
+                },
+                body: 'selectedRole=' + encodeURIComponent(selectedRoleValues)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error occurred while updating user role status');
+                    }
+                    return response.json(); // Várunk egy JSON választ
+                })
+                .then(data => {
+                    // Kezeljük a választ, és jelenítsük meg az üzenetet
+                    console.log(data.message);
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error('Hiba történt:', error);
+                });
+            //location.reload();
+        }).catch(error => {
             console.error('Hiba történt:', error);
-        });
+        })
+
+    } else {
+        console.log("igen1" + selectedRoles);
+        var selectedRoleValues = Array.from(selectedRoles).map(role => role.value).join(',');
+        // selectedRoles.forEach(function(role) {
+        //     selectedRole.push(role.value);
+        //     //console.log(role.value);
+        // });
+        console.log("igen2" +selectedRoleValues);
+
+
+// Elküldjük a kérést az '/updateUserRoleStatus' végpontra
+        fetch('/updateUserRoleStatus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            },
+            body: 'selectedRole=' + encodeURIComponent(selectedRoleValues)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error occurred while updating user role status');
+                }
+                return response.json(); // Várunk egy JSON választ
+            })
+            .then(data => {
+                // Kezeljük a választ, és jelenítsük meg az üzenetet
+                console.log(data.message);
+                location.reload();
+            })
+            .catch(error => {
+                console.error('Hiba történt:', error);
+            });
+    }
+
+
+
+
 }
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"][name="role"]');
 
+    checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+            var label = checkbox.closest('label'); // Megkeressük a checkboxhoz tartozó címkét
+            label.classList.add('checked');
+        }
+        checkbox.addEventListener('change', function() {
+            var label = this.closest('label'); // Megkeressük a checkboxhoz tartozó címkét
+
+            if (this.checked) {
+                label.classList.remove('unchecked');
+                label.classList.add('checked');
+            } else {
+                label.classList.remove('checked');
+                label.classList.add('unchecked');
+            }
+        });
+    });
+});
 
 setupMentorModal();
 setupModal();

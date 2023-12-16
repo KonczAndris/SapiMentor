@@ -2,8 +2,11 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-
+// A ScheduledTaskService osztályban lévő
+// @Scheduled annotációk használatához
+@EnableScheduling
 @SpringBootApplication
 public class SapimentorDemoProjectApplication {
 

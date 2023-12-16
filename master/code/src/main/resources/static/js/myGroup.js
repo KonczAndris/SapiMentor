@@ -60,6 +60,7 @@ handleWindowResize();
 
 let selectedSide = '';
 
+
 function selectSide(side) {
     if (selectedSide === side) {
         selectedSide = '';
@@ -108,9 +109,38 @@ window.onclick = function(event) {
 };
 
 
+function fuggveny(){
+    var menteebutton =  document.querySelector('.mentee-side');
+    var mentorbutton =  document.querySelector('.mentor-side');
+
+    if (menteebutton.classList.contains('active')) {
+        window.location.href = "/myGroup/getallmentees";
+    } else if (mentorbutton.classList.contains('active')) {
+        alert("Mentoros oldalra irányítás")
+        //window.location.href = "/myGroup/myCustomGroupMentor";
+    } else {
+        //Meg kell jelenitse hogy valamelyiket muszaj kivalasztani
+        // es esetleg azt a mentor/mentee div-nek adjon piros keretet
+        alert("Hibat kell megjelenitsen, ")
+        //window.location.href = "/myGroup/myCustomGroup";
+    }
+
+
+}
+
+
 // profilkepek megjelenitese
 let profileimages = [];
 document.addEventListener('DOMContentLoaded', function() {
+    var currentURL = window.location.href;
+    var MainInformationPage = document.getElementById("information-box");
+    if (currentURL.includes("myGroup/getallmentees")) {
+        MainInformationPage.style.display = "none";
+    }
+
+
+    console.log("Current URL: ", currentURL);
+
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 

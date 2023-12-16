@@ -174,18 +174,18 @@
                   <div class="form-group-mentor">
                     <div class="detail-row-mentor">
                       <div class="edit-input-mentor" id="role-edit" required>
+<!--                        <label>-->
+<!--                          <input type="checkbox" name="role" value="USER" th:checked="${#lists.contains(userRegistrationDetails.roles, 'USER')}" required>-->
+<!--                          <span class="checkbox-custom"></span>-->
+<!--                          USER-->
+<!--                        </label>-->
                         <label>
-                          <input type="radio" name="role" value="USER" th:checked="${userRegistrationDetails.roles == 'USER'}" required>
-                          <span class="checkbox-custom"></span>
-                          USER
-                        </label>
-                        <label>
-                          <input type="radio" name="role" value="MENTOR" th:checked="${userRegistrationDetails.roles == 'MENTOR'}" required>
+                          <input type="checkbox" name="role" value="MENTOR" th:checked="${#lists.contains(userRegistrationDetails.roles, 'MENTOR')}" required>
                           <span class="checkbox-custom"></span>
                           MENTOR
                         </label>
                         <label>
-                          <input type="radio" name="role" value="MENTEE" th:checked="${userRegistrationDetails.roles == 'MENTEE'}" required>
+                          <input type="checkbox" name="role" value="MENTEE" th:checked="${#lists.contains(userRegistrationDetails.roles, 'MENTEE')}" required>
                           <span class="checkbox-custom"></span>
                           MENTEE
                         </label>

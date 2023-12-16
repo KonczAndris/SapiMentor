@@ -35,6 +35,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.MyGroupProfileDetailDTO(u.first_Name, u.last_Name, u.id) FROM User u WHERE u.id != :userId")
     List<MyGroupProfileDetailDTO> findAllOtherUser(@Param("userId") Long userId);
 
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.MyGroupProfileDetailDTO(u.first_Name, u.last_Name, u.id) FROM User u JOIN u.roles r WHERE r.name = 'MENTEE' AND u.id != :userId")
+    List<MyGroupProfileDetailDTO> findAllMentees(@Param("userId") Long userId);
+
     @Query("SELECT u.profileImage, u.id FROM User u WHERE u.id != :userId")
     List<Object[]> findallProfileImageById(@Param("userId") Long userId);
 }

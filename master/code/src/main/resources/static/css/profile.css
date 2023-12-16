@@ -401,7 +401,7 @@ h2 {
     font-size: large;
     align-items: center;
 }
-.edit-input-mentor label input[type="radio"] {
+.edit-input-mentor label input[type="checkbox"] {
     display: none;
 }
 
@@ -428,7 +428,7 @@ h2 {
     transform: rotate(45deg);
     opacity: 0;
 }
-.edit-input-mentor input[type="radio"]:checked + .checkbox-custom::before {
+.edit-input-mentor input[type="checkbox"]:checked + .checkbox-custom::before {
     opacity: 1;
 }
 

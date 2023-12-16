@@ -6,10 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import javax.transaction.Transactional;
+import java.util.*;
 
 
 //megkerdezni chat-tol hogy ez pontosan miaz
@@ -148,8 +146,6 @@ public class User {
             this.roles = new ArrayList<>();
         }
 
-//        System.out.println("New role: " + newRole.getName());
-//        System.out.println("Roles: ");
         var i = 0;
         for (Role role : this.roles) {
             if(role.getName().equals(newRole.getName())){
@@ -171,5 +167,27 @@ public class User {
             System.out.println("Role not added");
         }
     }
+
+
+
+    @Transactional
+    public List<Integer> removeRoleFromUser(User user, String roleName) {
+        // Keresd meg a User objektumot a user_id alapján
+
+            Set<Role> rolesToRemove = new HashSet<>();
+            List<Integer> removedRoles = new ArrayList<>();
+            // Végigmenj a Role-okon és gyűjtsd össze azokat, amiket törölni kell
+            for (Role role : user.getRoles()) {
+                if (role.getName().equals(roleName)) {
+                    rolesToRemove.add(role);
+                    removedRoles.add(role.getId());
+                }
+            }
+
+            // Távolítsd el a gyűjtött Role-okat
+            user.getRoles().removeAll(rolesToRemove);
+            return removedRoles;
+    }
+
 
 }

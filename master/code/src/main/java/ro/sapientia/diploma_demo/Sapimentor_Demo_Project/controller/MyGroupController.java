@@ -154,15 +154,67 @@ public class MyGroupController {
         // ezeknek majd kell kulon controller es service es repository
         // es fetch - el kell lekerni
         // uj verzio
+//        String email = principal.getName();
+//        Long userId = userRepository.findIdByEmail(email);
+//        List<MyGroupProfileDetailDTO> allUsers = userRepository.findAllOtherUser(userId);
+//        //System.out.println("allUsers: " + allUsers);
+//        List<Rating> allRatings = ratingRepository.findAll();
+//
+//        // Map<Long, String> profileImagesByUserId = new HashMap<>();
+//        Map<Long, Double> averageRatingsByUserId = new HashMap<>();
+//        for (MyGroupProfileDetailDTO user : allUsers) {
+//            Long user_Id = user.getId();
+//            double averageRating = ratingService.getAverageRating(user_Id).get("average");
+//            averageRatingsByUserId.put(user_Id, averageRating);
+//        }
+//
+//
+////        List<Rating> allRatings = ratingRepository.findAll();
+////
+////        Map<Long, Double> averageRatingsByUserId = new HashMap<>();
+////        for (User user : allUsers) {
+////            double averageRating = ratingService.getAverageRating(user.getId()).get("average");
+////            averageRatingsByUserId.put(user.getId(), averageRating);
+////        }
+//
+//        model.addAttribute("allUsers", allUsers);
+//        // model.addAttribute("profileImagesByUserId", profileImagesByUserId);
+//        model.addAttribute("allRatings", allRatings);
+//        model.addAttribute("averageRatingsByUserId", averageRatingsByUserId);
+
+        return "myGroup";
+    }
+
+    @GetMapping("/getallmentees")
+    public String showAllMentees (Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        utilityForSomeCotroller.showTopicsToMyGroupPage(model);
+        utilityForSomeCotroller.showSkillsToMyGroupPage(model);
+        utilityForSomeCotroller.showProfileImageAndName(model, principal);
+
+        // ez itt csak proba ezt szepen meg kene csinalni fuggvenybe
+
+        // regi verzio
+        //List<User> allUsers = userRepository.findAll();
+
+        // itt majd ugy is ugy kell lekerdezeseket
+        // csinalni hogy a felhasznalo sajat magat ne lassa es
+        // hogy mentor vagy mentoraltakat keressen
+
+
+        // ezeknek majd kell kulon controller es service es repository
+        // es fetch - el kell lekerni
+        // uj verzio
         String email = principal.getName();
         Long userId = userRepository.findIdByEmail(email);
-        List<MyGroupProfileDetailDTO> allUsers = userRepository.findAllOtherUser(userId);
-        //System.out.println("allUsers: " + allUsers);
-        List<Rating> allRatings = ratingRepository.findAll();
+        List<MyGroupProfileDetailDTO> allMentees = userRepository.findAllMentees(userId);
+        List<Rating> allRatings = ratingRepository.findAllOther(userId);
 
         // Map<Long, String> profileImagesByUserId = new HashMap<>();
         Map<Long, Double> averageRatingsByUserId = new HashMap<>();
-        for (MyGroupProfileDetailDTO user : allUsers) {
+        for (MyGroupProfileDetailDTO user : allMentees) {
             Long user_Id = user.getId();
             double averageRating = ratingService.getAverageRating(user_Id).get("average");
             averageRatingsByUserId.put(user_Id, averageRating);
@@ -177,13 +229,14 @@ public class MyGroupController {
 //            averageRatingsByUserId.put(user.getId(), averageRating);
 //        }
 
-        model.addAttribute("allUsers", allUsers);
+        model.addAttribute("allUsers", allMentees);
         // model.addAttribute("profileImagesByUserId", profileImagesByUserId);
         model.addAttribute("allRatings", allRatings);
         model.addAttribute("averageRatingsByUserId", averageRatingsByUserId);
 
         return "myGroup";
     }
+
 
     @Cacheable("getallprofileimage")
     @GetMapping("/getallprofileimage")

@@ -12,13 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.*;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ProfileTopicsRepository;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.SkillRepository;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.TopicRepository;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.RatingService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserServiceImpl;
+
+import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.*;
@@ -32,6 +31,7 @@ public class ProfileController {
     private final TopicRepository topicRepository;
     private final ProfileTopicsRepository profileTopicsRepository;
     private final RatingService ratingService;
+    private final RoleRepository roleRepository;
 
 
     @Autowired
@@ -41,7 +41,8 @@ public class ProfileController {
                              SkillRepository skillRepository,
                              TopicRepository topicRepository,
                              ProfileTopicsRepository profileTopicsRepository,
-                             RatingService ratingService) {
+                             RatingService ratingService,
+                             RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.topicService = topicService;
@@ -49,6 +50,7 @@ public class ProfileController {
         this.topicRepository = topicRepository;
         this.profileTopicsRepository = profileTopicsRepository;
         this.ratingService = ratingService;
+        this.roleRepository = roleRepository;
     }
 
     @GetMapping("/profile")
@@ -64,7 +66,7 @@ public class ProfileController {
         User user = userRepository.findByEmail(email);
 
         UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
-        //System.out.println("UJ ERTEK" + userRegistrationDetails);
+        System.out.println("UJ ERTEK" + userRegistrationDetails);
 
         List<String> rolesToDisplay = new ArrayList<>();
         boolean hasOtherRoles = false;
@@ -292,10 +294,7 @@ public class ProfileController {
                                                        Principal principal) throws JsonProcessingException {
         System.out.println("Selected role: " + selectedRole);
         String email = principal.getName();
-        //System.out.println("Email: " + email);
-
         Long userId = userRepository.findByEmail(email).getId();
-        //System.out.println("User id: " + userId);
 
         if(!userService.isAtLeastSecondYear(userId)){
             //System.out.println("Nem masodik ev");
@@ -303,17 +302,65 @@ public class ProfileController {
             responsee.put("message", "Nem masod eves legalabb!"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
             return ResponseEntity.ok(new ObjectMapper().writeValueAsString(responsee));
         }else{
-            //System.out.println("Tobb/Vagy mint masodik ev");
             User user = userRepository.findByEmail(email);
-            Role newRole = new Role(selectedRole);
-            //System.out.println("New role: " + newRole);
-            user.addRole(newRole);
+            if (selectedRole.length() > 6) {
+                String[] rolesArray = selectedRole.split(",");
+                for (String role : rolesArray) {
+                    Role newRole = new Role(role.trim());
+                    user.addRole(newRole);
+                    System.out.println("New role added: " + newRole);
+                }
+            } else if (selectedRole.length() == 6 ) {
+                Role newRole = new Role(selectedRole);
+                user.addRole(newRole);
+            }
+
             userRepository.save(user);
         }
 
         // Az eredmény JSON objektum létrehozása
+         Map<String, String> response = new HashMap<>();
+         response.put("message", "Szerep módosítva!"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
+
+        // JSON objektum visszaadása a ResponseEntity segítségével
+        return ResponseEntity.ok(new ObjectMapper().writeValueAsString(response));
+    }
+
+    @Transactional
+    @PostMapping("/deleteUserRoleStatus")
+    public ResponseEntity<String> deleteUserRoleStatus(String selectedRoleToDelete, Principal principal)
+            throws JsonProcessingException {
+        System.out.println("Selected role for delete: " + selectedRoleToDelete);
+        String email = principal.getName();
+        Long userId = userRepository.findIdByEmail(email);
+
+        User user = userRepository.findByEmail(email);
+        List<Integer> removedRoles = new ArrayList<>();
+        if (selectedRoleToDelete.length() > 6) {
+            String[] rolesArray = selectedRoleToDelete.split(",");
+            for (String role : rolesArray) {
+                String removableRole = role.trim();
+                // Törölje el a kiválasztott szerepet a User objektumból
+                removedRoles.addAll(user.removeRoleFromUser(user, removableRole));
+            }
+            System.out.println("Removed role1: " + removedRoles);
+        } else if (selectedRoleToDelete.length() == 6) {
+            // Ha egy szerep van kiválasztva, akkor azt is törölje
+            removedRoles.addAll(user.removeRoleFromUser(user, selectedRoleToDelete.trim()));
+            System.out.println("Removed roles2: " + removedRoles);
+        }
+
+        userRepository.save(user);
+
+        // Most a removedRoles listában tárolt szerepekhez férhetsz hozzá
+        for (Integer removedRole : removedRoles) {
+            System.out.println("Removed role: " + removedRole);
+            roleRepository.updateRolesStatusByIdCustom(removedRole);
+        }
+
+        // Az eredmény JSON objektum létrehozása
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Szerep módosítva!"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
+        response.put("message", "Szerep torolve!"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
 
         // JSON objektum visszaadása a ResponseEntity segítségével
         return ResponseEntity.ok(new ObjectMapper().writeValueAsString(response));

@@ -312,5 +312,24 @@ body {
         text-align: center;
     }
 
+    #sapimentor-logo{
+        letter-spacing: 2px;
+        text-align: center;
+        justify-content: center;
+        margin: 25px;
+        width: 26%;
+    }
+
 }
+
+@media (max-width: 450px) {
+    #sapimentor-logo{
+        letter-spacing: 2px;
+        text-align: center;
+        justify-content: center;
+        margin: 25px;
+        width: 40%;
+    }
+}
+
 

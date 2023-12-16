@@ -1,5 +1,6 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository;
 
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,4 +24,7 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
     @Modifying
     @Query("DELETE FROM Rating r WHERE r.userId = :ratingUserId AND r.ratedUserId = :ratedUserId")
     void deleteByUserIdAndRatedUserId(Long ratingUserId, Long ratedUserId);
+
+    @Query("SELECT r FROM Rating r WHERE r.ratedUserId != :userId")
+    List<Rating> findAllOther(@Param("userId") Long userId);
 }
