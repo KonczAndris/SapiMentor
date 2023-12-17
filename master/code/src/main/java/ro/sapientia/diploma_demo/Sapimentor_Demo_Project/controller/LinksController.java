@@ -58,9 +58,6 @@ public class LinksController {
 
         String email = principal.getName();
 
-        // Eredeti megoldas
-        // User user = userRepository.findByEmail(email);
-
         // Uj megoldas (probalkozas)
         Long userId = userRepository.findIdByEmail(email);
         Collection<Role> roles = userRepository.findRolesByUserId(userId);
@@ -69,14 +66,6 @@ public class LinksController {
         List<String> rolesToDisplayResources = new ArrayList<>();
         boolean hasOtherRole = false;
 
-        // Eredeti megoldas
-//        for (Role role : user.getRoles()){
-//            if(!role.getName().equals("USER")){
-//                rolesToDisplayResources.add(role.getName());
-//                hasOtherRole = true;
-//            }
-//        }
-
         // Uj megoldas (probalkozas)
         for (Role role : roles){
             if(!role.getName().equals("USER")){
@@ -84,7 +73,6 @@ public class LinksController {
                 hasOtherRole = true;
             }
         }
-
 
         if(!hasOtherRole){
             rolesToDisplayResources.add("USER");
@@ -98,7 +86,6 @@ public class LinksController {
     private void showTopicsToDisplayResources(Model model){
         // Itt lekérem a témákat a service segítségével
         List<Topic> topics = topicService.getAllTopics();
-        //System.out.println("Topics: " + topics);
         model.addAttribute("topics", topics);
     }
 
@@ -106,7 +93,6 @@ public class LinksController {
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
         UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
-        //System.out.println("User: " + userRegistrationDetails.getFirstName());
 
         byte[] profileImage = user.getProfileImage();
         if(profileImage != null){
@@ -140,70 +126,68 @@ public class LinksController {
                                                   Principal principal){
         //ez a objectMapper a json stringet alakitja at objektumokka
         ObjectMapper objectMapper = new ObjectMapper();
-        //System.out.println("Resources upload data items: " + resourcesUploadDataItems);
-
         String email = principal.getName();
-        // Regi megoldas
-       // User user = userRepository.findByEmail(email);
 
         // Uj megoldas (probalkozas)
         Long user_id = userRepository.findIdByEmail(email);
-        //System.out.println("User_Name: " + user.getFirst_Name());
         String User_name = userRepository.findNameById(user_id);
-        //System.out.println("User_Name: " + User_name);
         String Full_User_Name = User_name.replace(",", " ");
-        //System.out.println("Full_User_Name: " + Full_User_Name);
         try{
             // JSON string deszerializálása objektumokká
             Resources[] resources_dataItems = objectMapper.readValue(resourcesUploadDataItems, Resources[].class);
-            //System.out.println("Resources data items: " + resources_dataItems);
 
-            for (Resources resourcesData : resources_dataItems){
-                String name = resourcesData.getName();
-                String link = resourcesData.getLink();
-                String topic_name = resourcesData.getTopic_name();
-                // Regi megoldas
-                // String user_name = user.getFirst_Name() + " " + user.getLast_Name();
+            String answer = resourceServices.processAndSaveResources(resources_dataItems, Full_User_Name);
 
-                // Uj megoldas (probalkozas)
-                String user_name = Full_User_Name;
-
-                Integer like = 0;
-                Integer dislike = 0;
-//                System.out.println("IsLinkAccessible: " + isLinkAccessible(link));
-//                System.out.println("ContainsMaliciousContent: " + containsMaliciousContent(link));
-                //System.out.println("IsURLSafe: " + isURLSafe(link));
-
-                // link ervenyessegenek ellenorzese
-                if (resourceServices.isLinkAccessible(link)){
-                    // linkben talalhato-e karterek
-                    if(!resourceServices.containsMaliciousContent(link)){
-                        if(resourceServices.isURLSafe(link)){
-                            // Adatok elmentese a Resources entitasba
-                            Resources resources = new Resources();
-                            resources.setName(name);
-                            resources.setLink(link);
-                            resources.setTopic_name(topic_name);
-                            resources.setUser_name(user_name);
-                            resources.setLike(like);
-                            resources.setDislike(dislike);
-
-                            // Resources entitas elmentese az adatbazisba
-                             resourcesRepository.save(resources);
-                        } else {
-                            // link biztonsagos-e vagy karos
-                            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NotSafe");
-                        }
-                    } else {
-                        // linkben talalhato karterek
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("MaliciousContent");
-                    }
-                } else {
-                    // link ervenytelen
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("InvalidLink");
-                }
+            if(answer.equals("Success")){
+                return ResponseEntity.ok("Success");
+            } else if (answer.equals("NotSafe")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NotSafe");
+            } else if (answer.equals("MaliciousContent")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("MaliciousContent");
+            } else if (answer.equals("InvalidLink")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("InvalidLink");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
             }
-            return ResponseEntity.ok("Success");
+
+//            for (Resources resourcesData : resources_dataItems){
+//                String name = resourcesData.getName();
+//                String link = resourcesData.getLink();
+//                String topic_name = resourcesData.getTopic_name();
+//                String user_name = Full_User_Name;
+//                Integer like = 0;
+//                Integer dislike = 0;
+//
+//                // link ervenyessegenek ellenorzese
+//                if (resourceServices.isLinkAccessible(link)){
+//                    // linkben talalhato-e karterek
+//                    if(!resourceServices.containsMaliciousContent(link)){
+//                        if(resourceServices.isURLSafe(link)){
+//                            // Adatok elmentese a Resources entitasba
+//                            Resources resources = new Resources();
+//                            resources.setName(name);
+//                            resources.setLink(link);
+//                            resources.setTopic_name(topic_name);
+//                            resources.setUser_name(user_name);
+//                            resources.setLike(like);
+//                            resources.setDislike(dislike);
+//                            // Resources entitas elmentese az adatbazisba
+//                             resourcesRepository.save(resources);
+//                        } else {
+//                            // link biztonsagos-e vagy karos
+//                            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NotSafe");
+//                        }
+//                    } else {
+//                        // linkben talalhato karterek
+//                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("MaliciousContent");
+//                    }
+//                } else {
+//                    // link ervenytelen
+//                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("InvalidLink");
+//                }
+//            }
+//
+//            return ResponseEntity.ok("Success");
         } catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");

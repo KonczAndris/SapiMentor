@@ -435,8 +435,14 @@ function saveExamExamplesDataToServer() {
        topic: imageTopic,
 
     });
+
+    if (image === undefined || imageFileName === "" || imageTopic === "Choose a topic") {
+        showErrorMessageInExam("Please fill out all fields!");
+    } else {
+        sendExamsDataToServer(data);
+    }
     //console.log(data);
-    sendExamsDataToServer(data);
+    // sendExamsDataToServer(data);
 }
 // ezt is andrisnak
 function showLoadingModal() {

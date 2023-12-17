@@ -109,15 +109,21 @@ window.onclick = function(event) {
 };
 
 
+
+
+// itt attol fugg melyik active ugyebar arra az URL-re kell iranyitson
 function fuggveny(){
     var menteebutton =  document.querySelector('.mentee-side');
     var mentorbutton =  document.querySelector('.mentor-side');
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
 
     if (menteebutton.classList.contains('active')) {
-        window.location.href = "/myGroup/getallmentees";
+        showLoadingModal();
+        window.location.href = "/myGroup/mentees";
     } else if (mentorbutton.classList.contains('active')) {
-        alert("Mentoros oldalra irányítás")
-        //window.location.href = "/myGroup/myCustomGroupMentor";
+        showLoadingModal();
+        window.location.href = "/myGroup/mentors";
     } else {
         //Meg kell jelenitse hogy valamelyiket muszaj kivalasztani
         // es esetleg azt a mentor/mentee div-nek adjon piros keretet
@@ -132,43 +138,76 @@ function fuggveny(){
 // profilkepek megjelenitese
 let profileimages = [];
 document.addEventListener('DOMContentLoaded', function() {
-    var currentURL = window.location.href;
-    var MainInformationPage = document.getElementById("information-box");
-    if (currentURL.includes("myGroup/getallmentees")) {
-        MainInformationPage.style.display = "none";
-    }
-
-
-    console.log("Current URL: ", currentURL);
-
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
-    console.log("Helloka");
-    fetch("/myGroup/getallprofileimage", {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Something went wrong');
-        }
-    }).then(data => {
-        profileimages = data.profileimagesandid;
-        console.log(profileimages);
-        handlereprofileimages();
-    }).catch(error => {
-        console.log("Error: ", error);
-    });
+    var currentURL = window.location.href;
+    console.log("Current URL: ", currentURL);
+    var MainInformationPage = document.getElementById("information-box");
+    var mentorbutton =  document.querySelector('.mentor-side');
+    var menteebutton =  document.querySelector('.mentee-side');
 
+    if (currentURL.includes("myGroup/mentees")) {
+        MainInformationPage.style.display = "none";
+        menteebutton.classList.add('active');
+        menteebutton.style.backgroundColor = 'rgb(22, 175, 132)';
+        menteebutton.style.color = 'white';
+        // lekerni a mentee-k profilkepeit
+        console.log("Helloka menteek");
+        fetch("/myGroup/mentees/getallmenteeprofileimage", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).then(data => {
+            profileimages = data.profileimagesandid;
+            //console.log(profileimages);
+            handlereprofileimages();
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
+    } else if (currentURL.includes("myGroup/mentors")) {
+        MainInformationPage.style.display = "none";
+        mentorbutton.classList.add('active');
+        mentorbutton.style.backgroundColor = 'rgb(22, 175, 132)';
+        mentorbutton.style.color = 'white';
+
+        // lekerni a mentorok profilkepeit
+        console.log("Helloka mentorok");
+        fetch("/myGroup/mentors/getallmentorprofileimage", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).then(data => {
+            profileimages = data.profileimagesandid;
+            //console.log(profileimages);
+            handlereprofileimages();
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
+    }
 });
 
 function handlereprofileimages() {
+
+    //console.log("Profile images hossz : ", profileimages.length);
     for (let i = 0; i < profileimages.length; i++) {
+        //console.log("Profile images : ", profileimages[i]);
         const profilData = profileimages[i];
         const profilImage = profilData[0];
         const profilId = profilData[1];
@@ -181,7 +220,16 @@ function handlereprofileimages() {
     }
 }
 
+function showLoadingModal() {
+    var modal = document.getElementById("loading-modal");
+    modal.style.display = "block"; // Megjelenítjük a modal ablakot
+}
 
+// ezt is andrisnak
+function hideLoadingModal() {
+    var modal = document.getElementById("loading-modal");
+    modal.style.display = "none"; // Elrejtjük a modal ablakot
+}
 // document.addEventListener('DOMContentLoaded', function() {
 //
 //
@@ -207,29 +255,29 @@ function handlereprofileimages() {
 //     });
 // });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const checkboxContainers = document.querySelectorAll('.checkbox-container');
-
-    checkboxContainers.forEach(container => {
-        const label = container.querySelector('label');
-        const checkbox = label.querySelector('input[class="dropdown-checkbox"]');
-        const labelText = label.textContent.trim();
-
-        const checkboxElement = document.createElement('div');
-        checkboxElement.classList.add('checkbox-item');
-
-        const checkboxValue = checkbox ? checkbox.value : ''; // Ellenőrizzük, hogy a checkbox változó létezik-e
-        checkboxElement.innerHTML = `
-            <label>
-                <input type="checkbox" value="${checkboxValue}">
-                <span class="checkmark"></span>
-                ${labelText}
-            </label>
-        `;
-
-        document.getElementById('checkboxDropdown-myGroup').appendChild(checkboxElement);
-    });
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//     const checkboxContainers = document.querySelectorAll('.checkbox-container-skills');
+//
+//     checkboxContainers.forEach(container => {
+//         const label = container.querySelector('label');
+//         const checkbox = label.querySelector('input[class="dropdown-checkbox"]');
+//         const labelText = label.textContent.trim();
+//
+//         const checkboxElement = document.createElement('div');
+//         checkboxElement.classList.add('checkbox-item');
+//
+//         const checkboxValue = checkbox ? checkbox.value : ''; // Ellenőrizzük, hogy a checkbox változó létezik-e
+//         checkboxElement.innerHTML = `
+//             <label>
+//                 <input type="checkbox" value="${checkboxValue}">
+//                 <span class="checkmark"></span>
+//                 ${labelText}
+//             </label>
+//         `;
+//
+//         document.getElementById('checkboxDropdown-myGroup').appendChild(checkboxElement);
+//     });
+// });
 
 
 

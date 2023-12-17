@@ -118,7 +118,12 @@
     transition: color 0.2s;
 }
 
-.rating label:hover,
+
+/*.rating label:hover{*/
+/*    color: gold;*/
+/*}*/
+
+
 .rating input[type="radio"]:checked~label {
     color: gold;
 }
@@ -1044,4 +1049,15 @@ table tr:last-child td {
         top: 0;
         opacity: 1
     }
+}
+
+.message-modal-content-mentor-container {
+    text-align: center;
+    margin-bottom: 9px /* Igazítsd az elhelyezést igény szerint */
+}
+
+.error-message-modal-content-mentor {
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
 }

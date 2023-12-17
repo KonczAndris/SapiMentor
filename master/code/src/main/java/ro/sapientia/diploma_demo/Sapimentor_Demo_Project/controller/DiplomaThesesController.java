@@ -45,23 +45,12 @@ public class DiplomaThesesController {
     protected void showUserRolesToDisplayResources(Model model, Principal principal){
         String email = principal.getName();
 
-        // Eredeti megoldas
-        // User user = userRepository.findByEmail(email);
-
         // Uj megoldas (probalkozas)
         Long userId = userRepository.findIdByEmail(email);
         Collection<Role> roles = userRepository.findRolesByUserId(userId);
 
         List<String> rolesToDisplayResources = new ArrayList<>();
         boolean hasOtherRole = false;
-
-        // Eredeti megoldas
-//        for (Role role : user.getRoles()){
-//            if(!role.getName().equals("USER")){
-//                rolesToDisplayResources.add(role.getName());
-//                hasOtherRole = true;
-//            }
-//        }
 
         // Uj megoldas (probalkozas)
         for (Role role : roles){
@@ -76,7 +65,6 @@ public class DiplomaThesesController {
         }
 
         String rolesAsString = String.join(",", rolesToDisplayResources);
-        //System.out.println("Roles: " + rolesAsString);
         model.addAttribute("userRolesToDisplayResources", rolesAsString);
     }
 
@@ -127,20 +115,6 @@ public class DiplomaThesesController {
 
         return "diplomaTheses";
     }
-
-//    @GetMapping("/getalldiplomapdf")
-//    public ResponseEntity<Map<String,Object>> getAllDiplomaPdf() {
-//        try {
-//            Map<String, Object> response = new HashMap<>();
-//            List<Object[]> diplomaPdfByteList = diplomaServices.getAllDiplomaPdfById();
-//            response.put("diplomaPdfsandid", diplomaPdfByteList);
-//
-//            return ResponseEntity.ok(response);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
 
     @GetMapping("/getdiplomabyid")
     public ResponseEntity<List<Object[]>> getDiplomaById(@RequestParam Long diplomaId) {

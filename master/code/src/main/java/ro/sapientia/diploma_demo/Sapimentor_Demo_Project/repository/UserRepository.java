@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.MyGroupProfileDetailDTO;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Rating;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 
@@ -38,6 +39,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.MyGroupProfileDetailDTO(u.first_Name, u.last_Name, u.id) FROM User u JOIN u.roles r WHERE r.name = 'MENTEE' AND u.id != :userId")
     List<MyGroupProfileDetailDTO> findAllMentees(@Param("userId") Long userId);
 
-    @Query("SELECT u.profileImage, u.id FROM User u WHERE u.id != :userId")
-    List<Object[]> findallProfileImageById(@Param("userId") Long userId);
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.MyGroupProfileDetailDTO(u.first_Name, u.last_Name, u.id) FROM User u JOIN u.roles r WHERE r.name = 'MENTOR' AND u.id != :userId")
+    List<MyGroupProfileDetailDTO> findAllMentors(@Param("userId") Long userId);
+
+    @Query("SELECT u.profileImage, u.id FROM User u JOIN u.roles r WHERE r.name = 'MENTEE' AND u.id != :userId")
+    List<Object[]> findallMenteeProfileImageById(@Param("userId") Long userId);
+
+    @Query("SELECT u.profileImage, u.id FROM User u JOIN u.roles r WHERE r.name = 'MENTOR' AND u.id != :userId")
+    List<Object[]> findallMentorProfileImageById(@Param("userId") Long userId);
+
+
+
 }

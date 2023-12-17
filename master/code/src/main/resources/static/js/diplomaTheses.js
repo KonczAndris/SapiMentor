@@ -433,8 +433,15 @@ function saveDiplomaThesesDataToServer() {
         year: pdfFileYear
     });
 
-    console.log(data);
-    sendDiplomaThesesDataToServer(data);
+    if (pdfFile == null || pdfFileName === "" || pdfFileYear === "" || pdfTopic === "") {
+        //alert("Please fill out all fields!");
+        showErrorMessageInDiploma("Please fill out all fields!");
+    } else {
+        sendDiplomaThesesDataToServer(data);
+    }
+
+    //console.log(data);
+    // sendDiplomaThesesDataToServer(data);
 }
 // ezt is andrisnak
 function showLoadingModal() {

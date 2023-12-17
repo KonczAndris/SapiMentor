@@ -112,14 +112,12 @@
 
 
                     <div class="topic-box"> <p>Topic</p>
-
                         <div class="checkbox-container" th:each="topic : ${topics}">
                             <label class="container-checkbox-myGroup">
                                 <span th:text="${topic.topic}"></span>
                                 <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">
                             <span class="checkmark-myGroup"></span> </label>
                         </div>
-
                     </div>
 
                     <div class="year-box">
@@ -152,7 +150,7 @@
                     <button onclick="toggleDropdown()" class="dropbtn-myGroup">Select Tags</button>
 
                     <div id="checkboxDropdown-myGroup" class="dropdown-content-myGroup">
-                        <div class="checkbox-container" th:each="skill : ${skills}">
+                        <div class="checkbox-container-skills" th:each="skill : ${skills}">
                             <label class="container-checkbox-myGroup">
                                 <span th:text="${skill.skill}"></span>
                                 <input type="checkbox" th:value="${skill.skill}" th:id="${'checkbox-' + skill}"
@@ -177,7 +175,7 @@
                     <p>Ide valami szoveg vagy valami</p>
                 </div>
                 <div class="scrollable-div">
-                    <div class="image-cell" th:id="${'image-cell-' + pic}" th:each="pic : ${allUsers}">
+                    <div class="image-cell" th:id="${'image-cell-' + pic}" th:each="pic : ${allMenteesOrMentors}">
                         <!-- Profilkép megjelenítése -->
 <!--                        <img th:if="${profileImagesByUserId[pic.id] ne null and profileImagesByUserId[pic.id] ne ''}"-->
 <!--                             th:src="@{|data:image/jpeg;base64,${profileImagesByUserId[pic.id]}|}"-->
@@ -217,6 +215,7 @@
     </div>
 
 <!--        SEARCH DIV END-->
+
 
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

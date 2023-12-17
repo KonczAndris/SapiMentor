@@ -15,7 +15,8 @@ public class ScheduledTaskService {
 
     // 24 óra milliszekundumban
    // @Scheduled(fixedRate = 1000 * 60 * 60 * 24)
-    @Scheduled(fixedRate = 1000 * 30) 
+    // 5 perc milliszekundumban
+    @Scheduled(fixedRate = 1000 * 60 * 5)
     public void cleanInactiveRoles() {
         // Implementáld a szükséges logikát
         roleRepository.deleteInactiveRoles();

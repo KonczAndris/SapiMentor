@@ -299,7 +299,7 @@ public class ProfileController {
         if(!userService.isAtLeastSecondYear(userId)){
             //System.out.println("Nem masodik ev");
             Map<String, String> responsee = new HashMap<>();
-            responsee.put("message", "Nem masod eves legalabb!"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
+            responsee.put("message", "NEM_MASOD"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
             return ResponseEntity.ok(new ObjectMapper().writeValueAsString(responsee));
         }else{
             User user = userRepository.findByEmail(email);
@@ -320,7 +320,7 @@ public class ProfileController {
 
         // Az eredmény JSON objektum létrehozása
          Map<String, String> response = new HashMap<>();
-         response.put("message", "Szerep módosítva!"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
+         response.put("message", "MODOSITVA"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
 
         // JSON objektum visszaadása a ResponseEntity segítségével
         return ResponseEntity.ok(new ObjectMapper().writeValueAsString(response));
@@ -343,11 +343,11 @@ public class ProfileController {
                 // Törölje el a kiválasztott szerepet a User objektumból
                 removedRoles.addAll(user.removeRoleFromUser(user, removableRole));
             }
-            System.out.println("Removed role1: " + removedRoles);
+            //System.out.println("Removed role1: " + removedRoles);
         } else if (selectedRoleToDelete.length() == 6) {
             // Ha egy szerep van kiválasztva, akkor azt is törölje
             removedRoles.addAll(user.removeRoleFromUser(user, selectedRoleToDelete.trim()));
-            System.out.println("Removed roles2: " + removedRoles);
+            //System.out.println("Removed roles2: " + removedRoles);
         }
 
         userRepository.save(user);
@@ -360,7 +360,7 @@ public class ProfileController {
 
         // Az eredmény JSON objektum létrehozása
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Szerep torolve!"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
+        response.put("message", "TOROLVE"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
 
         // JSON objektum visszaadása a ResponseEntity segítségével
         return ResponseEntity.ok(new ObjectMapper().writeValueAsString(response));

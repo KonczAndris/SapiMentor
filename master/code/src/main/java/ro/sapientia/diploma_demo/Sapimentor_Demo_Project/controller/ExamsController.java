@@ -107,37 +107,6 @@ public class ExamsController {
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
     }
 
-//    @GetMapping("")
-//    public String showExamExamples(Model model,
-//                                   Principal principal) {
-//
-//        showUserRolesToDisplayResources(model, principal);
-//        showTopicsToDisplayResources(model, principal);
-//        List<Exams> exams = examServices.getAllExams();
-//
-//        List<String> examImageBase64List = new ArrayList<>();
-//        for (Exams exam : exams) {
-//            byte[] examImageBytes = exam.getExamImage();
-//            if (examImageBytes != null) {
-//                String examImageBase64 = Base64.getEncoder().encodeToString(examImageBytes);
-//                examImageBase64List.add(examImageBase64);
-//            } else {
-//                examImageBase64List.add("");
-//            }
-//        }
-//
-//        model.addAttribute("examsData", exams);
-//        //System.out.println("examImageBase64List: " + examImageBase64List);
-//        model.addAttribute("examImageBase64List", examImageBase64List);
-////        model.addAllAttributes(Map.of(
-////                "examsData", exams,
-////                "examImageBase64List", examImageBase64List
-////        ));
-//        showProfileImageAndName(model, principal);
-//
-//        return "examExamples";
-//    }
-
     @GetMapping("")
     public String showExamExamples(Model model, Principal principal) {
         if (principal == null) {
@@ -147,17 +116,9 @@ public class ExamsController {
         showTopicsToDisplayResources(model, principal);
 
         List<Exams> exams = examServices.getExamsWithSelectedFields();
-        //System.out.println("Exams: " + exams);
-
-//        List<String> examImageBase64List = exams.stream()
-//                .map(exam -> Optional.ofNullable(exam.getExamImage())
-//                        .map(imageBytes -> Base64.getEncoder().encodeToString(imageBytes))
-//                        .orElse(""))
-//                .collect(Collectors.toList());
 
         model.addAllAttributes(Map.of(
                 "examsData", exams
-                //"examImageBase64List", examImageBase64List
         ));
 
         showProfileImageAndName(model, principal);
@@ -165,68 +126,19 @@ public class ExamsController {
         return "examExamples";
     }
 
-
-//    @GetMapping("/getexambyId")
-//    public ResponseEntity<List<Object[]>> getExamImage(@RequestParam Long examId) {
-//        try {
-//            List<Object[]> images = examServices.getExamImage(examId);
-//            return ResponseEntity.ok(images);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
-
     @GetMapping("/getallexamimage")
     public ResponseEntity<Map<String,Object>> getAllExamImage() {
         try {
             Map<String, Object> response = new HashMap<>();
             List<Object[]> examImageBytesList = examServices.getAllExamImageById();
             response.put("examimagesandid", examImageBytesList);
-            //System.out.println("examImageBytesList: " + examImageBytesList);
 
-            //System.out.println("examImageBase64List: " + examImageBase64List);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
-
-
-//    @GetMapping("")
-//    public String showExamExamples(
-//            Model model,
-//            Principal principal,
-//            @RequestParam(name = "page", defaultValue = "0") int page,
-//            @RequestParam(name = "size", defaultValue = "14") int size
-//    ) {
-//        showUserRolesToDisplayResources(model, principal);
-//        showTopicsToDisplayResources(model, principal);
-//
-//        // Az adott oldalszám és méret alapján kérjük le az adatokat
-//        Page<Exams> examsPage = examServices.getExamsByPageAndSize(page, size);
-//        List<Exams> exams = examsPage.getContent();
-//
-////        // Képek Base64 kódolása
-////        List<String> examImageBase64List = exams.stream()
-////                .map(exam -> Optional.ofNullable(exam.getExamImage())
-////                        .map(imageBytes -> Base64.getEncoder().encodeToString(imageBytes))
-////                        .orElse(""))
-////                .collect(Collectors.toList());
-//
-//        model.addAllAttributes(Map.of(
-//                "examsData", exams
-////                "examImageBase64List", examImageBase64List
-//        ));
-//
-//        showProfileImageAndName(model, principal);
-//
-//        return "examExamples";
-//    }
-
-
 
 
     @PostMapping("/uploadExams")
@@ -245,8 +157,6 @@ public class ExamsController {
                 if(errorMessage != null){
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
                 }
-
-                //resourceServices.uploadExamImage(image, name, topic, user_name);
 
                 return ResponseEntity.ok("Success");
             } catch (Exception e) {

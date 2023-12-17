@@ -250,8 +250,8 @@ body {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 9px;
-    padding: 10px;
-    max-height: 200px;
+    padding: 14px;
+    max-height: 320%;
     overflow: auto;
 }
 
@@ -472,6 +472,13 @@ body {
 
     .detail-row {
         flex-direction: column;
+    }
+    .dropdown-content-myGroup {
+        max-height: 520%;
+    }
+    .dropdown-myGroup:hover .dropdown-content-myGroup {
+        display: block;
+        transform: translateY(-4%);
     }
 }
 

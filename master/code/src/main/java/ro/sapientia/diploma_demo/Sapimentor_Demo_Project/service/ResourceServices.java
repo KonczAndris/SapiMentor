@@ -192,4 +192,49 @@ public class ResourceServices {
         return false;
     }
 
+    public String processAndSaveResources(Resources[] resourcesDataItems, String fullUserName) {
+        try {
+            for (Resources resourcesData : resourcesDataItems){
+                String name = resourcesData.getName();
+                String link = resourcesData.getLink();
+                String topic_name = resourcesData.getTopic_name();
+                String user_name = fullUserName;
+                Integer like = 0;
+                Integer dislike = 0;
+
+                // link ervenyessegenek ellenorzese
+                if (isLinkAccessible(link)){
+                    // linkben talalhato-e karterek
+                    if(!containsMaliciousContent(link)){
+                        if(isURLSafe(link)){
+                            // Adatok elmentese a Resources entitasba
+                            Resources resources = new Resources();
+                            resources.setName(name);
+                            resources.setLink(link);
+                            resources.setTopic_name(topic_name);
+                            resources.setUser_name(user_name);
+                            resources.setLike(like);
+                            resources.setDislike(dislike);
+                            // Resources entitas elmentese az adatbazisba
+                             resourcesRepository.save(resources);
+                        } else {
+                            // link biztonsagos-e vagy karos
+                            return "NotSafe";
+                        }
+                    } else {
+                        // linkben talalhato karterek
+                        return "MaliciousContent";
+                    }
+                } else {
+                    // link ervenytelen
+                    return "InvalidLink";
+                }
+            }
+            return "Success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error";
+        }
+    }
+
 }

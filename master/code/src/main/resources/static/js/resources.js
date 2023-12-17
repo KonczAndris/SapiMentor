@@ -380,9 +380,14 @@ function saveResourceDataToServer() {
         topic_name: linkTopic,
     });
 
+    if(link === "" || linkName === "" || linkTopic === "Choose a topic"){
+        showErrorMessage("Please fill all the fields!");
+    } else {
+        sendResourcesDataToServer(data);
+    }
 
     //console.log(data);
-    sendResourcesDataToServer(data);
+    // sendResourcesDataToServer(data);
 }
 
 // ezt is andrisnak

@@ -797,7 +797,13 @@ function updateRoleStatus(){
                 .then(data => {
                     // Kezeljük a választ, és jelenítsük meg az üzenetet
                     console.log(data.message);
-                    location.reload();
+                    if (data.message === "NEM_MASOD") {
+                        showErrorMessageInProfile("The user must be at least 2 years\n" +
+                            " to change their role.");
+                    } else if (data.message === "MODOSITVA") {
+                        location.reload();
+                    }
+
                 })
                 .catch(error => {
                     console.error('Hiba történt:', error);
@@ -835,16 +841,23 @@ function updateRoleStatus(){
             .then(data => {
                 // Kezeljük a választ, és jelenítsük meg az üzenetet
                 console.log(data.message);
-                location.reload();
+                if (data.message === "NEM_MASOD") {
+                    showErrorMessageInProfile("The user must be at least 2 years\n" +
+                        " to change their role.");
+                } else if (data.message === "MODOSITVA") {
+                    location.reload();
+                }
             })
             .catch(error => {
                 console.error('Hiba történt:', error);
             });
     }
+}
 
 
-
-
+function showErrorMessageInProfile(message) {
+    var errorMessageElement = document.getElementById('error-message-modal-content-mentor');
+    errorMessageElement.innerText = message;
 }
 
 
