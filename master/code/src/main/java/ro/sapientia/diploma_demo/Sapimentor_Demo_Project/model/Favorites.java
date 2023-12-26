@@ -18,6 +18,7 @@ public class Favorites {
     private Long id;
     private Long user_id;
     private Long favorite_id;
+    private Integer status = 0;
 
     public Favorites() {
     }

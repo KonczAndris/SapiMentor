@@ -175,7 +175,7 @@
                     <p>Ide valami szoveg vagy valami</p>
                 </div>
                 <div class="scrollable-div">
-                    <div class="image-cell" th:id="${'image-cell-' + pic}" th:each="pic : ${allMenteesOrMentors}">
+                    <div class="image-cell" th:id="${'image-cell-' + pic.id}" th:each="pic : ${allMenteesOrMentors}">
                         <!-- Profilkép megjelenítése -->
 <!--                        <img th:if="${profileImagesByUserId[pic.id] ne null and profileImagesByUserId[pic.id] ne ''}"-->
 <!--                             th:src="@{|data:image/jpeg;base64,${profileImagesByUserId[pic.id]}|}"-->
@@ -186,6 +186,8 @@
 
                         <img th:id="${'myGroupProfileImg-' + pic.id}" th:src="@{/img/anonym.jpg}" class="rounded-image" alt="Profile Image">
 
+                        <!-- Itt kapom meg a kedvenchez tartozo id-t -->
+                        <span class="favorite-id" th:text="${favoriteIdsByUserId[pic.id]}"></span>
 
                         <!-- Értékelés megjelenítése -->
                         <div class="rating">

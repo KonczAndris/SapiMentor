@@ -144,7 +144,7 @@ public class MyGroupController {
             return ResponseEntity.ok("ok");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a mentés során!");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during saving rating!");
         }
 
     }
@@ -158,8 +158,34 @@ public class MyGroupController {
             return ResponseEntity.ok("ok");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a mentés során!");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during revoking!");
         }
+    }
+
+    @PostMapping("/saveFavorite")
+    public ResponseEntity<String> saveFavorite(@RequestParam Long favoriteUserId,
+                                             Principal principal) {
+        try {
+            myGroupService.saveFavorite(principal, favoriteUserId);
+            return ResponseEntity.ok("ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during saving favourite!");
+        }
+
+    }
+
+    @PostMapping("/revokeFavorite")
+    public ResponseEntity<String> revokeFavorite(@RequestParam Long favoriteUserId,
+                                             Principal principal) {
+        try {
+            myGroupService.revokeFavorite(principal, favoriteUserId);
+            return ResponseEntity.ok("ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during revoking favourite!");
+        }
+
     }
 
 }
