@@ -66,7 +66,7 @@ public class ProfileController {
         User user = userRepository.findByEmail(email);
 
         UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
-        System.out.println("UJ ERTEK" + userRegistrationDetails);
+        //System.out.println("UJ ERTEK" + userRegistrationDetails);
 
         List<String> rolesToDisplay = new ArrayList<>();
         boolean hasOtherRoles = false;

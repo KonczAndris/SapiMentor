@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.MyGroupProfileDetailDTO;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Rating;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 
@@ -49,5 +48,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<Object[]> findallMentorProfileImageById(@Param("userId") Long userId);
 
 
-
+    User findUserById(Long userId);
 }

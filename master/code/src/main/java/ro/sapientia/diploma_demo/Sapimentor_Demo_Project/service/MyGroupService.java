@@ -3,10 +3,11 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.MyGroupProfileDetailDTO;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Favorites;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Rating;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.FavoriteRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ProfileTopicsRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.RatingRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 
@@ -24,15 +25,22 @@ public class MyGroupService {
     private final RatingRepository ratingRepository;
     private final RatingService ratingService;
     private final FavoriteRepository favoriteRepository;
+    private final TopicService topicService;
+    private final ProfileTopicsRepository profileTopicsRepository;
 
     public MyGroupService(UserRepository userRepository,
                           RatingRepository ratingRepository,
                           RatingService ratingService,
-                          FavoriteRepository favoriteRepository) {
+                          FavoriteRepository favoriteRepository,
+                          TopicService topicService,
+                          ProfileTopicsRepository profileTopicsRepository) {
+
         this.userRepository = userRepository;
         this.ratingRepository = ratingRepository;
         this.ratingService = ratingService;
         this.favoriteRepository = favoriteRepository;
+        this.topicService = topicService;
+        this.profileTopicsRepository = profileTopicsRepository;
     }
 
     @Cacheable("getAllMenteeProfileImageById")
@@ -51,10 +59,10 @@ public class MyGroupService {
         List<MyGroupProfileDetailDTO> allMentees = userRepository.findAllMentees(userId);
         List<Rating> allRatings = ratingRepository.findAllMenteeRatingById(userId);
         List<Favorites> allFavorites = favoriteRepository.findAllFavoriteMenteeById(userId);
-        System.out.println("allFavorites: " + allFavorites);
+        //System.out.println("allFavorites: " + allFavorites);
         Map<Long, Integer> favoriteIdsByUserId = new HashMap<>();
         for (Favorites favorite : allFavorites) {
-            System.out.println("Favorites id: " + favorite.getId() + ", Status: " + favorite.getStatus() + ", User_id: " + favorite.getUser_id() + ", Favorite_id: " + favorite.getFavorite_id());
+            //System.out.println("Favorites id: " + favorite.getId() + ", Status: " + favorite.getStatus() + ", User_id: " + favorite.getUser_id() + ", Favorite_id: " + favorite.getFavorite_id());
             favoriteIdsByUserId.put(favorite.getFavorite_id(), favorite.getStatus());
         }
 
@@ -131,6 +139,29 @@ public class MyGroupService {
             favorite.setFavorite_id(favoriteUserId);
             favorite.setStatus(0);
             favoriteRepository.save(favorite);
+        }
+    }
+
+    @Cacheable("getSelectedUserProfile")
+    public void getSelectedUserProfile(Long userId,Model model) {
+        User user = userRepository.findUserById(userId);
+        System.out.println("Email: " + user.getEmail()
+        + ", Name: " + user.getFirst_Name() + " " + user.getLast_Name() );
+
+        UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
+        System.out.println("userRegistrationDetails: " + userRegistrationDetails.getUsername());
+
+        List<Topic> topics = topicService.getAllTopics();
+
+        List<Profile_Topics> userTopics = profileTopicsRepository.findByUserId(userId);
+
+        if (!userTopics.isEmpty()) {
+            System.out.println("User topics: " + userTopics);
+            System.out.println("User topics: " + userTopics.get(0).getTags());
+            for (Profile_Topics profile_topics : userTopics) {
+                System.out.println("Profile_topics: " + profile_topics.getTags());
+            }
+            //model.addAttribute("userTopics", userTopics);
         }
     }
 

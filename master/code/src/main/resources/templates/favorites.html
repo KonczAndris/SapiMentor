@@ -98,6 +98,10 @@
         <!--     SEARCH DIV START -->
         <div class="large-message-box">
             <div class="left-message-box">
+                <div th:id="${'probamegjelenites-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}" style="display: block; margin-bottom: 10px;">
+                    <span th:text="${favoriteUser.last_Name + ' ' + favoriteUser.first_Name}"></span>
+                    <span th:text = "${'Status: ' + favoriteUser.status}"></span>
+                </div>
             </div>
             <div class="right-message-box">
             </div>

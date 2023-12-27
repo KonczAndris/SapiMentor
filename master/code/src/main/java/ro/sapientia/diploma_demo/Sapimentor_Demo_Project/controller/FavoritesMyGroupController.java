@@ -8,19 +8,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.FavoritesService;
 
 import java.security.Principal;
 import java.util.Base64;
 
 @RequestMapping("/myGroup/favorites")
 @Controller
-public class FavoritesMyGroup {
+public class FavoritesMyGroupController {
 
     private final UserRepository userRepository;
+    private final FavoritesService favoritesService;
 
     @Autowired
-    public FavoritesMyGroup(UserRepository userRepository) {
+    public FavoritesMyGroupController(UserRepository userRepository,
+                                      FavoritesService favoritesService) {
         this.userRepository = userRepository;
+        this.favoritesService = favoritesService;
     }
 
     //TODO: Implement showProfileImageAndName
@@ -46,6 +50,7 @@ public class FavoritesMyGroup {
             return "redirect:/login";
         }
         showProfileImageAndName(model, principal);
+        favoritesService.showAllFavorites(model, principal);
         return "favorites";
     }
 }

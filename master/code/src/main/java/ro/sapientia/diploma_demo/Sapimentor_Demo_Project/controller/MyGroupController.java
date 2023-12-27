@@ -185,7 +185,18 @@ public class MyGroupController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during revoking favourite!");
         }
+    }
 
+    @GetMapping("/getSelectedUserDetails")
+    public ResponseEntity<String> showSelectedUserDetails(@RequestParam Long selectedUserId,
+                                                          Model model) {
+        try {
+            myGroupService.getSelectedUserProfile(selectedUserId, model);
+            return ResponseEntity.ok("ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during revoking favourite!");
+        }
     }
 
 }
