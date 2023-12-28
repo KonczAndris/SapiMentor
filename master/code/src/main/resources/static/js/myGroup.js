@@ -112,7 +112,7 @@ window.onclick = function(event) {
 
 
 // itt attol fugg melyik active ugyebar arra az URL-re kell iranyitson
-function fuggveny(){
+function searchUsers(){
     var menteebutton =  document.querySelector('.mentee-side');
     var mentorbutton =  document.querySelector('.mentor-side');
     var token = $("meta[name='_csrf']").attr("content");
@@ -152,6 +152,10 @@ document.addEventListener('DOMContentLoaded', function() {
         menteebutton.classList.add('active');
         menteebutton.style.backgroundColor = 'rgb(22, 175, 132)';
         menteebutton.style.color = 'white';
+        var rating = document.querySelectorAll('.rating');
+        rating.forEach(function (element) {
+           element.style.display = "none";
+        });
         // lekerni a mentee-k profilkepeit
         console.log("Helloka menteek");
         fetch("/myGroup/mentees/getallmenteeprofileimage", {

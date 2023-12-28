@@ -402,6 +402,7 @@ body {
 
 .myGroupName{
     margin-top: 2%;
+    color: rgb(25, 150, 114);
 }
 
 @media screen and (max-width: 768px) {
