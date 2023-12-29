@@ -342,6 +342,10 @@ toggleFieldsAvailability();
 //     }
 // });
 
+
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     var selectedSkillsByTopic = {};  // Objektum, amely tárolja a kiválasztott skill-eket témánként
 
@@ -361,32 +365,57 @@ document.addEventListener("DOMContentLoaded", function () {
                     selectedSkillsByTopic[selectedTopic] = [];
                 }
 
-                // Show skill checkboxes related to the selected topic
-                var relatedSkillCheckboxes = document.querySelectorAll('#skill-checkbox-' + selectedTopic + ':checked');
-                relatedSkillCheckboxes.forEach(function (relatedCheckbox) {
-                    selectedSkillsByTopic[selectedTopic].push(relatedCheckbox.value);
+                updateSkillsVisibility(selectedSkillsByTopic);
+                var skillCheckboxes = document.querySelectorAll('.skill-checkbox');
+                skillCheckboxes.forEach(function (skillCheckbox) {
+                    // Add click event listener to each skill checkbox
+                    skillCheckbox.addEventListener('click', function () {
+                        var selectedtopic = skillCheckbox.parentNode;
+                        console.log("Selected topic1: ", selectedtopic);
+                        var igen = selectedtopic.id;
+                        console.log("Selected topic2: ", igen.split("-")[2]);
+                        if (igen.split("-")[2] === selectedTopic){
+                            var selectedSkill = skillCheckbox.value;
+                            var isChecked = skillCheckbox.hasAttribute('checked') || skillCheckbox.checked;
+
+                            if (isChecked) {
+                                // Add the selected skill to the corresponding topic
+                                if (!selectedSkillsByTopic[selectedTopic].includes(selectedSkill)) {
+                                    selectedSkillsByTopic[selectedTopic].push(selectedSkill);
+                                }
+                            } else {
+                                // Remove the selected skill from the corresponding topic
+                                var skillIndex = selectedSkillsByTopic[selectedTopic].indexOf(selectedSkill);
+                                if (skillIndex !== -1) {
+                                    selectedSkillsByTopic[selectedTopic].splice(skillIndex, 1);
+                                }
+                            }
+                        }
+
+
+                        // Toggle visibility of the skills based on the current selected topics
+                        updateSkillsVisibility(selectedSkillsByTopic);
+                    });
                 });
             } else {
                 // Remove the entry for the unselected topic
                 delete selectedSkillsByTopic[selectedTopic];
+                updateSkillsVisibility(selectedSkillsByTopic);
             }
-
-            // Toggle visibility of the skills based on the current selected topics
-            updateSkillsVisibility(selectedSkillsByTopic);
         });
     });
 
     // Function to toggle visibility of skills based on selected topics
     function updateSkillsVisibility(selectedSkillsByTopic) {
         // Hide all skill checkboxes
-        var skillCheckboxes = document.querySelectorAll('.skill-checkbox');
+        var skillCheckboxes = document.querySelectorAll('.skill-checkboxx');
         skillCheckboxes.forEach(function (skillCheckbox) {
             skillCheckbox.style.display = 'none';
         });
 
         // Show skill checkboxes related to the selected topics
         Object.keys(selectedSkillsByTopic).forEach(function (topic) {
-            var relatedSkillCheckboxes = document.querySelectorAll('#skill-checkbox-' + topic);
+            var relatedSkillCheckboxes = document.querySelectorAll('#skill-checkboxx-' + topic);
             relatedSkillCheckboxes.forEach(function (relatedCheckbox) {
                 relatedCheckbox.style.display = 'block';
             });
@@ -398,6 +427,12 @@ document.addEventListener("DOMContentLoaded", function () {
         var searchData = {
             selectedSkillsByTopic: selectedSkillsByTopic
         };
+
+        console.log("Kiválasztott skill-ek: ");
+        Object.keys(selectedSkillsByTopic).forEach(function (topic) {
+            console.log("Téma: " + topic);
+            console.log("Kijelölt skill-ek: " + selectedSkillsByTopic[topic].join(", "));
+        });
 
         console.log("Adatok : ", searchData);
 
@@ -419,14 +454,12 @@ document.addEventListener("DOMContentLoaded", function () {
         //     });
     }
 
-
     var searchButton = document.getElementById('search-button');
     searchButton.addEventListener('click', function () {
         // Send selected data to the server when the "Search" button is clicked
         sendSearchDataToServer();
     });
 });
-
 
 
 
