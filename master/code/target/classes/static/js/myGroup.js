@@ -154,9 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (currentURL.includes("myGroup/mentees")) {
         MainInformationPage.style.display = "none";
-        menteebutton.classList.add('active');
-        menteebutton.style.backgroundColor = 'rgb(22, 175, 132)';
-        menteebutton.style.color = 'white';
+
         var rating = document.querySelectorAll('.rating');
         rating.forEach(function (element) {
            element.style.display = "none";
@@ -184,9 +182,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     } else if (currentURL.includes("myGroup/mentors")) {
         MainInformationPage.style.display = "none";
-        mentorbutton.classList.add('active');
-        mentorbutton.style.backgroundColor = 'rgb(22, 175, 132)';
-        mentorbutton.style.color = 'white';
 
         // lekerni a mentorok profilkepeit
         console.log("Helloka mentorok");
@@ -234,60 +229,6 @@ function showLoadingModal() {
     modal.style.display = "block"; // Megjelenítjük a modal ablakot
 }
 
-// ezt is andrisnak
-function hideLoadingModal() {
-    var modal = document.getElementById("loading-modal");
-    modal.style.display = "none"; // Elrejtjük a modal ablakot
-}
-// document.addEventListener('DOMContentLoaded', function() {
-//
-//
-//     const checkboxContainers = document.querySelectorAll('.checkbox-container');
-//
-//     checkboxContainers.forEach(container => {
-//         const label = container.querySelector('label');
-//         const checkbox = label.querySelector('input[class="dropdown-checkbox"]');
-//         const labelText = label.textContent.trim();
-//
-//         const checkboxElement = document.createElement('div');
-//         checkboxElement.classList.add('checkbox-item');
-//
-//         checkboxElement.innerHTML = `
-//             <label>
-//                 <input type="checkbox" value="${checkbox.value}">
-//                 <span class="checkmark"></span>
-//                 ${labelText}
-//             </label>
-//         `;
-//
-//         document.getElementById('checkboxDropdown-myGroup').appendChild(checkboxElement);
-//     });
-// });
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     const checkboxContainers = document.querySelectorAll('.checkbox-container-skills');
-//
-//     checkboxContainers.forEach(container => {
-//         const label = container.querySelector('label');
-//         const checkbox = label.querySelector('input[class="dropdown-checkbox"]');
-//         const labelText = label.textContent.trim();
-//
-//         const checkboxElement = document.createElement('div');
-//         checkboxElement.classList.add('checkbox-item');
-//
-//         const checkboxValue = checkbox ? checkbox.value : ''; // Ellenőrizzük, hogy a checkbox változó létezik-e
-//         checkboxElement.innerHTML = `
-//             <label>
-//                 <input type="checkbox" value="${checkboxValue}">
-//                 <span class="checkmark"></span>
-//                 ${labelText}
-//             </label>
-//         `;
-//
-//         document.getElementById('checkboxDropdown-myGroup').appendChild(checkboxElement);
-//     });
-// });
-
 function isRoleSelected() {
     const mentorButton = document.querySelector('.mentor-side');
     const menteeButton = document.querySelector('.mentee-side');
@@ -307,6 +248,7 @@ function isTopicSelected() {
 function toggleFieldsAvailability() {
     const topicBox = document.querySelector('.topic-box');
     const dropdownButton = document.querySelector('.dropdown-myGroup');
+    const searchButton = document.querySelector('.search-button');
 
     const roleSelected = isRoleSelected();
     const topicSelected = isTopicSelected();
@@ -314,9 +256,13 @@ function toggleFieldsAvailability() {
     if (roleSelected) {
         topicBox.style.opacity = '1';
         topicBox.style.pointerEvents = 'auto';
+        searchButton.style.opacity = '1';
+        searchButton.style.pointerEvents = 'auto';
     } else {
         topicBox.style.opacity = '0.5';
         topicBox.style.pointerEvents = 'none';
+        searchButton.style.opacity = '0.5';
+        searchButton.style.pointerEvents = 'none';
     }
 
     if (topicSelected) {
@@ -337,3 +283,5 @@ document.querySelectorAll('.topic-box input[type="checkbox"]').forEach(checkbox 
 });
 
 toggleFieldsAvailability();
+
+

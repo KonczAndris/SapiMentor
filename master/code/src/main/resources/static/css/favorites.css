@@ -77,12 +77,44 @@ body {
 
 .left-message-box{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 30%;
     height: 100%;
     background-color: rgb(255, 255, 255);
     border-right: 3px solid rgb(22, 175, 132);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 25px;
+    cursor: pointer;
+    overflow-y: auto;
+}
+
+.left-message-box .user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.left-message-box .user img {
+    width: 40px; /* A kör profilkép mérete */
+    height: 40px; /* A kör profilkép mérete */
+    border-radius: 50%; /* Kerekített profil kép */
+}
+
+.left-message-box .user .user-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%; /* Kör alakú */
+}
+
+/* Online státusz zöld */
+.left-message-box .user .online {
+    background-color: green;
+}
+
+/* Offline státusz piros */
+.left-message-box .user .offline {
+    background-color: red;
 }
 
 .right-message-box{
