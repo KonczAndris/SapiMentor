@@ -2,12 +2,15 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.FavoritesDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.FavoriteRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -26,13 +29,27 @@ public class FavoritesService {
         String email = principal.getName();
         Long userId = userRepository.findIdByEmail(email);
         List<User> allFavorites = favoriteRepository.findAllFavoriteUserByIdAndStatus(userId);
+
+        List<FavoritesDTO> favoriteUserDTOs = new ArrayList<>();
         for (User favoritesUsers : allFavorites) {
-            System.out.println("FavoriteUser_Id: " + favoritesUsers.getId()
-                    + ", Email:" + favoritesUsers.getEmail()
-                    + ", Name: " + favoritesUsers.getLast_Name()
-                    + " " +  favoritesUsers.getFirst_Name()
-                    + ", Status: " + favoritesUsers.getStatus());
+            FavoritesDTO favoriteDTO = new FavoritesDTO();
+            favoriteDTO.setId(favoritesUsers.getId());
+            favoriteDTO.setEmail(favoritesUsers.getEmail());
+            favoriteDTO.setFullName(favoritesUsers.getLast_Name() + " " + favoritesUsers.getFirst_Name());
+            favoriteDTO.setStatus(favoritesUsers.getStatus());
+            byte[] favoriteprofileImage = favoritesUsers.getProfileImage();
+            if (favoriteprofileImage != null) {
+                String favoritebase64Image = Base64.getEncoder().encodeToString(favoriteprofileImage);
+                favoriteDTO.setFavoriteProfileImageBase64(favoritebase64Image);
+            }else {
+                favoriteDTO.setFavoriteProfileImageBase64("");
+            }
+
+            favoriteUserDTOs.add(favoriteDTO);
+
         }
-        model.addAttribute("allFavoritesUser", allFavorites);
+        //System.out.println("favoriteUserDTOs: " + favoriteUserDTOs.get(0).getFavoriteProfileImageBase64());
+
+        model.addAttribute("allFavoritesUser", favoriteUserDTOs);
     }
 }

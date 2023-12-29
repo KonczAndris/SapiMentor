@@ -116,43 +116,17 @@
                         <div class="checkbox-container" th:each="topic : ${topics}">
                             <label class="container-checkbox-myGroup">
                                 <span th:text="${topic.topic}"></span>
-                                <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">
+                                <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}" class="topic-checkbox">
                             <span class="checkmark-myGroup"></span> </label>
                         </div>
                     </div>
-
-<!--                    <div class="year-box">-->
-<!--                        <p>Year</p>-->
-<!--                        <div class="checkbox-container">-->
-<!--                            <label class="container-checkbox-myGroup">1-->
-<!--                            <input type="checkbox" id="year1-box" name="year" value="1">-->
-<!--                            <span class="checkmark-myGroup "></span>-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                        <div class="checkbox-container">-->
-<!--                            <label class="container-checkbox-myGroup">2-->
-<!--                            <input type="checkbox" id="year2-box" name="year" value="2">-->
-<!--                            <span class="checkmark-myGroup "></span>-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                        <div class="checkbox-container">-->
-<!--                            <label class="container-checkbox-myGroup">3-->
-<!--                            <input type="checkbox" id="year3-box" name="year" value="3">-->
-<!--                            <span class="checkmark-myGroup "></span></label>-->
-<!--                        </div>-->
-<!--                        <div class="checkbox-container">-->
-<!--                            <label class="container-checkbox-myGroup">4-->
-<!--                            <input type="checkbox" id="year4-box" name="year" value="4">-->
-<!--                           <span class="checkmark-myGroup "></span> </label>-->
-<!--                        </div>-->
-<!--                    </div>-->
 
                 <div class="dropdown-myGroup">
                     <button onclick="toggleDropdown()" class="dropbtn-myGroup">Select Tags</button>
 
                     <div id="checkboxDropdown-myGroup" class="dropdown-content-myGroup">
                         <div class="checkbox-container-skills" th:each="skill : ${skills}">
-                            <label class="container-checkbox-myGroup">
+                            <label class="container-checkbox-myGroup skill-checkbox" th:id="${'skill-checkbox-' + skill.topic.topic}">
                                 <span th:text="${skill.skill}"></span>
                                 <input type="checkbox" th:value="${skill.skill}" th:id="${'checkbox-' + skill}"
                                        class="dropdown-checkbox">
@@ -165,6 +139,7 @@
 
                 <div class="button-box">
                     <button class="search-button" id="search-button" th:onclick="searchUsers()">Search</button>
+<!--                    <button class="search-button" id="search-button">Search</button>-->
                     <button class="cancel-button" id="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
                 </div>
             </div>

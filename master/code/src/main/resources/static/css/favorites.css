@@ -114,7 +114,7 @@ body {
 }
 
 .left-message-box .user .offline {
-    background-color: red;
+    background-color: gray;
 }
 
 .right-message-box{

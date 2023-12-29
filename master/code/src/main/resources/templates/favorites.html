@@ -99,9 +99,24 @@
         <!--     SEARCH DIV START -->
         <div class="large-message-box">
             <div class="left-message-box">
-                <div th:id="${'probamegjelenites-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}" style="display: block; margin-bottom: 10px;">
-                    <span th:text="${favoriteUser.last_Name + ' ' + favoriteUser.first_Name}"></span>
-                    <span th:text = "${'Status: ' + favoriteUser.status}"></span>
+
+<!--                <div class="user" th:id="${'probamegjelenites-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}" style="display: block; margin-bottom: 10px;">-->
+<!--                    <img th:if="${favoriteUser.favoriteProfileImageBase64 != ''}"-->
+<!--                         th:src="@{|data:image/jpeg;base64,${favoriteUser.favoriteProfileImageBase64}|}">-->
+<!--                    <img th:unless="${favoriteUser.favoriteProfileImageBase64 != ''}"-->
+<!--                         th:src="@{/img/anonym.jpg}" alt="Profile Image">-->
+<!--                    <span th:text="${favoriteUser.fullName}"></span>-->
+<!--                    <span th:text="${favoriteUser.status}"></span>-->
+<!--                </div>-->
+
+                <div class="user" th:id="${'user-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}">
+                    <img th:if="${favoriteUser.favoriteProfileImageBase64 != ''}"
+                         th:src="@{|data:image/jpeg;base64,${favoriteUser.favoriteProfileImageBase64}|}">
+                    <img th:unless="${favoriteUser.favoriteProfileImageBase64 != ''}"
+                         th:src="@{/img/anonym.jpg}" alt="Profile Image">
+                    <span th:text="${favoriteUser.fullName}"></span>
+                    <!-- Példa online státuszra -->
+                    <div class="user-status" th:classappend="${favoriteUser.status == 0 ? 'offline' : 'online'}"></div>
                 </div>
 
                 <div class="user">

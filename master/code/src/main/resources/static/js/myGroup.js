@@ -284,4 +284,154 @@ document.querySelectorAll('.topic-box input[type="checkbox"]').forEach(checkbox 
 
 toggleFieldsAvailability();
 
+// document.addEventListener("DOMContentLoaded", function () {
+//     var selectedSkillsByTopic = {};  // Objektum, amely tárolja a kiválasztott skill-eket témánként
+//
+//     // Get all topic checkboxes
+//     var topicCheckboxes = document.querySelectorAll('.topic-checkbox');
+//
+//     // Add click event listener to each topic checkbox
+//     topicCheckboxes.forEach(function (checkbox) {
+//         checkbox.addEventListener('click', function () {
+//             var selectedTopic = checkbox.value;
+//
+//             // Check if the topic is checked or unchecked
+//             var isChecked = checkbox.hasAttribute('checked') || checkbox.checked;
+//             if (isChecked) {
+//                 // Initialize the selectedSkillsByTopic entry if not exists
+//                 if (!selectedSkillsByTopic[selectedTopic]) {
+//                     selectedSkillsByTopic[selectedTopic] = [];
+//                 }
+//
+//                 // Show skill checkboxes related to the selected topic
+//                 var relatedSkillCheckboxes = document.querySelectorAll('#skill-checkbox-' + selectedTopic);
+//                 relatedSkillCheckboxes.forEach(function (relatedCheckbox) {
+//                     relatedCheckbox.style.display = 'block';
+//                 });
+//             } else {
+//                 // Hide skill checkboxes related to the unselected topic
+//                 var relatedSkillCheckboxes = document.querySelectorAll('#skill-checkbox-' + selectedTopic);
+//                 relatedSkillCheckboxes.forEach(function (relatedCheckbox) {
+//                     relatedCheckbox.style.display = 'none';
+//                 });
+//
+//                 // Remove the entry for the unselected topic
+//                 delete selectedSkillsByTopic[selectedTopic];
+//             }
+//
+//             // Toggle visibility of the skills based on the current selected topics
+//             updateSkillsVisibility(selectedSkillsByTopic);
+//         });
+//     });
+//
+//     // Function to toggle visibility of skills based on selected topics
+//     function updateSkillsVisibility(selectedSkillsByTopic) {
+//         // Hide all skill checkboxes
+//         var skillCheckboxes = document.querySelectorAll('.skill-checkbox');
+//         skillCheckboxes.forEach(function (skillCheckbox) {
+//             skillCheckbox.style.display = 'none';
+//         });
+//
+//         // Show skill checkboxes related to the selected topics
+//         Object.keys(selectedSkillsByTopic).forEach(function (topic) {
+//             var relatedSkillCheckboxes = document.querySelectorAll('#skill-checkbox-' + topic);
+//             relatedSkillCheckboxes.forEach(function (relatedCheckbox) {
+//                 relatedCheckbox.style.display = 'block';
+//             });
+//         });
+//     }
+// });
+
+document.addEventListener("DOMContentLoaded", function () {
+    var selectedSkillsByTopic = {};  // Objektum, amely tárolja a kiválasztott skill-eket témánként
+
+    // Get all topic checkboxes
+    var topicCheckboxes = document.querySelectorAll('.topic-checkbox');
+
+    // Add click event listener to each topic checkbox
+    topicCheckboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('click', function () {
+            var selectedTopic = checkbox.value;
+
+            // Check if the topic is checked or unchecked
+            var isChecked = checkbox.hasAttribute('checked') || checkbox.checked;
+            if (isChecked) {
+                // Initialize the selectedSkillsByTopic entry if not exists
+                if (!selectedSkillsByTopic[selectedTopic]) {
+                    selectedSkillsByTopic[selectedTopic] = [];
+                }
+
+                // Show skill checkboxes related to the selected topic
+                var relatedSkillCheckboxes = document.querySelectorAll('#skill-checkbox-' + selectedTopic + ':checked');
+                relatedSkillCheckboxes.forEach(function (relatedCheckbox) {
+                    selectedSkillsByTopic[selectedTopic].push(relatedCheckbox.value);
+                });
+            } else {
+                // Remove the entry for the unselected topic
+                delete selectedSkillsByTopic[selectedTopic];
+            }
+
+            // Toggle visibility of the skills based on the current selected topics
+            updateSkillsVisibility(selectedSkillsByTopic);
+        });
+    });
+
+    // Function to toggle visibility of skills based on selected topics
+    function updateSkillsVisibility(selectedSkillsByTopic) {
+        // Hide all skill checkboxes
+        var skillCheckboxes = document.querySelectorAll('.skill-checkbox');
+        skillCheckboxes.forEach(function (skillCheckbox) {
+            skillCheckbox.style.display = 'none';
+        });
+
+        // Show skill checkboxes related to the selected topics
+        Object.keys(selectedSkillsByTopic).forEach(function (topic) {
+            var relatedSkillCheckboxes = document.querySelectorAll('#skill-checkbox-' + topic);
+            relatedSkillCheckboxes.forEach(function (relatedCheckbox) {
+                relatedCheckbox.style.display = 'block';
+            });
+        });
+    }
+
+    function sendSearchDataToServer() {
+        // Convert the data to JSON
+        var searchData = {
+            selectedSkillsByTopic: selectedSkillsByTopic
+        };
+
+        console.log("Adatok : ", searchData);
+
+        // Send a POST request to the server
+        // fetch('/your-server-search-endpoint', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(searchData),
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // Handle the response from the server if needed
+        //         console.log(data);
+        //     })
+        //     .catch(error => {
+        //         console.error('Error sending search data to the server:', error);
+        //     });
+    }
+
+
+    var searchButton = document.getElementById('search-button');
+    searchButton.addEventListener('click', function () {
+        // Send selected data to the server when the "Search" button is clicked
+        sendSearchDataToServer();
+    });
+});
+
+
+
+
+
+
+
+
 
