@@ -172,8 +172,17 @@
 <!--                 proba  ide esetleg valami udvozlo es informalo szoveg
                      es hogy jol nezzen ki hogy ne legyen ures div -->
                 <div th:id="information-box">
-                    <h1>Search for a mentor or mentee</h1>
-                    <p>Ide valami szoveg vagy valami</p>
+                    <div>
+                        <h1>Search for a Mentor or Mentee</h1>
+                        <p>Welcome to our platform dedicated to connecting mentors and mentees. Whether you are seeking guidance or looking to share your expertise, our search functionality simplifies the process of finding the right match for you.</p>
+
+                        <h2>How does it work?</h2>
+                        <ol>
+                            <li><strong>Select Your Role:</strong> Choose whether you're seeking to mentor or be mentored by clicking the respective button.</li>
+                            <li><strong>Explore Topics:</strong> Once you've chosen your role, explore the available topics that align with your interests or expertise.</li>
+                            <li><strong>Refine Your Search:</strong> Use the provided tags to narrow down your search further and find individuals specializing in specific areas.</li>
+                        </ol>
+                    </div>
                 </div>
                 <div class="scrollable-div">
                     <div class="image-cell" th:id="${'image-cell-' + pic.id}" th:each="pic : ${allMenteesOrMentors}">

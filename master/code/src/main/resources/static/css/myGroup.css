@@ -516,5 +516,14 @@ body {
     margin-top: 5px;
 }
 
+#information-box {
+    width: 80%;
+    margin: 0 auto; /* Középre igazítás */
+}
+
+#information-box div {
+    padding: 20px;
+    border-radius: 5px;
+}
 
 
