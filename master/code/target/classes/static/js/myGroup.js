@@ -427,14 +427,21 @@ document.addEventListener("DOMContentLoaded", function () {
         var searchData = {
             selectedSkillsByTopic: selectedSkillsByTopic
         };
+        console.log("Igen12: " + Object.keys(selectedSkillsByTopic));
 
-        console.log("Kiválasztott skill-ek: ");
-        Object.keys(selectedSkillsByTopic).forEach(function (topic) {
-            console.log("Téma: " + topic);
-            console.log("Kijelölt skill-ek: " + selectedSkillsByTopic[topic].join(", "));
-        });
+        if (Object.keys(selectedSkillsByTopic).length === 0) {
+            console.log("Nincs kiválasztva semmi");
+        } else {
+            console.log("Kiválasztott skill-ek: ");
+            Object.keys(selectedSkillsByTopic).forEach(function (topic) {
+                console.log("Téma: " + topic);
+                console.log("Kijelölt skill-ek: " + selectedSkillsByTopic[topic].join(", "));
+            });
 
-        console.log("Adatok : ", searchData);
+            console.log("Adatok: ", searchData);
+        }
+
+
 
         // Send a POST request to the server
         // fetch('/your-server-search-endpoint', {
