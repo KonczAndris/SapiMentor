@@ -73,6 +73,8 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgb(255, 255, 255);
+    padding-right: 0;
+    overflow: hidden;
 }
 
 .left-message-box{
@@ -96,9 +98,9 @@ body {
 }
 
 .left-message-box .user img {
-    width: 40px; /* A kör profilkép mérete */
-    height: 40px; /* A kör profilkép mérete */
-    border-radius: 50%; /* Kerekített profil kép */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }
 
 .left-message-box .user .user-status {
@@ -107,12 +109,10 @@ body {
     border-radius: 50%; /* Kör alakú */
 }
 
-/* Online státusz zöld */
 .left-message-box .user .online {
     background-color: green;
 }
 
-/* Offline státusz piros */
 .left-message-box .user .offline {
     background-color: red;
 }
@@ -141,7 +141,17 @@ body {
         order: -1;
         border-right: none;
         border-bottom: 3px solid rgb(22, 175, 132);
+        flex-direction: row;
+        overflow-x: auto;
+        padding-top: 0;
+        padding-left: 25px;
+        padding-right: 25px;
     }
+
+    .left-message-box .user span {
+        display: none;
+    }
+
 
     .right-message-box{
         height: fit-content;
@@ -180,5 +190,52 @@ body {
     background-color: #FFCCCC;
 }
 
+.right-message-box {
+    position: relative;
+    overflow: hidden;
+}
 
+.chat-input-box{
+    position:absolute;
+    bottom: 0;
+    display:flex;
+    width: 100%;
+    height:10%;
+    border-top: 3px solid rgb(22, 175, 132);
+    justify-content:center;
+    align-items: center;
+    margin-left:5%;
+}
 
+#message-input {
+    width: 75%;
+    border: none;
+    height:55%;
+    padding-left:2%;
+}
+
+#send-button{
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    border-radius: 20px;
+    width: 100px;
+    max-width: 55%;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    height: 40px;
+    font-size: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+    align-items: start;
+    justify-content: center;
+}
+
+#send-button:hover {
+    background-color: rgb(30, 214, 162);
+    border: 2px solid white;
+}
+
+#emoji-button{
+    display: none;
+}
