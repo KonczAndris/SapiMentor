@@ -77,6 +77,8 @@ function selectSide(side) {
             document.querySelector('.mentor-side').style.color = 'white';
             document.querySelector('.mentee-side').style.backgroundColor = 'white';
             document.querySelector('.mentee-side').style.color = 'rgb(22, 175, 132)';
+            mentorbutton.classList.add('selected');
+            menteebutton.classList.remove('selected');
 
         } else {
             if (mentorbutton.classList.contains('active')) {
@@ -87,8 +89,11 @@ function selectSide(side) {
             document.querySelector('.mentee-side').style.backgroundColor = 'rgb(22, 175, 132)';
             document.querySelector('.mentee-side').style.color = 'white';
             document.querySelector('.mentor-side').style.color = 'rgb(22, 175, 132)';
+            menteebutton.classList.add('selected');
+            mentorbutton.classList.remove('selected');
         }
     }
+    toggleFieldsAvailability();
 }
 
 function toggleDropdown() {
@@ -283,5 +288,52 @@ function hideLoadingModal() {
 //     });
 // });
 
+function isRoleSelected() {
+    const mentorButton = document.querySelector('.mentor-side');
+    const menteeButton = document.querySelector('.mentee-side');
+    return mentorButton.classList.contains('selected') || menteeButton.classList.contains('selected');
+}
 
+function isTopicSelected() {
+    const checkboxes = document.querySelectorAll('.topic-box input[type="checkbox"]');
+    for (const checkbox of checkboxes) {
+        if (checkbox.checked) {
+            return true;
+        }
+    }
+    return false;
+}
 
+function toggleFieldsAvailability() {
+    const topicBox = document.querySelector('.topic-box');
+    const dropdownButton = document.querySelector('.dropdown-myGroup');
+
+    const roleSelected = isRoleSelected();
+    const topicSelected = isTopicSelected();
+
+    if (roleSelected) {
+        topicBox.style.opacity = '1';
+        topicBox.style.pointerEvents = 'auto';
+    } else {
+        topicBox.style.opacity = '0.5';
+        topicBox.style.pointerEvents = 'none';
+    }
+
+    if (topicSelected) {
+        dropdownButton.style.opacity = '1';
+        dropdownButton.style.pointerEvents = 'auto';
+    } else {
+        dropdownButton.style.opacity = '0.5';
+        dropdownButton.style.pointerEvents = 'none';
+    }
+}
+
+document.querySelectorAll('.role-button button').forEach(button => {
+    button.addEventListener('click', toggleFieldsAvailability);
+});
+
+document.querySelectorAll('.topic-box input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', toggleFieldsAvailability);
+});
+
+toggleFieldsAvailability();
