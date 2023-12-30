@@ -53,4 +53,6 @@ public class FavoritesMyGroupController {
         favoritesService.showAllFavorites(model, principal);
         return "favorites";
     }
+
+
 }

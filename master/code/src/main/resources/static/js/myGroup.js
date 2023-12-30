@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
            element.style.display = "none";
         });
         // lekerni a mentee-k profilkepeit
-        console.log("Helloka menteek");
+        //console.log("Helloka menteek");
         fetch("/myGroup/mentees/getallmenteeprofileimage", {
             method: "GET",
             headers: {
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
         MainInformationPage.style.display = "none";
 
         // lekerni a mentorok profilkepeit
-        console.log("Helloka mentorok");
+        //console.log("Helloka mentorok");
         fetch("/myGroup/mentors/getallmentorprofileimage", {
             method: "GET",
             headers: {
@@ -427,6 +427,10 @@ document.addEventListener("DOMContentLoaded", function () {
         var searchData = {
             selectedSkillsByTopic: selectedSkillsByTopic
         };
+        var menteebutton =  document.querySelector('.mentee-side');
+        var mentorbutton =  document.querySelector('.mentor-side');
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
         //console.log("Igen12: " + Object.keys(selectedSkillsByTopic));
 
         // igy megkapom a kivalasztott skill-eket es topicokat is
@@ -434,6 +438,20 @@ document.addEventListener("DOMContentLoaded", function () {
         // ha van kivalasztva valami akkor pedig a kereses oldalra iranyitson
         if (Object.keys(selectedSkillsByTopic).length === 0) {
             console.log("Nincs kiválasztva semmi");
+
+
+            if (menteebutton.classList.contains('active')) {
+                showLoadingModal();
+                window.location.href = "/myGroup/mentees";
+            } else if (mentorbutton.classList.contains('active')) {
+                showLoadingModal();
+                window.location.href = "/myGroup/mentors";
+            } else {
+                //Meg kell jelenitse hogy valamelyiket muszaj kivalasztani
+                // es esetleg azt a mentor/mentee div-nek adjon piros keretet
+                alert("Hibat kell megjelenitsen, ")
+                //window.location.href = "/myGroup/myCustomGroup";
+            }
         } else {
             console.log("Kiválasztott skill-ek: ");
             Object.keys(selectedSkillsByTopic).forEach(function (topic) {
@@ -442,6 +460,36 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             console.log("Adatok: ", searchData);
+
+            if (menteebutton.classList.contains('active')) {
+                const queryString = Object.keys(selectedSkillsByTopic).map(topic => {
+                    const skills = selectedSkillsByTopic[topic].map(skill => encodeURIComponent(skill)).join(',');
+                    return `${encodeURIComponent(topic)}=${skills}`;
+                }).join('&');
+                const url = `/myGroup/mentees/filtered?${queryString}`;
+
+                fetch(url, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRF-TOKEN': token
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Something went wrong');
+                    }
+                }).then(data => {
+                    console.log(data);
+                    //window.location.href = "/myGroup/mentees/filtered";
+                }).catch(error => {
+                    console.log("Error: ", error);
+                });
+            } else {
+                console.log("Helloka mentorok");
+            }
+
         }
 
 

@@ -14,11 +14,14 @@ public class MyGroupProfileDetailDTO {
     public MyGroupProfileDetailDTO() {
     }
 
-    public MyGroupProfileDetailDTO(String firstName, String lastName, Long id) {
+    public MyGroupProfileDetailDTO(String firstName,
+                                   String lastName,
+                                   Long id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
     }
+
 
 
 }

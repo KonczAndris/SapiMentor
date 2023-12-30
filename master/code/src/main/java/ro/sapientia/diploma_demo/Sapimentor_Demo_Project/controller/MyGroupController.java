@@ -1,11 +1,13 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -199,4 +201,43 @@ public class MyGroupController {
         }
     }
 
+//    @Cacheable("showAllMentors")
+//    @GetMapping("/mentors")
+//    public String showAllMentors (Model model, Principal principal) {
+//        if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        utilityForSomeCotroller.showTopicsToMyGroupPage(model);
+//        utilityForSomeCotroller.showSkillsToMyGroupPage(model);
+//        utilityForSomeCotroller.showProfileImageAndName(model, principal);
+//
+//        // ez helyett esetleg a hosszu menet
+//        myGroupService.getAllMentorsDetails(model, principal);
+//
+//        return "myGroup";
+//    }
+
+    @GetMapping("/mentees/filtered")
+    public ResponseEntity<String> showFilteredMentees(Model model, Principal principal, @RequestParam MultiValueMap<String, String> params) {
+        try {
+            System.out.println("searchData: " + params);
+
+//            params.forEach((key, values) -> {
+//                System.out.println(key + ": " + values);
+//            });
+
+            // JSON reprezentáció a params-ról
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonRepresentation = objectMapper.writeValueAsString(params);
+
+            System.out.println("JSON reprezentáció: " + jsonRepresentation);
+
+            myGroupService.getAllMenteesDetailsByFilter(principal, params);
+
+            return ResponseEntity.ok("ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 }

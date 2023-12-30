@@ -3,6 +3,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.MyGroupProfileDetailDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.*;
@@ -13,9 +14,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserReposito
 
 import javax.transaction.Transactional;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -159,10 +158,157 @@ public class MyGroupService {
             System.out.println("User topics: " + userTopics);
             System.out.println("User topics: " + userTopics.get(0).getTags());
             for (Profile_Topics profile_topics : userTopics) {
-                System.out.println("Profile_topics: " + profile_topics.getTags());
+                System.out.println("Profile_topics: " +profile_topics.getTopic() + ": " + profile_topics.getTags());
             }
             //model.addAttribute("userTopics", userTopics);
         }
     }
 
+
+    ////////////////////////////////////////////////////////////////
+    // Filteres kereses
+    ////////////////////////////////////////////////////////////////
+
+    @Cacheable("getAllMenteesDetailsByFilter")
+    public List<User> getAllMenteesDetailsByFilter(Principal principal,MultiValueMap<String, String> params){
+        String email = principal.getName();
+        Long userId = userRepository.findIdByEmail(email);
+        List<MyGroupProfileDetailDTO> allMentees = userRepository.findAllMentees(userId);
+        List<MyGroupProfileDetailDTO> filteredUsers = new ArrayList<>();
+
+        for (MyGroupProfileDetailDTO userDTO : allMentees) {
+
+            Long userDTOId = userDTO.getId();
+            System.out.println("User: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
+            List<Profile_Topics> userTopics = profileTopicsRepository.findByUserId(userDTOId);
+
+//            if (!userTopics.isEmpty()) {
+//                for (Profile_Topics profile_topics : userTopics) {
+//                    System.out.println("Profile_topics: " +profile_topics.getTopic() + ": " + profile_topics.getTags());
+//                }
+//            }
+
+            boolean userMatchesFilter = true;
+
+            for (Map.Entry<String, List<String>> entry : params.entrySet()) {
+                String paramName = entry.getKey();
+                List<String> paramValues = new ArrayList<>();
+                paramValues = Arrays.asList(entry.getValue().get(0).split(","));
+
+                System.out.println("ELSO paramName: " + paramName + ", paramValues: " + paramValues);
+
+                for (Profile_Topics profile_topics : userTopics) {
+                    System.out.println("Profile_topics: " +profile_topics.getTopic() + ": " + profile_topics.getTags());
+
+                    if(paramName.equals(profile_topics.getTopic()) ) {
+                        System.out.println("Egyenlo a topic a felhasznalo topicjaval");
+
+
+                        if (!filteredUsers.contains(userDTO)) {
+                            filteredUsers.add(userDTO);
+                        }
+                        System.out.println("filteredUsers123: " + filteredUsers);
+                        int db = 0;
+                        List<String> emptyStringList = new ArrayList<>();
+
+                        System.out.println("paramValues.size(): " + paramValues.get(0).length());
+                        if (paramValues.get(0).length() != 0 ){
+
+                            for (String paramValue : paramValues) {
+
+                                System.out.println("paramValueasdasd: " + paramValue);
+                                emptyStringList.add(paramValue);
+                                if (profile_topics.getTags().contains(paramValue)) {
+                                    db++;
+                                    System.out.println("Nem tartalmazza a taget");
+                                    //filteredUsers.remove(userDTO);
+                                }
+                            }
+                            System.out.println("emptyStringList: " + emptyStringList.get(0).length());
+                            if (db == 0 ){
+                                filteredUsers.remove(userDTO);
+                            }
+                            System.out.println("db: " + db);
+                        }
+
+
+
+
+
+//                        for (String paramValue : paramValues) {
+//                            System.out.println("paramValue: " + paramValue);
+//                            if (!profile_topics.getTags().contains(paramValue)) {
+//                                System.out.println("Nem tartalmazza a taget");
+//                                userMatchesFilter = false;
+//                                break;
+//                            }
+//                        }
+                    }
+                }
+
+                System.out.println("userMatchesFilter: " + userMatchesFilter);
+            }
+
+        }
+
+        //System.out.println("filteredUsers: " + filteredUsers);
+        for (MyGroupProfileDetailDTO userDTO : filteredUsers) {
+
+            System.out.println("Userutolso: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
+        }
+
+        return null;
+    }
+
+
 }
+
+
+
+//import org.springframework.beans.factory.annotation.Autowired;
+//        import org.springframework.stereotype.Service;
+//        import org.springframework.util.MultiValueMap;
+//
+//        import java.util.ArrayList;
+//        import java.util.List;
+//
+//@Service
+//public class YourUserService {
+//
+//    @Autowired
+//    private UserRepository userRepository;
+//
+//    @Autowired
+//    private ProfileTopicsRepository profileTopicsRepository;
+//
+//    public List<User> filterUsersByParams(MultiValueMap<String, String> params) {
+//        List<User> filteredUsers = new ArrayList<>();
+//
+//        // Ellenőrzés, hogy a "selectedSkillsByTopic" kulcsú paraméter létezik-e
+//        if (params.containsKey("selectedSkillsByTopic")) {
+//            List<String> selectedSkillsByTopicValues = params.get("selectedSkillsByTopic");
+//
+//            for (String selectedSkillsByTopic : selectedSkillsByTopicValues) {
+//                // Keresd meg a skill-ekhez tartozó témákat
+//                List<Profile_Topics> topicsWithMatchingSkills = profileTopicsRepository.findBySkillName(selectedSkillsByTopic);
+//
+//                // Vegyük ki a témákat, amelyekhez tartoznak a kiválasztott skill-ek
+//                List<String> selectedTopics = new ArrayList<>();
+//                topicsWithMatchingSkills.forEach(topic -> selectedTopics.add(topic.getTopic().getTopic()));
+//
+//                // Keresd meg a felhasználókat a kiválasztott témák alapján
+//                List<User> usersWithMatchingTopics = userRepository.findByTopics(selectedTopics);
+//
+//                // Adjuk hozzá az eredményeket a filteredUsers listához (duplikációk nélkül)
+//                usersWithMatchingTopics.forEach(user -> {
+//                    if (!filteredUsers.contains(user)) {
+//                        filteredUsers.add(user);
+//                    }
+//                });
+//            }
+//        }
+//
+//        return filteredUsers;
+//    }
+//}
+
