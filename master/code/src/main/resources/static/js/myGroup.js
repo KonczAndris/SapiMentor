@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             profileimages = data.profileimagesandid;
-            //console.log(profileimages);
+            console.log("Igen: " + profileimages);
             handlereprofileimages();
         }).catch(error => {
             console.log("Error: ", error);
@@ -199,7 +199,59 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             profileimages = data.profileimagesandid;
-            //console.log(profileimages);
+            console.log("Igen: " + profileimages);
+            handlereprofileimages();
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
+    } else if (currentURL.includes("myGroup/mentees/filtered")) {
+        MainInformationPage.style.display = "none";
+
+        var rating = document.querySelectorAll('.rating');
+        rating.forEach(function (element) {
+            element.style.display = "none";
+        });
+        // lekerni a mentee-k profilkepeit
+        //console.log("Helloka menteek");
+        fetch("/myGroup/mentees/getallmenteeprofileimage", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).then(data => {
+            profileimages = data.profileimagesandid;
+            console.log("Igen: " + profileimages);
+            handlereprofileimages();
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
+    } else if (currentURL.includes("myGroup/mentors/filtered")) {
+        MainInformationPage.style.display = "none";
+
+        // lekerni a mentorok profilkepeit
+        //console.log("Helloka mentorok");
+        fetch("/myGroup/mentors/getallmentorprofileimage", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).then(data => {
+            profileimages = data.profileimagesandid;
+            console.log("Igen: " + profileimages);
             handlereprofileimages();
         }).catch(error => {
             console.log("Error: ", error);
@@ -216,8 +268,12 @@ function handlereprofileimages() {
         const profilImage = profilData[0];
         const profilId = profilData[1];
 
+        console.log("Profil image: ", profilImage);
+        console.log("Profil id: ", profilId);
+
         var profileImg  = document.getElementById('myGroupProfileImg-' + profilId);
-        if (profilImage != null) {
+        console.log("Profile image: ", profileImg);
+        if (profilImage != null && profileImg != null ) {
             profileImg.src = 'data:image/jpeg;base64,' + profilImage;
         }
 
@@ -467,27 +523,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     return `${encodeURIComponent(topic)}=${skills}`;
                 }).join('&');
                 const url = `/myGroup/mentees/filtered?${queryString}`;
+                showLoadingModal();
+                window.location.href = url;
 
-                fetch(url, {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-CSRF-TOKEN': token
-                    }
-                }).then(response => {
-                    if (response.ok) {
-                        return response.text();
-                    } else {
-                        throw new Error('Something went wrong');
-                    }
-                }).then(data => {
-                    console.log(data);
-                    //window.location.href = "/myGroup/mentees/filtered";
-                }).catch(error => {
-                    console.log("Error: ", error);
-                });
-            } else {
-                console.log("Helloka mentorok");
+            } else if (mentorbutton.classList.contains('active')) {
+                const queryString = Object.keys(selectedSkillsByTopic).map(topic => {
+                    const skills = selectedSkillsByTopic[topic].map(skill => encodeURIComponent(skill)).join(',');
+                    return `${encodeURIComponent(topic)}=${skills}`;
+                }).join('&');
+                const url = `/myGroup/mentors/filtered?${queryString}`;
+                showLoadingModal();
+                window.location.href = url;
             }
 
         }

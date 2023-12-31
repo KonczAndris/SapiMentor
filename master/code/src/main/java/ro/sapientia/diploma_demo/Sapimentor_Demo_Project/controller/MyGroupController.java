@@ -1,6 +1,5 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -218,26 +217,43 @@ public class MyGroupController {
 //    }
 
     @GetMapping("/mentees/filtered")
-    public ResponseEntity<String> showFilteredMentees(Model model, Principal principal, @RequestParam MultiValueMap<String, String> params) {
+    public String showFilteredMentees(Model model, Principal principal, @RequestParam MultiValueMap<String, String> params) {
         try {
+            if (principal == null) {
+                return "redirect:/login";
+            }
             System.out.println("searchData: " + params);
 
-//            params.forEach((key, values) -> {
-//                System.out.println(key + ": " + values);
-//            });
+            utilityForSomeCotroller.showTopicsToMyGroupPage(model);
+            utilityForSomeCotroller.showSkillsToMyGroupPage(model);
+            utilityForSomeCotroller.showProfileImageAndName(model, principal);
+            myGroupService.getAllMenteesDetailsByFilter(principal, model, params);
 
-            // JSON reprezentáció a params-ról
-            ObjectMapper objectMapper = new ObjectMapper();
-            String jsonRepresentation = objectMapper.writeValueAsString(params);
-
-            System.out.println("JSON reprezentáció: " + jsonRepresentation);
-
-            myGroupService.getAllMenteesDetailsByFilter(principal, params);
-
-            return ResponseEntity.ok("ok");
+            return "myGroup";
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return "error";
+        }
+    }
+
+
+    @GetMapping("/mentors/filtered")
+    public String showFilteredMentors(Model model, Principal principal, @RequestParam MultiValueMap<String, String> params) {
+        try {
+            if (principal == null) {
+                return "redirect:/login";
+            }
+            System.out.println("searchData: " + params);
+
+            utilityForSomeCotroller.showTopicsToMyGroupPage(model);
+            utilityForSomeCotroller.showSkillsToMyGroupPage(model);
+            utilityForSomeCotroller.showProfileImageAndName(model, principal);
+            myGroupService.getAllMentorsDetailsByFilter(principal, model, params);
+
+            return "myGroup";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
         }
     }
 }
