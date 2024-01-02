@@ -405,6 +405,253 @@ body {
     color: rgb(25, 150, 114);
 }
 
+/*PROFILE MODAL*/
+.profile-modal-background{
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    overflow-x: scroll;
+    display: none;
+}
+
+.profile-modal{
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    margin-top: 5%;
+    padding: 10px;
+    border: 1px solid #888;
+    border-radius: 25px;
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    position: relative;
+}
+
+.profile-modal::-webkit-scrollbar{
+    width: 0;
+    background: transparent;
+}
+
+.close-profile-modal{
+    color: #aaaaaa;
+    float: left;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-right: 20px;
+    margin-left: auto;
+    position: absolute;
+    align-self: flex-end;
+    top: 15px;
+    right: 10px;
+}
+
+.close-profile-modal:hover,
+.close-profile-modal:focus{
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.profile-modal-left-box{
+    width: 30%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-modal-right-box{
+    width: 70%;
+    text-align: start;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+    flex: 1;
+    margin-right: none;
+    overflow-y: auto;
+}
+
+.profile-modal-right-box::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+.favorite-button {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #ffffff;
+    color: rgb(30, 214, 162);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5%;
+}
+
+.heart-icon {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    margin-right: 6px;
+    vertical-align: middle;
+    color: gray;
+}
+
+/* Hover effect */
+.favorite-button:hover {
+    text-shadow: 0 0px 5px rgb(195, 255, 238);
+}
+
+.remove-button {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #ffffff;
+    color:  rgb(234, 80, 80);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5%;
+}
+
+.remove-icon {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+/* Hover effect */
+.remove-button:hover {
+    text-shadow: 0 0px 5px  rgb(250, 152, 152);
+}
+
+
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 5%;
+}
+
+.status-box {
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 5%;
+}
+
+.name-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-direction: column;
+}
+
+.first-name,
+.last-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.status {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0;
+    text-transform: uppercase;
+    font-size: larger;
+    font-weight: bold;
+    color: rgb(22, 175, 132);
+}
+
+.rating {
+    direction: rtl;
+}
+
+.rating input[type="radio"] {
+    display: none;
+}
+
+.rating label {
+    display: inline-block;
+    font-size: 1.8rem;
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+
+.rating input[type="radio"]:checked~label {
+    color: gold;
+}
+
+.rating-text {
+    text-align: center;
+    margin-top: 5px;
+}
+
+.section {
+    max-width: 100%;
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 24px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.divider {
+    width: 100%;
+    height: 2px;
+    background-color: #000000;
+    margin-bottom: 20px;
+}
+
 @media screen and (max-width: 768px) {
     .image-cell {
         flex: 0 0 calc(33.333% - 10px);
@@ -423,6 +670,20 @@ body {
     }
 }
 
+@media (max-width: 800px) {
+    .profile-modal{
+        flex-direction: column;
+    }
+
+    .profile-modal-left-box {
+        width: 100%;
+    }
+
+    .profile-modal-right-box {
+        width: 100%;
+    }
+
+}
 
 @media screen and (max-width: 600px) {
     .left-search-box{
