@@ -17,7 +17,7 @@ public class SapimentorDemoProjectApplication {
 
 	private static final Long MAX_PDF_FILE_SIZE = 10 * 1024 * 1024L; // 10 MB
 
-	// Informatika szakos diakok diplomamunkainak feltoltese
+	// Informatika_2023 szakos diakok diplomamunkainak feltoltese
 	// a CommandLineRunner interfesz implementalas segitsegevel
 //	@Bean
 //	public CommandLineRunner InformaticPDFUploadRunner(DiplomaServices diplomaServices) {
@@ -58,7 +58,7 @@ public class SapimentorDemoProjectApplication {
 //	}
 
 
-	// Szamitastechnika szakos diakok diplomamunkainak feltoltese
+	// Szamitastechnika_2023 szakos diakok diplomamunkainak feltoltese
 	// a CommandLineRunner interfesz implementalas segitsegevel
 //	@Bean
 //	public CommandLineRunner CalculatoarePDFUploadRunner(DiplomaServices diplomaServices) {
@@ -97,6 +97,10 @@ public class SapimentorDemoProjectApplication {
 //			System.out.println("CommandLineRunner running in the UnsplashApplication class...");
 //		};
 //	}
+
+
+
+
 
 	private String cleanFileName(String fileName) {
 		// Az "_" és "-" karakterek eltávolítása
