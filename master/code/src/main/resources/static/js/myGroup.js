@@ -486,6 +486,35 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// Get the button element by its class name
+const profileButtons = document.querySelectorAll('.profile-button');
+const profileModal = document.getElementById('profileModal');
+const closeBtn = document.querySelector('.close-profile-modal');
+
+// Function to display the modal
+function displayModal() {
+    profileModal.style.display = 'block';
+}
+
+function closeModal() {
+    profileModal.style.display = 'none';
+}
+
+// Event listener for each profile button
+profileButtons.forEach(button => {
+    button.addEventListener('click', displayModal);
+});
+
+closeBtn.addEventListener('click', closeModal);
+
+// Function to close the modal when clicking outside the modal content
+window.addEventListener('click', function(event) {
+    if (event.target === profileModal) {
+        profileModal.style.display = 'none';
+    }
+});
+
+
 
 
 

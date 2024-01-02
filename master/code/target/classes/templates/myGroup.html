@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SapiMentor</title>
-        <meta name="_csrf" th:content="${_csrf.token}"/>
-        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+    <!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/myGroup.css}">
     <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
@@ -159,6 +159,7 @@
                         </ol>
                     </div>
                 </div>
+
                 <div class="scrollable-div">
                     <div class="image-cell" th:id="${'image-cell-' + pic.id}" th:each="pic : ${allMenteesOrMentors}">
                         <!-- Profilkép megjelenítése -->
@@ -170,6 +171,7 @@
 <!--                             th:src="@{/img/anonym.jpg}" alt="Profile Image" class="rounded-image">-->
 
                         <img th:id="${'myGroupProfileImg-' + pic.id}" th:src="@{/img/anonym.jpg}" class="rounded-image" alt="Profile Image">
+                        <button th:id="${'profileButton-' + pic.id}" class="profile-button"> VIEW </button>
 
                         <!-- Itt kapom meg a kedvenchez tartozo id-t -->
                         <span class="favorite-id" th:text="${favoriteIdsByUserId[pic.id]}"></span>
@@ -192,6 +194,7 @@
                             <label th:for="${'star1_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 0.5} ? 'color: gold;' : ''">&#9733;</label>
                         </div>
                         <span class="myGroupName" th:text="${pic.firstName + ' ' + pic.lastName}"></span>
+
                     </div>
                 </div>
             </div>
@@ -200,6 +203,102 @@
 
 <!--        SEARCH DIV END-->
 
+    <div class="profile-modal-background" id="profileModal">
+        <div class="profile-modal">
+            <span class="close-profile-modal">&times;</span>
+
+            <div class="profile-modal-left-box">
+
+                <div class="image-container">
+                    <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
+                </div>
+                <div class="status-box">
+                    <div class="name-box">
+                        <p class="first-name"> Name </p>
+                    </div>
+
+                    <div>
+                        <h2 th:text="${userRolesToDisplay}" class="status"> MENTEE </h2>
+                    </div>
+
+                    <div class="rating">
+                        <input type="radio" id="star5" name="rating" value="5" th:checked="${averageOfRating >= 4.5 && averageOfRating <= 5}" disabled />
+                        <label for="star5">&#9733;</label>
+                        <input type="radio" id="star4" name="rating" value="4" th:checked="${averageOfRating >= 3.5 && averageOfRating < 4.5}" disabled />
+                        <label for="star4">&#9733;</label>
+                        <input type="radio" id="star3" name="rating" value="3" th:checked="${averageOfRating >= 2.5 && averageOfRating < 3.5}" disabled />
+                        <label for="star3">&#9733;</label>
+                        <input type="radio" id="star2" name="rating" value="2" th:checked="${averageOfRating >= 1.5 && averageOfRating < 2.5}" disabled />
+                        <label for="star2">&#9733;</label>
+                        <input type="radio" id="star1" name="rating" value="1" th:checked="${averageOfRating >= 0.5 && averageOfRating < 1.5}" disabled />
+                        <label for="star1">&#9733;</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="profile-modal-right-box">
+
+                <div class="profile-right">
+                    <!-- ABOUT CONTAINER  START -->
+                    <div class="section">
+                        <h2>ABOUT</h2>
+                        <!-- ABOUT INFO START -->
+                        <div class="divider"></div>
+                        <div class="details">
+                            <div class="detail-row">
+                                <p class="detail-label">Name:</p>
+                                <p class="detail-value" th:text="${userRegistrationDetails.firstName}"></p>
+                                <p class="detail-value" th:text="${userRegistrationDetails.lastName}"></p>
+                            </div>
+                            <div class="detail-row">
+                                <p class="detail-label">Specialization:</p>
+                                <p th:text="${userRegistrationDetails.specialization ?: 'ex: Software Engineering'}"></p>
+                            </div>
+                            <div class="detail-row">
+                                <p class="detail-label">Year:</p>
+                                <p th:text="${userRegistrationDetails.year ?: 'ex: 3'}"></p>
+                            </div>
+                            <div class="detail-row">
+                                <p class="detail-label">E-mail:</p>
+                                <p class="detail-value" th:text="${userRegistrationDetails.username}"></p>
+                            </div>
+                            <div class="detail-row">
+                                <p class="detail-label">Phone:</p>
+                                <p th:text="${userRegistrationDetails.phoneNumber ?: 'ex: 0734155510'}"></p>
+                            </div>
+                        </div>
+                        <!-- ABOUT INFO END -->
+                    </div>
+                    <!-- ABOUT CONTAINER  END -->
+
+                    <!-- SKILLS CONTAINER START -->
+                    <div class="section">
+                        <h2>SKILLS
+                        </h2>
+                        <div class="divider"></div>
+                        <!-- SKILLS INFO START -->
+                        <div class="table-container">
+                            <table>
+                                <tbody>
+                                <tr th:each="topic : ${userTopics}" >
+                                    <td th:text="${topic.topic}"></td>
+                                    <td class="scrollable-column">
+                                        <div th:each="tag : ${topic.tags}" class="topic-tag-profile" th:text="${tag}"></div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="divider"></div>
+                        <!-- SKILLS INFO END -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
