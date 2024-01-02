@@ -4,8 +4,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.MyGroupProfileDetailDTO;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UserDetailsDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.FavoriteRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ProfileTopicsRepository;
@@ -141,26 +141,40 @@ public class MyGroupService {
         }
     }
 
-    @Cacheable("getSelectedUserProfile")
+//    @Cacheable("getSelectedUserProfile")
     public void getSelectedUserProfile(Long userId,Model model) {
         User user = userRepository.findUserById(userId);
-        System.out.println("Email: " + user.getEmail()
-        + ", Name: " + user.getFirst_Name() + " " + user.getLast_Name() );
+//        System.out.println("Email: " + user.getEmail()
+//        + ", Name: " + user.getFirst_Name() + " " + user.getLast_Name() );
+//        model.addAttribute("showDetails", true);
+        UserDetailsDTO userDetailsForMyGroup = new UserDetailsDTO(user);
+//        System.out.println("UserDetailsForMyGroup content: " + userDetailsForMyGroup);
+//        System.out.println("userDetailsForMyGroup: " + userDetailsForMyGroup.getUserName());
+        byte[] profileImageForMyGroup = user.getProfileImage();
+        if (profileImageForMyGroup != null) {
+            String profileImageForMyGroupBase64 = Base64.getEncoder().encodeToString(profileImageForMyGroup);
+            model.addAttribute("profileImageForMyGroupBase64", profileImageForMyGroupBase64);
+        } else {
+            model.addAttribute("profileImageForMyGroupBase64", "");
+        }
 
-        UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
-        System.out.println("userRegistrationDetails: " + userRegistrationDetails.getUsername());
+        double averageRatingForMyGruopModal = ratingService.getAverageRating(userId).get("average");
+
+        model.addAttribute("averageRatingForMyGruopModal", averageRatingForMyGruopModal);
+
+        model.addAttribute("userDetailsForMyGroup", userDetailsForMyGroup);
 
         List<Topic> topics = topicService.getAllTopics();
 
-        List<Profile_Topics> userTopics = profileTopicsRepository.findByUserId(userId);
+        List<Profile_Topics> userTopicsForMyGroup = profileTopicsRepository.findByUserId(userId);
 
-        if (!userTopics.isEmpty()) {
-            System.out.println("User topics: " + userTopics);
-            System.out.println("User topics: " + userTopics.get(0).getTags());
-            for (Profile_Topics profile_topics : userTopics) {
-                System.out.println("Profile_topics: " +profile_topics.getTopic() + ": " + profile_topics.getTags());
-            }
-            //model.addAttribute("userTopics", userTopics);
+        if (!userTopicsForMyGroup.isEmpty()) {
+//            System.out.println("User topics: " + userTopicsForMyGroup);
+//            System.out.println("User topics: " + userTopicsForMyGroup.get(0).getTags());
+//            for (Profile_Topics profile_topics : userTopicsForMyGroup) {
+//                System.out.println("Profile_topics: " +profile_topics.getTopic() + ": " + profile_topics.getTags());
+//            }
+            model.addAttribute("userTopicsForMyGroup", userTopicsForMyGroup);
         }
     }
 

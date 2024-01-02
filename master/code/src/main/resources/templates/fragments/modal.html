@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" th:href="@{../css/index.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{../css/myGroup.css}">
+  <title>Title</title>
+</head>
+<body>
+<div th:fragment="modal-content" class="profile-modal" >
+  <span class="close-profile-modal">&times;</span>
+
+  <div class="profile-modal-left-box">
+
+    <div class="image-container">
+      <img th:if="${profileImageForMyGroupBase64 != ''}"
+           th:src="@{|data:image/jpeg;base64,${profileImageForMyGroupBase64}|}"
+           alt="Profile Image" class="profile-image">
+
+      <img th:unless="${profileImageForMyGroupBase64 != ''}"
+           th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
+    </div>
+    <div class="status-box">
+      <div class="name-box">
+        <p class="first-name" th:text="${userDetailsForMyGroup.firstName}">  </p>
+      </div>
+
+      <div class="rating modal-rating-star">
+        <input type="radio" id="star5" name="rating" value="5" th:checked="${averageRatingForMyGruopModal >= 4.5}" disabled />
+        <label for="star5" th:style="${averageRatingForMyGruopModal >= 4.5} ? 'color: gold;' : ''" >&#9733;</label>
+        <input type="radio" id="star4" name="rating" value="4" th:checked="${averageRatingForMyGruopModal >= 3.5}" disabled />
+        <label for="star4" th:style="${averageRatingForMyGruopModal >= 3.5} ? 'color: gold;' : ''" >&#9733;</label>
+        <input type="radio" id="star3" name="rating" value="3" th:checked="${averageRatingForMyGruopModal >= 2.5}" disabled />
+        <label for="star3" th:style="${averageRatingForMyGruopModal >= 2.5} ? 'color: gold;' : ''" >&#9733;</label>
+        <input type="radio" id="star2" name="rating" value="2" th:checked="${averageRatingForMyGruopModal >= 1.5}" disabled />
+        <label for="star2" th:style="${averageRatingForMyGruopModal >= 1.5} ? 'color: gold;' : ''" >&#9733;</label>
+        <input type="radio" id="star1" name="rating" value="1" th:checked="${averageRatingForMyGruopModal >= 0.5}" disabled />
+        <label for="star1" th:style="${averageRatingForMyGruopModal >= 0.5} ? 'color: gold;' : ''" >&#9733;</label>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="profile-modal-right-box" >
+
+    <div class="profile-right">
+      <!-- ABOUT CONTAINER  START -->
+      <div class="section">
+        <h2>ABOUT</h2>
+        <!-- ABOUT INFO START -->
+        <div class="divider"></div>
+        <div class="details">
+          <div class="detail-row">
+            <p class="detail-label">Name:</p>
+            <p class="detail-value" th:text="${userDetailsForMyGroup.lastName}"></p>
+            <p class="detail-value" th:text="${userDetailsForMyGroup.firstName}"></p>
+          </div>
+          <div class="detail-row">
+            <p class="detail-label">Specialization:</p>
+            <p th:text="${userDetailsForMyGroup.specialization ?: 'ex: Software Engineering'}"></p>
+          </div>
+          <div class="detail-row">
+            <p class="detail-label">Year:</p>
+            <p th:text="${userDetailsForMyGroup.year ?: 'ex: 3'}"></p>
+          </div>
+          <div class="detail-row">
+            <p class="detail-label">E-mail:</p>
+            <p class="detail-value" th:text="${userDetailsForMyGroup.userName}"></p>
+          </div>
+          <div class="detail-row">
+            <p class="detail-label">Phone:</p>
+            <p th:text="${userDetailsForMyGroup.phoneNumber ?: 'ex: 0734155510'}"></p>
+          </div>
+        </div>
+        <!-- ABOUT INFO END -->
+      </div>
+      <!-- ABOUT CONTAINER  END -->
+
+      <!-- SKILLS CONTAINER START -->
+      <div class="section">
+        <h2>SKILLS
+        </h2>
+        <div class="divider"></div>
+        <!-- SKILLS INFO START -->
+        <div class="table-container">
+          <table>
+            <tbody>
+            <tr th:each="topic : ${userTopicsForMyGroup}" >
+              <td th:text="${topic.topic}"></td>
+              <td class="scrollable-column">
+                <div th:each="tag : ${topic.tags}" class="topic-tag-profile" th:text="${tag}"></div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="divider"></div>
+        <!-- SKILLS INFO END -->
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{src/main/resources/static/js/functions.js}"></script>
+<script th:src="@{src/main/resources/static/js/myGroup.js}"></script>
+</body>
+</html>

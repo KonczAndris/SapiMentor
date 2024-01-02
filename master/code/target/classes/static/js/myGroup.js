@@ -343,6 +343,8 @@ toggleFieldsAvailability();
 
 
 document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector('.profile-modal-background').style.display = 'none';
+
     var selectedSkillsByTopic = {};  // Objektum, amely tárolja a kiválasztott skill-eket témánként
 
     // Get all topic checkboxes
@@ -489,23 +491,75 @@ document.addEventListener("DOMContentLoaded", function () {
 // Get the button element by its class name
 const profileButtons = document.querySelectorAll('.profile-button');
 const profileModal = document.getElementById('profileModal');
-const closeBtn = document.querySelector('.close-profile-modal');
+
 
 // Function to display the modal
 function displayModal() {
-    profileModal.style.display = 'block';
+    var currentURL = window.location.href;
+    if (profileModal !== null) {
+        profileModal.style.display = 'block';
+    }
+
+    if (currentURL.includes("myGroup/mentees")) {
+        var rating = document.querySelector('.rating.modal-rating-star');
+        rating.style.display = "none";
+    }
 }
 
 function closeModal() {
-    profileModal.style.display = 'none';
+    if (profileModal !== null) {
+        profileModal.style.display = 'none';
+    }
 }
 
 // Event listener for each profile button
 profileButtons.forEach(button => {
-    button.addEventListener('click', displayModal);
+    // button.addEventListener('click', displayModal);
+    button.addEventListener('click', function() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+       //console.log("Button clicked", button.id);
+       var userId = button.id.split("-")[1];
+       //console.log("User id: ", userId);
+       var url = '/myGroup/getSelectedUserDetails?selectedUserId=' + userId;
+
+       fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            }
+       }).then(response => {
+           if (response.ok) {
+               return response.text();
+           } else {
+               throw new Error('Something went wrong');
+           }
+       }).then(data => {
+           if (data !== 'error') {
+               console.log("Sikeres lekerdezes");
+
+               document.getElementById('profileModal').innerHTML = data;
+               const closeBtn = document.querySelector('.close-profile-modal');
+               if (closeBtn !== null){
+                   closeBtn.addEventListener('click', closeModal);
+               }
+               displayModal();
+           } else {
+                throw new Error('Something went wrong');
+           }
+
+       }).catch(error => {
+              console.log("Error: ", error);
+       });
+
+    });
 });
 
-closeBtn.addEventListener('click', closeModal);
+
+
+
+
 
 // Function to close the modal when clicking outside the modal content
 window.addEventListener('click', function(event) {
@@ -513,6 +567,7 @@ window.addEventListener('click', function(event) {
         profileModal.style.display = 'none';
     }
 });
+
 
 
 

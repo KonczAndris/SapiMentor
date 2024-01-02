@@ -99,6 +99,180 @@ public class SapimentorDemoProjectApplication {
 //	}
 
 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+
+
+	// Informatika_2022 szakos diakok diplomamunkainak feltoltese
+	// a CommandLineRunner interfesz implementalas segitsegevel
+//	@Bean
+//	public CommandLineRunner InformaticPDFUploadRunner(DiplomaServices diplomaServices) {
+//		return args -> {
+//			String pdfDirectoryPath = "src/main/resources/static/pdf";
+//
+//			// PDF-fájlok listázása a könyvtárban
+//			File pdfDirectory = new File(pdfDirectoryPath);
+//			File[] pdfFiles = pdfDirectory.listFiles((dir, name) -> name.toLowerCase().endsWith(".pdf"));
+//
+//			if (pdfFiles != null) {
+//				for (File pdfFile : pdfFiles) {
+//					String originalName = pdfFile.getName().replace(".pdf", "");
+//					String cleanedName = cleanFileName(originalName);
+//					String formattedName = formatName(cleanedName);
+//					String topic = "Informatics";
+//					String user_Name = "Szotyori Csongor";
+//					String year = "2022";
+//
+//
+//					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
+//						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
+//						continue;
+//					}
+//					byte[] pdfBytes = Files.readAllBytes(pdfFile.toPath());
+//					//System.out.println("PDF file name: " + formattedName + " | PDF file size: " + pdfFile.length() + " bytes");
+//					//System.out.println(pdfFile.getName().replace(".pdf", ""));
+//
+//					Thread.sleep(2000);
+//					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
+//					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year);
+//				}
+//			}
+//
+//			//System.out.println("PDF files found in the directory: " + pdfFiles.length);
+//			System.out.println("CommandLineRunner running in the UnsplashApplication class...");
+//		};
+//	}
+
+
+	// Szamitastechnika_2022 szakos diakok diplomamunkainak feltoltese
+	// a CommandLineRunner interfesz implementalas segitsegevel
+//	@Bean
+//	public CommandLineRunner CalculatoarePDFUploadRunner(DiplomaServices diplomaServices) {
+//		return args -> {
+//			String pdfDirectoryPath = "src/main/resources/static/pdf";
+//
+//			// PDF-fájlok listázása a könyvtárban
+//			File pdfDirectory = new File(pdfDirectoryPath);
+//			File[] pdfFiles = pdfDirectory.listFiles((dir, name) -> name.toLowerCase().endsWith(".pdf"));
+//
+//			if (pdfFiles != null) {
+//				for (File pdfFile : pdfFiles) {
+//					String originalName = pdfFile.getName().replace(".pdf", "");
+//					String cleanedName = cleanFileName(originalName);
+//					String formattedName = formatName(cleanedName);
+//					String topic = "Engineering";
+//					String user_Name = "Koncz Andras";
+//					String year = "2022";
+//
+//
+//					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
+//						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
+//						continue;
+//					}
+//					byte[] pdfBytes = Files.readAllBytes(pdfFile.toPath());
+//					//System.out.println("PDF file name: " + formattedName + " | PDF file size: " + pdfFile.length() + " bytes");
+//					//System.out.println(pdfFile.getName().replace(".pdf", ""));
+//
+//					Thread.sleep(3000);
+//					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
+//					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year);
+//				}
+//			}
+//
+//			//System.out.println("PDF files found in the directory: " + pdfFiles.length);
+//			System.out.println("CommandLineRunner running in the UnsplashApplication class...");
+//		};
+//	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+
+
+	// Informatika_2021 szakos diakok diplomamunkainak feltoltese
+	// a CommandLineRunner interfesz implementalas segitsegevel
+//	@Bean
+//	public CommandLineRunner InformaticPDFUploadRunner(DiplomaServices diplomaServices) {
+//		return args -> {
+//			String pdfDirectoryPath = "src/main/resources/static/pdf";
+//
+//			// PDF-fájlok listázása a könyvtárban
+//			File pdfDirectory = new File(pdfDirectoryPath);
+//			File[] pdfFiles = pdfDirectory.listFiles((dir, name) -> name.toLowerCase().endsWith(".pdf"));
+//
+//			if (pdfFiles != null) {
+//				for (File pdfFile : pdfFiles) {
+//					String originalName = pdfFile.getName().replace(".pdf", "");
+//					String cleanedName = cleanFileName(originalName);
+//					String formattedName = formatName(cleanedName);
+//					String topic = "Informatics";
+//					String user_Name = "Szotyori Csongor";
+//					String year = "2021";
+//
+//
+//					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
+//						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
+//						continue;
+//					}
+//					byte[] pdfBytes = Files.readAllBytes(pdfFile.toPath());
+//					//System.out.println("PDF file name: " + formattedName + " | PDF file size: " + pdfFile.length() + " bytes");
+//					//System.out.println(pdfFile.getName().replace(".pdf", ""));
+//
+//					Thread.sleep(2000);
+//					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
+//					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year);
+//				}
+//			}
+//
+//			//System.out.println("PDF files found in the directory: " + pdfFiles.length);
+//			System.out.println("CommandLineRunner running in the UnsplashApplication class...");
+//		};
+//	}
+
+
+	// Szamitastechnika_2021 szakos diakok diplomamunkainak feltoltese
+	// a CommandLineRunner interfesz implementalas segitsegevel
+//	@Bean
+//	public CommandLineRunner CalculatoarePDFUploadRunner(DiplomaServices diplomaServices) {
+//		return args -> {
+//			String pdfDirectoryPath = "src/main/resources/static/pdf";
+//
+//			// PDF-fájlok listázása a könyvtárban
+//			File pdfDirectory = new File(pdfDirectoryPath);
+//			File[] pdfFiles = pdfDirectory.listFiles((dir, name) -> name.toLowerCase().endsWith(".pdf"));
+//
+//			if (pdfFiles != null) {
+//				for (File pdfFile : pdfFiles) {
+//					String originalName = pdfFile.getName().replace(".pdf", "");
+//					String cleanedName = cleanFileName(originalName);
+//					String formattedName = formatName(cleanedName);
+//					String topic = "Engineering";
+//					String user_Name = "Koncz Andras";
+//					String year = "2021";
+//
+//
+//					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
+//						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
+//						continue;
+//					}
+//					byte[] pdfBytes = Files.readAllBytes(pdfFile.toPath());
+//					//System.out.println("PDF file name: " + formattedName + " | PDF file size: " + pdfFile.length() + " bytes");
+//					//System.out.println(pdfFile.getName().replace(".pdf", ""));
+//
+//					Thread.sleep(3000);
+//					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
+//					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year);
+//				}
+//			}
+//
+//			//System.out.println("PDF files found in the directory: " + pdfFiles.length);
+//			System.out.println("CommandLineRunner running in the UnsplashApplication class...");
+//		};
+//	}
+
 
 
 

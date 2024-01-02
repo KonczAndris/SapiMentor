@@ -63,6 +63,7 @@ public class MyGroupController {
         utilityForSomeCotroller.showTopicsToMyGroupPage(model);
         utilityForSomeCotroller.showSkillsToMyGroupPage(model);
         utilityForSomeCotroller.showProfileImageAndName(model, principal);
+//        model.addAttribute("ButtonClicked", false);
 
         return "myGroup";
     }
@@ -189,14 +190,16 @@ public class MyGroupController {
     }
 
     @GetMapping("/getSelectedUserDetails")
-    public ResponseEntity<String> showSelectedUserDetails(@RequestParam Long selectedUserId,
+    public String showSelectedUserDetails(@RequestParam Long selectedUserId,
                                                           Model model) {
         try {
             myGroupService.getSelectedUserProfile(selectedUserId, model);
-            return ResponseEntity.ok("ok");
+            //model.addAttribute("isButtonClicked", true);
+            //model.addAttribute("showDetails", true);
+            return "fragments/modal :: modal-content";
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during revoking favourite!");
+            return "error";
         }
     }
 
