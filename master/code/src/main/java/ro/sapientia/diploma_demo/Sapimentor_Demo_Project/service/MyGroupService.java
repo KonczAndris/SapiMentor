@@ -159,13 +159,9 @@ public class MyGroupService {
         }
 
         double averageRatingForMyGruopModal = ratingService.getAverageRating(userId).get("average");
-
         model.addAttribute("averageRatingForMyGruopModal", averageRatingForMyGruopModal);
-
         model.addAttribute("userDetailsForMyGroup", userDetailsForMyGroup);
-
         List<Topic> topics = topicService.getAllTopics();
-
         List<Profile_Topics> userTopicsForMyGroup = profileTopicsRepository.findByUserId(userId);
 
         if (!userTopicsForMyGroup.isEmpty()) {
@@ -262,10 +258,10 @@ public class MyGroupService {
         }
 
         //System.out.println("filteredUsers: " + filteredUsers);
-        for (MyGroupProfileDetailDTO userDTO : filteredUsers) {
-
-            System.out.println("Userutolso: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
-        }
+//        for (MyGroupProfileDetailDTO userDTO : filteredUsers) {
+//
+//            System.out.println("Userutolso: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
+//        }
 
         model.addAttribute("allMenteesOrMentors", filteredUsers);
         model.addAttribute("allRatings", allRatings);
@@ -352,10 +348,10 @@ public class MyGroupService {
         }
 
         //System.out.println("filteredUsers: " + filteredUsers);
-        for (MyGroupProfileDetailDTO userDTO : filteredUsers) {
-
-            System.out.println("Userutolso: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
-        }
+//        for (MyGroupProfileDetailDTO userDTO : filteredUsers) {
+//
+//            System.out.println("Userutolso: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
+//        }
 
         model.addAttribute("allMenteesOrMentors", filteredUsers);
         model.addAttribute("allRatings", allRatings);

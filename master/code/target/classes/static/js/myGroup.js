@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var header = $("meta[name='_csrf_header']").attr("content");
 
     var currentURL = window.location.href;
-    console.log("Current URL: ", currentURL);
+    //console.log("Current URL: ", currentURL);
     var MainInformationPage = document.getElementById("information-box");
     var mentorbutton =  document.querySelector('.mentor-side');
     var menteebutton =  document.querySelector('.mentee-side');
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             profileimages = data.profileimagesandid;
-            console.log("Igen: " + profileimages);
+            //console.log("Igen: " + profileimages);
             handlereprofileimages();
         }).catch(error => {
             console.log("Error: ", error);
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             profileimages = data.profileimagesandid;
-            console.log("Igen: " + profileimages);
+            //console.log("Igen: " + profileimages);
             handlereprofileimages();
         }).catch(error => {
             console.log("Error: ", error);
@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             profileimages = data.profileimagesandid;
-            console.log("Igen: " + profileimages);
+            //console.log("Igen: " + profileimages);
             handlereprofileimages();
         }).catch(error => {
             console.log("Error: ", error);
@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             profileimages = data.profileimagesandid;
-            console.log("Igen: " + profileimages);
+            //console.log("Igen: " + profileimages);
             handlereprofileimages();
         }).catch(error => {
             console.log("Error: ", error);
@@ -268,11 +268,11 @@ function handlereprofileimages() {
         const profilImage = profilData[0];
         const profilId = profilData[1];
 
-        console.log("Profil image: ", profilImage);
-        console.log("Profil id: ", profilId);
+        //console.log("Profil image: ", profilImage);
+        //console.log("Profil id: ", profilId);
 
         var profileImg  = document.getElementById('myGroupProfileImg-' + profilId);
-        console.log("Profile image: ", profileImg);
+        //console.log("Profile image: ", profileImg);
         if (profilImage != null && profileImg != null ) {
             profileImg.src = 'data:image/jpeg;base64,' + profilImage;
         }
@@ -369,9 +369,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Add click event listener to each skill checkbox
                     skillCheckbox.addEventListener('click', function () {
                         var selectedtopic = skillCheckbox.parentNode;
-                        console.log("Selected topic1: ", selectedtopic);
+                        //console.log("Selected topic1: ", selectedtopic);
                         var igen = selectedtopic.id;
-                        console.log("Selected topic2: ", igen.split("-")[2]);
+                        //console.log("Selected topic2: ", igen.split("-")[2]);
                         if (igen.split("-")[2] === selectedTopic){
                             var selectedSkill = skillCheckbox.value;
                             var isChecked = skillCheckbox.hasAttribute('checked') || skillCheckbox.checked;
@@ -450,13 +450,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 //window.location.href = "/myGroup/myCustomGroup";
             }
         } else {
-            console.log("Kiválasztott skill-ek: ");
-            Object.keys(selectedSkillsByTopic).forEach(function (topic) {
-                console.log("Téma: " + topic);
-                console.log("Kijelölt skill-ek: " + selectedSkillsByTopic[topic].join(", "));
-            });
+            // console.log("Kiválasztott skill-ek: ");
+            // Object.keys(selectedSkillsByTopic).forEach(function (topic) {
+            //     console.log("Téma: " + topic);
+            //     console.log("Kijelölt skill-ek: " + selectedSkillsByTopic[topic].join(", "));
+            // });
 
-            console.log("Adatok: ", searchData);
+            //console.log("Adatok: ", searchData);
 
             if (menteebutton.classList.contains('active')) {
                 const queryString = Object.keys(selectedSkillsByTopic).map(topic => {
@@ -537,7 +537,7 @@ profileButtons.forEach(button => {
            }
        }).then(data => {
            if (data !== 'error') {
-               console.log("Sikeres lekerdezes");
+               //console.log("Sikeres lekerdezes");
 
                document.getElementById('profileModal').innerHTML = data;
                const closeBtn = document.querySelector('.close-profile-modal');
@@ -564,23 +564,119 @@ window.addEventListener('click', function(event) {
     }
 });
 
+
+
 function showHeartIcons() {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
     var favoriteIds = document.querySelectorAll('.favorite-id');
 
     favoriteIds.forEach(function(favoriteId) {
         var idValue = parseInt(favoriteId.textContent);
 
+
+
+        console.log("Favorite id: ", idValue);
+
         var parentCell = favoriteId.parentElement;
+        console.log("Parent cell: ", parentCell);
         var checkedHeart = parentCell.querySelector('.checked-heart');
         var uncheckedHeart = parentCell.querySelector('.unchecked-heart');
 
-        if (idValue === 0) {
+        if (idValue === 0 || isNaN(idValue)) {
+            uncheckedHeart.classList.add('active');
+            checkedHeart.classList.add('inactive');
             uncheckedHeart.style.display = 'inline';
             checkedHeart.style.display = 'none';
         } else if (idValue === 1) {
+            uncheckedHeart.classList.add('inactive');
+            checkedHeart.classList.add('active');
             uncheckedHeart.style.display = 'none';
             checkedHeart.style.display = 'inline';
         }
+
+
+        var parentCellId = parentCell.id.split("-")[2];
+        console.log("Parent cell id: ", parentCellId);
+        var favoriteButton = document.getElementById('favoriteButton-' + parentCellId);
+        console.log("Favorite button: ", favoriteButton);
+
+        favoriteButton.addEventListener('click', function() {
+           console.log("Favorite " + parentCellId + " button clicked");
+           if (uncheckedHeart.classList.contains('active')) {
+               console.log("Hozzaadom a kedvencekhez");
+               uncheckedHeart.style.display = 'none';
+               checkedHeart.style.display = 'inline';
+               uncheckedHeart.classList.remove('active');
+               uncheckedHeart.classList.add('inactive');
+               checkedHeart.classList.remove('inactive');
+               checkedHeart.classList.add('active');
+               var urlforsave = '/myGroup/saveFavorite?favoriteUserId=' + parentCellId;
+
+               fetch(urlforsave, {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/x-www-form-urlencoded',
+                       'X-CSRF-TOKEN': token
+                   }
+               }).then(response => {
+                     if (response.ok) {
+                          return response.text();
+                     } else {
+                          throw new Error('Something went wrong');
+                     }
+               }).then(data => {
+                        if (data === 'ok') {
+                            console.log("Sikeres mentes");
+                        } else {
+                            throw new Error('Something went wrong');
+                        }
+               }).catch(error => {
+                        console.log("Error: ", error);
+               });
+
+           } else if (checkedHeart.classList.contains('active')) {
+
+               // ide tenni a modal megjeleniteset es mert itt nyomok ra a piros szivre
+               // es akkor itt kell elojojjon a modal es csak akkor hivja meg a torlest es ami ez utan van mindent
+               // amikor a modalban megerositem hogy biztos hogy ki akarom torolni a kedvencek kozul
+
+               console.log("Kiveszem a kedvencek kozul");
+               uncheckedHeart.style.display = 'inline';
+               checkedHeart.style.display = 'none';
+                checkedHeart.classList.remove('active');
+                checkedHeart.classList.add('inactive');
+                uncheckedHeart.classList.remove('inactive');
+                uncheckedHeart.classList.add('active');
+
+               var urlforrevoke = '/myGroup/revokeFavorite?favoriteUserId=' + parentCellId;
+
+               fetch(urlforrevoke, {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/x-www-form-urlencoded',
+                       'X-CSRF-TOKEN': token
+                   }
+               }).then(response => {
+                   if (response.ok) {
+                       return response.text();
+                   } else {
+                       throw new Error('Something went wrong');
+                   }
+               }).then(data => {
+                   if (data === 'ok') {
+                       console.log("Sikeres visszavonas");
+                   } else {
+                       throw new Error('Something went wrong');
+                   }
+               }).catch(error => {
+                   console.log("Error: ", error);
+               });
+           }
+
+        });
+
+
     });
 }
 

@@ -176,11 +176,12 @@
                             <button th:id="${'profileButton-' + pic.id}" class="profile-button-watch"> <img class="profile-button-icon-watch" th:src="@{/img/watch-profile.png}" alt="Watch Profile"> </button>
                             <button th:id="${'favoriteButton-' + pic.id}" class="profile-button">
                                 <img class="profile-button-icon checked-heart"  th:src="@{/img/checked-heart.png}" alt="Favorite">
-                                <img class="profile-button-icon unchecked-heart"  th:src="@{/img/unchecked-heart.png}" alt="Favorite"></button>
+                                <img class="profile-button-icon unchecked-heart"  th:src="@{/img/unchecked-heart.png}" alt="Favorite">
+                            </button>
                         </div>
 
                         <!-- Itt kapom meg a kedvenchez tartozo id-t -->
-                        <span class="favorite-id" th:text="${favoriteIdsByUserId[pic.id]}"></span>
+                        <span class="favorite-id" th:text="${favoriteIdsByUserId[pic.id]}" style="display: none"></span>
 
                         <!-- Értékelés megjelenítése -->
                         <div class="rating">
