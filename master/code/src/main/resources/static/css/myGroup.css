@@ -405,6 +405,48 @@ body {
     color: rgb(25, 150, 114);
 }
 
+
+.profile-button-container{
+    width: 60%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-bottom: solid 2px;
+    background-color:white;
+    position: relative;
+    border-radius: 15px;
+    left: 50%; /* Position it 50% from the left */
+    transform: translate(-50%, -50%);
+}
+
+.profile-button-container button{
+    background-color:transparent;
+    border:none;
+    padding: 2px;
+}
+
+.profile-button-icon, .profile-button-icon-watch{
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    margin-right: 6px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.checked-heart{
+    display: none;
+}
+
+.unchecked-heart{
+    display: none;
+}
+
+.profile-button-icon-watch{
+    width: 25px;
+    height: 25px;
+}
+
 /*PROFILE MODAL*/
 .profile-modal-background{
     position: fixed;
@@ -492,64 +534,62 @@ body {
     background: transparent;
 }
 
-.favorite-button {
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background-color: #ffffff;
-    color: rgb(30, 214, 162);
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 5%;
-}
+/*.favorite-button {*/
+/*    width: 100%;*/
+/*    display: inline-flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    border: none;*/
+/*    background-color: #ffffff;*/
+/*    color: rgb(30, 214, 162);*/
+/*    font-family: Arial, sans-serif;*/
+/*    font-size: 16px;*/
+/*    font-weight: bold;*/
+/*    cursor: pointer;*/
+/*    padding: 5%;*/
+/*}*/
 
-.heart-icon {
-    width: 20px;
-    height: 20px;
-    background-size: cover;
-    margin-right: 6px;
-    vertical-align: middle;
-    color: gray;
-}
+/*.heart-icon {*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    background-size: cover;*/
+/*    margin-right: 6px;*/
+/*    vertical-align: middle;*/
+/*    color: gray;*/
+/*}*/
 
-/* Hover effect */
-.favorite-button:hover {
-    text-shadow: 0 0px 5px rgb(195, 255, 238);
-}
+/*!* Hover effect *!*/
+/*.favorite-button:hover {*/
+/*    text-shadow: 0 0px 5px rgb(195, 255, 238);*/
+/*}*/
 
-.remove-button {
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background-color: #ffffff;
-    color:  rgb(234, 80, 80);
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 5%;
-}
+/*.remove-button {*/
+/*    width: 100%;*/
+/*    display: inline-flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    border: none;*/
+/*    background-color: #ffffff;*/
+/*    color:  rgb(234, 80, 80);*/
+/*    font-family: Arial, sans-serif;*/
+/*    font-size: 16px;*/
+/*    font-weight: bold;*/
+/*    cursor: pointer;*/
+/*    padding: 5%;*/
+/*}*/
 
-.remove-icon {
-    width: 20px;
-    height: 20px;
-    background-size: cover;
-    margin-right: 6px;
-    vertical-align: middle;
-}
+/*.remove-icon {*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    background-size: cover;*/
+/*    margin-right: 6px;*/
+/*    vertical-align: middle;*/
+/*}*/
 
-/* Hover effect */
-.remove-button:hover {
-    text-shadow: 0 0px 5px  rgb(250, 152, 152);
-}
-
-
+/*!* Hover effect *!*/
+/*.remove-button:hover {*/
+/*    text-shadow: 0 0px 5px  rgb(250, 152, 152);*/
+/*}*/
 
 .image-container {
     display: flex;

@@ -489,7 +489,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // Get the button element by its class name
-const profileButtons = document.querySelectorAll('.profile-button');
+const profileButtons = document.querySelectorAll('.profile-button-watch');
 const profileModal = document.getElementById('profileModal');
 
 
@@ -557,10 +557,6 @@ profileButtons.forEach(button => {
 });
 
 
-
-
-
-
 // Function to close the modal when clicking outside the modal content
 window.addEventListener('click', function(event) {
     if (event.target === profileModal) {
@@ -568,7 +564,28 @@ window.addEventListener('click', function(event) {
     }
 });
 
+function showHeartIcons() {
+    var favoriteIds = document.querySelectorAll('.favorite-id');
 
+    favoriteIds.forEach(function(favoriteId) {
+        var idValue = parseInt(favoriteId.textContent);
+
+        var parentCell = favoriteId.parentElement;
+        var checkedHeart = parentCell.querySelector('.checked-heart');
+        var uncheckedHeart = parentCell.querySelector('.unchecked-heart');
+
+        if (idValue === 0) {
+            uncheckedHeart.style.display = 'inline';
+            checkedHeart.style.display = 'none';
+        } else if (idValue === 1) {
+            uncheckedHeart.style.display = 'none';
+            checkedHeart.style.display = 'inline';
+        }
+    });
+}
+
+// Hívás a függvényre, például az oldal betöltésekor vagy más eseményre
+showHeartIcons();
 
 
 

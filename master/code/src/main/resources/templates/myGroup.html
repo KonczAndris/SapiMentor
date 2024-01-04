@@ -171,7 +171,13 @@
 <!--                             th:src="@{/img/anonym.jpg}" alt="Profile Image" class="rounded-image">-->
 
                         <img th:id="${'myGroupProfileImg-' + pic.id}" th:src="@{/img/anonym.jpg}" class="rounded-image" alt="Profile Image">
-                        <button th:id="${'profileButton-' + pic.id}" class="profile-button"> VIEW </button>
+
+                        <div class="profile-button-container">
+                            <button th:id="${'profileButton-' + pic.id}" class="profile-button-watch"> <img class="profile-button-icon-watch" th:src="@{/img/watch-profile.png}" alt="Watch Profile"> </button>
+                            <button th:id="${'favoriteButton-' + pic.id}" class="profile-button">
+                                <img class="profile-button-icon checked-heart"  th:src="@{/img/checked-heart.png}" alt="Favorite">
+                                <img class="profile-button-icon unchecked-heart"  th:src="@{/img/unchecked-heart.png}" alt="Favorite"></button>
+                        </div>
 
                         <!-- Itt kapom meg a kedvenchez tartozo id-t -->
                         <span class="favorite-id" th:text="${favoriteIdsByUserId[pic.id]}"></span>
