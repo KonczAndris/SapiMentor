@@ -574,8 +574,6 @@ function showHeartIcons() {
     favoriteIds.forEach(function(favoriteId) {
         var idValue = parseInt(favoriteId.textContent);
 
-
-
         console.log("Favorite id: ", idValue);
 
         var parentCell = favoriteId.parentElement;
@@ -673,10 +671,7 @@ function showHeartIcons() {
                    console.log("Error: ", error);
                });
            }
-
         });
-
-
     });
 }
 
