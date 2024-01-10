@@ -340,8 +340,16 @@
           <!-- SKILLS MODAL START -->
           <div id="skillsModal" class="modal-skills">
             <div class="modal-content-skills">
+              <!-- Hibaüzenet megjelenítése -->
+
               <span class="close-skill">&times;</span>
+
+              <div id="error-message-for-skills" style="color: red">
+                <p>This topic has already been added!"</p>
+              </div>
+
               <div class="dropdown-container">
+
                 <div class="dropdown">
                   <button class="dropbtn" onclick="toggleDropdown()">Choose a topic</button>
                   <div class="dropdown-content" id="myDropdown">

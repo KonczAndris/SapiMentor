@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     h1Element.addEventListener("click", function() {
         window.location.href = "/";
     });
+
 });
 
 function setupMentorModal() {
@@ -378,6 +379,7 @@ function isTopicAlreadyAdded(topicName) {
 
 //JavaScript rész a Skills Modal-hoz
 function addSelectedTopic() {
+    var errorMessageForAddingTopic = document.getElementById("error-message-for-skills");
     //var selectedTopic = document.getElementById("topic-input").value;
     //console.log(selectedTopic.type);
     var selectedTopic = document.getElementById("topic-input").value;
@@ -385,6 +387,7 @@ function addSelectedTopic() {
 
     if (selectedTopic !== "") {
         if (!isTopicAlreadyAdded(selectedTopic)) {
+            errorMessageForAddingTopic.style.display = "none";
             //console.log("Elso: " + topicCounter)
             // var topicTag = document.createElement("div");
             // topicTag.className = "topic-tag";
@@ -489,7 +492,8 @@ function addSelectedTopic() {
         } else {
 
             // itt kell andrisnak a hibauzenetet elhelyezze ugy ahogy o szeretne
-            alert("Ez a téma már hozzá van adva!");
+            //alert("Ez a téma már hozzá van adva!");
+            errorMessageForAddingTopic.style.display = "block";
         }
     }
 }
@@ -862,6 +866,9 @@ function showErrorMessageInProfile(message) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
+    var errorMessageForSkills = document.getElementById('error-message-for-skills');
+    errorMessageForSkills.style.display = 'none';
+
     var checkboxes = document.querySelectorAll('input[type="checkbox"][name="role"]');
 
     checkboxes.forEach(function(checkbox) {

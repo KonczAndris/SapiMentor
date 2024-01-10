@@ -103,6 +103,36 @@ body {
     padding: 20px;
     margin: 5px;
   }
+
+.toggle-password-btn-profile {
+    width: 50px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background-color: transparent;
+    text-shadow: none;
+    color: white;}
+
+.info-tooltip-profile {
+    position: absolute;
+    color: white;
+    right: -5px;
+    top: -10px;
+    background-color: rgb(50, 189, 149);
+    padding: 5px 10px;
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+}
+
+.form-group:hover .info-tooltip-profile {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(-5px);
+}
   
 #login-submit {
     display: flex;

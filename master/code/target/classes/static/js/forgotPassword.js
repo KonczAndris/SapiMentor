@@ -12,6 +12,13 @@ function validateEmail() {
 document.addEventListener("DOMContentLoaded", function () {
     var emailInput = document.getElementById("email");
     var errorEmail = document.getElementById("invalid-email");
+    var invalidEmailType = document.getElementById("invalid-email-type");
+
+    if (emailInput.classList.contains("highlight")) {
+        invalidEmailType.style.display = "block";
+    } else {
+        invalidEmailType.style.display = "none";
+    }
 
     emailInput.addEventListener("input", validateEmail);
 
@@ -24,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         await new Promise(resolve => setTimeout(resolve, 1000));
 
-        if (emailInput.classList.contains("highlight")) {
+        if (emailInput.classList.contains("highlight") && errorEmail != null) {
             errorEmail.style.display = "block";
         }
         else{

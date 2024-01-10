@@ -20,6 +20,20 @@ function validatePassword() {
     }
 }
 
+function passwordToggleVisibilityForLogin(inputId, iconId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleIcon = document.getElementById(iconId);
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.src = '/img/eye-slash.png';
+    } else {
+        passwordInput.type = 'password';
+        toggleIcon.src = '/img/eye.png';
+    }
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
     var usernameInput = document.getElementById("username");
     var passwordInput = document.getElementById("password");
