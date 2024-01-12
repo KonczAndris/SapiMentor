@@ -26,12 +26,25 @@ function passwordToggleVisibilityForLogin(inputId, iconId) {
 
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        toggleIcon.src = '/img/eye-slash.png';
     } else {
         passwordInput.type = 'password';
-        toggleIcon.src = '/img/eye.png';
+    }
+
+    const icon1 = document.getElementById('password-toggle-icon');
+    const icon2 = document.getElementById('password-toggle-icon2');
+    const passwordToggle = document.querySelector('.password-toggle');
+
+    passwordToggle.classList.toggle('active');
+
+    if (passwordToggle.classList.contains('active')) {
+        icon1.classList.add('hidden');
+        icon2.classList.remove('hidden');
+    } else {
+        icon1.classList.remove('hidden');
+        icon2.classList.add('hidden');
     }
 }
+
 
 
 document.addEventListener("DOMContentLoaded", function () {

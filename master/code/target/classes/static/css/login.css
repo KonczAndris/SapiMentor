@@ -107,9 +107,9 @@ body {
 .toggle-password-btn-profile {
     width: 50px;
     position: absolute;
-    top: 50%;
+    top: 14%;
     right: 10px;
-    transform: translateY(-50%);
+    transform: translateY(0%);
     background-color: transparent;
     text-shadow: none;
     color: white;}
@@ -191,4 +191,24 @@ body {
 
 .highlight {
     background-color: #FFCCCC;
+}
+
+ /*Password toggle*/
+.password-toggle img {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+#password-toggle-icon2 {
+    opacity: 0;
+    transform: translateY(50%);
+}
+
+.password-toggle.active #password-toggle-icon {
+    opacity: 0;
+    transform: translateY(-50%);
+}
+
+.password-toggle.active #password-toggle-icon2 {
+    opacity: 1;
+    transform: translateY(0);
 }

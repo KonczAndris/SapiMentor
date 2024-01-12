@@ -16,7 +16,7 @@ function validatePassword() {
         passwordInput.classList.add("highlight");
     }
 
-    if (confirmPasswordValue !== "" && doPasswordsMatch) {
+    if (confirmPasswordValue !== "" && doPasswordsMatch && isValidFormat) {
         confirmPasswordInput.classList.remove("highlight");
         changePasswordBtn.disabled = !doPasswordsMatch;
     } else if (confirmPasswordValue === "") {
@@ -54,10 +54,47 @@ function passwordToggleVisibility(inputId, iconId) {
 
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        toggleIcon.src = '/img/eye-slash.png';
     } else {
         passwordInput.type = 'password';
-        toggleIcon.src = '/img/eye.png';
+    }
+
+    const icon1 = document.getElementById('password-toggle-icon');
+    const icon2 = document.getElementById('password-toggle-icon2');
+    const passwordToggle = document.querySelector('.password-toggle');
+
+    passwordToggle.classList.toggle('active');
+
+    if (passwordToggle.classList.contains('active')) {
+        icon1.classList.add('hidden');
+        icon2.classList.remove('hidden');
+    } else {
+        icon1.classList.remove('hidden');
+        icon2.classList.add('hidden');
+    }
+}
+
+function confirmpasswordToggleVisibility(inputId, iconId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleIcon = document.getElementById(iconId);
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+    } else {
+        passwordInput.type = 'password';
+    }
+
+    const icon1 = document.getElementById('confirm-password-toggle-icon');
+    const icon2 = document.getElementById('confirm-password-toggle-icon2');
+    const passwordToggle = document.querySelector('.confirm-password-toggle');
+
+    passwordToggle.classList.toggle('active');
+
+    if (passwordToggle.classList.contains('active')) {
+        icon1.classList.add('hidden');
+        icon2.classList.remove('hidden');
+    } else {
+        icon1.classList.remove('hidden');
+        icon2.classList.add('hidden');
     }
 }
 
