@@ -2,6 +2,51 @@ document.getElementById("searchMyGroup").addEventListener("click", function () {
     window.location.href = "/myGroup";
 });
 
+var stompClient = null;
+
+function connectToWebSocket() {
+    var socket = new SockJS('/ws');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+
+        // Feliratkozás a /topic/userStatusUpdate-re
+        stompClient.subscribe('/topic/userStatusUpdate', function (message) {
+            var userStatusUpdate = JSON.parse(message.body);
+            handleUserStatusUpdate(userStatusUpdate.userId, userStatusUpdate.status);
+        });
+    });
+}
+
+function handleUserStatusUpdate(userId, status) {
+    // Kezelje a felhasználó státuszváltozását
+    console.log('Received user status update:', userId, status);
+    // Implementáld a szükséges logikát a státuszváltozás kezelésére
+    // Ebben a példában csak kiírjuk a konzolra az értesítést, de itt érdemes frissíteni az UI-t stb.
+    var userElement = document.getElementById('user-' + userId);
+    console.log("userElement: ", userElement);
+    if (userElement) {
+        var statusElement = userElement.querySelector('.user-status');
+        if (statusElement) {
+            statusElement.className = 'user-status ' + (status === 1 ? 'online' : 'offline');
+        }
+    }
+}
+
+// function updateOnlineStatus(status) {
+//     // Frissítsd a felhasználó státuszát a felületen
+//     var userElement = document.getElementById('user-' + userId);
+//     console.log("userElement: ", userElement);
+//     if (userElement) {
+//         var statusElement = userElement.querySelector('.user-status');
+//         if (statusElement) {
+//             statusElement.className = 'user-status ' + (status === 1 ? 'online' : 'offline');
+//         }
+//     }
+// }
+
+
 $(document).ready(function() {
     // Emojik beszúrása az input mezőbe
     $('#message-input').emojioneArea({
@@ -29,3 +74,6 @@ $(document).ready(function() {
         $('#message-input').emojioneArea('toggle');
     });
 });
+
+// Későbbi rész a kódban:
+connectToWebSocket();

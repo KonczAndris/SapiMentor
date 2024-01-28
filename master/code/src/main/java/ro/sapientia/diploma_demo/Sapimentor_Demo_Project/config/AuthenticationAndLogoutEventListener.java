@@ -2,11 +2,13 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.authentication.event.AbstractAuthenticationEvent;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.WebSocketController;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 
 import javax.servlet.http.HttpSession;
@@ -17,10 +19,16 @@ import javax.transaction.Transactional;
 public class AuthenticationAndLogoutEventListener implements ApplicationListener<AbstractAuthenticationEvent> {
 
     @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private WebSocketController webSocketController;
 
     @Override
     public void onApplicationEvent(AbstractAuthenticationEvent event) {
@@ -57,6 +65,9 @@ public class AuthenticationAndLogoutEventListener implements ApplicationListener
         if (userId != null) {
             // Ha igen, akkor frissítjük a státuszát
             userRepository.updateUserStatusById(userId, status);
+            // Értesítés küldése a felhasználó státuszfrissítésről
+            webSocketController.sendUserStatusUpdate(userId, status);
+
         } else {
             // Ha nem, akkor hibát dobunk
             throw new RuntimeException("Don't find user with this email address: " + email);

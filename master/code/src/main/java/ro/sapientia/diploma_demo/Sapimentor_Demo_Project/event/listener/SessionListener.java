@@ -2,8 +2,10 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.event.listener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.web.session.HttpSessionDestroyedEvent;
 import org.springframework.stereotype.Component;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.WebSocketController;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 
 import javax.servlet.http.HttpSession;
@@ -14,7 +16,13 @@ import javax.transaction.Transactional;
 public class SessionListener implements ApplicationListener<HttpSessionDestroyedEvent> {
 
     @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private WebSocketController webSocketController;
 
 
     @Override
@@ -36,6 +44,10 @@ public class SessionListener implements ApplicationListener<HttpSessionDestroyed
         if (userId != null) {
             // Ha igen, akkor frissítjük a státuszát
             userRepository.updateUserStatusById(userId, 0);
+
+            // Értesítés küldése a felhasználó státuszfrissítésről
+            webSocketController.sendUserStatusUpdate(userId, 0);
+            System.out.println("Ertesites kuldese a felhasznalo statuszfrissitesrol: " + userId);
         } else {
             // Ha nem, akkor hibát dobunk
             throw new RuntimeException("Don't find user with this email address: " + email);

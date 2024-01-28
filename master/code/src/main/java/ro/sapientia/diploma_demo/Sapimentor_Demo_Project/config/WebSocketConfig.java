@@ -26,8 +26,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     // a /user prefixen keresztül lehet leiratkozni a websocketekről
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/user");
+
+        // Engedélyezzük a WebSocket-t a /user prefixen keresztül
+        registry.enableSimpleBroker("/topic");
+        // Az üzenetek küldésére használt prefix
         registry.setApplicationDestinationPrefixes("/app");
+        // Felhasználói célú prefix a WebSocket endpointeken keresztül
         registry.setUserDestinationPrefix(("/user"));
     }
 
@@ -37,6 +41,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     // a fallback lehetőség akkor használatos, ha a websocketek nem elérhetőek
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+
+        // Regisztráljuk a /ws endpointet a WebSocketekhez
         registry.addEndpoint("/ws").withSockJS();
     }
 
@@ -45,6 +51,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     // hogy a websocketeknél JSON formátumú üzeneteket tudjunk küldeni
     @Override
     public boolean configureMessageConverters(List<MessageConverter> messageConverters) {
+
+        // Beállítjuk a JSON konvertert
         DefaultContentTypeResolver resolver = new DefaultContentTypeResolver();
         resolver.setDefaultMimeType(APPLICATION_JSON);
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
