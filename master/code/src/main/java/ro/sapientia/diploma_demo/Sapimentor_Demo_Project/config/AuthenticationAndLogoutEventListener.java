@@ -33,17 +33,17 @@ public class AuthenticationAndLogoutEventListener implements ApplicationListener
 
     private void handleAuthenticationSuccessEvent(AuthenticationSuccessEvent event) {
         String email = ((UserDetails) event.getAuthentication().getPrincipal()).getUsername();
-        System.out.println("email1: " + email);
+        //System.out.println("email1: " + email);
         updateUserStatusByEmail(email, 1);
-        System.out.println("email2: " + email);
+        //System.out.println("email2: " + email);
         session.setAttribute("userEmail", email);
     }
 
     private void handleLogoutSuccess(LogoutSuccessEvent event) {
         String email = ((UserDetails) event.getAuthentication().getPrincipal()).getUsername();
-        System.out.println("email3: " + email);
+        //System.out.println("email3: " + email);
         updateUserStatusByEmail(email, 0);
-        System.out.println("email4: " + email);
+        //System.out.println("email4: " + email);
         session.removeAttribute("userEmail");
 
     }
@@ -52,7 +52,7 @@ public class AuthenticationAndLogoutEventListener implements ApplicationListener
     public void updateUserStatusByEmail(String email, int status) {
         // Az e-mail cím alapján kérdezzük le a felhasználót
         Long userId = userRepository.findIdByEmail(email);
-        System.out.println("userId: " + userId);
+        //System.out.println("userId: " + userId);
         // Ellenőrizzük, hogy találtunk-e felhasználót
         if (userId != null) {
             // Ha igen, akkor frissítjük a státuszát
