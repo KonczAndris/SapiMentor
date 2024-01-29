@@ -10,6 +10,9 @@
   <link rel="stylesheet"  type="text/css" th:href="@{/css/profile.css}">
   <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
   <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
+  <link rel="stylesheet"  type="text/css" th:href="@{/css/cropper.css}">
+  <script th:src="@{/js/cropper.js}"></script>
+  <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js}"></script>
 </head>
 <body>
 
@@ -110,7 +113,7 @@
               <div class="modal-content-upload">
                 <span class="close-upload">&times;</span>
 
-                <div class="info-tooltip-upload"><p> 1x1 picture is recommanded. </p></div>
+<!--                <div class="info-tooltip-upload"><p> 1x1 picture is recommanded. </p></div>-->
 
                 <div id="error-message" class="alert alert-danger">
                   The size of the image is too large.
