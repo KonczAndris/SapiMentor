@@ -139,7 +139,7 @@ public class UserServiceImpl implements UserService{
                     BufferedImage squareImage = originalImage.getSubimage(x, y, minDimension, minDimension);
 
                     BufferedImage scaledImage = Thumbnails.of(squareImage)
-                            .size(400, 400)
+                            .size(600, 600)
                             .outputQuality(0.6)
                             .asBufferedImage();
 

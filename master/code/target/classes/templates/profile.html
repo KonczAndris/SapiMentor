@@ -135,10 +135,13 @@
                   <div class="btn btn-success" id="upload-upload">
                     <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"> Select
                   </div>
-                  <form th:action="@{/upload-profile-image}" method="post" enctype="multipart/form-data">
-                    <input type="file" id="imageUpload" style="display: none;" accept="image/*" name="image">
-                    <button type="submit" id="upload-save" class="btn btn-success">Upload</button>
-                  </form>
+
+<!--                  <form th:action="@{/upload-profile-image}" method="post" enctype="multipart/form-data">-->
+<!--                    <input type="file" id="imageUpload" style="display: none;" accept="image/*" name="image">-->
+<!--                    <button type="submit" id="upload-save" class="btn btn-success">Upload</button>-->
+<!--                  </form>-->
+                  <input type="file" id="imageUpload" style="display: none;" accept="image/*" name="image">
+                  <button type="submit" id="upload-save" class="btn btn-success">Upload</button>
                 </div>
               </div>
             </div>

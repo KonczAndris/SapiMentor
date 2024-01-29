@@ -367,6 +367,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('upload-upload').addEventListener('click', function () {
         // Clear previous cropper instance if it exists
         if (cropper) {
+            console.log("destroy");
             cropper.destroy();
         }
 
@@ -377,6 +378,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Event listener for file input change
     imageUploadInput.addEventListener('change', function (event) {
         const selectedImage = event.target.files[0];
+
+        console.log("Igen:",selectedImage);
         const reader = new FileReader();
 
         // Read the selected image as a data URL
@@ -389,10 +392,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Initialize Cropper only when the image is loaded
             profileImage.onload = function () {
+                if (cropper) {
+                    console.log("destroy");
+                    cropper.destroy();
+                }
+
                 cropper = new Cropper(profileImage, {
                     aspectRatio: 1, // You can set the aspect ratio as needed
                     viewMode: 1, // Set the view mode to restrict the cropped area to the canvas
                 });
+                console.log("Igen2", cropper);
             };
         };
 
@@ -400,19 +409,53 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Event listener for the "Upload" button in the modal
-    document.getElementById('upload-save').addEventListener('click', function () {
+    document.getElementById('upload-save').addEventListener('click', function (event) {
+        //event.preventDefault();
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        console.log(document.getElementById('imageUpload').files[0]);
+
         if (cropper) {
+            //console.log("cropper", cropper);
             // Get the cropped data URL from the cropper
-            const croppedDataURL = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+            //const croppedDataURL = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+
+            const croppedCanvas = cropper.getCroppedCanvas();
+            if (!croppedCanvas) {
+                // Handle the case where the user hasn't cropped an image
+                console.error('No cropped image data.');
+                return;
+            }
+
+            croppedCanvas.toBlob(function (blob) {
+                const formData = new FormData();
+                formData.append('image', blob, 'cropped-image.jpg', { type: 'image/jpeg' });
+                console.log(formData.getAll('image'));
+                fetch('/upload-profile-image', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': token
+                    }
+                }).then(response => {
+                    location.reload();
+                }).catch(error => {
+                    console.error('An error occurred while uploading the image:', error);
+                });
+                // Hide the upload modal
+                // uploadModal.style.display = 'none';
+                // location.reload();
+            }, 'image/jpeg');
 
             // Perform the necessary steps to upload the cropped image as the profile picture
             // You can use AJAX to send the croppedDataURL to the server for further processing
 
             // For demonstration purposes, you can log the data URL to the console
-            console.log(croppedDataURL);
 
-            // Hide the upload modal
-            uploadModal.style.display = 'none';
+
+
+
         }
     });
 
