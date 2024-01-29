@@ -140,18 +140,28 @@
 
             </div>
             <div class="right-message-box">
+                <div class="chat-container">
+                <div class="chat-box" id="chat-box">
+                    <!-- Your messages -->
+                    <div class="message my-message">Hello, how are you?</div>
 
-                    <div class="chat-input-box">
-                        <input type="text" id="message-input" placeholder="Type a message...">
-                        <button id="emoji-button">😊</button>
-                        <button id="send-button">Send</button>
-                    </div>
+                    <!-- Partner's messages -->
+                    <div class="message partner-message">Hi there! I'm good.</div>
 
+                </div>
+
+                <div class="chat-input-box">
+                    <input type="text" id="message-input" placeholder="Type a message..." maxlength="500">
+                    <button id="emoji-button">😊</button>
+                    <button type="submit" id="send-button" th:onclick="sendMessage()">Send</button>
+                </div>
+
+                </div>
             </div>
         </div>
         <!--        SEARCH DIV END-->
 
-
+    </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>

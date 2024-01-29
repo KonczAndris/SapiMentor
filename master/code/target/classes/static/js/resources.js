@@ -213,74 +213,6 @@ function closeModalOnClickOutside() {
 setupSkillsModal();
 closeModalOnClickOutside();
 
-document.addEventListener("DOMContentLoaded", function () {
-    const table = document.querySelector(".link-table");
-    const tableBody = table.querySelector("tbody");
-    const rows = Array.from(tableBody.querySelectorAll("tr"));
-    const rowsPerPage = 20;
-    let currentPage = 1;
-
-    function updatePageCounter() {
-        const pageCount = Math.ceil(rows.length / rowsPerPage);
-        document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
-    }
-
-    function showRowsForCurrentPage() {
-        const startIdx = (currentPage - 1) * rowsPerPage;
-        const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
-
-        rows.forEach((row, index) => {
-            if (index >= startIdx && index < endIdx) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
-
-    function setPage(page) {
-        currentPage = page;
-        showRowsForCurrentPage();
-        updatePageCounter();
-    }
-
-    updatePageCounter();
-    showRowsForCurrentPage();
-
-    document.getElementById("next-page-button").addEventListener("click", () => {
-        if (currentPage < Math.ceil(rows.length / rowsPerPage)) {
-            setPage(currentPage + 1);
-        }
-    });
-
-    document.getElementById("prev-page-button").addEventListener("click", () => {
-        if (currentPage > 1) {
-            setPage(currentPage - 1);
-        }
-    });
-
-    const reverseButton = document.getElementById("reverseButton");
-    const reverseButton2 = document.getElementById("myReverseBtn");
-
-    reverseButton.addEventListener("click", function () {
-        const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-        const rows = Array.from(tableBody.getElementsByTagName('tr'));
-        const visibleRows = rows.filter(row => row.style.display !== 'none');
-
-        visibleRows.reverse();
-        visibleRows.forEach(row => tableBody.appendChild(row));
-    });
-
-    reverseButton2.addEventListener("click", function () {
-        const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-        const rows = Array.from(tableBody.getElementsByTagName('tr'));
-        const visibleRows = rows.filter(row => row.style.display !== 'none');
-
-        visibleRows.reverse();
-        visibleRows.forEach(row => tableBody.appendChild(row));
-    });
-});
-
 //NEW
 var linkCounter = 0;
 function addLinkRow() {
@@ -908,6 +840,74 @@ function handleLikeAndDislikeStatuses() {
 
 
 // SEARCH:
+document.addEventListener("DOMContentLoaded", function () {
+    const table = document.querySelector(".link-table");
+    const tableBody = table.querySelector("tbody");
+    const rows = Array.from(tableBody.querySelectorAll("tr"));
+    const rowsPerPage = 20;
+    let currentPage = 1;
+
+    function updatePageCounter() {
+        const pageCount = Math.ceil(rows.length / rowsPerPage);
+        document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
+    }
+
+    function showRowsForCurrentPage() {
+        const startIdx = (currentPage - 1) * rowsPerPage;
+        const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
+
+        rows.forEach((row, index) => {
+            if (index >= startIdx && index < endIdx) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    function setPage(page) {
+        currentPage = page;
+        showRowsForCurrentPage();
+        updatePageCounter();
+    }
+
+    updatePageCounter();
+    showRowsForCurrentPage();
+
+    document.getElementById("next-page-button").addEventListener("click", () => {
+        if (currentPage < Math.ceil(rows.length / rowsPerPage)) {
+            setPage(currentPage + 1);
+        }
+    });
+
+    document.getElementById("prev-page-button").addEventListener("click", () => {
+        if (currentPage > 1) {
+            setPage(currentPage - 1);
+        }
+    });
+
+    const reverseButton = document.getElementById("reverseButton");
+    const reverseButton2 = document.getElementById("myReverseBtn");
+
+    reverseButton.addEventListener("click", function () {
+        const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+        const rows = Array.from(tableBody.getElementsByTagName('tr'));
+        const visibleRows = rows.filter(row => row.style.display !== 'none');
+
+        visibleRows.reverse();
+        visibleRows.forEach(row => tableBody.appendChild(row));
+    });
+
+    reverseButton2.addEventListener("click", function () {
+        const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+        const rows = Array.from(tableBody.getElementsByTagName('tr'));
+        const visibleRows = rows.filter(row => row.style.display !== 'none');
+
+        visibleRows.reverse();
+        visibleRows.forEach(row => tableBody.appendChild(row));
+    });
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     const filterInput = document.getElementById("filter-input");
     const tableRows = document.querySelectorAll("#link-table-body tr");

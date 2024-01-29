@@ -678,9 +678,60 @@ function showHeartIcons() {
 // Hívás a függvényre, például az oldal betöltésekor vagy más eseményre
 showHeartIcons();
 
+function showRateSection() {
+    document.getElementById('ratingSection').style.display = 'block';
+    document.getElementById('commentSection').style.display = 'none';
+    document.getElementById('comment-button').style.display = 'none';
+}
 
+function showCommentSection() {
+    document.getElementById('ratingSection').style.display = 'none';
+    document.getElementById('commentSection').style.display = 'block';
+    document.getElementById('rating-button').style.display = 'none';
+}
 
+function saveRating() {
+    // Implement logic to save the rating
+    // You can retrieve the selected rating using document.querySelector('input[name="rating"]:checked').value
+    // Reset the rating section
+    document.getElementById('ratingSection').style.display = 'none';
+    document.getElementById('comment-button').style.display = 'inline';
+}
 
+function cancelRating() {
+    // Reset the rating section
+    document.getElementById('ratingSection').style.display = 'none';
+    document.getElementById('comment-button').style.display = 'inline';
+}
 
+function saveComment() {
+    // Implement logic to save the comment
+    // You can retrieve the comment using document.getElementById('commentInput').value
+    // Reset the comment section
+    document.getElementById('commentSection').style.display = 'none';
+    // Update comment display section (you'll need to implement this part)
+    document.getElementById('rating-button').style.display = 'inline';
 
+}
 
+function cancelComment() {
+    // Reset the comment section
+    document.getElementById('commentSection').style.display = 'none';
+    document.getElementById('rating-button').style.display = 'inline';
+}
+
+function rateWithStars(rating) {
+    // Get all the star elements
+    var stars = document.querySelectorAll('.rating-rate .modal-rating-star-rate label');
+
+    // Loop through each star and apply the color based on the rating
+    for (var i = 0; i < stars.length; i++) {
+        if (i + 1 <= rating) {
+            // If the star's index is less than or equal to the selected rating, make it gold
+            stars[i].style.color = 'gold';
+        } else {
+            // Otherwise, make it grey
+            stars[i].style.color = 'grey';
+        }
+    }
+}
