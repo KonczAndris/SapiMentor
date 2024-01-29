@@ -77,3 +77,25 @@ $(document).ready(function() {
 
 // Későbbi rész a kódban:
 connectToWebSocket();
+
+
+function sendMessage() {
+    // Get the message input value
+    var messageInput = document.getElementById('message-input');
+    var messageText = messageInput.value;
+
+    // Check if the message is not empty
+    if (messageText.trim() !== '') {
+        // Create a new message element
+        var newMessage = document.createElement('div');
+        newMessage.className = 'message my-message';
+        newMessage.textContent = messageText;
+
+        // Append the new message to the chat box
+        var chatBox = document.getElementById('chat-box');
+        chatBox.appendChild(newMessage);
+
+        // Clear the input field
+        messageInput.value = '';
+    }
+}

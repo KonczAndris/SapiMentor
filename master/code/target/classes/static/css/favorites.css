@@ -208,28 +208,76 @@ body {
     overflow: hidden;
 }
 
-.chat-input-box{
-    position:absolute;
-    bottom: 0;
-    display:flex;
-    width: 85%;
-    height:10%;
-    border-top: 3px solid rgb(22, 175, 132);
-    justify-content:center;
-    align-items: center;
-    margin-left:5%;
-    padding-left:3%;
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    height: 89.5%;
+    width: 97%;
+    overflow-y: auto;
+    padding-left: 20px;
+    padding-right: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    align-items: flex-end;
+}
 
+/* WebKit (Chrome, Safari) */
+.chat-box::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+.chat-box::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+
+.message {
+    max-width: 70%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    word-wrap: break-word;
+}
+
+.message:first-child {
+    margin-top: auto;
+}
+
+.my-message {
+    background-color: rgb(22, 175, 132);
+    color: white;
+    align-self: flex-end;
+}
+
+.partner-message {
+    background-color: #EAEAEA;
+    align-self: flex-start;
+}
+
+.chat-input-box {
+    position: absolute;
+    bottom: 0;
+    width: 90%;
+    height: 10%;
+    border-top: 3px solid rgb(22, 175, 132);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 3%;
 }
 
 #message-input {
     width: 75%;
     border: none;
-    height:55%;
-    padding-left:2%;
+    height: 55%;
+    padding-left: 2%;
 }
 
-#send-button{
+#send-button {
     color: rgb(255, 255, 255);
     background-color: rgb(22, 175, 132);
     border-radius: 20px;
@@ -242,8 +290,6 @@ body {
     font-size: 15px;
     margin-left: 15px;
     margin-right: 15px;
-    align-items: start;
-    justify-content: center;
 }
 
 #send-button:hover {
@@ -251,7 +297,14 @@ body {
     border: 2px solid white;
 }
 
-#emoji-button{
+#emoji-button {
     display: none;
 }
 
+.chat-container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items:center;
+}
