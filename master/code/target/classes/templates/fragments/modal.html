@@ -37,6 +37,45 @@
         <input type="radio" id="star1" name="rating" value="1" th:checked="${averageRatingForMyGruopModal >= 0.5}" disabled />
         <label for="star1" th:style="${averageRatingForMyGruopModal >= 0.5} ? 'color: gold;' : ''" >&#9733;</label>
       </div>
+
+      <div class="interaction-buttons">
+      <!-- RATE button -->
+      <button id="rating-button" onclick="showRateSection()">RATE</button>
+        <!-- Rating Section -->
+        <div id="ratingSection" style="display: none;">
+          <div class="rating-rate modal-rating-star-rate">
+            <input type="radio" id="ratestar5" name="rating" value="5" onclick="rateWithStars(5)" />
+            <label for="ratestar5">&#9733;</label>
+            <input type="radio" id="ratestar4" name="rating" value="4" onclick="rateWithStars(4)" />
+            <label for="ratestar4">&#9733;</label>
+            <input type="radio" id="ratestar3" name="rating" value="3" onclick="rateWithStars(3)" />
+            <label for="ratestar3">&#9733;</label>
+            <input type="radio" id="ratestar2" name="rating" value="2" onclick="rateWithStars(2)" />
+            <label for="ratestar2">&#9733;</label>
+            <input type="radio" id="ratestar1" name="rating" value="1" onclick="rateWithStars(1)" />
+            <label for="ratestar1">&#9733;</label>
+          </div>
+          <!-- SAVE and CANCEL buttons for rating -->
+          <button id="save-rating" onclick="saveRating()">SAVE</button>
+          <button id="cancel-rating" onclick="cancelRating()">CANCEL</button>
+        </div>
+      <!-- COMMENT button -->
+      <button id="comment-button" onclick="showCommentSection()">COMMENT</button>
+        </div>
+
+      <!-- Comment Section -->
+      <div id="commentSection" style="display: none;">
+        <textarea id="commentInput" maxlength="500" placeholder="Write your comment..."></textarea>
+        <!-- SAVE and CANCEL buttons for commenting -->
+        <button id="save-comment" onclick="saveComment()">SAVE</button>
+        <button id="cancel-comment" onclick="cancelComment()">CANCEL</button>
+      </div>
+
+      <!-- Comment Display Section -->
+      <div id="commentDisplaySection">
+        <!-- Comments will be displayed here -->
+      </div>
+
     </div>
   </div>
 
@@ -98,8 +137,34 @@
         </div>
         <div class="divider"></div>
         <!-- SKILLS INFO END -->
-
       </div>
+      <!-- COMMENT CONTAINER START -->
+      <div class="section">
+        <h2>COMMENTS</h2>
+        <!-- COMMENT INFO START -->
+        <div class="divider"></div>
+        <div class="comments">
+
+          <!-- Comment entries with navigation arrows -->
+          <div class="comment-entry" id="commentContainer" style="display: block;">
+            <div class="comment-row">
+              <p class="comment-label">Author:</p>
+              <p id="author"></p>
+            </div>
+            <div class="comment-content">
+              <p class="comment-label">Comment:</p>
+              <p id="comment"></p>
+            </div>
+            <div class="nav-arrows">
+              <button onclick="navigateComments(-1)">←</button>
+              <button onclick="navigateComments(1)">→</button>
+            </div>
+          </div>
+
+        </div>
+        <!-- COMMENT INFO END -->
+      </div>
+      <!-- COMMENT CONTAINER END -->
     </div>
 
   </div>

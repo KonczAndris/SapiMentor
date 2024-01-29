@@ -643,7 +643,7 @@ body {
     color: rgb(22, 175, 132);
 }
 
-.rating {
+.rating, .rating-rate {
     direction: rtl;
 }
 
@@ -651,7 +651,11 @@ body {
     display: none;
 }
 
-.rating label {
+.rating-rate input[type="radio"] {
+    display: none;
+}
+
+.rating label, .rating-rate label {
     display: inline-block;
     font-size: 1.8rem;
     color: gray;
@@ -661,6 +665,10 @@ body {
 
 
 .rating input[type="radio"]:checked~label {
+    color: gold;
+}
+
+.rating-rate input[type="radio"]:checked~label {
     color: gold;
 }
 
@@ -928,4 +936,96 @@ h2 {
     border-radius: 5px;
 }
 
+#rating-button{
+    color: rgb(255, 255, 255);
+    background-color: rgb(40, 152, 200);
+    border-radius: 15px;
+    max-width: 120px;
+    min-width: 100px;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    text-overflow: ellipsis;
+    height: 40px;
+    font-weight:bold;
+    font-size: 1em;
+    margin:5px;
+}
 
+#comment-button{
+    color: rgb(255, 255, 255);
+    background-color: rgb(40, 152, 200);
+    border-radius: 15px;
+    max-width: 120px;
+    min-width: 100px;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    text-overflow: ellipsis;
+    height: 40px;
+    font-weight:bold;
+    font-size: 1em;
+    margin:5px;
+}
+
+.interaction-buttons{
+    flex-direction: column;
+}
+
+#save-rating, #save-comment{
+    color: rgb(255, 255, 255);
+    background-color: rgb(50, 189, 149);
+    border-radius: 10px;
+    width: 70px;
+    max-width: 55%;
+    cursor: pointer;
+    border: none;
+    height: 30px;
+    text-align: center;
+    justify-content: center;
+
+}
+
+#cancel-rating, #cancel-comment{
+    color: rgb(255, 255, 255);
+    background-color: rgb(238, 84, 76);
+    border-radius: 10px;
+    width: 70px;
+    max-width: 55%;
+    cursor: pointer;
+    border: none;
+    height: 30px;
+    text-align: center;
+    justify-content: center;
+}
+
+#commentInput {
+    resize: none;
+    display: flex;
+    min-height: 75px;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    border-radius: 20px;
+    padding: 5px;
+    overflow: hidden;
+    overflow-y: auto;  /* Enable vertical scrolling when the content exceeds the height */
+
+    /* Style scrollbar for WebKit browsers (Chrome, Safari) */
+    scrollbar-color: transparent transparent; /* thumb and track color */
+    scrollbar-width: thin; /* width of the scrollbar */
+}
+
+/* Style scrollbar for Firefox */
+#commentInput::-webkit-scrollbar {
+    width: 6px; /* width of the scrollbar */
+}
+
+#commentInput::-webkit-scrollbar-thumb {
+    background-color: transparent; /* color of the thumb */
+}
+
+.rating-rate {
+    direction: rtl;
+    padding-bottom: 10px;
+}
