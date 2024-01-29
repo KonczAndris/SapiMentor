@@ -749,9 +749,27 @@ function showTopicsAndSkillsInModal() {
                 var deleteButton = document.createElement("button");
                 deleteButton.className = "delete-button";
                 deleteButton.textContent = "Delete";
+
                 deleteButton.onclick = function () {
-                    deleteRowAndDatabase(this);
+                    if (this.textContent === "Delete") {
+                        this.textContent = "Sure?";
+                        this.style.backgroundColor = "rgb(234, 80, 80)"; // Change to the "Sure?" color
+                        document.body.addEventListener('click', outsideClickHandler.bind(null, this));
+                    } else {
+                        deleteRowAndDatabase(this);
+                        this.style.backgroundColor = "rgb(245, 125, 125)"; // Change to the "Delete" color
+                        document.body.removeEventListener('click', outsideClickHandler);
+                    }
                 }
+
+                function outsideClickHandler(clickedButton, event) {
+                    if (!clickedButton.contains(event.target)) {
+                        clickedButton.textContent = "Delete";
+                        clickedButton.style.backgroundColor = "";
+                        document.body.removeEventListener('click', outsideClickHandler);
+                    }
+                }
+
 
                 funcButtons.appendChild(addButton);
                 funcButtons.appendChild(deleteButton);
