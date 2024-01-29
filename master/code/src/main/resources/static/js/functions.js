@@ -356,8 +356,71 @@ function saveSkills(button,skillCell,topicId) {
     //console.log("3:" + selectedTags)
 }
 
-document.getElementById('upload-upload').addEventListener('click', function() {
-    document.getElementById('imageUpload').click();
+// CROPPER
+document.addEventListener('DOMContentLoaded', function () {
+    const imageUploadInput = document.getElementById('imageUpload');
+    const profileImage = document.getElementById('change-profile-image');
+    const uploadModal = document.getElementById('uploadModal');
+    let cropper; // Define cropper variable outside the event listeners
+
+    // Event listener for the "Select" button in the modal
+    document.getElementById('upload-upload').addEventListener('click', function () {
+        // Clear previous cropper instance if it exists
+        if (cropper) {
+            cropper.destroy();
+        }
+
+        // Show the file input dialog
+        imageUploadInput.click();
+    });
+
+    // Event listener for file input change
+    imageUploadInput.addEventListener('change', function (event) {
+        const selectedImage = event.target.files[0];
+        const reader = new FileReader();
+
+        // Read the selected image as a data URL
+        reader.onload = function (e) {
+            // Set the data URL as the source of the profile image
+            profileImage.src = e.target.result;
+
+            // Show the upload modal with the cropper
+            uploadModal.style.display = 'block';
+
+            // Initialize Cropper only when the image is loaded
+            profileImage.onload = function () {
+                cropper = new Cropper(profileImage, {
+                    aspectRatio: 1, // You can set the aspect ratio as needed
+                    viewMode: 1, // Set the view mode to restrict the cropped area to the canvas
+                });
+            };
+        };
+
+        reader.readAsDataURL(selectedImage);
+    });
+
+    // Event listener for the "Upload" button in the modal
+    document.getElementById('upload-save').addEventListener('click', function () {
+        if (cropper) {
+            // Get the cropped data URL from the cropper
+            const croppedDataURL = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+
+            // Perform the necessary steps to upload the cropped image as the profile picture
+            // You can use AJAX to send the croppedDataURL to the server for further processing
+
+            // For demonstration purposes, you can log the data URL to the console
+            console.log(croppedDataURL);
+
+            // Hide the upload modal
+            uploadModal.style.display = 'none';
+        }
+    });
+
+    // Event listener for the modal close button
+    document.querySelector('.close-upload').addEventListener('click', function () {
+        // Hide the upload modal without saving
+        uploadModal.style.display = 'none';
+    });
 });
 
 // Egyedi témák számolására
@@ -686,9 +749,27 @@ function showTopicsAndSkillsInModal() {
                 var deleteButton = document.createElement("button");
                 deleteButton.className = "delete-button";
                 deleteButton.textContent = "Delete";
+
                 deleteButton.onclick = function () {
-                    deleteRowAndDatabase(this);
+                    if (this.textContent === "Delete") {
+                        this.textContent = "Sure?";
+                        this.style.backgroundColor = "rgb(234, 80, 80)"; // Change to the "Sure?" color
+                        document.body.addEventListener('click', outsideClickHandler.bind(null, this));
+                    } else {
+                        deleteRowAndDatabase(this);
+                        this.style.backgroundColor = "rgb(245, 125, 125)"; // Change to the "Delete" color
+                        document.body.removeEventListener('click', outsideClickHandler);
+                    }
                 }
+
+                function outsideClickHandler(clickedButton, event) {
+                    if (!clickedButton.contains(event.target)) {
+                        clickedButton.textContent = "Delete";
+                        clickedButton.style.backgroundColor = "";
+                        document.body.removeEventListener('click', outsideClickHandler);
+                    }
+                }
+
 
                 funcButtons.appendChild(addButton);
                 funcButtons.appendChild(deleteButton);
@@ -902,17 +983,4 @@ validateYear();
 validatePhone();
 addSelectedTopic();
 //updateRoleStatus();
-
 window.onload = showTopicsAndSkillsInModal;
-
-
-
-
-
-
-
-
-
-
-
-
