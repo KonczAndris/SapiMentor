@@ -502,6 +502,8 @@ function displayModal() {
 
     if (currentURL.includes("myGroup/mentees")) {
         var rating = document.querySelector('.rating.modal-rating-star');
+        var interaction_buttons = document.querySelector('.interaction-buttons');
+        interaction_buttons.style.display = "none";
         rating.style.display = "none";
     }
 }
