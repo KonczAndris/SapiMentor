@@ -172,11 +172,20 @@
 
                         <img th:id="${'myGroupProfileImg-' + pic.id}" th:src="@{/img/anonym.jpg}" class="rounded-image" alt="Profile Image">
 
-                        <div class="profile-button-container">
+                        <div th:id="${'profile-button-container-' + pic.id}" class="profile-button-container">
                             <button th:id="${'profileButton-' + pic.id}" class="profile-button-watch"> <img class="profile-button-icon-watch" th:src="@{/img/watch-profile.png}" alt="Watch Profile"> </button>
                             <button th:id="${'favoriteButton-' + pic.id}" class="profile-button">
                                 <img class="profile-button-icon checked-heart"  th:src="@{/img/checked-heart.png}" alt="Favorite">
                                 <img class="profile-button-icon unchecked-heart"  th:src="@{/img/unchecked-heart.png}" alt="Favorite">
+                            </button>
+                        </div>
+
+                        <div th:id="${'profile-button-container-sure-' + pic.id}" class="profile-button-container-sure" style="display: none">
+                            <button th:id="${'sureButton-' + pic.id}" class="checkmark-button-profile profile-button">
+                                <img class="profile-button-icon profile-button-icon-sure"  th:src="@{/img/checkmark-icon.png}" alt="Sure">
+                            </button>
+                            <button th:id="${'cancelButton-' + pic.id}" class="cancel-button-profile profile-button">
+                                <img class="profile-button-icon profile-button-icon-sure"  th:src="@{/img/cancel-icon.png}" alt="Sure">
                             </button>
                         </div>
 

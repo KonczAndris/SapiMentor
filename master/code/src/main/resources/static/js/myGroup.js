@@ -635,44 +635,69 @@ function showHeartIcons() {
                         console.log("Error: ", error);
                });
 
-           } else if (checkedHeart.classList.contains('active')) {
+           }
 
-               // ide tenni a modal megjeleniteset es mert itt nyomok ra a piros szivre
-               // es akkor itt kell elojojjon a modal es csak akkor hivja meg a torlest es ami ez utan van mindent
-               // amikor a modalban megerositem hogy biztos hogy ki akarom torolni a kedvencek kozul
+           else if (checkedHeart.classList.contains('active')) {
+               const sureButton = document.getElementById('sureButton-' + parentCellId);
+               const cancelButton = document.getElementById('cancelButton-' + parentCellId);
+               const profileButtonContainerSure = document.getElementById('profile-button-container-sure-' + parentCellId);
+               const profileButtonContainer = document.getElementById('profile-button-container-' + parentCellId);
+               if (profileButtonContainerSure) {
+                   profileButtonContainerSure.style.display = 'flex';
+                   profileButtonContainer.style.display = 'none';
+               }
 
-               console.log("Kiveszem a kedvencek kozul");
-               uncheckedHeart.style.display = 'inline';
-               checkedHeart.style.display = 'none';
-                checkedHeart.classList.remove('active');
-                checkedHeart.classList.add('inactive');
-                uncheckedHeart.classList.remove('inactive');
-                uncheckedHeart.classList.add('active');
+               sureButton.addEventListener('click', () => {
+                   console.log("Kiveszem a kedvencek kozul");
+                   uncheckedHeart.style.display = 'inline';
+                   checkedHeart.style.display = 'none';
+                   checkedHeart.classList.remove('active');
+                   checkedHeart.classList.add('inactive');
+                   uncheckedHeart.classList.remove('inactive');
+                   uncheckedHeart.classList.add('active');
 
-               var urlforrevoke = '/myGroup/revokeFavorite?favoriteUserId=' + parentCellId;
+                   var urlforrevoke = '/myGroup/revokeFavorite?favoriteUserId=' + parentCellId;
 
-               fetch(urlforrevoke, {
-                   method: 'POST',
-                   headers: {
-                       'Content-Type': 'application/x-www-form-urlencoded',
-                       'X-CSRF-TOKEN': token
+                   fetch(urlforrevoke, {
+                       method: 'POST',
+                       headers: {
+                           'Content-Type': 'application/x-www-form-urlencoded',
+                           'X-CSRF-TOKEN': token
+                       }
+                   }).then(response => {
+                       if (response.ok) {
+                           return response.text();
+                       } else {
+                           throw new Error('Something went wrong');
+                       }
+                   }).then(data => {
+                       if (data === 'ok') {
+                           console.log("Sikeres visszavonas");
+                       } else {
+                           throw new Error('Something went wrong');
+                       }
+                   }).catch(error => {
+                       console.log("Error: ", error);
+                   });
+
+                   // Hide the sure-modal after the action is performed
+                   const profileButtonContainerSure = document.getElementById('profile-button-container-sure-' + parentCellId);
+                   if (profileButtonContainerSure) {
+                       profileButtonContainerSure.style.display = 'none';
+                       profileButtonContainer.style.display = 'flex';
                    }
-               }).then(response => {
-                   if (response.ok) {
-                       return response.text();
-                   } else {
-                       throw new Error('Something went wrong');
+               });
+
+               cancelButton.addEventListener('click', () => {
+                   // Hide the sure-modal without performing any action
+                   if (profileButtonContainerSure) {
+                       profileButtonContainerSure.style.display = 'none';
+                       profileButtonContainer.style.display = 'flex';
                    }
-               }).then(data => {
-                   if (data === 'ok') {
-                       console.log("Sikeres visszavonas");
-                   } else {
-                       throw new Error('Something went wrong');
-                   }
-               }).catch(error => {
-                   console.log("Error: ", error);
                });
            }
+
+
         });
     });
 }
@@ -737,3 +762,4 @@ function rateWithStars(rating) {
         }
     }
 }
+

@@ -406,8 +406,9 @@ body {
 }
 
 
-.profile-button-container{
-    width: 60%;
+.profile-button-container, .profile-button-container-sure{
+    height: 30px;
+    width: 70px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -862,7 +863,7 @@ h2 {
     }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 600px) {
     .info-tooltip {
         position: absolute;
         color: white;
@@ -1084,4 +1085,62 @@ h2 {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+@media (max-width: 800px) {
+    .comment-row{
+        flex-direction:column;
+    }
+    .comment-infos{
+        margin-top: -25px;
+        margin-left: -12px;
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Style the modal content */
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.checkmark-button-profile {
+    width: 20px;
+    height: 21px;
+    background: transparent;
+    vertical-align: middle;
+    cursor: pointer;
+    border:none;
+    margin-right: 10px;
+}
+
+.cancel-button-profile{
+    width: 20px;
+    height: 21px;
+    background: transparent;
+    vertical-align: middle;
+    cursor: pointer;
+    border:none;
+    margin-right: 12px;
+}
+
+.profile-button-icon-sure{
+    height: 18px;
+    width: 18px
 }
