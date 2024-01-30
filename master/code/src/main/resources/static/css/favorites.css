@@ -211,11 +211,12 @@ body {
 .chat-box {
     display: flex;
     flex-direction: column;
-    height: 89.5%;
+    height: 84.6%;
     width: 97%;
     overflow-y: auto;
     padding-left: 20px;
     padding-right: 10px;
+    padding-top: 30px;
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;
     align-items: flex-end;
@@ -261,13 +262,21 @@ body {
 .chat-input-box {
     position: absolute;
     bottom: 0;
-    width: 90%;
+    width: 96%;
     height: 10%;
     border-top: 3px solid rgb(22, 175, 132);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-left: 3%;
+}
+
+#messageForm{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
 }
 
 #message-input {
@@ -307,4 +316,8 @@ body {
     height: 100%;
     width: 100%;
     align-items:center;
+}
+
+.hiddenMessageForm {
+    display: none;
 }

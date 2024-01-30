@@ -34,58 +34,50 @@ function handleUserStatusUpdate(userId, status) {
     }
 }
 
-// function updateOnlineStatus(status) {
-//     // Frissítsd a felhasználó státuszát a felületen
-//     var userElement = document.getElementById('user-' + userId);
-//     console.log("userElement: ", userElement);
-//     if (userElement) {
-//         var statusElement = userElement.querySelector('.user-status');
-//         if (statusElement) {
-//             statusElement.className = 'user-status ' + (status === 1 ? 'online' : 'offline');
-//         }
-//     }
-// }
 
 
-$(document).ready(function() {
+$(document).ready(function () {
     // Emojik beszúrása az input mezőbe
     $('#message-input').emojioneArea({
         pickerPosition: 'top',
         tonesStyle: 'bullet',
         events: {
             // Amikor egy emoji kerül kiválasztásra, illeszd be az input mezőbe
-            emojibtn_click: function(button, event) {
+            emojibtn_click: function (button, event) {
                 $('#message-input').emojioneArea('insert', button.html());
+            },
+            // Az Enter lenyomását figyeljük meg
+            keydown: function (editor, event) {
+                if (event.which === 13 && !event.shiftKey) {
+                    event.preventDefault();
+                    sendMessage();
+                }
             }
         }
     });
 
     // Egyéb műveletek, pl. üzenet elküldése gombra kattintáskor
-    $('#send-button').click(function() {
-        let message = $('#message-input').val();
-        // Ide jöhet az üzenet küldése a megfelelő feldolgozással
-        console.log("Elküldött üzenet: ", message);
-        // Töröld az üzenetet az input mezőből
-        $('#message-input').val('');
+    $('#send-button').click(function () {
+        sendMessage();
     });
 
     // Emoji gomb funkciója
-    $('#emoji-button').click(function() {
+    $('#emoji-button').click(function () {
         $('#message-input').emojioneArea('toggle');
     });
+
+    // WebSocket kapcsolat létrehozása
+    connectToWebSocket();
+
 });
-
-// Későbbi rész a kódban:
-connectToWebSocket();
-
 
 function sendMessage() {
     // Get the message input value
-    var messageInput = document.getElementById('message-input');
-    var messageText = messageInput.value;
+    var messageInput = $('#message-input').emojioneArea();
+    var messageText = messageInput[0].emojioneArea.getText().trim();
 
     // Check if the message is not empty
-    if (messageText.trim() !== '') {
+    if (messageText !== '') {
         // Create a new message element
         var newMessage = document.createElement('div');
         newMessage.className = 'message my-message';
@@ -95,7 +87,17 @@ function sendMessage() {
         var chatBox = document.getElementById('chat-box');
         chatBox.appendChild(newMessage);
 
-        // Clear the input field
-        messageInput.value = '';
+        // Clear the EmojioneArea text
+        messageInput[0].emojioneArea.setText('');
+
+        // Optional: Set focus back on the EmojioneArea
+        messageInput[0].emojioneArea.editor.focus();
+        // Görgetés az üzenetek aljára
+        scrollToBottom();
     }
+}
+
+function scrollToBottom() {
+    var chatBox = document.getElementById('chat-box');
+    chatBox.scrollTop = chatBox.scrollHeight;
 }

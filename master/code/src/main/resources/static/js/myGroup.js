@@ -503,8 +503,10 @@ function displayModal() {
     if (currentURL.includes("myGroup/mentees")) {
         var rating = document.querySelector('.rating.modal-rating-star');
         var interaction_buttons = document.querySelector('.interaction-buttons');
+        var comments = document.getElementById('comment-section-container');
         interaction_buttons.style.display = "none";
         rating.style.display = "none";
+        comments.style.display = "none";
     }
 }
 

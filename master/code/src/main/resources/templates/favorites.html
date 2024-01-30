@@ -141,20 +141,23 @@
             </div>
             <div class="right-message-box">
                 <div class="chat-container">
-                <div class="chat-box" id="chat-box">
-                    <!-- Your messages -->
-                    <div class="message my-message">Hello, how are you?</div>
 
-                    <!-- Partner's messages -->
-                    <div class="message partner-message">Hi there! I'm good.</div>
+                    <!--Itt lesznek a szovegek-->
+                    <div class="chat-box" id="chat-box">
+                        <!-- Your messages -->
+                        <div class="message my-message">Hello, how are you?</div>
+                        <!-- Partner's messages -->
+                        <div class="message partner-message">Hi there! I'm good.</div>
+                    </div>
 
-                </div>
-
-                <div class="chat-input-box">
-                    <input type="text" id="message-input" placeholder="Type a message..." maxlength="500">
-                    <button id="emoji-button">😊</button>
-                    <button type="submit" id="send-button" th:onclick="sendMessage()">Send</button>
-                </div>
+                    <!--Itt kell nekem a chat et-->
+                    <form id="messageForm" name="messageForm" >
+                        <div class="chat-input-box">
+                            <input type="text" id="message-input" placeholder="Type a message..." maxlength="500">
+                            <button id="emoji-button">😊</button>
+                            <button type="button" id="send-button">Send</button>
+                        </div>
+                    </form>
 
                 </div>
             </div>
