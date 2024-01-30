@@ -145,21 +145,41 @@
         <div class="divider"></div>
         <div class="comments">
 
+
+
           <!-- Comment entries with navigation arrows -->
           <div class="comment-entry" id="commentContainer" style="display: block;">
             <div class="comment-row">
-              <p class="comment-label">Author:</p>
-              <p id="author"></p>
+              <p class="comment-label">FirstName LastName </p>
+
+              <div class="comment-infos">
+              <p class="comment-label-date">2024.01.20. </p>
+              <div class="comment-rating">
+                <input type="radio" id="comment-star5" name="rating" value="5" th:checked="${averageRatingForMyGruopModal >= 4.5}" disabled />
+                <label for="star5" th:style="${averageRatingForMyGruopModal >= 4.5} ? 'color: gold;' : ''" >&#9733;</label>
+                <input type="radio" id="comment-star4" name="rating" value="4" th:checked="${averageRatingForMyGruopModal >= 3.5}" disabled />
+                <label for="star4" th:style="${averageRatingForMyGruopModal >= 3.5} ? 'color: gold;' : ''" >&#9733;</label>
+                <input type="radio" id="comment-star3" name="rating" value="3" th:checked="${averageRatingForMyGruopModal >= 2.5}" disabled />
+                <label for="star3" th:style="${averageRatingForMyGruopModal >= 2.5} ? 'color: gold;' : ''" >&#9733;</label>
+                <input type="radio" id="comment-star2" name="rating" value="2" th:checked="${averageRatingForMyGruopModal >= 1.5}" disabled />
+                <label for="star2" th:style="${averageRatingForMyGruopModal >= 1.5} ? 'color: gold;' : ''" >&#9733;</label>
+                <input type="radio" id="comment-star1" name="rating" value="1" th:checked="${averageRatingForMyGruopModal >= 0.5}" disabled />
+                <label for="star1" th:style="${averageRatingForMyGruopModal >= 0.5} ? 'color: gold;' : ''" >&#9733;</label>
+              </div>
+              </div>
+
             </div>
             <div class="comment-content">
-              <p class="comment-label">Comment:</p>
+              <p class="comment-label-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
               <p id="comment"></p>
             </div>
             <div class="nav-arrows">
-              <button onclick="navigateComments(-1)">←</button>
-              <button onclick="navigateComments(1)">→</button>
+              <button class="navigate-button" onclick="navigateComments(-1)">←</button>
+              <button class="navigate-button" onclick="navigateComments(1)">→</button>
             </div>
           </div>
+
+
 
         </div>
         <!-- COMMENT INFO END -->
