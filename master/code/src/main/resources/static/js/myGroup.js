@@ -709,44 +709,22 @@ showHeartIcons();
 
 function showRateSection() {
     document.getElementById('ratingSection').style.display = 'block';
-    document.getElementById('commentSection').style.display = 'none';
-    document.getElementById('comment-button').style.display = 'none';
 }
 
-function showCommentSection() {
-    document.getElementById('ratingSection').style.display = 'none';
-    document.getElementById('commentSection').style.display = 'block';
-    document.getElementById('rating-button').style.display = 'none';
-}
+document.getElementById('commentInput').addEventListener('focus', function () {
+    this.selectionStart = this.selectionEnd = this.value.length;
+});
 
 function saveRating() {
     // Implement logic to save the rating
     // You can retrieve the selected rating using document.querySelector('input[name="rating"]:checked').value
     // Reset the rating section
     document.getElementById('ratingSection').style.display = 'none';
-    document.getElementById('comment-button').style.display = 'inline';
+    document.getElementById('rating-button').style.display = 'inline';
 }
 
 function cancelRating() {
-    // Reset the rating section
     document.getElementById('ratingSection').style.display = 'none';
-    document.getElementById('comment-button').style.display = 'inline';
-}
-
-function saveComment() {
-    // Implement logic to save the comment
-    // You can retrieve the comment using document.getElementById('commentInput').value
-    // Reset the comment section
-    document.getElementById('commentSection').style.display = 'none';
-    // Update comment display section (you'll need to implement this part)
-    document.getElementById('rating-button').style.display = 'inline';
-
-}
-
-function cancelComment() {
-    // Reset the comment section
-    document.getElementById('commentSection').style.display = 'none';
-    document.getElementById('rating-button').style.display = 'inline';
 }
 
 function rateWithStars(rating) {

@@ -40,7 +40,7 @@
 
       <div class="interaction-buttons">
       <!-- RATE button -->
-      <button id="rating-button" onclick="showRateSection()">RATE</button>
+      <button id="rating-button" onclick="showRateSection()"> RATE </button>
         <!-- Rating Section -->
         <div id="ratingSection" style="display: none;">
           <div class="rating-rate modal-rating-star-rate">
@@ -55,27 +55,12 @@
             <input type="radio" id="ratestar1" name="rating" value="1" onclick="rateWithStars(1)" />
             <label for="ratestar1">&#9733;</label>
           </div>
+          <textarea id="commentInput" maxlength="500" placeholder="Write your comment..."></textarea>
           <!-- SAVE and CANCEL buttons for rating -->
           <button id="save-rating" onclick="saveRating()">SAVE</button>
           <button id="cancel-rating" onclick="cancelRating()">CANCEL</button>
         </div>
-      <!-- COMMENT button -->
-      <button id="comment-button" onclick="showCommentSection()">COMMENT</button>
-        </div>
-
-      <!-- Comment Section -->
-      <div id="commentSection" style="display: none;">
-        <textarea id="commentInput" maxlength="500" placeholder="Write your comment..."></textarea>
-        <!-- SAVE and CANCEL buttons for commenting -->
-        <button id="save-comment" onclick="saveComment()">SAVE</button>
-        <button id="cancel-comment" onclick="cancelComment()">CANCEL</button>
       </div>
-
-      <!-- Comment Display Section -->
-      <div id="commentDisplaySection">
-        <!-- Comments will be displayed here -->
-      </div>
-
     </div>
   </div>
 
