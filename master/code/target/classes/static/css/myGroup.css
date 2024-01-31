@@ -1027,17 +1027,18 @@ h2 {
     text-align: center;
     height: 20px;
     margin-left: 10px;
+    display: flex;
+    flex-direction:row !important;
+    margin: 0;
 }
 
 .comment-rating label {
     color: gray;
     cursor: pointer;
     transition: color 0.2s;
-    display: inline-block;
+    display: inline;
     font-size: 1rem;
-    vertical-align: middle; /* Add this line to vertically align the stars */
-    /* Adjust the margin as needed */
-    margin-top: 15px;/* Adjust the margin as needed */
+    margin-top: 10px;/* Adjust the margin as needed */
 }
 
 .comment-rating input {
@@ -1045,7 +1046,9 @@ h2 {
 }
 
 .comment-label-date{
-    margin-left: 10px;
+    padding-top: 10px !important;
+    font-size: 14px;
+    font-style:italic;
 }
 
 .comment-rating input[type="radio"] {
@@ -1054,7 +1057,8 @@ h2 {
 
 .comment-row{
     display: flex;
-    flex-direction:row;
+    flex-direction:column;
+    text-align:center;
 }
 
 .comment-label-text {
@@ -1083,17 +1087,54 @@ h2 {
 
 .comment-infos{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
+}
+
+.comment-profile-image{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    margin-bottom:5px;
+}
+
+.comment-section{
+    display:flex;
+    flex-direction: row;
+}
+
+.comment-content{
+    padding-left: 15px;
+}
+
+.comment-label,
+.comment-label-date,
+.comment-rating {
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
 }
 
 @media (max-width: 800px) {
     .comment-row{
-        flex-direction:column;
+        flex-direction:row;
+        justify-content: center;
+        margin-bottom:10px;
     }
+
     .comment-infos{
-        margin-top: -25px;
-        margin-left: -12px;
+        align-items: flex-start;
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .comment-section{
+        display:flex;
+        flex-direction: column;
+    }
+
+    .comment-profile-image{
+        width:85px;
+        height: 85px;
     }
 }
 

@@ -149,10 +149,12 @@
 
           <!-- Comment entries with navigation arrows -->
           <div class="comment-entry" id="commentContainer" style="display: block;">
+            <div class="comment-section">
             <div class="comment-row">
-              <p class="comment-label">FirstName LastName </p>
+              <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
 
               <div class="comment-infos">
+                <p class="comment-label">FirstName LastName </p>
               <p class="comment-label-date">2024.01.20. </p>
               <div class="comment-rating">
                 <input type="radio" id="comment-star5" name="rating" value="5" th:checked="${averageRatingForMyGruopModal >= 4.5}" disabled />
@@ -172,6 +174,7 @@
             <div class="comment-content">
               <p class="comment-label-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
               <p id="comment"></p>
+            </div>
             </div>
             <div class="nav-arrows">
               <button class="navigate-button" onclick="navigateComments(-1)">←</button>
