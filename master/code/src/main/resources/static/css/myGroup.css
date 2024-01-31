@@ -925,12 +925,13 @@ h2 {
 
 #information-box {
     width: 80%;
-    margin: 0 auto; /* Középre igazítás */
+    margin: 0 auto; /* KÃ¶zÃ©pre igazÃ­tÃ¡s */
+    text-align: center;
 }
 
 #information-box div {
     padding: 20px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
 }
 
 #rating-button{
@@ -1185,4 +1186,52 @@ h2 {
 .profile-button-icon-sure{
     height: 18px;
     width: 18px
+}
+
+.smaller-div {
+    min-width: 50px;
+    max-width: 150px;
+    display: flex;
+}
+
+.main-div {
+    margin:2%;
+    width:90%;
+    border: 4px solid rgb(22, 175, 132);
+    border-radius: 25px;
+    flex-direction: column;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    z-index: 1; /* Initial z-index value */
+    opacity:60%;
+    padding: 20px;
+}
+
+.main-div:hover {
+    transform: scale(1.1); /* Scale by 110% on hover */
+    box-shadow: 0 0 20px rgba(22, 175, 132, 0.8); /* Add a glow effect */
+    z-index: 2; /* Increase z-index on hover to make it overlap */
+    margin-top:20px;
+    margin-bottom: 20px;
+    opacity: 100%;
+}
+
+.small-div-image{
+    max-width:100%;
+    border: 4px solid rgb(22, 175, 132);
+    border-radius: 25px;
+
+}
+
+.mygroup-pics{
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.main-div p{
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
