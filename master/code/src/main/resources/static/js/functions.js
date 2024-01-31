@@ -1026,4 +1026,4 @@ validateYear();
 validatePhone();
 addSelectedTopic();
 //updateRoleStatus();
-window.onload = showTopicsAndSkillsInModal;
+window.onload = showTopicsAndSkillsInModal();
