@@ -7,7 +7,7 @@
   <title>Title</title>
 </head>
 <body>
-<div th:fragment="modal-content" class="profile-modal" >
+<div th:fragment="modal-content" class="profile-modal" th:id="${'profileMainModal_' + uId}" >
   <span class="close-profile-modal">&times;</span>
 
   <div class="profile-modal-left-box">
@@ -43,21 +43,24 @@
       <button id="rating-button" onclick="showRateSection()"> RATE </button>
         <!-- Rating Section -->
         <div id="ratingSection" style="display: none;">
-          <div class="rating-rate modal-rating-star-rate">
-            <input type="radio" id="ratestar5" name="rating" value="5" onclick="rateWithStars(5)" />
+
+          <div id="error-for-ratingSection" style="display: none"></div>
+
+          <div class="rating-rate modal-rating-star-rate" id="rate_star_by_user">
+            <input type="radio" id="ratestar5" name="selectrating" value="5" onclick="rateWithStars(5)" />
             <label for="ratestar5">&#9733;</label>
-            <input type="radio" id="ratestar4" name="rating" value="4" onclick="rateWithStars(4)" />
+            <input type="radio" id="ratestar4" name="selectrating" value="4" onclick="rateWithStars(4)" />
             <label for="ratestar4">&#9733;</label>
-            <input type="radio" id="ratestar3" name="rating" value="3" onclick="rateWithStars(3)" />
+            <input type="radio" id="ratestar3" name="selectrating" value="3" onclick="rateWithStars(3)" />
             <label for="ratestar3">&#9733;</label>
-            <input type="radio" id="ratestar2" name="rating" value="2" onclick="rateWithStars(2)" />
+            <input type="radio" id="ratestar2" name="selectrating" value="2" onclick="rateWithStars(2)" />
             <label for="ratestar2">&#9733;</label>
-            <input type="radio" id="ratestar1" name="rating" value="1" onclick="rateWithStars(1)" />
+            <input type="radio" id="ratestar1" name="selectrating" value="1" onclick="rateWithStars(1)" />
             <label for="ratestar1">&#9733;</label>
           </div>
           <textarea id="commentInput" maxlength="500" placeholder="Write your comment..."></textarea>
           <!-- SAVE and CANCEL buttons for rating -->
-          <button id="save-rating" onclick="saveRating()">SAVE</button>
+          <button id="save-rating" onclick="saveRating()" >SAVE</button>
           <button id="cancel-rating" onclick="cancelRating()">CANCEL</button>
         </div>
       </div>
@@ -128,9 +131,8 @@
         <h2>COMMENTS</h2>
         <!-- COMMENT INFO START -->
         <div class="divider"></div>
+
         <div class="comments">
-
-
 
           <!-- Comment entries with navigation arrows -->
           <div class="comment-entry" id="commentContainer" style="display: block;">
@@ -166,7 +168,6 @@
               <button class="navigate-button" onclick="navigateComments(1)">→</button>
             </div>
           </div>
-
 
 
         </div>

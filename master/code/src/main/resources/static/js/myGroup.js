@@ -542,6 +542,7 @@ profileButtons.forEach(button => {
        }).then(data => {
            if (data !== 'error') {
                //console.log("Sikeres lekerdezes");
+               //console.log("Data: ", data);
 
                document.getElementById('profileModal').innerHTML = data;
                const closeBtn = document.querySelector('.close-profile-modal');
@@ -715,13 +716,86 @@ document.getElementById('commentInput').addEventListener('focus', function () {
     this.selectionStart = this.selectionEnd = this.value.length;
 });
 
+
+
 function saveRating() {
+
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+
+
     // Implement logic to save the rating
     // You can retrieve the selected rating using document.querySelector('input[name="rating"]:checked').value
     // Reset the rating section
-    document.getElementById('ratingSection').style.display = 'none';
-    document.getElementById('rating-button').style.display = 'inline';
+
+
+
+    // Az input mezőkből kiolvasott adatok
+    if (document.querySelector('input[name="selectrating"]:checked') === null){
+        var errorMessages = document.getElementById('error-for-ratingSection');
+        errorMessages.textContent = 'Please select a rating first!';
+        errorMessages.style.display = 'block';
+        errorMessages.style.color = 'red';
+        //console.log("Nincs kivalasztva rating")
+    } else {
+        var rating = document.querySelector('input[name="selectrating"]:checked').value;
+        console.log("Rating: ", rating);
+        var comment = document.getElementById('commentInput').value;
+
+
+        console.log("Comment: ", comment);
+
+        var profileModalElement = document.querySelector('[id*="profileMainModal_"]');
+        console.log("Igen: ", profileModalElement);
+        var userId = profileModalElement.id.split("_")[1];
+        console.log("User id: ", userId);
+
+        // Az aktuális dátum létrehozása
+        var currentDate = new Date();
+        console.log('Jelenlegi_1 dátum:', currentDate);
+        // Dátum formázása 2024.01.20. formátumra
+        var formattedDate = currentDate.toLocaleDateString('hu-HU', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+        // Eredmény kiíratása a konzolra
+        console.log('Jelenlegi_2 dátum:', formattedDate);
+
+        fetch('/myGroup/saveRating', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify({
+                userId: userId,
+                score: rating,
+                comment: comment,
+                date: formattedDate
+            })
+        }).then(response => {
+            if (response.ok) {
+                location.reload();
+                return response.text();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).then(data => {
+            if (data === 'ok') {
+                console.log("Sikeres mentes");
+                document.getElementById('error-for-ratingSection').style.display = 'none';
+                document.getElementById('ratingSection').style.display = 'none';
+                document.getElementById('rating-button').style.display = 'inline';
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
+    }
+
 }
+
+
 
 function cancelRating() {
     document.getElementById('ratingSection').style.display = 'none';

@@ -7,10 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Rating;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.RatingRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.MyGroupService;
@@ -137,12 +135,22 @@ public class MyGroupController {
 
 
     @PostMapping("/saveRating")
-    public ResponseEntity<String> saveRating(@RequestParam String ratedUserEmail,
-                                             @RequestParam int score,
+    public ResponseEntity<String> saveRating(@RequestBody Rating ratingRequest,
                                              Principal principal) {
         String ratingUserEmail = principal.getName();
+        Long ratedUserId = ratingRequest.getUserId();
+        int score = ratingRequest.getScore();
+        String comment = ratingRequest.getComment();
+        String date = ratingRequest.getDate();
+
+        System.out.println("ratingUserEmail: " + ratingUserEmail);
+        System.out.println("ratedUserId: " + ratedUserId);
+        System.out.println("score: " + score);
+        System.out.println("comment: " + comment);
+        System.out.println("date: " + date);
+
         try {
-            ratingService.saveRating(ratingUserEmail, ratedUserEmail, score);
+            ratingService.saveRating(ratingUserEmail, ratingRequest);
             return ResponseEntity.ok("ok");
         } catch (Exception e) {
             e.printStackTrace();

@@ -163,6 +163,7 @@ public class MyGroupService {
         model.addAttribute("userDetailsForMyGroup", userDetailsForMyGroup);
         List<Topic> topics = topicService.getAllTopics();
         List<Profile_Topics> userTopicsForMyGroup = profileTopicsRepository.findByUserId(userId);
+        model.addAttribute("uId", userId);
 
         if (!userTopicsForMyGroup.isEmpty()) {
 //            System.out.println("User topics: " + userTopicsForMyGroup);
