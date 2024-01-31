@@ -54,6 +54,7 @@ public class MyGroupService {
 
     public List<Object[]> getSelectedUserImages(Long userId) {
         List<Rating> allRatingsForThisUser = ratingRepository.findAllByUserId(userId);
+        System.out.println("allRatingsForThisUser: " + allRatingsForThisUser);
         ArrayList<Long> allUserId = new ArrayList<>();
         for (Rating rating : allRatingsForThisUser) {
             allUserId.add(rating.getUserId());

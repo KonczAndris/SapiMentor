@@ -567,26 +567,26 @@ profileButtons.forEach(button => {
        });
 
         var url2 = '/myGroup/getSelectedUsersImages?selectedUserId=' + userId;
-        fetch(url2, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRF-TOKEN': token
-            }
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Something went wrong');
-            }
-        }).then(data => {
-            console.log("Data: ", data);
-            //profileimages = data.profileimagesandid;
-            //console.log("Igen: " + profileimages);
-            //handlereprofileimages();
-        }).catch(error => {
-            console.log("Error: ", error);
-        });
+        // fetch(url2, {
+        //     method: "GET",
+        //     headers: {
+        //         'Content-Type': 'application/x-www-form-urlencoded',
+        //         'X-CSRF-TOKEN': token
+        //     }
+        // }).then(response => {
+        //     if (response.ok) {
+        //         return response.json();
+        //     } else {
+        //         throw new Error('Something went wrong');
+        //     }
+        // }).then(data => {
+        //     console.log("Data: ", data);
+        //     //profileimages = data.profileimagesandid;
+        //     //console.log("Igen: " + profileimages);
+        //     //handlereprofileimages();
+        // }).catch(error => {
+        //     console.log("Error: ", error);
+        // });
 
     });
 });
