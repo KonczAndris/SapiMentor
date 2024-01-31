@@ -81,6 +81,7 @@ body {
     overflow-x: hidden;
     box-shadow:  2px 2px 20px rgb(10, 145, 107);
     border-radius: 50px;
+    display: flex;
 }
 
 #sapimentor-logo{
@@ -331,108 +332,3 @@ body {
     }
 }
 
-#right-content {
-    flex-direction: column;
-}
-
-.smaller-div {
-    width: 150px;
-    height: 150px;
-    margin: 15px;
-}
-
-.div-row{
-    display:flex;
-    height:45%;
-    padding:20px;
-    padding-bottom: 0;
-}
-
-.main-div {
-    margin:2%;
-    width:90%;
-    border: 4px solid rgb(22, 175, 132);
-    border-radius: 25px;
-    flex-direction: column;
-    display: flex;
-    text-align: center;
-    align-items: center;
-    transition: all 0.3s ease;
-    z-index: 1; /* Initial z-index value */
-    opacity:60%;
-    padding: 20px;
-}
-
-.main-div:hover {
-    transform: scale(1.1); /* Scale by 110% on hover */
-    box-shadow: 0 0 20px rgba(22, 175, 132, 0.8); /* Add a glow effect */
-    z-index: 2; /* Increase z-index on hover to make it overlap */
-    margin-top:20px;
-    margin-bottom: 20px;
-    opacity: 100%;
-}
-
-.index-titles {
-    margin-top: 2px; /* Adjust the margin top to reduce space */
-    margin-bottom: 5px; /* Adjust the margin bottom to reduce space */
-    font-style: italic;
-    font-weight: bold;
-}
-
-.index-infos {
-    margin-top: 2px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-}
-
-.column-row{
-    display:none;
-}
-
-@media (max-width:700px) {
-    .main-div{
-        width: 80%;
-    }
-
-    .column-row{
-        display:flex;
-        height:100%;
-        flex-direction:column;
-        margin-right:20px;
-        align-items: center;
-    }
-    .row-row{
-        display: none;
-    }
-}
-
-
-@media (max-height: 700px) {
-    .main-div{
-        width: 80%;
-    }
-
-    .column-row{
-        display:flex;
-        height:100%;
-        flex-direction:column;
-        margin-right:20px;
-        align-items: center;
-    }
-    .row-row{
-        display: none;
-    }
-
-}
-
-
-
-.small-div-image{
-    max-width: 100%;
-    min-width:50px;
-    border: 4px solid rgb(22, 175, 132);
-    border-radius: 25px;
-
-}
