@@ -215,23 +215,23 @@ public class MyGroupController {
 
 
 
-//    @GetMapping("/getSelectedUsersImages")
-//    public ResponseEntity<Map<String,Object>> getSelectedUsersImages(@RequestParam Long selectedUserId,
-//                                                          Principal principal) {
-//        try {
-//            Map<String, Object> response = new HashMap<>();
-//            List<Object[]> selectedUserImages = myGroupService.getSelectedUserImages(selectedUserId);
+    @GetMapping("/getSelectedUsersImages")
+    public ResponseEntity<Map<String,Object>> getSelectedUsersImages(@RequestParam Long selectedUserId,
+                                                          Principal principal) {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            List<Object[]> selectedUserImages = myGroupService.getSelectedUserImages(selectedUserId);
 //            for (Object[] selectedUserImage : selectedUserImages) {
-//                System.out.println("selectedUserImage: " + selectedUserImage[0]);
-//                System.out.println("selectedUserImage: " + selectedUserImage[1]);
+//                System.out.println("selectedUserImage1: " + selectedUserImage[0]);
+//                System.out.println("selectedUserImage2: " + selectedUserImage[1]);
 //            }
-//            response.put("selectedUserImages", null);
-//            return ResponseEntity.ok(response);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
+            response.put("selectedUserImages", selectedUserImages);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 
 //    @Cacheable("showAllMentors")
 //    @GetMapping("/mentors")

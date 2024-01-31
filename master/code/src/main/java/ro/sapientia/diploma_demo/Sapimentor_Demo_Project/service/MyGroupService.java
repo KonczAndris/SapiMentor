@@ -52,16 +52,27 @@ public class MyGroupService {
         return userRepository.findallMentorProfileImageById(userId);
     }
 
-//    public List<Object[]> getSelectedUserImages(Long userId) {
-//        List<Rating> allRatingsForThisUser = ratingRepository.findAllByUserId(userId);
-//        System.out.println("allRatingsForThisUser: " + allRatingsForThisUser);
-//        ArrayList<Long> allUserId = new ArrayList<>();
-//        for (Rating rating : allRatingsForThisUser) {
-//            allUserId.add(rating.getUserId());
-//        }
-//        List<User> allSelectedUsers = userRepository.findAllByIdIn(allUserId);
-//        return userRepository.findAllSelectedUserImages(allSelectedUsers);
-//    }
+
+    public List<Object[]> getSelectedUserImages(Long userId) {
+        List<Rating> allRatingsForThisUserImages = ratingRepository.findAllByRatedUserId(userId);
+        System.out.println("allRatingsForThisUser: " + allRatingsForThisUserImages);
+        ArrayList<Long> allUserId = new ArrayList<>();
+        for (Rating rating : allRatingsForThisUserImages) {
+            System.out.println("RatedUserId: " + rating.getRatedUserId() +
+                    ", Score: " + rating.getScore() +
+                    ", Comment: " + rating.getComment() +
+                    ", Date: " + rating.getDate() +
+                    ", Who rate : " + rating.getUserId());
+            allUserId.add(rating.getUserId());
+        }
+        List<Object[]> allSelectedUsers = userRepository.findAllSelectedUserImages(allUserId);
+
+        for (Object[] user : allSelectedUsers) {
+            System.out.println("User: " + user[0] + ", id: " + user[1]);
+        }
+
+        return allSelectedUsers;
+    }
 
     public void getAllMeneesDetails (Model model, Principal principal) {
         String email = principal.getName();

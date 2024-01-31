@@ -141,7 +141,7 @@
             mert tobb ilyen section kene letre jojjon-->
             <div class="comment-section" th:id="${'comment-section-' + data.userId}" th:each="data : ${allRatingsForThisUser}">
             <div class="comment-row">
-              <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
+              <img  th:id="${'commentProfileImg-' + data.userId}" th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
 
               <div class="comment-infos">
 

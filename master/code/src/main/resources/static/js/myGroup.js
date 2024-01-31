@@ -567,29 +567,53 @@ profileButtons.forEach(button => {
        });
 
         var url2 = '/myGroup/getSelectedUsersImages?selectedUserId=' + userId;
-        // fetch(url2, {
-        //     method: "GET",
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded',
-        //         'X-CSRF-TOKEN': token
-        //     }
-        // }).then(response => {
-        //     if (response.ok) {
-        //         return response.json();
-        //     } else {
-        //         throw new Error('Something went wrong');
-        //     }
-        // }).then(data => {
-        //     console.log("Data: ", data);
-        //     //profileimages = data.profileimagesandid;
-        //     //console.log("Igen: " + profileimages);
-        //     //handlereprofileimages();
-        // }).catch(error => {
-        //     console.log("Error: ", error);
-        // });
+        fetch(url2, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).then(data => {
+            //console.log("Data: ", data);
+            profileimagesforSelectedUsers = data.selectedUserImages;
+            //console.log("Igen: " + profileimagesforSelectedUsers);
+            setInterval(() => {
+                handlereselectedimages();
+            }, 1000); // 2000 milliszekundum = 2 másodperc
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
 
     });
 });
+
+
+function handlereselectedimages() {
+
+    //console.log("Profile images hossz : ", profileimages.length);
+    for (let i = 0; i < profileimagesforSelectedUsers.length; i++) {
+        //console.log("Profile images : ", profileimages[i]);
+        const commentprofileData = profileimagesforSelectedUsers[i];
+        const commentprofileImage = commentprofileData[0];
+        const commentprofileId = commentprofileData[1];
+
+        //console.log("Profil image: ", commentprofileImage);
+        //console.log("Profil id: ", commentprofileId);
+
+         var commentedProfileImg  = document.getElementById('commentProfileImg-' + commentprofileId);
+        //console.log("Profile image div: ", commentedProfileImg);
+        if (commentprofileImage != null && commentedProfileImg != null ) {
+            commentedProfileImg.src = 'data:image/jpeg;base64,' + commentprofileImage;
+        }
+
+    }
+}
 
 
 // Function to close the modal when clicking outside the modal content
