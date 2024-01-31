@@ -35,7 +35,9 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
     @Query("SELECT r FROM Rating r JOIN User u ON r.ratedUserId = u.id JOIN u.roles ur ON ur.name = 'MENTOR' WHERE r.userId = :userId")
     List<Rating> findAllMentorRatingById(@Param("userId") Long userId);
 
-    @Query("SELECT r FROM Rating r WHERE r.ratedUserId = :userId")
-    List<Rating> findAllByUserId(Long userId);
+//    @Query("SELECT r FROM Rating r WHERE r.ratedUserId = :userId")
+//    List<Rating> findAllByUserId(Long userId);
+    @Query("SELECT r FROM Rating r WHERE r.userId = :userId")
+    List<Rating> findAllByRatedUserId(Long userId);
 
 }

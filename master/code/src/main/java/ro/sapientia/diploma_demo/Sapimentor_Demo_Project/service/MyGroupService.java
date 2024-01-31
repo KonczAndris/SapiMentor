@@ -180,7 +180,7 @@ public class MyGroupService {
     }
 
     public void getSelectedUserComments(Long  userId,Model model, Principal principal) {
-        List<Rating> allRatingsForThisUser = ratingRepository.findAllByUserId(userId);
+        List<Rating> allRatingsForThisUser = ratingRepository.findAllByRatedUserId(userId);
         ArrayList<Long> allUserId = new ArrayList<>();
         for (Rating rating : allRatingsForThisUser) {
 //            System.out.println("RatedUserId: " + rating.getRatedUserId() +

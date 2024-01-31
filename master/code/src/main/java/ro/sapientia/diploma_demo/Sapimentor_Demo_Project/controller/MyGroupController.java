@@ -214,22 +214,6 @@ public class MyGroupController {
     }
 
 
-//    @Cacheable("getallmenteesprofileimage")
-//    @GetMapping("/mentees/getallmenteeprofileimage")
-//    public ResponseEntity<Map<String,Object>> getAllMenteeProfileImage(Principal principal) {
-//        try {
-//            String email = principal.getName();
-//            Long userId = userRepository.findIdByEmail(email);
-//            Map<String, Object> response = new HashMap<>();
-//            List<Object[]> menteeprofileImageBytesList = myGroupService.getAllMenteeProfileImageById(userId);
-//            response.put("profileimagesandid", menteeprofileImageBytesList);
-//
-//            return ResponseEntity.ok(response);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
 
 //    @GetMapping("/getSelectedUsersImages")
 //    public ResponseEntity<Map<String,Object>> getSelectedUsersImages(@RequestParam Long selectedUserId,
