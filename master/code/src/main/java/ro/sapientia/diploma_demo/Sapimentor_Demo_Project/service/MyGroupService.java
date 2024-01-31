@@ -52,16 +52,16 @@ public class MyGroupService {
         return userRepository.findallMentorProfileImageById(userId);
     }
 
-    public List<Object[]> getSelectedUserImages(Long userId) {
-        List<Rating> allRatingsForThisUser = ratingRepository.findAllByUserId(userId);
-        System.out.println("allRatingsForThisUser: " + allRatingsForThisUser);
-        ArrayList<Long> allUserId = new ArrayList<>();
-        for (Rating rating : allRatingsForThisUser) {
-            allUserId.add(rating.getUserId());
-        }
-        List<User> allSelectedUsers = userRepository.findAllByIdIn(allUserId);
-        return userRepository.findAllSelectedUserImages(allSelectedUsers);
-    }
+//    public List<Object[]> getSelectedUserImages(Long userId) {
+//        List<Rating> allRatingsForThisUser = ratingRepository.findAllByUserId(userId);
+//        System.out.println("allRatingsForThisUser: " + allRatingsForThisUser);
+//        ArrayList<Long> allUserId = new ArrayList<>();
+//        for (Rating rating : allRatingsForThisUser) {
+//            allUserId.add(rating.getUserId());
+//        }
+//        List<User> allSelectedUsers = userRepository.findAllByIdIn(allUserId);
+//        return userRepository.findAllSelectedUserImages(allSelectedUsers);
+//    }
 
     public void getAllMeneesDetails (Model model, Principal principal) {
         String email = principal.getName();
