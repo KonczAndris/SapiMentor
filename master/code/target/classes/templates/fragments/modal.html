@@ -25,7 +25,7 @@
         <p class="first-name" th:text="${userDetailsForMyGroup.firstName}">  </p>
       </div>
 
-      <div class="rating modal-rating-star">
+      <div class="rating modal-rating-star" id="modal-rating-star-for-modal">
         <input type="radio" id="star5" name="rating" value="5" th:checked="${averageRatingForMyGruopModal >= 4.5}" disabled />
         <label for="star5" th:style="${averageRatingForMyGruopModal >= 4.5} ? 'color: gold;' : ''" >&#9733;</label>
         <input type="radio" id="star4" name="rating" value="4" th:checked="${averageRatingForMyGruopModal >= 3.5}" disabled />
@@ -47,18 +47,18 @@
           <div id="error-for-ratingSection" style="display: none"></div>
 
           <div class="rating-rate modal-rating-star-rate" id="rate_star_by_user">
-            <input type="radio" id="ratestar5" name="selectrating" value="5" onclick="rateWithStars(5)" />
-            <label for="ratestar5">&#9733;</label>
-            <input type="radio" id="ratestar4" name="selectrating" value="4" onclick="rateWithStars(4)" />
-            <label for="ratestar4">&#9733;</label>
-            <input type="radio" id="ratestar3" name="selectrating" value="3" onclick="rateWithStars(3)" />
-            <label for="ratestar3">&#9733;</label>
-            <input type="radio" id="ratestar2" name="selectrating" value="2" onclick="rateWithStars(2)" />
-            <label for="ratestar2">&#9733;</label>
-            <input type="radio" id="ratestar1" name="selectrating" value="1" onclick="rateWithStars(1)" />
-            <label for="ratestar1">&#9733;</label>
+            <input type="radio" id="ratestar5" name="selectrating" value="5" th:checked="${ratingForThisUser != null and ratingForThisUser.score >= 4.5}" onclick="rateWithStars(5)"/>
+            <label for="ratestar5" th:style="${ratingForThisUser != null and ratingForThisUser.score >= 4.5} ? 'color: gold;' : ''">&#9733;</label>
+            <input type="radio" id="ratestar4" name="selectrating" value="4" th:checked="${ratingForThisUser != null and ratingForThisUser.score >= 3.5}" onclick="rateWithStars(4)"/>
+            <label for="ratestar4" th:style="${ratingForThisUser != null and ratingForThisUser.score >= 3.5} ? 'color: gold;' : ''">&#9733;</label>
+            <input type="radio" id="ratestar3" name="selectrating" value="3" th:checked="${ratingForThisUser != null and ratingForThisUser.score >= 2.5}" onclick="rateWithStars(3)"/>
+            <label for="ratestar3" th:style="${ratingForThisUser != null and ratingForThisUser.score >= 2.5} ? 'color: gold;' : ''">&#9733;</label>
+            <input type="radio" id="ratestar2" name="selectrating" value="2" th:checked="${ratingForThisUser != null and ratingForThisUser.score >= 1.5}" onclick="rateWithStars(2)"/>
+            <label for="ratestar2" th:style="${ratingForThisUser != null and ratingForThisUser.score >= 1.5} ? 'color: gold;' : ''">&#9733;</label>
+            <input type="radio" id="ratestar1" name="selectrating" value="1" th:checked="${ratingForThisUser != null and ratingForThisUser.score >= 0.5}" onclick="rateWithStars(1)"/>
+            <label for="ratestar1" th:style="${ratingForThisUser != null and ratingForThisUser.score >= 0.5} ? 'color: gold;' : ''">&#9733;</label>
           </div>
-          <textarea id="commentInput" maxlength="500" placeholder="Write your comment..."></textarea>
+          <textarea id="commentInput" maxlength="500" placeholder="Write your comment..." th:text="${ratingForThisUser != null ? ratingForThisUser.comment : ''}"></textarea>
           <!-- SAVE and CANCEL buttons for rating -->
           <button id="save-rating" onclick="saveRating()" >SAVE</button>
           <button id="cancel-rating" onclick="cancelRating()">CANCEL</button>
@@ -136,33 +136,48 @@
 
           <!-- Comment entries with navigation arrows -->
           <div class="comment-entry" id="commentContainer" style="display: block;">
-            <div class="comment-section">
+
+            <!-- Ahogy eszre vettem ezt kellene megcsinálni, hogy a commenteket lehessen navigálni
+            mert tobb ilyen section kene letre jojjon-->
+            <div class="comment-section" th:id="${'comment-section-' + data.userId}" th:each="data : ${allRatingsForThisUser}">
             <div class="comment-row">
               <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
 
               <div class="comment-infos">
-                <p class="comment-label">FirstName LastName </p>
-              <p class="comment-label-date">2024.01.20. </p>
-              <div class="comment-rating">
-                <input type="radio" id="comment-star5" name="rating" value="5" th:checked="${averageRatingForMyGruopModal >= 4.5}" disabled />
-                <label for="star5" th:style="${averageRatingForMyGruopModal >= 4.5} ? 'color: gold;' : ''" >&#9733;</label>
-                <input type="radio" id="comment-star4" name="rating" value="4" th:checked="${averageRatingForMyGruopModal >= 3.5}" disabled />
-                <label for="star4" th:style="${averageRatingForMyGruopModal >= 3.5} ? 'color: gold;' : ''" >&#9733;</label>
-                <input type="radio" id="comment-star3" name="rating" value="3" th:checked="${averageRatingForMyGruopModal >= 2.5}" disabled />
-                <label for="star3" th:style="${averageRatingForMyGruopModal >= 2.5} ? 'color: gold;' : ''" >&#9733;</label>
-                <input type="radio" id="comment-star2" name="rating" value="2" th:checked="${averageRatingForMyGruopModal >= 1.5}" disabled />
-                <label for="star2" th:style="${averageRatingForMyGruopModal >= 1.5} ? 'color: gold;' : ''" >&#9733;</label>
-                <input type="radio" id="comment-star1" name="rating" value="1" th:checked="${averageRatingForMyGruopModal >= 0.5}" disabled />
-                <label for="star1" th:style="${averageRatingForMyGruopModal >= 0.5} ? 'color: gold;' : ''" >&#9733;</label>
-              </div>
-              </div>
 
+                <div th:each="user : ${allSelectedUsers}">
+                  <p style="margin: 0" th:if="${user.id == data.userId}" th:text="${user.last_Name + ' ' + user.first_Name}"></p>
+                </div>
+
+<!--                <p class="comment-label" th:id="${'comment-label-name-' + data.userId}" th:text="${allSelectedUsers.last_Name}"> </p>-->
+                <p class="comment-label-date" th:id="${'comment-label-date-' + data.userId}" th:text="${data.date}"></p>
+                <div class="comment-rating" th:id="${'comment-rating-' + data.userId}">
+                  <input type="radio" th:id="${'comment-star5_'+data.userId}" name="rating" value="5" th:checked="${data.score >= 4.5}" disabled />
+                  <label th:for="${'comment-star5_' + data.userId}" th:style="${data.score >= 4.5} ? 'color: gold;' : ''" >&#9733;</label>
+
+                  <input type="radio" th:id="${'comment-star4_'+data.userId}" name="rating" value="4" th:checked="${data.score >= 3.5}" disabled />
+                  <label th:for="${'comment-star4_' + data.userId}" th:style="${data.score >= 3.5} ? 'color: gold;' : ''" >&#9733;</label>
+
+                  <input type="radio" th:id="${'comment-star3_'+data.userId}" name="rating" value="3" th:checked="${data.score >= 2.5}" disabled />
+                  <label th:for="${'comment-star3_' + data.userId}" th:style="${data.score >= 2.5} ? 'color: gold;' : ''" >&#9733;</label>
+
+                  <input type="radio" th:id="${'comment-star2_'+data.userId}" name="rating" value="2" th:checked="${data.score >= 1.5}" disabled />
+                  <label th:for="${'comment-star2_' + data.userId}" th:style="${data.score >= 1.5} ? 'color: gold;' : ''" >&#9733;</label>
+
+                  <input type="radio" th:id="${'comment-star1_'+data.userId}" name="rating" value="1" th:checked="${data.score >= 0.5}" disabled />
+                  <label th:for="${'comment-star1_' + data.userId}" th:style="${data.score >= 0.5} ? 'color: gold;' : ''" >&#9733;</label>
+                </div>
+              </div>
             </div>
             <div class="comment-content">
-              <p class="comment-label-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+              <p class="comment-label-text" th:id="${'comment-label-text-' + data.userId}" th:text="${data.comment}"></p>
               <p id="comment"></p>
             </div>
-            </div>
+          </div>
+            <!-- Idaig -->
+
+
+
             <div class="nav-arrows">
               <button class="navigate-button" onclick="navigateComments(-1)">←</button>
               <button class="navigate-button" onclick="navigateComments(1)">→</button>

@@ -199,9 +199,11 @@ public class MyGroupController {
 
     @GetMapping("/getSelectedUserDetails")
     public String showSelectedUserDetails(@RequestParam Long selectedUserId,
-                                                          Model model) {
+                                                          Model model,
+                                                          Principal principal) {
         try {
             myGroupService.getSelectedUserProfile(selectedUserId, model);
+            myGroupService.getSelectedUserComments(selectedUserId, model, principal);
             //model.addAttribute("isButtonClicked", true);
             //model.addAttribute("showDetails", true);
             return "fragments/modal :: modal-content";
@@ -210,6 +212,42 @@ public class MyGroupController {
             return "error";
         }
     }
+
+
+//    @Cacheable("getallmenteesprofileimage")
+//    @GetMapping("/mentees/getallmenteeprofileimage")
+//    public ResponseEntity<Map<String,Object>> getAllMenteeProfileImage(Principal principal) {
+//        try {
+//            String email = principal.getName();
+//            Long userId = userRepository.findIdByEmail(email);
+//            Map<String, Object> response = new HashMap<>();
+//            List<Object[]> menteeprofileImageBytesList = myGroupService.getAllMenteeProfileImageById(userId);
+//            response.put("profileimagesandid", menteeprofileImageBytesList);
+//
+//            return ResponseEntity.ok(response);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
+
+//    @GetMapping("/getSelectedUsersImages")
+//    public ResponseEntity<Map<String,Object>> getSelectedUsersImages(@RequestParam Long selectedUserId,
+//                                                          Principal principal) {
+//        try {
+//            Map<String, Object> response = new HashMap<>();
+//            List<Object[]> selectedUserImages = myGroupService.getSelectedUserImages(selectedUserId);
+//            for (Object[] selectedUserImage : selectedUserImages) {
+//                System.out.println("selectedUserImage: " + selectedUserImage[0]);
+//                System.out.println("selectedUserImage: " + selectedUserImage[1]);
+//            }
+//            response.put("selectedUserImages", null);
+//            return ResponseEntity.ok(response);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
 
 //    @Cacheable("showAllMentors")
 //    @GetMapping("/mentors")

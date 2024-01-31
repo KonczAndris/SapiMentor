@@ -196,7 +196,7 @@
                         <span class="favorite-id" th:text="${favoriteIdsByUserId[pic.id]}" style="display: none"></span>
 
                         <!-- Értékelés megjelenítése -->
-                        <div class="rating">
+                        <div class="rating" id="mainRating-for-MyGroup">
                             <input type="radio" th:id="${'star5_'+pic.id}" name="rating" value="5" th:checked="${averageRatingsByUserId[pic.id] >= 4.5}" disabled />
                             <label th:for="${'star5_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 4.5} ? 'color: gold;' : ''">&#9733;</label>
 

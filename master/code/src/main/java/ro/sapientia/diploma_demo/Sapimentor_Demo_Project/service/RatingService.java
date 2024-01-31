@@ -41,11 +41,11 @@ public class RatingService {
             if(existingRating != null) {
                 //existingRating.setScore(score);
                 //return ratingRepository.save(existingRating);
-                System.out.println("Existing ratingUserId: " + ratingUserId);
-                System.out.println("Existing ratedUserId: " + ratedUserId);
-                System.out.println("Existing score: " + score);
-                System.out.println("Existing comment: " + comment);
-                System.out.println("Existing date: " + date);
+//                System.out.println("Existing ratingUserId: " + ratingUserId);
+//                System.out.println("Existing ratedUserId: " + ratedUserId);
+//                System.out.println("Existing score: " + score);
+//                System.out.println("Existing comment: " + comment);
+//                System.out.println("Existing date: " + date);
                 // return null;
 
                 existingRating.setScore(score);
@@ -53,11 +53,11 @@ public class RatingService {
                 existingRating.setDate(date);
                 return ratingRepository.save(existingRating);
             } else {
-                System.out.println("New ratingUserId: " + ratingUserId);
-                System.out.println("New ratedUserId: " + ratedUserId);
-                System.out.println("New score: " + score);
-                System.out.println("New comment: " + comment);
-                System.out.println("New date: " + date);
+//                System.out.println("New ratingUserId: " + ratingUserId);
+//                System.out.println("New ratedUserId: " + ratedUserId);
+//                System.out.println("New score: " + score);
+//                System.out.println("New comment: " + comment);
+//                System.out.println("New date: " + date);
                 // return null;
                 Rating newRating = new Rating();
                 newRating.setUserId(ratingUserId);

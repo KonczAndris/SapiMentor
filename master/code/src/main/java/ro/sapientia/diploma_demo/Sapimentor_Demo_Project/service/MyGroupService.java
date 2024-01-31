@@ -52,6 +52,16 @@ public class MyGroupService {
         return userRepository.findallMentorProfileImageById(userId);
     }
 
+    public List<Object[]> getSelectedUserImages(Long userId) {
+        List<Rating> allRatingsForThisUser = ratingRepository.findAllByUserId(userId);
+        ArrayList<Long> allUserId = new ArrayList<>();
+        for (Rating rating : allRatingsForThisUser) {
+            allUserId.add(rating.getUserId());
+        }
+        List<User> allSelectedUsers = userRepository.findAllByIdIn(allUserId);
+        return userRepository.findAllSelectedUserImages(allSelectedUsers);
+    }
+
     public void getAllMeneesDetails (Model model, Principal principal) {
         String email = principal.getName();
         Long userId = userRepository.findIdByEmail(email);
@@ -144,12 +154,8 @@ public class MyGroupService {
 //    @Cacheable("getSelectedUserProfile")
     public void getSelectedUserProfile(Long userId,Model model) {
         User user = userRepository.findUserById(userId);
-//        System.out.println("Email: " + user.getEmail()
-//        + ", Name: " + user.getFirst_Name() + " " + user.getLast_Name() );
-//        model.addAttribute("showDetails", true);
         UserDetailsDTO userDetailsForMyGroup = new UserDetailsDTO(user);
-//        System.out.println("UserDetailsForMyGroup content: " + userDetailsForMyGroup);
-//        System.out.println("userDetailsForMyGroup: " + userDetailsForMyGroup.getUserName());
+
         byte[] profileImageForMyGroup = user.getProfileImage();
         if (profileImageForMyGroup != null) {
             String profileImageForMyGroupBase64 = Base64.getEncoder().encodeToString(profileImageForMyGroup);
@@ -166,13 +172,40 @@ public class MyGroupService {
         model.addAttribute("uId", userId);
 
         if (!userTopicsForMyGroup.isEmpty()) {
-//            System.out.println("User topics: " + userTopicsForMyGroup);
-//            System.out.println("User topics: " + userTopicsForMyGroup.get(0).getTags());
-//            for (Profile_Topics profile_topics : userTopicsForMyGroup) {
-//                System.out.println("Profile_topics: " +profile_topics.getTopic() + ": " + profile_topics.getTags());
-//            }
             model.addAttribute("userTopicsForMyGroup", userTopicsForMyGroup);
         }
+
+
+    }
+
+    public void getSelectedUserComments(Long  userId,Model model, Principal principal) {
+        List<Rating> allRatingsForThisUser = ratingRepository.findAllByUserId(userId);
+        ArrayList<Long> allUserId = new ArrayList<>();
+        for (Rating rating : allRatingsForThisUser) {
+//            System.out.println("RatedUserId: " + rating.getRatedUserId() +
+//                    ", Score: " + rating.getScore() +
+//                    ", Comment: " + rating.getComment() +
+//                    ", Date: " + rating.getDate() +
+//                    ", Who rate : " + rating.getUserId());
+            allUserId.add(rating.getUserId());
+        }
+
+        List<User> allSelectedUsers = userRepository.findAllByIdIn(allUserId);
+//        for (User user : allSelectedUsers) {
+//            System.out.println("User: " + user.getFirst_Name() + " " + user.getLast_Name());
+//        }
+
+        model.addAttribute("allSelectedUsers", allSelectedUsers);
+
+        String email = principal.getName();
+        Long user_Id = userRepository.findIdByEmail(email);
+        Rating ratingForThisUser = ratingRepository.findByUserIdAndRatedUserId(user_Id,userId);
+
+        if (ratingForThisUser != null) {
+            model.addAttribute("ratingForThisUser", ratingForThisUser);
+        }
+        model.addAttribute("allRatingsForThisUser", allRatingsForThisUser);
+
     }
 
 

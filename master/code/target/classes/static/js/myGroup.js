@@ -511,11 +511,19 @@ function displayModal() {
 }
 
 function closeModal() {
-    if (profileModal !== null) {
+    if (profileModal !== null ) {
         profileModal.style.display = 'none';
     }
 }
 
+function specialCloseModal() {
+    if (profileModal !== null) {
+        location.reload();
+        profileModal.style.display = 'none';
+    }
+}
+
+let profileimagesforSelectedUsers = [];
 // Event listener for each profile button
 profileButtons.forEach(button => {
     // button.addEventListener('click', displayModal);
@@ -557,6 +565,28 @@ profileButtons.forEach(button => {
        }).catch(error => {
               console.log("Error: ", error);
        });
+
+        var url2 = '/myGroup/getSelectedUsersImages?selectedUserId=' + userId;
+        fetch(url2, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).then(data => {
+            console.log("Data: ", data);
+            //profileimages = data.profileimagesandid;
+            //console.log("Igen: " + profileimages);
+            //handlereprofileimages();
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
 
     });
 });
@@ -710,6 +740,25 @@ showHeartIcons();
 
 function showRateSection() {
     document.getElementById('ratingSection').style.display = 'block';
+    var isChecked = false;
+    var ratedRating = document.querySelectorAll('input[name="selectrating"]');
+    console.log("Rated rating: ", ratedRating);
+
+    ratedRating.forEach(function (element) {
+        if (element.checked){
+            element.attributes.disabled = true;
+            isChecked = true;
+        }
+    });
+    console.log("Is checked: ", isChecked);
+
+    var ratedButton = document.getElementById('save-rating');
+
+    if (isChecked) {
+        ratedButton.disabled = true;
+    } else {
+        ratedButton.disabled = false;
+    }
 }
 
 document.getElementById('commentInput').addEventListener('focus', function () {
@@ -774,7 +823,7 @@ function saveRating() {
             })
         }).then(response => {
             if (response.ok) {
-                location.reload();
+                //location.reload();
                 return response.text();
             } else {
                 throw new Error('Something went wrong');
@@ -785,6 +834,45 @@ function saveRating() {
                 document.getElementById('error-for-ratingSection').style.display = 'none';
                 document.getElementById('ratingSection').style.display = 'none';
                 document.getElementById('rating-button').style.display = 'inline';
+
+                var currentRatingDiv = document.getElementById('modal-rating-star-for-modal');
+                console.log("Current rating div: ", currentRatingDiv);
+                var checkedInputs = Array.from(currentRatingDiv.querySelectorAll('input[name="rating"]'))
+                    .filter(input => input.hasAttribute('checked') );
+                console.log("Checked inputs: ", checkedInputs);
+
+                if (checkedInputs.length > 0) {
+                    var lastCheckedValue = checkedInputs.length;
+                    console.log('Az utolsó kiválasztott érték: ' + lastCheckedValue);
+                    console.log('Rating: ' + rating);
+                    var floatRating = parseFloat(rating);
+                    var floatLastCheckedValue = parseFloat(lastCheckedValue);
+                    var avg = (floatLastCheckedValue + floatRating)/2;
+                    console.log('Az új átlag érték: ' + avg);
+
+
+                    // Beállítjuk az új átlag értéknek megfelelően a csillagokat
+                    for (var i = 1; i <= 5; i++) {
+                        var starInput = currentRatingDiv.querySelector('input[value="' + i + '"]');
+                        var starLabel = currentRatingDiv.querySelector('label[for="star' + i + '"]');
+
+                        if (i <= avg) {
+                            starInput.checked = true;
+                            starLabel.style.color = 'gold';
+                        } else {
+                            starInput.checked = false;
+                            starLabel.style.color = '';
+                        }
+                    }
+                    const closeBtn = document.querySelector('.close-profile-modal');
+                    if (closeBtn !== null){
+                        closeBtn.addEventListener('click', specialCloseModal);
+                    }
+
+                } else {
+                    console.log('Nincs kiválasztott érték.');
+                }
+
             } else {
                 throw new Error('Something went wrong');
             }
@@ -794,6 +882,7 @@ function saveRating() {
     }
 
 }
+
 
 
 
@@ -816,4 +905,6 @@ function rateWithStars(rating) {
         }
     }
 }
+
+
 
