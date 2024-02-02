@@ -930,5 +930,99 @@ function rateWithStars(rating) {
     }
 }
 
+// function showCommentSection1() {
+//     console.log("showCommentSection1 called");
+//     // Hide all comment sections
+//     var commentSections = document.querySelectorAll('.comment-section');
+//     commentSections.forEach(function(section) {
+//         section.style.display = 'none';
+//     });
+//
+//     // Show the specific comment section with ID 'comment-section-1'
+//     var commentSection1 = document.getElementById('comment-section-2');
+//     if (commentSection1) {
+//         commentSection1.style.display = 'block';
+//     }
+// }
 
+var currentCommentIndex = 0;
 
+function showNextCommentSection() {
+    let commentSections = document.querySelectorAll('.comment-section');
+    let currentCommentSection = commentSections[currentCommentIndex];
+
+    // Elrejtjük az aktuális elemet
+    if (currentCommentSection) {
+        currentCommentSection.classList.remove('active');
+    }
+
+    // Növeljük a kiválasztott indexet
+    currentCommentIndex++;
+
+    // Megjelenítjük a következő elemet
+    let nextCommentSection = commentSections[currentCommentIndex];
+
+    if (nextCommentSection) {
+        nextCommentSection.classList.add('active');
+    } else {
+        // Ha nincs további elem, visszaállunk az alapértelmezett elemre
+        currentCommentIndex = 0;
+        commentSections[currentCommentIndex].classList.add('active');
+    }
+}
+
+function showPreviousCommentSection() {
+    let commentSections = document.querySelectorAll('.comment-section');
+    let currentCommentSection = commentSections[currentCommentIndex];
+
+    // Elrejtjük az aktuális elemet
+    if (currentCommentSection) {
+        currentCommentSection.classList.remove('active');
+    }
+
+    // Csökkentjük a kiválasztott indexet
+    currentCommentIndex--;
+
+    // Megjelenítjük az előző elemet
+    let previousCommentSection = commentSections[currentCommentIndex];
+
+    if (previousCommentSection) {
+        previousCommentSection.classList.add('active');
+    } else {
+        // Ha nincs előző elem, visszaugrunk az utolsó elemre
+        currentCommentIndex = commentSections.length - 1;
+        commentSections[currentCommentIndex].classList.add('active');
+    }
+}
+
+// Az oldal betöltésekor hívódik meg
+document.addEventListener('DOMContentLoaded', function () {
+    // Csak az első elem kapja meg az active osztályt
+    let commentSections = document.querySelectorAll('.comment-section');
+    commentSections.forEach(function (section, index) {
+        if (index === 0) {
+            section.classList.add('active');
+        } else {
+            section.classList.remove('active');
+        }
+    });
+});
+
+function toggleAndShowNext() {
+    toggleComments();
+    showNextCommentSection();
+    showPreviousCommentSection();
+    showPreviousCommentSection();
+}
+
+function toggleComments() {
+    var commentsDiv = document.getElementById("comment-section-container");
+    var showButton = document.getElementById("showCommentsButton");
+
+    if (commentsDiv.style.display === "none" || commentsDiv.style.display === "") {
+        commentsDiv.style.display = "block";
+        showButton.style.display = "none";
+    } else {
+        commentsDiv.style.display = "none";
+    }
+}
