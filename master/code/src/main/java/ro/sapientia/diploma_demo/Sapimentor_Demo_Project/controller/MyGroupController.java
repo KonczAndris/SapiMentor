@@ -150,7 +150,7 @@ public class MyGroupController {
         System.out.println("date: " + date);
 
         try {
-            ratingService.saveRating(ratingUserEmail, ratingRequest);
+            //ratingService.saveRating(ratingUserEmail, ratingRequest);
             return ResponseEntity.ok("ok");
         } catch (Exception e) {
             e.printStackTrace();
@@ -221,10 +221,7 @@ public class MyGroupController {
         try {
             Map<String, Object> response = new HashMap<>();
             List<Object[]> selectedUserImages = myGroupService.getSelectedUserImages(selectedUserId);
-//            for (Object[] selectedUserImage : selectedUserImages) {
-//                System.out.println("selectedUserImage1: " + selectedUserImage[0]);
-//                System.out.println("selectedUserImage2: " + selectedUserImage[1]);
-//            }
+
             response.put("selectedUserImages", selectedUserImages);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
@@ -232,22 +229,6 @@ public class MyGroupController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
-//    @Cacheable("showAllMentors")
-//    @GetMapping("/mentors")
-//    public String showAllMentors (Model model, Principal principal) {
-//        if (principal == null) {
-//            return "redirect:/login";
-//        }
-//        utilityForSomeCotroller.showTopicsToMyGroupPage(model);
-//        utilityForSomeCotroller.showSkillsToMyGroupPage(model);
-//        utilityForSomeCotroller.showProfileImageAndName(model, principal);
-//
-//        // ez helyett esetleg a hosszu menet
-//        myGroupService.getAllMentorsDetails(model, principal);
-//
-//        return "myGroup";
-//    }
 
     @GetMapping("/mentees/filtered")
     public String showFilteredMentees(Model model, Principal principal, @RequestParam MultiValueMap<String, String> params) {

@@ -4,11 +4,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Rating;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.DiplomaServices;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ExamServices;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ResourceServices;
 
 import java.io.IOException;
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -21,12 +25,16 @@ public class SseController {
     private final ExamServices examServices;
     private final DiplomaServices diplomaServices;
 
+    private final UserRepository userRepository;
+
     public SseController(ResourceServices resourceServices,
                          ExamServices examServices,
-                         DiplomaServices diplomaServices) {
+                         DiplomaServices diplomaServices,
+                         UserRepository userRepository) {
         this.resourceServices = resourceServices;
         this.examServices = examServices;
         this.diplomaServices = diplomaServices;
+        this.userRepository = userRepository;
     }
 
     // SSE endpoint
@@ -193,5 +201,68 @@ public class SseController {
         return ResponseEntity.ok("SSE message sent");
     }
 
+
+    @PostMapping("/sendCommentInMyGroup")
+    public ResponseEntity<String> sendSseMessageForCommentInMyGroup(@RequestBody Rating commentData,
+                                                                    Principal principal)
+    {
+        try {
+            String ratingUserEmail = principal.getName();
+            Long ratingUserId = userRepository.findIdByEmail(ratingUserEmail);
+            Long ratedUserId = commentData.getUserId();
+            int score = commentData.getScore();
+            String comment = commentData.getComment();
+            String date = commentData.getDate();
+
+            System.out.println("ratingUserEmail: " + ratingUserEmail + " ,Id: " + ratingUserId);
+            System.out.println("ratedUserId: " + ratedUserId);
+            System.out.println("score: " + score);
+            System.out.println("comment: " + comment);
+            System.out.println("date: " + date);
+
+            //System.out.println("SSE message sent1(message): " + message);
+            if (ratedUserId == null && ratingUserId == null) {
+                return ResponseEntity.badRequest().body("Invalid message");
+            }
+
+            List<Object[]> userImageAndName = userRepository.findUserImageById(ratingUserId);
+
+            if (userImageAndName != null && !userImageAndName.isEmpty()) {
+                Object[] userData = userImageAndName.get(0);
+
+                byte[] userImage = (byte[]) userData[0];
+                String userName = (String) userData[2] + " " + (String) userData[1];
+
+//                System.out.println("userImage: " + userImage);
+//                System.out.println("userName: " + userName);
+
+                Map<String, Object> userCommentData = new HashMap<>();
+                userCommentData.put("ratingUserId", ratingUserId);
+                userCommentData.put("ratedUserId", ratedUserId);
+                userCommentData.put("score", score);
+                userCommentData.put("comment", comment);
+                userCommentData.put("date", date);
+                userCommentData.put("userImage", userImage);
+                userCommentData.put("userName", userName);
+
+                System.out.println("userCommentData: " + userCommentData);
+
+                for (SseEmitter emitter : emitters) {
+                    try {
+                        //A kliensnek elkuldom a like es dislike szamot
+                        emitter.send(SseEmitter.event().name("UserComment").data(userCommentData));
+                    } catch (IOException e) {
+                        //e.printStackTrace(); // Logold ki a kivételt
+                        emitters.remove(emitter);
+                    }
+                }
+
+            }
+            return ResponseEntity.ok("SSE message sent");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
 

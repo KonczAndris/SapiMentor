@@ -1,3 +1,52 @@
+
+
+// Ez azert kell hogy az oldal frissitese nelkul is egybol mindenkinel megjelenjen a comment
+$(document).ready(function() {
+    // SSE
+    var urlEndpoint = "/sse/subscribe"
+
+    //itt az eventsource a szerver oldalon lévő végpontot figyeli
+    const eventSource = new EventSource(urlEndpoint);
+
+    eventSource.onopen = function (event) {
+        console.log('SSE connection opened.');
+    };
+
+    eventSource.onerror = function (event) {
+        console.error('SSE error:', event);
+    };
+
+    eventSource.addEventListener('UserComment', function (event) {
+
+        const userCommentData = JSON.parse(event.data);
+        const ratingUserId = userCommentData.ratingUserId;
+        console.log("Az ID: " + ratingUserId);
+        console.log("Received UserComment:", userCommentData);
+
+        var commentSection = document.createElement('div');
+        commentSection.classList = 'comment-section'
+        commentSection.id = 'comment-section-' + ratingUserId;
+        //console.log("A Comment-Section: " + commentSection);
+
+        var commentContainer = document.getElementById("commentContainer");
+        commentContainer.appendChild(commentSection);
+        //console.log("A commentContainer: " + commentContainer);
+        // const data = JSON.parse(event.data);
+        // const rowId = data.rowId;
+        // const likeCountElement = document.querySelector(`#resource-row-${rowId} #likeButton`);
+        // const dislikeCountElement = document.querySelector(`#resource-row-${rowId} #dislikeButton`);
+        //
+        // //console.log('Received SSE message:', data.rowId);
+        // // Itt frissitsd a like/dislike ertekeket a DOM-ban
+        // //const likeDislikeCountElement = document.querySelector(`#resource-row-${rowId} .like-dislike-count`);
+        // //console.log(likeDislikeCountElement);
+        // likeCountElement.textContent = data.like;
+        // dislikeCountElement.textContent = data.dislike;
+    });
+
+});
+
+
 document.getElementById("favorites").addEventListener("click", function () {
     window.location.href = "/myGroup/favorites";
 });
@@ -633,10 +682,10 @@ function showHeartIcons() {
     favoriteIds.forEach(function(favoriteId) {
         var idValue = parseInt(favoriteId.textContent);
 
-        console.log("Favorite id: ", idValue);
+        //console.log("Favorite id: ", idValue);
 
         var parentCell = favoriteId.parentElement;
-        console.log("Parent cell: ", parentCell);
+        //console.log("Parent cell: ", parentCell);
         var checkedHeart = parentCell.querySelector('.checked-heart');
         var uncheckedHeart = parentCell.querySelector('.unchecked-heart');
 
@@ -654,14 +703,14 @@ function showHeartIcons() {
 
 
         var parentCellId = parentCell.id.split("-")[2];
-        console.log("Parent cell id: ", parentCellId);
+        //console.log("Parent cell id: ", parentCellId);
         var favoriteButton = document.getElementById('favoriteButton-' + parentCellId);
-        console.log("Favorite button: ", favoriteButton);
+        //console.log("Favorite button: ", favoriteButton);
 
         favoriteButton.addEventListener('click', function() {
-           console.log("Favorite " + parentCellId + " button clicked");
+           //console.log("Favorite " + parentCellId + " button clicked");
            if (uncheckedHeart.classList.contains('active')) {
-               console.log("Hozzaadom a kedvencekhez");
+               //console.log("Hozzaadom a kedvencekhez");
                uncheckedHeart.style.display = 'none';
                checkedHeart.style.display = 'inline';
                uncheckedHeart.classList.remove('active');
@@ -770,7 +819,6 @@ function showRateSection() {
 
     ratedRating.forEach(function (element) {
         if (element.checked){
-            element.attributes.disabled = true;
             isChecked = true;
         }
     });
@@ -778,16 +826,25 @@ function showRateSection() {
 
     var ratedButton = document.getElementById('save-rating');
 
-    if (isChecked) {
-        ratedButton.disabled = true;
-    } else {
-        ratedButton.disabled = false;
-    }
+    // if (isChecked) {
+    //     ratedRating.forEach(function (element) {
+    //         element.disabled = true;
+    //     });
+    //     ratedButton.disabled = true;
+    // } else {
+    //     ratedButton.disabled = false;
+    //     ratedRating.forEach(function (element) {
+    //         element.disabled = false;
+    //     });
+    // }
 }
 
 document.getElementById('commentInput').addEventListener('focus', function () {
     this.selectionStart = this.selectionEnd = this.value.length;
 });
+
+// SSE a kommentekhez
+
 
 
 
@@ -795,13 +852,6 @@ function saveRating() {
 
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-
-
-
-    // Implement logic to save the rating
-    // You can retrieve the selected rating using document.querySelector('input[name="rating"]:checked').value
-    // Reset the rating section
-
 
 
     // Az input mezőkből kiolvasott adatok
@@ -833,6 +883,8 @@ function saveRating() {
         // Eredmény kiíratása a konzolra
         console.log('Jelenlegi_2 dátum:', formattedDate);
 
+        const sseUrl = "/sse/sendCommentInMyGroup";
+
         fetch('/myGroup/saveRating', {
             method: 'POST',
             headers: {
@@ -848,9 +900,33 @@ function saveRating() {
         }).then(response => {
             if (response.ok) {
                 //location.reload();
+                console.log("Hello hello sseemiter");
+
+                fetch(sseUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    },
+                    body: JSON.stringify({
+                        userId: userId,
+                        score: rating,
+                        comment: comment,
+                        date: formattedDate
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Nagyoasfajsofosa");
+                        //return response.text();
+                    } else {
+                        throw new Error('Error in SSE fetch');
+                    }
+                })
+
                 return response.text();
             } else {
-                throw new Error('Something went wrong');
+                throw new Error('Something went wrong in rating save');
             }
         }).then(data => {
             if (data === 'ok') {

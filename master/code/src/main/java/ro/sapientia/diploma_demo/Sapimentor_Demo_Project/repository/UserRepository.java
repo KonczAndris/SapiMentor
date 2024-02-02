@@ -56,6 +56,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.profileImage, u.id FROM User u WHERE u.id IN :userId")
     List<Object[]> findAllSelectedUserImages(List<Long> userId);
 
+    @Query("SELECT u.profileImage, u.first_Name, u.last_Name FROM User u WHERE u.id = :userId")
+    List<Object[]> findUserImageById(Long userId);
+
+
 //    @Query("SELECT u.profileImage, u.id FROM User u WHERE u.id IN :userIds")
 //    List<Object[]> findAllSelectedUserImages(List<User> userIds);
 }
