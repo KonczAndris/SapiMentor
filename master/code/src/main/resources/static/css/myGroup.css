@@ -798,7 +798,7 @@ h2 {
     }
 
     .profile-modal-right-box {
-        display:flex;
+        /*display:flex;*/
         width: 100%;
         overflow-y: unset;
         padding: 0;
@@ -1059,8 +1059,9 @@ h2 {
 
 .comment-row{
     display: flex;
-    flex-direction:column;
-    text-align:center;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 .comment-label-text {
@@ -1091,6 +1092,9 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: start;
+    height: 100%;
+
 }
 
 .comment-profile-image{
@@ -1102,10 +1106,10 @@ h2 {
 
 .comment-section{
     display:flex;
-    flex-direction: row;
 }
 
 .comment-content{
+    padding-top: 7px;
     padding-left: 15px;
 }
 
@@ -1137,6 +1141,10 @@ h2 {
     .comment-profile-image{
         width:85px;
         height: 85px;
+    }
+
+    .comment-content{
+        text-align: center;
     }
 }
 
@@ -1234,4 +1242,17 @@ h2 {
 .main-div p{
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+.comment-section {
+    display: none;
+}
+.comment-section.active {
+    display: flex;
+}
+
+#showCommentsButton{
+    width: 160px;
+    height: 40px;
+    font-size: large;
 }
