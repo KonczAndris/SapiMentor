@@ -1252,7 +1252,20 @@ h2 {
 }
 
 #showCommentsButton{
-    width: 160px;
-    height: 40px;
+    width: 200px;
+    height: 45px;
     font-size: large;
+    background-color: rgb(22, 175, 132);
+}
+
+#showCommentsButton:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(30, 214, 162);
+    border: 2px solid white;
+}
+
+.icon {
+    width: 30px;
+    position: relative;
+    top: 3px;
 }

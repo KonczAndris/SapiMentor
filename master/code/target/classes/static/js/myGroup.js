@@ -19,13 +19,13 @@ $(document).ready(function() {
     eventSource.addEventListener('UserComment', function (event) {
 
         const userCommentData = JSON.parse(event.data);
-        const ratedUserId = userCommentData.ratedUserId
-        console.log("Az ID: " + ratedUserId);
+        const ratingUserId = userCommentData.ratingUserId;
+        console.log("Az ID: " + ratingUserId);
         console.log("Received UserComment:", userCommentData);
 
         var commentSection = document.createElement('div');
         commentSection.classList = 'comment-section'
-        commentSection.id = 'comment-section-' + ratedUserId;
+        commentSection.id = 'comment-section-' + ratingUserId;
         //console.log("A Comment-Section: " + commentSection);
 
         var commentContainer = document.getElementById("commentContainer");
