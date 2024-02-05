@@ -143,14 +143,14 @@ public class MyGroupController {
         String comment = ratingRequest.getComment();
         String date = ratingRequest.getDate();
 
-        System.out.println("ratingUserEmail: " + ratingUserEmail);
-        System.out.println("ratedUserId: " + ratedUserId);
-        System.out.println("score: " + score);
-        System.out.println("comment: " + comment);
-        System.out.println("date: " + date);
+//        System.out.println("ratingUserEmail: " + ratingUserEmail);
+//        System.out.println("ratedUserId: " + ratedUserId);
+//        System.out.println("score: " + score);
+//        System.out.println("comment: " + comment);
+//        System.out.println("date: " + date);
 
         try {
-            //ratingService.saveRating(ratingUserEmail, ratingRequest);
+            ratingService.saveRating(ratingUserEmail, ratingRequest);
             return ResponseEntity.ok("ok");
         } catch (Exception e) {
             e.printStackTrace();
@@ -236,7 +236,7 @@ public class MyGroupController {
             if (principal == null) {
                 return "redirect:/login";
             }
-            System.out.println("searchData: " + params);
+            //System.out.println("searchData: " + params);
 
             utilityForSomeCotroller.showTopicsToMyGroupPage(model);
             utilityForSomeCotroller.showSkillsToMyGroupPage(model);
@@ -257,7 +257,7 @@ public class MyGroupController {
             if (principal == null) {
                 return "redirect:/login";
             }
-            System.out.println("searchData: " + params);
+            //System.out.println("searchData: " + params);
 
             utilityForSomeCotroller.showTopicsToMyGroupPage(model);
             utilityForSomeCotroller.showSkillsToMyGroupPage(model);

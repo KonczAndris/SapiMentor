@@ -136,42 +136,55 @@
         <div class="divider"></div>
         <!-- COMMENT INFO START -->
 
-<div id="commentsDiv" class="comments">
-          <div class="comment-entry" id="commentContainer" style="display: block;">
-            <div class="comment-section active" th:id="${'comment-section-' + data.userId}" th:each="data, status : ${allRatingsForThisUser}">
-              <div class="comment-row">
-              <img  th:id="${'commentProfileImg-' + data.userId}" th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
-                <div class="comment-infos">
-              <div th:each="user : ${allSelectedUsers}">
-                <p style="margin: 0" th:if="${user.id == data.userId}" th:text="${user.last_Name + ' ' + user.first_Name}"></p>
-              </div>
-              <p class="comment-label-date" th:id="${'comment-label-date-' + data.userId}" th:text="${data.date}"></p>
-              <div class="comment-rating" th:id="${'comment-rating-' + data.userId}">
-                <input type="radio" th:id="${'comment-star5_'+data.userId}" name="rating" value="5" th:checked="${data.score >= 4.5}" disabled />
-                <label th:for="${'comment-star5_' + data.userId}" th:style="${data.score >= 4.5} ? 'color: gold;' : ''" >&#9733;</label>
-                <input type="radio" th:id="${'comment-star4_'+data.userId}" name="rating" value="4" th:checked="${data.score >= 3.5}" disabled />
-                <label th:for="${'comment-star4_' + data.userId}" th:style="${data.score >= 3.5} ? 'color: gold;' : ''" >&#9733;</label>
-                <input type="radio" th:id="${'comment-star3_'+data.userId}" name="rating" value="3" th:checked="${data.score >= 2.5}" disabled />
-                <label th:for="${'comment-star3_' + data.userId}" th:style="${data.score >= 2.5} ? 'color: gold;' : ''" >&#9733;</label>
-                <input type="radio" th:id="${'comment-star2_'+data.userId}" name="rating" value="2" th:checked="${data.score >= 1.5}" disabled />
-                <label th:for="${'comment-star2_' + data.userId}" th:style="${data.score >= 1.5} ? 'color: gold;' : ''" >&#9733;</label>
-                <input type="radio" th:id="${'comment-star1_'+data.userId}" name="rating" value="1" th:checked="${data.score >= 0.5}" disabled />
-                <label th:for="${'comment-star1_' + data.userId}" th:style="${data.score >= 0.5} ? 'color: gold;' : ''" >&#9733;</label>
-              </div>
-              </div>
-              </div>
-              <div class="comment-content">
-                <p class="comment-label-text" th:id="${'comment-label-text-' + data.userId}" th:text="${data.comment}"></p>
-              </div>
-            </div>
-          </div>
+          <div id="commentsDiv" class="comments">
+              <div class="comment-entry" id="commentContainer" style="display: block;">
+                <!-- Innen az sse-nel -->
 
-          <div class="nav-arrows">
-            <button class="navigate-button" onclick="showPreviousCommentSection()">←</button>
-            <button class="navigate-button" onclick="showNextCommentSection()">→</button>
+                <div class="comment-section active" th:id="${'comment-section-' + data.userId}" th:each="data, status : ${allRatingsForThisUser}">
+                  <div class="comment-row">
+
+                    <img  th:id="${'commentProfileImg-' + data.userId}" th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
+
+                    <div class="comment-infos">
+
+                      <div th:each="user : ${allSelectedUsers}">
+                        <p style="margin: 0" th:if="${user.id == data.userId}" th:text="${user.last_Name + ' ' + user.first_Name}"></p>
+                      </div>
+
+                      <p class="comment-label-date" th:id="${'comment-label-date-' + data.userId}" th:text="${data.date}"></p>
+                      <div class="comment-rating" th:id="${'comment-rating-' + data.userId}">
+                        <input type="radio" th:id="${'comment-star5_'+data.userId}" name="rating" value="5" th:checked="${data.score >= 4.5}" disabled />
+                        <label th:for="${'comment-star5_' + data.userId}" th:style="${data.score >= 4.5} ? 'color: gold;' : ''" >&#9733;</label>
+
+                        <input type="radio" th:id="${'comment-star4_'+data.userId}" name="rating" value="4" th:checked="${data.score >= 3.5}" disabled />
+                        <label th:for="${'comment-star4_' + data.userId}" th:style="${data.score >= 3.5} ? 'color: gold;' : ''" >&#9733;</label>
+                        <input type="radio" th:id="${'comment-star3_'+data.userId}" name="rating" value="3" th:checked="${data.score >= 2.5}" disabled />
+                        <label th:for="${'comment-star3_' + data.userId}" th:style="${data.score >= 2.5} ? 'color: gold;' : ''" >&#9733;</label>
+                        <input type="radio" th:id="${'comment-star2_'+data.userId}" name="rating" value="2" th:checked="${data.score >= 1.5}" disabled />
+                        <label th:for="${'comment-star2_' + data.userId}" th:style="${data.score >= 1.5} ? 'color: gold;' : ''" >&#9733;</label>
+                        <input type="radio" th:id="${'comment-star1_'+data.userId}" name="rating" value="1" th:checked="${data.score >= 0.5}" disabled />
+                        <label th:for="${'comment-star1_' + data.userId}" th:style="${data.score >= 0.5} ? 'color: gold;' : ''" >&#9733;</label>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="comment-content">
+                    <p class="comment-label-text" th:id="${'comment-label-text-' + data.userId}" th:text="${data.comment}"></p>
+                  </div>
+
+                </div>
+
+                <!-- Idaig -->
+              </div>
+
+              <div class="nav-arrows">
+                <button class="navigate-button" onclick="showPreviousCommentSection()">←</button>
+                <button class="navigate-button" onclick="showNextCommentSection()">→</button>
+              </div>
           </div>
-</div>
-        <!-- COMMENT INFO END -->
+            <!-- COMMENT INFO END -->
 
       </div>
       <!-- COMMENT CONTAINER END -->

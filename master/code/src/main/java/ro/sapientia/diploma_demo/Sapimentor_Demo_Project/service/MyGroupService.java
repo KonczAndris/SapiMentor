@@ -108,10 +108,10 @@ public class MyGroupService {
         List<MyGroupProfileDetailDTO> allMentors = userRepository.findAllMentors(userId);
         List<Rating> allRatings = ratingRepository.findAllMentorRatingById(userId);
         List<Favorites> allFavorites = favoriteRepository.findAllFavoriteMentorById(userId);
-        System.out.println("allFavorites: " + allFavorites);
+//        System.out.println("allFavorites: " + allFavorites);
         Map<Long, Integer> favoriteIdsByUserId = new HashMap<>();
         for (Favorites favorite : allFavorites) {
-            System.out.println("Favorites id: " + favorite.getId() + ", Status: " + favorite.getStatus() + ", User_id: " + favorite.getUser_id() + ", Favorite_id: " + favorite.getFavorite_id());
+            //System.out.println("Favorites id: " + favorite.getId() + ", Status: " + favorite.getStatus() + ", User_id: " + favorite.getUser_id() + ", Favorite_id: " + favorite.getFavorite_id());
             favoriteIdsByUserId.put(favorite.getFavorite_id(), favorite.getStatus());
         }
 
@@ -251,7 +251,7 @@ public class MyGroupService {
         for (MyGroupProfileDetailDTO userDTO : allMentees) {
 
             Long userDTOId = userDTO.getId();
-            System.out.println("User: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
+           // System.out.println("User: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
             List<Profile_Topics> userTopics = profileTopicsRepository.findByUserId(userDTOId);
 
             boolean userMatchesFilter = true;
@@ -261,45 +261,45 @@ public class MyGroupService {
                 List<String> paramValues = new ArrayList<>();
                 paramValues = Arrays.asList(entry.getValue().get(0).split(","));
 
-                System.out.println("ELSO paramName: " + paramName + ", paramValues: " + paramValues);
+               // System.out.println("ELSO paramName: " + paramName + ", paramValues: " + paramValues);
 
                 for (Profile_Topics profile_topics : userTopics) {
-                    System.out.println("Profile_topics: " +profile_topics.getTopic() + ": " + profile_topics.getTags());
+                  //  System.out.println("Profile_topics: " +profile_topics.getTopic() + ": " + profile_topics.getTags());
 
                     if(paramName.equals(profile_topics.getTopic()) ) {
-                        System.out.println("Egyenlo a topic a felhasznalo topicjaval");
+                      //  System.out.println("Egyenlo a topic a felhasznalo topicjaval");
 
 
                         if (!filteredUsers.contains(userDTO)) {
                             filteredUsers.add(userDTO);
                         }
-                        System.out.println("filteredUsers123: " + filteredUsers);
+                      //  System.out.println("filteredUsers123: " + filteredUsers);
                         int db = 0;
                         List<String> emptyStringList = new ArrayList<>();
 
-                        System.out.println("paramValues.size(): " + paramValues.get(0).length());
+                       // System.out.println("paramValues.size(): " + paramValues.get(0).length());
                         if (paramValues.get(0).length() != 0 ){
 
                             for (String paramValue : paramValues) {
 
-                                System.out.println("paramValueasdasd: " + paramValue);
+                               // System.out.println("paramValueasdasd: " + paramValue);
                                 emptyStringList.add(paramValue);
                                 if (profile_topics.getTags().contains(paramValue)) {
                                     db++;
-                                    System.out.println("Nem tartalmazza a taget");
+                                  //  System.out.println("Nem tartalmazza a taget");
                                     //filteredUsers.remove(userDTO);
                                 }
                             }
-                            System.out.println("emptyStringList: " + emptyStringList.get(0).length());
+                           // System.out.println("emptyStringList: " + emptyStringList.get(0).length());
                             if (db == 0 ){
                                 filteredUsers.remove(userDTO);
                             }
-                            System.out.println("db: " + db);
+                          //  System.out.println("db: " + db);
                         }
 
                     }
                 }
-                System.out.println("userMatchesFilter: " + userMatchesFilter);
+               // System.out.println("userMatchesFilter: " + userMatchesFilter);
             }
         }
 
@@ -341,7 +341,7 @@ public class MyGroupService {
         for (MyGroupProfileDetailDTO userDTO : allMentors) {
 
             Long userDTOId = userDTO.getId();
-            System.out.println("User: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
+           // System.out.println("User: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
             List<Profile_Topics> userTopics = profileTopicsRepository.findByUserId(userDTOId);
 
             boolean userMatchesFilter = true;
@@ -351,45 +351,45 @@ public class MyGroupService {
                 List<String> paramValues = new ArrayList<>();
                 paramValues = Arrays.asList(entry.getValue().get(0).split(","));
 
-                System.out.println("ELSO paramName: " + paramName + ", paramValues: " + paramValues);
+              //  System.out.println("ELSO paramName: " + paramName + ", paramValues: " + paramValues);
 
                 for (Profile_Topics profile_topics : userTopics) {
-                    System.out.println("Profile_topics: " +profile_topics.getTopic() + ": " + profile_topics.getTags());
+                   // System.out.println("Profile_topics: " +profile_topics.getTopic() + ": " + profile_topics.getTags());
 
                     if(paramName.equals(profile_topics.getTopic()) ) {
-                        System.out.println("Egyenlo a topic a felhasznalo topicjaval");
+                       // System.out.println("Egyenlo a topic a felhasznalo topicjaval");
 
 
                         if (!filteredUsers.contains(userDTO)) {
                             filteredUsers.add(userDTO);
                         }
-                        System.out.println("filteredUsers123: " + filteredUsers);
+                      //  System.out.println("filteredUsers123: " + filteredUsers);
                         int db = 0;
                         List<String> emptyStringList = new ArrayList<>();
 
-                        System.out.println("paramValues.size(): " + paramValues.get(0).length());
+                      //  System.out.println("paramValues.size(): " + paramValues.get(0).length());
                         if (paramValues.get(0).length() != 0 ){
 
                             for (String paramValue : paramValues) {
 
-                                System.out.println("paramValueasdasd: " + paramValue);
+                              //  System.out.println("paramValueasdasd: " + paramValue);
                                 emptyStringList.add(paramValue);
                                 if (profile_topics.getTags().contains(paramValue)) {
                                     db++;
-                                    System.out.println("Nem tartalmazza a taget");
+                                   // System.out.println("Nem tartalmazza a taget");
                                     //filteredUsers.remove(userDTO);
                                 }
                             }
-                            System.out.println("emptyStringList: " + emptyStringList.get(0).length());
+                           // System.out.println("emptyStringList: " + emptyStringList.get(0).length());
                             if (db == 0 ){
                                 filteredUsers.remove(userDTO);
                             }
-                            System.out.println("db: " + db);
+                           // System.out.println("db: " + db);
                         }
 
                     }
                 }
-                System.out.println("userMatchesFilter: " + userMatchesFilter);
+               // System.out.println("userMatchesFilter: " + userMatchesFilter);
             }
         }
 

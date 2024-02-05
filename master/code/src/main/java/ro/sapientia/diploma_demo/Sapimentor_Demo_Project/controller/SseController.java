@@ -214,11 +214,11 @@ public class SseController {
             String comment = commentData.getComment();
             String date = commentData.getDate();
 
-            System.out.println("ratingUserEmail: " + ratingUserEmail + " ,Id: " + ratingUserId);
-            System.out.println("ratedUserId: " + ratedUserId);
-            System.out.println("score: " + score);
-            System.out.println("comment: " + comment);
-            System.out.println("date: " + date);
+//            System.out.println("ratingUserEmail: " + ratingUserEmail + " ,Id: " + ratingUserId);
+//            System.out.println("ratedUserId: " + ratedUserId);
+//            System.out.println("score: " + score);
+//            System.out.println("comment: " + comment);
+//            System.out.println("date: " + date);
 
             //System.out.println("SSE message sent1(message): " + message);
             if (ratedUserId == null && ratingUserId == null) {
@@ -231,7 +231,8 @@ public class SseController {
                 Object[] userData = userImageAndName.get(0);
 
                 byte[] userImage = (byte[]) userData[0];
-                String userName = (String) userData[2] + " " + (String) userData[1];
+                String firstName = (String) userData[2];
+                String lastName = (String) userData[1];
 
 //                System.out.println("userImage: " + userImage);
 //                System.out.println("userName: " + userName);
@@ -243,9 +244,10 @@ public class SseController {
                 userCommentData.put("comment", comment);
                 userCommentData.put("date", date);
                 userCommentData.put("userImage", userImage);
-                userCommentData.put("userName", userName);
+                userCommentData.put("firstName", firstName);
+                userCommentData.put("lastName", lastName);
 
-                System.out.println("userCommentData: " + userCommentData);
+                //System.out.println("userCommentData: " + userCommentData);
 
                 for (SseEmitter emitter : emitters) {
                     try {
