@@ -2,6 +2,18 @@
     font-family: 'CustomFont';
     src: url('../fonts/roundfont.ttf') format('truetype')}
 
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
 body {
     margin: 0;
     font-family: 'CustomFont';
