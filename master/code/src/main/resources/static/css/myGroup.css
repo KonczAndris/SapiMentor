@@ -246,13 +246,11 @@ body {
     font-size: 16px;
     border: none;
     cursor: pointer;
-}
-
-.dropdown-myGroup {
     position: relative;
     display: inline-block;
     margin-top: 10%;
-    width: 100%;
+    width: 165px;
+
 }
 
 .dropdown-content-myGroup {
@@ -262,7 +260,8 @@ body {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 9px;
-    padding: 34.2px;
+    width: 145px;
+    padding: 10px;
     max-height: 320%;
     overflow: auto;
 }
@@ -390,6 +389,7 @@ body {
     max-height: calc(100vh - 60px);
     margin: auto;
     align-items: start;
+    user-select: none;
 }
 
 .scrollable-div {
@@ -656,6 +656,12 @@ body {
     color: rgb(22, 175, 132);
 }
 
+.fix-ratings{
+    user-select: none !important;
+    cursor: default !important;
+    pointer-events: none !important;
+}
+
 .rating, .rating-rate {
     direction: rtl;
 }
@@ -706,6 +712,7 @@ h2 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    user-select: none;
 }
 
 .divider {
@@ -743,6 +750,7 @@ h2 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    user-select: none;
 }
 
 .detail-value {
@@ -755,6 +763,27 @@ h2 {
 
 .detail-value+.detail-value {
     margin-left: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid #5c5c5c;
+    user-select: none;
+}
+
+tr:hover {
+    background-color: rgb(208, 233, 226);
+}
+
+table tr:last-child td {
+    border-bottom: none;
 }
 
 .text-box-container {
@@ -962,6 +991,12 @@ h2 {
     margin:5px;
 }
 
+#rating-button:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    background-color: rgb(1, 187, 255);
+    border: 2px solid white;
+}
+
 #comment-button{
     color: rgb(255, 255, 255);
     background-color: rgb(40, 152, 200);
@@ -993,7 +1028,12 @@ h2 {
     height: 30px;
     text-align: center;
     justify-content: center;
+}
 
+#save-rating:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(30, 214, 162);
+    border: 2px solid white;
 }
 
 #cancel-rating{
@@ -1007,6 +1047,12 @@ h2 {
     height: 30px;
     text-align: center;
     justify-content: center;
+}
+
+#cancel-rating:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: #f07373;
+    border: 2px solid white;
 }
 
 #commentInput {

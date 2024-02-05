@@ -27,7 +27,7 @@
         <p class="first-name" th:text="${userDetailsForMyGroup.firstName}">  </p>
       </div>
 
-      <div class="rating modal-rating-star" id="modal-rating-star-for-modal">
+      <div class="rating modal-rating-star fix-ratings" id="modal-rating-star-for-modal">
         <input type="radio" id="star5" name="rating" value="5" th:checked="${averageRatingForMyGruopModal >= 4.5}" disabled />
         <label for="star5" th:style="${averageRatingForMyGruopModal >= 4.5} ? 'color: gold;' : ''" >&#9733;</label>
         <input type="radio" id="star4" name="rating" value="4" th:checked="${averageRatingForMyGruopModal >= 3.5}" disabled />
