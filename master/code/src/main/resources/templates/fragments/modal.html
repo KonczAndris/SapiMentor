@@ -40,9 +40,10 @@
         <label for="star1" th:style="${averageRatingForMyGruopModal >= 0.5} ? 'color: gold;' : ''" >&#9733;</label>
       </div>
 
-      <div class="interaction-buttons">
+      <div class="interaction-buttons" th:if="${userRolesToDisplayMentorSelector.contains('MENTEE')}">
         <!-- RATE button -->
         <button id="rating-button" onclick="showRateSection()"> RATE </button>
+
         <!-- Rating Section -->
         <div id="ratingSection" style="display: none;">
 

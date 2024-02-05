@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topic;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
@@ -30,7 +29,7 @@ public class TopicsController {
         this.topicService = topicService;
     }
 
-    private void showUserRolesToDisplayResources(Model model, Principal principal){
+    private void showUserRolesToDisplayTopics(Model model, Principal principal){
 
         String email = principal.getName();
 
@@ -59,11 +58,6 @@ public class TopicsController {
         model.addAttribute("userRolesToDisplayTopics", rolesAsString);
     }
 
-    private void showTopicsToDisplayResources(Model model){
-        // Itt lekérem a témákat a service segítségével
-        List<Topic> topics = topicService.getAllTopics();
-        model.addAttribute("topics", topics);
-    }
 
     private void showProfileImageAndName(Model model, Principal principal){
         String email = principal.getName();
@@ -73,9 +67,9 @@ public class TopicsController {
         byte[] profileImage = user.getProfileImage();
         if(profileImage != null){
             String profileImageBase64 = Base64.getEncoder().encodeToString(profileImage);
-            model.addAttribute("profileImageBase64", profileImageBase64);
+            model.addAttribute("topicsImageBase64", profileImageBase64);
         } else {
-            model.addAttribute("profileImageBase64", "");
+            model.addAttribute("topicsImageBase64", "");
         }
 
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
@@ -86,9 +80,7 @@ public class TopicsController {
         if (principal == null) {
             return "redirect:/login";
         }
-        showUserRolesToDisplayResources(model, principal);
-        showTopicsToDisplayResources(model);
-
+        showUserRolesToDisplayTopics(model, principal);
         showProfileImageAndName(model, principal);
 
         return "topics";

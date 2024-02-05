@@ -124,6 +124,8 @@ public class ProfileController {
         model.addAttribute("averageOfRating", average);
         model.addAttribute("countOfRating", count);
 
+        userService.getUserComments(model, principal);
+
         return "profile";
     }
 

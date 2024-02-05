@@ -6,12 +6,15 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UserRegistrationDto;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.token.ConfirmationToken;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Rating;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ConfirmationTokenRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.RatingRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 
 import javax.imageio.ImageIO;
@@ -20,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -32,6 +36,7 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final RatingRepository ratingRepository;
 
     //Ezzel tudod beallitani hogy mekkora legyen a maximalis meret amit feltolthet a felhasznalo
     private static final long MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2 MB
@@ -40,10 +45,14 @@ public class UserServiceImpl implements UserService{
     //private static final long MAX_IMAGE_SIZE = 40 * 1024; // 40 KB
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, ConfirmationTokenRepository confirmationTokenRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           BCryptPasswordEncoder passwordEncoder,
+                           ConfirmationTokenRepository confirmationTokenRepository,
+                           RatingRepository ratingRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.confirmationTokenRepository = confirmationTokenRepository;
+        this.ratingRepository = ratingRepository;
     }
 
 
@@ -184,6 +193,17 @@ public class UserServiceImpl implements UserService{
     }
 
 
-
+    public void getUserComments(Model model, Principal principal) {
+        String email = principal.getName();
+        Long userId = userRepository.findIdByEmail(email);
+        List<Rating> allRatingsForThisUser = ratingRepository.findAllByRatedUserId(userId);
+        for (Rating rating : allRatingsForThisUser) {
+            System.out.println("RatedUserId: " + rating.getRatedUserId() +
+                    ", Score: " + rating.getScore() +
+                    ", Comment: " + rating.getComment() +
+                    ", Date: " + rating.getDate() +
+                    ", Who rate : " + rating.getUserId());
+        }
+    }
 
 }

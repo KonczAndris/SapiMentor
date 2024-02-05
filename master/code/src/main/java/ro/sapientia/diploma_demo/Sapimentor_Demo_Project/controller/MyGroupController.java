@@ -61,6 +61,7 @@ public class MyGroupController {
         utilityForSomeCotroller.showTopicsToMyGroupPage(model);
         utilityForSomeCotroller.showSkillsToMyGroupPage(model);
         utilityForSomeCotroller.showProfileImageAndName(model, principal);
+
 //        model.addAttribute("ButtonClicked", false);
 
         return "myGroup";
@@ -204,6 +205,7 @@ public class MyGroupController {
         try {
             myGroupService.getSelectedUserProfile(selectedUserId, model);
             myGroupService.getSelectedUserComments(selectedUserId, model, principal);
+            utilityForSomeCotroller.getUserRolesToDisplayMentorSelector(model, principal);
             //model.addAttribute("isButtonClicked", true);
             //model.addAttribute("showDetails", true);
             return "fragments/modal :: modal-content";
@@ -221,6 +223,7 @@ public class MyGroupController {
         try {
             Map<String, Object> response = new HashMap<>();
             List<Object[]> selectedUserImages = myGroupService.getSelectedUserImages(selectedUserId);
+
 
             response.put("selectedUserImages", selectedUserImages);
             return ResponseEntity.ok(response);

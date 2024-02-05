@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Skill;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topic;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
@@ -12,7 +13,9 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.SkillService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -67,5 +70,30 @@ public class UtilityForSomeCotroller {
         }
         model.addAttribute("skills", skills);
     }
+
+    public void getUserRolesToDisplayMentorSelector(Model model, Principal principal){
+        String email = principal.getName();
+
+        Long userId = userRepository.findIdByEmail(email);
+        Collection<Role> roles = userRepository.findRolesByUserId(userId);
+
+        List<String> rolesToDisplayResources = new ArrayList<>();
+        boolean hasOtherRole = false;
+
+        for (Role role : roles){
+            if(!role.getName().equals("USER")){
+                rolesToDisplayResources.add(role.getName());
+                hasOtherRole = true;
+            }
+        }
+
+        if(!hasOtherRole){
+            rolesToDisplayResources.add("USER");
+        }
+
+        String rolesAsString = String.join(",", rolesToDisplayResources);
+        model.addAttribute("userRolesToDisplayMentorSelector", rolesAsString);
+    }
+
 
 }

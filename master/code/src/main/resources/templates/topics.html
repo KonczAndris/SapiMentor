@@ -12,12 +12,12 @@
 <div class="taskbar">
     <p class="menu-function-top">
         <a href="/" th:href="@{/profile}">
-            <img th:if="${indexImagesBase64 != ''}"
-                 th:src="@{|data:image/jpeg;base64,${indexImagesBase64}|}"
+            <img th:if="${topicsImageBase64 != ''}"
+                 th:src="@{|data:image/jpeg;base64,${topicsImageBase64}|}"
                  alt="Profile Image" class="menu-icon rounded-icon-top"
                  th:async="async"
                  th:attr="data-cache='no-cache'">
-            <img th:unless="${indexImagesBase64 != ''}"
+            <img th:unless="${topicsImageBase64 != ''}"
                  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
             <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
     <p class="menu-function">
@@ -34,12 +34,12 @@
         <div class="form-group form-group-profile">
             <p class="menu-function menu-function-profile">
                 <a href="/" th:href="@{/profile}">
-                    <img th:if="${indexImagesBase64 != ''}"
-                         th:src="@{|data:image/jpeg;base64,${indexImagesBase64}|}"
+                    <img th:if="${topicsImageBase64 != ''}"
+                         th:src="@{|data:image/jpeg;base64,${topicsImageBase64}|}"
                          alt="Profile Image" class="menu-icon rounded-icon"
                          th:async="async"
                          th:attr="data-cache='no-cache'">
-                    <img th:unless="${indexImagesBase64 != ''}"
+                    <img th:unless="${topicsImageBase64 != ''}"
                          th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
                     <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span>  </a>
         </div>
