@@ -24,6 +24,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -197,13 +198,19 @@ public class UserServiceImpl implements UserService{
         String email = principal.getName();
         Long userId = userRepository.findIdByEmail(email);
         List<Rating> allRatingsForThisUser = ratingRepository.findAllByRatedUserId(userId);
+        ArrayList<Long> allUserId = new ArrayList<>();
         for (Rating rating : allRatingsForThisUser) {
             System.out.println("RatedUserId: " + rating.getRatedUserId() +
                     ", Score: " + rating.getScore() +
                     ", Comment: " + rating.getComment() +
                     ", Date: " + rating.getDate() +
                     ", Who rate : " + rating.getUserId());
+            allUserId.add(rating.getUserId());
         }
+
+        List<User> allSelectedUsers = userRepository.findAllByIdIn(allUserId);
+        model.addAttribute("allSelectedUsers", allSelectedUsers);
+        model.addAttribute("allRatingsForThisUser", allRatingsForThisUser);
     }
 
 }

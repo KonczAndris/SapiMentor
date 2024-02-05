@@ -209,15 +209,15 @@
 
 
             <div class="rating">
-              <input type="radio" id="star5" name="rating" value="5" th:checked="${averageOfRating >= 4.5 && averageOfRating <= 5}" disabled />
+              <input type="radio" id="star5" name="ratingProfile" value="5" th:checked="${averageOfRating >= 4.5 && averageOfRating <= 5}" disabled />
               <label for="star5">&#9733;</label>
-              <input type="radio" id="star4" name="rating" value="4" th:checked="${averageOfRating >= 3.5 && averageOfRating < 4.5}" disabled />
+              <input type="radio" id="star4" name="ratingProfile" value="4" th:checked="${averageOfRating >= 3.5 && averageOfRating < 4.5}" disabled />
               <label for="star4">&#9733;</label>
-              <input type="radio" id="star3" name="rating" value="3" th:checked="${averageOfRating >= 2.5 && averageOfRating < 3.5}" disabled />
+              <input type="radio" id="star3" name="ratingProfile" value="3" th:checked="${averageOfRating >= 2.5 && averageOfRating < 3.5}" disabled />
               <label for="star3">&#9733;</label>
-              <input type="radio" id="star2" name="rating" value="2" th:checked="${averageOfRating >= 1.5 && averageOfRating < 2.5}" disabled />
+              <input type="radio" id="star2" name="ratingProfile" value="2" th:checked="${averageOfRating >= 1.5 && averageOfRating < 2.5}" disabled />
               <label for="star2">&#9733;</label>
-              <input type="radio" id="star1" name="rating" value="1" th:checked="${averageOfRating >= 0.5 && averageOfRating < 1.5}" disabled />
+              <input type="radio" id="star1" name="ratingProfile" value="1" th:checked="${averageOfRating >= 0.5 && averageOfRating < 1.5}" disabled />
               <label for="star1">&#9733;</label>
             </div>
 
@@ -416,6 +416,8 @@
 
           <div id="commentsDiv" class="comments">
             <div class="comment-entry" id="commentContainer" style="display: block;">
+
+
               <div class="comment-section active" th:id="${'comment-section-' + data.userId}" th:each="data, status : ${allRatingsForThisUser}">
                 <div class="comment-row">
                   <img  th:id="${'commentProfileImg-' + data.userId}" th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
