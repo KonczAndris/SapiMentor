@@ -104,6 +104,8 @@
 
 .rating {
     direction: rtl;
+    cursor: default;
+    user-select: none;
 }
 
 .rating input[type="radio"] {
@@ -114,10 +116,10 @@
     display: inline-block;
     font-size: 1.8rem;
     color: gray;
-    cursor: pointer;
+    user-select: none;
+    cursor: default;
     transition: color 0.2s;
 }
-
 
 /*.rating label:hover{*/
 /*    color: gold;*/
@@ -172,6 +174,7 @@ h2 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    user-select: none;
 }
 
 .divider {
@@ -211,6 +214,7 @@ h2 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    user-select: none;
 }
 
 .detail-value {
@@ -727,6 +731,7 @@ th, td {
     text-align: center;
     border: none;
     border-bottom: 1px solid #5c5c5c;
+    user-select: none;
 }
 
 tr:hover {

@@ -2,6 +2,18 @@
     font-family: 'CustomFont';
     src: url('../fonts/roundfont.ttf') format('truetype')}
 
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
 body {
     margin: 0;
     font-family: 'CustomFont';
@@ -619,7 +631,7 @@ body {
 
 .cancel-button-modal:hover {
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(233, 99, 81);
+    background-color: rgb(249 110 91);
     border: 2px solid white;
 }
 

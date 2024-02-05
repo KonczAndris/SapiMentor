@@ -1055,9 +1055,6 @@ function saveRating() {
             })
         }).then(response => {
             if (response.ok) {
-                //location.reload();
-                //console.log("Hello hello sseemiter");
-
                 fetch(sseUrl, {
                     method: 'POST',
                     headers: {
