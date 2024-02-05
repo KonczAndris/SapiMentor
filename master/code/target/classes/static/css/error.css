@@ -54,6 +54,7 @@ button:hover {
     text-align: center;
     position: relative;
     top: -30%;
+    user-select: none;
 }
 
 .error-image{
