@@ -708,7 +708,7 @@ function displayModal() {
     if (currentURL.includes("myGroup/mentees")) {
         var rating = document.querySelector('.rating.modal-rating-star');
         var interaction_buttons = document.querySelector('.interaction-buttons');
-        var comments = document.getElementById('comment-section-container');
+        var comments = document.getElementById('showCommentsButton');
         interaction_buttons.style.display = "none";
         rating.style.display = "none";
         comments.style.display = "none";
@@ -1055,9 +1055,6 @@ function saveRating() {
             })
         }).then(response => {
             if (response.ok) {
-                //location.reload();
-                //console.log("Hello hello sseemiter");
-
                 fetch(sseUrl, {
                     method: 'POST',
                     headers: {
