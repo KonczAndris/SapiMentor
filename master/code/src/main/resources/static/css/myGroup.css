@@ -1100,6 +1100,12 @@ h2 {
     margin:5px;
 }
 
+.navigate-button:hover{
+    background-color: rgb(119 193 225);
+    border: 2px solid white;
+}
+
+
 .comment-infos{
     display: flex;
     flex-direction: column;
