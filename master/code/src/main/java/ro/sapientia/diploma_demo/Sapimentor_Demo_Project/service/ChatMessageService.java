@@ -15,6 +15,9 @@ public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatRoomService chatRoomService;
 
+    // itt elmentjuk az uzenetet
+    // a chatId-t a chatRoomService segitsegevel kapjuk meg
+    // a chatMessageRepository segitsegevel mentjuk el az uzenetet
     public ChatMessage save(ChatMessage chatMessage) {
         var chatId = chatRoomService
                 .getChatRoomId(chatMessage.getSenderId(),
@@ -26,9 +29,13 @@ public class ChatMessageService {
         return chatMessage;
     }
 
+    // itt lekerjuk az osszes uzenetet
+    // a chatId-t a chatRoomService segitsegevel kapjuk meg
+    // a chatMessageRepository segitsegevel kerjuk le az osszes uzenetet
     public List<ChatMessage> findChatMessages(Long senderId,
                                               Long recipientId) {
-        var chatId = chatRoomService.getChatRoomId(senderId,
+        var chatId = chatRoomService.
+                getChatRoomId(senderId,
                         recipientId,
                         false);
         return chatId.map(chatMessageRepository::findByChatId)
