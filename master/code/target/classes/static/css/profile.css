@@ -620,7 +620,7 @@ h2 {
     margin: 0;
 }
 
-.dropdown {
+.dropdown-skill-modal {
     position: relative;
     flex-grow: 1;
     border: 0;
