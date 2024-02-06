@@ -123,6 +123,7 @@ public class ProfileController {
         int count = ratingData.get("count").intValue();
         model.addAttribute("averageOfRating", average);
         model.addAttribute("countOfRating", count);
+        model.addAttribute("UserId", user.getId());
 
         userService.getUserComments(model, principal);
 

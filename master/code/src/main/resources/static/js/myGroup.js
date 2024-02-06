@@ -202,6 +202,189 @@ $(document).ready(function() {
         });
     } else {
         console.log("Profile oldalon vagyunk");
+        eventSource.addEventListener('UserComment', function (event) {
+
+            const userCommentData = JSON.parse(event.data);
+            const ratingUserId = userCommentData.ratingUserId;
+            //console.log("Az ID: " + ratingUserId);
+            //console.log("Received UserComment:", userCommentData);
+            const userProfileContainer = document.getElementById('profile-container-Id_' + userCommentData.ratedUserId);
+            console.log("User profile modal: ", userProfileContainer);
+
+            // if(userProfileContainer !== null) {
+            //     // console.log("User profile modal found");
+            //     var commentSection = document.createElement('div');
+            //     commentSection.classList = 'comment-section'
+            //     commentSection.id = 'comment-section-' + ratingUserId;
+            //     //console.log("A Comment-Section: " + commentSection);
+            //
+            //     var commentRow = document.createElement('div');
+            //     commentRow.classList = 'comment-row';
+            //     commentSection.appendChild(commentRow);
+            //
+            //     // Profile image
+            //     var commentProfileImg = document.createElement('img');
+            //     commentProfileImg.id = 'commentProfileImg-' + ratingUserId;
+            //     if (userCommentData.userImage == null || userCommentData.userImage === "") {
+            //         commentProfileImg.src = "/img/anonym.jpg";
+            //     } else {
+            //         commentProfileImg.src = 'data:image/jpeg;base64,' + userCommentData.userImage;
+            //     }
+            //     commentProfileImg.alt = 'Profile Image';
+            //     commentProfileImg.classList = 'comment-profile-image';
+            //     commentRow.appendChild(commentProfileImg);
+            //     //
+            //
+            //     var commentInfos = document.createElement('div');
+            //     commentInfos.classList = 'comment-infos';
+            //     commentRow.appendChild(commentInfos);
+            //
+            //     // User Name
+            //     var commentUsernameDiv = document.createElement('div');
+            //     commentInfos.appendChild(commentUsernameDiv);
+            //
+            //     var commentUsername = document.createElement('p');
+            //     commentUsername.style.margin = '0';
+            //     commentUsername.textContent = userCommentData.firstName + " " + userCommentData.lastName;
+            //     commentUsernameDiv.appendChild(commentUsername);
+            //     //
+            //
+            //     // Date
+            //     var commentLabelDate = document.createElement('p');
+            //     commentLabelDate.classList = 'comment-label-date';
+            //     commentLabelDate.id = 'comment-label-date-' + ratingUserId;
+            //     commentLabelDate.textContent = userCommentData.date;
+            //     commentInfos.appendChild(commentLabelDate);
+            //
+            //     var commentRating = document.createElement('div');
+            //     commentRating.classList = 'comment-rating';
+            //     commentRating.id = 'comment-rating-' + ratingUserId;
+            //     commentInfos.appendChild(commentRating);
+            //
+            //     //Star 5
+            //     var commentStar5 = document.createElement('input');
+            //     commentStar5.type = 'radio';
+            //     commentStar5.id = 'comment-star5_' + ratingUserId;
+            //     commentStar5.name = 'rating';
+            //     commentStar5.value = '5';
+            //     commentStar5.checked = userCommentData.score >= 4.5;
+            //     commentStar5.disabled = true;
+            //     commentRating.appendChild(commentStar5);
+            //
+            //     var commentStar5Label = document.createElement('label');
+            //     commentStar5Label.htmlFor = 'comment-star5_' + ratingUserId;
+            //     if (userCommentData.score >= 4.5) {
+            //         commentStar5Label.style.color = 'gold';
+            //     } else {
+            //         commentStar5Label.style.color = '';
+            //     }
+            //     commentStar5Label.innerHTML = '&#9733';
+            //     commentRating.appendChild(commentStar5Label);
+            //
+            //     //
+            //
+            //     //Star 4
+            //     var commentStar4 = document.createElement('input');
+            //     commentStar4.type = 'radio';
+            //     commentStar4.id = 'comment-star4_' + ratingUserId;
+            //     commentStar4.name = 'rating';
+            //     commentStar4.value = '4';
+            //     commentStar4.checked = userCommentData.score >= 3.5;
+            //     commentStar4.disabled = true;
+            //     commentRating.appendChild(commentStar4);
+            //
+            //     var commentStar4Label = document.createElement('label');
+            //     commentStar4Label.htmlFor = 'comment-star4_' + ratingUserId;
+            //     if (userCommentData.score >= 3.5) {
+            //         commentStar4Label.style.color = 'gold';
+            //     } else {
+            //         commentStar4Label.style.color = '';
+            //     }
+            //     commentStar4Label.innerHTML = '&#9733';
+            //     commentRating.appendChild(commentStar4Label);
+            //
+            //     //
+            //
+            //     //Star 3
+            //     var commentStar3 = document.createElement('input');
+            //     commentStar3.type = 'radio';
+            //     commentStar3.id = 'comment-star3_' + ratingUserId;
+            //     commentStar3.name = 'rating';
+            //     commentStar3.value = '3';
+            //     commentStar3.checked = userCommentData.score >= 2.5;
+            //     commentStar3.disabled = true;
+            //     commentRating.appendChild(commentStar3);
+            //
+            //     var commentStar3Label = document.createElement('label');
+            //     commentStar3Label.htmlFor = 'comment-star3_' + ratingUserId;
+            //     if (userCommentData.score >= 2.5) {
+            //         commentStar3Label.style.color = 'gold';
+            //     } else {
+            //         commentStar3Label.style.color = '';
+            //     }
+            //     commentStar3Label.innerHTML = '&#9733';
+            //     commentRating.appendChild(commentStar3Label);
+            //
+            //     //
+            //
+            //     //Star 2
+            //     var commentStar2 = document.createElement('input');
+            //     commentStar2.type = 'radio';
+            //     commentStar2.id = 'comment-star2_' + ratingUserId;
+            //     commentStar2.name = 'rating';
+            //     commentStar2.value = '2';
+            //     commentStar2.checked = userCommentData.score >= 1.5;
+            //     commentStar2.disabled = true;
+            //     commentRating.appendChild(commentStar2);
+            //
+            //     var commentStar2Label = document.createElement('label');
+            //     commentStar2Label.htmlFor = 'comment-star2_' + ratingUserId;
+            //     if (userCommentData.score >= 1.5) {
+            //         commentStar2Label.style.color = 'gold';
+            //     } else {
+            //         commentStar2Label.style.color = '';
+            //     }
+            //     commentStar2Label.innerHTML = '&#9733';
+            //     commentRating.appendChild(commentStar2Label);
+            //
+            //     //
+            //
+            //     //Star 1
+            //     var commentStar1 = document.createElement('input');
+            //     commentStar1.type = 'radio';
+            //     commentStar1.id = 'comment-star1_' + ratingUserId;
+            //     commentStar1.name = 'rating';
+            //     commentStar1.value = '1';
+            //     commentStar1.checked = userCommentData.score >= 0.5;
+            //     commentStar1.disabled = true;
+            //     commentRating.appendChild(commentStar1);
+            //
+            //     var commentStar1Label = document.createElement('label');
+            //     commentStar1Label.htmlFor = 'comment-star1_' + ratingUserId;
+            //     if (userCommentData.score >= 0.5) {
+            //         commentStar1Label.style.color = 'gold';
+            //     } else {
+            //         commentStar1Label.style.color = '';
+            //     }
+            //     commentStar1Label.innerHTML = '&#9733';
+            //     commentRating.appendChild(commentStar1Label);
+            //
+            //     //
+            //
+            //     var commentContent = document.createElement('div');
+            //     commentContent.classList = 'comment-content';
+            //     commentSection.appendChild(commentContent);
+            //
+            //     var commentLabelText = document.createElement('p');
+            //     commentLabelText.classList = 'comment-label-text';
+            //     commentLabelText.id = 'comment-label-text-' + ratingUserId;
+            //     commentLabelText.textContent = userCommentData.comment;
+            //     commentContent.appendChild(commentLabelText);
+            //
+            //     var commentContainer = document.getElementById("commentContainer");
+            //     commentContainer.appendChild(commentSection);
+            // }
+        });
     }
 
 
