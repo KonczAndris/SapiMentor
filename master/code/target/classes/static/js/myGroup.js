@@ -1442,6 +1442,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function toggleAndShowNext() {
+    toggleComments();
     showNextCommentSection();
 }
 
