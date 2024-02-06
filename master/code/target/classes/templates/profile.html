@@ -420,7 +420,7 @@
 
               <div class="comment-section active" th:id="${'comment-section-' + data.userId}" th:each="data, status : ${allRatingsForThisUser}">
                 <div class="comment-row">
-                  <img  th:id="${'commentProfileImg-' + data.userId}" th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
+                  <img  th:id="${'commentProfileImgProfilePage-' + data.userId}" th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
                   <div class="comment-infos">
                     <div th:each="user : ${allSelectedUsers}">
                       <p style="margin: 0" th:if="${user.id == data.userId}" th:text="${user.last_Name + ' ' + user.first_Name}"></p>

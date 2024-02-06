@@ -1014,6 +1014,64 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+let profileimagesforProfilePage = [];
+
+var seeCommentsButton = document.getElementById('showCommentsButton');
+seeCommentsButton.addEventListener('click', function() {
+   //console.log("Igen");
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+
+    var url2 = '/getSelectedUsersImagesForProfilePage';
+    fetch(url2, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            //console.log("Igen: " + response);
+            return response.json();
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }).then(data => {
+        //console.log("Data: ", data);
+        profileimagesforProfilePage = data.selectedUserImagesForProfilePage;
+        //console.log("Igen: " + profileimagesforSelectedUsers);
+        // setInterval(() => {
+        //     handlereselectedimagesforProfilePage();
+        // }, 500); // 2000 milliszekundum = 2 másodperc
+        handlereselectedimagesforProfilePage();
+    }).catch(error => {
+        console.log("Error: ", error);
+    });
+});
+
+function handlereselectedimagesforProfilePage() {
+
+    //console.log("Profile images hossz : ", profileimages.length);
+    for (let i = 0; i < profileimagesforProfilePage.length; i++) {
+        //console.log("Profile images : ", profileimages[i]);
+        const commentprofileData = profileimagesforProfilePage[i];
+        const commentprofileImage = commentprofileData[0];
+        const commentprofileId = commentprofileData[1];
+
+        //console.log("Profil image: ", commentprofileImage);
+        //console.log("Profil id: ", commentprofileId);
+
+        var commentedProfileImg  = document.getElementById('commentProfileImgProfilePage-' + commentprofileId);
+        //console.log("Profile image div: ", commentedProfileImg);
+        if (commentprofileImage != null && commentedProfileImg != null ) {
+            commentedProfileImg.src = 'data:image/jpeg;base64,' + commentprofileImage;
+        }
+
+    }
+}
+
+
 setupMentorModal();
 setupModal();
 setupSkillsModal();

@@ -129,6 +129,20 @@ public class ProfileController {
         return "profile";
     }
 
+    @GetMapping("/getSelectedUsersImagesForProfilePage")
+    public ResponseEntity<Map<String,Object>> getSelectedUserImagesForProfilePage(Principal principal){
+        try {
+            Map<String, Object> response = new HashMap<>();
+            List<Object[]> selectedUserImagesForProfilePage = userService.getSelectedUserImagesForProfilePage(principal);
+
+            response.put("selectedUserImagesForProfilePage", selectedUserImagesForProfilePage);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 
 
     @PostMapping("/profile/save")

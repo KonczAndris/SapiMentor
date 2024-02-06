@@ -208,6 +208,8 @@ $(document).ready(function() {
 });
 
 
+
+
 if(document.getElementById("favorites") !== null) {
     document.getElementById("favorites").addEventListener("click", function () {
         window.location.href = "/myGroup/favorites";
@@ -717,6 +719,9 @@ function displayModal() {
         var rating = document.querySelector('.rating.modal-rating-star');
         var interaction_buttons = document.querySelector('.interaction-buttons');
         var comments = document.getElementById('showCommentsButton');
+
+        //console.log("Interaction:" + interaction_buttons);
+
         if(rating !== null && comments !== null){
             rating.style.display = "none";
             comments.style.display = "none";
@@ -724,6 +729,10 @@ function displayModal() {
             interaction_buttons.style.display = "none";
         }
 
+        if (interaction_buttons !== null) {
+            interaction_buttons.style.display = "none";
+        }
+        
 
     }
 }

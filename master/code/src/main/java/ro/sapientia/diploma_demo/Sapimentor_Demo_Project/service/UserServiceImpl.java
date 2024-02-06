@@ -213,4 +213,19 @@ public class UserServiceImpl implements UserService{
         model.addAttribute("allRatingsForThisUser", allRatingsForThisUser);
     }
 
+    public List<Object[]> getSelectedUserImagesForProfilePage (Principal principal) {
+        String email = principal.getName();
+        Long userId = userRepository.findIdByEmail(email);
+        List<Rating> allRatingsForThisUserImages = ratingRepository.findAllByRatedUserId(userId);
+
+        ArrayList<Long> allUserId = new ArrayList<>();
+        for (Rating rating : allRatingsForThisUserImages) {
+            allUserId.add(rating.getUserId());
+        }
+
+        List<Object[]> allSelectedUsers = userRepository.findAllSelectedUserImages(allUserId);
+
+        return allSelectedUsers;
+    }
+
 }

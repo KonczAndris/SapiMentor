@@ -24,7 +24,8 @@ public class SettingsController {
     private final TopicService topicService;
 
     @Autowired
-    public SettingsController(UserRepository userRepository, TopicService topicService) {
+    public SettingsController(UserRepository userRepository,
+                              TopicService topicService) {
         this.userRepository = userRepository;
         this.topicService = topicService;
     }
