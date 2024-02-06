@@ -19,10 +19,6 @@ body {
     font-family: 'CustomFont';
 }
 
-button{
-    font-family: 'CustomFont';
-}
-
 .right {
     flex-direction: column;
     align-items: center;
@@ -268,6 +264,7 @@ button{
     padding: 10px;
     max-height: 320%;
     overflow: auto;
+    margin-top: 4px;
 }
 
 .dropdown-content-myGroup::-webkit-scrollbar {
@@ -1336,4 +1333,12 @@ table tr:last-child td {
     width: 30px;
     position: relative;
     top: 3px;
+}
+
+.show{
+    position: relative;
+}
+
+.comment-row p{
+    text-align: center;
 }

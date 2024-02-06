@@ -494,7 +494,7 @@ function selectSide(side) {
     toggleFieldsAvailability();
 }
 
-function toggleDropdown() {
+function toggleDropdownMyGroup() {
     document.getElementById("checkboxDropdown-myGroup").classList.toggle("show");
 }
 
@@ -1444,8 +1444,6 @@ document.addEventListener('DOMContentLoaded', function () {
 function toggleAndShowNext() {
     toggleComments();
     showNextCommentSection();
-    showPreviousCommentSection();
-    showPreviousCommentSection();
 }
 
 function toggleComments() {
@@ -1455,6 +1453,14 @@ function toggleComments() {
     if (commentsDiv.style.display === "none" || commentsDiv.style.display === "") {
         commentsDiv.style.display = "block";
         showButton.style.display = "none";
+        let commentSections = document.querySelectorAll('.comment-section');
+        commentSections.forEach(function (section, index) {
+            if (index === 0) {
+                section.classList.add('active');
+            } else {
+                section.classList.remove('active');
+            }
+        });
     } else {
         commentsDiv.style.display = "none";
     }
