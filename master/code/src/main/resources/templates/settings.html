@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SapiMentor</title>
   <link rel="stylesheet"  type="text/css" th:href="@{/css/index-home.css}">
+  <link rel="stylesheet"  type="text/css" th:href="@{/css/settings.css}">
   <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
   <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 </head>
@@ -70,10 +71,72 @@
 
   <div class="right show" id="right-content">
 
+    <div class="large-settings-div">
+      <div class="left-settings-div">
+
+        <div class="divider-container">
+        <h2>PERSONALIZE </h2>
+          <img th:src="@{/img/settings-personalize-monster.png}" alt="See Comments Icon" class="divider-icon">
+        <div class="divider"></div>
+        </div>
+
+        <div class="language-div">
+        <label class="setting-title">LANGUAGE</label>
+        <div class="settings-option">
+        <input type="checkbox" id="hungarian" class="topic-checkbox">
+        <span class="checkmark-setting"> </span> <label for="hungarian">Hungarian</label>
+        </div>
+        <div class="settings-option">
+        <input type="checkbox" id="english" class="topic-checkbox">
+        <span class="checkmark-setting"></span> <label for="english">English</label>
+        </div>
+        </div>
+
+        <div class="theme-div">
+          <label class="setting-title">THEME</label>
+          <div class="settings-option">
+            <input type="checkbox" id="light" class="topic-checkbox">
+            <span class="checkmark-setting"> </span> <label for="light">Light</label>
+          </div>
+          <div class="settings-option">
+            <input type="checkbox" id="dark" class="topic-checkbox">
+            <span class="checkmark-setting"></span> <label for="dark">Dark</label>
+          </div>
+        </div>
+
+        <div class="settings-buttons">
+        <button class="save-settings-btn" id="saveSettings"> Save settings</button><br>
+        <button class="deactivate-btn" onclick="showDeactivateModal()"> Deactivate your account</button>
+        </div>
+
+      </div>
+
+      <div class="right-settings-div">
+
+        <div class="divider-container">
+          <h2>CONTACT </h2>
+          <img th:src="@{/img/settings-contact-monster.png}" alt="See Comments Icon" class="divider-icon">
+          <div class="divider"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="deactivateModal" class="modal">
+      <div class="modal-content">
+        <p>Are you sure?</p>
+        <p class="p2">After deactivating you won't be able to retrieve your data! </p>
+        <button id="deactivate-yes" onclick="closeDeactivateModal()">Yes</button>
+        <button id="deactivate-no" onclick="closeDeactivateModal()">No</button>
+      </div>
+    </div>
+
 
   </div>
 </div>
 
 <script th:src="@{/js/functions.js}"></script>
+<script th:src="@{/js/settings.js}"></script>
 </body>
 </html>

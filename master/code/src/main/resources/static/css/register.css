@@ -16,6 +16,10 @@ body {
 
 }
 
+button{
+    font-family: 'CustomFont';
+}
+
 .center {
     display: flex;
     justify-content: center;

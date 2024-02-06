@@ -19,6 +19,10 @@ body {
     font-family: 'CustomFont';
 }
 
+button{
+    font-family: 'CustomFont';
+}
+
 .right {
     flex-direction: column;
     align-items: center;
