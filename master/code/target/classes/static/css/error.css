@@ -15,6 +15,10 @@ body {
     overflow: hidden;
 }
 
+button{
+    font-family: 'CustomFont';
+}
+
 .error-container {
     width: 600px;
     height: 400px;
