@@ -231,6 +231,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{/js/functions.js}"></script>
 <script th:src="@{/js/myGroup.js}"></script>
+<script>
+    if (localStorage.getItem('theme') === 'dark') {
+        const darkThemeLink = document.createElement('link');
+        darkThemeLink.rel = 'stylesheet';
+        darkThemeLink.href = '/css/darkTheme.css';
+        document.head.appendChild(darkThemeLink);
+    }
+</script>
 
 </body>
 

@@ -75,5 +75,13 @@
 </div>
 
 <script th:src="@{/js/functions.js}"></script>
+<script>
+    if (localStorage.getItem('theme') === 'dark') {
+        const darkThemeLink = document.createElement('link');
+        darkThemeLink.rel = 'stylesheet';
+        darkThemeLink.href = '/css/darkTheme.css';
+        document.head.appendChild(darkThemeLink);
+    }
+</script>
 </body>
 </html>

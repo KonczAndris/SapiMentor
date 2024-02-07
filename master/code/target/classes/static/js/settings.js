@@ -54,3 +54,44 @@ function handleCheckboxCheck(checkboxes) {
 // Call the function for language and theme checkboxes
 handleCheckboxCheck(languageCheckboxes);
 handleCheckboxCheck(themeCheckboxes);
+
+
+const darkCheckbox = document.getElementById('dark');
+const saveSettingsButton = document.getElementById('saveSettings');
+
+// Function to apply or remove the dark theme
+function applyDarkTheme() {
+    if (darkCheckbox.checked) {
+        const darkThemeLink = document.createElement('link');
+        darkThemeLink.rel = 'stylesheet';
+        darkThemeLink.href = '/css/darkTheme.css';
+        darkThemeLink.id = 'darkTheme'; // Add an ID to the link element for easier removal later
+        document.head.appendChild(darkThemeLink);
+        // Save dark theme state locally
+        localStorage.setItem('theme', 'dark');
+    } else {
+        const darkThemeLink = document.getElementById('darkTheme');
+        if (darkThemeLink) {
+            darkThemeLink.remove(); // Remove the dark theme CSS
+        }
+        // Remove dark theme state from local storage
+        localStorage.removeItem('theme');
+    }
+}
+
+// Event listener for the save button
+saveSettingsButton.addEventListener('click', function() {
+    applyDarkTheme();
+    location.reload(); // Reload the page
+});
+
+const lightCheckbox = document.getElementById('light');
+// Check if dark theme was selected previously and apply it
+if (localStorage.getItem('theme') === 'dark') {
+    darkCheckbox.checked = true;
+    applyDarkTheme(); // Apply the dark theme
+}
+
+else{
+ lightCheckbox.checked = true;
+}
