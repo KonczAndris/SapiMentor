@@ -255,12 +255,12 @@ body {
 
 .dropdown-content-myGroup {
     display: none;
-    position: absolute;
     background-color: #f9f9f9;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 9px;
-    width: 145px;
+    min-width: 140px;
+    max-width: 140px;
     padding: 10px;
     max-height: 200px;
     overflow: auto;
@@ -272,7 +272,6 @@ body {
 }
 
 .dropdown-content-myGroup {
-    top: 100%;
     transform: translateY(-6%);
 }
 
@@ -917,11 +916,10 @@ table tr:last-child td {
         flex-direction: column;
     }
     .dropdown-content-myGroup {
-        max-height: 520%;
+        max-height: 200px;
     }
     .dropdown-myGroup:hover .dropdown-content-myGroup {
         display: block;
-        transform: translateY(-4%);
     }
 }
 
