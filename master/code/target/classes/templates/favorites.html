@@ -97,19 +97,11 @@
         </div>
 
         <!--     SEARCH DIV START -->
-        <div class="large-message-box">
+        <div class="large-message-box" th:id="${'large-message-box-for-' + userId}">
+
             <div class="left-message-box">
 
-<!--                <div class="user" th:id="${'probamegjelenites-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}" style="display: block; margin-bottom: 10px;">-->
-<!--                    <img th:if="${favoriteUser.favoriteProfileImageBase64 != ''}"-->
-<!--                         th:src="@{|data:image/jpeg;base64,${favoriteUser.favoriteProfileImageBase64}|}">-->
-<!--                    <img th:unless="${favoriteUser.favoriteProfileImageBase64 != ''}"-->
-<!--                         th:src="@{/img/anonym.jpg}" alt="Profile Image">-->
-<!--                    <span th:text="${favoriteUser.fullName}"></span>-->
-<!--                    <span th:text="${favoriteUser.status}"></span>-->
-<!--                </div>-->
-
-                <div class="user" th:id="${'user-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}">
+                <div class="user" th:id="${'user-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}" th:onclick="userItemClick(event)">
                     <img th:if="${favoriteUser.favoriteProfileImageBase64 != ''}"
                          th:src="@{|data:image/jpeg;base64,${favoriteUser.favoriteProfileImageBase64}|}">
                     <img th:unless="${favoriteUser.favoriteProfileImageBase64 != ''}"
@@ -117,43 +109,26 @@
                     <span th:text="${favoriteUser.fullName}"></span>
                     <!-- Példa online státuszra -->
                     <div class="user-status" th:classappend="${favoriteUser.status == 0 ? 'offline' : 'online'}"></div>
+                    <span class="nbr-msg hiddenMsg">0</span>
                 </div>
-
-<!--                <div class="user">-->
-<!--                    <img th:src="@{/img/anonym.jpg}" alt="Profilkép">-->
-<!--                    <span>Felhasználó Neve</span>-->
-<!--                    &lt;!&ndash; Példa online státuszra &ndash;&gt;-->
-<!--                    <div class="user-status online"></div>-->
-<!--                </div>-->
-<!--                <div class="user">-->
-<!--                    <img th:src="@{/img/anonym.jpg}" alt="Profilkép">-->
-<!--                    <span>Felhasználó Neve</span>-->
-<!--                    &lt;!&ndash; Példa online státuszra &ndash;&gt;-->
-<!--                    <div class="user-status online"></div>-->
-<!--                </div>-->
-<!--                <div class="user">-->
-<!--                    <img th:src="@{/img/anonym.jpg}" alt="Profilkép">-->
-<!--                    <span>Felhasználó Neve</span>-->
-<!--                    &lt;!&ndash; Példa online státuszra &ndash;&gt;-->
-<!--                    <div class="user-status online"></div>-->
-<!--                </div>-->
-
             </div>
+
+
             <div class="right-message-box">
-                <div class="chat-container">
+                <div class="chat-container" id="chat-page">
 
                     <!--Itt lesznek a szovegek-->
                     <div class="chat-box" id="chat-box">
-                        <!-- Your messages -->
-                        <div class="message my-message">Hello, how are you?</div>
-                        <!-- Partner's messages -->
-                        <div class="message partner-message">Hi there! I'm good.</div>
+<!--                        &lt;!&ndash; Your messages &ndash;&gt;-->
+<!--                        <div class="message my-message">Hello, how are you?</div>-->
+<!--                        &lt;!&ndash; Partner's messages &ndash;&gt;-->
+<!--                        <div class="message partner-message">Hi there! I'm good.</div>-->
                     </div>
 
                     <!--Itt kell nekem a chat et-->
-                    <form id="messageForm" name="messageForm" >
+                    <form id="messageForm" name="messageForm"  style="display: none">
                         <div class="chat-input-box">
-                            <input type="text" id="message-input" placeholder="Type a message..." maxlength="500">
+                            <input type="text" id="message-input" placeholder="Type a message..." maxlength="500" >
                             <button id="emoji-button">😊</button>
                             <button type="button" id="send-button">Send</button>
                         </div>

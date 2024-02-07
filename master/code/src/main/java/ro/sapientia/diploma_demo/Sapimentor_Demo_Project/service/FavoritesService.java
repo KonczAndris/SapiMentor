@@ -52,4 +52,8 @@ public class FavoritesService {
 
         model.addAttribute("allFavoritesUser", favoriteUserDTOs);
     }
+
+    public List<Object[]> getSenderUserImg(Long userId) {
+        return userRepository.findProfileImageById(userId);
+    }
 }

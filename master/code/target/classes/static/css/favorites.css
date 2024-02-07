@@ -83,7 +83,7 @@ button{
 
 .left-message-box{
     display: flex;
-    width: 30%;
+    width: 26%;
     height: 100%;
     background-color: rgb(255, 255, 255);
     border-right: 3px solid rgb(22, 175, 132);
@@ -94,6 +94,8 @@ button{
     cursor: pointer;
     overflow-y: auto;
 }
+
+
 
 .left-message-box .user {
     display: flex;
@@ -114,7 +116,7 @@ button{
 }
 
 .left-message-box .user .online {
-    background-color: green;
+    background-color: #007d00;
 }
 
 .left-message-box .user .offline {
@@ -130,16 +132,31 @@ button{
     background-color: rgb(253, 253, 253);
 }
 
+.user.active {
+    background-color: rgb(97 218 179);
+    border-radius: 60px;
+    width: 90%;
+}
+
 
 @media screen and (max-width: 1000px) {
     .right-message-box{
         margin-bottom: 5%;
     }
 
+    .user.active {
+        background-color: rgb(97 218 179);
+        border-radius: 40px;
+        width: 80%;
+    }
+
 }
 
 
 @media screen and (max-width: 600px) {
+
+
+
     .left-message-box{
         min-height: 9%;
         height: fit-content;
@@ -172,6 +189,12 @@ button{
         align-items: start;
         flex-direction: column;
         justify-content: start;
+    }
+
+    .user.active {
+        background-color: rgb(97 218 179);
+        border-radius: 40px;
+        width: 20%;
     }
 
 }
@@ -275,6 +298,7 @@ button{
     padding-left: 3%;
 }
 
+
 #messageForm{
     display: flex;
     justify-content: space-between;
@@ -322,6 +346,22 @@ button{
     align-items:center;
 }
 
-.hiddenMessageForm {
+.user span.nbr-msg {
+    margin-left: 10px;
+    background-color: #f8fa6f;
+    color: white;
+    padding: 7px;
+    width: 10px;
+    border-radius: 50%;
+    height: 10px;
+    margin-bottom: 10px;
+    margin-right: 0;
+}
+
+.hiddenMsg {
+    display: none;
+}
+
+.hiddenInfo {
     display: none;
 }

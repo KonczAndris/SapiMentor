@@ -384,25 +384,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Read the selected image as a data URL
         reader.onload = function (e) {
+
+            console.log("Igen1:",profileImage);
             // Set the data URL as the source of the profile image
-            profileImage.src = e.target.result;
+            if (profileImage == null) {
+                let profileImage = document.getElementById('change-profile-image-sec');
+                profileImage.src = e.target.result;
+
+                // Initialize Cropper only when the image is loaded
+                profileImage.onload = function () {
+                    if (cropper) {
+                        console.log("destroy");
+                        cropper.destroy();
+                    }
+
+                    cropper = new Cropper(profileImage, {
+                        aspectRatio: 1, // You can set the aspect ratio as needed
+                        viewMode: 1, // Set the view mode to restrict the cropped area to the canvas
+                    });
+                    console.log("Igen2", cropper);
+                };
+            } else {
+                profileImage.src = e.target.result;
+
+                // Initialize Cropper only when the image is loaded
+                profileImage.onload = function () {
+                    if (cropper) {
+                        console.log("destroy");
+                        cropper.destroy();
+                    }
+
+                    cropper = new Cropper(profileImage, {
+                        aspectRatio: 1, // You can set the aspect ratio as needed
+                        viewMode: 1, // Set the view mode to restrict the cropped area to the canvas
+                    });
+                    console.log("Igen2", cropper);
+                };
+            }
+
 
             // Show the upload modal with the cropper
             uploadModal.style.display = 'block';
 
-            // Initialize Cropper only when the image is loaded
-            profileImage.onload = function () {
-                if (cropper) {
-                    console.log("destroy");
-                    cropper.destroy();
-                }
 
-                cropper = new Cropper(profileImage, {
-                    aspectRatio: 1, // You can set the aspect ratio as needed
-                    viewMode: 1, // Set the view mode to restrict the cropped area to the canvas
-                });
-                console.log("Igen2", cropper);
-            };
         };
 
         reader.readAsDataURL(selectedImage);

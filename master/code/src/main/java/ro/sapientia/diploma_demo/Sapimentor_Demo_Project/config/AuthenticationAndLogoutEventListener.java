@@ -42,7 +42,7 @@ public class AuthenticationAndLogoutEventListener implements ApplicationListener
     private void handleAuthenticationSuccessEvent(AuthenticationSuccessEvent event) {
         String email = ((UserDetails) event.getAuthentication().getPrincipal()).getUsername();
         //System.out.println("email1: " + email);
-        updateUserStatusByEmail(email, 1);
+        //updateUserStatusByEmail(email, 1);
         //System.out.println("email2: " + email);
         session.setAttribute("userEmail", email);
     }

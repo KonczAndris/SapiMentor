@@ -17,7 +17,7 @@ public class WebSocketController {
         Map<String, Object> userStatusUpdate = new HashMap<>();
         userStatusUpdate.put("userId", userId);
         userStatusUpdate.put("status", status);
-        messagingTemplate.convertAndSend("/topic/userStatusUpdate", userStatusUpdate);
+        messagingTemplate.convertAndSend("/user/public/userStatusUpdate", userStatusUpdate);
     }
 
 

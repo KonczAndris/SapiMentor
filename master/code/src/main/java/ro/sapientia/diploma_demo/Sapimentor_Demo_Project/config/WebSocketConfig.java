@@ -28,7 +28,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry registry) {
 
         // Engedélyezzük a WebSocket-t a /user prefixen keresztül
-        registry.enableSimpleBroker("/topic");
+        registry.enableSimpleBroker("/user");
         // Az üzenetek küldésére használt prefix
         registry.setApplicationDestinationPrefixes("/app");
         // Felhasználói célú prefix a WebSocket endpointeken keresztül
