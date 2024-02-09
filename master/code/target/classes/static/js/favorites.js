@@ -184,8 +184,8 @@ async function onMessageReceived(payload) {
         user.appendChild(userStatus);
         user.appendChild(nbrMsg);
 
-        var chatBox = document.querySelector('.chat-box');
-        chatBox.appendChild(userInfo);
+        // var chatBox = document.querySelector('.chat-box');
+        // chatBox.appendChild(userInfo);
     }
 }
 

@@ -6,6 +6,8 @@
 <!--  <meta name="_csrf" th:content="${_csrf.token}"/>-->
 <!--  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
   <title>SapiMentor</title>
+  <link rel="preload" th:href="@{/css/darkTheme.css}" as="style" onload="this.onload=null; this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" th:href="@{/css/darkTheme.css}"></noscript>
   <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/diplomaTheses.css}">
   <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
