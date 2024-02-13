@@ -5,10 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.ChatMessageReadOrNot;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.FavoritesService;
@@ -70,6 +69,52 @@ public class FavoritesMyGroupController {
             List<Object[]> selectedUserImg = favoritesService.getSenderUserImg(userId);
             response.put("selectedUserImg", selectedUserImg);
             return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    //Map<String,Object>
+    @GetMapping("/readOrnot")
+    public ResponseEntity<Map<String,Object>> findChatMessagesReadOrNot(
+            @RequestParam("userId") Long userId
+    ) {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            List<Object[]> chatMessageReadOrNotList = favoritesService.getChatMessageReadOrNot(userId);
+            System.out.println("chatMessageReadOrNotList: " + chatMessageReadOrNotList);
+
+            if (chatMessageReadOrNotList != null && !chatMessageReadOrNotList.isEmpty()){
+                for (Object[] chatMessageReadOrNot : chatMessageReadOrNotList) {
+                    System.out.println("chatMessageReadOrNot: " + chatMessageReadOrNot[0] + " " + chatMessageReadOrNot[1] + " " + chatMessageReadOrNot[2]);
+                }
+                response.put("chatMessageReadOrNotList", chatMessageReadOrNotList);
+                System.out.println("response" + response);
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("chatMessageReadOrNotList", null);
+                return ResponseEntity.ok(response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(null);
+        }
+    }
+
+    @PostMapping("updateReadOrNotStatus")
+    public ResponseEntity<String> updateReadOrNotStatus(@RequestBody ChatMessageReadOrNot ReadOrNotData) {
+        try {
+            System.out.println("SenderId: " + ReadOrNotData.getSenderId());
+            System.out.println("RecipientId: " + ReadOrNotData.getRecipientId());
+            Long SenderUserId = ReadOrNotData.getSenderId();
+            Long RecipientUserId = ReadOrNotData.getRecipientId();
+            String Response = favoritesService.updateChatMessageReadOrNotStatus(SenderUserId, RecipientUserId);
+            if (Response.equals("US")) {
+                return ResponseEntity.ok("OK");
+            } else {
+                return ResponseEntity.ok("ERROR");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

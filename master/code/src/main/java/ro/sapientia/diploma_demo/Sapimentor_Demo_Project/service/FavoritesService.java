@@ -3,7 +3,9 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.FavoritesDTO;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.ChatMessageReadOrNot;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ChatMessageReadOrNotRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.FavoriteRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 
@@ -18,11 +20,14 @@ import java.util.List;
 public class FavoritesService {
     private final UserRepository userRepository;
     private final FavoriteRepository favoriteRepository;
+    private final ChatMessageReadOrNotRepository chatMessageReadOrNotRepository;
 
     public FavoritesService(UserRepository userRepository,
-                            FavoriteRepository favoriteRepository) {
+                            FavoriteRepository favoriteRepository,
+                            ChatMessageReadOrNotRepository chatMessageReadOrNotRepository) {
         this.userRepository = userRepository;
         this.favoriteRepository = favoriteRepository;
+        this.chatMessageReadOrNotRepository = chatMessageReadOrNotRepository;
     }
 
     public void showAllFavorites(Model model, Principal principal) {
@@ -55,5 +60,21 @@ public class FavoritesService {
 
     public List<Object[]> getSenderUserImg(Long userId) {
         return userRepository.findProfileImageById(userId);
+    }
+
+    public List<Object[]> getChatMessageReadOrNot(Long recipientId) {
+        //System.out.println("recipientId: " + recipientId);
+        return chatMessageReadOrNotRepository.findByRecipientId(recipientId);
+    }
+
+    public String updateChatMessageReadOrNotStatus(Long senderId, Long recipientId) {
+        ChatMessageReadOrNot chatMessageReadOrNot = chatMessageReadOrNotRepository.findBySenderIdAndRecipientId(senderId, recipientId);
+        if (chatMessageReadOrNot != null) {
+            chatMessageReadOrNot.setReadOrNot(1);
+            chatMessageReadOrNotRepository.save(chatMessageReadOrNot);
+            return "US";
+        } else {
+            return "NUS";
+        }
     }
 }

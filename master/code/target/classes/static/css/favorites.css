@@ -100,7 +100,7 @@ button{
 .left-message-box .user {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 3px;
 }
 
 .left-message-box .user img {

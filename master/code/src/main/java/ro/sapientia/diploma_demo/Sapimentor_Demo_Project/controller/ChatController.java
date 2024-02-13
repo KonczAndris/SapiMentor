@@ -25,6 +25,7 @@ public class ChatController {
     public void processMessage(
             @Payload ChatMessage chatMessage
     ) {
+
         ChatMessage savedMsg = chatMessageService.save(chatMessage);
 
         simpMessagingTemplate.convertAndSendToUser(
@@ -47,4 +48,5 @@ public class ChatController {
     ) {
         return ResponseEntity.ok(chatMessageService.findChatMessages(senderId, recipientId));
     }
+
 }

@@ -44,6 +44,9 @@ function onConnected() {
 }
 
 function userItemClick(event) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
     document.querySelectorAll('.user').forEach(item => {
         item.classList.remove('active');
     });
@@ -63,6 +66,34 @@ function userItemClick(event) {
     const nbrMsg = clickedUser.querySelector('.nbr-msg');
     nbrMsg.classList.add('hiddenMsg');
     nbrMsg.textContent = '0';
+
+    // itt ha rakattint a userre akkor a readOrNot-ot 1-re allitjuk mivel elolvasta
+    fetch('/myGroup/favorites/updateReadOrNotStatus', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': token
+        },
+        body: JSON.stringify({
+            senderId: selectedUserId,
+            recipientId: IdForUser,
+        })
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            throw new Error('Error in SSE fetch');
+        }
+    }).then(data => {
+        console.log("data: ", data);
+        if(data === 'OK') {
+            console.log("Sikeres modositas");
+        } else if (data === 'ERROR') {
+            console.log("Sikertelen modositas");
+        }
+    }).catch(error => {
+        console.log("Error: ", error);
+    });
 }
 
 function displayMessage(senderId, content) {
@@ -115,10 +146,39 @@ async function onMessageReceived(payload) {
     const message = JSON.parse(payload.body);
     console.log("Message Received tole :" + selectedUserId)
     console.log("Message Received tole itt a masik:" + message.senderId)
+
+    // ha belep ide akkor a read_Or_not-ot 1 -re allitjuk mivel elolvasta
     if (selectedUserId && selectedUserId === message.senderId.toString()) {
         console.log("Belep ide a displayMessage-be")
         displayMessage(message.senderId, message.content);
         chatArea.scrollTop = chatArea.scrollHeight;
+
+        fetch('/myGroup/favorites/updateReadOrNotStatus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify({
+                senderId: message.senderId,
+                recipientId: IdForUser,
+            })
+        }).then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Error in SSE fetch');
+            }
+        }).then(data => {
+            console.log("data: ", data);
+            if(data === 'OK') {
+                console.log("Sikeres modositas");
+            } else if (data === 'ERROR') {
+                console.log("Sikertelen modositas");
+            }
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
     }
 
     if (selectedUserId) {
@@ -146,6 +206,7 @@ async function onMessageReceived(payload) {
         user.addEventListener('click', userItemClick);
         var userImage = document.createElement('img');
         var userName = document.createElement('span');
+
         fetch(`/myGroup/favorites/getSenderUserImg?userId=${message.senderId}`, {
                 method: "GET",
                 headers: {
@@ -171,9 +232,9 @@ async function onMessageReceived(payload) {
             console.log("Error: ", error);
         });
 
-        var userStatus = document.createElement('div');
-        userStatus.classList.add('user-status');
-        userStatus.classList.add('online');
+        // var userStatus = document.createElement('div');
+        // userStatus.classList.add('user-status');
+        // userStatus.classList.add('online');
         var nbrMsg = document.createElement('span');
         nbrMsg.classList.add('nbr-msg');
         nbrMsg.textContent = '';
@@ -181,7 +242,7 @@ async function onMessageReceived(payload) {
         leftMessageBox.appendChild(user);
         user.appendChild(userImage);
         user.appendChild(userName);
-        user.appendChild(userStatus);
+        //user.appendChild(userStatus);
         user.appendChild(nbrMsg);
 
         // var chatBox = document.querySelector('.chat-box');
@@ -298,6 +359,101 @@ $(document).ready(function () {
     // WebSocket kapcsolat létrehozása
     connectToWebSocket();
 
+    fetch(`/myGroup/favorites/readOrnot?userId=${IdForUser}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }).then(data => {
+        console.log("dataigennem: ", data.chatMessageReadOrNotList);
+        if (data.chatMessageReadOrNotList !== null) {
+            for (var i = 0; i < data.chatMessageReadOrNotList.length; i++){
+                console.log("senderId: ", data.chatMessageReadOrNotList[i][0]);
+                console.log("recipientId: ", data.chatMessageReadOrNotList[i][1]);
+                console.log("readOrNot: ", data.chatMessageReadOrNotList[i][2]);
+                console.log("readOrNot: ");
+                var senderUserId = data.chatMessageReadOrNotList[i][0];
+                var recipientUserId = data.chatMessageReadOrNotList[i][1];
+                var readOrNot = data.chatMessageReadOrNotList[i][2];
+                // ha 0 akkor nincs elolvasva es akkor
+                // ilyenkor meg kell jeleniteni a felhasznalot
+                if (readOrNot === 0) {
+                    const notifiedUserElement = document.querySelector(`#${'user-' + senderUserId}`);
+                    console.log("notifiedUser: ", notifiedUserElement);
+                    if (notifiedUserElement && !notifiedUserElement.classList.contains('active')) {
+                        console.log("Belep a notifiedUser-be")
+                        const nbrMsg = notifiedUserElement.querySelector('.nbr-msg');
+                        nbrMsg.classList.remove('hiddenMsg');
+                        nbrMsg.textContent = '';
+                    } else if (notifiedUserElement === null) {
+                        var leftMessageBox = document.querySelector('.left-message-box');
+                        var userInfo = document.createElement('h3');
+                        userInfo.textContent = "Don't forget to add this user to your favorites to keep the message, otherwise, it will be lost!";
+                        userInfo.style.color = '#bd532c';
+                        userInfo.style.textAlign = 'center';
+                        var userElement = document.createElement('div');
+                        userElement.classList.add('user');
+                        userElement.id = 'user-' + senderUserId;
+                        userElement.addEventListener('click', userItemClick);
+                        var userImageElement = document.createElement('img');
+                        var userName = document.createElement('span');
+
+                        fetch(`/myGroup/favorites/getSenderUserImg?userId=${senderUserId}`, {
+                            method: "GET",
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-CSRF-TOKEN': token
+                            }
+                        }).then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error('Something went wrong');
+                            }
+                        }).then(data =>{
+                            console.log(data.selectedUserImg[0][0]);
+                            if (data.selectedUserImg === null) {
+                                userImageElement.src = "/img/anonym.jpg";
+                            } else {
+                                userImageElement.src = 'data:image/jpeg;base64,' + data.selectedUserImg[0][0];
+                            }
+                            console.log("Kep: " + userImageElement);
+                            userName.textContent = data.selectedUserImg[0][1] + " " + data.selectedUserImg[0][2];
+                        }).catch(error => {
+                            console.log("Error: ", error);
+                        });
+
+                        // var userStatus = document.createElement('div');
+                        // userStatus.classList.add('user-status');
+                        // userStatus.classList.add('online');
+                        var nbrMsg = document.createElement('span');
+                        nbrMsg.classList.add('nbr-msg');
+                        nbrMsg.textContent = '';
+
+                        leftMessageBox.appendChild(userElement);
+                        userElement.appendChild(userImageElement);
+                        userElement.appendChild(userName);
+                        //userElement.appendChild(userStatus);
+                        userElement.appendChild(nbrMsg);
+
+                        // var chatBox = document.querySelector('.chat-box');
+                        // chatBox.appendChild(userInfo);
+                    }
+                }
+            }
+        } else {
+            console.log("Nincs ilyen adat");
+        }
+    }).catch(error => {
+        console.log("Error: ", error);
+    });
 });
 
 
