@@ -110,9 +110,9 @@ button{
 }
 
 .left-message-box .user .user-status {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%; /* KÃƒÂ¶r alakÃƒÂº */
+    min-width: 10px;
+    min-height: 10px;
+    border-radius: 50%; /* KÃƒÆ’Ã‚Â¶r alakÃƒÆ’Ã‚Âº */
 }
 
 .left-message-box .user .online {
@@ -132,12 +132,13 @@ button{
     background-color: rgb(253, 253, 253);
 }
 
-.user.active {
-    background-color: rgb(97 218 179);
-    border-radius: 60px;
-    width: 90%;
-}
 
+.user.active {
+    background-color: rgb(111 233 193);
+    border-radius: 60px;
+    width: 92%;
+    padding: 5px;
+}
 
 @media screen and (max-width: 1000px) {
     .right-message-box{
@@ -155,6 +156,9 @@ button{
 
 @media screen and (max-width: 600px) {
 
+    .user{
+        min-width: 60px;
+    }
 
 
     .left-message-box{
@@ -191,10 +195,15 @@ button{
         justify-content: start;
     }
 
-    .user.active {
-        background-color: rgb(97 218 179);
-        border-radius: 40px;
-        width: 20%;
+    .user.active{
+        background: none;
+        width: 00%;
+    }
+
+    .user.active img{
+        border: 4px solid rgb(111 233 193);
+        margin: none;
+
     }
 
 }

@@ -89,7 +89,7 @@ const lightCheckbox = document.getElementById('light');
 // Check if dark theme was selected previously and apply it
 if (localStorage.getItem('theme') === 'dark') {
     darkCheckbox.checked = true;
-    applyDarkTheme(); // Apply the dark theme
+    applyDarkTheme();
 }
 
 else{
