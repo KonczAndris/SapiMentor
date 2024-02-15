@@ -1,5 +1,6 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.FavoritesDTO;
@@ -30,6 +31,7 @@ public class FavoritesService {
         this.chatMessageReadOrNotRepository = chatMessageReadOrNotRepository;
     }
 
+    @Cacheable("showAllFavorites")
     public void showAllFavorites(Model model, Principal principal) {
         String email = principal.getName();
         Long userId = userRepository.findIdByEmail(email);
@@ -58,10 +60,12 @@ public class FavoritesService {
         model.addAttribute("allFavoritesUser", favoriteUserDTOs);
     }
 
+    @Cacheable("senderUserImg")
     public List<Object[]> getSenderUserImg(Long userId) {
         return userRepository.findProfileImageById(userId);
     }
 
+    @Cacheable("chatMessageReadOrNot")
     public List<Object[]> getChatMessageReadOrNot(Long recipientId) {
         //System.out.println("recipientId: " + recipientId);
         return chatMessageReadOrNotRepository.findByRecipientId(recipientId);

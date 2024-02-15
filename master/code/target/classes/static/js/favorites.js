@@ -43,7 +43,7 @@ function onConnected() {
     });
 }
 
-function userItemClick(event) {
+async function userItemClick(event) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -204,6 +204,8 @@ async function onMessageReceived(payload) {
         user.classList.add('user');
         user.id = 'user-' + message.senderId;
         user.addEventListener('click', userItemClick);
+        var userImgContainer = document.createElement('div');
+        userImgContainer.classList.add('user-img-container');
         var userImage = document.createElement('img');
         var userName = document.createElement('span');
 
@@ -240,10 +242,11 @@ async function onMessageReceived(payload) {
         nbrMsg.textContent = '';
 
         leftMessageBox.appendChild(user);
-        user.appendChild(userImage);
-        user.appendChild(userName);
+        user.appendChild(userImgContainer);
+        userImgContainer.appendChild(userImage);
+        userImgContainer.appendChild(userName);
         //user.appendChild(userStatus);
-        user.appendChild(nbrMsg);
+        userImgContainer.appendChild(nbrMsg);
 
         // var chatBox = document.querySelector('.chat-box');
         // chatBox.appendChild(userInfo);
@@ -402,6 +405,8 @@ $(document).ready(function () {
                         userElement.classList.add('user');
                         userElement.id = 'user-' + senderUserId;
                         userElement.addEventListener('click', userItemClick);
+                        var userImageContainerElement = document.createElement('div');
+                        userImageContainerElement.classList.add('user-img-container');
                         var userImageElement = document.createElement('img');
                         var userName = document.createElement('span');
 
@@ -438,10 +443,10 @@ $(document).ready(function () {
                         nbrMsg.textContent = '';
                         userElement.style.opacity = 0.75;
                         leftMessageBox.appendChild(userElement);
-                        userElement.appendChild(userImageElement);
-                        userElement.appendChild(userName);
-                        //userElement.appendChild(userStatus);
-                        userElement.appendChild(nbrMsg);
+                        userElement.appendChild(userImageContainerElement);
+                        userImageContainerElement.appendChild(userImageElement);
+                        userImageContainerElement.appendChild(userName);
+                        userImageContainerElement.appendChild(nbrMsg);
 
                         // var chatBox = document.querySelector('.chat-box');
                         // chatBox.appendChild(userInfo);
