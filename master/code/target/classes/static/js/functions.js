@@ -479,15 +479,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 // uploadModal.style.display = 'none';
                 // location.reload();
             }, 'image/jpeg');
-
-            // Perform the necessary steps to upload the cropped image as the profile picture
-            // You can use AJAX to send the croppedDataURL to the server for further processing
-
-            // For demonstration purposes, you can log the data URL to the console
-
-
-
-
         }
     });
 
@@ -1102,6 +1093,7 @@ function handlereselectedimagesforProfilePage() {
 
     }
 }
+
 
 setupMentorModal();
 setupModal();

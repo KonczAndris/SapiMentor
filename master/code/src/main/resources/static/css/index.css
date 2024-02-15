@@ -387,3 +387,7 @@ a{
     display: inline-block;
     white-space: nowrap;
 }
+
+.hiddenMsg {
+    display: none;
+}

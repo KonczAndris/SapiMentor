@@ -139,6 +139,13 @@ button{
     width: 92%;
     padding: 5px;
 }
+.username-messenger {
+    color: rgb(25, 150, 114);
+}
+
+.user.active .username-messenger {
+    color: white;
+}
 
 .highlight {
     background-color: #FFCCCC;

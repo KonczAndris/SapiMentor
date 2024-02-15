@@ -19,7 +19,7 @@ let selectedUserId = null;
 function connectToWebSocket() {
     var element = document.querySelector('[id^="large-message-box-for-"]');
     IdForUser = element.id.substring('large-message-box-for-'.length);
-    console.log("Itt mar az userId: " + IdForUser);
+   // console.log("Itt mar az userId: " + IdForUser);
 
     var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
@@ -60,7 +60,10 @@ async function userItemClick(event) {
 
     var selectedUser = clickedUser.getAttribute('id');
     selectedUserId = selectedUser.substring('user-'.length);
-    console.log("selectedUserId: ", selectedUserId);
+    // const divelement = clickedUser.querySelector('.username-messenger');
+    // divelement.style.color = 'white';
+    // console.log("selectedUserName: ", divelement);
+   // console.log("selectedUserId: ", selectedUserId);
     fetchAndDisplayUserChat().then();
 
     const nbrMsg = clickedUser.querySelector('.nbr-msg-messenger');
@@ -85,11 +88,11 @@ async function userItemClick(event) {
             throw new Error('Error in SSE fetch');
         }
     }).then(data => {
-        console.log("data: ", data);
+       // console.log("data: ", data);
         if(data === 'OK') {
-            console.log("Sikeres modositas");
+            //console.log("Sikeres modositas");
         } else if (data === 'ERROR') {
-            console.log("Sikertelen modositas");
+           // console.log("Sikertelen modositas");
         }
     }).catch(error => {
         console.log("Error: ", error);
@@ -127,7 +130,7 @@ async function fetchAndDisplayUserChat() {
     chatArea.appendChild(infoContainer);
 
     userChat.forEach(chat => {
-        console.log("chat: ", chat);
+        //console.log("chat: ", chat);
         displayMessage(chat.senderId, chat.content);
     });
 }
@@ -142,14 +145,14 @@ async function onMessageReceived(payload) {
     var header = $("meta[name='_csrf_header']").attr("content");
 
     //await findAndDisplayConnectedUsers();
-    console.log('Message received', payload);
+   // console.log('Message received', payload);
     const message = JSON.parse(payload.body);
-    console.log("Message Received tole :" + selectedUserId)
-    console.log("Message Received tole itt a masik:" + message.senderId)
+    //console.log("Message Received tole :" + selectedUserId)
+    //console.log("Message Received tole itt a masik:" + message.senderId)
 
     // ha belep ide akkor a read_Or_not-ot 1 -re allitjuk mivel elolvasta
     if (selectedUserId && selectedUserId === message.senderId.toString()) {
-        console.log("Belep ide a displayMessage-be")
+        //console.log("Belep ide a displayMessage-be")
         displayMessage(message.senderId, message.content);
         chatArea.scrollTop = chatArea.scrollHeight;
 
@@ -170,11 +173,11 @@ async function onMessageReceived(payload) {
                 throw new Error('Error in SSE fetch');
             }
         }).then(data => {
-            console.log("data: ", data);
+            //console.log("data: ", data);
             if(data === 'OK') {
-                console.log("Sikeres modositas");
+                //console.log("Sikeres modositas");
             } else if (data === 'ERROR') {
-                console.log("Sikertelen modositas");
+                //console.log("Sikertelen modositas");
             }
         }).catch(error => {
             console.log("Error: ", error);
@@ -188,9 +191,9 @@ async function onMessageReceived(payload) {
     }
 
     const notifiedUser = document.querySelector(`#${'user-' + message.senderId}`);
-    console.log("notifiedUser: ", notifiedUser);
+    //console.log("notifiedUser: ", notifiedUser);
     if (notifiedUser && !notifiedUser.classList.contains('active')) {
-        console.log("Belep a notifiedUser-be")
+       // console.log("Belep a notifiedUser-be")
         const nbrMsg = notifiedUser.querySelector('.nbr-msg-messenger');
         nbrMsg.classList.remove('hiddenMsg');
         nbrMsg.textContent = '';
@@ -222,14 +225,15 @@ async function onMessageReceived(payload) {
                 throw new Error('Something went wrong');
             }
         }).then(data =>{
-            console.log(data.selectedUserImg[0][0]);
+            //console.log(data.selectedUserImg[0][0]);
             if (data.selectedUserImg === null) {
                 userImage.src = "/img/anonym.jpg";
             } else {
                 userImage.src = 'data:image/jpeg;base64,' + data.selectedUserImg[0][0];
             }
-            console.log("Kep: " + userImage);
+            //console.log("Kep: " + userImage);
             userName.textContent = data.selectedUserImg[0][1] + " " + data.selectedUserImg[0][2];
+            userName.style.color = 'rgb(20,115,100)'
         }).catch(error => {
             console.log("Error: ", error);
         });
@@ -244,9 +248,10 @@ async function onMessageReceived(payload) {
         leftMessageBox.appendChild(user);
         user.appendChild(userImgContainer);
         userImgContainer.appendChild(userImage);
-        userImgContainer.appendChild(userName);
-        //user.appendChild(userStatus);
         userImgContainer.appendChild(nbrMsg);
+        user.appendChild(userName);
+        //user.appendChild(userStatus);
+
 
         // var chatBox = document.querySelector('.chat-box');
         // chatBox.appendChild(userInfo);
@@ -308,27 +313,27 @@ $(document).ready(function () {
     var header = $("meta[name='_csrf_header']").attr("content");
 
 
-    fetch('/myGroup/favorites/updateUserStatusToOnline', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    }).then(response => {
-        if (response.ok) {
-            return response.text();
-        } else {
-            throw new Error('Something went wrong');
-        }
-    }).then(data => {
-        if (data === 'ok') {
-            console.log("Sikeres modositas");
-        } else {
-            throw new Error('Something went wrong');
-        }
-    }).catch(error => {
-        console.log("Error: ", error);
-    });
+    // fetch('/myGroup/favorites/updateUserStatusToOnline', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded',
+    //         'X-CSRF-TOKEN': token
+    //     }
+    // }).then(response => {
+    //     if (response.ok) {
+    //         return response.text();
+    //     } else {
+    //         throw new Error('Something went wrong');
+    //     }
+    // }).then(data => {
+    //     if (data === 'ok') {
+    //         //console.log("Sikeres modositas");
+    //     } else {
+    //         throw new Error('Something went wrong');
+    //     }
+    // }).catch(error => {
+    //     console.log("Error: ", error);
+    // });
 
     // Emojik beszúrása az input mezőbe
     $('#message-input').emojioneArea({
@@ -362,6 +367,7 @@ $(document).ready(function () {
     // WebSocket kapcsolat létrehozása
     connectToWebSocket();
 
+
     fetch(`/myGroup/favorites/readOrnot?userId=${IdForUser}`, {
         method: 'GET',
         headers: {
@@ -375,13 +381,13 @@ $(document).ready(function () {
             throw new Error('Something went wrong');
         }
     }).then(data => {
-        console.log("dataigennem: ", data.chatMessageReadOrNotList);
+        //console.log("dataigennem: ", data.chatMessageReadOrNotList);
         if (data.chatMessageReadOrNotList !== null) {
             for (var i = 0; i < data.chatMessageReadOrNotList.length; i++){
-                console.log("senderId: ", data.chatMessageReadOrNotList[i][0]);
-                console.log("recipientId: ", data.chatMessageReadOrNotList[i][1]);
-                console.log("readOrNot: ", data.chatMessageReadOrNotList[i][2]);
-                console.log("readOrNot: ");
+                //console.log("senderId: ", data.chatMessageReadOrNotList[i][0]);
+                //console.log("recipientId: ", data.chatMessageReadOrNotList[i][1]);
+                //console.log("readOrNot: ", data.chatMessageReadOrNotList[i][2]);
+                //console.log("readOrNot: ");
                 var senderUserId = data.chatMessageReadOrNotList[i][0];
                 var recipientUserId = data.chatMessageReadOrNotList[i][1];
                 var readOrNot = data.chatMessageReadOrNotList[i][2];
@@ -389,9 +395,9 @@ $(document).ready(function () {
                 // ilyenkor meg kell jeleniteni a felhasznalot
                 if (readOrNot === 0) {
                     const notifiedUserElement = document.querySelector(`#${'user-' + senderUserId}`);
-                    console.log("notifiedUser: ", notifiedUserElement);
+                   // console.log("notifiedUser: ", notifiedUserElement);
                     if (notifiedUserElement && !notifiedUserElement.classList.contains('active')) {
-                        console.log("Belep a notifiedUser-be")
+                        //console.log("Belep a notifiedUser-be")
                         const nbrMsg = notifiedUserElement.querySelector('.nbr-msg-messenger');
                         nbrMsg.classList.remove('hiddenMsg');
                         nbrMsg.textContent = '';
@@ -423,14 +429,15 @@ $(document).ready(function () {
                                 throw new Error('Something went wrong');
                             }
                         }).then(data =>{
-                            console.log(data.selectedUserImg[0][0]);
+                            //console.log(data.selectedUserImg[0][0]);
                             if (data.selectedUserImg === null) {
                                 userImageElement.src = "/img/anonym.jpg";
                             } else {
                                 userImageElement.src = 'data:image/jpeg;base64,' + data.selectedUserImg[0][0];
                             }
-                            console.log("Kep: " + userImageElement);
+                            //console.log("Kep: " + userImageElement);
                             userName.textContent = data.selectedUserImg[0][1] + " " + data.selectedUserImg[0][2];
+                            //userName.style.color = 'rgb(25, 150, 114)'
                         }).catch(error => {
                             console.log("Error: ", error);
                         });
@@ -441,19 +448,15 @@ $(document).ready(function () {
                         var nbrMsg = document.createElement('span');
                         nbrMsg.classList.add('nbr-msg-messenger');
                         nbrMsg.textContent = '';
-                        userElement.style.opacity = 0.75;
+                        //userElement.style.opacity = 0.75;
                         leftMessageBox.appendChild(userElement);
 
                         userElement.appendChild(userImageContainerElement);
                         userImageContainerElement.appendChild(userImageElement);
-                        userImageContainerElement.appendChild(userName);
                         userImageContainerElement.appendChild(nbrMsg);
-
-                        // var chatBox = document.querySelector('.chat-box');
-                        // chatBox.appendChild(userInfo);
-                        userElement.appendChild(userImageElement);
                         userElement.appendChild(userName);
-                        userElement.appendChild(nbrMsg);
+
+
                     }
                 }
             }
@@ -467,32 +470,32 @@ $(document).ready(function () {
 
 
 
-window.addEventListener('beforeunload', function (e) {
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
-
-
-    fetch('/myGroup/favorites/updateUserStatusToOffline', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    }).then(response => {
-        if (response.ok) {
-            return response.text();
-        } else {
-            throw new Error('Something went wrong');
-        }
-    }).then(data => {
-        if (data === 'ok') {
-            console.log("Sikeres modositas");
-        } else {
-            throw new Error('Something went wrong');
-        }
-    }).catch(error => {
-        console.log("Error: ", error);
-    });
-});
+// window.addEventListener('beforeunload', function (e) {
+//     var token = $("meta[name='_csrf']").attr("content");
+//     var header = $("meta[name='_csrf_header']").attr("content");
+//
+//
+//     fetch('/myGroup/favorites/updateUserStatusToOffline', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded',
+//             'X-CSRF-TOKEN': token
+//         }
+//     }).then(response => {
+//         if (response.ok) {
+//             return response.text();
+//         } else {
+//             throw new Error('Something went wrong');
+//         }
+//     }).then(data => {
+//         if (data === 'ok') {
+//             //console.log("Sikeres modositas");
+//         } else {
+//             throw new Error('Something went wrong');
+//         }
+//     }).catch(error => {
+//         console.log("Error: ", error);
+//     });
+// });
 
 

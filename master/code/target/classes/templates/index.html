@@ -26,7 +26,7 @@
 </div>
 
 
-<div class="center">
+<div class="center" th:id="'userIdForIndexPage-' + ${userId}">
     <div class="left hidden">
         <div class="center-image">
             <img th:src="@{/img/white.png}" id="sapimentor-logo" alt="image">
@@ -42,7 +42,7 @@
                          th:attr="data-cache='no-cache'">
                     <img th:unless="${indexImagesBase64 != ''}"
                          th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
-                    <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+                    <span class="nbr-msg hiddenMsg toMessenger-btn" ></span>
                 </div>
                     <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span>  </a>
         </div>
@@ -125,6 +125,10 @@
 
     </div>
   </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <script th:src="@{/js/WebSocketForIndexPage.js}"></script>
   <script th:src="@{/js/functions.js}"></script>
 <script>
     if (localStorage.getItem('theme') === 'dark') {

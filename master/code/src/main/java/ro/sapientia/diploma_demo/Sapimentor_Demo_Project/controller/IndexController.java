@@ -58,6 +58,7 @@ public class IndexController {
         }
 
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
+        model.addAttribute("userId", user.getId());
 
         return "index";
     }
