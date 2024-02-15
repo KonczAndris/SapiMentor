@@ -443,6 +443,7 @@ $(document).ready(function () {
                         nbrMsg.textContent = '';
                         userElement.style.opacity = 0.75;
                         leftMessageBox.appendChild(userElement);
+
                         userElement.appendChild(userImageContainerElement);
                         userImageContainerElement.appendChild(userImageElement);
                         userImageContainerElement.appendChild(userName);
@@ -450,6 +451,9 @@ $(document).ready(function () {
 
                         // var chatBox = document.querySelector('.chat-box');
                         // chatBox.appendChild(userInfo);
+                        userElement.appendChild(userImageElement);
+                        userElement.appendChild(userName);
+                        userElement.appendChild(nbrMsg);
                     }
                 }
             }
