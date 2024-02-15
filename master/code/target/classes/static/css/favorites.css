@@ -265,7 +265,7 @@ button{
     display: inline-block;
 }
 
-.nbr-msg {
+.nbr-msg-messenger {
     position: absolute;
     left: 22px;
     top: 25px;

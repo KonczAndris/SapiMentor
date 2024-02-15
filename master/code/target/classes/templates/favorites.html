@@ -112,7 +112,7 @@
                          th:src="@{|data:image/jpeg;base64,${favoriteUser.favoriteProfileImageBase64}|}">
                     <img th:unless="${favoriteUser.favoriteProfileImageBase64 != ''}"
                          th:src="@{/img/anonym.jpg}" alt="Profile Image">
-                    <span class="nbr-msg hiddenMsg"></span>
+                    <span class="nbr-msg-messenger hiddenMsg"></span>
                     </div>
                     <span class="username-messenger" th:text="${favoriteUser.fullName}"></span>
                     <!-- Példa online státuszra -->
