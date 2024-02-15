@@ -43,7 +43,7 @@ function onConnected() {
     });
 }
 
-function userItemClick(event) {
+async function userItemClick(event) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
