@@ -6,6 +6,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
+document.querySelectorAll(".toMessenger-btn").forEach(function(element) {
+    element.addEventListener("click", function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        window.location.href = "/myGroup/favorites";
+    });
+});
+
 function setupMentorModal() {
     var mentorModal = document.getElementById("mentorModal");
 
@@ -1094,14 +1102,6 @@ function handlereselectedimagesforProfilePage() {
 
     }
 }
-
-document.querySelectorAll(".toMessenger-btn").forEach(function(element) {
-    element.addEventListener("click", function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        window.location.href = "/myGroup/favorites";
-    });
-});
 
 setupMentorModal();
 setupModal();

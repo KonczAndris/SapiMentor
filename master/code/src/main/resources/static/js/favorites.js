@@ -3,6 +3,14 @@ document.getElementById("searchMyGroup").addEventListener("click", function () {
     window.location.href = "/myGroup";
 });
 
+document.querySelectorAll(".toMessenger-btn").forEach(function(element) {
+    element.addEventListener("click", function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        window.location.href = "/myGroup/favorites";
+    });
+});
+
 // itt kezdodik a chat funkcio megvalositasa
 
 const chatPage = document.querySelector('#chat-page');
