@@ -1095,6 +1095,16 @@ function handlereselectedimagesforProfilePage() {
     }
 }
 
+document.querySelectorAll(".toMessenger-btn").forEach(function(element) {
+    element.addEventListener("click", function(event) {
+        // Prevent the default behavior of the anchor tag
+        event.preventDefault();
+
+        // Your custom logic here
+        // For example, you can navigate to a different URL
+        window.location.href = "/myGroup/favorites";
+    });
+});
 
 setupMentorModal();
 setupModal();
