@@ -108,8 +108,15 @@ button{
 }
 
 a{
+    /* display: flex; */
     text-decoration: none !important;
     color: white;
+    /* flex-direction: row; */
+}
+
+.menu-function-profile a{
+    display: flex;
+    align-items: center;
 }
 
 .menu-function, .menu-function-top{
@@ -374,4 +381,9 @@ a{
     background-image: url('../img/envelope.png');
     background-size: contain;
     outline: 50px solid transparent;
+}
+
+.username-container{
+    display: inline-block;
+    white-space: nowrap;
 }

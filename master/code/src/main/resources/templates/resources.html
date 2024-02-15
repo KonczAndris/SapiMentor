@@ -27,7 +27,7 @@
                  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
             <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
         </div>
-        <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
+        <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
     <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
 </div>
 
@@ -48,7 +48,7 @@
                         th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
                    <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
                </div>
-               <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
+               <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
        </div>
        <div class="menu-divider"></div>
        <div class="form-group" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">

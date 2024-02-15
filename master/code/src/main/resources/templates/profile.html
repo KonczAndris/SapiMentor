@@ -31,7 +31,7 @@
         <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
       </div>
 
-      <span class="profile-taskbar-name" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span>
+      <span class="profile-taskbar-name username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span>
     </a>
   </p>
     <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
@@ -57,7 +57,7 @@
           <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
           </div>
 
-          <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span>
+          <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span>
          </a>
     </div>
     <div class="menu-divider"></div>

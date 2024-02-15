@@ -440,11 +440,7 @@ $(document).ready(function () {
                         leftMessageBox.appendChild(userElement);
                         userElement.appendChild(userImageElement);
                         userElement.appendChild(userName);
-                        //userElement.appendChild(userStatus);
                         userElement.appendChild(nbrMsg);
-
-                        // var chatBox = document.querySelector('.chat-box');
-                        // chatBox.appendChild(userInfo);
                     }
                 }
             }
