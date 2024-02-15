@@ -108,11 +108,19 @@
                 <div class="user" th:id="${'user-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}" th:onclick="userItemClick(event)">
                     <div class="user-status" th:classappend="${favoriteUser.status == 0 ? 'offline' : 'online'}"></div>
                     <div class="user-img-container">
+
+                        <img th:if="${favoriteUser.favoriteProfileImageBase64 != ''}"
+                            th:src="@{|data:image/jpeg;base64,${favoriteUser.favoriteProfileImageBase64}|}">
+                        <img th:unless="${favoriteUser.favoriteProfileImageBase64 != ''}"
+                            th:src="@{/img/anonym.jpg}" alt="Profile Image">
+                        <span class="nbr-msg hiddenMsg"></span>
+
                     <img th:if="${favoriteUser.favoriteProfileImageBase64 != ''}"
                          th:src="@{|data:image/jpeg;base64,${favoriteUser.favoriteProfileImageBase64}|}">
                     <img th:unless="${favoriteUser.favoriteProfileImageBase64 != ''}"
                          th:src="@{/img/anonym.jpg}" alt="Profile Image">
                     <span class="nbr-msg-messenger hiddenMsg"></span>
+
                     </div>
                     <span class="username-messenger" th:text="${favoriteUser.fullName}"></span>
                     <!-- Példa online státuszra -->
