@@ -16,8 +16,8 @@
 <body>
 
 <div class="taskbar">
-    <p class="menu-function-top">
-        <a href="/" th:href="@{/profile}">
+    <a href="/" th:href="@{/profile}">
+        <div class="user-img-container">
             <img th:if="${profileImageBase64 != ''}"
                  th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
                  alt="Profile Image" class="menu-icon rounded-icon-top"
@@ -25,9 +25,10 @@
                  th:attr="data-cache='no-cache'">
             <img th:unless="${profileImageBase64 != ''}"
                  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
-            <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
-    <p class="menu-function">
-        <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
+            <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+        </div>
+        <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
+    <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
 </div>
 
 <div class="center">
@@ -35,9 +36,10 @@
         <div class="center-image">
             <img th:src="@{/img/white.png}" id="sapimentor-logo" alt="image">
         </div>
-        <div class="form-group form-group-profile">
-            <p class="menu-function menu-function-profile">
-                <a href="/" th:href="@{/profile}">
+
+        <div class="form-group form-group-profile menu-function-profile">
+            <a href="/" th:href="@{/profile}">
+                <div class="user-img-container">
                     <img th:if="${profileImageBase64 != ''}"
                          th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
                          alt="Profile Image" class="menu-icon rounded-icon"
@@ -45,8 +47,11 @@
                          th:attr="data-cache='no-cache'">
                     <img th:unless="${profileImageBase64 != ''}"
                          th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
-                    <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
+                    <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+                </div>
+                <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
         </div>
+
         <div class="menu-divider"></div>
         <div class="form-group" >
             <p class="menu-function">

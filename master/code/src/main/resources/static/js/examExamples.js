@@ -14,7 +14,6 @@ document.getElementById("resourcesDrop").addEventListener("click", function () {
     window.location.href = "/resources";
 });
 
-
 function toggleFilterDropdown() {
     var dropdownContent = document.getElementById("filter-myDropdown");
     dropdownContent.classList.toggle("active");
