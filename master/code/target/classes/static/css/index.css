@@ -165,9 +165,10 @@ a{
 }
 
 .rounded-icon-top{
-    margin-top: 6px;
-    margin-left: 6px;
-    margin-bottom: 1px;
+    margin-top: 6px !important;
+    margin-left: 6px !important;
+    margin-bottom: 1px !important;
+    margin-right: 10px !important;
     width: 35px;
     border-radius: 50%;
     padding: 0;
@@ -372,4 +373,5 @@ a{
     line-height: 1;
     background-image: url('../img/envelope.png');
     background-size: contain;
+    outline: 50px solid transparent;
 }

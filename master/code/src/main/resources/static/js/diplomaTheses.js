@@ -14,6 +14,13 @@ document.getElementById("resourcesDrop").addEventListener("click", function () {
     window.location.href = "/resources";
 });
 
+document.querySelectorAll(".toMessenger-btn").forEach(function(element) {
+    element.addEventListener("click", function(event) {
+        event.preventDefault();
+        event.stopPropagation(); // Stop event propagation
+        window.location.href = "/myGroup/favorites";
+    });
+});
 
 function toggleFilterDropdown() {
     var dropdownContent = document.getElementById("filter-myDropdown");

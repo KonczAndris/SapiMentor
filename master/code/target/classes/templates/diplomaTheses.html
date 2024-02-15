@@ -17,6 +17,7 @@
 
 <div class="taskbar">
     <a href="/" th:href="@{/profile}">
+
       <div class="user-img-container">
       <img th:if="${profileImageBase64 != ''}"
            th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
@@ -51,8 +52,8 @@
     </div>
           <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
     </div>
-    <div class="menu-divider"></div>
 
+    <div class="menu-divider"></div>
     <div class="form-group" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
       <p class="menu-function">
         <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
@@ -289,8 +290,8 @@
 
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script th:src="@{/js/functions.js}"></script>
 <script th:src="@{/js/diplomaTheses.js}"></script>
+<script th:src="@{/js/functions.js}"></script>
 <script>
   if (localStorage.getItem('theme') === 'dark') {
     const darkThemeLink = document.createElement('link');
