@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SapiMentor</title>
     <link rel="stylesheet"  type="text/css" th:href="@{/css/index-home.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
     <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
     <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 </head>
 <body>
 <div class="taskbar">
-    <p class="menu-function-top">
         <a href="/" th:href="@{/profile}">
+            <div class="user-img-container">
             <img th:if="${topicsImageBase64 != ''}"
                  th:src="@{|data:image/jpeg;base64,${topicsImageBase64}|}"
                  alt="Profile Image" class="menu-icon rounded-icon-top"
@@ -19,9 +20,11 @@
                  th:attr="data-cache='no-cache'">
             <img th:unless="${topicsImageBase64 != ''}"
                  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
-            <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
+                <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+            </div>
+            <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
     <p class="menu-function">
-        <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
+        <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()">
 </div>
 
 
@@ -31,9 +34,9 @@
             <img th:src="@{/img/white.png}" id="sapimentor-logo" alt="image">
         </div>
 
-        <div class="form-group form-group-profile">
-            <p class="menu-function menu-function-profile">
+        <div class="form-group form-group-profile menu-function-profile">
                 <a href="/" th:href="@{/profile}">
+                    <div class="user-img-container">
                     <img th:if="${topicsImageBase64 != ''}"
                          th:src="@{|data:image/jpeg;base64,${topicsImageBase64}|}"
                          alt="Profile Image" class="menu-icon rounded-icon"
@@ -41,6 +44,8 @@
                          th:attr="data-cache='no-cache'">
                     <img th:unless="${topicsImageBase64 != ''}"
                          th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
+                        <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+                    </div>
                     <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span>  </a>
         </div>
 
