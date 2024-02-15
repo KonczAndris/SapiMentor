@@ -63,7 +63,7 @@ async function userItemClick(event) {
     console.log("selectedUserId: ", selectedUserId);
     fetchAndDisplayUserChat().then();
 
-    const nbrMsg = clickedUser.querySelector('.nbr-msg');
+    const nbrMsg = clickedUser.querySelector('.nbr-msg-messenger');
     nbrMsg.classList.add('hiddenMsg');
     nbrMsg.textContent = '0';
 
@@ -191,7 +191,7 @@ async function onMessageReceived(payload) {
     console.log("notifiedUser: ", notifiedUser);
     if (notifiedUser && !notifiedUser.classList.contains('active')) {
         console.log("Belep a notifiedUser-be")
-        const nbrMsg = notifiedUser.querySelector('.nbr-msg');
+        const nbrMsg = notifiedUser.querySelector('.nbr-msg-messenger');
         nbrMsg.classList.remove('hiddenMsg');
         nbrMsg.textContent = '';
     } else if (notifiedUser === null) {
@@ -236,7 +236,7 @@ async function onMessageReceived(payload) {
         // userStatus.classList.add('user-status');
         // userStatus.classList.add('online');
         var nbrMsg = document.createElement('span');
-        nbrMsg.classList.add('nbr-msg');
+        nbrMsg.classList.add('nbr-msg-messenger');
         nbrMsg.textContent = '';
 
         leftMessageBox.appendChild(user);
@@ -389,7 +389,7 @@ $(document).ready(function () {
                     console.log("notifiedUser: ", notifiedUserElement);
                     if (notifiedUserElement && !notifiedUserElement.classList.contains('active')) {
                         console.log("Belep a notifiedUser-be")
-                        const nbrMsg = notifiedUserElement.querySelector('.nbr-msg');
+                        const nbrMsg = notifiedUserElement.querySelector('.nbr-msg-messenger');
                         nbrMsg.classList.remove('hiddenMsg');
                         nbrMsg.textContent = '';
                     } else if (notifiedUserElement === null) {
@@ -434,9 +434,9 @@ $(document).ready(function () {
                         // userStatus.classList.add('user-status');
                         // userStatus.classList.add('online');
                         var nbrMsg = document.createElement('span');
-                        nbrMsg.classList.add('nbr-msg');
+                        nbrMsg.classList.add('nbr-msg-messenger');
                         nbrMsg.textContent = '';
-
+                        userElement.style.opacity = 0.75;
                         leftMessageBox.appendChild(userElement);
                         userElement.appendChild(userImageElement);
                         userElement.appendChild(userName);
