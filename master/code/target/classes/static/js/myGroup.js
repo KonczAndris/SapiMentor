@@ -1,3 +1,76 @@
+'use strict';
+
+let stompClient = null;
+let IdForUserInMyGroupPage = null;
+function connectToWebSocketForMyGroupPage() {
+    var elementToGetMyGroupUserId = document.querySelector('[id^="userIdForMyGroupPage-"]');
+    // console.log("elementToGetUserId: ", elementToGetUserId);
+    IdForUserInMyGroupPage = elementToGetMyGroupUserId.id.split("-")[1];
+    // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
+
+    var socket = new SockJS('/ws');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, onConnectedForMyGroupPage, onErrorInMyGroupPage);
+}
+
+function onConnectedForMyGroupPage() {
+    stompClient.subscribe(`/user/${IdForUserInMyGroupPage}/queue/messages`, onMessageReceivedNotificationInMyGroupPage)
+}
+
+function onErrorInMyGroupPage(error) {
+    //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+    //connectingElement.style.color = 'red';
+}
+
+async function onMessageReceivedNotificationInMyGroupPage(payload) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    document.querySelectorAll('.nbr-msg').forEach(item => {
+        item.classList.remove('hiddenMsg');
+        item.textContent = '';
+    });
+}
+
+// ez azert hogy a valosideju ertesiteseket is megkapjuk
+// es ha frissitunk vagy ha csak siman ugy kapunk ertesitest hogy nem vagyunk
+// belepve akkor is megkapjuk az ertesitest
+document.addEventListener('DOMContentLoaded', () => {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    connectToWebSocketForMyGroupPage();
+
+    var elementToGetMyGroupProfileUserId = document.querySelector('[id^="userIdForMyGroupPage-"]');
+    var mygroupasprofileUserId = elementToGetMyGroupProfileUserId.id.split("-")[1];
+
+    fetch(`/myGroup/getMyGroupProfileNotificationStatus?userId=${mygroupasprofileUserId}`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            throw new Error('Request failed!');
+        }
+    }).then(data => {
+        if (data === "OK") {
+            document.querySelectorAll('.nbr-msg').forEach(item => {
+                item.classList.remove('hiddenMsg');
+                item.textContent = '';
+            });
+        }
+    }).catch((error) => {
+        console.log("Error:" + error);
+    });
+
+});
+
+
 
 
 // Ez azert kell hogy az oldal frissitese nelkul is egybol mindenkinel megjelenjen a comment

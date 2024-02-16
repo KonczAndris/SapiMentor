@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SapiMentor</title>
+    <!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+    <!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel="stylesheet"  type="text/css" th:href="@{/css/index-home.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
     <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
@@ -28,7 +30,7 @@
 </div>
 
 
-<div class="center">
+<div class="center" th:id="'userIdForTopicsPage-' + ${topicsUserId}">
     <div class="left hidden">
         <div class="center-image">
             <img th:src="@{/img/white.png}" id="sapimentor-logo" alt="image">
@@ -78,8 +80,11 @@
 
     </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{/js/functions.js}"></script>
+<script th:src="@{/js/topics.js}"></script>
 <script>
     if (localStorage.getItem('theme') === 'dark') {
         const darkThemeLink = document.createElement('link');

@@ -16,6 +16,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.RatingService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserServiceImpl;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UserProfileNotification;
 
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
@@ -32,6 +33,7 @@ public class ProfileController {
     private final ProfileTopicsRepository profileTopicsRepository;
     private final RatingService ratingService;
     private final RoleRepository roleRepository;
+    private final UserProfileNotification userProfileNotification;
 
 
     @Autowired
@@ -42,7 +44,8 @@ public class ProfileController {
                              TopicRepository topicRepository,
                              ProfileTopicsRepository profileTopicsRepository,
                              RatingService ratingService,
-                             RoleRepository roleRepository) {
+                             RoleRepository roleRepository,
+                             UserProfileNotification userProfileNotification) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.topicService = topicService;
@@ -51,6 +54,7 @@ public class ProfileController {
         this.profileTopicsRepository = profileTopicsRepository;
         this.ratingService = ratingService;
         this.roleRepository = roleRepository;
+        this.userProfileNotification = userProfileNotification;
     }
 
     @GetMapping("/profile")
@@ -381,6 +385,20 @@ public class ProfileController {
 
         // JSON objektum visszaadása a ResponseEntity segítségével
         return ResponseEntity.ok(new ObjectMapper().writeValueAsString(response));
+    }
+
+    @GetMapping("/profile/getProfileNotificationStatus")
+    public ResponseEntity<String> getProfileNotificationStatus(Long userId) {
+        if(userId != null) {
+            String profileNotificationStatus = userProfileNotification.getProfileNotificationStatus(userId);
+            if (profileNotificationStatus != null && profileNotificationStatus.equals("HAVE")) {
+                return ResponseEntity.ok("OK");
+            } else {
+                return ResponseEntity.ok("NOTOK");
+            }
+        } else {
+            return ResponseEntity.ok("ERROR");
+        }
     }
 
 }

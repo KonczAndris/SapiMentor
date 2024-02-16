@@ -1,6 +1,7 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UserProfileNotification;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -22,11 +24,15 @@ import java.util.List;
 public class TopicsController {
     private final UserRepository userRepository;
     private final TopicService topicService;
+    private final UserProfileNotification userProfileNotification;
 
     @Autowired
-    public TopicsController(UserRepository userRepository, TopicService topicService) {
+    public TopicsController(UserRepository userRepository,
+                            TopicService topicService,
+                            UserProfileNotification userProfileNotification) {
         this.userRepository = userRepository;
         this.topicService = topicService;
+        this.userProfileNotification = userProfileNotification;
     }
 
     private void showUserRolesToDisplayTopics(Model model, Principal principal){
@@ -73,6 +79,7 @@ public class TopicsController {
         }
 
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
+        model.addAttribute("topicsUserId", user.getId());
     }
 
     @GetMapping("")
@@ -84,5 +91,19 @@ public class TopicsController {
         showProfileImageAndName(model, principal);
 
         return "topics";
+    }
+
+    @GetMapping("/getTopicsProfileNotificationStatus")
+    public ResponseEntity<String> getProfileNotificationStatus(Long userId) {
+        if(userId != null) {
+            String profileNotificationStatus = userProfileNotification.getProfileNotificationStatus(userId);
+            if (profileNotificationStatus != null && profileNotificationStatus.equals("HAVE")) {
+                return ResponseEntity.ok("OK");
+            } else {
+                return ResponseEntity.ok("NOTOK");
+            }
+        } else {
+            return ResponseEntity.ok("ERROR");
+        }
     }
 }

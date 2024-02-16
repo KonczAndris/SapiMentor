@@ -1,3 +1,77 @@
+'use strict';
+
+let stompClient = null;
+let IdForUserInDiplomaThesesPage = null;
+function connectToWebSocketForDiplomaThesesPage() {
+    var elementToGetDiplomaThesesUserId = document.querySelector('[id^="userIdForDiplomaThesesPage-"]');
+    // console.log("elementToGetUserId: ", elementToGetUserId);
+    IdForUserInDiplomaThesesPage = elementToGetDiplomaThesesUserId.id.split("-")[1];
+    // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
+
+    var socket = new SockJS('/ws');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, onConnectedForDiplomaThesesPage, onErrorInDiplomaThesesPage);
+}
+
+function onConnectedForDiplomaThesesPage() {
+    stompClient.subscribe(`/user/${IdForUserInDiplomaThesesPage}/queue/messages`, onMessageReceivedNotificationInDiplomaThesesPage)
+}
+
+function onErrorInDiplomaThesesPage(error) {
+    //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+    //connectingElement.style.color = 'red';
+}
+
+async function onMessageReceivedNotificationInDiplomaThesesPage(payload) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    document.querySelectorAll('.nbr-msg').forEach(item => {
+        item.classList.remove('hiddenMsg');
+        item.textContent = '';
+    });
+}
+
+// ez azert hogy a valosideju ertesiteseket is megkapjuk
+// es ha frissitunk vagy ha csak siman ugy kapunk ertesitest hogy nem vagyunk
+// belepve akkor is megkapjuk az ertesitest
+document.addEventListener('DOMContentLoaded', () => {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    connectToWebSocketForDiplomaThesesPage();
+
+    var elementToGetDiplomaThesesProfileUserId = document.querySelector('[id^="userIdForDiplomaThesesPage-"]');
+    var DiplomaThesesprofileUserId = elementToGetDiplomaThesesProfileUserId.id.split("-")[1];
+
+    fetch(`/resources/diplomaTheses/getDiplomaThesesProfileNotificationStatus?userId=${DiplomaThesesprofileUserId}`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            throw new Error('Request failed!');
+        }
+    }).then(data => {
+        if (data === "OK") {
+            document.querySelectorAll('.nbr-msg').forEach(item => {
+                item.classList.remove('hiddenMsg');
+                item.textContent = '';
+            });
+        }
+    }).catch((error) => {
+        console.log("Error:" + error);
+    });
+
+});
+
+
+
 document.getElementById("examExamples").addEventListener("click", function () {
     window.location.href = "/resources/examExamples";
 });

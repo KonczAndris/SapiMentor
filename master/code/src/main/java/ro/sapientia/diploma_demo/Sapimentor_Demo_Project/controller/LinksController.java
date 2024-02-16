@@ -18,6 +18,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ResourceService
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserResourceLikeDislikeService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.VirusTotalService;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UserProfileNotification;
 
 import java.security.Principal;
 import java.util.*;
@@ -33,6 +34,7 @@ public class LinksController {
     private final SseController sseController;
     private final VirusTotalService virusTotalService;
     private final UserResourceLikeDislikeService userResourceLikeDislikeService;
+    private final UserProfileNotification userProfileNotification;
 
 
     @Autowired
@@ -42,7 +44,8 @@ public class LinksController {
                            ResourceServices resourceServices,
                            SseController sseController,
                            VirusTotalService virusTotalService,
-                           UserResourceLikeDislikeService userResourceLikeDislikeService) {
+                           UserResourceLikeDislikeService userResourceLikeDislikeService,
+                           UserProfileNotification userProfileNotification) {
         this.userRepository = userRepository;
         this.topicService = topicService;
         this.resourcesRepository = resourcesRepository;
@@ -50,6 +53,7 @@ public class LinksController {
         this.sseController = sseController;
         this.virusTotalService = virusTotalService;
         this.userResourceLikeDislikeService = userResourceLikeDislikeService;
+        this.userProfileNotification = userProfileNotification;
     }
 
 
@@ -103,6 +107,7 @@ public class LinksController {
         }
 
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
+        model.addAttribute("linksUserId", user.getId());
     }
 
     @GetMapping("")
@@ -335,6 +340,20 @@ public class LinksController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/getLinksProfileNotificationStatus")
+    public ResponseEntity<String> getProfileNotificationStatus(Long userId) {
+        if(userId != null) {
+            String profileNotificationStatus = userProfileNotification.getProfileNotificationStatus(userId);
+            if (profileNotificationStatus != null && profileNotificationStatus.equals("HAVE")) {
+                return ResponseEntity.ok("OK");
+            } else {
+                return ResponseEntity.ok("NOTOK");
+            }
+        } else {
+            return ResponseEntity.ok("ERROR");
         }
     }
 

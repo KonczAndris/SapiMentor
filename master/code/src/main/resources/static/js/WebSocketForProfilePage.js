@@ -1,29 +1,29 @@
 'use strict';
 
-let stompClient = null;
-let IdForUserInIndexPage = null;
-function connectToWebSocketForIndexPage() {
-    var elementToGetUserId = document.querySelector('[id^="userIdForIndexPage-"]');
+let stompClientForProfileWebSocket = null;
+let IdForUserInProfilePage = null;
+function connectToWebSocketForProfilePage() {
+    var elementToGetProfileUserId = document.querySelector('[id^="userIdForProfilePage-"]');
     // console.log("elementToGetUserId: ", elementToGetUserId);
-    IdForUserInIndexPage = elementToGetUserId.id.split("-")[1];
+    IdForUserInProfilePage = elementToGetProfileUserId.id.split("-")[1];
     // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
 
     var socket = new SockJS('/ws');
-    stompClient = Stomp.over(socket);
+    stompClientForProfileWebSocket = Stomp.over(socket);
 
-    stompClient.connect({}, onConnectedForIndexPage, onError);
+    stompClientForProfileWebSocket.connect({}, onConnectedForProfilePage, onErrorInProfilePage);
 }
 
-function onConnectedForIndexPage() {
-    stompClient.subscribe(`/user/${IdForUserInIndexPage}/queue/messages`, onMessageReceivedNotification)
+function onConnectedForProfilePage() {
+    stompClientForProfileWebSocket.subscribe(`/user/${IdForUserInProfilePage}/queue/messages`, onMessageReceivedNotificationInProfilePage)
 }
 
-function onError(error) {
+function onErrorInProfilePage(error) {
     //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     //connectingElement.style.color = 'red';
 }
 
-async function onMessageReceivedNotification(payload) {
+async function onMessageReceivedNotificationInProfilePage(payload) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -40,12 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
-    connectToWebSocketForIndexPage();
+    connectToWebSocketForProfilePage();
 
-    var elementToGetProfileUserId = document.querySelector('[id^="userIdForIndexPage-"]');
-    var profileUserId = elementToGetProfileUserId.id.split("-")[1];
+    var elementToGetProfileProfileUserId = document.querySelector('[id^="userIdForProfilePage-"]');
+    var profileprofileUserId = elementToGetProfileProfileUserId.id.split("-")[1];
 
-    fetch(`/getIndexProfileNotificationStatus?userId=${profileUserId}`, {
+    fetch(`/profile/getProfileNotificationStatus?userId=${profileprofileUserId}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

@@ -1,3 +1,75 @@
+'use strict';
+let stompClient = null;
+let IdForUserInLinksPage = null;
+
+function connectToWebSocketForLinksPage() {
+    var elementToGetLinksUserId = document.querySelector('[id^="userIdForLinksPage-"]');
+    // console.log("elementToGetUserId: ", elementToGetUserId);
+    IdForUserInLinksPage = elementToGetLinksUserId.id.split("-")[1];
+    // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
+
+    var socket = new SockJS('/ws');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, onConnectedForLinksPage, onErrorInLinksPage);
+}
+
+function onConnectedForLinksPage() {
+    stompClient.subscribe(`/user/${IdForUserInLinksPage}/queue/messages`, onMessageReceivedNotificationInLinksPage)
+}
+
+function onErrorInLinksPage(error) {
+    //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+    //connectingElement.style.color = 'red';
+}
+
+async function onMessageReceivedNotificationInLinksPage(payload) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    document.querySelectorAll('.nbr-msg').forEach(item => {
+        item.classList.remove('hiddenMsg');
+        item.textContent = '';
+    });
+}
+
+// ez azert hogy a valosideju ertesiteseket is megkapjuk
+// es ha frissitunk vagy ha csak siman ugy kapunk ertesitest hogy nem vagyunk
+// belepve akkor is megkapjuk az ertesitest
+document.addEventListener('DOMContentLoaded', () => {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    connectToWebSocketForLinksPage();
+
+    var elementToGetLinksProfileUserId = document.querySelector('[id^="userIdForLinksPage-"]');
+    var profileLinksUserId = elementToGetLinksProfileUserId.id.split("-")[1];
+
+    fetch(`/resources/getLinksProfileNotificationStatus?userId=${profileLinksUserId}`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            throw new Error('Request failed!');
+        }
+    }).then(data => {
+        if (data === "OK") {
+            document.querySelectorAll('.nbr-msg').forEach(item => {
+                item.classList.remove('hiddenMsg');
+                item.textContent = '';
+            });
+        }
+    }).catch((error) => {
+        console.log("Error:" + error);
+    });
+
+});
+
 document.getElementById("diplomaTheses").addEventListener("click", function () {
     window.location.href = "/resources/diplomaTheses";
 });

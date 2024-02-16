@@ -17,6 +17,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserReposito
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.DiplomaServices;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserDiplomaLikeDislikeService;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UserProfileNotification;
 
 import java.security.Principal;
 import java.util.*;
@@ -29,16 +30,19 @@ public class DiplomaThesesController {
     private final TopicService topicService;
     private final DiplomaServices diplomaServices;
     private final UserDiplomaLikeDislikeService userDiplomaLikeDislikeService;
+    private final UserProfileNotification userProfileNotification;
 
     @Autowired
     public DiplomaThesesController(UserRepository userRepository,
                                    TopicService topicService,
                                    DiplomaServices diplomaServices,
-                                   UserDiplomaLikeDislikeService userDiplomaLikeDislikeService) {
+                                   UserDiplomaLikeDislikeService userDiplomaLikeDislikeService,
+                                   UserProfileNotification userProfileNotification) {
         this.userRepository = userRepository;
         this.topicService = topicService;
         this.diplomaServices = diplomaServices;
         this.userDiplomaLikeDislikeService = userDiplomaLikeDislikeService;
+        this.userProfileNotification = userProfileNotification;
     }
 
     @Async
@@ -94,6 +98,7 @@ public class DiplomaThesesController {
         }
 
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
+        model.addAttribute("diplomathesesUserId", user.getId());
     }
 
     @GetMapping("")
@@ -369,6 +374,20 @@ public class DiplomaThesesController {
         } catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/getDiplomaThesesProfileNotificationStatus")
+    public ResponseEntity<String> getProfileNotificationStatus(Long userId) {
+        if(userId != null) {
+            String profileNotificationStatus = userProfileNotification.getProfileNotificationStatus(userId);
+            if (profileNotificationStatus != null && profileNotificationStatus.equals("HAVE")) {
+                return ResponseEntity.ok("OK");
+            } else {
+                return ResponseEntity.ok("NOTOK");
+            }
+        } else {
+            return ResponseEntity.ok("ERROR");
         }
     }
 

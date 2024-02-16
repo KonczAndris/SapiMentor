@@ -15,6 +15,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.MyGroupService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.RatingService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.SkillService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UserProfileNotification;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UtilityForSomeCotroller;
 
 import java.security.Principal;
@@ -33,6 +34,7 @@ public class MyGroupController {
     private final RatingRepository ratingRepository;
     private final UtilityForSomeCotroller utilityForSomeCotroller;
     private  final MyGroupService myGroupService;
+    private final UserProfileNotification userProfileNotification;
 
 
 
@@ -43,7 +45,8 @@ public class MyGroupController {
                              SkillService skillService,
                              RatingRepository ratingRepository,
                              UtilityForSomeCotroller utilityForSomeCotroller,
-                             MyGroupService myGroupService) {
+                             MyGroupService myGroupService,
+                             UserProfileNotification userProfileNotification) {
         this.userRepository = userRepository;
         this.ratingService = ratingService;
         this.topicService = topicService;
@@ -51,6 +54,7 @@ public class MyGroupController {
         this.ratingRepository = ratingRepository;
         this.utilityForSomeCotroller = utilityForSomeCotroller;
         this.myGroupService = myGroupService;
+        this.userProfileNotification = userProfileNotification;
     }
 
     @GetMapping("")
@@ -273,4 +277,19 @@ public class MyGroupController {
             return "error";
         }
     }
+
+    @GetMapping("/getMyGroupProfileNotificationStatus")
+    public ResponseEntity<String> getProfileNotificationStatus(Long userId) {
+        if(userId != null) {
+            String profileNotificationStatus = userProfileNotification.getProfileNotificationStatus(userId);
+            if (profileNotificationStatus != null && profileNotificationStatus.equals("HAVE")) {
+                return ResponseEntity.ok("OK");
+            } else {
+                return ResponseEntity.ok("NOTOK");
+            }
+        } else {
+            return ResponseEntity.ok("ERROR");
+        }
+    }
+
 }

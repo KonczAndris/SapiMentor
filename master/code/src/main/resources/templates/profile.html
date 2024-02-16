@@ -37,7 +37,7 @@
     <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
 </div>
 
-<div class="center">
+<div class="center" th:id="'userIdForProfilePage-' + ${UserId}">
   <div class="left hidden">
     <div class="center-image">
       <img th:src="@{/img/white.png}" id="sapimentor-logo" alt="image">
@@ -477,8 +477,11 @@
   </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{/js/myGroup.js}"></script>
 <script th:src="@{/js/functions.js}"></script>
+<script th:src="@{/js/WebSocketForProfilePage.js}"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const imageUploadInput = document.getElementById('imageUpload');

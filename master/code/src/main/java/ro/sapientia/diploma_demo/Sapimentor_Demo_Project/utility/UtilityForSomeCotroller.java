@@ -47,6 +47,7 @@ public class UtilityForSomeCotroller {
         }
 
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
+        model.addAttribute("mygroupUserId", user.getId());
     }
 
     public void showTopicsToMyGroupPage(Model model){

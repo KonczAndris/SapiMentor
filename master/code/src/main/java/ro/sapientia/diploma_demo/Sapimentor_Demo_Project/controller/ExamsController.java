@@ -17,6 +17,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ExamServices;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ResourceServices;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.UserExamLikeDislikeService;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UserProfileNotification;
 
 import java.security.Principal;
 import java.util.*;
@@ -29,18 +30,21 @@ public class ExamsController {
     private final ResourceServices resourceServices;
     private final ExamServices examServices;
     private final UserExamLikeDislikeService userExamLikeDislikeService;
+    private final UserProfileNotification userProfileNotification;
 
     @Autowired
     public ExamsController(UserRepository userRepository,
                            TopicService topicService,
                            ResourceServices resourceServices,
                            ExamServices examServices,
-                           UserExamLikeDislikeService userExamLikeDislikeService) {
+                           UserExamLikeDislikeService userExamLikeDislikeService,
+                           UserProfileNotification userProfileNotification) {
         this.userRepository = userRepository;
         this.topicService = topicService;
         this.resourceServices = resourceServices;
         this.examServices = examServices;
         this.userExamLikeDislikeService = userExamLikeDislikeService;
+        this.userProfileNotification = userProfileNotification;
     }
 
     private void showUserRolesToDisplayResources(Model model, Principal principal){
@@ -105,6 +109,7 @@ public class ExamsController {
         }
 
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
+        model.addAttribute("examsUserId", user.getId());
     }
 
     @GetMapping("")
@@ -368,6 +373,20 @@ public class ExamsController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/getExmasProfileNotificationStatus")
+    public ResponseEntity<String> getProfileNotificationStatus(Long userId) {
+        if(userId != null) {
+            String profileNotificationStatus = userProfileNotification.getProfileNotificationStatus(userId);
+            if (profileNotificationStatus != null && profileNotificationStatus.equals("HAVE")) {
+                return ResponseEntity.ok("OK");
+            } else {
+                return ResponseEntity.ok("NOTOK");
+            }
+        } else {
+            return ResponseEntity.ok("ERROR");
         }
     }
 }

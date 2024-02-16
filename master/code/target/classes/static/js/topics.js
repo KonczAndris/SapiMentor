@@ -1,29 +1,29 @@
 'use strict';
 
 let stompClient = null;
-let IdForUserInIndexPage = null;
-function connectToWebSocketForIndexPage() {
-    var elementToGetUserId = document.querySelector('[id^="userIdForIndexPage-"]');
+let IdForUserInTopicsPage = null;
+function connectToWebSocketForTopicsPage() {
+    var elementToGetTopicsUserId = document.querySelector('[id^="userIdForTopicsPage-"]');
     // console.log("elementToGetUserId: ", elementToGetUserId);
-    IdForUserInIndexPage = elementToGetUserId.id.split("-")[1];
+    IdForUserInTopicsPage = elementToGetTopicsUserId.id.split("-")[1];
     // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
 
     var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
 
-    stompClient.connect({}, onConnectedForIndexPage, onError);
+    stompClient.connect({}, onConnectedForTopicsPage, onErrorInTopicsPage);
 }
 
-function onConnectedForIndexPage() {
-    stompClient.subscribe(`/user/${IdForUserInIndexPage}/queue/messages`, onMessageReceivedNotification)
+function onConnectedForTopicsPage() {
+    stompClient.subscribe(`/user/${IdForUserInTopicsPage}/queue/messages`, onMessageReceivedNotificationInTopicsPage)
 }
 
-function onError(error) {
+function onErrorInTopicsPage(error) {
     //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     //connectingElement.style.color = 'red';
 }
 
-async function onMessageReceivedNotification(payload) {
+async function onMessageReceivedNotificationInTopicsPage(payload) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -40,12 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
-    connectToWebSocketForIndexPage();
+    connectToWebSocketForTopicsPage();
 
-    var elementToGetProfileUserId = document.querySelector('[id^="userIdForIndexPage-"]');
-    var profileUserId = elementToGetProfileUserId.id.split("-")[1];
+    var elementToGetTopicsProfileUserId = document.querySelector('[id^="userIdForTopicsPage-"]');
+    var topicsprofileUserId = elementToGetTopicsProfileUserId.id.split("-")[1];
 
-    fetch(`/getIndexProfileNotificationStatus?userId=${profileUserId}`, {
+    fetch(`/topics/getTopicsProfileNotificationStatus?userId=${topicsprofileUserId}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

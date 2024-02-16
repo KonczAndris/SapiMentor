@@ -13,4 +13,8 @@ public interface ChatMessageReadOrNotRepository extends JpaRepository<ChatMessag
     List<Object[]> findByRecipientId(Long recipientId);
 
     ChatMessageReadOrNot findBySenderIdAndRecipientId(Long senderId, Long recipientId);
+
+    @Query("SELECT CASE WHEN COUNT(cmron) > 0 THEN true ELSE false END FROM ChatMessageReadOrNot cmron WHERE cmron.recipientId = :userId AND cmron.readOrNot = 0")
+    boolean existsByrecipientId(Long userId);
+
 }
