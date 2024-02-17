@@ -27,22 +27,22 @@ public class DatabaseInitializer implements CommandLineRunner {
             Topic topic2 = new Topic("Languages");
             Topic topic3 = new Topic("Engineering");
 
-            Skill skill1 = new Skill("Java", topic1);
-            Skill skill2 = new Skill("C++", topic1);
-            Skill skill3 = new Skill("Haskell", topic1);
-            Skill skill4 = new Skill("Python", topic1);
-            Skill skill5 = new Skill("HTML", topic1);
-            Skill skill6 = new Skill("CSS", topic1);
-            Skill skill7 = new Skill("JavaScript", topic1);
+            Skill skill1 = new Skill("C", topic1);
+            Skill skill2 = new Skill("C#", topic1);
+            Skill skill3 = new Skill(".NET", topic1);
+            Skill skill4 = new Skill("Graph", topic1);
+            Skill skill5 = new Skill("Databases", topic1);
+            Skill skill6 = new Skill("Algorithms", topic1);
+            Skill skill7 = new Skill("System programming and operating languages", topic1);
             Skill skill8 = new Skill("OOP", topic1);
 
-            Skill skill9 = new Skill("English", topic2);
-            Skill skill10 = new Skill("Deutsch", topic2);
-            Skill skill11 = new Skill("Romana", topic2);
+            Skill skill9 = new Skill("Terminology", topic2);
+            Skill skill10 = new Skill("Specialized language", topic2);
+            Skill skill11 = new Skill("Translation theory and practice", topic2);
 
-            Skill skill12 = new Skill("Mechanical Engineering", topic3);
-            Skill skill13 = new Skill("Electrical Engineering", topic3);
-            Skill skill14 = new Skill("Civil Engineering", topic3);
+            Skill skill12 = new Skill("Electrical measurements", topic3);
+            Skill skill13 = new Skill("Digital and analogue electronics", topic3);
+            Skill skill14 = new Skill("Microprocessors", topic3);
 
             topic1.getSkills().add(skill1);
             topic1.getSkills().add(skill2);
