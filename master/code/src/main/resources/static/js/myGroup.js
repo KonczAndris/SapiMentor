@@ -1116,7 +1116,7 @@ function showHeartIcons() {
     favoriteIds.forEach(function(favoriteId) {
         var idValue = parseInt(favoriteId.textContent);
 
-        //console.log("Favorite id: ", idValue);
+        console.log("Favorite id: ", idValue);
 
         var parentCell = favoriteId.parentElement;
         //console.log("Parent cell: ", parentCell);

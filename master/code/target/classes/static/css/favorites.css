@@ -312,6 +312,10 @@ button{
     display: none;
 }
 
+.hiddenHeader {
+    display: none;
+}
+
 .message-request-box{
     border-top: 3px solid rgb(10, 145, 107);
     width: 95%;
@@ -351,6 +355,7 @@ button{
         padding-top: 0;
         padding-left: 25px;
         padding-right: 25px;
+        padding-bottom: 0;
     }
 
     .username-messenger {

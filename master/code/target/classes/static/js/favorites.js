@@ -65,6 +65,8 @@ async function userItemClick(event) {
     // console.log("selectedUserName: ", divelement);
    // console.log("selectedUserId: ", selectedUserId);
 
+
+
     // Elrejtjük az összes üzenet-fejlécet
     document.querySelectorAll('.right-message-box .chat-header').forEach(header => {
         header.style.display = 'none';
@@ -74,6 +76,7 @@ async function userItemClick(event) {
     if (selectedHeader) {
         selectedHeader.style.display = 'block';
     }
+
 
     fetchAndDisplayUserChat().then();
 
@@ -108,6 +111,9 @@ async function userItemClick(event) {
     }).catch(error => {
         console.log("Error: ", error);
     });
+
+    showHeartIcons(selectedUserId);
+
 }
 
 function displayMessage(senderId, content) {
@@ -218,6 +224,11 @@ async function onMessageReceived(payload) {
         user.classList.add('user');
         user.id = 'user-' + message.senderId;
         user.addEventListener('click', userItemClick);
+        // var favoriteId = document.createElement('span');
+        // favoriteId.classList.add('favorite-id');
+        // favoriteId.textContent = message.senderId;
+        // favoriteId.style.display = 'none';
+        // user.appendChild(favoriteId);
         var userImgContainer = document.createElement('div');
         userImgContainer.classList.add('user-img-container');
         var userImage = document.createElement('img');
@@ -263,9 +274,77 @@ async function onMessageReceived(payload) {
         user.appendChild(userName);
         //user.appendChild(userStatus);
 
-
         // var chatBox = document.querySelector('.chat-box');
         // chatBox.appendChild(userInfo);
+
+
+        // letre hozom a chat-header-t
+        var chatPage = document.getElementById('chat-page');
+
+        var chatHeader = document.createElement('div');
+        chatHeader.classList.add('chat-header');
+        chatHeader.classList.add('hiddenHeader');
+        chatHeader.id = 'user-header-' + message.senderId;
+        chatHeader.style.borderBottom = '0px solid green';
+        chatHeader.style.borderTop = '2px solid green';
+        var favoriteId = document.createElement('span');
+        favoriteId.classList.add('favorite-id');
+        favoriteId.textContent = message.senderId;
+        favoriteId.id = 'favoriteId-' + message.senderId;
+        favoriteId.textContent = '0';
+        favoriteId.style.display = 'none';
+        var profileButtonContainer = document.createElement('div');
+        profileButtonContainer.classList.add('profile-button-container');
+        profileButtonContainer.id = 'profile-button-container-' + message.senderId;
+        var profileButton = document.createElement('button');
+        profileButton.classList.add('profile-button');
+        profileButton.id = 'favoriteButton-' + message.senderId;
+        var checkedHeart = document.createElement('img');
+        checkedHeart.classList.add('profile-button-icon');
+        checkedHeart.classList.add('checked-heart');
+        checkedHeart.src = "/img/checked-heart.png";
+        checkedHeart.alt = "Favorite";
+        var uncheckedHeart = document.createElement('img');
+        uncheckedHeart.classList.add('profile-button-icon');
+        uncheckedHeart.classList.add('unchecked-heart');
+        uncheckedHeart.src = "/img/unchecked-heart.png";
+        uncheckedHeart.alt = "Favorite";
+        var profileButtonContainerSure = document.createElement('div');
+        profileButtonContainerSure.classList.add('profile-button-container-sure');
+        profileButtonContainerSure.id = 'profile-button-container-sure-' + message.senderId;
+        profileButtonContainerSure.style.display = 'none';
+        var sureButton = document.createElement('button');
+        sureButton.classList.add('checkmark-button-profile');
+        sureButton.classList.add('profile-button');
+        sureButton.id = 'sureButton-' + message.senderId;
+        var profileButtonIconSure = document.createElement('img');
+        profileButtonIconSure.classList.add('profile-button-icon');
+        profileButtonIconSure.classList.add('profile-button-icon-sure');
+        profileButtonIconSure.src = "/img/checkmark-icon.png";
+        profileButtonIconSure.alt = "Sure";
+        var cancelButton = document.createElement('button');
+        cancelButton.classList.add('cancel-button-profile');
+        cancelButton.classList.add('profile-button');
+        cancelButton.id = 'cancelButton-' + message.senderId;
+        var profileButtonIconCancel = document.createElement('img');
+        profileButtonIconCancel.classList.add('profile-button-icon');
+        profileButtonIconCancel.classList.add('profile-button-icon-sure');
+        profileButtonIconCancel.src = "/img/cancel-icon.png";
+        profileButtonIconCancel.alt = "Sure";
+
+        chatPage.appendChild(chatHeader);
+        chatHeader.appendChild(favoriteId);
+        chatHeader.appendChild(profileButtonContainer);
+        profileButtonContainer.appendChild(profileButton);
+        profileButton.appendChild(checkedHeart);
+        profileButton.appendChild(uncheckedHeart);
+        chatHeader.appendChild(profileButtonContainerSure);
+        profileButtonContainerSure.appendChild(sureButton);
+        sureButton.appendChild(profileButtonIconSure);
+        profileButtonContainerSure.appendChild(cancelButton);
+        cancelButton.appendChild(profileButtonIconCancel);
+
+
     }
 }
 
@@ -422,6 +501,11 @@ $(document).ready(function () {
                         userElement.classList.add('user');
                         userElement.id = 'user-' + senderUserId;
                         userElement.addEventListener('click', userItemClick);
+                        // var favoriteIdElement = document.createElement('span');
+                        // favoriteIdElement.classList.add('favorite-id');
+                        // favoriteIdElement.textContent = senderUserId;
+                        // favoriteIdElement.style.display = 'none';
+                        // userElement.appendChild(favoriteIdElement);
                         var userImageContainerElement = document.createElement('div');
                         userImageContainerElement.classList.add('user-img-container');
                         var userImageElement = document.createElement('img');
@@ -467,7 +551,7 @@ $(document).ready(function () {
                         userImageContainerElement.appendChild(nbrMsg);
                         userElement.appendChild(userName);
 
-
+                        // letre hozom a chat-header-t
                     }
                 }
             }
@@ -479,18 +563,21 @@ $(document).ready(function () {
     });
 });
 
-function showHeartIcons() {
+function showHeartIcons(favoriteUserId) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-    var favoriteIds = document.querySelectorAll('.favorite-id');
+    //var favoriteIds = document.querySelector('.favorite-id');
+    var favoriteId = document.getElementById('favoriteId-' + favoriteUserId);
+    //var favoriteId = elementForFavoriteId.id.substring('favoriteId-'.length);
+    console.log("favoriteIdElement: ", favoriteId);
 
-    favoriteIds.forEach(function(favoriteId) {
+    //favoriteIds.forEach(function(favoriteId) {
         var idValue = parseInt(favoriteId.textContent);
-
-        //console.log("Favorite id: ", idValue);
+        console.log("Favorite id: ", idValue);
 
         var parentCell = favoriteId.parentElement;
-        //console.log("Parent cell: ", parentCell);
+        console.log("Parent cell: ", parentCell);
+
         var checkedHeart = parentCell.querySelector('.checked-heart');
         var uncheckedHeart = parentCell.querySelector('.unchecked-heart');
 
@@ -508,9 +595,9 @@ function showHeartIcons() {
 
 
         var parentCellId = parentCell.id.split("-")[2];
-        //console.log("Parent cell id: ", parentCellId);
+        console.log("Parent cell id: ", parentCellId);
         var favoriteButton = document.getElementById('favoriteButton-' + parentCellId);
-        //console.log("Favorite button: ", favoriteButton);
+        console.log("Favorite button: ", favoriteButton);
 
         favoriteButton.addEventListener('click', function() {
             //console.log("Favorite " + parentCellId + " button clicked");
@@ -608,11 +695,10 @@ function showHeartIcons() {
                 });
             }
 
-
         });
-    });
+    //});
 }
 
 // Hívás a függvényre, például az oldal betöltésekor vagy más eseményre
-showHeartIcons();
+
 
