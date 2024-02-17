@@ -106,6 +106,7 @@
             <div class="left-message-box">
 
                 <div class="user" th:id="${'user-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}" th:onclick="userItemClick(event)">
+                    <span class="favorite-id" th:text="${favoriteUser.id}" style="display: none"></span>
                     <div class="user-status" th:classappend="${favoriteUser.status == 0 ? 'offline' : 'online'}"></div>
                     <div class="user-img-container">
 
@@ -125,7 +126,24 @@
 
             <div class="right-message-box">
                 <div class="chat-container" id="chat-page">
+                    <div class="chat-header" th:each="favoriteUser : ${allFavoritesUser}" th:id="'user-header-' + ${favoriteUser.id}">
+                        <span class="favorite-id" th:text="${favoriteUser.id}" style="display: none"></span>
+                        <div th:id="${'profile-button-container-' + favoriteUser.id}" class="profile-button-container">
+                            <button th:id="${'favoriteButton-' + favoriteUser.id}" class="profile-button">
+                                <img class="profile-button-icon checked-heart"  th:src="@{/img/checked-heart.png}" alt="Favorite">
+                                <img class="profile-button-icon unchecked-heart"  th:src="@{/img/unchecked-heart.png}" alt="Favorite">
+                            </button>
+                        </div>
 
+                        <div th:id="${'profile-button-container-sure-' + favoriteUser.id}" class="profile-button-container-sure" style="display: none">
+                            <button th:id="${'sureButton-' + favoriteUser.id}" class="checkmark-button-profile profile-button">
+                                <img class="profile-button-icon profile-button-icon-sure"  th:src="@{/img/checkmark-icon.png}" alt="Sure">
+                            </button>
+                            <button th:id="${'cancelButton-' + favoriteUser.id}" class="cancel-button-profile profile-button">
+                                <img class="profile-button-icon profile-button-icon-sure"  th:src="@{/img/cancel-icon.png}" alt="Sure">
+                            </button>
+                        </div>
+                    </div>
                     <!--Itt lesznek a szovegek-->
                     <div class="chat-box" id="chat-box">
 <!--                        &lt;!&ndash; Your messages &ndash;&gt;-->

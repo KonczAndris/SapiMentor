@@ -77,22 +77,27 @@ button{
     width: 100%;
     height: 100%;
     background-color: rgb(255, 255, 255);
-    padding-right: 0;
+    padding-right: none !important;
+    margin-right: none;
     overflow: hidden;
 }
 
 .left-message-box{
     display: flex;
-    width: 26%;
+    width: 25%;
     height: 100%;
     background-color: rgb(255, 255, 255);
     border-right: 3px solid rgb(22, 175, 132);
     display: flex;
     flex-direction: column;
     gap: 15px;
-    padding-top: 25px;
+    padding-top: 45px;
     cursor: pointer;
     overflow-y: auto;
+    padding-right: 35px;
+    padding-left: 35px;
+    padding-bottom: 20px;
+
 }
 
 
@@ -112,7 +117,7 @@ button{
 .left-message-box .user .user-status {
     min-width: 10px;
     min-height: 10px;
-    border-radius: 50%; /* KÃƒÆ’Ã‚Â¶r alakÃƒÆ’Ã‚Âº */
+    border-radius: 50%; /* KÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¶r alakÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âº */
 }
 
 .left-message-box .user .online {
@@ -127,9 +132,10 @@ button{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 65%;
+    width: 75%;
     height: 100%;
     background-color: rgb(253, 253, 253);
+    /* padding-bottom: 15px; */
 }
 
 
@@ -159,7 +165,7 @@ button{
 .chat-box {
     display: flex;
     flex-direction: column;
-    height: 84.6%;
+    height: 75.6%;
     width: 97%;
     overflow-y: auto;
     padding-left: 20px;
@@ -210,29 +216,36 @@ button{
 .chat-input-box {
     position: absolute;
     bottom: 0;
-    width: 96%;
+    width: 100%;
     height: 10%;
     border-top: 3px solid rgb(22, 175, 132);
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding-left: 3%;
+    /* padding-left: 3%; */
+    padding-bottom: 20px;
 }
 
 
 #messageForm{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
 
 }
 
 #message-input {
-    width: 75%;
+    width: 75% !important;
     border: none;
     height: 55%;
     padding-left: 2%;
+}
+
+.emojionearea,.emojionearea.form-control {
+    display: block;
+    position: relative!important;
+    width: 70%;
 }
 
 #send-button {
@@ -301,7 +314,7 @@ button{
 
 .message-request-box{
     border-top: 3px solid rgb(10, 145, 107);
-    width: 80%;
+    width: 95%;
 }
 
 @media screen and (max-width: 1000px) {
@@ -405,3 +418,38 @@ button{
     }
 
 }
+
+.chat-header {
+    width: 100%;
+    border-bottom: 2px solid green;
+    justify-content: end;
+    padding: 5px;
+}
+
+.profile-button{
+    background: transparent;
+    border: none;
+    padding-right: 15px
+}
+
+.profile-button-icon{
+    width:30px;
+    cursor: pointer;
+}
+
+.profile-button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.profile-button-container-sure{
+    justify-content: flex-end;
+    padding-right: 15px;
+}
+
+.profile-button-container-sure button{
+    background-color:transparent;
+    border:none;
+    padding: 2px;
+}
+

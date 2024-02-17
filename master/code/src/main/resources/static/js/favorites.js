@@ -64,6 +64,17 @@ async function userItemClick(event) {
     // divelement.style.color = 'white';
     // console.log("selectedUserName: ", divelement);
    // console.log("selectedUserId: ", selectedUserId);
+
+    // Elrejtjük az összes üzenet-fejlécet
+    document.querySelectorAll('.right-message-box .chat-header').forEach(header => {
+        header.style.display = 'none';
+    });
+
+    const selectedHeader = document.getElementById('user-header-' + selectedUserId);
+    if (selectedHeader) {
+        selectedHeader.style.display = 'block';
+    }
+
     fetchAndDisplayUserChat().then();
 
     const nbrMsg = clickedUser.querySelector('.nbr-msg-messenger');
@@ -468,34 +479,140 @@ $(document).ready(function () {
     });
 });
 
+function showHeartIcons() {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    var favoriteIds = document.querySelectorAll('.favorite-id');
+
+    favoriteIds.forEach(function(favoriteId) {
+        var idValue = parseInt(favoriteId.textContent);
+
+        //console.log("Favorite id: ", idValue);
+
+        var parentCell = favoriteId.parentElement;
+        //console.log("Parent cell: ", parentCell);
+        var checkedHeart = parentCell.querySelector('.checked-heart');
+        var uncheckedHeart = parentCell.querySelector('.unchecked-heart');
+
+        if (idValue === 0 || isNaN(idValue)) {
+            uncheckedHeart.classList.add('active');
+            checkedHeart.classList.add('inactive');
+            uncheckedHeart.style.display = 'inline';
+            checkedHeart.style.display = 'none';
+        } else if (idValue === 1) {
+            uncheckedHeart.classList.add('inactive');
+            checkedHeart.classList.add('active');
+            uncheckedHeart.style.display = 'none';
+            checkedHeart.style.display = 'inline';
+        }
 
 
-// window.addEventListener('beforeunload', function (e) {
-//     var token = $("meta[name='_csrf']").attr("content");
-//     var header = $("meta[name='_csrf_header']").attr("content");
-//
-//
-//     fetch('/myGroup/favorites/updateUserStatusToOffline', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded',
-//             'X-CSRF-TOKEN': token
-//         }
-//     }).then(response => {
-//         if (response.ok) {
-//             return response.text();
-//         } else {
-//             throw new Error('Something went wrong');
-//         }
-//     }).then(data => {
-//         if (data === 'ok') {
-//             //console.log("Sikeres modositas");
-//         } else {
-//             throw new Error('Something went wrong');
-//         }
-//     }).catch(error => {
-//         console.log("Error: ", error);
-//     });
-// });
+        var parentCellId = parentCell.id.split("-")[2];
+        //console.log("Parent cell id: ", parentCellId);
+        var favoriteButton = document.getElementById('favoriteButton-' + parentCellId);
+        //console.log("Favorite button: ", favoriteButton);
 
+        favoriteButton.addEventListener('click', function() {
+            //console.log("Favorite " + parentCellId + " button clicked");
+            if (uncheckedHeart.classList.contains('active')) {
+                //console.log("Hozzaadom a kedvencekhez");
+                uncheckedHeart.style.display = 'none';
+                checkedHeart.style.display = 'inline';
+                uncheckedHeart.classList.remove('active');
+                uncheckedHeart.classList.add('inactive');
+                checkedHeart.classList.remove('inactive');
+                checkedHeart.classList.add('active');
+                var urlforsave = '/myGroup/saveFavorite?favoriteUserId=' + parentCellId;
+
+                fetch(urlforsave, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRF-TOKEN': token
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Something went wrong');
+                    }
+                }).then(data => {
+                    if (data === 'ok') {
+                        console.log("Sikeres mentes");
+                    } else {
+                        throw new Error('Something went wrong');
+                    }
+                }).catch(error => {
+                    console.log("Error: ", error);
+                });
+
+            }
+
+            else if (checkedHeart.classList.contains('active')) {
+                const sureButton = document.getElementById('sureButton-' + parentCellId);
+                const cancelButton = document.getElementById('cancelButton-' + parentCellId);
+                const profileButtonContainerSure = document.getElementById('profile-button-container-sure-' + parentCellId);
+                const profileButtonContainer = document.getElementById('profile-button-container-' + parentCellId);
+                if (profileButtonContainerSure) {
+                    profileButtonContainerSure.style.display = 'flex';
+                    profileButtonContainer.style.display = 'none';
+                }
+
+                sureButton.addEventListener('click', () => {
+                    console.log("Kiveszem a kedvencek kozul");
+                    uncheckedHeart.style.display = 'inline';
+                    checkedHeart.style.display = 'none';
+                    checkedHeart.classList.remove('active');
+                    checkedHeart.classList.add('inactive');
+                    uncheckedHeart.classList.remove('inactive');
+                    uncheckedHeart.classList.add('active');
+
+                    var urlforrevoke = '/myGroup/revokeFavorite?favoriteUserId=' + parentCellId;
+
+                    fetch(urlforrevoke, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRF-TOKEN': token
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        } else {
+                            throw new Error('Something went wrong');
+                        }
+                    }).then(data => {
+                        if (data === 'ok') {
+                            console.log("Sikeres visszavonas");
+                        } else {
+                            throw new Error('Something went wrong');
+                        }
+                    }).catch(error => {
+                        console.log("Error: ", error);
+                    });
+
+                    // Hide the sure-modal after the action is performed
+                    const profileButtonContainerSure = document.getElementById('profile-button-container-sure-' + parentCellId);
+                    if (profileButtonContainerSure) {
+                        profileButtonContainerSure.style.display = 'none';
+                        profileButtonContainer.style.display = 'flex';
+                    }
+                });
+
+                cancelButton.addEventListener('click', () => {
+                    // Hide the sure-modal without performing any action
+                    if (profileButtonContainerSure) {
+                        profileButtonContainerSure.style.display = 'none';
+                        profileButtonContainer.style.display = 'flex';
+                    }
+                });
+            }
+
+
+        });
+    });
+}
+
+// Hívás a függvényre, például az oldal betöltésekor vagy más eseményre
+showHeartIcons();
 
