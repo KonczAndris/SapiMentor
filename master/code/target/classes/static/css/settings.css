@@ -314,3 +314,49 @@ h2 {
     background-color: #f07373;
     border: 2px solid white;
 }
+
+.contact-div, .get-in-touch-div {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+
+}
+
+.get-in-touch-div input[type="text"],
+.get-in-touch-div input[type="email"],
+.get-in-touch-div textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+
+}
+
+.get-in-touch-div textarea {
+    height: 100px;
+}
+
+.get-in-touch-div button {
+    color: rgb(255, 255, 255);
+    background-color: rgb(22, 175, 132);
+    border-radius: 15px;
+    cursor: pointer;
+    padding: 4px;
+    border: none;
+    text-overflow: ellipsis;
+    font-size: 1em;
+    margin: 5px;
+    width: 180px;
+    height: 35px;
+    font-family: 'CustomFont';
+}
+
+.get-in-touch-div button:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(30, 214, 162);
+    border: 2px solid white;
+}
+

@@ -351,6 +351,7 @@ button{
         padding-top: 0;
         padding-left: 25px;
         padding-right: 25px;
+        padding-bottom: 0px;
     }
 
     .username-messenger {
@@ -386,9 +387,12 @@ button{
     .message-request-box{
         align-self: center;
         width: auto;
-        height: 70%;
+        height: 100%;
         border-top: none;
         border-left: 3px solid rgb(10, 145, 107);
+        /* padding-right: 29px; */
+        margin-left: 20px;
+        margin-right: 20px;
     }
 
 }
