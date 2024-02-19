@@ -160,7 +160,7 @@
 
                 <tr th:each="resource, stat : ${resourcesData}" th:id="'resource-row-' + ${resource.id}">
                     <td th:text="${stat.index + 1}"></td>
-                    <td><a th:href="${resource.link}" target="_blank" th:text="${resource.name}"></a></td>
+                    <td><a th:href="${resource.link}" target="_blank" th:text="${resource.name}" style="color: #2196F3"></a></td>
                     <td th:text="${resource.topic_name}"></td>
                     <td th:text="${resource.user_name}"></td>
                     <td>

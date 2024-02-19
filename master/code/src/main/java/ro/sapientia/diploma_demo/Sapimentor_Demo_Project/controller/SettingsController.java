@@ -5,11 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.SendContactEmail;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UserProfileNotification;
 
@@ -25,14 +27,17 @@ public class SettingsController {
     private final UserRepository userRepository;
     private final TopicService topicService;
     private final UserProfileNotification userProfileNotification;
+    private final SendContactEmail sendContactEmail;
 
     @Autowired
     public SettingsController(UserRepository userRepository,
                               TopicService topicService,
-                              UserProfileNotification userProfileNotification) {
+                              UserProfileNotification userProfileNotification,
+                              SendContactEmail sendContactEmail) {
         this.userRepository = userRepository;
         this.topicService = topicService;
         this.userProfileNotification = userProfileNotification;
+        this.sendContactEmail = sendContactEmail;
     }
 
     private void showUserRolesToDisplaySettings(Model model, Principal principal){
@@ -107,5 +112,19 @@ public class SettingsController {
             return ResponseEntity.ok("ERROR");
         }
     }
+
+    @PostMapping("/sendContactEmail")
+    public String sendContactEmail( String Name,
+                                    String Email,
+                                    String Message) {
+        System.out.println("Email: " + Name);
+        System.out.println("Name: " + Email);
+        System.out.println("Message: " + Message);
+
+        sendContactEmail.sendContactEmail(Name, Email, Message);
+
+        return "redirect:/settings";
+    }
+
 
 }
