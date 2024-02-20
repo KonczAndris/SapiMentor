@@ -2,7 +2,7 @@ function validateUsername() {
     var usernameInput = document.getElementById("username");
     var usernameValue = usernameInput.value.trim();
 
-    if (!usernameValue.endsWith("@student.ms.sapientia.ro")) {
+    if (!usernameValue.endsWith("@ms.sapientia.ro")) {
         usernameInput.classList.add("highlight");
     } else {
         usernameInput.classList.remove("highlight");
