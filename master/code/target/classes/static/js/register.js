@@ -24,11 +24,8 @@ function validateEmail() {
     var emailInput = document.getElementById("email");
     var emailValue = emailInput.value.trim();
 
-    if (!emailValue.endsWith("@ms.sapientia.ro")) {
+    if (!emailValue.endsWith("@ms.sapientia.ro") && !emailValue.endsWith("@student.ms.sapientia.ro")) {
         emailInput.classList.add("highlight");
-    }
-    else if(!usernameValue.endsWith("@student.ms.sapientia.ro")){
-        usernameInput.classList.add("highlight");
     }
     else {
         emailInput.classList.remove("highlight");
