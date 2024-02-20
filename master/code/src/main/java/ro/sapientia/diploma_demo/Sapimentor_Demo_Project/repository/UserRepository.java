@@ -62,6 +62,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.profileImage, u.last_Name, u.first_Name FROM User u WHERE u.id = :userId")
     List<Object[]> findProfileImageById(Long userId);
 
+    @Modifying
+    @Query(value = "DELETE FROM user_role WHERE user_id = :userId", nativeQuery = true)
+    void deleteUserRoleRecordsByUserId(@Param("userId") Long userId);
 
 //    @Query("SELECT u.profileImage, u.id FROM User u WHERE u.id IN :userIds")
 //    List<Object[]> findAllSelectedUserImages(List<User> userIds);

@@ -132,7 +132,7 @@
 
         <div class="get-in-touch-div">
           <h3>Get in touch with us</h3>
-          <form id="contact-form">
+          <form id="contact-form" th:action="@{/settings/sendContactEmail}" method="post">
             <input type="text" id="name" name="name" placeholder="Your Name" required>
             <input type="email" id="email" name="email" placeholder="Your Email" required>
             <textarea id="message" name="message" placeholder="Your Message" required></textarea>

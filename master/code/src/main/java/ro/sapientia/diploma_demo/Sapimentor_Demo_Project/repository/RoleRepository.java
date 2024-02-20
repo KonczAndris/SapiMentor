@@ -17,4 +17,8 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
     @Modifying
     @Query("DELETE FROM Role r WHERE r.status = 0")
     void deleteInactiveRoles();
+
+
+
+
 }

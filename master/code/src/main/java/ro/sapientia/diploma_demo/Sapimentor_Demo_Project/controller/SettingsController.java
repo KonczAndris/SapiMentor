@@ -12,6 +12,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.SendContactEmail;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.SettingsService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UserProfileNotification;
 
@@ -28,16 +29,19 @@ public class SettingsController {
     private final TopicService topicService;
     private final UserProfileNotification userProfileNotification;
     private final SendContactEmail sendContactEmail;
+    private final SettingsService settingsService;
 
     @Autowired
     public SettingsController(UserRepository userRepository,
                               TopicService topicService,
                               UserProfileNotification userProfileNotification,
-                              SendContactEmail sendContactEmail) {
+                              SendContactEmail sendContactEmail,
+                              SettingsService settingsService) {
         this.userRepository = userRepository;
         this.topicService = topicService;
         this.userProfileNotification = userProfileNotification;
         this.sendContactEmail = sendContactEmail;
+        this.settingsService = settingsService;
     }
 
     private void showUserRolesToDisplaySettings(Model model, Principal principal){
@@ -114,17 +118,31 @@ public class SettingsController {
     }
 
     @PostMapping("/sendContactEmail")
-    public String sendContactEmail( String Name,
-                                    String Email,
-                                    String Message) {
-        System.out.println("Email: " + Name);
-        System.out.println("Name: " + Email);
-        System.out.println("Message: " + Message);
+    public String sendContactEmail( String name,
+                                    String email,
+                                    String message) {
+        System.out.println("Email: " + name);
+        System.out.println("Name: " + email);
+        System.out.println("Message: " + message);
 
-        sendContactEmail.sendContactEmail(Name, Email, Message);
+        sendContactEmail.sendContactEmail(name, email, message);
 
         return "redirect:/settings";
     }
 
+    @PostMapping("/deactivateAccount")
+    public void deactivateAccount(Principal principal) {
+        String email = principal.getName();
+        Long userId = userRepository.findIdByEmail(email);
+        System.out.println("Ez kell" + settingsService.deactivateUserAccount(principal));
+
+//        if(settingsService.deactivateUserAccount(principal).equals("DELETED")){
+//            System.out.println("Deleted: successfully");
+//            return "OK";
+//        } else {
+//            return "NEM OK";
+//        }
+
+    }
 
 }

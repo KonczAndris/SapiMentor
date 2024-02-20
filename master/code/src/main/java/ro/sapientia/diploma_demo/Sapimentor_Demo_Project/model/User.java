@@ -101,6 +101,11 @@ public class User {
     }
 
     public String getEmail() {
+        if (email == null) {
+            System.out.println("User class is null");
+            return "redirect:/login";
+        }
+
         return email;
     }
 

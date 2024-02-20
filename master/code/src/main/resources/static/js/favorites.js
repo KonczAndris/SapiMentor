@@ -289,7 +289,6 @@ async function onMessageReceived(payload) {
         chatHeader.style.borderTop = '2px solid green';
         var favoriteId = document.createElement('span');
         favoriteId.classList.add('favorite-id');
-        favoriteId.textContent = message.senderId;
         favoriteId.id = 'favoriteId-' + message.senderId;
         favoriteId.textContent = '0';
         favoriteId.style.display = 'none';

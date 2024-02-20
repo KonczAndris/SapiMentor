@@ -44,5 +44,9 @@ public interface UserDiplomaLikeDislikeRepository extends JpaRepository<UserDipl
     @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_TLikeDislike_DTO(dt.id, dt.user.id, dt.diplomaTheses.id, dt.like, dt.dislike) FROM UserDiploma_TLikeDislike dt WHERE dt.user = :userId")
     List<Diploma_TLikeDislike_DTO> findAllByUserId(User userId);
 
+    @Modifying
+    @Query("DELETE FROM UserDiploma_TLikeDislike udtld WHERE udtld.user.id = :userId")
+    void deleteByUserId(Long userId);
+
 
 }

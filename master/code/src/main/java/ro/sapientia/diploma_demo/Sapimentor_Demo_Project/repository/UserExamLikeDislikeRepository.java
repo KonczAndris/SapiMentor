@@ -34,4 +34,8 @@ public interface UserExamLikeDislikeRepository extends JpaRepository<UserExamLik
 
     @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.UserExamLikeDislike(ueld.id, ueld.like, ueld.dislike) FROM UserExamLikeDislike ueld WHERE ueld.user.id = :userId AND ueld.exams.id = :examId")
     Optional<UserExamLikeDislike> findByUserAndExamsId(Long userId, Long examId);
+
+    @Modifying
+    @Query("DELETE FROM UserExamLikeDislike ueld WHERE ueld.user.id = :userId")
+    void deleteByUserId(Long userId);
 }
