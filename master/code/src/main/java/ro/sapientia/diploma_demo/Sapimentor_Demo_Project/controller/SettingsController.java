@@ -131,17 +131,13 @@ public class SettingsController {
     }
 
     @PostMapping("/deactivateAccount")
-    public void deactivateAccount(Principal principal) {
-        String email = principal.getName();
-        Long userId = userRepository.findIdByEmail(email);
-        System.out.println("Ez kell" + settingsService.deactivateUserAccount(principal));
-
-//        if(settingsService.deactivateUserAccount(principal).equals("DELETED")){
-//            System.out.println("Deleted: successfully");
-//            return "OK";
-//        } else {
-//            return "NEM OK";
-//        }
+    public String deactivateAccount(Principal principal) {
+        if(settingsService.deactivateUserAccount(principal).equals("DELETED")){
+            System.out.println("Deleted: successfully");
+            return "redirect:/login";
+        } else {
+            return "redirect:/settings";
+        }
 
     }
 

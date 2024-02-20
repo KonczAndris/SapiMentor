@@ -66,6 +66,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "DELETE FROM user_role WHERE user_id = :userId", nativeQuery = true)
     void deleteUserRoleRecordsByUserId(@Param("userId") Long userId);
 
+    @Modifying
+    @Query("DELETE FROM User u WHERE u.id = :userId")
+    void deleteUserById(@Param("userId") Long userId);
+
 //    @Query("SELECT u.profileImage, u.id FROM User u WHERE u.id IN :userIds")
 //    List<Object[]> findAllSelectedUserImages(List<User> userIds);
 }

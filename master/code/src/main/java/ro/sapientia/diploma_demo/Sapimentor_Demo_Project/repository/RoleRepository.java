@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 
+import java.util.List;
+
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
@@ -18,7 +20,7 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
     @Query("DELETE FROM Role r WHERE r.status = 0")
     void deleteInactiveRoles();
 
-
-
+    @Query(value = "SELECT ur.role_id FROM user_role ur WHERE user_id = :userId", nativeQuery = true)
+    List<Object[]> getAllRole_idByUserId(@Param("userId") Long userId);
 
 }

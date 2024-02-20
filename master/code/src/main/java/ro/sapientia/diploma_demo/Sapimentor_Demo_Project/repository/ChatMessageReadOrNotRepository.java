@@ -1,6 +1,7 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.ChatMessageReadOrNot;
 
@@ -16,5 +17,9 @@ public interface ChatMessageReadOrNotRepository extends JpaRepository<ChatMessag
 
     @Query("SELECT CASE WHEN COUNT(cmron) > 0 THEN true ELSE false END FROM ChatMessageReadOrNot cmron WHERE cmron.recipientId = :userId AND cmron.readOrNot = 0")
     boolean existsByrecipientId(Long userId);
+
+    @Modifying
+    @Query("DELETE FROM ChatMessageReadOrNot c WHERE c.senderId = :userId OR c.recipientId = :userId")
+    void deleteBySenderIdOrRecipientId(Long userId);
 
 }

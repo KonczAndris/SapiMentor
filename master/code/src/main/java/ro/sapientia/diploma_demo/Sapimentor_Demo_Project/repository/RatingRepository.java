@@ -40,4 +40,8 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
     @Query("SELECT r FROM Rating r WHERE r.ratedUserId = :userId")
     List<Rating> findAllByRatedUserId(Long userId);
 
+    @Modifying
+    @Query("DELETE FROM Rating r WHERE r.userId = :userId OR r.ratedUserId = :userId")
+    void deleteAllByUserId(Long userId);
+
 }
