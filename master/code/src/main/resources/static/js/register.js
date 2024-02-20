@@ -26,7 +26,11 @@ function validateEmail() {
 
     if (!emailValue.endsWith("@ms.sapientia.ro")) {
         emailInput.classList.add("highlight");
-    } else {
+    }
+    else if(!usernameValue.endsWith("@student.ms.sapientia.ro")){
+        usernameInput.classList.add("highlight");
+    }
+    else {
         emailInput.classList.remove("highlight");
     }
 }
