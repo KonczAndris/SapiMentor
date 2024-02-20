@@ -4,7 +4,11 @@ function validateUsername() {
 
     if (!usernameValue.endsWith("@ms.sapientia.ro")) {
         usernameInput.classList.add("highlight");
-    } else {
+    }
+    else if(!usernameValue.endsWith("@student.ms.sapientia.ro")){
+        usernameInput.classList.add("highlight");
+    }
+    else {
         usernameInput.classList.remove("highlight");
     }
 }
