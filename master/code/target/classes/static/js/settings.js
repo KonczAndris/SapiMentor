@@ -74,6 +74,33 @@ function closeDeactivateModal() {
     document.getElementById("deactivateModal").style.display = "none";
 }
 
+function startDeactivatingUser() {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    fetch(`/settings/deactivateAccount`, {
+        method: "POST",
+        headers: {
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            throw new Error('Request failed!');
+        }
+    }).then(data => {
+        if (data === "DELETED") {
+            window.location.href = "/login";
+        } else {
+            window.location.href = "/settings";
+        }
+    }).catch((error) => {
+        window.location.href = "/settings";
+        console.log("Error:" + error);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     // Select all span elements with class checkmark-setting
     var spanElements = document.querySelectorAll('.checkmark-setting');

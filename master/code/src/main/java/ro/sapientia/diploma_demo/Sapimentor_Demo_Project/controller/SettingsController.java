@@ -131,12 +131,12 @@ public class SettingsController {
     }
 
     @PostMapping("/deactivateAccount")
-    public String deactivateAccount(Principal principal) {
+    public ResponseEntity<String> deactivateAccount(Principal principal) {
         if(settingsService.deactivateUserAccount(principal).equals("DELETED")){
             System.out.println("Deleted: successfully");
-            return "redirect:/login";
+            return ResponseEntity.ok("DELETED");
         } else {
-            return "redirect:/settings";
+            return ResponseEntity.ok("NOTDELETED");
         }
 
     }

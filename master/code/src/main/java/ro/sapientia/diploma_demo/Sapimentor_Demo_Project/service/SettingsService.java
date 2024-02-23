@@ -37,7 +37,7 @@ public class SettingsService {
             userRepository.deleteUserRoleRecordsByUserId(userId);
 
             roleRepository.getAllRole_idByUserId(userId).forEach(role -> {
-                System.out.println("Rolek: " + role[0]);
+                //System.out.println("Rolek: " + role[0]);
                 roleRepository.updateRolesStatusByIdCustom((Integer) role[0]);
             });
             passwordResetTokenRepository.deleteByUserId(userId);
@@ -48,14 +48,14 @@ public class SettingsService {
             chatMessageReadOrNotRepository.deleteBySenderIdOrRecipientId(userId);
             ratingRepository.deleteAllByUserId(userId);
             profileTopicsRepository.findPTIdByUserId(userId).forEach(pt -> {
-                System.out.println("ProfileTopics: " + pt[0]);
+                //System.out.println("ProfileTopics: " + pt[0]);
                 profileTopicsRepository.deleteById((Long) pt[0]);
             });
 
             profileTopicsRepository.deleteByUserId(userId);
             userRepository.deleteUserById(userId);
 
-            System.out.println("UserResourceLikeDislike deleted");
+            //System.out.println("UserResourceLikeDislike deleted");
             return "DELETED";
         } catch (Exception e){
             return "ERROR";

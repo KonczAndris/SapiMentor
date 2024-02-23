@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SapiMentor</title>
+  <!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+  <!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
   <link rel="stylesheet"  type="text/css" th:href="@{/css/index-home.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/settings.css}">
@@ -149,7 +151,7 @@
       <div class="modal-content">
         <p>Are you sure?</p>
         <p class="p2">After deactivating you won't be able to retrieve your data! </p>
-        <button id="deactivate-yes" onclick="closeDeactivateModal()">Yes</button>
+        <button id="deactivate-yes" onclick="startDeactivatingUser()">Yes</button>
         <button id="deactivate-no" onclick="closeDeactivateModal()">No</button>
       </div>
     </div>
