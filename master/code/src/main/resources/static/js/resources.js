@@ -1070,6 +1070,7 @@ function searchTable() {
 
     const table = document.getElementById('dataTable');
     const rows = table.getElementsByTagName('tr');
+    const filteredRows = [];
 
     for (let i = 1; i < rows.length; i++) {
         const cells = rows[i].getElementsByTagName('td');
@@ -1095,12 +1096,74 @@ function searchTable() {
         }
 
         if (nameFound && topicFound) {
+            filteredRows.push(rows[i]);
             rows[i].style.display = '';
         } else {
             rows[i].style.display = 'none';
         }
     }
-    originalRows = [];
+
+    const tableBody = table.querySelector("tbody");
+    const rowsPerPage = 20;
+    let currentPage = 1;
+
+        function updatePageCounter() {
+            const pageCount = Math.ceil(filteredRows.length / rowsPerPage);
+            document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
+        }
+
+        function showRowsForCurrentPage() {
+            const startIdx = (currentPage - 1) * rowsPerPage;
+            const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
+
+            filteredRows.forEach((row, index) => {
+                if (index >= startIdx && index < endIdx) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        function setPage(page) {
+            currentPage = page;
+            showRowsForCurrentPage();
+            updatePageCounter();
+        }
+
+        updatePageCounter();
+        showRowsForCurrentPage();
+
+        document.getElementById("next-page-button").addEventListener("click", () => {
+            if (currentPage < Math.ceil(filteredRows.length / rowsPerPage)) {
+                setPage(currentPage + 1);
+            }
+        });
+
+        document.getElementById("prev-page-button").addEventListener("click", () => {
+            if (currentPage > 1) {
+                setPage(currentPage - 1);
+            }
+        });
+
+        const reverseButton = document.getElementById("reverseButton");
+        const reverseButton2 = document.getElementById("myReverseBtn");
+
+        reverseButton.addEventListener("click", function () {
+            const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+            const visibleRows = filteredRows.filter(row => row.style.display !== 'none');
+
+            visibleRows.reverse();
+            visibleRows.forEach(row => tableBody.appendChild(row));
+        });
+
+        reverseButton2.addEventListener("click", function () {
+            const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+            const visibleRows = filteredRows.filter(row => row.style.display !== 'none');
+
+            visibleRows.reverse();
+            visibleRows.forEach(row => tableBody.appendChild(row));
+        });
 }
 
 document.getElementById('search-button').addEventListener('click', searchTable);
