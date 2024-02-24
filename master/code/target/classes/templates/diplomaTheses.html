@@ -113,7 +113,7 @@
       <input type="text" class="filter-input" id="filter-input" placeholder="Search..." required>
         <div class="topic-dropdown-container">
           <div class="topic-dropdown">
-            <button class="topic-dropbtn" onclick="toggleDropdown()">Choose topics</button>
+            <button class="topic-dropbtn" onclick="toggleDiplomaDropdown()">Choose topics</button>
             <div class="topic-checkboxes" id="topic-myCheckboxes">
               <label th:each="topic : ${topics}">
                 <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">

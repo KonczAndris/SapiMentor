@@ -135,10 +135,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-
-function toggleDropdown() {
+function toggleDiplomaDropdown() {
     const checkboxContainer = document.getElementById("topic-myCheckboxes");
-
     if (checkboxContainer.style.display === "flex") {
         checkboxContainer.style.display = "none";
     } else {
