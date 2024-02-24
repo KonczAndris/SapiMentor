@@ -1149,6 +1149,11 @@ document.querySelectorAll('.sortable').forEach(headerCell => {
             let valueA = a.children[headerIndex].innerText.trim();
             let valueB = b.children[headerIndex].innerText.trim();
 
+            if (headerIndex === 0) {
+                valueA = parseInt(valueA);
+                valueB = parseInt(valueB);
+            }
+
             if (column === 'likes') {
                 valueA = parseFloat(valueA.split(' ')[0]); // Csak a like szám
                 valueB = parseFloat(valueB.split(' ')[0]); // Csak a like szám
