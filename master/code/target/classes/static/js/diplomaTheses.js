@@ -137,6 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function toggleDiplomaDropdown() {
     const checkboxContainer = document.getElementById("topic-myCheckboxes");
+
     if (checkboxContainer.style.display === "flex") {
         checkboxContainer.style.display = "none";
     } else {
@@ -308,74 +309,6 @@ function closeModalOnClickOutside() {
 setupSkillsModal();
 closeModalOnClickOutside();
 
-
-document.addEventListener("DOMContentLoaded", function () {
-    const table = document.querySelector(".link-table");
-    const tableBody = table.querySelector("tbody");
-    const rows = Array.from(tableBody.querySelectorAll("tr"));
-    const rowsPerPage = 20;
-    let currentPage = 1;
-
-    function updatePageCounter() {
-        const pageCount = Math.ceil(rows.length / rowsPerPage);
-        document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
-    }
-
-    function showRowsForCurrentPage() {
-        const startIdx = (currentPage - 1) * rowsPerPage;
-        const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
-
-        rows.forEach((row, index) => {
-            if (index >= startIdx && index < endIdx) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
-
-    function setPage(page) {
-        currentPage = page;
-        showRowsForCurrentPage();
-        updatePageCounter();
-    }
-
-    updatePageCounter();
-    showRowsForCurrentPage();
-
-    document.getElementById("next-page-button").addEventListener("click", () => {
-        if (currentPage < Math.ceil(rows.length / rowsPerPage)) {
-            setPage(currentPage + 1);
-        }
-    });
-
-    document.getElementById("prev-page-button").addEventListener("click", () => {
-        if (currentPage > 1) {
-            setPage(currentPage - 1);
-        }
-    });
-
-    const reverseButton = document.getElementById("reverseButton");
-    const reverseButton2 = document.getElementById("myReverseBtn");
-
-    reverseButton.addEventListener("click", function () {
-        const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-        const rows = Array.from(tableBody.getElementsByTagName('tr'));
-        const visibleRows = rows.filter(row => row.style.display !== 'none');
-
-        visibleRows.reverse();
-        visibleRows.forEach(row => tableBody.appendChild(row));
-    });
-
-    reverseButton2.addEventListener("click", function () {
-        const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-        const rows = Array.from(tableBody.getElementsByTagName('tr'));
-        const visibleRows = rows.filter(row => row.style.display !== 'none');
-
-        visibleRows.reverse();
-        visibleRows.forEach(row => tableBody.appendChild(row));
-    });
-});
 
 // Function to handle file selection and update the input field
 document.getElementById("fileUpload").addEventListener("change", function() {
@@ -1112,6 +1045,59 @@ function isMobileOrTabletScreen() {
     return window.innerWidth <= 1024; // Például, 767 pixel vagy alatta van mobilnak tekintve
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    const table = document.querySelector(".link-table");
+    const tableBody = table.querySelector("tbody");
+    const rows = Array.from(tableBody.querySelectorAll("tr"));
+    const rowsPerPage = 20;
+    let currentPage = 1;
+
+    function updatePageCounter() {
+        const pageCount = Math.ceil(rows.length / rowsPerPage);
+        document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
+    }
+
+    function showRowsForCurrentPage() {
+        const startIdx = (currentPage - 1) * rowsPerPage;
+        const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
+
+        rows.forEach((row, index) => {
+            if (index >= startIdx && index < endIdx) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    function setPage(page) {
+        currentPage = page;
+        showRowsForCurrentPage();
+        updatePageCounter();
+    }
+
+    updatePageCounter();
+    showRowsForCurrentPage();
+
+    document.getElementById("next-page-button").addEventListener("click", () => {
+        if (currentPage < Math.ceil(rows.length / rowsPerPage)) {
+            setPage(currentPage + 1);
+        }
+        else {
+            setPage(1);
+        }
+    });
+
+    document.getElementById("prev-page-button").addEventListener("click", () => {
+        if (currentPage > 1) {
+            setPage(currentPage - 1);
+        }
+        else {
+            setPage(Math.ceil(rows.length / rowsPerPage));
+        }
+    });
+});
+
 let originalRows = []; // Változó az eredeti sorok tárolásához
 
 function saveOriginalRows() {
@@ -1144,6 +1130,7 @@ function searchTable() {
 
     const table = document.getElementById('dataTable');
     const rows = table.getElementsByTagName('tr');
+    const filteredRows = [];
 
     for (let i = 1; i < rows.length; i++) {
         const cells = rows[i].getElementsByTagName('td');
@@ -1169,15 +1156,66 @@ function searchTable() {
         }
 
         if (nameFound && topicFound) {
+            filteredRows.push(rows[i]);
             rows[i].style.display = '';
         } else {
             rows[i].style.display = 'none';
         }
     }
-    originalRows = [];
+    const rowsPerPage = 20;
+    let currentPage = 1;
+
+    function updatePageCounter() {
+        const pageCount = Math.ceil(filteredRows.length / rowsPerPage);
+        document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
+    }
+
+    function showRowsForCurrentPage() {
+        const startIdx = (currentPage - 1) * rowsPerPage;
+        const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
+
+        filteredRows.forEach((row, index) => {
+            if (index >= startIdx && index < endIdx) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    function setPage(page) {
+        currentPage = page;
+        showRowsForCurrentPage();
+        updatePageCounter();
+    }
+
+    updatePageCounter();
+    showRowsForCurrentPage();
+
+
+    document.getElementById("next-page-button").addEventListener("click", () => {
+        if (currentPage < Math.ceil(filteredRows.length / rowsPerPage)) {
+            setPage(currentPage + 1);
+        }
+        else{
+            setPage(1);
+        }
+    });
+
+    document.getElementById("prev-page-button").addEventListener("click", () => {
+        if (currentPage > 1) {
+            setPage(currentPage - 1);
+        }
+        else    {
+            setPage(Math.ceil(filteredRows.length / rowsPerPage));
+        }
+    });
 }
 
-document.getElementById('search-button').addEventListener('click', searchTable);
+document.getElementById('search-button').addEventListener('click', () => {
+    document.getElementById('search-button').click();
+    searchTable();
+});
 
 document.querySelectorAll('.sortable').forEach(headerCell => {
     headerCell.addEventListener('click', () => {

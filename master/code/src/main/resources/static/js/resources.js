@@ -950,34 +950,20 @@ document.addEventListener("DOMContentLoaded", function () {
         if (currentPage < Math.ceil(rows.length / rowsPerPage)) {
             setPage(currentPage + 1);
         }
+        else {
+            setPage(1);
+        }
     });
 
     document.getElementById("prev-page-button").addEventListener("click", () => {
         if (currentPage > 1) {
             setPage(currentPage - 1);
         }
+        else {
+            setPage(Math.ceil(rows.length / rowsPerPage));
+        }
     });
 
-    const reverseButton = document.getElementById("reverseButton");
-    const reverseButton2 = document.getElementById("myReverseBtn");
-
-    reverseButton.addEventListener("click", function () {
-        const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-        const rows = Array.from(tableBody.getElementsByTagName('tr'));
-        const visibleRows = rows.filter(row => row.style.display !== 'none');
-
-        visibleRows.reverse();
-        visibleRows.forEach(row => tableBody.appendChild(row));
-    });
-
-    reverseButton2.addEventListener("click", function () {
-        const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-        const rows = Array.from(tableBody.getElementsByTagName('tr'));
-        const visibleRows = rows.filter(row => row.style.display !== 'none');
-
-        visibleRows.reverse();
-        visibleRows.forEach(row => tableBody.appendChild(row));
-    });
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -1046,9 +1032,7 @@ function saveOriginalRows() {
 
 function restoreOriginalTable() {
     const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-    tableBody.innerHTML = ''; // Töröljük az összes sort a táblázatból
-
-    // Hozzáadjuk az eredeti sorokat a táblázathoz
+    tableBody.innerHTML = '';
     originalRows.forEach(row => tableBody.appendChild(row.cloneNode(true)));
 }
 
@@ -1103,7 +1087,6 @@ function searchTable() {
         }
     }
 
-    const tableBody = table.querySelector("tbody");
     const rowsPerPage = 20;
     let currentPage = 1;
 
@@ -1134,9 +1117,13 @@ function searchTable() {
         updatePageCounter();
         showRowsForCurrentPage();
 
+
         document.getElementById("next-page-button").addEventListener("click", () => {
             if (currentPage < Math.ceil(filteredRows.length / rowsPerPage)) {
                 setPage(currentPage + 1);
+            }
+            else{
+                setPage(1);
             }
         });
 
@@ -1144,29 +1131,16 @@ function searchTable() {
             if (currentPage > 1) {
                 setPage(currentPage - 1);
             }
-        });
-
-        const reverseButton = document.getElementById("reverseButton");
-        const reverseButton2 = document.getElementById("myReverseBtn");
-
-        reverseButton.addEventListener("click", function () {
-            const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-            const visibleRows = filteredRows.filter(row => row.style.display !== 'none');
-
-            visibleRows.reverse();
-            visibleRows.forEach(row => tableBody.appendChild(row));
-        });
-
-        reverseButton2.addEventListener("click", function () {
-            const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-            const visibleRows = filteredRows.filter(row => row.style.display !== 'none');
-
-            visibleRows.reverse();
-            visibleRows.forEach(row => tableBody.appendChild(row));
+            else    {
+                setPage(Math.ceil(filteredRows.length / rowsPerPage));
+            }
         });
 }
 
-document.getElementById('search-button').addEventListener('click', searchTable);
+document.getElementById('search-button').addEventListener('click', () => {
+    document.getElementById('search-button').click();
+    searchTable();
+});
 
 document.querySelectorAll('.sortable').forEach(headerCell => {
     headerCell.addEventListener('click', () => {
@@ -1191,6 +1165,11 @@ document.querySelectorAll('.sortable').forEach(headerCell => {
             } else if (sortType === 'number') {
                 valueA = parseFloat(valueA);
                 valueB = parseFloat(valueB);
+            }
+
+            if (headerIndex === 0) {
+                valueA = parseInt(valueA);
+                valueB = parseInt(valueB);
             }
 
             // Kis- és nagybetűk figyelmen kívül hagyása az ABC szerinti rendezésnél

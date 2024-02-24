@@ -95,7 +95,6 @@
 
         <div class="open-search-buttons">
             <button class="search-button" id="myFilterBtn" onclick="showFilterContainer()">Search</button>
-            <button class="reverse-button" id="myReverseBtn"><img th:src="@{/img/reverse.png}" alt="Icon" class="reverse-icon"></button>
             <button type="button" id="upload-hidden" class="btn btn-success" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
                 <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
 
@@ -135,8 +134,6 @@
             <div class="func-buttons">
                 <button class="search-button" id="search-button">Search</button>
                 <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
-                <button class="reverse-button" id="reverseButton"><img th:src="@{/img/reverse.png}" alt="Icon"
-                                                                       class="reverse-icon"></button>
                 <button type="button" id="upload-upload" class="btn btn-success" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
                     <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
             </div>
@@ -148,7 +145,7 @@
             <table class="link-table" id="dataTable">
                 <thead id="link-table-head">
                 <tr>
-                    <th class="table-number">NR</th>
+                    <th class="table-number sortable">NR</th>
                     <th class="table-link sortable" data-column="link">Link</th>
                     <th class="table-topic sortable" data-column="topic">Topic</th>
                     <th class="table-user sortable" data-column="user">User</th>
