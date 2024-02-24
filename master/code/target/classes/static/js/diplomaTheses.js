@@ -569,7 +569,7 @@ $(document).ready(async function () {
         console.error('SSE error:', event);
     };
 
-    eventSource.addEventListener('LikeOrDislike', function (event) {
+    eventSource.addEventListener('LikeOrDislikeDiploma', function (event) {
         const data = JSON.parse(event.data);
         const rowId = data.rowId;
         const likeCountElement = document.querySelector(`#diploma-row-${rowId} #likeButton`);

@@ -51,7 +51,7 @@ public class DiplomaServices {
 
 
 
-    //@Cacheable("getAllDiplomaThesesWithSelectedFields")
+    @Cacheable("getAllDiplomaThesesWithSelectedFields")
     public List<Diploma_Theses> getAllDiplomaThesesWithSelectedFields() {
         List<Object[]> results = diplomaThesesRepository.findProjectedBy();
         List<Diploma_Theses> diploma_theses = new ArrayList<>();

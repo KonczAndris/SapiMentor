@@ -91,7 +91,7 @@ public class SseController {
             for (SseEmitter emitter : emitters) {
                 try {
                     //A kliensnek elkuldom a like es dislike szamot
-                    emitter.send(SseEmitter.event().name("LikeOrDislike").data(likeAndDislikeCounts));
+                    emitter.send(SseEmitter.event().name("LikeOrDislikeLink").data(likeAndDislikeCounts));
                 } catch (IOException e) {
                     emitters.remove(emitter);
                 }
@@ -139,7 +139,7 @@ public class SseController {
             for (SseEmitter emitter : emitters) {
                 try {
                     //A kliensnek elkuldom a like es dislike szamot
-                    emitter.send(SseEmitter.event().name("LikeOrDislike").data(likeAndDislikeCounts));
+                    emitter.send(SseEmitter.event().name("LikeOrDislikeExam").data(likeAndDislikeCounts));
                 } catch (IOException e) {
                     emitters.remove(emitter);
                 }
@@ -187,7 +187,7 @@ public class SseController {
             for (SseEmitter emitter : emitters) {
                 try {
                     //A kliensnek elkuldom a like es dislike szamot
-                    emitter.send(SseEmitter.event().name("LikeOrDislike").data(likeAndDislikeCounts));
+                    emitter.send(SseEmitter.event().name("LikeOrDislikeDiploma").data(likeAndDislikeCounts));
                 } catch (IOException e) {
                     emitters.remove(emitter);
                 }

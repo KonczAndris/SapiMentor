@@ -3,6 +3,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Resources;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ExamsRepository;
@@ -29,10 +30,12 @@ public class ResourceServices {
         this.examsRepository = examsRepository;
     }
 
+    @Cacheable("getAllResources")
     public List<Resources> getAllResources() {
         return resourcesRepository.findAll();
     }
 
+    @Cacheable("getLikeAndDislikeCounts")
     public Map<String, Integer> getLikeAndDislikeCounts(Long resourceId) {
         Resources resource = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
