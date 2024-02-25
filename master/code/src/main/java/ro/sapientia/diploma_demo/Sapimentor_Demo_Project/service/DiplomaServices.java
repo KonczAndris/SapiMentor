@@ -160,6 +160,7 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
             // itt hozom letre a Diploma_Theses objektumot
             // es teszem bele a megadott adatokat
             Diploma_Theses diploma_theses = new Diploma_Theses();
+            diploma_theses.setId(1L);
             diploma_theses.setName(name);
             diploma_theses.setTopic_name(topic);
             diploma_theses.setUser_name(user_name);

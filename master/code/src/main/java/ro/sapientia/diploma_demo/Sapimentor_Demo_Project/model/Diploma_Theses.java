@@ -33,6 +33,8 @@ public class Diploma_Theses {
     private String user_name;
 
     private String year;
+    @Column(name = "diploma_theses_keywords")
+    private String keywords;
 
     public Diploma_Theses(String name,
                           byte[] diploma_theses_file,
