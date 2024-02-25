@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_TLikeDislike_DTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.DiplomaThesesRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.findKeywordsInAbstract;
 
 import javax.transaction.Transactional;
 import java.io.ByteArrayInputStream;
@@ -25,9 +26,12 @@ import java.util.Map;
 @Transactional
 public class DiplomaServices {
     private final DiplomaThesesRepository diplomaThesesRepository;
+    private final findKeywordsInAbstract findKeywordsInAbstract;
 
-    public DiplomaServices(DiplomaThesesRepository diplomaThesesRepository) {
+    public DiplomaServices(DiplomaThesesRepository diplomaThesesRepository,
+                           findKeywordsInAbstract findKeywordsInAbstract) {
         this.diplomaThesesRepository = diplomaThesesRepository;
+        this.findKeywordsInAbstract = findKeywordsInAbstract;
     }
 
     public List<Diploma_Theses> getAllDiplomaTheses() {
@@ -111,20 +115,17 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
                                      String year){
     if(!pdf.isEmpty()) {
         try {
-//            System.out.println("Pdf size: " + pdf.getSize());
-//            System.out.println("MAX_PDF_SIZE: " + MAX_PDF_SIZE);
-//            System.out.println("Pdf name: " + name);
-//            System.out.println("Pdf topic: " + topic);
-//            System.out.println("Pdf user_name: " + user_name);
 
             if (pdf.getSize() > MAX_PDF_SIZE) {
                 return "Too large";
             }
+            String finalyKeywords = null;
 
             byte[] originalPdfBytes = pdf.getBytes();
 
             // Először alakítsd át InputStream-re
             ByteArrayInputStream pdfInputStream = new ByteArrayInputStream(originalPdfBytes);
+
             // Tömörítés előkészítése iText segítségével
             ByteArrayOutputStream compressedPdfStream = new ByteArrayOutputStream();
 
@@ -132,6 +133,34 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
             PdfWriter pdfWriter = new PdfWriter(compressedPdfStream);
 
             PdfDocument pdfDocument = new PdfDocument(pdfReader, pdfWriter);
+
+            try {
+                String searchText = "Abstract";
+                System.out.println("Search text: " + searchText);
+                PdfReader pdfReaderForAbstract = new PdfReader(pdf.getInputStream());
+                int abstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReaderForAbstract, searchText);
+                System.out.println("Abstract page number: " + abstractPageNumber);
+
+                if (abstractPageNumber > 0) {
+                    PdfReader pdfReaderForAbstractText = new PdfReader(pdf.getInputStream());
+                    String abstractText = findKeywordsInAbstract.getAbstractText(pdfReaderForAbstractText, abstractPageNumber);
+                    System.out.println("Abstract text: " + abstractText);
+
+                    List<String> keywords = findKeywordsInAbstract.extractKeywords(abstractText);
+                    System.out.println("Keywords: " + keywords);
+                    if (!keywords.isEmpty()) {
+                        finalyKeywords = String.join(", ", keywords);
+                    } else {
+                        finalyKeywords = "No keywords found";
+                    }
+
+                } else {
+                    System.out.println("Abstract not found in the PDF.");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             // Itt végrehajthatod a tömörítési műveleteket, például a képek minőségének csökkentését
             // A képek minőségének csökkentése 80%-ra
@@ -160,13 +189,14 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
             // itt hozom letre a Diploma_Theses objektumot
             // es teszem bele a megadott adatokat
             Diploma_Theses diploma_theses = new Diploma_Theses();
-            diploma_theses.setId(1L);
             diploma_theses.setName(name);
             diploma_theses.setTopic_name(topic);
             diploma_theses.setUser_name(user_name);
             diploma_theses.setYear(year);
             diploma_theses.setLike(0);
             diploma_theses.setDislike(0);
+            diploma_theses.setKeywords(finalyKeywords);
+
 
 //            // itt adom hozzá a tömörítetlen PDF-et az objektumhoz
 //            diploma_theses.setDiploma_theses_file(originalPdfBytes);
@@ -185,16 +215,12 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
 
 // a CommandLineRunner altal hasznalt metodus
 public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
-                                     String name,
-                                     String topic,
-                                     String user_name,
-                                     String year){
+                                          String name,
+                                          String topic,
+                                          String user_name,
+                                          String year,
+                                          String keywords){
     try {
-//        System.out.println("Pdf size: " + pdfBytes.length);
-//        System.out.println("MAX_PDF_SIZE: " + MAX_PDF_SIZE);
-//        System.out.println("Pdf name: " + name);
-//        System.out.println("Pdf topic: " + topic);
-//        System.out.println("Pdf user_name: " + user_name + "\n");
 
         if (pdfBytes.length > MAX_PDF_SIZE) {
             return "Too large";
@@ -243,6 +269,7 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
         diploma_theses.setYear(year);
         diploma_theses.setLike(0);
         diploma_theses.setDislike(0);
+        diploma_theses.setKeywords(keywords);
 
 //            // itt adom hozzá a tömörítetlen PDF-et az objektumhoz
 //            diploma_theses.setDiploma_theses_file(originalPdfBytes);
