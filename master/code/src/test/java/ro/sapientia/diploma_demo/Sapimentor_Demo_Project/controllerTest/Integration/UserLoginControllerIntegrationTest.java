@@ -12,6 +12,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.token.ConfirmationToken;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.PasswordResetTokenServiceInterface;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -20,6 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
+// Ez azert kell hogy a MockMvc mukodjon
+// Es azert kell, hogy a teljes alkalmazas kontextusaban teszteljunk
 @SpringBootTest
 @AutoConfigureMockMvc
 @DataJpaTest
@@ -28,11 +33,31 @@ public class UserLoginControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Mock
     private PasswordResetTokenServiceInterface passwordResetTokenServiceInterface;
 
     @Test
     public void testLogin() throws Exception {
+
+        User user = new User();
+        user.setId(1L);
+        user.setEmail("szotyori.csongor@student.ms.sapientia.ro");
+        user.setPassword("proba123");
+        user.setFirst_Name("Csongor");
+        user.setLast_Name("Szotyori");
+        user.setYear(2);
+        user.setEnabled(true);
+        Role role = new Role();
+        role.setId(1);
+        role.setName("USER");
+        user.addRole(role);
+        user.setSpecialization("Computer Science");
+        userRepository.save(user);
+
+
         // Szimulált HTTP kérés küldése
         mockMvc.perform(post("/login").param("username", "szotyori.csongor@student.ms.sapientia.ro")
                 .param("password", "proba123"))

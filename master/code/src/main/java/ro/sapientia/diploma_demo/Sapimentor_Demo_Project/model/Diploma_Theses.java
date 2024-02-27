@@ -42,7 +42,8 @@ public class Diploma_Theses {
                           String user_name,
                           Integer like,
                           Integer dislike,
-                          String year) {
+                          String year,
+                          String keywords) {
         this.name = name;
         this.diploma_theses_file = diploma_theses_file;
         this.topic_name = topic_name;
@@ -50,6 +51,7 @@ public class Diploma_Theses {
         this.like = like;
         this.dislike = dislike;
         this.year = year;
+        this.keywords = keywords;
     }
 
     public Diploma_Theses(Long id,

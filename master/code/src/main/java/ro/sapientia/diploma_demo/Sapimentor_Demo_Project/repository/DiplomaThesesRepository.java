@@ -22,7 +22,7 @@ public interface DiplomaThesesRepository extends JpaRepository<Diploma_Theses, L
     @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_TLikeDislike_DTO(dt.id, dt.like, dt.dislike)  FROM Diploma_Theses dt WHERE dt.id = :diplomaId")
     List<Diploma_TLikeDislike_DTO> findLikeDislikeById(Long diplomaId);
 
-    @Query("SELECT d.id, d.name, d.year, d.topic_name,d.user_name,d.like,d.dislike FROM Diploma_Theses d")
+    @Query("SELECT d.id, d.name, d.year, d.topic_name,d.user_name,d.like,d.dislike,d.keywords FROM Diploma_Theses d")
     List<Object[]> findProjectedBy();
 
     @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses(d.id, d.like, d.dislike) FROM Diploma_Theses d WHERE d.id = :diplomaId")

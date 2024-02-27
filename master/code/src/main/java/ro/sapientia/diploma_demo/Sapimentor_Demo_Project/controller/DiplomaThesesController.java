@@ -116,6 +116,10 @@ public class DiplomaThesesController {
                 "diplomaThesesData", diplomaTheses
         ));
 
+        diplomaTheses.forEach(diploma_theses -> {
+            System.out.println("Diploma_theses: " + diploma_theses.getKeywords());
+        });
+
 
 
         return "diplomaTheses";
