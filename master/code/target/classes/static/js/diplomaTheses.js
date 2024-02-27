@@ -1045,6 +1045,18 @@ function isMobileOrTabletScreen() {
     return window.innerWidth <= 1024; // Például, 767 pixel vagy alatta van mobilnak tekintve
 }
 
+// Az eseménykezelő, ami bezárja a modalt a bezáró gombra kattintva
+// Bezáró gomb eseménykezelője a modal bezárására
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('close-pdf-modal-btn')) {
+        const modalId = event.target.closest('.pdf-image-modal').id;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     const table = document.querySelector(".link-table");
     const tableBody = table.querySelector("tbody");
@@ -1139,14 +1151,16 @@ function searchTable() {
     const table = document.getElementById('dataTable');
     const rows = table.getElementsByTagName('tr');
     const filteredRows = [];
-    const tagWordsTd = document.getElementById('tagWords');
+
 
     for (let i = 1; i < rows.length; i++) {
         const cells = rows[i].getElementsByTagName('td');
+        const tagCells = rows[i].getElementsByTagName('td');
         let nameFound = false;
         let topicFound = false;
 
         const cell = cells[1];
+        const tagCell = cells[7];
 
         if (cell) {
             const cellText = cell.textContent || cell.innerText;
@@ -1154,6 +1168,14 @@ function searchTable() {
                 nameFound = true;
             }
         }
+
+        if(isCheckboxChecked()){
+        if (tagCell) {
+            const cellText = tagCell.textContent || tagCell.innerText;
+            if (cellText.toUpperCase().indexOf(filter) > -1) {
+                nameFound = true;
+            }
+        }}
 
         const topicCell = cells[3];
 
@@ -1274,17 +1296,6 @@ document.querySelectorAll('.sortable').forEach(headerCell => {
     });
 });
 
-// Az eseménykezelő, ami bezárja a modalt a bezáró gombra kattintva
-// Bezáró gomb eseménykezelője a modal bezárására
-document.querySelectorAll('.close-pdf-modal-btn').forEach(closeBtn => {
-    closeBtn.addEventListener('click', function() {
-        const modalId = closeBtn.parentNode.id;
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = 'none';
-        }
-    });
-});
 
 // Get the modal
 var infoModal = document.getElementById("infoModal");
