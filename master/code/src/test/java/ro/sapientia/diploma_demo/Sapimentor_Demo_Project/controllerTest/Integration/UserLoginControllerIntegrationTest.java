@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -12,8 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.token.ConfirmationToken;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.PasswordResetTokenServiceInterface;
 
@@ -27,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // Es azert kell, hogy a teljes alkalmazas kontextusaban teszteljunk
 @SpringBootTest
 @AutoConfigureMockMvc
-@DataJpaTest
 public class UserLoginControllerIntegrationTest {
 
     @Autowired
@@ -41,21 +37,6 @@ public class UserLoginControllerIntegrationTest {
 
     @Test
     public void testLogin() throws Exception {
-
-        User user = new User();
-        user.setId(1L);
-        user.setEmail("szotyori.csongor@student.ms.sapientia.ro");
-        user.setPassword("proba123");
-        user.setFirst_Name("Csongor");
-        user.setLast_Name("Szotyori");
-        user.setYear(2);
-        user.setEnabled(true);
-        Role role = new Role();
-        role.setId(1);
-        role.setName("USER");
-        user.addRole(role);
-        user.setSpecialization("Computer Science");
-        userRepository.save(user);
 
 
         // Szimulált HTTP kérés küldése
@@ -94,6 +75,19 @@ public class UserLoginControllerIntegrationTest {
                         .param("password", password))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/login?reset_success"));
+    }
+
+    @Test
+    public void testIfTokenIsInvalidResetPassword() throws Exception {
+        String token = "asdasd";
+        String password = "proba123";
+
+        // Teszt: HTTP POST kérés szimulálása a resetPassword végponton
+        mockMvc.perform(MockMvcRequestBuilders.post("/reset-password")
+                        .param("token", token)
+                        .param("password", password))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/login?invalid_token"));
     }
 
 
