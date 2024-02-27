@@ -1,4 +1,5 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.event.listener.RegistrationCompleteEventListener;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.PasswordResetTokenService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.PasswordResetTokenServiceInterface;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.Url;
 
@@ -63,6 +63,7 @@ public class UserLoginController {
         model.addAttribute("token", token);
         return "newPassword";
     }
+
     @PostMapping("/reset-password")
     public String resetPassword(HttpServletRequest request){
         String theToken = request.getParameter("token");

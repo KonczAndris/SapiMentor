@@ -493,7 +493,7 @@ function sendDiplomaThesesDataToServer(data) {
         //console.log(data)
         hideLoadingModal()
         if (data === "Success") {
-            //location.reload();
+            location.reload();
         } else if(data === "Too large"){
             //alert("The file is too large!");
             showErrorMessageInExam("The file is too large!");
