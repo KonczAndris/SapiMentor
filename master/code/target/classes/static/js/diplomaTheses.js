@@ -1112,6 +1112,8 @@ function restoreOriginalTable() {
     originalRows.forEach(row => tableBody.appendChild(row.cloneNode(true)));
 }
 
+const tagWords = ["JavaScript", "HTML", "CSS", "React", "Node.js", "Python", "Java", "C++", "PHP", "Ruby", "Angular", "Vue.js", "Bootstrap", "jQuery", "SQL", "MongoDB", "Express.js", "Django", "Flask", "Sass", "TypeScript", "Firebase", "GraphQL", "Redux", "RESTful API"];
+
 function searchTable() {
     if (originalRows.length === 0) {
         saveOriginalRows();
@@ -1123,6 +1125,12 @@ function searchTable() {
     const filter = input.value.toUpperCase();
     const selectedValues = [];
     const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
+    const tagCheckbox = document.querySelector('.tags-checkbox');
+
+    function isCheckboxChecked() {
+        return tagCheckbox.checked;
+    }
+
 
     checkboxes.forEach((checkbox) => {
         selectedValues.push(checkbox.value);
@@ -1131,6 +1139,7 @@ function searchTable() {
     const table = document.getElementById('dataTable');
     const rows = table.getElementsByTagName('tr');
     const filteredRows = [];
+    const tagWordsTd = document.getElementById('tagWords');
 
     for (let i = 1; i < rows.length; i++) {
         const cells = rows[i].getElementsByTagName('td');
@@ -1267,7 +1276,7 @@ document.querySelectorAll('.sortable').forEach(headerCell => {
 
 // Az eseménykezelő, ami bezárja a modalt a bezáró gombra kattintva
 // Bezáró gomb eseménykezelője a modal bezárására
-document.querySelectorAll('.close-modal-btn').forEach(closeBtn => {
+document.querySelectorAll('.close-pdf-modal-btn').forEach(closeBtn => {
     closeBtn.addEventListener('click', function() {
         const modalId = closeBtn.parentNode.id;
         const modal = document.getElementById(modalId);
@@ -1276,3 +1285,24 @@ document.querySelectorAll('.close-modal-btn').forEach(closeBtn => {
         }
     });
 });
+
+// Get the modal
+var infoModal = document.getElementById("infoModal");
+
+// Function to open the modal
+function openInfoModal() {
+    infoModal.style.display = "block";
+}
+
+// Function to close the modal
+function closeInfoModal() {
+    infoModal.style.display = "none";
+}
+
+// Close the modal when clicked outside of it
+window.onclick = function(event) {
+    if (event.target == infoModal) {
+        closeInfoModal();
+    }
+}
+

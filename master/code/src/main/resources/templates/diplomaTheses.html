@@ -108,7 +108,28 @@
     <!-- FILTER BAR START-->
     <div class="filter-container">
       <div class="filter-ddowns">
+        <!-- ⓘ Icon -->
+        <span class="info-icon-btn" onclick="openInfoModal()">ⓘ</span>
+
+        <!-- The Modal -->
+        <div id="infoModal" class="info-modal">
+          <!-- Modal content -->
+          <div class="info-modal-content">
+            <span class="close-info-modal" onclick="closeInfoModal()">&times;</span>
+            <p>Here you can search for diploma theses. You can filter the results by name, year, topic, user and tags. You can also like or dislike the diploma theses.</p>
+          </div>
+        </div>
       <input type="text" class="filter-input" id="filter-input" placeholder="Search..." required>
+
+        <div class="tag-box">
+        <div class="checkbox-container">
+        <label class="container-checkbox-diplomaTags">
+        <input type="checkbox" class="tags-checkbox">
+        <span class="checkmark-diplomaTags"></span> </label>
+        </div>
+        </div>
+
+
         <div class="topic-dropdown-container">
           <div class="topic-dropdown">
             <button class="topic-dropbtn" onclick="toggleDiplomaDropdown()">Choose topics</button>
@@ -146,6 +167,7 @@
           <th class="table-user sortable" data-column="user">User</th>
           <th class="table-likes sortable" data-column="likes">Likes</th>
           <th class="table-actions">Actions</th>
+          <th class="table-tags sortable" data-column="tags">Tags</th>
         </tr>
         </thead>
         <tbody id="link-table-body">
@@ -177,7 +199,7 @@
                 <span th:text="${diploma.name}"></span>
                 <span id="zoomIcon" class="zoom-icon" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'">&#128269;</span>
                 <div class="pdf-image-modal" th:id="'myModal-' + ${diploma.id}">
-                  <span class="close-modal-btn" th:id="'closeModalBtn-' + ${diploma.id}">&times;</span>
+                  <span class="close-pdf-modal-btn" th:id="'closeModalBtn-' + ${diploma.id}">&times;</span>
                   <!--                  <embed th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content"  type='application/pdf'>-->
                   <iframe th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content" ></iframe>
                   <a th:id="'modalPDFMobile-' + ${diploma.id}" th:alt="${diploma.name}" ></a>
@@ -197,6 +219,9 @@
             <td>
               <button class="like-button-link">Like</button>
               <button class="dislike-button-link">Dislike</button>
+            </td>
+            <td>
+              <span id="tagWords"></span>
             </td>
           </tr>
 

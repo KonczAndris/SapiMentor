@@ -21,6 +21,11 @@ function validatePassword() {
     }
 }
 
+module.exports = {
+    validateUsername,
+    validatePassword
+};
+
 function passwordToggleVisibilityForLogin(inputId, iconId) {
     const passwordInput = document.getElementById(inputId);
     const toggleIcon = document.getElementById(iconId);
