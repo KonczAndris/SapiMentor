@@ -107,9 +107,8 @@ button{
     box-sizing: border-box;
     padding: 5px;
     margin: 0;
-    margin-right: 15px;
     text-align: center;
-    font-size: 15px;
+    font-size: smaller;
 }
 
 .topic-dropbtn,

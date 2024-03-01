@@ -1130,10 +1130,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     checkbox.addEventListener('change', function() {
         if (this.checked) {
-            filterInput.setAttribute('placeholder', 'Search by Name/Keywords');
+            filterInput.setAttribute('placeholder', 'Search by Name/Keywords...');
             filterInput.style.fontSize = 'smaller';
         } else {
-            filterInput.setAttribute('placeholder', 'Search by Name');
+            filterInput.setAttribute('placeholder', 'Search by Name...');
             filterInput.style.fontSize = 'smaller';
         }
     });
