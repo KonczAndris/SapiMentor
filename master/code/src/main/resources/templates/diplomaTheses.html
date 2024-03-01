@@ -119,7 +119,7 @@
             <p>Here you can search for diploma theses. You can filter the results by name, year, topic, user and tags. You can also like or dislike the diploma theses.</p>
           </div>
         </div>
-      <input type="text" class="filter-input" id="filter-input" placeholder="Search..." required>
+      <input type="text" class="filter-input" id="filter-input" placeholder="Search by Name..." required>
 
         <div class="tag-box"><p class="tag-box-text">KEYWORD<br>SEARCH</p>
         <div class="checkbox-container">
@@ -129,21 +129,18 @@
         </div>
         </div>
 
-
-        <div class="topic-dropdown-container">
-          <div class="topic-dropdown">
-            <button class="topic-dropbtn" onclick="toggleDiplomaDropdown()">Choose topics</button>
-            <div class="topic-checkboxes" id="topic-myCheckboxes">
-              <label th:each="topic : ${topics}">
-                <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}" checked>
-                <span th:text="${topic.topic}"></span>
-              </label>
-            </div>
+      </div>
+      <div class="topic-dropdown-container">
+        <div class="topic-dropdown">
+          <button class="topic-dropbtn" onclick="toggleDiplomaDropdown()">Choose topics</button>
+          <div class="topic-checkboxes" id="topic-myCheckboxes">
+            <label th:each="topic : ${topics}">
+              <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}" checked>
+              <span th:text="${topic.topic}"></span>
+            </label>
           </div>
         </div>
-
       </div>
-
       <div class="func-buttons">
         <button class="search-button" id="search-button">Search</button>
         <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
