@@ -111,7 +111,7 @@
                         <button class="topic-dropbtn" onclick="toggleDropdown()">Choose topics</button>
                         <div class="topic-checkboxes" id="topic-myCheckboxes">
                             <label th:each="topic : ${topics}">
-                                <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">
+                                <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}" checked>
                                 <span th:text="${topic.topic}"></span>
                             </label>
                         </div>
