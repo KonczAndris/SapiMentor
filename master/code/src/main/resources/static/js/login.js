@@ -1,3 +1,4 @@
+
 function validateUsername() {
     var usernameInput = document.getElementById("username");
     var usernameValue = usernameInput.value.trim();
@@ -21,10 +22,7 @@ function validatePassword() {
     }
 }
 
-module.exports = {
-    validateUsername,
-    validatePassword
-};
+module.exports = {validateUsername, validatePassword};
 
 function passwordToggleVisibilityForLogin(inputId, iconId) {
     const passwordInput = document.getElementById(inputId);
