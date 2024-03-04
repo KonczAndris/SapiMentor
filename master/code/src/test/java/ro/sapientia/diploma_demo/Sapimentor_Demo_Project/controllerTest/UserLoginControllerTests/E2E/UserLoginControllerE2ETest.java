@@ -1,4 +1,4 @@
-package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controllerTest.Integration;
+package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controllerTest.UserLoginControllerTests.E2E;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // Es azert kell, hogy a teljes alkalmazas kontextusaban teszteljunk
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserLoginControllerIntegrationTest {
+public class UserLoginControllerE2ETest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,7 +37,6 @@ public class UserLoginControllerIntegrationTest {
 
     @Test
     public void testLogin() throws Exception {
-
 
         // Szimulált HTTP kérés küldése
         mockMvc.perform(post("/login").param("username", "szotyori.csongor@student.ms.sapientia.ro")

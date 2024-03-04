@@ -30,11 +30,13 @@ public class ResourceServices {
         this.examsRepository = examsRepository;
     }
 
+    // van teszt irva ra
     @Cacheable("getAllResources")
     public List<Resources> getAllResources() {
         return resourcesRepository.findAll();
     }
 
+    // van teszt irva ra
     @Cacheable("getLikeAndDislikeCounts")
     public Map<String, Integer> getLikeAndDislikeCounts(Long resourceId) {
         Resources resource = resourcesRepository.findById(resourceId)
@@ -51,6 +53,7 @@ public class ResourceServices {
         return likeAndDislikeCounts;
     }
 
+    // van teszt irva ra
     public void likeResource(Long resourceId) {
         Resources resource = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
@@ -62,6 +65,7 @@ public class ResourceServices {
         resourcesRepository.save(resource);
     }
 
+    // van teszt irva ra
     public void dislikeResource(Long resourceId) {
         Resources resource = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
@@ -73,6 +77,8 @@ public class ResourceServices {
         resourcesRepository.save(resource);
     }
 
+
+    // van ra irva teszt
     public void revokeLike(Long resourceId){
         Resources resource = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));

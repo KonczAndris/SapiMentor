@@ -1,4 +1,4 @@
-package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controllerTest.Unit;
+package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controllerTest.UserLoginControllerTests.Unit;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

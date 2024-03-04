@@ -393,12 +393,6 @@ public class MyGroupService {
             }
         }
 
-        //System.out.println("filteredUsers: " + filteredUsers);
-//        for (MyGroupProfileDetailDTO userDTO : filteredUsers) {
-//
-//            System.out.println("Userutolso: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
-//        }
-
         model.addAttribute("allMenteesOrMentors", filteredUsers);
         model.addAttribute("allRatings", allRatings);
         model.addAttribute("averageRatingsByUserId", averageRatingsByUserId);
