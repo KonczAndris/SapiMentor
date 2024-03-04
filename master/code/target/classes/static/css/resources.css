@@ -55,16 +55,23 @@ button{
     border: none;
 }
 
-.resource-menu button:hover {
+.resource-menu button {
     color: rgb(255, 255, 255);
     background-color: rgb(22, 175, 132);
     transition: background-color 0.3s, color 0.3s;
     cursor: pointer;
 }
 
+.resource-menu button:hover {
+    color: rgb(22, 175, 132);
+    background-color: rgb(255 255 255);
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
 .selected {
-    color: rgb(255, 255, 255) !important;
-    background-color: rgb(22, 175, 132);
+    color: rgb(22, 175, 132) !important;
+    background-color: rgb(255 255 255) !important;
     transition: background-color 0.3s, color 0.3s;
     cursor: default !important;
 }
@@ -100,9 +107,8 @@ button{
     box-sizing: border-box;
     padding: 5px;
     margin: 0;
-    margin-right: 15px;
     text-align: center;
-    font-size: 15px;
+    font-size: smaller;
 }
 
 .topic-dropbtn,
@@ -343,6 +349,13 @@ button{
     margin: 0;
 }
 
+.current-page-icon {
+    margin: 0;
+    height: 20px;
+    width:auto;
+    transform: translateY(-15%);
+}
+
 
 @media screen and (max-width: 1000px) {
 
@@ -401,8 +414,8 @@ button{
     }
 
     .dropbtn {
-        background-color: rgb(22, 175, 132);
-        color: white;
+        background-color: rgb(255 255 255) !important;
+        color: rgb(22, 175, 132) !important;
         padding: 16px;
         font-size: 16px;
         border: none;
@@ -422,14 +435,14 @@ button{
     .dropdown-content {
         display: none;
         position: absolute;
-        background-color: #f1f1f1;
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1000;
+        background-color: rgb(22, 175, 132) !important;
     }
 
     .dropdown-content a {
-        color: rgb(22, 175, 132);
+        color: rgb(255 255 255);
         padding: 12px 16px;
         text-decoration: none;
         display: block;
@@ -437,7 +450,7 @@ button{
     }
 
     .dropdown-content a:hover {
-        background-color: #ddd;
+        background-color: rgb(55 143 119);
     }
 
     .dropdown:hover .dropdown-content {

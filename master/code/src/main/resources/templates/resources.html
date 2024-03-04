@@ -61,7 +61,7 @@
        </div>
        <div class="form-group">
            <p class="menu-function">
-               <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resource</a> </p>
+               <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resources</a> </p>
        </div>
        <div class="form-group">
            <p class="menu-function">
@@ -77,13 +77,13 @@
        <!-- MENU BAR START-->
         <div class="resource-menu">
             <div class="button-container">
-                <button class="selected"> LINKS</button>
+                <button class="selected"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon"> LINKS</button>
                 <button id="examExamples"> EXAMS</button>
                 <button id="diplomaTheses"> DIPLOMA THESES</button>
             </div>
 
             <div class="dropdown">
-                <button class="dropbtn">LINKS</button>
+                <button class="dropbtn"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon">LINKS</button>
                 <div class="dropdown-content">
                     <a id="examExamplesDrop">EXAMS</a>
                     <a id="diplomaThesesDrop">DIPLOMA THESES</a>
@@ -103,13 +103,13 @@
         <!-- FILTER BAR START-->
         <div class="filter-container">
             <div class="filter-ddowns">
-            <input type="text" class="filter-input" id="filter-input" placeholder="Search..." required>
+            <input type="text" class="filter-input" id="filter-input" placeholder="Search by Link-Name..." required>
                 <div class="topic-dropdown-container">
                     <div class="topic-dropdown">
                         <button class="topic-dropbtn" onclick="toggleDropdown()">Choose topics</button>
                         <div class="topic-checkboxes" id="topic-myCheckboxes">
                             <label th:each="topic : ${topics}">
-                                <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">
+                                <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}" checked>
                                 <span th:text="${topic.topic}"></span>
                             </label>
                         </div>
@@ -146,7 +146,7 @@
                 <thead id="link-table-head">
                 <tr>
                     <th class="table-number sortable">NR</th>
-                    <th class="table-link sortable" data-column="link">Link</th>
+                    <th class="table-link sortable" data-column="link">Link-Name</th>
                     <th class="table-topic sortable" data-column="topic">Topic</th>
                     <th class="table-user sortable" data-column="user">User</th>
                     <th class="table-likes sortable" data-column="likes">Likes</th>

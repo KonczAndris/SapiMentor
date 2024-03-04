@@ -55,16 +55,23 @@ button{
     border: none;
 }
 
-.resource-menu button:hover {
+.resource-menu button {
     color: rgb(255, 255, 255);
     background-color: rgb(22, 175, 132);
     transition: background-color 0.3s, color 0.3s;
     cursor: pointer;
 }
 
+.resource-menu button:hover {
+    color: rgb(22, 175, 132);
+    background-color: rgb(255 255 255);
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
 .selected {
-    color: rgb(255, 255, 255) !important;
-    background-color: rgb(22, 175, 132);
+    color: rgb(22, 175, 132) !important;
+    background-color: rgb(255 255 255) !important;
     transition: background-color 0.3s, color 0.3s;
     cursor: default !important;
 }
@@ -88,21 +95,21 @@ button{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin: 1%;
+    margin-bottom: 0 !important;
+    margin-top: 2%;
 }
 
 .filter-input {
-    width: 150px;
-    min-width: 140px;
+    min-width: 225px;
+    max-width: 225px;
     height: 40px;
     border-radius: 10px;
     border: 2px solid rgb(0, 0, 0);
     box-sizing: border-box;
     padding: 5px;
     margin: 0;
-    margin-right: 15px;
     text-align: center;
-    font-size: 15px;
+    font-size: smaller;
 }
 
 .topic-dropbtn,
@@ -123,6 +130,7 @@ button{
     box-sizing: border-box;
     color: gray;
     background-color: white;
+    margin-bottom: 10px;
 }
 
 .filter-dropdown {
@@ -145,7 +153,7 @@ button{
     padding: 0;
     width: 100%;
     position: relative;
-    margin-top: -9px;
+    margin-top: -18px;
     background-color: white;
     border-end-start-radius: 10px;
     border-end-end-radius: 10px;
@@ -304,6 +312,7 @@ button{
     align-items: start;
     justify-content: center;
     text-align: center;
+    margin-bottom: 0 !important;
 }
 
 .filter-dropdown-container,
@@ -343,6 +352,12 @@ button{
 .menu-icon {
     margin: 0;
 }
+
+.current-page-icon {
+    margin: 0;
+    height: 20px;
+    width:auto;
+    transform: translateY(-15%);}
 
 
 @media screen and (max-width: 1000px) {
@@ -402,8 +417,8 @@ button{
     }
 
     .dropbtn {
-        background-color: rgb(22, 175, 132);
-        color: white;
+        background-color: rgb(255 255 255) !important;
+        color: rgb(22, 175, 132) !important;
         padding: 16px;
         font-size: 16px;
         border: none;
@@ -423,14 +438,14 @@ button{
     .dropdown-content {
         display: none;
         position: absolute;
-        background-color: #f1f1f1;
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1000;
+        background-color: rgb(22, 175, 132) !important;
     }
 
     .dropdown-content a {
-        color: rgb(22, 175, 132);
+        color: rgb(255 255 255);
         padding: 12px 16px;
         text-decoration: none;
         display: block;
@@ -438,7 +453,7 @@ button{
     }
 
     .dropdown-content a:hover {
-        background-color: #ddd;
+        background-color: rgb(55 143 119);
     }
 
     .dropdown:hover .dropdown-content {
@@ -1013,27 +1028,27 @@ tr {
     cursor: pointer;
 }
 
-/* Bezáró gomb stílusának meghatározása */
-/* Bezáró gomb stílusának meghatározása a jobb felső sarokban */
+/* BezÃ¡rÃ³ gomb stÃ­lusÃ¡nak meghatÃ¡rozÃ¡sa */
+/* BezÃ¡rÃ³ gomb stÃ­lusÃ¡nak meghatÃ¡rozÃ¡sa a jobb felsÅ‘ sarokban */
 .close-pdf-modal-btn {
     position: fixed;
     top: 20px;
     right: 20px;
     font-size: 24px;
     cursor: pointer;
-    color: #fff; /* Például fehér színűre állítva, hogy látható legyen a sötét háttéren */
-    z-index: 10000; /* Azért, hogy mindig a legfelső rétegben jelenjen meg */
+    color: #fff; /* PÃ©ldÃ¡ul fehÃ©r szÃ­nÅ±re Ã¡llÃ­tva, hogy lÃ¡thatÃ³ legyen a sÃ¶tÃ©t hÃ¡ttÃ©ren */
+    z-index: 10000; /* AzÃ©rt, hogy mindig a legfelsÅ‘ rÃ©tegben jelenjen meg */
 }
 
 
-/* Opcionális: Ha szeretnéd stilizálni a gombot a felhasználó interakcióihoz */
+/* OpcionÃ¡lis: Ha szeretnÃ©d stilizÃ¡lni a gombot a felhasznÃ¡lÃ³ interakciÃ³ihoz */
 .close-pdf-modal-btn:hover {
-    color: #999; /* Például szürkére változtathatod a színt a hover eseményre */
+    color: #999; /* PÃ©ldÃ¡ul szÃ¼rkÃ©re vÃ¡ltoztathatod a szÃ­nt a hover esemÃ©nyre */
 }
 
 .message-diploma-modal-content-container {
     text-align: center;
-    margin-bottom: 9px /* Igazítsd az elhelyezést igény szerint */
+    margin-bottom: 9px /* IgazÃ­tsd az elhelyezÃ©st igÃ©ny szerint */
 }
 
 .error-message-diploma-modal-content {
@@ -1107,8 +1122,8 @@ tr {
     width: 100%;
     height: 100%;
     font-size: medium;
-
-
+    transform: translateY(-20%);
+    margin-left:10px;
 }
 
 .tag-box-text{

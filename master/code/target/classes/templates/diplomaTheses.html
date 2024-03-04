@@ -64,7 +64,7 @@
     </div>
     <div class="form-group">
       <p class="menu-function">
-        <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resource</a> </p>
+        <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resources</a> </p>
     </div>
     <div class="form-group">
       <p class="menu-function">
@@ -82,11 +82,11 @@
       <div class="button-container">
         <button id="resources"> LINKS</button>
         <button id="examExamples"> EXAMS </button>
-        <button class="selected"> DIPLOMA THESES</button>
+        <button class="selected"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon"> DIPLOMA THESES</button>
       </div>
 
       <div class="dropdown">
-        <button class="dropbtn">DIPLOMA THESES</button>
+        <button class="dropbtn"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon"> DIPLOMA THESES</button>
         <div class="dropdown-content">
           <a id="resourcesDrop">LINKS</a>
           <a id="examExamplesDrop">EXAMS</a>
@@ -119,9 +119,9 @@
             <p>Here you can search for diploma theses. You can filter the results by name, year, topic, user and tags. You can also like or dislike the diploma theses.</p>
           </div>
         </div>
-      <input type="text" class="filter-input" id="filter-input" placeholder="Search..." required>
+      <input type="text" class="filter-input" id="filter-input" placeholder="Search by Name..." required>
 
-        <div class="tag-box"><p class="tag-box-text">TAG SEARCH</p>
+        <div class="tag-box"><p class="tag-box-text">KEYWORD<br>SEARCH</p>
         <div class="checkbox-container">
         <label class="container-checkbox-diplomaTags">
         <input type="checkbox" class="tags-checkbox">
@@ -129,21 +129,18 @@
         </div>
         </div>
 
-
-        <div class="topic-dropdown-container">
-          <div class="topic-dropdown">
-            <button class="topic-dropbtn" onclick="toggleDiplomaDropdown()">Choose topics</button>
-            <div class="topic-checkboxes" id="topic-myCheckboxes">
-              <label th:each="topic : ${topics}">
-                <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}">
-                <span th:text="${topic.topic}"></span>
-              </label>
-            </div>
+      </div>
+      <div class="topic-dropdown-container">
+        <div class="topic-dropdown">
+          <button class="topic-dropbtn" onclick="toggleDiplomaDropdown()">Choose topics</button>
+          <div class="topic-checkboxes" id="topic-myCheckboxes">
+            <label th:each="topic : ${topics}">
+              <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}" checked>
+              <span th:text="${topic.topic}"></span>
+            </label>
           </div>
         </div>
-
       </div>
-
       <div class="func-buttons">
         <button class="search-button" id="search-button">Search</button>
         <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
@@ -196,7 +193,7 @@
             <td th:text="${stat.index + 1}"></td>
             <td class="pdf-container-column">
               <div class="pdf-image-image-container">
-                <span th:text="${diploma.name}"></span>
+                <span th:text="${diploma.name}" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'"></span>
                 <span id="zoomIcon" class="zoom-icon" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'">&#128269;</span>
                 <div class="pdf-image-modal" th:id="'myModal-' + ${diploma.id}">
                   <span class="close-pdf-modal-btn" th:id="'closeModalBtn-' + ${diploma.id}">&times;</span>

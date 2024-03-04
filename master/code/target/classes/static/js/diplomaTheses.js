@@ -1124,7 +1124,20 @@ function restoreOriginalTable() {
     originalRows.forEach(row => tableBody.appendChild(row.cloneNode(true)));
 }
 
-const tagWords = ["JavaScript", "HTML", "CSS", "React", "Node.js", "Python", "Java", "C++", "PHP", "Ruby", "Angular", "Vue.js", "Bootstrap", "jQuery", "SQL", "MongoDB", "Express.js", "Django", "Flask", "Sass", "TypeScript", "Firebase", "GraphQL", "Redux", "RESTful API"];
+document.addEventListener('DOMContentLoaded', function() {
+    const checkbox = document.querySelector('.tags-checkbox');
+    const filterInput = document.querySelector('.filter-input');
+
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            filterInput.setAttribute('placeholder', 'Search by Name/Keywords...');
+            filterInput.style.fontSize = 'smaller';
+        } else {
+            filterInput.setAttribute('placeholder', 'Search by Name...');
+            filterInput.style.fontSize = 'smaller';
+        }
+    });
+});
 
 function searchTable() {
     if (originalRows.length === 0) {

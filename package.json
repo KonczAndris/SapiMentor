@@ -1,9 +1,36 @@
 {
   "devDependencies": {
-    "jest": "^29.7.0"
+    "@babel/preset-env": "^7.24.0",
+    "@testing-library/dom": "^9.3.4",
+    "babel-jest": "^29.7.0",
+    "esm": "^3.2.25",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-fetch-mock": "^3.0.3",
+    "ts-jest": "^29.1.2"
   },
   "dependencies": {
     "expect": "^29.7.0",
-    "jsdom": "^24.0.0"
-  }
+    "jsdom": "^24.0.0",
+    "test": "^3.3.0",
+    "text-encoding": "^0.7.0"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "name": "sapimentor",
+  "description": "https://sapimentor.onrender.com/login",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KonczAndris/SapiMentor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KonczAndris/SapiMentor/issues"
+  },
+  "homepage": "https://github.com/KonczAndris/SapiMentor#readme"
 }
