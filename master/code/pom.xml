@@ -238,6 +238,14 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- 31. WebFlux (ez okozhat problemat ha valami nem joo)
+		(Esetleg ezt kell majd kicserelni)
+		-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -5,18 +5,25 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
 import com.itextpdf.kernel.pdf.*;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.json.JSONObject;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_TLikeDislike_DTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.DiplomaThesesRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.GPT3Service;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.findKeywordsInAbstract;
 
 import javax.transaction.Transactional;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Service
@@ -24,11 +31,14 @@ import java.util.*;
 public class DiplomaServices {
     private final DiplomaThesesRepository diplomaThesesRepository;
     private final findKeywordsInAbstract findKeywordsInAbstract;
+    private final GPT3Service gpt3Service;
 
     public DiplomaServices(DiplomaThesesRepository diplomaThesesRepository,
-                           findKeywordsInAbstract findKeywordsInAbstract) {
+                           findKeywordsInAbstract findKeywordsInAbstract,
+                           GPT3Service gpt3Service) {
         this.diplomaThesesRepository = diplomaThesesRepository;
         this.findKeywordsInAbstract = findKeywordsInAbstract;
+        this.gpt3Service = gpt3Service;
     }
 
     public List<Diploma_Theses> getAllDiplomaTheses() {
@@ -117,6 +127,7 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
                 return "Too large";
             }
             String finalyKeywords = null;
+            StringBuilder allKeywords = new StringBuilder();
 
             byte[] originalPdfBytes = pdf.getBytes();
 
@@ -140,14 +151,46 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
 
                 if (abstractPageNumber > 0) {
                     PdfReader pdfReaderForAbstractText = new PdfReader(pdf.getInputStream());
-                    String abstractText = findKeywordsInAbstract.getAbstractText(pdfReaderForAbstractText, abstractPageNumber);
+                    // Itt kijavitottam az abstractText-et a GPT3-as verziora
+                    String abstractText = "Get 5 or 3 keywords from this text: " + findKeywordsInAbstract.getAbstractText(pdfReaderForAbstractText, abstractPageNumber);
+                    abstractText = abstractText.replaceAll("[\\r\\n]+", "");
                     System.out.println("Abstract text: " + abstractText);
 
-                    List<String> keywords = findKeywordsInAbstract.extractKeywords(abstractText);
-                    System.out.println("Keywords: " + keywords);
-                    if (!keywords.isEmpty()) {
-                        finalyKeywords = String.join(", ", keywords);
+                    //////// Itt van a GPT3-as verzio ////////////
+
+                    String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
+
+                    // ide teszem be a gpt3 tol kapott valaszt
+                    JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
+
+                    // itt kiszedem a hasznos reszt a valaszbol
+                    String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
+                            .getJSONObject(0)
+                            .getJSONObject("message")
+                            .getString("content");
+
+
+
+                    /////// Idaig van a GPT3-as verzio //////////
+
+                    //List<String> keywords = findKeywordsInAbstract.extractKeywords(abstractText);
+                    System.out.println("Keywords: " + gpt3Keywords);
+
+
+                    String patternString = "^\\d+\\. (.+)";
+                    Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
+
+                    if (!gpt3Keywords.isEmpty()) {
+                        Matcher matcher = pattern.matcher(gpt3Keywords);
+                        while (matcher.find()){
+                            allKeywords.append(matcher.group(1)).append(", ");
+                        }
+
+                        System.out.println("GPT-3 keywords: " + allKeywords.toString());
+                        finalyKeywords = allKeywords.toString();
+                        //finalyKeywords = String.join(", ", keywords);
                     } else {
+                        allKeywords.append("No keywords found");
                         finalyKeywords = "No keywords found";
                     }
 
@@ -192,7 +235,7 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
             diploma_theses.setYear(year);
             diploma_theses.setLike(0);
             diploma_theses.setDislike(0);
-            diploma_theses.setKeywords(finalyKeywords);
+            diploma_theses.setKeywords(allKeywords.toString());
 
 
 //            // itt adom hozzá a tömörítetlen PDF-et az objektumhoz
