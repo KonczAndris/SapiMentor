@@ -1,5 +1,32 @@
-const { validateUsername, validatePassword } = require('./../../main/resources/static/js/login.js');
+const fs = require('fs');
+const path = require('path');
 
+const htmlFilePath = path.resolve(__dirname, './../../main/resources/templates/login.html');
+const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+
+const { JSDOM } = require('jsdom');
+const { window } = new JSDOM(htmlContent);
+
+const { validateUsername, validatePassword } = require('./../../main/resources/static/js/login.js');
+require('./../../main/resources/static/js/login.js');
+
+// Login page load testing
+describe('Login page loading', () => {
+    test('Page is fully loaded', () => {
+        const { document } = window;
+        const loginForm = document.querySelector('form');
+        const usernameInput = document.querySelector('#username');
+        const passwordInput = document.querySelector('#password');
+        const loginButton = document.querySelector('#login-submit');
+
+        expect(loginForm).toBeTruthy();
+        expect(usernameInput).toBeTruthy();
+        expect(passwordInput).toBeTruthy();
+        expect(loginButton).toBeTruthy();
+    });
+});
+
+// Username validation testing
 describe('validateUsername function', () => {
     describe('Valid email addresses', () => {
         var validEmails = [
@@ -50,6 +77,7 @@ describe('validateUsername function', () => {
     });
 });
 
+// Password validation testing
 describe('validatePassword function', () => {
     describe('Valid passwords', () => {
         const validPasswords = [
@@ -89,3 +117,4 @@ describe('validatePassword function', () => {
         });
     });
 });
+

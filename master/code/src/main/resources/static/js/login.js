@@ -1,4 +1,4 @@
-
+// Validate Username
 function validateUsername() {
     var usernameInput = document.getElementById("username");
     var usernameValue = usernameInput.value.trim();
@@ -11,6 +11,7 @@ function validateUsername() {
     }
 }
 
+// Validate Password
 function validatePassword() {
     var passwordInput = document.getElementById("password");
     var passwordValue = passwordInput.value.trim();
@@ -22,8 +23,7 @@ function validatePassword() {
     }
 }
 
-module.exports = {validateUsername, validatePassword};
-
+// Password visibility toggle
 function passwordToggleVisibilityForLogin(inputId, iconId) {
     const passwordInput = document.getElementById(inputId);
     const toggleIcon = document.getElementById(iconId);
@@ -49,8 +49,7 @@ function passwordToggleVisibilityForLogin(inputId, iconId) {
     }
 }
 
-
-
+// Login form validation
 document.addEventListener("DOMContentLoaded", function () {
     var usernameInput = document.getElementById("username");
     var passwordInput = document.getElementById("password");
@@ -104,4 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+// Jest testing exports
+module.exports = {validateUsername, validatePassword};
 
