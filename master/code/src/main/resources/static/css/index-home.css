@@ -1,6 +1,8 @@
 @font-face {
     font-family: 'CustomFont';
-    src: url('../fonts/roundfont.ttf') format('truetype')}
+    src: url('../fonts/roundfont.ttf') format('truetype')
+
+}
 
 @keyframes transitionIn{
     from{

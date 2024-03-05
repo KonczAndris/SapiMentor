@@ -1,23 +1,6 @@
 @font-face {
     font-family: 'CustomFont';
-    src: url('../fonts/roundfont.ttf') format('truetype');
-}
-
-/* Ellenőrzi a jelenlegi protokollt és állítja be az elérési utat */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-    @font-face {
-        font-family: 'CustomFont';
-        src: url('../fonts/roundfont.ttf') format('truetype');
-    }
-}
-
-/* Ha a jelenlegi protokoll HTTPS, akkor alkalmazza a módosított elérési utat */
-@media screen and (min-resolution: .001dpcm) {
-    @font-face {
-        font-family: 'CustomFont';
-        src: url('https://www.sapimentor.eu/fonts/roundfont.ttf') format('truetype');
-    }
-}
+    src: url('../fonts/roundfont.ttf') format('truetype')}
 
 
 body {
