@@ -8,7 +8,12 @@ function connectToWebSocketForMyGroupPage() {
     IdForUserInMyGroupPage = elementToGetMyGroupUserId.id.split("-")[1];
     // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
 
-    var socket = new SockJS('/ws');
+    if(window.location.href.includes("http://")){
+        var socket = new SockJS('/ws');
+    }else {
+        var socket = new SockJS('/wss');
+    }
+
     stompClient = Stomp.over(socket);
 
     stompClient.connect({}, onConnectedForMyGroupPage, onErrorInMyGroupPage);
