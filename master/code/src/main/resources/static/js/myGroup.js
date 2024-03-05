@@ -10,8 +10,10 @@ function connectToWebSocketForMyGroupPage() {
 
     if(window.location.href.includes("http://")){
         var socket = new SockJS('/ws');
+        console.log("sima ws-t hasznal");
     }else {
         var socket = new SockJS('/wss');
+        console.log("wss-t hasznal");
     }
 
     stompClient = Stomp.over(socket);
