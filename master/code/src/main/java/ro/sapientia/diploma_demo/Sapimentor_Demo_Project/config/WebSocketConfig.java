@@ -43,7 +43,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
 
         // Regisztráljuk a /ws endpointet a WebSocketekhez
-        registry.addEndpoint("/ws").withSockJS();
+        registry.addEndpoint("/ws")
+                .setAllowedOrigins("http://localhost:8080", "https://www.sapimentor.eu", "https://sapimentor.eu"
+                        , "https://www.sapimentor.onrender.com")
+                .withSockJS();
     }
 
     // ez a metódus beállítja a JSON konvertert
