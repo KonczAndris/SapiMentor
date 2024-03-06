@@ -47,7 +47,7 @@ public class UserLoginControllerE2ETest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
     }
-//
+
 //
 //    @Test
 //    // itt azt teszteljuk hogy a /forgot-password endpoint megfeleloen mukodik-e
