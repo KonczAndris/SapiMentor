@@ -12,7 +12,7 @@ function connectToWebSocketForIndexPage() {
         var socket = new SockJS('/ws');
         console.log("sima ws-t hasznal");
     }else {
-        var socket = new SockJS('https://' + window.location.host + '/ws');
+        var socket = new SockJS('wss://' + window.location.host + '/ws');
         console.log("wss-t hasznal");
     }
     stompClient = Stomp.over(socket);
