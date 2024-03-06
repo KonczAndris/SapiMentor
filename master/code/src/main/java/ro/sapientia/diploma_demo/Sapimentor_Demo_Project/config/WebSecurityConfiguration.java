@@ -1,22 +1,22 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
 
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private CrosConfig crosConfig;
+
+//    @Autowired
+//    private CrosConfig crosConfig;
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -25,9 +25,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .addFilterBefore(crosConfig.corsFilter(), CorsFilter.class)
+                //.addFilterBefore(crosConfig.corsFilter(), CorsFilter.class)
                 //.and()
-                .csrf().disable()
+                .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
                 //.and()
                 .headers()
                 .frameOptions()
