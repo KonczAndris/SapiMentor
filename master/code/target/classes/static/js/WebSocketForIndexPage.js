@@ -8,12 +8,13 @@ function connectToWebSocketForIndexPage() {
     IdForUserInIndexPage = elementToGetUserId.id.split("-")[1];
     // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
 
-    if(window.location.href.includes("http://")){
-        var socket = new SockJS('/ws');
-        console.log("sima ws-t hasznal");
-    }else {
-        var socket = new SockJS('wss://' + window.location.host + '/ws');
-        console.log("wss-t hasznal");
+    var socket;
+    if (window.location.protocol === "http:") {
+        socket = new SockJS('http://' + window.location.host + '/ws');
+        console.log("http");
+    } else {
+        socket = new SockJS('https://' + window.location.host + '/ws');
+        console.log("https");
     }
     stompClient = Stomp.over(socket);
 
