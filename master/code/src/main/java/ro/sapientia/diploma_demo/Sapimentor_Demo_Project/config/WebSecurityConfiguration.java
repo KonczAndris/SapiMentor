@@ -66,15 +66,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login?logout")
                     .permitAll();
-                //.and()
-                //innentol a session kezeles
-//                .sessionManagement()
-//                    .maximumSessions(1)
-//                    .maxSessionsPreventsLogin(false)
-//                    .expiredUrl("/login?expiredSession")
-//                    .and()
-//                    .invalidSessionUrl("/login");
-
     }
 
 
