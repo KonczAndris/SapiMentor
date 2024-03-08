@@ -1,0 +1,398 @@
+@font-face {
+    font-family: 'CustomFont';
+    src: url('../fonts/roundfont.ttf') format('truetype')
+
+}
+
+
+
+
+@keyframes transitionIn{
+    from{
+        opacity: 0;
+        transform: rotateX(-15deg);
+    }
+    to{
+        opacity: 1;
+        transform: rotateX(0);
+    }
+}
+
+.animate {
+    animation: transitionIn 0.75s;
+}
+
+.left::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+body::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+.right::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgb(50, 189, 149);
+    font-family: 'CustomFont';
+    scrollbar-color: transparent transparent;
+    background-image: url('../img/pattern.png');
+    background-size: cover;
+    background-attachment:fixed;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    padding-top: 1%;
+}
+
+button{
+    font-family: 'CustomFont';
+}
+
+.center {
+    display: flex;
+    position: fixed;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    animation: transitionIn 0.75s;
+    padding-top: 5px;
+}
+
+.left{
+    width: 20%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    justify-content: flex-start;
+    align-items: start;
+    flex-direction: column;
+    margin-top: 2%;
+    display: flex;
+}
+
+.right{
+    margin-top: 0;
+    margin-right: 2%;
+    width: 80%;
+    height: 95%;
+    background-color: white;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow:  2px 2px 20px rgb(10, 145, 107);
+    border-radius: 50px;
+    display: flex;
+}
+
+#sapimentor-logo{
+    letter-spacing: 2px;
+    text-align: start;
+    margin: 25px;
+    color: white;
+    font-size: xx-large;
+    margin-left: 15%;
+    user-select: none;
+    cursor: pointer;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content:center;
+    margin-left: 10%;
+}
+
+a{
+    /* display: flex; */
+    text-decoration: none !important;
+    color: white;
+    /* flex-direction: row; */
+}
+
+.menu-function-profile a{
+    display: flex;
+    align-items: center;
+}
+
+.menu-function, .menu-function-top{
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    justify-content: flex-end;
+}
+
+
+.menu-function a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 120%;
+    transition: font-size 0.2s;
+    transition: box-shadow 0.2s;
+    border-radius: 50px;
+    padding: 15px 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu-function-top a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 100%;
+    transition: font-size 0.2s;
+    transition: box-shadow 0.2s;
+    border-radius: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 0;
+}
+
+
+.menu-function:last-child {
+    justify-content: flex-end;
+}
+
+.menu-icon {
+    width: 30px;
+    margin-right: 10px;
+    vertical-align:middle;
+}
+
+.rounded-icon{
+    width: 45px;
+    border-radius: 50%;
+    padding: 0;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.rounded-icon-top{
+    margin-top: 6px !important;
+    margin-left: 6px !important;
+    margin-bottom: 1px !important;
+    margin-right: 10px !important;
+    width: 35px;
+    border-radius: 50%;
+    padding: 0;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.menu-divider {
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.taskbar {
+    position: fixed;
+    top: 0;
+    height: 45px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    background-color: transparent;
+    display: none;
+}
+
+.back-icon {
+    max-width: 55px;
+    margin-top: -15px;
+    align-self: center;
+    transition: box-shadow 0.2s, transform 0.2s; /* Added transform transition */
+    /* padding: 10%; */
+    margin-top: 6px;
+    margin-right: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding: 4px;
+    border-radius: 50px;
+    overflow: hidden;
+    border: 2px solid white;
+    cursor: pointer;
+    opacity: 0.5;
+    margin-left: auto;
+}
+
+.back-icon:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    opacity: 1;
+}
+
+.back-icon:active {
+    transform: scale(0.95);
+}
+
+
+.center-image {
+    text-align: center;
+}
+
+#sapimentor-logo{
+    letter-spacing: 2px;
+    text-align: center;
+    justify-content: center;
+    margin: 25px;
+    width: 40%;
+}
+
+.loading-gif {
+    margin: 20px;
+    border-radius: 100px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.64);
+    z-index: 9999;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+@media (max-width: 1000px) {
+
+    .menu-function-profile{
+        display: none !important;
+    }
+
+    .menu-divider{
+        display: none;
+    }
+
+    .center {
+        width: 100%;
+        flex-direction: column;
+        margin-top: 90px;
+    }
+    .right{
+        display: flex;
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+    .left {
+        display: flex;
+        width: 100%;
+        text-align: start;
+        padding-left: 10%;
+        padding-bottom: 10%;
+    }
+
+    .form-group{
+        margin-left: 0;
+    }
+
+    #index-text {
+        letter-spacing: 2px;
+        text-align: start;
+        margin: 25px;
+        color: white;
+        font-size: xx-large;
+        margin-left: 0;
+        margin-right: 18%;
+        width: 50%;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .taskbar{
+        display: flex;
+    }
+
+    .loading-gif {
+        width: 100%;
+        margin: 30px;
+        border-radius: 38px;
+    }
+
+    .center-image {
+        text-align: start;
+    }
+    .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 43%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    #sapimentor-logo{
+        letter-spacing: 2px;
+        text-align: center;
+        justify-content: center;
+        margin: 25px;
+        width: 26%;
+    }
+
+}
+
+@media (max-width: 450px) {
+    #sapimentor-logo{
+        letter-spacing: 2px;
+        text-align: center;
+        justify-content: center;
+        margin: 25px;
+        width: 40%;
+    }
+}
+
+/*MESSAGE-ALERT*/
+.user-img-container {
+    position: relative;
+    display: inline-block;
+    margin-left:20px;
+    margin-bottom:10px;
+}
+
+.nbr-msg {
+    position: absolute;
+    left: 27px;
+    top: 25px;
+    background-color: #e3596b;
+    color: white;
+    padding: 6px; /* Adjust padding */
+    width: 10px; /* Adjust size */
+    height: 10px; /* Adjust size */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    line-height: 1;
+    background-image: url('../img/envelope.png');
+    background-size: contain;
+    outline: 50px solid transparent;
+}
+
+.username-container{
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.hiddenMsg {
+    display: none;
+}

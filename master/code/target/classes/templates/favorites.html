@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SapiMentor</title>
+<!--        <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css}" />
+    <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
+    <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/favorites.css}">
+
+</head>
+
+<body>
+
+<div class="taskbar">
+    <a href="/" th:href="@{/profile}">
+
+        <div class="user-img-container">
+            <img th:if="${profileImageBase64 != ''}"
+                 th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+                 alt="Profile Image" class="menu-icon rounded-icon-top"
+                 th:async="async"
+                 th:attr="data-cache='no-cache'">
+            <img th:unless="${profileImageBase64 != ''}"
+                 th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
+            <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+        </div>
+        <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
+    <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
+</div>
+
+<div class="center">
+    <div class="left hidden">
+        <div class="center-image">
+            <img th:src="@{/img/white.png}" id="sapimentor-logo" alt="image">
+        </div>
+        <div class="form-group form-group-profile menu-function-profile">
+            <a href="/" th:href="@{/profile}">
+                <div class="user-img-container">
+                    <img th:if="${profileImageBase64 != ''}"
+                         th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+                         alt="Profile Image" class="menu-icon rounded-icon"
+                         th:async="async"
+                         th:attr="data-cache='no-cache'">
+                    <img th:unless="${profileImageBase64 != ''}"
+                         th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
+                    <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+                </div>
+                <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
+        </div>
+        <div class="menu-divider"></div>
+        <div class="form-group" >
+            <p class="menu-function">
+                <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
+        </div>
+        <div class="form-group">
+            <p class="menu-function">
+                <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
+        </div>
+        <div class="form-group">
+            <p class="menu-function">
+                <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resources</a> </p>
+        </div>
+        <div class="form-group">
+            <p class="menu-function">
+                <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon"> Settings</a> </p>
+        </div>
+        <div class="form-group">
+            <p class="menu-function">
+                <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
+        </div>
+    </div>
+
+    <div class="right show" id="right-content">
+        <!-- MENU BAR START-->
+        <div class="resource-menu">
+            <div class="button-container">
+
+                <button id="searchMyGroup"> SEARCH</button>
+                <button class="selected"> FAVORITES</button>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">FAVORITES</button>
+                <div class="dropdown-content">
+                    <a id="searchDrop">SEARCH</a>
+                </div>
+            </div>
+
+        </div>
+        <!-- MENU BAR END-->
+
+        <div id="loading-modal" class="modal">
+            <div class="modal-content">
+                <img class="loading-gif" th:src="@{/gif/loading.gif}" alt="Loading..." />
+            </div>
+        </div>
+
+        <!--     SEARCH DIV START -->
+        <div class="large-message-box" th:id="${'large-message-box-for-' + userId}">
+
+            <div class="left-message-box">
+
+                <div class="user" th:id="${'user-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}" th:onclick="userItemClick(event)">
+<!--                    <span class="favorite-id" th:text="${favoriteUser.id}" style="display: none"></span>-->
+                    <div class="user-status" th:classappend="${favoriteUser.status == 0 ? 'offline' : 'online'}"></div>
+                    <div class="user-img-container">
+
+                        <img th:if="${favoriteUser.favoriteProfileImageBase64 != ''}"
+                             th:src="@{|data:image/jpeg;base64,${favoriteUser.favoriteProfileImageBase64}|}">
+                        <img th:unless="${favoriteUser.favoriteProfileImageBase64 != ''}"
+                             th:src="@{/img/anonym.jpg}" alt="Profile Image">
+                        <span class="nbr-msg-messenger hiddenMsg"></span>
+
+                    </div>
+                    <span class="username-messenger" th:text="${favoriteUser.fullName}" ></span>
+                    <!-- Példa online státuszra -->
+                </div>
+                <div class="message-request-box"></div>
+            </div>
+
+
+            <div class="right-message-box">
+                <div class="chat-container" id="chat-page">
+
+
+                    <div class="chat-header hiddenHeader" th:each="favoriteUser : ${allFavoritesUser}" th:id="'user-header-' + ${favoriteUser.id}">
+                        <span class="favorite-id" th:id="'favoriteId-' + ${favoriteUser.id}" th:text="1" style="display: none"></span>
+                        <div th:id="${'profile-button-container-' + favoriteUser.id}" class="profile-button-container">
+                            <button th:id="${'favoriteButton-' + favoriteUser.id}" class="profile-button">
+                                <img class="profile-button-icon checked-heart"  th:src="@{/img/checked-heart.png}" alt="Favorite">
+                                <img class="profile-button-icon unchecked-heart"  th:src="@{/img/unchecked-heart.png}" alt="Favorite">
+                            </button>
+                        </div>
+
+                        <div th:id="${'profile-button-container-sure-' + favoriteUser.id}" class="profile-button-container-sure" style="display: none">
+                            <button th:id="${'sureButton-' + favoriteUser.id}" class="checkmark-button-profile profile-button">
+                                <img class="profile-button-icon profile-button-icon-sure"  th:src="@{/img/checkmark-icon.png}" alt="Sure">
+                            </button>
+                            <button th:id="${'cancelButton-' + favoriteUser.id}" class="cancel-button-profile profile-button">
+                                <img class="profile-button-icon profile-button-icon-sure"  th:src="@{/img/cancel-icon.png}" alt="Sure">
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!--Itt lesznek a szovegek-->
+                    <div class="chat-box" id="chat-box">
+<!--                        &lt;!&ndash; Your messages &ndash;&gt;-->
+<!--                        <div class="message my-message">Hello, how are you?</div>-->
+<!--                        &lt;!&ndash; Partner's messages &ndash;&gt;-->
+<!--                        <div class="message partner-message">Hi there! I'm good.</div>-->
+                    </div>
+
+                    <!--Itt kell nekem a chat et-->
+                    <form id="messageForm" name="messageForm"  style="display: none">
+                        <div class="chat-input-box">
+                            <input type="text" id="message-input" placeholder="Type a message..." maxlength="500" >
+                            <button id="emoji-button">😊</button>
+                            <button type="button" id="send-button">Send</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <!--        SEARCH DIV END-->
+
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js}"></script>
+    <script th:src="@{/js/functions.js}"></script>
+    <script th:src="@{/js/favorites.js}"></script>
+<script>
+    if (localStorage.getItem('theme') === 'dark') {
+        const darkThemeLink = document.createElement('link');
+        darkThemeLink.rel = 'stylesheet';
+        darkThemeLink.href = '/css/darkTheme.css';
+        document.head.appendChild(darkThemeLink);
+    }
+</script>
+</body>
+
+</html>

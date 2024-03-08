@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SapiMentor</title>
+<!--      <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--      <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+  <link rel="stylesheet"  type="text/css" th:href="@{/css/index-home.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+  <link rel="stylesheet"  type="text/css" th:href="@{/css/settings.css}">
+  <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
+  <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
+</head>
+<body>
+
+<div class="taskbar">
+    <a href="/" th:href="@{/profile}">
+      <div class="user-img-container">
+      <img th:if="${settingsImageBase64 != ''}"
+           th:src="@{|data:image/jpeg;base64,${settingsImageBase64}|}"
+           alt="Profile Image" class="menu-icon rounded-icon-top"
+           th:async="async"
+           th:attr="data-cache='no-cache'">
+      <img th:unless="${settingsImageBase64 != ''}"
+           th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
+        <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+      </div>
+      <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
+    <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()">
+</div>
+
+
+<div class="center" th:id="'userIdForSettingsPage-' + ${settingsUserId}">
+  <div class="left hidden">
+    <div class="center-image">
+      <img th:src="@{/img/white.png}" id="sapimentor-logo" alt="image">
+    </div>
+
+    <div class="form-group form-group-profile menu-function-profile">
+      <a href="/" th:href="@{/profile}">
+        <div class="user-img-container">
+          <img th:if="${settingsImageBase64 != ''}"
+               th:src="@{|data:image/jpeg;base64,${settingsImageBase64}|}"
+               alt="Profile Image" class="menu-icon rounded-icon"
+               th:async="async"
+               th:attr="data-cache='no-cache'">
+          <img th:unless="${settingsImageBase64 != ''}"
+               th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
+          <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+    </div>
+          <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span>  </a>
+    </div>
+
+    <div class="menu-divider"></div>
+    <div class="form-group" th:if="${userRolesToDisplaySettings.contains('MENTOR') or userRolesToDisplaySettings.contains('MENTEE')}">
+      <p class="menu-function">
+        <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
+    </div>
+    <div class="form-group">
+      <p class="menu-function">
+        <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
+    </div>
+    <div class="form-group">
+      <p class="menu-function">
+        <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resources</a> </p>
+    </div>
+    <div class="form-group">
+      <p class="menu-function">
+        <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon"> Settings</a> </p>
+    </div>
+    <div class="form-group">
+      <p class="menu-function">
+        <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
+    </div>
+
+  </div>
+
+  <div class="right show" id="right-content">
+
+    <div class="large-settings-div">
+      <div class="left-settings-div">
+
+        <div class="divider-container">
+        <h2>PERSONALIZE </h2>
+          <img th:src="@{/img/settings-personalize-monster.png}" alt="See Comments Icon" class="divider-icon">
+        <div class="divider"></div>
+        </div>
+
+        <div class="language-div">
+        <label class="setting-title">LANGUAGE</label>
+        <div class="settings-option">
+        <input type="checkbox" id="hungarian" class="topic-checkbox">
+        <span class="checkmark-setting"> </span> <label for="hungarian">Hungarian</label>
+        </div>
+        <div class="settings-option">
+        <input type="checkbox" id="english" class="topic-checkbox">
+        <span class="checkmark-setting"></span> <label for="english">English</label>
+        </div>
+        </div>
+
+        <div class="theme-div">
+          <label class="setting-title">THEME</label>
+          <div class="settings-option">
+            <input type="checkbox" id="light" class="topic-checkbox">
+            <span class="checkmark-setting"> </span> <label for="light">Light</label>
+          </div>
+          <div class="settings-option">
+            <input type="checkbox" id="dark" class="topic-checkbox">
+            <span class="checkmark-setting"></span> <label for="dark">Dark</label>
+          </div>
+        </div>
+
+        <div class="settings-buttons">
+        <button class="save-settings-btn" id="saveSettings"> Save settings</button><br>
+        <button class="deactivate-btn" onclick="showDeactivateModal()"> Deactivate your account</button>
+        </div>
+
+      </div>
+
+      <div class="right-settings-div">
+
+        <div class="divider-container">
+          <h2>CONTACT </h2>
+          <img th:src="@{/img/settings-contact-monster.png}" alt="See Comments Icon" class="divider-icon">
+          <div class="divider"></div>
+        </div>
+
+        <div class="contact-div">
+          <p>Email: example@example.com</p>
+          <p>Phone: +1234567890</p>
+          <p>Address: 123 Main Street, City, Country</p>
+        </div>
+
+        <div class="get-in-touch-div">
+          <h3>Get in touch with us</h3>
+          <form id="contact-form" th:action="@{/settings/sendContactEmail}" method="post">
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+            <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Email</button>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Modal -->
+    <div id="deactivateModal" class="modal">
+      <div class="modal-content">
+        <p>Are you sure?</p>
+        <p class="p2">After deactivating you won't be able to retrieve your data! </p>
+        <button id="deactivate-yes" onclick="startDeactivatingUser()">Yes</button>
+        <button id="deactivate-no" onclick="closeDeactivateModal()">No</button>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:src="@{/js/functions.js}"></script>
+<script th:src="@{/js/settings.js}"></script>
+</body>
+</html>

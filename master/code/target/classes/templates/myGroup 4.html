@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SapiMentor</title>
+<!--        <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/myGroup.css}">
+    <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
+    <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
+
+</head>
+
+<body>
+
+<div class="taskbar">
+    <a href="/" th:href="@{/profile}">
+        <div class="user-img-container">
+            <img th:if="${profileImageBase64 != ''}"
+                 th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+                 alt="Profile Image" class="menu-icon rounded-icon-top"
+                 th:async="async"
+                 th:attr="data-cache='no-cache'">
+            <img th:unless="${profileImageBase64 != ''}"
+                 th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
+            <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+        </div>
+        <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
+    <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
+</div>
+
+<div class="center" th:id="'userIdForMyGroupPage-' + ${mygroupUserId}">
+    <div class="left hidden">
+        <div class="center-image">
+            <img th:src="@{/img/white.png}" id="sapimentor-logo" alt="image">
+        </div>
+
+        <div class="form-group form-group-profile menu-function-profile">
+            <a href="/" th:href="@{/profile}">
+                <div class="user-img-container">
+                    <img th:if="${profileImageBase64 != ''}"
+                         th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+                         alt="Profile Image" class="menu-icon rounded-icon"
+                         th:async="async"
+                         th:attr="data-cache='no-cache'">
+                    <img th:unless="${profileImageBase64 != ''}"
+                         th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
+                    <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+                </div>
+                <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
+        </div>
+
+        <div class="menu-divider"></div>
+        <div class="form-group" >
+            <p class="menu-function">
+                <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
+        </div>
+        <div class="form-group">
+            <p class="menu-function">
+                <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
+        </div>
+        <div class="form-group">
+            <p class="menu-function">
+                <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resources</a> </p>
+        </div>
+        <div class="form-group">
+            <p class="menu-function">
+                <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon"> Settings</a> </p>
+        </div>
+        <div class="form-group">
+            <p class="menu-function">
+                <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
+        </div>
+    </div>
+
+    <div class="right show" id="right-content">
+        <!-- MENU BAR START-->
+        <div class="resource-menu">
+            <div class="button-container">
+
+                <button class="selected"> SEARCH</button>
+                <button id="favorites"> FAVORITES</button>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">SEARCH</button>
+                <div class="dropdown-content">
+                    <a id="favoritesDrop">FAVORITES</a>
+                </div>
+            </div>
+
+        </div>
+        <!-- MENU BAR END-->
+
+    <div id="loading-modal" class="modal">
+        <div class="loading-modal-content">
+            <img class="loading-gif" th:src="@{/gif/loading.gif}" alt="Loading..." />
+        </div>
+    </div>
+
+<!--     SEARCH DIV START -->
+        <div class="open-search-buttons">
+            <button id="myFilterBtn" onclick="showFilterContainer()">OPEN THE SEARCH MENU</button>
+        </div>
+
+        <div class="large-search-box">
+            <div class="left-search-box" id="searchDiv">
+                <div class="search-content">
+                    <div class="role-button">
+                        <div class="role-button">
+                            <button class="mentor-side " onclick="selectSide('left')">MENTOR</button>
+                            <div class="button-divider"></div>
+                            <button class="mentee-side" onclick="selectSide('right')">MENTEE</button>
+                        </div>
+                    </div>
+
+
+                    <div class="topic-box"> <p>Topic</p>
+                        <div class="checkbox-container" th:each="topic : ${topics}">
+                            <label class="container-checkbox-myGroup">
+                                <span th:text="${topic.topic}"></span>
+                                <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}" class="topic-checkbox">
+                            <span class="checkmark-myGroup"></span> </label>
+                        </div>
+                    </div>
+
+                <div class="dropdown-myGroup">
+                    <button onclick="toggleDropdownMyGroup()" class="dropbtn-myGroup">Select Tags</button>
+
+                    <div id="checkboxDropdown-myGroup" class="dropdown-content-myGroup">
+                        <div class="checkbox-container-skills" th:each="skill : ${skills}">
+                            <label class="container-checkbox-myGroup skill-checkboxx" th:id="${'skill-checkboxx-' + skill.topic.topic}">
+                                <span th:text="${skill.skill}"></span>
+                                <input type="checkbox" th:value="${skill.skill}" th:id="${'checkbox-' + skill}"
+                                       class="dropdown-checkbox skill-checkbox">
+                                <span class="checkmark-myGroup "></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="button-box">
+<!--                    <button class="search-button" id="search-button" th:onclick="searchUsers()">Search</button>-->
+                    <button class="search-button" id="search-button">Search</button>
+                    <button class="cancel-button" id="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
+                </div>
+            </div>
+            <div class="right-search-box">
+<!--                 proba  ide esetleg valami udvozlo es informalo szoveg
+                     es hogy jol nezzen ki hogy ne legyen ures div -->
+                <div th:id="information-box">
+                    <div>
+                        <h1>Search for a Mentor or Mentee</h1>
+                        <p>Welcome to our platform dedicated to connecting mentors and mentees. Whether you are seeking guidance or looking to share your expertise, our search functionality simplifies the process of finding the right match for you.</p>
+                        <div class="main-div">
+                            <h2>How does it work?</h2>
+                            <div class="mygroup-pics">
+                            <div class="smaller-div"><img th:src="@{/img/searching-monster.jpg}" alt="Error Image" class="small-div-image"></div>
+                            <div class="smaller-div"><img th:src="@{/img/meeting-monsters.jpg}" alt="Error Image" class="small-div-image"></div>
+                            </div>
+                            <p><strong>Select Your Role:</strong><br> Choose whether you're seeking to mentor or be mentored by clicking the respective button.</p>
+                            <p><strong>Explore Topics:</strong><br> Once you've chosen your role, explore the available topics that align with your interests or expertise.</p>
+                            <p><strong>Refine Your Search:</strong><br> Use the provided tags to narrow down your search further and find individuals specializing in specific areas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scrollable-div">
+                    <div class="image-cell" th:id="${'image-cell-' + pic.id}" th:each="pic : ${allMenteesOrMentors}">
+                        <!-- Profilkép megjelenítése -->
+<!--                        <img th:if="${profileImagesByUserId[pic.id] ne null and profileImagesByUserId[pic.id] ne ''}"-->
+<!--                             th:src="@{|data:image/jpeg;base64,${profileImagesByUserId[pic.id]}|}"-->
+<!--                             alt="Profile Image" class="rounded-image"-->
+<!--                             th:async="async" th:attr="data-cache='no-cache'">-->
+<!--                        <img th:unless="${profileImagesByUserId[pic.id] ne null and profileImagesByUserId[pic.id] ne ''}"-->
+<!--                             th:src="@{/img/anonym.jpg}" alt="Profile Image" class="rounded-image">-->
+
+                        <img th:id="${'myGroupProfileImg-' + pic.id}" th:src="@{/img/anonym.jpg}" class="rounded-image" alt="Profile Image">
+
+                        <div th:id="${'profile-button-container-' + pic.id}" class="profile-button-container">
+                            <button th:id="${'profileButton-' + pic.id}" class="profile-button-watch"> <img class="profile-button-icon-watch" th:src="@{/img/watch-profile.png}" alt="Watch Profile"> </button>
+                            <button th:id="${'favoriteButton-' + pic.id}" class="profile-button">
+                                <img class="profile-button-icon checked-heart"  th:src="@{/img/checked-heart.png}" alt="Favorite">
+                                <img class="profile-button-icon unchecked-heart"  th:src="@{/img/unchecked-heart.png}" alt="Favorite">
+                            </button>
+                        </div>
+
+                        <div th:id="${'profile-button-container-sure-' + pic.id}" class="profile-button-container-sure" style="display: none">
+                            <button th:id="${'sureButton-' + pic.id}" class="checkmark-button-profile profile-button">
+                                <img class="profile-button-icon profile-button-icon-sure"  th:src="@{/img/checkmark-icon.png}" alt="Sure">
+                            </button>
+                            <button th:id="${'cancelButton-' + pic.id}" class="cancel-button-profile profile-button">
+                                <img class="profile-button-icon profile-button-icon-sure"  th:src="@{/img/cancel-icon.png}" alt="Sure">
+                            </button>
+                        </div>
+
+                        <!-- Itt kapom meg a kedvenchez tartozo id-t -->
+                        <span class="favorite-id" th:text="${favoriteIdsByUserId[pic.id]}" style="display: none"></span>
+
+                        <!-- Értékelés megjelenítése -->
+                        <div class="rating" id="mainRating-for-MyGroup">
+                            <input type="radio" th:id="${'star5_'+pic.id}" name="rating" value="5" th:checked="${averageRatingsByUserId[pic.id] >= 4.5}" disabled />
+                            <label th:for="${'star5_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 4.5} ? 'color: gold;' : ''">&#9733;</label>
+
+                            <input type="radio" th:id="${'star4_'+pic.id}" name="rating" value="4" th:checked="${averageRatingsByUserId[pic.id] >= 3.5 and averageRatingsByUserId[pic.id] < 4.5}" disabled />
+                            <label th:for="${'star4_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 3.5} ? 'color: gold;' : ''">&#9733;</label>
+
+                            <input type="radio" th:id="${'star3_'+pic.id}" name="rating" value="3" th:checked="${averageRatingsByUserId[pic.id] >= 2.5 and averageRatingsByUserId[pic.id] < 3.5}" disabled />
+                            <label th:for="${'star3_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 2.5} ? 'color: gold;' : ''">&#9733;</label>
+
+                            <input type="radio" th:id="${'star2_'+pic.id}" name="rating" value="2" th:checked="${averageRatingsByUserId[pic.id] >= 1.5 and averageRatingsByUserId[pic.id] < 2.5}" disabled />
+                            <label th:for="${'star2_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 1.5} ? 'color: gold;' : ''">&#9733;</label>
+
+                            <input type="radio" th:id="${'star1_'+pic.id}" name="rating" value="1" th:checked="${averageRatingsByUserId[pic.id] >= 0.5 and averageRatingsByUserId[pic.id] < 1.5}" disabled />
+                            <label th:for="${'star1_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 0.5} ? 'color: gold;' : ''">&#9733;</label>
+                        </div>
+                        <span class="myGroupName" th:text="${pic.lastName + ' ' + pic.firstName}"></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--        SEARCH DIV END-->
+
+
+    <div class="profile-modal-background" id="profileModal" >
+
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:src="@{/js/functions.js}"></script>
+<script th:src="@{/js/myGroup.js}"></script>
+<script>
+    if (localStorage.getItem('theme') === 'dark') {
+        const darkThemeLink = document.createElement('link');
+        darkThemeLink.rel = 'stylesheet';
+        darkThemeLink.href = '/css/darkTheme.css';
+        document.head.appendChild(darkThemeLink);
+    }
+</script>
+
+</body>
+
+</html>
