@@ -5,3 +5,5 @@ if (typeof TextEncoder === 'undefined') {
 if (typeof TextDecoder === 'undefined') {
     global.TextDecoder = require('util').TextDecoder;
 }
+
+require('jest-fetch-mock').enableMocks()

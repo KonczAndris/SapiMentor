@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+global.XMLHttpRequest = jest.fn();
 
 const htmlFilePath = path.resolve(__dirname, './../../main/resources/templates/login.html');
 const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
@@ -43,7 +44,7 @@ describe('validateUsername function', () => {
         ];
 
         validEmails.forEach((email) => {
-            test(`"${email}" should not have highlight class`, () => {
+            test(`"${email}" is a valid email address`, () => {
                 document.body.innerHTML = `<input type="text" id="username" value="${email}" />`;
                 validateUsername();
                 const usernameInput = document.getElementById("username");
@@ -118,3 +119,29 @@ describe('validatePassword function', () => {
     });
 });
 
+
+// Login redirecting testing
+describe('Login functionality', () => {
+    document.body.innerHTML = htmlContent;
+
+    test('Login successful login', async () => {
+        var usernameValue = "validUsername@ms.sapientia.ro";
+        var passwordValue = "validPassword";
+
+        const usernameInput = document.getElementById('username');
+        usernameInput.value = usernameValue;
+        const passwordInput = document.getElementById('password');
+        passwordInput.value = passwordValue;
+        const loginButton = document.getElementById('login-submit');
+        const errorMessage = document.getElementById('error-message');
+
+        validateUsername();
+        validatePassword();
+
+        expect(usernameInput.classList.contains("highlight")).toBe(false);
+        expect(passwordInput.classList.contains("highlight")).toBe(false);
+
+        loginButton.dispatchEvent(new MouseEvent('submit'));
+
+    });
+});
