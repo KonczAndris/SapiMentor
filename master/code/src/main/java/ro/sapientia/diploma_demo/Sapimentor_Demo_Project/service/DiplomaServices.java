@@ -160,39 +160,46 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
 
                     String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
 
-                    // ide teszem be a gpt3 tol kapott valaszt
-                    JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
-
-                    // itt kiszedem a hasznos reszt a valaszbol
-                    String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
-                            .getJSONObject(0)
-                            .getJSONObject("message")
-                            .getString("content");
-
-
-
-                    /////// Idaig van a GPT3-as verzio //////////
-
-                    //List<String> keywords = findKeywordsInAbstract.extractKeywords(abstractText);
-                    System.out.println("Keywords: " + gpt3Keywords);
-
-
-                    String patternString = "^\\d+\\. (.+)";
-                    Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
-
-                    if (!gpt3Keywords.isEmpty()) {
-                        Matcher matcher = pattern.matcher(gpt3Keywords);
-                        while (matcher.find()){
-                            allKeywords.append(matcher.group(1)).append(", ");
-                        }
-
-                        System.out.println("GPT-3 keywords: " + allKeywords.toString());
-                        finalyKeywords = allKeywords.toString();
-                        //finalyKeywords = String.join(", ", keywords);
-                    } else {
-                        allKeywords.append("No keywords found");
+                    if(gpt3Response.contains("Error GPT-3 API")){
+                        System.out.println("Error GPT-3 API");
                         finalyKeywords = "No keywords found";
+                    } else {
+                        // ide teszem be a gpt3 tol kapott valaszt
+                        JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
+
+                        // itt kiszedem a hasznos reszt a valaszbol
+                        String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
+                                .getJSONObject(0)
+                                .getJSONObject("message")
+                                .getString("content");
+
+
+
+                        /////// Idaig van a GPT3-as verzio //////////
+
+                        //List<String> keywords = findKeywordsInAbstract.extractKeywords(abstractText);
+                        System.out.println("Keywords: " + gpt3Keywords);
+
+
+                        String patternString = "^\\d+\\. (.+)";
+                        Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
+
+                        if (!gpt3Keywords.isEmpty()) {
+                            Matcher matcher = pattern.matcher(gpt3Keywords);
+                            while (matcher.find()){
+                                allKeywords.append(matcher.group(1)).append(", ");
+                            }
+
+                            System.out.println("GPT-3 keywords: " + allKeywords.toString());
+                            finalyKeywords = allKeywords.toString();
+                            //finalyKeywords = String.join(", ", keywords);
+                        } else {
+                            allKeywords.append("No keywords found");
+                            finalyKeywords = "No keywords found";
+                        }
                     }
+
+
 
                 } else {
                     System.out.println("Abstract not found in the PDF.");

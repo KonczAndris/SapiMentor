@@ -43,7 +43,7 @@ public class findKeywordsInAbstract {
         //int numberOfPages = pdfDocument.getNumberOfPages();
 
 
-        for (int page = 1; page <= 10; page++) {
+        for (int page = 4; page <= 15; page++) {
             PdfPage pdfPage = pdfDocument.getPage(page);
             String pageText = PdfTextExtractor.getTextFromPage(pdfPage);
             if (pageText.contains(searchText)) {

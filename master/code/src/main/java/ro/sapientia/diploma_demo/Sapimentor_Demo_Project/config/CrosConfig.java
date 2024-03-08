@@ -15,7 +15,8 @@ public class CrosConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("https://sapimentor.eu"); // Engedélyezett eredet
         config.addAllowedHeader("*"); // Engedélyez minden fejlécet
-        config.addAllowedMethod("POST"); // Engedélyezett kérési módszer
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("GET");// Engedélyezett kérési módszer
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
