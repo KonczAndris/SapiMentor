@@ -21,7 +21,13 @@ function connectToWebSocket() {
     IdForUser = element.id.substring('large-message-box-for-'.length);
    // console.log("Itt mar az userId: " + IdForUser);
 
-    var socket = new SockJS('/ws');
+    if(window.location.href.includes("http://")){
+        var socket = new SockJS('/ws');
+        console.log("sima ws-t hasznal");
+    }else {
+        var socket = new SockJS('https://' + window.location.host + '/ws');
+        console.log("wss-t hasznal");
+    }
     stompClient = Stomp.over(socket);
 
     // stompClient.connect({}, function (frame) {

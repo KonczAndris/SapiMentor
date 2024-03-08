@@ -8,8 +8,17 @@ function connectToWebSocketForIndexPage() {
     IdForUserInIndexPage = elementToGetUserId.id.split("-")[1];
     // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
 
-    var socket = new SockJS('/ws');
+    var socket;
+    if (window.location.protocol === "http:") {
+       socket = new SockJS('http://' + window.location.host + '/ws');
+        console.log("http" + socket);
+    } else {
+        socket = new SockJS('https://' + window.location.host + '/ws');
+        console.log("https" + socket);
+    }
     stompClient = Stomp.over(socket);
+
+    console.log("stompClient: ", stompClient);
 
     stompClient.connect({}, onConnectedForIndexPage, onError);
 }

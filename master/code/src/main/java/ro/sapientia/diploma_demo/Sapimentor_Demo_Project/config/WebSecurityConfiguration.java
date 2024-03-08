@@ -2,6 +2,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -11,32 +12,23 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-
 //    @Autowired
-//    private UserRepository userRepository;
-
+//    private CrosConfig crosConfig;
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public MyCustomSessionInformationExpiredStrategy customSessionInformationExpiredStrategy() {
-//        return new MyCustomSessionInformationExpiredStrategy();
-//    }
-//
-//    @Bean
-//    public HttpSessionEventPublisher httpSessionEventPublisher() {
-//        return new HttpSessionEventPublisher();
-//    }
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
+        http
+                //.addFilterBefore(crosConfig.corsFilter(), CorsFilter.class)
+                //.and()
+                .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
                 //.and()
                 .headers()
                 .frameOptions()
@@ -74,16 +66,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login?logout")
                     .permitAll();
-                //.and()
-                //innentol a session kezeles
-//                .sessionManagement()
-//                    .maximumSessions(1)
-//                    .maxSessionsPreventsLogin(false)
-//                    .expiredUrl("/login?expiredSession")
-//                    .and()
-//                    .invalidSessionUrl("/login");
-
     }
+
 
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {
