@@ -182,7 +182,7 @@
 
                         <div th:id="${'profile-button-container-' + pic.id}" class="profile-button-container">
                             <button th:id="${'profileButton-' + pic.id}" class="profile-button-watch"> <img class="profile-button-icon-watch" th:src="@{/img/watch-profile.png}" alt="Watch Profile"> </button>
-                            <button th:id="${'favoriteButton-' + pic.id}" class="profile-button">
+                            <button th:id="${'favoriteButton-' + pic.id}" class="profile-button" th:classappend="${not userRolesToDisplayMentorSelector.contains('MENTEE') ? 'notmentee' : ''} + ${not userRolesToDisplayMentorSelector.contains('MENTOR') ? 'notmentor' : ''}" >
                                 <img class="profile-button-icon checked-heart"  th:src="@{/img/checked-heart.png}" alt="Favorite">
                                 <img class="profile-button-icon unchecked-heart"  th:src="@{/img/unchecked-heart.png}" alt="Favorite">
                             </button>

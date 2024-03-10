@@ -83,6 +83,7 @@ public class MyGroupController {
 
         // ez helyett esetleg a hosszu menet
         myGroupService.getAllMeneesDetails(model, principal);
+        utilityForSomeCotroller.getUserRolesToDisplayMentorSelector(model, principal);
 
         return "myGroup";
     }
@@ -100,6 +101,7 @@ public class MyGroupController {
 
         // ez helyett esetleg a hosszu menet
         myGroupService.getAllMentorsDetails(model, principal);
+        utilityForSomeCotroller.getUserRolesToDisplayMentorSelector(model, principal);
 
         return "myGroup";
     }
@@ -249,6 +251,7 @@ public class MyGroupController {
             utilityForSomeCotroller.showSkillsToMyGroupPage(model);
             utilityForSomeCotroller.showProfileImageAndName(model, principal);
             myGroupService.getAllMenteesDetailsByFilter(principal, model, params);
+            utilityForSomeCotroller.getUserRolesToDisplayMentorSelector(model, principal);
 
             return "myGroup";
         } catch (Exception e) {
@@ -270,6 +273,7 @@ public class MyGroupController {
             utilityForSomeCotroller.showSkillsToMyGroupPage(model);
             utilityForSomeCotroller.showProfileImageAndName(model, principal);
             myGroupService.getAllMentorsDetailsByFilter(principal, model, params);
+            utilityForSomeCotroller.getUserRolesToDisplayMentorSelector(model, principal);
 
             return "myGroup";
         } catch (Exception e) {

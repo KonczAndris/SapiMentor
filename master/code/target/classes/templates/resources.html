@@ -51,9 +51,9 @@
                <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
        </div>
        <div class="menu-divider"></div>
-       <div class="form-group" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
+       <div class="form-group">
            <p class="menu-function">
-               <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
+               <a th:onclick="${not userRolesToDisplayResources.contains('MENTOR') and not userRolesToDisplayResources.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
        </div>
        <div class="form-group">
            <p class="menu-function">

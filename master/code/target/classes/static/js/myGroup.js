@@ -1149,100 +1149,112 @@ function showHeartIcons() {
         //console.log("Favorite button: ", favoriteButton);
 
         favoriteButton.addEventListener('click', function() {
-           //console.log("Favorite " + parentCellId + " button clicked");
-           if (uncheckedHeart.classList.contains('active')) {
-               //console.log("Hozzaadom a kedvencekhez");
-               uncheckedHeart.style.display = 'none';
-               checkedHeart.style.display = 'inline';
-               uncheckedHeart.classList.remove('active');
-               uncheckedHeart.classList.add('inactive');
-               checkedHeart.classList.remove('inactive');
-               checkedHeart.classList.add('active');
-               var urlforsave = '/myGroup/saveFavorite?favoriteUserId=' + parentCellId;
 
-               fetch(urlforsave, {
-                   method: 'POST',
-                   headers: {
-                       'Content-Type': 'application/x-www-form-urlencoded',
-                       'X-CSRF-TOKEN': token
-                   }
-               }).then(response => {
-                     if (response.ok) {
-                          return response.text();
-                     } else {
-                          throw new Error('Something went wrong');
-                     }
-               }).then(data => {
-                        if (data === 'ok') {
-                            console.log("Sikeres mentes");
-                        } else {
-                            throw new Error('Something went wrong');
+
+                //console.log("Favorite " + parentCellId + " button clicked");
+                if (uncheckedHeart.classList.contains('active')) {
+
+                    if (favoriteButton.classList.contains('notmentee') && window.location.href.includes('mentors')) {
+                        alert("You are not a mentee,so you can't add this mentor to your favorites!");
+                    } else if (favoriteButton.classList.contains('notmentor') && window.location.href.includes('mentees')) {
+                        alert("You are not a mentor,so you can't add this mentee to your favorites!");
+                    } else {
+
+                        //console.log("Hozzaadom a kedvencekhez");
+                        uncheckedHeart.style.display = 'none';
+                        checkedHeart.style.display = 'inline';
+                        uncheckedHeart.classList.remove('active');
+                        uncheckedHeart.classList.add('inactive');
+                        checkedHeart.classList.remove('inactive');
+                        checkedHeart.classList.add('active');
+                        var urlforsave = '/myGroup/saveFavorite?favoriteUserId=' + parentCellId;
+
+                        fetch(urlforsave, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-CSRF-TOKEN': token
+                            }
+                        }).then(response => {
+                            if (response.ok) {
+                                return response.text();
+                            } else {
+                                throw new Error('Something went wrong');
+                            }
+                        }).then(data => {
+                            if (data === 'ok') {
+                                console.log("Sikeres mentes");
+                            } else {
+                                throw new Error('Something went wrong');
+                            }
+                        }).catch(error => {
+                            console.log("Error: ", error);
+                        });
+                    }
+
+
+                }
+                else if (checkedHeart.classList.contains('active')) {
+                    const sureButton = document.getElementById('sureButton-' + parentCellId);
+                    const cancelButton = document.getElementById('cancelButton-' + parentCellId);
+                    const profileButtonContainerSure = document.getElementById('profile-button-container-sure-' + parentCellId);
+                    const profileButtonContainer = document.getElementById('profile-button-container-' + parentCellId);
+                    if (profileButtonContainerSure) {
+                        profileButtonContainerSure.style.display = 'flex';
+                        profileButtonContainer.style.display = 'none';
+                    }
+
+                    sureButton.addEventListener('click', () => {
+                        console.log("Kiveszem a kedvencek kozul");
+                        uncheckedHeart.style.display = 'inline';
+                        checkedHeart.style.display = 'none';
+                        checkedHeart.classList.remove('active');
+                        checkedHeart.classList.add('inactive');
+                        uncheckedHeart.classList.remove('inactive');
+                        uncheckedHeart.classList.add('active');
+
+                        var urlforrevoke = '/myGroup/revokeFavorite?favoriteUserId=' + parentCellId;
+
+                        fetch(urlforrevoke, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-CSRF-TOKEN': token
+                            }
+                        }).then(response => {
+                            if (response.ok) {
+                                return response.text();
+                            } else {
+                                throw new Error('Something went wrong');
+                            }
+                        }).then(data => {
+                            if (data === 'ok') {
+                                console.log("Sikeres visszavonas");
+                            } else {
+                                throw new Error('Something went wrong');
+                            }
+                        }).catch(error => {
+                            console.log("Error: ", error);
+                        });
+
+                        // Hide the sure-modal after the action is performed
+                        const profileButtonContainerSure = document.getElementById('profile-button-container-sure-' + parentCellId);
+                        if (profileButtonContainerSure) {
+                            profileButtonContainerSure.style.display = 'none';
+                            profileButtonContainer.style.display = 'flex';
                         }
-               }).catch(error => {
-                        console.log("Error: ", error);
-               });
+                    });
 
-           }
+                    cancelButton.addEventListener('click', () => {
+                        // Hide the sure-modal without performing any action
+                        if (profileButtonContainerSure) {
+                            profileButtonContainerSure.style.display = 'none';
+                            profileButtonContainer.style.display = 'flex';
+                        }
+                    });
+                }
 
-           else if (checkedHeart.classList.contains('active')) {
-               const sureButton = document.getElementById('sureButton-' + parentCellId);
-               const cancelButton = document.getElementById('cancelButton-' + parentCellId);
-               const profileButtonContainerSure = document.getElementById('profile-button-container-sure-' + parentCellId);
-               const profileButtonContainer = document.getElementById('profile-button-container-' + parentCellId);
-               if (profileButtonContainerSure) {
-                   profileButtonContainerSure.style.display = 'flex';
-                   profileButtonContainer.style.display = 'none';
-               }
 
-               sureButton.addEventListener('click', () => {
-                   console.log("Kiveszem a kedvencek kozul");
-                   uncheckedHeart.style.display = 'inline';
-                   checkedHeart.style.display = 'none';
-                   checkedHeart.classList.remove('active');
-                   checkedHeart.classList.add('inactive');
-                   uncheckedHeart.classList.remove('inactive');
-                   uncheckedHeart.classList.add('active');
-
-                   var urlforrevoke = '/myGroup/revokeFavorite?favoriteUserId=' + parentCellId;
-
-                   fetch(urlforrevoke, {
-                       method: 'POST',
-                       headers: {
-                           'Content-Type': 'application/x-www-form-urlencoded',
-                           'X-CSRF-TOKEN': token
-                       }
-                   }).then(response => {
-                       if (response.ok) {
-                           return response.text();
-                       } else {
-                           throw new Error('Something went wrong');
-                       }
-                   }).then(data => {
-                       if (data === 'ok') {
-                           console.log("Sikeres visszavonas");
-                       } else {
-                           throw new Error('Something went wrong');
-                       }
-                   }).catch(error => {
-                       console.log("Error: ", error);
-                   });
-
-                   // Hide the sure-modal after the action is performed
-                   const profileButtonContainerSure = document.getElementById('profile-button-container-sure-' + parentCellId);
-                   if (profileButtonContainerSure) {
-                       profileButtonContainerSure.style.display = 'none';
-                       profileButtonContainer.style.display = 'flex';
-                   }
-               });
-
-               cancelButton.addEventListener('click', () => {
-                   // Hide the sure-modal without performing any action
-                   if (profileButtonContainerSure) {
-                       profileButtonContainerSure.style.display = 'none';
-                       profileButtonContainer.style.display = 'flex';
-                   }
-               });
-           }
 
 
         });
@@ -1545,3 +1557,10 @@ function toggleComments() {
         commentsDiv.style.display = "none";
     }
 }
+
+
+function notMentee() {
+    alert("You are not a mentee, so you cannot add this mentor to your favorites!");
+
+}
+

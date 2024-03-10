@@ -1094,6 +1094,17 @@ function handlereselectedimagesforProfilePage() {
     }
 }
 
+// itt kell majd a modalt megjeleniteni
+function notMenteeOrMentor() {
+    console.log("Not mentee or mentor");
+    alert("Please select a role first!");
+}
+
+function redirectToMyGroup() {
+    //console.log("Redirect to my group");
+    window.location.href = "/myGroup";
+}
+
 
 setupMentorModal();
 setupModal();
