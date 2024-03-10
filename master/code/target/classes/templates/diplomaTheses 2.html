@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--  <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+  <title>SapiMentor</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/diplomaTheses.css}">
+  <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
+  <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
+
+</head>
+
+<body>
+
+<div class="taskbar">
+    <a href="/" th:href="@{/profile}">
+
+      <div class="user-img-container">
+      <img th:if="${profileImageBase64 != ''}"
+           th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+           alt="Profile Image" class="menu-icon rounded-icon-top"
+           th:async="async"
+           th:attr="data-cache='no-cache'">
+      <img th:unless="${profileImageBase64 != ''}"
+           th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
+        <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+      </div>
+      <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
+    <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
+</div>
+
+<div class="center" th:id="'userIdForDiplomaThesesPage-' + ${diplomathesesUserId}">
+  <div class="left hidden">
+    <div class="center-image">
+      <img th:src="@{/img/white.png}" id="sapimentor-logo" alt="image">
+    </div>
+
+    <div class="form-group form-group-profile menu-function-profile">
+        <a href="/" th:href="@{/profile}">
+          <div class="user-img-container">
+          <img th:if="${profileImageBase64 != ''}"
+               th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+               alt="Profile Image" class="menu-icon rounded-icon"
+               th:async="async"
+               th:attr="data-cache='no-cache'">
+          <img th:unless="${profileImageBase64 != ''}"
+               th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
+          <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+    </div>
+          <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
+    </div>
+
+    <div class="menu-divider"></div>
+    <div class="form-group" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
+      <p class="menu-function">
+        <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
+    </div>
+    <div class="form-group">
+      <p class="menu-function">
+        <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
+    </div>
+    <div class="form-group">
+      <p class="menu-function">
+        <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resources</a> </p>
+    </div>
+    <div class="form-group">
+      <p class="menu-function">
+        <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon"> Settings</a> </p>
+    </div>
+    <div class="form-group">
+      <p class="menu-function">
+        <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
+    </div>
+  </div>
+
+  <div class="right show" id="right-content">
+    <!-- MENU BAR START-->
+    <div class="resource-menu">
+      <div class="button-container">
+        <button id="resources"> LINKS</button>
+        <button id="examExamples"> EXAMS </button>
+        <button class="selected"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon"> DIPLOMA THESES</button>
+      </div>
+
+      <div class="dropdown">
+        <button class="dropbtn"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon"> DIPLOMA THESES</button>
+        <div class="dropdown-content">
+          <a id="resourcesDrop">LINKS</a>
+          <a id="examExamplesDrop">EXAMS</a>
+        </div>
+      </div>
+
+    </div>
+    <!-- MENU BAR END-->
+
+
+    <!-- SEARCH BUTTON BAR START-->
+    <div class="open-search-buttons">
+      <button class="search-button" id="myFilterBtn" onclick="showFilterContainer()">Search</button>
+      <button type="button" id="upload-hidden" class="btn btn-success" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
+        <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
+    </div>
+    <!-- SEARCH BUTTON BAR END-->
+
+    <!-- FILTER BAR START-->
+    <div class="filter-container">
+      <div class="filter-ddowns">
+        <!-- ⓘ Icon -->
+        <span class="info-icon-btn" onclick="openInfoModal()">ⓘ</span>
+
+        <!-- The Modal -->
+        <div id="infoModal" class="info-modal">
+          <!-- Modal content -->
+          <div class="info-modal-content">
+            <span class="close-info-modal" onclick="closeInfoModal()">&times;</span>
+            <p>Here you can search for diploma theses. You can filter the results by name, year, topic, user and tags. You can also like or dislike the diploma theses.</p>
+          </div>
+        </div>
+      <input type="text" class="filter-input" id="filter-input" placeholder="Search by Name..." required>
+
+        <div class="tag-box"><p class="tag-box-text">KEYWORD<br>SEARCH</p>
+        <div class="checkbox-container">
+        <label class="container-checkbox-diplomaTags">
+        <input type="checkbox" class="tags-checkbox">
+        <span class="checkmark-diplomaTags"></span> </label>
+        </div>
+        </div>
+
+      </div>
+      <div class="topic-dropdown-container">
+        <div class="topic-dropdown">
+          <button class="topic-dropbtn" onclick="toggleDiplomaDropdown()">Choose topics</button>
+          <div class="topic-checkboxes" id="topic-myCheckboxes">
+            <label th:each="topic : ${topics}">
+              <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}" checked>
+              <span th:text="${topic.topic}"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="func-buttons">
+        <button class="search-button" id="search-button">Search</button>
+        <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
+        <button type="button" class="upload-hidden btn btn-success" id="upload-upload" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
+          <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- FILTER BAR END-->
+
+    <!-- LINK TABLE START -->
+    <!-- LINK TABLE START -->
+    <div class="table-container" id="table-container">
+      <table class="link-table" id="dataTable">
+        <thead id="link-table-head">
+        <tr>
+          <th class="table-number sortable">NR</th>
+          <th class="table-link sortable" data-column="name">Name</th>
+          <th class="table-number sortable" data-column="year">Year</th>
+          <th class="table-topic sortable" data-column="topic">Topic</th>
+          <th class="table-user sortable" data-column="user">User</th>
+          <th class="table-likes sortable" data-column="likes">Likes</th>
+          <th class="table-actions">Actions</th>
+          <th class="table-tags sortable" data-column="tags" style="display: none;">Tags</th>
+        </tr>
+        </thead>
+        <tbody id="link-table-body">
+
+<!--        <tr>-->
+<!--          <td>1</td>-->
+<!--          <td class="pdf-container-column">-->
+<!--            <div class="pdf-image-image-container">-->
+<!--              Majom Majon - Számítástechnika-->
+<!--              <span class="zoom-icon">&#128269;</span>-->
+<!--              <div class="pdf-image-modal">-->
+<!--                <embed class="pdf-image-modal-content" src="/pdf/teszt.pdf" type='application/pdf'>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--          <td> Info</td>-->
+<!--          <td> Majom</td>-->
+<!--          <td>1</td>-->
+<!--          <td>-->
+<!--            <button class="like-button-link">Like</button>-->
+<!--            <button class="dislike-button-link">Dislike</button>-->
+<!--          </td>-->
+<!--        </tr>-->
+
+          <tr th:each="diploma, stat : ${diplomaThesesData}" th:id="'diploma-row-' + ${diploma.id}">
+            <td th:text="${stat.index + 1}"></td>
+            <td class="pdf-container-column">
+              <div class="pdf-image-image-container">
+                <span th:text="${diploma.name}" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'"></span>
+                <span id="zoomIcon" class="zoom-icon" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'">&#128269;</span>
+                <div class="pdf-image-modal" th:id="'myModal-' + ${diploma.id}">
+                  <span class="close-pdf-modal-btn" th:id="'closeModalBtn-' + ${diploma.id}">&times;</span>
+                  <!--                  <embed th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content"  type='application/pdf'>-->
+                  <iframe th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content" ></iframe>
+                  <a th:id="'modalPDFMobile-' + ${diploma.id}" th:alt="${diploma.name}" ></a>
+                </div>
+              </div>
+            </td>
+            <td th:text="${diploma.year}"></td>
+            <td th:text="${diploma.topic_name}"></td>
+            <td th:text="${diploma.user_name}"></td>
+            <td>
+              <span class="like-dislike-count">
+                  <span class="like-color-text like-count" id="likeButton" th:text="${diploma.like}"></span>
+                  <span class="like-dislike-space"></span>
+                  <span class="dislike-color-text dislike-count" id="dislikeButton" th:text="${diploma.dislike}"></span>
+              </span>
+            </td>
+            <td>
+              <button class="like-button-link">Like</button>
+              <button class="dislike-button-link">Dislike</button>
+            </td>
+            <td style="display: none;">
+              <span id="tagWords" th:text="${diploma.keywords}"></span>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination-container">
+      <button id="prev-page-button">Previous</button>
+      <div id="page-counter"></div>
+      <button id="next-page-button">Next</button>
+    </div>
+    <!-- LINK TABLE END -->
+  </div>
+  <div id="loading-modal" class="modal">
+    <div class="modal-content">
+      <img class="loading-gif" th:src="@{/gif/loading.gif}" alt="Loading..." />
+    </div>
+  </div>
+  <!-- RESOURCE MODAL START -->
+  <div id="diplomaThesesModal" class="modal-diplomaTheses">
+    <div class="modal-content-diplomaTheses">
+<!--      <span class="close-diplomaTheses">&times;</span>-->
+      <!-- Új rész hozzáadása a modalhoz -->
+      <div class="message-diploma-modal-content-container">
+        <p class="error-message-diploma-modal-content" id="error-message-diploma-modal-content"></p>
+      </div>
+      <div class="form-group-edit">
+        <div class="detail-row">
+          <label for="fileUpload" class="detail-label">Choose File:</label>
+          <div class="fileUpload-row">
+            <input type="file" class="edit-input" id="fileUpload" accept=".pdf" style="display: none;">
+            <button type="button" class="upload-button" id="fileUploadButton">Select</button>
+            <input type="text" class="edit-input" id="diplomaThesesFileName-edit" placeholder="" required autofocus="autofocus" readonly>
+          </div> </div>
+      </div>
+
+      <div class="form-group-edit">
+        <div class="detail-row">
+          <p class="detail-label">Name:</p>
+          <input type="text" class="edit-input" id="diplomaTheses-edit" placeholder="" required
+                 autofocus="autofocus">
+          <div class="info-icon" data-tooltip="">
+            <i class="fas fa-info-circle"></i>
+          </div>
+          <div class="info-tooltip">Enter an accurate name!</div>
+        </div>
+      </div>
+
+      <div class="form-group-edit">
+        <div class="detail-row">
+          <p class="detail-label">Year:</p>
+          <input type="text" class="edit-input" id="diplomaTheses-edit-year" placeholder="" required
+                 autofocus="autofocus">
+          <div class="info-icon" data-tooltip="">
+            <i class="fas fa-info-circle"></i>
+          </div>
+          <div class="info-tooltip">Enter a valid year!</div>
+        </div>
+      </div>
+
+      <div class="form-group-edit" id="topicDD-edit">
+        <div class="detail-row">
+          <p class="detail-label">Topic:</p>
+          <div class="topic-dropdown-modal">
+            <button class="topic-dropbtn-modal" onclick="toggleDropdownModal()">Choose a topic</button>
+            <input type="hidden" id="topic-selected-modal" value="Choose a topic">
+            <div class="topic-dropdown-content" id="topic-myDropdown">
+              <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
+                 th:attr="onclick='closeDropdownTopics(\'' + ${topic.topic} + '\')'"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="func-buttons-modal">
+        <!--<form id="diplomaTheses-form"  th:action="@{/saveResourceLinks}" method="post" >-->
+        <!--<input type="hidden" name="diplomaThesesDataItems" id="diplomaThesesDataItems" value="">-->
+        <button type="submit" class="upload-button-modal" id="upload-button-modal" th:onclick="saveDiplomaThesesDataToServer()" >Upload</button>
+        <!--</form>-->
+        <button class="cancel-button-modal close-diplomaTheses">Cancel</button>
+      </div>
+
+
+    </div>
+  </div>
+  <!-- RESOURCE MODAL END -->
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:src="@{/js/diplomaTheses.js}"></script>
+<script th:src="@{/js/functions.js}"></script>
+<script>
+  if (localStorage.getItem('theme') === 'dark') {
+    const darkThemeLink = document.createElement('link');
+    darkThemeLink.rel = 'stylesheet';
+    darkThemeLink.href = '/css/darkTheme.css';
+    document.head.appendChild(darkThemeLink);
+  }
+</script>
+</body>
+
+</html>

@@ -13,9 +13,11 @@ public class CrosConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("https://sapimentor.eu"); // Engedélyezett eredet
-        config.addAllowedHeader("*"); // Engedélyez minden fejlécet
-        config.addAllowedMethod("POST"); // Engedélyezett kérési módszer
+        config.addAllowedOrigin("https://sapimentor.eu");
+        config.addAllowedOrigin("https://www.sapimentor.eu");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("GET");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }

@@ -18,7 +18,6 @@ public class GPT3Service {
     }
 
     public String getKeywordsFromAbstractWithGPT3(String userMessage) {
-        System.out.println("API key: " + apiKey);
         //System.out.println("User message: " + userMessage);
 
         // Elokeszitjuk a lekerdezesi torzset
@@ -42,7 +41,8 @@ public class GPT3Service {
             return gpt3Response;
         } catch (WebClientResponseException e) {
             System.err.println("API error response: " + e.getResponseBodyAsString());
-            throw e;
+            e.printStackTrace();
+            return "Error GPT-3 API";
         }
     }
 }

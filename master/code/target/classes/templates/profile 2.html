@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--  <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+  <title>SapiMentor</title>
+  <link rel="stylesheet"  type="text/css" th:href="@{/css/myGroup.css}">
+  <link rel="stylesheet"  type="text/css" th:href="@{/css/index.css}">
+  <link rel="stylesheet"  type="text/css" th:href="@{/css/profile.css}">
+  <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
+  <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
+  <link rel="stylesheet"  type="text/css" th:href="@{/css/cropper.css}">
+  <script th:src="@{/js/cropper.js}"></script>
+  <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js}"></script>
+</head>
+<body>
+
+<div class="taskbar">
+    <a href="/" th:href="@{/profile}">
+
+      <div class="user-img-container">
+      <img th:if="${profileImageBase64 != ''}"
+           th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+           alt="Profile Image" class="menu-icon rounded-icon-top"
+           th:async="async"
+           th:attr="data-cache='no-cache'">
+      <img th:unless="${profileImageBase64 != ''}"
+           th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
+        <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+      </div>
+
+      <span class="profile-taskbar-name username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span>
+    </a>
+  </p>
+    <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
+</div>
+
+<div class="center" th:id="'userIdForProfilePage-' + ${UserId}">
+  <div class="left hidden">
+    <div class="center-image">
+      <img th:src="@{/img/white.png}" id="sapimentor-logo" alt="image">
+    </div>
+
+    <div class="form-group form-group-profile menu-function-profile">
+        <a href="/" th:href="@{/profile}">
+
+          <div class="user-img-container">
+          <img th:if="${profileImageBase64 != ''}"
+               th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+               alt="Profile Image" class="menu-icon rounded-icon"
+               th:async="async"
+               th:attr="data-cache='no-cache'">
+          <img th:unless="${profileImageBase64 != ''}"
+               th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
+          <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
+          </div>
+
+          <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span>
+         </a>
+    </div>
+    <div class="menu-divider"></div>
+    <div class="form-group" th:if="${userRolesToDisplay.contains('MENTOR') or userRolesToDisplay.contains('MENTEE')}">
+      <p class="menu-function">
+        <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
+    </div>
+    <div class="form-group" >
+      <p class="menu-function">
+        <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
+    </div>
+    <div class="form-group">
+      <p class="menu-function">
+        <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resources</a> </p>
+    </div>
+    <div class="form-group">
+      <p class="menu-function">
+        <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon"> Settings</a> </p>
+    </div>
+    <div class="form-group">
+      <p class="menu-function">
+        <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
+    </div>
+
+  </div>
+
+  <div class="right show" id="right-content">
+
+    <!-- LEFT CONTAINER START -->
+    <div class="profile-container" th:id="${'profile-container-Id_' + UserId}">
+      <div class="profile-left">
+        <div class="section-profile">
+<!--          <div class="image-container">-->
+<!--            <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">-->
+<!--            <div class="change-icon" id="change-image-icon">-->
+<!--              <img th:src="@{/img/change.png}" alt="Change Icon">-->
+<!--            </div>-->
+<!--          </div>-->
+
+          <!--/*@thymesVar id="errorMessage" type=""*/-->
+          <!--A hibaüzenet megjelenítése itt-->
+          <!--A regi verzioban ez nem kell-->
+          <div style="color: red;">
+            <p th:text="${errorMessage}"></p>
+          </div>
+
+            <!-- A kép megjelenítése itt -->
+            <div class="image-container">
+              <img th:if="${profileImageBase64 != ''}"
+                   th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+                   alt="Profile Image" class="profile-image"
+                   th:async="async"
+                   th:attr="data-cache='no-cache'">
+              <img th:unless="${profileImageBase64 != ''}"
+                   th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">
+
+              <div class="change-icon" id="change-image-icon">
+                  <img th:src="@{/img/change.png}" alt="Change Icon">
+              </div>
+            </div>
+
+            <!-- UPLOAD MODAL START -->
+            <div id="uploadModal" class="modal-upload">
+              <div class="modal-content-upload">
+                <span class="close-upload">&times;</span>
+
+<!--                <div class="info-tooltip-upload"><p> 1x1 picture is recommanded. </p></div>-->
+
+                <div id="error-message" class="alert alert-danger">
+                  The size of the image is too large.
+                </div>
+
+                <div class="image-container">
+                  <img th:if="${profileImageBase64 != ''}"
+                       th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
+                       alt="Profile Image" class="profile-image"
+                       id="change-profile-image"
+                       th:async="async"
+                       th:attr="data-cache='no-cache'">
+                  <img th:unless="${profileImageBase64 != ''}"
+                       th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image" id="change-profile-image-sec">
+                </div>
+
+                <div class="upload-buttons">
+
+                  <div class="btn btn-success" id="upload-upload">
+                    <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"> Select
+                  </div>
+
+<!--                  <form th:action="@{/upload-profile-image}" method="post" enctype="multipart/form-data">-->
+<!--                    <input type="file" id="imageUpload" style="display: none;" accept="image/*" name="image">-->
+<!--                    <button type="submit" id="upload-save" class="btn btn-success">Upload</button>-->
+<!--                  </form>-->
+                  <input type="file" id="imageUpload" style="display: none;" accept="image/*" name="image">
+                  <button type="submit" id="upload-save" class="btn btn-success">Upload</button>
+                </div>
+              </div>
+            </div>
+            <!-- UPLOAD MODAL END -->
+
+
+<!--          <div class="image-container">-->
+<!--            <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">-->
+<!--            <div class="change-icon" id="change-image-icon">-->
+<!--              <label for="image-upload" class="upload-label">-->
+<!--                <img th:src="@{/img/change.png}" alt="Change Icon">-->
+<!--                <input type="file" id="image-upload" style="display:none">-->
+<!--              </label>-->
+<!--            </div>-->
+<!--          </div>-->
+
+
+          <div class="status-box">
+            <div class="name-box">
+              <p class="first-name" th:text="${userRegistrationDetails.firstName}"></p>
+            </div>
+
+            <div id="edit-role">
+              <h2 th:text="${userRolesToDisplay}" class="status"> </h2>
+              <div class="edit-button">
+              <button id="myMentorBtn"> <img th:src="@{/img/edit-profile.png}" alt="Edit Role" /> </button>
+              </div>
+            </div>
+
+            <!-- MENTOR MODAL START -->
+            <div id="mentorModal" class="modal-mentor">
+              <div class="modal-content-mentor">
+                <span class="close-mentor">&times;</span>
+                <div class="message-modal-content-mentor-container">
+                  <p class="error-message-modal-content-mentor" id="error-message-modal-content-mentor"></p>
+                </div>
+                <div class="details">
+                  <div class="form-group-mentor">
+                    <div class="detail-row-mentor">
+                      <div class="edit-input-mentor" id="role-edit" required>
+<!--                        <label>-->
+<!--                          <input type="checkbox" name="role" value="USER" th:checked="${#lists.contains(userRegistrationDetails.roles, 'USER')}" required>-->
+<!--                          <span class="checkbox-custom"></span>-->
+<!--                          USER-->
+<!--                        </label>-->
+                        <label>
+                          <input type="checkbox" name="role" value="MENTOR" th:checked="${#lists.contains(userRegistrationDetails.roles, 'MENTOR')}" required>
+                          <span class="checkbox-custom"></span>
+                          MENTOR
+                        </label>
+                        <label>
+                          <input type="checkbox" name="role" value="MENTEE" th:checked="${#lists.contains(userRegistrationDetails.roles, 'MENTEE')}" required>
+                          <span class="checkbox-custom"></span>
+                          MENTEE
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" id="mentor-save" class="btn btn-success" th:onclick="updateRoleStatus()">Save</button>
+              </div>
+            </div>
+            <!-- MENTOR MODAL END -->
+
+
+            <div class="rating">
+              <input type="radio" id="star5" name="ratingProfile" value="5" th:checked="${averageOfRating >= 4.5 && averageOfRating <= 5}" disabled />
+              <label for="star5">&#9733;</label>
+              <input type="radio" id="star4" name="ratingProfile" value="4" th:checked="${averageOfRating >= 3.5 && averageOfRating < 4.5}" disabled />
+              <label for="star4">&#9733;</label>
+              <input type="radio" id="star3" name="ratingProfile" value="3" th:checked="${averageOfRating >= 2.5 && averageOfRating < 3.5}" disabled />
+              <label for="star3">&#9733;</label>
+              <input type="radio" id="star2" name="ratingProfile" value="2" th:checked="${averageOfRating >= 1.5 && averageOfRating < 2.5}" disabled />
+              <label for="star2">&#9733;</label>
+              <input type="radio" id="star1" name="ratingProfile" value="1" th:checked="${averageOfRating >= 0.5 && averageOfRating < 1.5}" disabled />
+              <label for="star1">&#9733;</label>
+            </div>
+
+            <div class="rating-text">
+              <span id="rating-number" th:text="${countOfRating}"></span> Ratings
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- LEFT CONTAINER END  -->
+      <!-- RIGHT CONTAINER  START -->
+      <div class="profile-right">
+        <!-- ABOUT CONTAINER  START -->
+        <div class="section">
+          <h2>ABOUT
+            <div class="edit-button">
+              <button id="myBtn"> <img th:src="@{/img/edit-profile.png}" alt="Edit Profile" /> </button>
+            </div>
+          </h2>
+
+          <!-- ABOUT MODAL START -->
+          <div id="myModal" class="modal-profile">
+            <form id="edit-form" th:action="@{/profile/save}" method="post">
+            <div class="modal-content-profile">
+              <span class="close">&times;</span>
+              <div class="details">
+
+                <div class="form-group-edit">
+                  <div class="detail-row">
+                    <p class="detail-label">First Name:</p>
+                    <input type="text" class="edit-input" id="firstName-edit" placeholder="" name="firstName"
+                           required autofocus="autofocus" oninput="validateFirstName(), checkValidationAndSetOpacity()" th:value="${userRegistrationDetails.firstName}">
+                    <div class="info-icon" data-tooltip="Tooltip text for First Name">
+                      <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="info-tooltip">Enter your real name!</div>
+                  </div> </div>
+
+                <div class="form-group-edit">
+                  <div class="detail-row">
+                    <p class="detail-label">Last Name:</p>
+                    <input type="text" class="edit-input" id="lastName-edit" placeholder="" name="lastName"
+                           required autofocus="autofocus" oninput="validateLastName(), checkValidationAndSetOpacity()" th:value="${userRegistrationDetails.lastName}">
+                    <div class="info-icon" data-tooltip="Tooltip text for Last Name">
+                      <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="info-tooltip">Enter your real name!</div>
+                  </div> </div>
+
+                <div class="form-group-edit">
+                  <div class="detail-row">
+                    <p class="detail-label">Specialization:</p>
+                    <input type="text" class="edit-input" id="specialization-edit" placeholder="ex: Software Engineering" name="specialization"
+                           required autofocus="autofocus" oninput="validateSpecialization(), checkValidationAndSetOpacity()" th:value="${userRegistrationDetails.specialization ?: ''}">
+                    <div class="info-icon" data-tooltip="Tooltip text for First Name">
+                      <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="info-tooltip">Enter your specialization!</div>
+                  </div> </div>
+
+                <div class="form-group-edit">
+                  <div class="detail-row">
+                    <p class="detail-label">Year:</p>
+                    <input type="number" class="edit-input" id="year-edit" placeholder="ex: 3" name="year"
+                           required autofocus="autofocus" oninput="validateYear(), checkValidationAndSetOpacity()" th:value="${userRegistrationDetails.year ?: ''}">
+                    <div class="info-icon" data-tooltip="Tooltip text for First Name">
+                      <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="info-tooltip">Only 1-4 year is accepted!</div>
+                  </div> </div>
+
+                <div class="form-group-edit">
+                  <div class="detail-row">
+                    <p class="detail-label">Phone:</p>
+                    <input type="tel" class="edit-input" id="phone-edit" placeholder="ex: 0734155510" name="phoneNumber"
+                           autofocus="autofocus" oninput="validatePhone()" th:value="${userRegistrationDetails.phoneNumber ?: ''}">
+                    <div class="info-icon" data-tooltip="Tooltip text for First Name">
+                      <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="info-tooltip">Enter your 10 digit phone number!</div>
+                  </div> </div>
+              </div>
+              <button type="submit" id="edit-save" class="btn btn-success">Save</button>
+            </div>
+            </form>
+            <div id="whitespace"> </div>
+          </div>
+          <!-- ABOUT MODAL END -->
+
+
+          <!-- ABOUT INFO START -->
+          <div class="divider"></div>
+          <div class="details">
+            <div class="detail-row">
+              <p class="detail-label">Name:</p>
+              <p class="detail-value" th:text="${userRegistrationDetails.firstName}"></p>
+              <p class="detail-value" th:text="${userRegistrationDetails.lastName}"></p>
+            </div>
+            <div class="detail-row">
+              <p class="detail-label">Specialization:</p>
+              <p th:text="${userRegistrationDetails.specialization ?: 'ex: Software Engineering'}"></p>
+            </div>
+            <div class="detail-row">
+              <p class="detail-label">Year:</p>
+              <p th:text="${userRegistrationDetails.year ?: 'ex: 3'}"></p>
+            </div>
+            <div class="detail-row">
+              <p class="detail-label">E-mail:</p>
+              <p class="detail-value" th:text="${userRegistrationDetails.username}"></p>
+            </div>
+            <div class="detail-row">
+              <p class="detail-label">Phone:</p>
+              <p th:text="${userRegistrationDetails.phoneNumber ?: 'ex: 0734155510'}"></p>
+            </div>
+          </div>
+          <!-- ABOUT INFO END -->
+        </div>
+        <!-- ABOUT CONTAINER  END -->
+
+        <!-- SKILLS CONTAINER START -->
+        <div class="section">
+          <h2>SKILLS
+            <div class="edit-button">
+              <button id="mySkillBtn"> <img th:src="@{/img/edit-profile.png}" alt="Edit Profile" /> </button>
+            </div>
+          </h2>
+          <!-- SKILLS MODAL START -->
+          <div id="skillsModal" class="modal-skills">
+            <div class="modal-content-skills">
+              <!-- Hibaüzenet megjelenítése -->
+
+              <span class="close-skill">&times;</span>
+
+              <div id="error-message-for-skills" style="color: red">
+                <p>This topic has already been added!</p>
+              </div>
+
+              <div class="dropdown-container">
+
+                <div class="dropdown-skill-modal">
+                  <button class="dropbtn" onclick="toggleDropdown()">Choose a topic</button>
+                  <div class="dropdown-content" id="myDropdown">
+                    <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
+                       th:attr="onclick='closeDropdown(\'' + ${topic.topic} + '\')'"></a>
+                  </div>
+                </div>
+                <input type="text" class="skills-input" id="topic-input" placeholder="Selected Topic"
+                       required autofocus="autofocus" readonly >
+                <button type="submit" id="skills-add" class="btn btn-success" th:onclick="addSelectedTopic()">Add Topic</button>
+
+              </div>
+              <div class="divider"></div>
+
+                <div id="skillsModalTableContainer" class="table-container">
+                  <table id="myTable">
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="divider"></div>
+              <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>
+<!--              <form id="skills-form"  th:action="@{/saveProfileTopics}" method="post" >-->
+<!--                <input type="hidden" name="profileTopicsDataItems" id="profileTopicsDataItems" value="">-->
+<!--                <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>-->
+<!--              </form>-->
+            </div>
+          </div>
+          <!-- SKILLS MODAL END -->
+          <div class="divider"></div>
+          <!-- SKILLS INFO START -->
+          <div class="table-container">
+            <table>
+              <tbody>
+              <tr th:each="topic : ${userTopics}" >
+                <td th:text="${topic.topic}"></td>
+                <td class="scrollable-column">
+                  <div th:each="tag : ${topic.tags}" class="topic-tag-profile" th:text="${tag}"></div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="divider"></div>
+          <!-- SKILLS INFO END -->
+        </div>
+        <!-- SKILLS CONTAINER END -->
+
+        <button class="navigate-button" id="showCommentsButton" onclick="toggleAndShowNext()">
+          <img th:src="@{/img/see-comments.png}" alt="See Comments Icon" class="icon"> SEE COMMENTS</button>
+        <!-- COMMENT CONTAINER START -->
+        <div class="section" id="comment-section-container" style="display: none;">
+          <h2>COMMENTS</h2>
+          <div class="divider"></div>
+          <!-- COMMENT INFO START -->
+
+          <div id="commentsDiv" class="comments">
+            <div class="comment-entry" id="commentContainer" style="display: block;">
+
+
+              <div class="comment-section active" th:id="${'comment-section-' + data.userId}" th:each="data, status : ${allRatingsForThisUser}">
+                <div class="comment-row">
+                  <img  th:id="${'commentProfileImgProfilePage-' + data.userId}" th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
+                  <div class="comment-infos">
+                    <div th:each="user : ${allSelectedUsers}">
+                      <p style="margin: 0" th:if="${user.id == data.userId}" th:text="${user.last_Name + ' ' + user.first_Name}"></p>
+                    </div>
+                    <p class="comment-label-date" th:id="${'comment-label-date-' + data.userId}" th:text="${data.date}"></p>
+                    <div class="comment-rating" th:id="${'comment-rating-' + data.userId}">
+                      <input type="radio" th:id="${'comment-star5_'+data.userId}" name="rating" value="5" th:checked="${data.score >= 4.5}" disabled />
+                      <label th:for="${'comment-star5_' + data.userId}" th:style="${data.score >= 4.5} ? 'color: gold;' : ''" >&#9733;</label>
+                      <input type="radio" th:id="${'comment-star4_'+data.userId}" name="rating" value="4" th:checked="${data.score >= 3.5}" disabled />
+                      <label th:for="${'comment-star4_' + data.userId}" th:style="${data.score >= 3.5} ? 'color: gold;' : ''" >&#9733;</label>
+                      <input type="radio" th:id="${'comment-star3_'+data.userId}" name="rating" value="3" th:checked="${data.score >= 2.5}" disabled />
+                      <label th:for="${'comment-star3_' + data.userId}" th:style="${data.score >= 2.5} ? 'color: gold;' : ''" >&#9733;</label>
+                      <input type="radio" th:id="${'comment-star2_'+data.userId}" name="rating" value="2" th:checked="${data.score >= 1.5}" disabled />
+                      <label th:for="${'comment-star2_' + data.userId}" th:style="${data.score >= 1.5} ? 'color: gold;' : ''" >&#9733;</label>
+                      <input type="radio" th:id="${'comment-star1_'+data.userId}" name="rating" value="1" th:checked="${data.score >= 0.5}" disabled />
+                      <label th:for="${'comment-star1_' + data.userId}" th:style="${data.score >= 0.5} ? 'color: gold;' : ''" >&#9733;</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="comment-content">
+                  <p class="comment-label-text" th:id="${'comment-label-text-' + data.userId}" th:text="${data.comment}"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-arrows">
+              <button class="navigate-button" onclick="showPreviousCommentSection()">←</button>
+              <button class="navigate-button" onclick="showNextCommentSection()">→</button>
+            </div>
+          </div>
+          <!-- COMMENT INFO END -->
+
+        </div>
+        <!-- COMMENT CONTAINER END -->
+
+      </div>
+      <!-- RIGHT CONTAINER  END -->
+      <div id="loading-modal" class="modal">
+        <div class="modal-content">
+          <img class="loading-gif" th:src="@{/gif/loading.gif}" alt="Loading..." />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:src="@{/js/myGroup.js}"></script>
+<script th:src="@{/js/functions.js}"></script>
+<script th:src="@{/js/WebSocketForProfilePage.js}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const imageUploadInput = document.getElementById('imageUpload');
+    const profileImageFirst = document.getElementById('change-profile-image');
+    const profileImageSecond = document.getElementById('change-profile-image-sec');
+
+    // console.log("First: " + profileImageFirst)
+    // console.log("Second: " + profileImageSecond)
+    imageUploadInput.addEventListener('change', (event) => {
+      const selectedImage = event.target.files[0];
+      //console.log(selectedImage)
+      if(profileImageFirst != null){
+        profileImageFirst.src = URL.createObjectURL(selectedImage);
+      }else{
+       profileImageSecond.src = URL.createObjectURL(selectedImage);
+      }
+    });
+  });
+
+</script>
+<script>
+  if (localStorage.getItem('theme') === 'dark') {
+    const darkThemeLink = document.createElement('link');
+    darkThemeLink.rel = 'stylesheet';
+    darkThemeLink.href = '/css/darkTheme.css';
+    document.head.appendChild(darkThemeLink);
+  }
+</script>
+</body>
+</html>
+
+
+
+
+
+
