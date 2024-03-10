@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@babel/core": "^7.24.0",
     "@babel/preset-env": "^7.24.0",
     "@testing-library/dom": "^9.3.4",
     "babel-jest": "^29.7.0",
@@ -12,6 +13,7 @@
   "dependencies": {
     "expect": "^29.7.0",
     "jsdom": "^24.0.0",
+    "sinon": "^17.0.1",
     "test": "^3.3.0",
     "text-encoding": "^0.7.0"
   },

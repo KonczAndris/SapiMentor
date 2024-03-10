@@ -49,6 +49,25 @@ function passwordToggleVisibilityForLogin(inputId, iconId) {
     }
 }
 
+// XMLHttpRequest for Checking Authentication
+function performXMLHttpRequest() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/check-authentication", true);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            var isRedirected = JSON.parse(xhr.responseText).redirected;
+            if (!isRedirected) {
+                errorMessage.style.display = "block";
+                event.stopPropagation();
+            } else {
+                errorMessage.style.display = "none";
+                loginForm.submit();
+            }
+        }
+    };
+    xhr.send();
+}
+
 // Login form validation
 document.addEventListener("DOMContentLoaded", function () {
     var usernameInput = document.getElementById("username");
@@ -85,25 +104,10 @@ document.addEventListener("DOMContentLoaded", function () {
         validateUsername();
         validatePassword();
 
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/check-authentication", true);
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                var isRedirected = JSON.parse(xhr.responseText).redirected;
-                if (!isRedirected) {
-                    errorMessage.style.display = "block";
-                    event.stopPropagation();
-                } else {
-                    errorMessage.style.display = "none";
-                    loginForm.submit();
-                }
-            }
-        };
-        xhr.send();
+        performXMLHttpRequest();
     });
-
 });
 
 // Jest testing exports
-module.exports = {validateUsername, validatePassword};
+module.exports = {validateUsername, validatePassword, performXMLHttpRequest};
 

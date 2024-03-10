@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-global.XMLHttpRequest = jest.fn();
 
 const htmlFilePath = path.resolve(__dirname, './../../main/resources/templates/login.html');
 const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
@@ -8,8 +7,15 @@ const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
 const { JSDOM } = require('jsdom');
 const { window } = new JSDOM(htmlContent);
 
-const { validateUsername, validatePassword } = require('./../../main/resources/static/js/login.js');
+const { validateUsername, validatePassword, performXMLHttpRequest } = require('./../../main/resources/static/js/login.js');
 require('./../../main/resources/static/js/login.js');
+
+function MockXMLHttpRequest() {
+    this.open = jest.fn();
+    this.send = jest.fn();
+    this.setRequestHeader = jest.fn();
+    this.onload = null;
+}
 
 // Login page load testing
 describe('Login page loading', () => {
@@ -119,19 +125,19 @@ describe('validatePassword function', () => {
     });
 });
 
-
 // Login redirecting testing
 describe('Login functionality', () => {
-    document.body.innerHTML = htmlContent;
-
     test('Login successful login', async () => {
-        var usernameValue = "validUsername@ms.sapientia.ro";
-        var passwordValue = "validPassword";
+        var usernameTestValue = "validUsername@ms.sapientia.ro";
+        var passwordTestValue = "validPassword";
+
+        document.body.innerHTML = htmlContent;
 
         const usernameInput = document.getElementById('username');
-        usernameInput.value = usernameValue;
+        usernameInput.value = usernameTestValue;
         const passwordInput = document.getElementById('password');
-        passwordInput.value = passwordValue;
+        passwordInput.value = passwordTestValue;
+        const loginForm = document.querySelector('form');
         const loginButton = document.getElementById('login-submit');
         const errorMessage = document.getElementById('error-message');
 
@@ -141,7 +147,16 @@ describe('Login functionality', () => {
         expect(usernameInput.classList.contains("highlight")).toBe(false);
         expect(passwordInput.classList.contains("highlight")).toBe(false);
 
-        loginButton.dispatchEvent(new MouseEvent('submit'));
+        const submitSpy = jest.spyOn(loginForm, 'dispatchEvent');
+        loginForm.dispatchEvent(new Event('submit'));
 
+        global.XMLHttpRequest = jest.fn().mockImplementation(MockXMLHttpRequest);
+        performXMLHttpRequest();
+        const xhrInstance = global.XMLHttpRequest.mock.instances[0];
+
+        expect(xhrInstance.open).toHaveBeenCalledWith("GET", "/check-authentication", true);
+        expect(xhrInstance.send).toHaveBeenCalled();
+        expect(errorMessage.style.display).toBe('none');
+        expect(submitSpy).toHaveBeenCalled();
     });
 });
