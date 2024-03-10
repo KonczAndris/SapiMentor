@@ -285,7 +285,8 @@ async function onMessageReceived(payload) {
 
 
         // letre hozom a chat-header-t
-        var chatPage = document.getElementById('chat-page');
+        var chatPage = document.querySelector('#chat-page');
+        console.log("chatPage: ", chatPage);
 
         var chatHeader = document.createElement('div');
         chatHeader.classList.add('chat-header');
@@ -506,11 +507,71 @@ $(document).ready(function () {
                         userElement.classList.add('user');
                         userElement.id = 'user-' + senderUserId;
                         userElement.addEventListener('click', userItemClick);
-                        // var favoriteIdElement = document.createElement('span');
-                        // favoriteIdElement.classList.add('favorite-id');
-                        // favoriteIdElement.textContent = senderUserId;
-                        // favoriteIdElement.style.display = 'none';
-                        // userElement.appendChild(favoriteIdElement);
+
+
+                        var chatHeaderElement = document.getElementById('chat-page');
+                        var chatHeaderDiv = document.createElement('div');
+                        chatHeaderDiv.classList.add('chat-header');
+                        chatHeaderDiv.classList.add('hiddenHeader');
+                        chatHeaderDiv.id = 'user-header-' + senderUserId;
+                        chatHeaderDiv.style.borderBottom = '0px solid green';
+                        chatHeaderDiv.style.borderTop = '2px solid green';
+                        chatHeaderElement.appendChild(chatHeaderDiv)
+                        var favoriteIdElement = document.createElement('span');
+                        favoriteIdElement.classList.add('favorite-id');
+                        favoriteIdElement.id = 'favoriteId-' + senderUserId;
+                        favoriteIdElement.textContent = 0;
+                        favoriteIdElement.style.display = 'none';
+                        chatHeaderDiv.appendChild(favoriteIdElement);
+                        var profileButtonContainerElement = document.createElement('div');
+                        profileButtonContainerElement.classList.add('profile-button-container');
+                        profileButtonContainerElement.id = 'profile-button-container-' + senderUserId;
+                        chatHeaderDiv.appendChild(profileButtonContainerElement);
+                        var profileButtonElement = document.createElement('button');
+                        profileButtonElement.classList.add('profile-button');
+                        profileButtonElement.id = 'favoriteButton-' + senderUserId;
+                        profileButtonContainerElement.appendChild(profileButtonElement);
+                        var checkedHeartElement = document.createElement('img');
+                        checkedHeartElement.classList.add('profile-button-icon');
+                        checkedHeartElement.classList.add('checked-heart');
+                        checkedHeartElement.src = "/img/checked-heart.png";
+                        checkedHeartElement.alt = "Favorite";
+                        profileButtonElement.appendChild(checkedHeartElement);
+                        var uncheckedHeartElement = document.createElement('img');
+                        uncheckedHeartElement.classList.add('profile-button-icon');
+                        uncheckedHeartElement.classList.add('unchecked-heart');
+                        uncheckedHeartElement.src = "/img/unchecked-heart.png";
+                        uncheckedHeartElement.alt = "Favorite";
+                        profileButtonElement.appendChild(uncheckedHeartElement);
+                        var profileButtonContainerSureElement = document.createElement('div');
+                        profileButtonContainerSureElement.classList.add('profile-button-container-sure');
+                        profileButtonContainerSureElement.id = 'profile-button-container-sure-' + senderUserId;
+                        profileButtonContainerSureElement.style.display = 'none';
+                        chatHeaderDiv.appendChild(profileButtonContainerSureElement);
+                        var sureButtonElement = document.createElement('button');
+                        sureButtonElement.classList.add('checkmark-button-profile');
+                        sureButtonElement.classList.add('profile-button');
+                        sureButtonElement.id = 'sureButton-' + senderUserId;
+                        profileButtonContainerSureElement.appendChild(sureButtonElement);
+                        var profileButtonIconSureElement = document.createElement('img');
+                        profileButtonIconSureElement.classList.add('profile-button-icon');
+                        profileButtonIconSureElement.classList.add('profile-button-icon-sure');
+                        profileButtonIconSureElement.src = "/img/checkmark-icon.png";
+                        profileButtonIconSureElement.alt = "Sure";
+                        sureButtonElement.appendChild(profileButtonIconSureElement);
+                        var cancelButtonElement = document.createElement('button');
+                        cancelButtonElement.classList.add('cancel-button-profile');
+                        cancelButtonElement.classList.add('profile-button');
+                        cancelButtonElement.id = 'cancelButton-' + senderUserId;
+                        profileButtonContainerSureElement.appendChild(cancelButtonElement);
+                        var profileButtonIconCancelElement = document.createElement('img');
+                        profileButtonIconCancelElement.classList.add('profile-button-icon');
+                        profileButtonIconCancelElement.classList.add('profile-button-icon-sure');
+                        profileButtonIconCancelElement.src = "/img/cancel-icon.png";
+                        profileButtonIconCancelElement.alt = "Sure";
+                        cancelButtonElement.appendChild(profileButtonIconCancelElement);
+
+
                         var userImageContainerElement = document.createElement('div');
                         userImageContainerElement.classList.add('user-img-container');
                         var userImageElement = document.createElement('img');
@@ -573,6 +634,11 @@ function showHeartIcons(favoriteUserId) {
     var header = $("meta[name='_csrf_header']").attr("content");
     //var favoriteIds = document.querySelector('.favorite-id');
     var favoriteId = document.getElementById('favoriteId-' + favoriteUserId);
+    console.log("favoriteId: ", favoriteId);
+
+    if (favoriteId === null) {
+        favoriteId = document.getElementById('user-' + favoriteUserId);
+    }
     //var favoriteId = elementForFavoriteId.id.substring('favoriteId-'.length);
     console.log("favoriteIdElement: ", favoriteId);
 

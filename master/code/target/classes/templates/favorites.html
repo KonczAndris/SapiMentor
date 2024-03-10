@@ -106,7 +106,6 @@
             <div class="left-message-box">
 
                 <div class="user" th:id="${'user-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}" th:onclick="userItemClick(event)">
-<!--                    <span class="favorite-id" th:text="${favoriteUser.id}" style="display: none"></span>-->
                     <div class="user-status" th:classappend="${favoriteUser.status == 0 ? 'offline' : 'online'}"></div>
                     <div class="user-img-container">
 
@@ -126,7 +125,6 @@
 
             <div class="right-message-box">
                 <div class="chat-container" id="chat-page">
-
 
                     <div class="chat-header hiddenHeader" th:each="favoriteUser : ${allFavoritesUser}" th:id="'user-header-' + ${favoriteUser.id}">
                         <span class="favorite-id" th:id="'favoriteId-' + ${favoriteUser.id}" th:text="1" style="display: none"></span>
