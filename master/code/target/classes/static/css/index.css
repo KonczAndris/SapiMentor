@@ -110,6 +110,18 @@ button{
     align-items: baseline;
     justify-content:center;
     margin-left: 10%;
+    opacity: 60%;
+}
+
+.form-group:hover{
+    opacity: 100%;
+    transform: scale(1.2);
+    transition: all 0.2s ease;
+}
+
+.current-page{
+    opacity: 100%;
+    transform: scale(1.1);
 }
 
 a{
@@ -395,4 +407,11 @@ a{
 
 .hiddenMsg {
     display: none;
+}
+
+.current-menu-icon {
+    margin: 0;
+    height: 30px;
+    width:auto;
+    transform: translateY(-15%);
 }
