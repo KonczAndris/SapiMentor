@@ -770,6 +770,20 @@ function showHeartIcons(favoriteUserId) {
     //});
 }
 
-// Hívás a függvényre, például az oldal betöltésekor vagy más eseményre
+window.onload = function() {
+    adjustChatBoxHeight();
+};
+
+window.addEventListener('resize', function() {
+    adjustChatBoxHeight();
+});
+
+function adjustChatBoxHeight() {
+    var inputBoxHeight = document.getElementById('chat-input-box').offsetHeight;
+    var totalHeight = document.getElementById('chat-page').offsetHeight;
+    var chatBoxHeight = totalHeight - inputBoxHeight;
+    document.getElementById('chat-box').style.height = chatBoxHeight + 'px';
+}
+
 
 
