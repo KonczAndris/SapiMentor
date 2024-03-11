@@ -90,6 +90,7 @@ public class ResourceServices {
         resourcesRepository.save(resource);
     }
 
+    // van ra irva teszt
     public void revokeDislike(Long resourceId){
         Resources resource = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
@@ -103,6 +104,7 @@ public class ResourceServices {
         resourcesRepository.save(resource);
     }
 
+    // van ra irva teszt
     public void likeResourceAndRevokeDislike(Long resourceId){
         Resources resource = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
@@ -117,6 +119,7 @@ public class ResourceServices {
         resourcesRepository.save(resource);
     }
 
+    // van ra irva teszt
     public void dislikeResourceAndRevokeLike(Long resourceId){
         Resources resource = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
@@ -131,6 +134,7 @@ public class ResourceServices {
         resourcesRepository.save(resource);
     }
 
+    // van ra irva teszt
     // link letezesenek ellenorzese
     // Ez fontos ez majd kell a link ellenorzesehez
     public boolean isLinkAccessible(String url){
@@ -144,6 +148,7 @@ public class ResourceServices {
         }
     }
 
+    // van ra irva teszt
     // linkben talalhato-e karterek
     public boolean containsMaliciousContent(String url){
         String[] maliciousContent = {"<script>", "</script>", "<iframe>", "</iframe>"};
@@ -159,6 +164,10 @@ public class ResourceServices {
         }
         return false;
     }
+
+
+
+    // van ra irva teszt
 
     // API kulcs VirusTotal:
     // 7806c278ec2b1b0cf2a451eaf26d0a4e76d317569281c351640c9cee147dfb66
@@ -201,6 +210,9 @@ public class ResourceServices {
         return false;
     }
 
+
+
+    // van ra irva teszt
     public String processAndSaveResources(Resources[] resourcesDataItems, String fullUserName) {
         try {
             for (Resources resourcesData : resourcesDataItems){
