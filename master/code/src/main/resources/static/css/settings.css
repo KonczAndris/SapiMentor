@@ -360,3 +360,8 @@ h2 {
     border: 2px solid white;
 }
 
+.setting-icon{
+    width: 30px;
+    vertical-align:middle;
+    margin-right: 0 !important;
+}
