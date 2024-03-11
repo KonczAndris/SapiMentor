@@ -1097,7 +1097,36 @@ function handlereselectedimagesforProfilePage() {
 // itt kell majd a modalt megjeleniteni
 function notMenteeOrMentor() {
     console.log("Not mentee or mentor");
-    alert("Please select a role first!");
+    var alertModal = document.createElement('div');
+    alertModal.classList.add('alertModal');
+    alertModal.innerHTML = `
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;">
+            <div style="background-color: white; padding: 20px; border-radius: 25px; text-align: center;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                -webkit-animation-name: animatetop;
+                -webkit-animation-duration: 0.4s;
+                animation-name: animatetop;
+                animation-duration: 0.4s;">
+                <p>Please select a role first.</p>
+                <p>You must be a <strong>MENTOR</strong> or a <strong>MENTEE</strong> to enter the My Group page. You can modify your role on the Profile page!</p>
+                <button onclick="toProfile()" style="padding: 10px 20px; background-color: rgb(22, 175, 132); color: white; border: none; border-radius: 20px; cursor: pointer;"
+                onmouseover="this.style.backgroundColor = 'rgb(30, 214, 162)'; this.style.boxShadow = '2px 2px 2px rgba(0, 0, 0, 0.5)'"
+                onmouseout="this.style.backgroundColor = 'rgb(22, 175, 132)'; this.style.boxShadow = 'none'">To Profile</button>
+                <button onclick="closeModal()" style="padding: 10px 20px; background-color: rgb(233, 99, 81); color: white; border: none; border-radius: 20px; cursor: pointer;"
+                onmouseover="this.style.backgroundColor = 'rgb(233, 99, 81)'; this.style.boxShadow = '2px 2px 2px rgba(0, 0, 0, 0.5)'"
+                onmouseout="this.style.backgroundColor = 'rgb(233, 99, 81)'; this.style.boxShadow = 'none'">Close</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(alertModal);
+}
+
+function toProfile() {
+    window.location.href = "/profile";
+}
+
+function closeModal() {
+    var modal = document.querySelector('.alertModal');
+    modal.parentNode.removeChild(modal);
 }
 
 function redirectToMyGroup() {
