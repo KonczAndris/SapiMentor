@@ -116,10 +116,21 @@
           <!-- Modal content -->
           <div class="info-modal-content">
             <span class="close-info-modal" onclick="closeInfoModal()">&times;</span>
-            <p>Here you can search for diploma theses. You can filter the results by name, year, topic, user and tags. You can also like or dislike the diploma theses.</p>
-          </div>
+              <div class="left-content">
+                <p id="diploma-info-1">On this page, you can view the diploma theses uploaded by your peers. Get inspired and browse through different theses.</p>
+                <p id="diploma-info-2" style="display: none;">Utilize the search functionality! Search by name, or check the keyword search and make use of our AI-powered search with keywords. Filter by topics.</p>
+                <p id="diploma-info-3" style="display: none;">Help your peers and be a contributor. Whether you are a MENTOR or MENTEE, you can upload your diploma theses, thereby aiding the learning of others.</p>
+                <p id="diploma-info-4" style="display: none;">Evaluate your peers' uploads, providing easier visibility for those who visit here!</p>
+                <img th:src="@{/img/info-monster3.jpg}" alt="Thesis Image" class="info-image">
+              </div>
+              <div class="pagination">
+                <button onclick="prevInfoPage()" class="navigate-button"> ←</button>
+                <button onclick="nextInfoPage()" class="navigate-button"> →</button>
+              </div>
+            </div>
         </div>
-      <input type="text" class="filter-input" id="filter-input" placeholder="Search by Name..." required>
+
+        <input type="text" class="filter-input" id="filter-input" placeholder="Search by Name..." required>
 
         <div class="tag-box"><p class="tag-box-text">KEYWORD<br>SEARCH</p>
         <div class="checkbox-container">

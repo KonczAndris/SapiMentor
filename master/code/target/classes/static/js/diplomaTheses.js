@@ -1336,3 +1336,34 @@ window.onclick = function(event) {
     }
 }
 
+var currentPage = 1; // Initial page
+
+function nextInfoPage() {
+    var paragraphs = document.querySelectorAll('.info-modal-content p'); // Select all <p> elements
+    if (currentPage < paragraphs.length) {
+        paragraphs[currentPage - 1].style.display = 'none'; // Hide current page
+        currentPage++; // Increment page number
+        paragraphs[currentPage - 1].style.display = 'block'; // Show next page
+    } else {
+        // If reached the last page, cycle back to the first page
+        paragraphs[paragraphs.length - 1].style.display = 'none'; // Hide last page
+        currentPage = 1; // Set current page to 1
+        paragraphs[currentPage - 1].style.display = 'block'; // Show first page
+    }
+}
+
+function prevInfoPage() {
+    var paragraphs = document.querySelectorAll('.info-modal-content p'); // Select all <p> elements
+    if (currentPage > 1) {
+        paragraphs[currentPage - 1].style.display = 'none'; // Hide current page
+        currentPage--; // Decrement page number
+        paragraphs[currentPage - 1].style.display = 'block'; // Show previous page
+    } else {
+        // If reached the first page, cycle back to the last page
+        paragraphs[0].style.display = 'none'; // Hide first page
+        currentPage = paragraphs.length; // Set current page to the last page
+        paragraphs[currentPage - 1].style.display = 'block'; // Show last page
+    }
+}
+
+
