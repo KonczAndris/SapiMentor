@@ -128,7 +128,16 @@
 
                     <div class="chat-header hiddenHeader" th:each="favoriteUser : ${allFavoritesUser}" th:id="'user-header-' + ${favoriteUser.id}">
                         <span class="favorite-id" th:id="'favoriteId-' + ${favoriteUser.id}" th:text="1" style="display: none"></span>
+
                         <div th:id="${'profile-button-container-' + favoriteUser.id}" class="profile-button-container">
+                            <div>
+                                <img th:if="${favoriteUser.favoriteProfileImageBase64 != ''}"
+                                     th:src="@{|data:image/jpeg;base64,${favoriteUser.favoriteProfileImageBase64}|}">
+                                <img th:unless="${favoriteUser.favoriteProfileImageBase64 != ''}"
+                                     th:src="@{/img/anonym.jpg}" alt="Profile Image">
+                                <span class="username-messenger" th:text="${favoriteUser.fullName}" ></span>
+                            </div>
+
                             <button th:id="${'favoriteButton-' + favoriteUser.id}" class="profile-button">
                                 <img class="profile-button-icon checked-heart"  th:src="@{/img/checked-heart.png}" alt="Favorite">
                                 <img class="profile-button-icon unchecked-heart"  th:src="@{/img/unchecked-heart.png}" alt="Favorite">
@@ -154,15 +163,16 @@
 <!--                        <div class="message partner-message">Hi there! I'm good.</div>-->
                     </div>
 
+                    <div class="chat-input-box">
                     <!--Itt kell nekem a chat et-->
                     <form id="messageForm" name="messageForm"  style="display: none">
-                        <div class="chat-input-box">
+
                             <input type="text" id="message-input" placeholder="Type a message..." maxlength="500" >
                             <button id="emoji-button">😊</button>
                             <button type="button" id="send-button">Send</button>
-                        </div>
-                    </form>
 
+                    </form>
+                    </div>
                 </div>
             </div>
         </div>
