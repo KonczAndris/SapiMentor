@@ -81,11 +81,11 @@
             <div class="button-container">
 
                 <button id="searchMyGroup"> SEARCH</button>
-                <button class="selected"> FAVORITES</button>
+                <button class="selected"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon"> FAVORITES</button>
             </div>
 
             <div class="dropdown">
-                <button class="dropbtn">FAVORITES</button>
+                <button class="dropbtn"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon"> FAVORITES</button>
                 <div class="dropdown-content">
                     <a id="searchDrop">SEARCH</a>
                 </div>
@@ -107,7 +107,7 @@
 
                 <div class="user" th:id="${'user-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}" th:onclick="userItemClick(event)">
                     <div class="user-status" th:classappend="${favoriteUser.status == 0 ? 'offline' : 'online'}"></div>
-                    <div class="user-img-container">
+                    <div class="user-img-container messeger-pic-box">
 
                         <img th:if="${favoriteUser.favoriteProfileImageBase64 != ''}"
                              th:src="@{|data:image/jpeg;base64,${favoriteUser.favoriteProfileImageBase64}|}">

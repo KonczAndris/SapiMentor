@@ -76,6 +76,12 @@ button{
     cursor: default !important;
 }
 
+.current-page-icon {
+    margin: 0;
+    height: 20px;
+    width:auto;
+    transform: translateY(-15%);}
+
 .divider {
     clear: both;
     width: 100%;
