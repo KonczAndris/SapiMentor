@@ -399,7 +399,7 @@ public class SapimentorDemoProjectApplication {
 //				for (File pdfFile : pdfFiles) {
 //					String originalName = pdfFile.getName().replace(".pdf", "");
 //					String cleanedName = findKeywordsInAbstract.cleanFileName(originalName);
-//					String formattedName = findKeywordsInAbstract.formatName(cleanedName);
+//					String formattedName = findKeywordsInAbstract.formatName_CALC2022(cleanedName);
 //					String topic = "Engineering";
 //					String user_Name = "Koncz Andras";
 //					String year = "2022";
@@ -521,7 +521,7 @@ public class SapimentorDemoProjectApplication {
 //				for (File pdfFile : pdfFiles) {
 //					String originalName = pdfFile.getName().replace(".pdf", "");
 //					String cleanedName = findKeywordsInAbstract.cleanFileName(originalName);
-//					String formattedName = findKeywordsInAbstract.formatName(cleanedName);
+//					String formattedName = findKeywordsInAbstract.formatName_INF2021(cleanedName);
 //					String topic = "Informatics";
 //					String user_Name = "Szotyori Csongor";
 //					String year = "2021";
@@ -638,7 +638,7 @@ public class SapimentorDemoProjectApplication {
 //				for (File pdfFile : pdfFiles) {
 //					String originalName = pdfFile.getName().replace(".pdf", "");
 //					String cleanedName = findKeywordsInAbstract.cleanFileName(originalName);
-//					String formattedName = findKeywordsInAbstract.formatName(cleanedName);
+//					String formattedName = findKeywordsInAbstract.formatName_CALC2021(cleanedName);
 //					String topic = "Engineering";
 //					String user_Name = "Koncz Andras";
 //					String year = "2021";

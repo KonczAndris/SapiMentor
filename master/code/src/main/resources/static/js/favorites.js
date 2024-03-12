@@ -591,7 +591,7 @@ $(document).ready(function () {
                             }
                         }).then(data =>{
                             //console.log(data.selectedUserImg[0][0]);
-                            if (data.selectedUserImg === null) {
+                            if (data.selectedUserImg[0][0] === null) {
                                 userImageElement.src = "/img/anonym.jpg";
                             } else {
                                 userImageElement.src = 'data:image/jpeg;base64,' + data.selectedUserImg[0][0];

@@ -38,10 +38,48 @@ public class findKeywordsInAbstract {
         return formattedName.toString().trim();
     }
 
+    public String formatName_CALC2021(String name) {
+        // "Lucrare" és "2021" szavak eltávolítása
+        name = name.replace("Lucrare", "").replace("2021", "");
+
+        // Név formázása "Nagy Marton Hunor" formátummá
+        String[] nameParts = name.split("(?=[A-Z])");
+        StringBuilder formattedName = new StringBuilder();
+        for (String part : nameParts) {
+            formattedName.append(part).append(" ");
+        }
+        return formattedName.toString().trim();
+    }
+
+    public String formatName_INF2021(String name) {
+        // "Dolgozat" és "2021" szavak eltávolítása
+        name = name.replace("Dolgozat", "").replace("2021", "");
+
+        // Név formázása "Nagy Marton Hunor" formátummá
+        String[] nameParts = name.split("(?=[A-Z])");
+        StringBuilder formattedName = new StringBuilder();
+        for (String part : nameParts) {
+            formattedName.append(part).append(" ");
+        }
+        return formattedName.toString().trim();
+    }
+
+    public String formatName_CALC2022(String name) {
+        // "Docum" es "Dokum"  és "2022" szavak eltávolítása
+        name = name.replace("Docum", "").replace("Dokum", "").replace("2021", "");
+
+        // Név formázása "Nagy Marton Hunor" formátummá
+        String[] nameParts = name.split("(?=[A-Z])");
+        StringBuilder formattedName = new StringBuilder();
+        for (String part : nameParts) {
+            formattedName.append(part).append(" ");
+        }
+        return formattedName.toString().trim();
+    }
+
     public int findAbstractPageNumber(PdfReader pdfReader, String searchText) throws IOException {
         PdfDocument pdfDocument = new PdfDocument(pdfReader);
         //int numberOfPages = pdfDocument.getNumberOfPages();
-
 
         for (int page = 4; page <= 15; page++) {
             PdfPage pdfPage = pdfDocument.getPage(page);
