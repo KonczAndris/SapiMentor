@@ -267,7 +267,7 @@ button{
     .center {
         width: 100%;
         flex-direction: column;
-        
+
     }
     .right{
         display: flex;
