@@ -1,29 +1,29 @@
+// Validate First Name
 function validateFirstName() {
     var firstNameInput = document.getElementById("firstName");
     var firstNameValue = firstNameInput.value.trim();
-
-    if (!/^[a-zA-Z]{1,20}$/.test(firstNameValue)) {
+    if (!/^[a-zA-ZÁÉÍÓÖŐÚÜŰáéíóöőúüű-]{2,20}$/.test(firstNameValue)) {
         firstNameInput.classList.add("highlight");
     } else {
         firstNameInput.classList.remove("highlight");
     }
 }
 
+// Validate Last Name
 function validateLastName() {
     var lastNameInput = document.getElementById("lastName");
     var lastNameValue = lastNameInput.value.trim();
-
-    if (!/^[a-zA-Z]{1,20}$/.test(lastNameValue)) {
+    if (!/^[a-zA-ZÁÉÍÓÖŐÚÜŰáéíóöőúüű-]{2,20}$/.test(lastNameValue)) {
         lastNameInput.classList.add("highlight");
     } else {
         lastNameInput.classList.remove("highlight");
     }
 }
 
+// Validate Email
 function validateEmail() {
     var emailInput = document.getElementById("email");
     var emailValue = emailInput.value.trim();
-
     if (!emailValue.endsWith("@ms.sapientia.ro") && !emailValue.endsWith("@student.ms.sapientia.ro")) {
         emailInput.classList.add("highlight");
     }
@@ -32,10 +32,10 @@ function validateEmail() {
     }
 }
 
+// Validate Password
 function validatePassword() {
     var passwordInput = document.getElementById("password");
     var passwordValue = passwordInput.value.trim();
-
     if (passwordValue.length < 8 || passwordValue.length > 20) {
         passwordInput.classList.add("highlight");
     } else {
@@ -43,6 +43,7 @@ function validatePassword() {
     }
 }
 
+// Full registration method
 document.addEventListener("DOMContentLoaded", function () {
     var firstNameInput = document.getElementById("firstName");
     var lastNameInput = document.getElementById("lastName");
@@ -104,3 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+// Jest testing exports
+module.exports = {validateFirstName, validateLastName, validateEmail, validatePassword};
