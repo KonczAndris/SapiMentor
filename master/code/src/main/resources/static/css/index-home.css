@@ -57,7 +57,6 @@ button{
 
 .center {
     display: flex;
-    position: fixed;
     justify-content: start;
     width: 100%;
     height: 100%;
@@ -81,12 +80,12 @@ button{
     margin-top: 0;
     margin-right: 2%;
     width: 80%;
-    height: 95%;
+    height: 100%;
     background-color: white;
     overflow-y: auto;
     overflow-x: hidden;
     box-shadow:  2px 2px 20px rgb(10, 145, 107);
-    border-radius: 50px;
+    /* border-radius: 50px; */
 }
 
 #sapimentor-logo{
@@ -266,14 +265,25 @@ button{
 
     .center {
         width: 100%;
+        height: 90%;
         flex-direction: column;
-        margin-top: 90px;
     }
     .right{
+
+        /* position: absolute; */
+
         display: flex;
+
         width: 100%;
+
+        height: fit-content;
+
         margin: 0;
-        border-radius: 0;
+
+        /* border-radius: 0; */
+
+        /* align-self: self-end; */
+
     }
     .left {
         display: flex;
@@ -303,7 +313,8 @@ button{
     }
 
     .taskbar{
-        display: flex;
+        display:flex;
+        /* height: 200px; */
     }
 
     .loading-gif {

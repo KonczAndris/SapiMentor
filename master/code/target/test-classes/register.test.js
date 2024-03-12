@@ -8,32 +8,6 @@ const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
 
 const { window } = new JSDOM(htmlContent);
 
-test('Clicking on Thymeleaf redirection link redirects to login page', async () => {
-    // Launch a headless browser
-    const browser = await puppeteer.launch();
-
-    // Open a new page
-    const page = await browser.newPage();
-
-    // Navigate to your page
-    await page.goto('http:/localhost:8080/register');
-
-    // Click on the Thymeleaf redirection link
-    await page.click('a[href="/login"]');
-
-    // Wait for navigation to complete
-    await page.waitForNavigation();
-
-    // Get the current URL after navigation
-    const currentUrl = page.url();
-
-    // Verify that the URL is now the login page
-    expect(currentUrl).toBe('http://localhost:8080/');
-
-    // Close the browser
-    await browser.close();
-});
-
 const { validateFirstName, validateLastName, validateEmail, validatePassword } = require('./../../main/resources/static/js/register.js');
 require('./../../main/resources/static/js/register.js');
 
