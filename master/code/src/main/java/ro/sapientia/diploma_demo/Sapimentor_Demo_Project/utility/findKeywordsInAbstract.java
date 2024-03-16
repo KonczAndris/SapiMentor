@@ -81,7 +81,22 @@ public class findKeywordsInAbstract {
         PdfDocument pdfDocument = new PdfDocument(pdfReader);
         //int numberOfPages = pdfDocument.getNumberOfPages();
 
-        for (int page = 4; page <= 15; page++) {
+        for (int page = 5; page <= 15; page++) {
+            PdfPage pdfPage = pdfDocument.getPage(page);
+            String pageText = PdfTextExtractor.getTextFromPage(pdfPage);
+            if (pageText.contains(searchText)) {
+                return page;
+            }
+        }
+
+        return -1; // Abstract not found
+    }
+
+    public int findAbstractPageNumberForBenedekSzab2021CALC(PdfReader pdfReader, String searchText) throws IOException {
+        PdfDocument pdfDocument = new PdfDocument(pdfReader);
+        //int numberOfPages = pdfDocument.getNumberOfPages();
+
+        for (int page = 9; page <= 15; page++) {
             PdfPage pdfPage = pdfDocument.getPage(page);
             String pageText = PdfTextExtractor.getTextFromPage(pdfPage);
             if (pageText.contains(searchText)) {
@@ -127,4 +142,60 @@ public class findKeywordsInAbstract {
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }
+
+
+    public String removeKeywords(String text) {
+        String[] lines = text.split("\n");
+        StringBuilder resultBuilder = new StringBuilder();
+
+        boolean skipNextLines = false;
+        for (String line : lines) {
+            if (line.startsWith("Keywords:")
+                    || line.startsWith("Key words:")
+                    || line.startsWith("Keywords—")
+                    || line.startsWith("Keyword:")
+                    || line.startsWith("Keywords")) {
+                skipNextLines = true;
+                continue;
+            }
+
+            if (!skipNextLines) {
+                resultBuilder.append(line).append("\n");
+            } else {
+                skipNextLines = false;
+            }
+        }
+
+        return resultBuilder.toString().trim();
+    }
+
+    public String getKeywordsForCSV(String text) {
+        String[] lines = text.split("\n");
+        StringBuilder resultBuilder = new StringBuilder();
+
+        boolean foundKeywords = false;
+        for (String line : lines) {
+            if (foundKeywords) {
+                resultBuilder.append(line.trim());
+                break; // Kilépünk a ciklusból, miután megtaláltuk a sorokat a "Keywords:" után
+            }
+
+            if (line.startsWith("Keywords:")
+                    || line.startsWith("Key words:")
+                    || line.startsWith("Keywords—")
+                    || line.startsWith("Keyword:")) {
+                // Ha megtaláljuk a "Keywords:" sort, beállítjuk a foundKeywords változót igazra
+                foundKeywords = true;
+                String keywords = line.replace("Keywords:", "")
+                        .replace("Key words:", "")
+                        .replace("Keywords—", "").trim();
+                // Ebben az esetben a Keywords: sort is hozzáadjuk a visszatérési értékhez
+                resultBuilder.append(keywords);
+            }
+        }
+
+        return resultBuilder.toString().trim();
+    }
+
+
 }

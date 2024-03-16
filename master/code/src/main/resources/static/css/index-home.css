@@ -352,12 +352,6 @@ button{
         margin: 25px;
         width: 40%;
     }
-
-    .center {
-        width: 100%;
-        flex-direction: column;
-        margin-top: 10%;
-    }
 }
 
 #right-content {
