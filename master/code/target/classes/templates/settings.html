@@ -9,6 +9,7 @@
   <link rel="stylesheet"  type="text/css" th:href="@{/css/index-home.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/settings.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
   <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
   <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 </head>
@@ -55,23 +56,33 @@
     <div class="menu-divider"></div>
     <div class="form-group" >
       <p class="menu-function">
-        <a th:onclick="${not userRolesToDisplaySettings.contains('MENTOR') and not userRolesToDisplaySettings.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
+        <a th:onclick="${not userRolesToDisplaySettings.contains('MENTOR') and not userRolesToDisplaySettings.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">My Group</span>
+          <span class="hungarian-text">Csoportom</span></a> </p>
     </div>
     <div class="form-group">
       <p class="menu-function">
-        <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
+        <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">Topics</span>
+          <span class="hungarian-text">Témák</span></a> </p>
     </div>
     <div class="form-group">
       <p class="menu-function">
-        <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resources</a> </p>
+        <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">Resources</span>
+          <span class="hungarian-text">Segédanyagok</span></a> </p>
     </div>
     <div class="form-group current-page">
       <p class="menu-function">
-        <a href="/" th:href="@{/settings}"> <img th:src="@{/img/current-page-icon.png}" alt="Icon" class="menu-icon current-menu-icon"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon"> Settings</a> </p>
+        <a href="/" th:href="@{/settings}"> <img th:src="@{/img/current-page-icon.png}" alt="Icon" class="menu-icon current-menu-icon"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">Settings</span>
+          <span class="hungarian-text">Beállítások</span></a> </p>
     </div>
     <div class="form-group">
       <p class="menu-function">
-        <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
+        <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">Logout</span>
+          <span class="hungarian-text">Kijelentkezés</span></a> </p>
     </div>
 
   </div>
@@ -82,38 +93,63 @@
       <div class="left-settings-div">
 
         <div class="divider-container">
-        <h2>PERSONALIZE </h2>
+        <h2><span class="english-text">PERSONALIZE</span>
+          <span class="hungarian-text">SZEMÉLYR ESZABÁS</span>
+        </h2>
           <img th:src="@{/img/settings-personalize-monster.png}" alt="See Comments Icon" class="divider-icon">
         <div class="divider"></div>
         </div>
 
         <div class="language-div">
-        <label class="setting-title">LANGUAGE</label>
+        <label class="setting-title">
+          <span class="english-text">LANGUAGE</span>
+          <span class="hungarian-text">NYELV</span>
+        </label>
         <div class="settings-option">
         <input type="checkbox" id="hungarian" class="topic-checkbox">
-        <span class="checkmark-setting"> </span> <label for="hungarian">Hungarian</label>
+        <span class="checkmark-setting"> </span> <label for="hungarian">
+          <span class="english-text">Hungarian</span>
+          <span class="hungarian-text">Magyar</span>
+        </label>
         </div>
         <div class="settings-option">
         <input type="checkbox" id="english" class="topic-checkbox">
-        <span class="checkmark-setting"></span> <label for="english">English</label>
+        <span class="checkmark-setting"></span> <label for="english">
+          <span class="english-text">English</span>
+          <span class="hungarian-text">Angol</span>
+        </label>
         </div>
         </div>
 
         <div class="theme-div">
-          <label class="setting-title">THEME</label>
+          <label class="setting-title">
+            <span class="english-text">THEME</span>
+            <span class="hungarian-text">TÉMA</span>
+          </label>
           <div class="settings-option">
             <input type="checkbox" id="light" class="topic-checkbox">
-            <span class="checkmark-setting"> </span> <label for="light">Light</label>
+            <span class="checkmark-setting"> </span> <label for="light">
+            <span class="english-text">Light</span>
+            <span class="hungarian-text">Világos</span>
+          </label>
           </div>
           <div class="settings-option">
             <input type="checkbox" id="dark" class="topic-checkbox">
-            <span class="checkmark-setting"></span> <label for="dark">Dark</label>
+            <span class="checkmark-setting"></span> <label for="dark">
+            <span class="english-text">Dark</span>
+            <span class="hungarian-text">Sötét</span>
+          </label>
           </div>
         </div>
 
         <div class="settings-buttons">
-        <button class="save-settings-btn green-button" id="saveSettings"> Save settings</button><br>
-        <button class="deactivate-btn red-button" onclick="showDeactivateModal()"> Deactivate your account</button>
+        <button class="save-settings-btn green-button" id="saveSettings">
+          <span class="english-text">Save settings</span>
+          <span class="hungarian-text">Beállítások mentése</span></button><br>
+        <button class="deactivate-btn red-button" onclick="showDeactivateModal()">
+          <span class="english-text">Deactivate your account</span>
+          <span class="hungarian-text">Fiók deaktiválása</span>
+        </button>
         </div>
 
       </div>
@@ -121,24 +157,41 @@
       <div class="right-settings-div">
 
         <div class="divider-container">
-          <h2>CONTACT </h2>
+          <h2>
+            <span class="english-text">CONTACT</span>
+            <span class="hungarian-text">ELÉRHETŐSÉGEK</span>
+          </h2>
           <img th:src="@{/img/settings-contact-monster.png}" alt="See Comments Icon" class="divider-icon">
           <div class="divider"></div>
         </div>
 
         <div class="contact-div">
-          <p> <img th:src="@{/img/settings-email.png}" class="setting-icon"> <strong> Email: </strong> example@example.com</p>
-           <p> <img th:src="@{/img/settings-phone.png}" class="setting-icon"> <strong>Phone:</strong> +1234567890</p>
-           <p> <img th:src="@{/img/settings-address.png}" class="setting-icon"> <strong>Address:</strong> 123 Main Street, City, Country</p>
+          <p> <img th:src="@{/img/settings-email.png}" class="setting-icon"> <strong>
+            <span class="english-text">Email: </span>
+            <span class="hungarian-text">Email cím: </span> </strong> example@example.com</p>
+           <p> <img th:src="@{/img/settings-phone.png}" class="setting-icon"> <strong>
+             <span class="english-text">Phone:</span>
+             <span class="hungarian-text">Telefonszám:</span>
+           </strong> +1234567890</p>
+           <p> <img th:src="@{/img/settings-address.png}" class="setting-icon"> <strong>
+             <span class="english-text">Address:</span>
+             <span class="hungarian-text">Cím:</span>
+           </strong> 123 Main Street, City, Country</p>
         </div>
 
         <div class="get-in-touch-div">
-          <h3>Get in touch with us</h3>
+          <h3>
+            <span class="english-text">Get in touch with us</span>
+            <span class="hungarian-text">Lépj kapcsolatba velünk</span>
+          </h3>
           <form id="contact-form" th:action="@{/settings/sendContactEmail}" method="post">
             <input type="text" id="name" name="name" placeholder="Your Name" required>
             <input type="email" id="email" name="email" placeholder="Your Email" required>
             <textarea id="message" name="message" placeholder="Your Message" required></textarea>
-            <button type="submit" class="green-button">Send Email</button>
+            <button type="submit" class="green-button">
+              <span class="english-text">Send email</span>
+              <span class="hungarian-text">Elküld</span>
+            </button>
           </form>
         </div>
 
@@ -149,10 +202,21 @@
     <!-- Modal -->
     <div id="deactivateModal" class="modal">
       <div class="modal-content">
-        <p>Are you sure?</p>
-        <p class="p2">After deactivating you won't be able to retrieve your data! </p>
-        <button id="deactivate-yes" class="green-button" onclick="startDeactivatingUser()">Yes</button>
-        <button id="deactivate-no" class="red-button" onclick="closeDeactivateModal()">No</button>
+        <p>
+          <span class="english-text">Are you sure?</span>
+          <span class="hungarian-text">Biztos vagy benne?</span>
+        </p>
+        <p class="p2">
+          <span class="english-text">After deactivating you won't be able to retrieve your data!</span>
+          <span class="hungarian-text">Fiókod deaktiválása után nem lesz lehetőséged visszanyerni az adataidat!</span>
+        </p>
+        <button id="deactivate-yes" class="green-button" onclick="startDeactivatingUser()">
+          <span class="english-text">Yes</span>
+          <span class="hungarian-text">Igen</span></button>
+        <button id="deactivate-no" class="red-button" onclick="closeDeactivateModal()">
+          <span class="english-text">No</span>
+          <span class="hungarian-text">Nem</span>
+        </button>
       </div>
     </div>
 

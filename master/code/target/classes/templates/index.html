@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SapiMentor</title>
     <link rel="stylesheet"  type="text/css" th:href="@{/css/index.css}">
-<!--    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">-->
-<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel="stylesheet"  type="text/css" th:href="@{/css/index-home.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
+
     <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
     <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 </head>
@@ -54,23 +53,38 @@
         <div class="menu-divider"></div>
         <div class="form-group" >
             <p class="menu-function">
-                <a  th:onclick="${not userRolesToDisplayIndex.contains('MENTOR') and not userRolesToDisplayIndex.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
+                <a  th:onclick="${not userRolesToDisplayIndex.contains('MENTOR') and not userRolesToDisplayIndex.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">My Group</span>
+                    <span class="hungarian-text">Csoportom</span>
+                </a> </p>
         </div>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
+                <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">Topics</span>
+                    <span class="hungarian-text">Témák</span>
+                </a> </p>
         </div>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resources</a> </p>
+                <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">Resources</span>
+                    <span class="hungarian-text">Segédanyagok</span>
+                </a> </p>
         </div>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon"> Settings</a> </p>
+                <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">Settings</span>
+                    <span class="hungarian-text">Beállítások</span>
+                </a> </p>
         </div>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
+                <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">Logout</span>
+                    <span class="hungarian-text">Kijelentkezés</span>
+                </a> </p>
         </div>
 
     </div>
@@ -81,49 +95,96 @@
         <div class="div-row">
         <div class="main-div">
             <div class="smaller-div"><img th:src="@{/img/helping-monster.jpg}" alt="Error Image" class="small-div-image"></div>
-            <p class="index-titles">BE A MENTOR/MENTEE</p>
-            <p class="index-infos">Join as a mentor and support your peers, or choose the role of a mentee and receive guidance from others! Easily adjust your status in the profile menu. Select the topics that interest you and get started on your mentoring journey...</p>
+            <p class="index-titles">
+                <span class="english-text">BE A MENTOR OR MENTEE</span>
+                <span class="hungarian-text">LEGYÉL MENTOR VAGY MENTORÁLT</span>
+            </p>
+            <p class="index-infos">
+                <span class="english-text">Join as a mentor and support your peers, or choose the role of a mentee and receive guidance from others! Easily adjust your status in the <strong>Profile </strong> menu. Select the topics that interest you and get started on your mentoring journey.</span>
+                <span class="hungarian-text">Csatlakozz mentorként, és támogasd társaidat, vagy válaszd a mentorált szerepet, és kapj iránymutatást másoktól! Egyszerűen állítsd be az állapotod a <strong>Profil</strong> menüben. Válaszd ki azokat a témákat, amelyek érdekelnek, és indulj el mentoráló utadon.</span>
+            </p>
         </div>
         <div class="main-div">
             <div class="smaller-div"><img th:src="@{/img/friendly-monster.jpg}" alt="Error Image" class="small-div-image"></div>
-            <p class="index-titles">MEET NEW PEOPLE</p>
-            <p class="index-infos">Expand your social circle and explore the vibrant community in the My Group section. Make use of the chat function to engage with and get to know your fellow members! Foster connections, share experiences, and enhance your networking opportunities within the app.</p>
+            <p class="index-titles">
+                <span class="english-text">MEET NEW PEOPLE</span>
+                <span class="hungarian-text">ISMERKEDJ</span>
+            </p>
+            <p class="index-infos">
+                <span class="english-text">Expand your social circle and explore the vibrant community in the <strong>My Group</strong> section. Make use of the chat function to engage with and get to know your fellow members! Foster connections, share experiences, and enhance your networking opportunities.</span>
+                <span class="hungarian-text">Szocializálódj és fedezd fel az oldalunk közösségét a <strong>Csoportom</strong> menüpont alatt. Használd a chat funkciót és lépj kapcsolatba társaiddal! Építs kapcsolatokat és osszd meg tapasztalataidat!</span>
+            </p>
         </div>
         </div>
         <div class="div-row">
         <div class="main-div">
             <div class="smaller-div"><img th:src="@{/img/browsing-monster.jpg}" alt="Error Image" class="small-div-image"></div>
-            <p class="index-titles">BROWSE IN RESOURCES</p>
-            <p class="index-infos">Browse through the Resources page and take advantage of shared study materials, exam papers, and diploma theses. Support your peers by contributing your own materials. Make learning easier and collaborative!</p>
+            <p class="index-titles">
+                <span class="english-text">BROWSE IN RESOURCES</span>
+                <span class="hungarian-text">BÖNGÉSSZ A SEGÉDANYAGOK KÖZÖTT</span>
+            </p>
+            <p class="index-infos">ű
+                <span class="english-text">Browse through the <strong>Resources</strong> page and take advantage of shared study materials, exam papers, and diploma theses. Support your peers by contributing your own materials. Make learning easier and collaborative!</span>
+                <span class="hungarian-text">Tekintsd át az <strong>Segédanyagok</strong> oldalt, és használd ki a megosztott tananyagokat, vizsgafeladatokat és szakdolgozatokat. Támogasd társaidat a saját anyagaiddal való hozzájárulással. Segítsd elő a könnyebb és együttműködő tanulást!</span>
+            </p>
         </div>
         <div class="main-div">
             <div class="smaller-div"><img th:src="@{/img/opinion-monster.jpg}" alt="Error Image" class="small-div-image"></div>
-            <p class="index-titles">GIVE YOUR OPINION</p>
-            <p class="index-infos">Share your insights on topics or reflect on your mentoring journey by leaving feedback on the Topics page or on your peers' profiles. Evaluate and appreciate the contributions of your fellow members! Make your voice heard in shaping the mentoring experience for everyone.</p>
+            <p class="index-titles">
+                <span class="english-text">GIVE YOUR OPINION</span>
+                <span class="hungarian-text">LEGYEN VÉLEMÉNYED</span>
+            </p>
+            <p class="index-infos">
+                <span class="english-text">Share your insights on topics or reflect on your mentoring journey by leaving feedback on the Topics page or on your peers' profiles. Evaluate and appreciate the contributions of your fellow members! Make your voice heard in shaping the mentoring experience for everyone.</span>
+                <span class="hungarian-text">Oszd meg gondolataidat a témákról, vagy hagyj visszajelzést társaid profil oldalán. Értékeld és méltasd társaid hozzájárulásait! Hangodat hallatva formáld meg a mentorálási élményt mindenki számára. </span>
+                </p>
         </div>
         </div>
         </div>
         <div class="column-row">
                 <div class="main-div">
                     <div class="smaller-div"><img th:src="@{/img/helping-monster.jpg}" alt="Error Image" class="small-div-image"></div>
-                    <p class="index-titles">BE A MENTOR/MENTEE</p>
-                    <p class="index-infos">Join as a mentor and support your peers, or choose the role of a mentee and receive guidance from others! Easily adjust your status in the profile menu. Select the topics that interest you and get started on your mentoring journey...</p>
+                    <p class="index-titles">
+                        <span class="english-text">BE A MENTOR OR MENTEE</span>
+                        <span class="hungarian-text">LEGYÉL MENTOR VAGY MENTORÁLT</span>
+                    </p>
+                    <p class="index-infos">
+                        <span class="english-text">Join as a mentor and support your peers, or choose the role of a mentee and receive guidance from others! Easily adjust your status in the <strong>Profile </strong> menu. Select the topics that interest you and get started on your mentoring journey.</span>
+                        <span class="hungarian-text">Csatlakozz mentorként, és támogasd társaidat, vagy válaszd a mentorált szerepet, és kapj iránymutatást másoktól! Egyszerűen állítsd be az állapotod a <strong>Profil</strong> menüben. Válaszd ki azokat a témákat, amelyek érdekelnek, és indulj el mentoráló utadon.</span>
+                    </p>
                 </div>
                 <div class="main-div">
                     <div class="smaller-div"><img th:src="@{/img/friendly-monster.jpg}" alt="Error Image" class="small-div-image"></div>
-                    <p class="index-titles">MEET NEW PEOPLE</p>
-                    <p class="index-infos">Expand your social circle and explore the vibrant community in the My Group section. Make use of the chat function to engage with and get to know your fellow members! Foster connections, share experiences, and enhance your networking opportunities within the app.</p>
+                    <p class="index-titles">
+                        <span class="english-text">MEET NEW PEOPLE</span>
+                        <span class="hungarian-text">ISMERKEDJ</span>
+                    </p>
+                    <p class="index-infos">
+                        <span class="english-text">Expand your social circle and explore the vibrant community in the <strong>My Group</strong> section. Make use of the chat function to engage with and get to know your fellow members! Foster connections, share experiences, and enhance your networking opportunities.</span>
+                        <span class="hungarian-text">Szocializálódj és fedezd fel az oldalunk közösségét a <strong>Csoportom</strong> menüpont alatt. Használd a chat funkciót és lépj kapcsolatba társaiddal! Építs kapcsolatokat és osszd meg tapasztalataidat!</span>
+                    </p>
                 </div>
                 <div class="main-div">
                     <div class="smaller-div"><img th:src="@{/img/browsing-monster.jpg}" alt="Error Image" class="small-div-image"></div>
-                    <p class="index-titles">BROWSE IN RESOURCES</p>
-                    <p class="index-infos">Browse through the Resources page and take advantage of shared study materials, exam papers, and diploma theses. Support your peers by contributing your own materials. Make learning easier and collaborative!</p>
+                    <p class="index-titles">
+                        <span class="english-text">BROWSE IN RESOURCES</span>
+                        <span class="hungarian-text">BÖNGÉSSZ A SEGÉDANYAGOK KÖZÖTT</span>
+                    </p>
+                    <p class="index-infos">ű
+                        <span class="english-text">Browse through the <strong>Resources</strong> page and take advantage of shared study materials, exam papers, and diploma theses. Support your peers by contributing your own materials. Make learning easier and collaborative!</span>
+                        <span class="hungarian-text">Tekintsd át az <strong>Segédanyagok</strong> oldalt, és használd ki a megosztott tananyagokat, vizsgafeladatokat és szakdolgozatokat. Támogasd társaidat a saját anyagaiddal való hozzájárulással. Segítsd elő a könnyebb és együttműködő tanulást!</span>
+                    </p>
                 </div>
                 <div class="main-div">
                     <div class="smaller-div"><img th:src="@{/img/opinion-monster.jpg}" alt="Error Image" class="small-div-image"></div>
-                    <p class="index-titles">GIVE YOUR OPINION</p>
-                    <p class="index-infos">Share your insights on topics or reflect on your mentoring journey by leaving feedback on the Topics page or on your peers' profiles. Evaluate and appreciate the contributions of your fellow members! Make your voice heard in shaping the mentoring experience for everyone.</p>
-
+                    <p class="index-titles">
+                        <span class="english-text">GIVE YOUR OPINION</span>
+                        <span class="hungarian-text">LEGYEN VÉLEMÉNYED</span>
+                    </p>
+                    <p class="index-infos">
+                        <span class="english-text">Share your insights on topics or reflect on your mentoring journey by leaving feedback on the Topics page or on your peers' profiles. Evaluate and appreciate the contributions of your fellow members! Make your voice heard in shaping the mentoring experience for everyone.</span>
+                        <span class="hungarian-text">Oszd meg gondolataidat a témákról, vagy hagyj visszajelzést társaid profil oldalán. Értékeld és méltasd társaid hozzájárulásait! Hangodat hallatva formáld meg a mentorálási élményt mindenki számára. </span>
+                    </p>
             </div>
         </div>
 

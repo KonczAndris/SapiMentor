@@ -11,6 +11,7 @@
     <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
     <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" th:href="@{/css/favorites.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
 
 </head>
 
@@ -55,23 +56,34 @@
         <div class="menu-divider"></div>
         <div class="form-group current-page" >
             <p class="menu-function">
-                <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/current-page-icon.png}" alt="Icon" class="menu-icon current-menu-icon"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon selected-menu-icon"> My Group</a> </p>
+                <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/current-page-icon.png}" alt="Icon" class="menu-icon current-menu-icon"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon selected-menu-icon">
+                    <span class="english-text">My Group</span>
+                    <span class="hungarian-text">Csoportom</span></a> </p>
         </div>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
+                <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">Topics</span>
+                    <span class="hungarian-text">Témák</span>
+                </a> </p>
         </div>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resources</a> </p>
+                <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">Resources</span>
+                    <span class="hungarian-text">Segédanyagok</span></a> </p>
         </div>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon"> Settings</a> </p>
+                <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">Settings</span>
+                    <span class="hungarian-text">Beállítások</span></a> </p>
         </div>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
+                <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">Logout</span>
+                    <span class="hungarian-text">Kijelentkezés</span></a> </p>
         </div>
     </div>
 
@@ -80,14 +92,26 @@
         <div class="resource-menu">
             <div class="button-container">
 
-                <button id="searchMyGroup"> SEARCH</button>
-                <button class="selected"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon"> FAVORITES</button>
+                <button id="searchMyGroup">
+                    <span class="english-text">SEARCH</span>
+                    <span class="hungarian-text">KERESÉS</span>
+                </button>
+                <button class="selected"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon">
+                    <span class="english-text">FAVORITES</span>
+                    <span class="hungarian-text">KEDVENCEK</span>
+                </button>
             </div>
 
             <div class="dropdown">
-                <button class="dropbtn"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon"> FAVORITES</button>
+                <button class="dropbtn"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon">
+                    <span class="english-text">FAVORITES</span>
+                    <span class="hungarian-text">KEDVENCEK</span>
+                </button>
                 <div class="dropdown-content">
-                    <a id="searchDrop">SEARCH</a>
+                    <a id="searchDrop">
+                        <span class="english-text">SEARCH</span>
+                        <span class="hungarian-text">KERESÉS</span>
+                    </a>
                 </div>
             </div>
 
@@ -145,14 +169,16 @@
                         </div>
 
                         <div th:id="${'profile-button-container-sure-' + favoriteUser.id}" class="profile-button-container-sure" style="display: none">
-                              <span style="display: inline-block;">
-                            Remove&nbsp;<strong><span th:text="${favoriteUser.fullName}"/></strong>&nbsp;from favorites?&nbsp;&nbsp;
-                              </span>
+                            <span class="english-text" style="display: inline-block;">Remove&nbsp;<strong><span class="english-text" th:text="${favoriteUser.fullName}"/></strong>&nbsp;from favorites?</span>
+                            <span class="hungarian-text" style="display: inline-block;">Törlöd&nbsp;<strong><span class="hungarian-text" th:text="${favoriteUser.fullName}"/></strong>-t a kedvenceid közül?&nbsp;</span>
+
                             <button th:id="${'sureButton-' + favoriteUser.id}" class="checkmark-button-profile profile-button">
-                                Yes&nbsp;
+                                <span class="english-text">Yes&nbsp;</span>
+                                <span class="hungarian-text">Igen&nbsp;</span>&nbsp;
                             </button>
                             <button th:id="${'cancelButton-' + favoriteUser.id}" class="cancel-button-profile profile-button">
-                                No
+                                <span class="english-text">No&nbsp;</span>
+                                <span class="hungarian-text">Nem&nbsp;</span>&nbsp;
                             </button>
                         </div>
                     </div>
@@ -160,10 +186,6 @@
 
                     <!--Itt lesznek a szovegek-->
                     <div class="chat-box" id="chat-box">
-<!--                        &lt;!&ndash; Your messages &ndash;&gt;-->
-<!--                        <div class="message my-message">Hello, how are you?</div>-->
-<!--                        &lt;!&ndash; Partner's messages &ndash;&gt;-->
-<!--                        <div class="message partner-message">Hi there! I'm good.</div>-->
                     </div>
 
                     <div class="chat-input-box">
@@ -172,7 +194,10 @@
 
                             <input type="text" id="message-input" placeholder="Type a message..." maxlength="500" >
                             <button id="emoji-button">😊</button>
-                            <button type="button" class="green-button" id="send-button">Send</button>
+                            <button type="button" class="green-button" id="send-button">
+                                <span class="english-text">Send</span>
+                                <span class="hungarian-text">Elküld</span>&nbsp;
+                            </button>
 
                     </form>
                     </div>

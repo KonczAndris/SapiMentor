@@ -220,6 +220,7 @@
     flex: 1;
     padding: 14px;
     border: none;
+    width: 50%;
     cursor: pointer;
     color: rgb(22, 175, 132);
     font-weight: bold;
@@ -254,12 +255,12 @@
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 9px;
-    min-width: 140px;
-    max-width: 140px;
+    min-width: 145px;
+    max-width: 145px;
     padding: 10px;
     max-height: 200px;
     overflow: auto;
-    margin-top: 4px;
+    margin-top: -1px;
 }
 
 .dropdown-content-myGroup::-webkit-scrollbar {
@@ -283,7 +284,8 @@
     margin-top: 4%;
     justify-content: center;
     border-radius: 9px;
-    width: 100%;
+    min-width: 165px;
+    max-width: 165px;
 }
 
 .dropdown-checkbox{

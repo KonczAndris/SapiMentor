@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Login</title>
   <link rel="stylesheet"  type="text/css" th:href="@{/css/login.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
   <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
   <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 
@@ -17,7 +18,13 @@
 
     <div class="right">
 
-      <p class="register-text">Not a member? <a href="/" th:href="@{/register}"> Register now!</a></p>
+      <p class="register-text">
+        <span class="english-text">Not a member?</span>
+        <span class="hungarian-text">Új vagy?</span>
+        <a href="/" th:href="@{/register}">
+        <span class="english-text">Register now!</span>
+        <span class="hungarian-text">Regisztrálj most!</span>
+      </a></p>
 
       <div class="center-image">
         <img th:src="@{/img/sm_logo.png}" id="sapimentor-logo" alt="image">
@@ -26,34 +33,45 @@
       <form th:action="@{/login}" method="post">
         <!-- error message -->
         <div id="error-message" class="alert alert-danger" style="display: none;">
-          Invalid email or password.
+          <span class="english-text">Invalid email or password.</span>
+          <span class="hungarian-text">Helytelen email cím vagy jelszó.</span>
+
         </div>
         <div th:if="${param.error}" class="alert alert-danger">
-          Invalid email or password.
+          <span class="english-text">Invalid email or password.</span>
+          <span class="hungarian-text">Helytelen email cím vagy jelszó.</span>
         </div>
         <!-- logout message -->
         <div th:if="${param.logout}" class="alert  alert-warning">
-          You have been logged out.
+          <span class="english-text">You have been logged out.</span>
+          <span class="hungarian-text">Sikeresen kijelentkeztél.</span>
+
         </div>
         <div th:if="${param.expiredSession}" class="alert alert-warning">
-          You're session time has expired! Please login again.
+          <span class="english-text">You're session time has expired! Please login again.</span>
+          <span class="hungarian-text">Lejárt a munkameneted időtartama! Kérlek, jelentkezz be újra.</span>
         </div>
 
         <div th:if="${param.alreadyVerified}" class="alert  alert-info">
-          This account has already been verified, please, login.
+          <span class="english-text">This account has already been verified, please log in.</span>
+          <span class="hungarian-text">Ez a fiók már meg volt erősítve, kérlek jelentkezz be.</span>
         </div>
         <div th:if="${param.verificationSuccess}" class="alert  alert-info">
-          Email verified successfully. Now you can login to your account.
+          <span class="english-text">Email verified successfully. Now you can log in to your account.</span>
+          <span class="hungarian-text">Az email cím megerősítése sikeres. Most már bejelentkezhetsz a fiókodba.</span>
         </div>
         <div th:if="${param.verificationError}" class="alert  alert-danger">
-          Invalid email verification. Please, register again.
+          <span class="english-text">Invalid email verification. Please register again.</span>
+          <span class="hungarian-text">Érvénytelen email cím megerősítés. Kérlek, regisztrálj újra.</span>
         </div>
 
         <div th:if="${param.reset_success}" class="alert  alert-info">
-          You have successfully reset your password, please log in here.
+          <span class="english-text">You have successfully reset your password, please log in here.</span>
+          <span class="hungarian-text">Sikeresen visszaállítottuk a jelszavadat. Kérlek, jelentkezz be itt.</span>
         </div>
         <div th:if="${param.invalid_token}" class="alert  alert-danger">
-          Unsuccessful password reset. The token is no longer valid. Please try again.
+          <span class="english-text">Unsuccessful password reset. The token is no longer valid. Please try again.</span>
+          <span class="hungarian-text">Sikertelen jelszóvisszaállítás. A token már nem érvényes. Kérlek, próbáld újra.</span>
         </div>
 
 
@@ -71,7 +89,10 @@
           <div class="info-icon" data-tooltip="Tooltip">
             <i class="fas fa-info-circle"></i>
           </div>
-          <div class="info-tooltip-profile">At least 8 characters!</div>
+          <div class="info-tooltip-profile">
+            <span class="english-text">At least 8 characters!</span>
+            <span class="hungarian-text">Legalább 8 karakter!</span>
+          </div>
 
           <div class="password-toggle" onclick="passwordToggleVisibilityForLogin('password', 'password-toggle-icon')">
             <img id="password-toggle-icon" class="toggle-password-btn-profile" src="/img/eye.png" alt="Toggle Password Visibility">
@@ -81,7 +102,10 @@
         </div>
 
         <div class="form-group">
-            <p class="forgotpassword-text"> <a th:href="@{/forgotPassword}">Forgot password?</a> </p>
+            <p class="forgotpassword-text"> <a th:href="@{/forgotPassword}">
+              <span class="english-text">Forgot your password?</span>
+              <span class="hungarian-text">Elfelejtetted a jelszavad?</span>
+            </a> </p>
           </div>
 
         <div class="form-group">

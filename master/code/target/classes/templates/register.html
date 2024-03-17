@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet"  type="text/css" th:href="@{/css/register.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
     <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
     <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 </head>
@@ -16,24 +17,36 @@
     </div>
 
     <div class="right">
-        <p class="register-text">Already registered? <a href="/" th:href="@{/login}">Login here!</a></p>
-        <h1 id="login-text">Registration</h1>
+        <p class="register-text">
+            <span class="english-text">Already registered?</span>
+            <span class="hungarian-text">Már regisztráltál?</span>
+            <a href="/" th:href="@{/login}">
+                <span class="english-text">Log in here!</span>
+                <span class="hungarian-text">Jelentkezz be itt!</span>
+            </a></p>
+        <h1 id="login-text"><span class="english-text">Registration</span>
+            <span class="hungarian-text">Regisztráció</span></h1>
         <div id="invalid-name" class="alert alert-danger" style="display: none;">
-            Invalid first or last name.
+            <span class="english-text">Invalid first or last name.</span>
+            <span class="hungarian-text">Helytelen kereszt- vagy vezetéknév.</span>
         </div>
         <div id="invalid-email" class="alert alert-danger" style="display: none;">
-            Invalid email.
+            <span class="english-text">Invalid email.</span>
+            <span class="hungarian-text">Helytelen email cím.</span>
         </div>
         <div id="invalid-password" class="alert alert-danger" style="display: none;">
-            Invalid password.
+            <span class="english-text">Invalid password.</span>
+            <span class="hungarian-text">Helytelen jelszó.</span>
         </div>
         <div id="already-registered" th:if="${param.duplicateError}" class="alert alert-danger">
-            This email is already taken!
+            <span class="english-text">This email is already taken.</span>
+            <span class="hungarian-text">Az email cím már használatban van.</span>
         </div>
 
         <!-- logout message -->
         <div th:if="${param.success}" class="alert alert-info">
-            You've successfully registered! Please, check your email for to complete your registration.
+            <span class="english-text">You've successfully registered! Please, check your email for to complete your registration.</span>
+            <span class="hungarian-text">Sikeresen regisztráltál! Kérlek, ellenőrizd az emailjeidet a regisztráció befejezéséhez.</span>
         </div>
 
         <form th:action="@{/register}" method="post" th:object="${user}">
@@ -54,7 +67,10 @@
                 <div class="info-icon" data-tooltip="Tooltip text for First Name">
                     <i class="fas fa-info-circle"></i>
                 </div>
-                <div class="info-tooltip">Only Sapientia email is accepted!</div>
+                    <div class="info-tooltip">
+                        <span class="english-text">Only Sapientia email is accepted!</span>
+                        <span class="hungarian-text">Csak sapientiás email cím elfogadott!</span>
+                    </div>
             </div>
 
             <div class="form-group">
@@ -63,11 +79,16 @@
                 <div class="info-icon" data-tooltip="Tooltip text for First Name">
                     <i class="fas fa-info-circle"></i>
                 </div>
-                <div class="info-tooltip">At least 8 characters!</div>
+                <div class="info-tooltip">
+                    <span class="english-text">At least 8 characters!</span>
+                    <span class="hungarian-text">Legalább 8 karakter!</span>
+                </div>
             </div>
 
             <div class="form-group">
-                <button type="submit"  id="register-submit" class="btn btn-success green-button">Register</button>
+                <button type="submit"  id="register-submit" class="btn btn-success green-button">
+                    <span class="english-text">Register</span>
+                    <span class="hungarian-text">Regisztráció</span></button>
             </div>
         </form>
 

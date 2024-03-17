@@ -638,9 +638,7 @@ tr {
 }
 
 .like-button-link, .like-button-link-active {
-    width: 90px;
-    max-width: 55%;
-    min-width: 70px;
+    width: 100px;
     cursor: pointer;
     padding: 10px;
     border: none;
@@ -654,9 +652,7 @@ tr {
 }
 
 .dislike-button-link, .dislike-button-link-active{
-    width: 90px;
-    min-width: 70px;
-    max-width: 55%;
+    width: 100px;
     cursor: pointer;
     padding: 10px;
     border: none;

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/error.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
   <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
   <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 
@@ -15,10 +16,22 @@
 <div class="error-container">
   <div class="error-content">
     <img th:src="@{/img/error.png}" alt="Error Image" class="error-image">
-    <h1>OOPS</h1>
-    <p>404 - PAGE NOT FOUND</p>
-    <p>The page you are looking for might have been removed or is temporarily unavailable.</p>
-    <button id="homeButton" class="dropbtn green-button">GO BACK TO HOME PAGE </button>
+    <h1>
+      <span class="english-text">OOPS</span>
+      <span class="hungarian-text">HOPPÁ</span>
+    </h1>
+    <p>
+      <span class="english-text">404 - PAGE NOT FOUND</span>
+      <span class="hungarian-text">404 - AZ OLDAL NEM TALÁLHATÓ</span>
+    </p>
+    <p>
+      <span class="english-text">The page you are looking for might have been removed or is temporarily unavailable.</span>
+      <span class="hungarian-text">Az általad keresett oldal lehet, hogy eltávolításra került, vagy ideiglenesen nem elérhető.</span>
+    </p>
+    <button id="homeButton" class="dropbtn green-button">
+      <span class="english-text">BACK TO HOME</span>
+      <span class="hungarian-text">VISSZA A FŐOLDALRA</span>
+    </button>
   </div>
 </div>
 
