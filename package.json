@@ -12,6 +12,7 @@
     "ts-jest": "^29.1.2"
   },
   "dependencies": {
+    "@google-cloud/translate": "^8.1.0",
     "expect": "^29.7.0",
     "jsdom": "^24.0.0",
     "sinon": "^17.0.1",
