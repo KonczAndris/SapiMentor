@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--  <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
   <title>SapiMentor</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/diplomaTheses.css}">
   <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
   <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
-
 </head>
 
 <body>
@@ -29,7 +26,7 @@
         <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
       </div>
       <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
-    <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
+    <img th:src="@{/img/back.png}" alt="Icon" class="back-icon green-button" onclick="toggleDivs()"> </p>
 </div>
 
 <div class="center" th:id="'userIdForDiplomaThesesPage-' + ${diplomathesesUserId}">
@@ -99,8 +96,8 @@
 
     <!-- SEARCH BUTTON BAR START-->
     <div class="open-search-buttons">
-      <button class="search-button" id="myFilterBtn" onclick="showFilterContainer()">Search</button>
-      <button type="button" id="upload-hidden" class="btn btn-success" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
+      <button class="search-button green-button" id="myFilterBtn" onclick="showFilterContainer()">Search</button>
+      <button type="button" id="upload-hidden" class="btn btn-success blue-button" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
         <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
     </div>
     <!-- SEARCH BUTTON BAR END-->
@@ -124,8 +121,8 @@
                 <img th:src="@{/img/info-monster3.jpg}" alt="Thesis Image" class="info-image">
               </div>
               <div class="pagination">
-                <button onclick="prevInfoPage()" class="navigate-button"> ←</button>
-                <button onclick="nextInfoPage()" class="navigate-button"> →</button>
+                <button onclick="prevInfoPage()" class="navigate-button blue-button"> ←</button>
+                <button onclick="nextInfoPage()" class="navigate-button blue-button"> →</button>
               </div>
             </div>
         </div>
@@ -153,9 +150,9 @@
         </div>
       </div>
       <div class="func-buttons">
-        <button class="search-button" id="search-button">Search</button>
-        <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
-        <button type="button" class="upload-hidden btn btn-success" id="upload-upload" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
+        <button class="search-button green-button" id="search-button">Search</button>
+        <button class="cancel-button red-button" onclick="cancelFilterWindow()">Cancel</button>
+        <button type="button" class="upload-hidden btn btn-success blue-button" id="upload-upload" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
           <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
       </div>
     </div>
@@ -179,27 +176,6 @@
         </tr>
         </thead>
         <tbody id="link-table-body">
-
-<!--        <tr>-->
-<!--          <td>1</td>-->
-<!--          <td class="pdf-container-column">-->
-<!--            <div class="pdf-image-image-container">-->
-<!--              Majom Majon - Számítástechnika-->
-<!--              <span class="zoom-icon">&#128269;</span>-->
-<!--              <div class="pdf-image-modal">-->
-<!--                <embed class="pdf-image-modal-content" src="/pdf/teszt.pdf" type='application/pdf'>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td> Info</td>-->
-<!--          <td> Majom</td>-->
-<!--          <td>1</td>-->
-<!--          <td>-->
-<!--            <button class="like-button-link">Like</button>-->
-<!--            <button class="dislike-button-link">Dislike</button>-->
-<!--          </td>-->
-<!--        </tr>-->
-
           <tr th:each="diploma, stat : ${diplomaThesesData}" th:id="'diploma-row-' + ${diploma.id}">
             <td th:text="${stat.index + 1}"></td>
             <td class="pdf-container-column">
@@ -225,8 +201,8 @@
               </span>
             </td>
             <td>
-              <button class="like-button-link">Like</button>
-              <button class="dislike-button-link">Dislike</button>
+              <button class="like-button-link green-button">Like</button>
+              <button class="dislike-button-link red-button">Dislike</button>
             </td>
             <td style="display: none;">
               <span id="tagWords" th:text="${diploma.keywords}"></span>
@@ -261,7 +237,7 @@
           <label for="fileUpload" class="detail-label">Choose File:</label>
           <div class="fileUpload-row">
             <input type="file" class="edit-input" id="fileUpload" accept=".pdf" style="display: none;">
-            <button type="button" class="upload-button" id="fileUploadButton">Select</button>
+            <button type="button" class="upload-button blue-button" id="fileUploadButton">Select</button>
             <input type="text" class="edit-input" id="diplomaThesesFileName-edit" placeholder="" required autofocus="autofocus" readonly>
           </div> </div>
       </div>
@@ -307,9 +283,9 @@
       <div class="func-buttons-modal">
         <!--<form id="diplomaTheses-form"  th:action="@{/saveResourceLinks}" method="post" >-->
         <!--<input type="hidden" name="diplomaThesesDataItems" id="diplomaThesesDataItems" value="">-->
-        <button type="submit" class="upload-button-modal" id="upload-button-modal" th:onclick="saveDiplomaThesesDataToServer()" >Upload</button>
+        <button type="submit" class="upload-button-modal blue-button" id="upload-button-modal" th:onclick="saveDiplomaThesesDataToServer()" >Upload</button>
         <!--</form>-->
-        <button class="cancel-button-modal close-diplomaTheses">Cancel</button>
+        <button class="cancel-button-modal close-diplomaTheses red-button">Cancel</button>
       </div>
 
 

@@ -556,7 +556,7 @@ function addSelectedTopic() {
 
 
             var addButton = document.createElement("button");
-            addButton.className = "add-button";
+            addButton.className = "add-button green-button";
             addButton.textContent = "Add";
             addButton.onclick = function() {
                 addSkillToTopic(selectedTopic,skillContainerTdElement, topicId, skillCell);
@@ -566,7 +566,7 @@ function addSelectedTopic() {
             };
 
             var deleteButton = document.createElement("button");
-            deleteButton.className = "delete-button";
+            deleteButton.className = "delete-button red-button";
             deleteButton.textContent = "Delete";
             deleteButton.onclick = function() {
                 deleteRow(this);
@@ -583,7 +583,7 @@ function addSelectedTopic() {
             topicSkillsFuncButtons.className = "func-buttons";
 
             var saveButton = document.createElement("button");
-            saveButton.className = "add-button";
+            saveButton.className = "add-button green-button";
             saveButton.id = "save-button";
             saveButton.textContent = "Save";
             saveButton.onclick = function() {
@@ -591,7 +591,7 @@ function addSelectedTopic() {
             }
 
             var cancelButton = document.createElement("button");
-            cancelButton.className = "delete-button";
+            cancelButton.className = "delete-button red-button";
             cancelButton.textContent = "Cancel";
             cancelButton.onclick = function() {
                 closeRow(this);

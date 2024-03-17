@@ -90,16 +90,6 @@
     <div class="profile-container" th:id="${'profile-container-Id_' + UserId}">
       <div class="profile-left">
         <div class="section-profile">
-<!--          <div class="image-container">-->
-<!--            <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">-->
-<!--            <div class="change-icon" id="change-image-icon">-->
-<!--              <img th:src="@{/img/change.png}" alt="Change Icon">-->
-<!--            </div>-->
-<!--          </div>-->
-
-          <!--/*@thymesVar id="errorMessage" type=""*/-->
-          <!--A hibaüzenet megjelenítése itt-->
-          <!--A regi verzioban ez nem kell-->
           <div style="color: red;">
             <p th:text="${errorMessage}"></p>
           </div>
@@ -124,8 +114,6 @@
               <div class="modal-content-upload">
                 <span class="close-upload">&times;</span>
 
-<!--                <div class="info-tooltip-upload"><p> 1x1 picture is recommanded. </p></div>-->
-
                 <div id="error-message" class="alert alert-danger">
                   The size of the image is too large.
                 </div>
@@ -144,31 +132,13 @@
                 <div class="upload-buttons">
 
                   <div class="btn btn-success" id="upload-upload">
-                    <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"> Select
+                    <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon blue-button"> Select
                   </div>
-
-<!--                  <form th:action="@{/upload-profile-image}" method="post" enctype="multipart/form-data">-->
-<!--                    <input type="file" id="imageUpload" style="display: none;" accept="image/*" name="image">-->
-<!--                    <button type="submit" id="upload-save" class="btn btn-success">Upload</button>-->
-<!--                  </form>-->
                   <input type="file" id="imageUpload" style="display: none;" accept="image/*" name="image">
-                  <button type="submit" id="upload-save" class="btn btn-success">Upload</button>
+                  <button type="submit" id="upload-save" class="btn btn-success green-button">Upload</button>
                 </div>
               </div>
             </div>
-            <!-- UPLOAD MODAL END -->
-
-
-<!--          <div class="image-container">-->
-<!--            <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">-->
-<!--            <div class="change-icon" id="change-image-icon">-->
-<!--              <label for="image-upload" class="upload-label">-->
-<!--                <img th:src="@{/img/change.png}" alt="Change Icon">-->
-<!--                <input type="file" id="image-upload" style="display:none">-->
-<!--              </label>-->
-<!--            </div>-->
-<!--          </div>-->
-
 
           <div class="status-box">
             <div class="name-box">
@@ -193,11 +163,6 @@
                   <div class="form-group-mentor">
                     <div class="detail-row-mentor">
                       <div class="edit-input-mentor" id="role-edit" required>
-<!--                        <label>-->
-<!--                          <input type="checkbox" name="role" value="USER" th:checked="${#lists.contains(userRegistrationDetails.roles, 'USER')}" required>-->
-<!--                          <span class="checkbox-custom"></span>-->
-<!--                          USER-->
-<!--                        </label>-->
                         <label>
                           <input type="checkbox" name="role" value="MENTOR" th:checked="${#lists.contains(userRegistrationDetails.roles, 'MENTOR')}" required>
                           <span class="checkbox-custom"></span>
@@ -212,7 +177,7 @@
                     </div>
                   </div>
                 </div>
-                <button type="submit" id="mentor-save" class="btn btn-success" th:onclick="updateRoleStatus()">Save</button>
+                <button type="submit" id="mentor-save" class="btn btn-success green-button" th:onclick="updateRoleStatus()">Save</button>
               </div>
             </div>
             <!-- MENTOR MODAL END -->
@@ -310,7 +275,7 @@
                     <div class="info-tooltip">Enter your 10 digit phone number!</div>
                   </div> </div>
               </div>
-              <button type="submit" id="edit-save" class="btn btn-success">Save</button>
+              <button type="submit" id="edit-save" class="btn btn-success green-button">Save</button>
             </div>
             </form>
             <div id="whitespace"> </div>
@@ -376,7 +341,7 @@
                 </div>
                 <input type="text" class="skills-input" id="topic-input" placeholder="Selected Topic"
                        required autofocus="autofocus" readonly >
-                <button type="submit" id="skills-add" class="btn btn-success" th:onclick="addSelectedTopic()">Add Topic</button>
+                <button type="submit" id="skills-add" class="btn btn-success green-button" th:onclick="addSelectedTopic()">Add Topic</button>
 
               </div>
               <div class="divider"></div>
@@ -389,11 +354,7 @@
                 </div>
 
                 <div class="divider"></div>
-              <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>
-<!--              <form id="skills-form"  th:action="@{/saveProfileTopics}" method="post" >-->
-<!--                <input type="hidden" name="profileTopicsDataItems" id="profileTopicsDataItems" value="">-->
-<!--                <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>-->
-<!--              </form>-->
+              <button type="submit" id="skills-save" class="btn btn-success green-button" th:onclick="saveDataToServer()">Save</button>
             </div>
           </div>
           <!-- SKILLS MODAL END -->
@@ -416,7 +377,7 @@
         </div>
         <!-- SKILLS CONTAINER END -->
 
-        <button class="navigate-button" id="showCommentsButton" onclick="toggleAndShowNext()">
+        <button class="navigate-button green-button" id="showCommentsButton" onclick="toggleAndShowNext(); scrollToBottom()">
           <img th:src="@{/img/see-comments.png}" alt="See Comments Icon" class="icon"> SEE COMMENTS</button>
         <!-- COMMENT CONTAINER START -->
         <div class="section" id="comment-section-container" style="display: none;">
@@ -457,8 +418,8 @@
             </div>
 
             <div class="nav-arrows">
-              <button class="navigate-button" onclick="showPreviousCommentSection()">←</button>
-              <button class="navigate-button" onclick="showNextCommentSection()">→</button>
+              <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
+              <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
             </div>
           </div>
           <!-- COMMENT INFO END -->

@@ -112,8 +112,8 @@
         </div>
 
         <div class="settings-buttons">
-        <button class="save-settings-btn" id="saveSettings"> Save settings</button><br>
-        <button class="deactivate-btn" onclick="showDeactivateModal()"> Deactivate your account</button>
+        <button class="save-settings-btn green-button" id="saveSettings"> Save settings</button><br>
+        <button class="deactivate-btn red-button" onclick="showDeactivateModal()"> Deactivate your account</button>
         </div>
 
       </div>
@@ -138,7 +138,7 @@
             <input type="text" id="name" name="name" placeholder="Your Name" required>
             <input type="email" id="email" name="email" placeholder="Your Email" required>
             <textarea id="message" name="message" placeholder="Your Message" required></textarea>
-            <button type="submit">Send Email</button>
+            <button type="submit" class="green-button">Send Email</button>
           </form>
         </div>
 
@@ -151,8 +151,8 @@
       <div class="modal-content">
         <p>Are you sure?</p>
         <p class="p2">After deactivating you won't be able to retrieve your data! </p>
-        <button id="deactivate-yes" onclick="startDeactivatingUser()">Yes</button>
-        <button id="deactivate-no" onclick="closeDeactivateModal()">No</button>
+        <button id="deactivate-yes" class="green-button" onclick="startDeactivatingUser()">Yes</button>
+        <button id="deactivate-no" class="red-button" onclick="closeDeactivateModal()">No</button>
       </div>
     </div>
 

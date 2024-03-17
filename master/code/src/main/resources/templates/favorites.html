@@ -145,11 +145,14 @@
                         </div>
 
                         <div th:id="${'profile-button-container-sure-' + favoriteUser.id}" class="profile-button-container-sure" style="display: none">
+                              <span style="display: inline-block;">
+                            Remove&nbsp;<strong><span th:text="${favoriteUser.fullName}"/></strong>&nbsp;from favorites?&nbsp;&nbsp;
+                              </span>
                             <button th:id="${'sureButton-' + favoriteUser.id}" class="checkmark-button-profile profile-button">
-                                <img class="profile-button-icon profile-button-icon-sure"  th:src="@{/img/checkmark-icon.png}" alt="Sure">
+                                Yes&nbsp;
                             </button>
                             <button th:id="${'cancelButton-' + favoriteUser.id}" class="cancel-button-profile profile-button">
-                                <img class="profile-button-icon profile-button-icon-sure"  th:src="@{/img/cancel-icon.png}" alt="Sure">
+                                No
                             </button>
                         </div>
                     </div>
@@ -169,7 +172,7 @@
 
                             <input type="text" id="message-input" placeholder="Type a message..." maxlength="500" >
                             <button id="emoji-button">😊</button>
-                            <button type="button" id="send-button">Send</button>
+                            <button type="button" class="green-button" id="send-button">Send</button>
 
                     </form>
                     </div>

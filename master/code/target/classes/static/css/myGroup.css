@@ -1,24 +1,3 @@
-@font-face {
-    font-family: 'CustomFont';
-    src: url('../fonts/roundfont.ttf') format('truetype')}
-
-@keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0
-    }
-
-    to {
-        top: 0;
-        opacity: 1
-    }
-}
-
-body {
-    margin: 0;
-    font-family: 'CustomFont';
-}
-
 .right {
     flex-direction: column;
     align-items: center;
@@ -116,22 +95,11 @@ body {
 #myFilterBtn {
     display: none;
     width: 100%;
-    background: white;
-    color: rgb(22, 175, 132);
-    border: none;
     padding: 10px;
     font-size: 15px;
-    border: 3px solid;
-    border-radius: 20px;
     margin-top: 5px;
     cursor: pointer;
 }
-
-#myFilterBtn:hover {
-    background-color: rgb(204, 252, 234);
-    font-weight: bold;
-}
-
 
 .year-box, .topic-box {
     width: 100%;
@@ -163,6 +131,7 @@ body {
 .topic-checkboxes label {
     margin-bottom: 5px;
 }
+
 .container-checkbox-myGroup {
     display: inline-block;
     position: relative;
@@ -193,7 +162,6 @@ body {
 .container-checkbox-myGroup input:checked ~ .checkmark-myGroup {
     background-color: #2196F3;
 }
-
 
 .container-checkbox-myGroup:hover input ~ .checkmark-myGroup {
     background-color: rgb(204, 252, 234);
@@ -244,8 +212,8 @@ body {
 }
 
 .role-button .button-divider {
-    flex: 0 0 2px; /* Width of the border */
-    background-color: rgb(22, 175, 132); /* Green color */
+    flex: 0 0 2px;
+    background-color: rgb(22, 175, 132);
 }
 
 .role-button button {
@@ -324,9 +292,6 @@ body {
 }
 
 .search-button {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 20px;
     width: 100px;
     max-width: 55%;
     cursor: pointer;
@@ -345,17 +310,8 @@ body {
     display: flex;
 }
 
-.search-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-}
-
 .cancel-button {
     display: none;
-    color: rgb(255, 255, 255);
-    background-color: rgb(238, 84, 76);
-    border-radius: 20px;
     width: 100px;
     max-width: 55%;
     cursor: pointer;
@@ -367,12 +323,6 @@ body {
     justify-content: center;
     margin-left: 15px;
     margin-right: 15px;
-}
-
-.cancel-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(233, 99, 81);
-    border: 2px solid white;
 }
 
 /*SEARCH DIV START*/
@@ -441,9 +391,8 @@ body {
 
 .myGroupName{
     margin-top: 2%;
-    color: rgb(25, 150, 114);
+    color: rgb(22, 175, 132);
 }
-
 
 .profile-button-container, .profile-button-container-sure{
     height: 30px;
@@ -487,7 +436,6 @@ body {
     height: 25px;
 }
 
-/*PROFILE MODAL*/
 .profile-modal-background{
     position: fixed;
     z-index: 9999;
@@ -504,8 +452,7 @@ body {
 .profile-modal{
     position: relative;
     background-color: #fefefe;
-    margin: auto;
-    margin-top: 5%;
+    margin: 5% auto auto;
     padding: 10px;
     border: 1px solid #888;
     border-radius: 25px;
@@ -513,7 +460,6 @@ body {
     height: 80%;
     display: flex;
     flex-direction: row;
-    /*align-items: center;*/
     justify-content: center;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -522,7 +468,6 @@ body {
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
     animation-duration: 0.4s;
-    position: relative;
 }
 
 .profile-modal::-webkit-scrollbar{
@@ -573,63 +518,6 @@ body {
     width: 0;
     background: transparent;
 }
-
-/*.favorite-button {*/
-/*    width: 100%;*/
-/*    display: inline-flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    border: none;*/
-/*    background-color: #ffffff;*/
-/*    color: rgb(30, 214, 162);*/
-/*    font-family: Arial, sans-serif;*/
-/*    font-size: 16px;*/
-/*    font-weight: bold;*/
-/*    cursor: pointer;*/
-/*    padding: 5%;*/
-/*}*/
-
-/*.heart-icon {*/
-/*    width: 20px;*/
-/*    height: 20px;*/
-/*    background-size: cover;*/
-/*    margin-right: 6px;*/
-/*    vertical-align: middle;*/
-/*    color: gray;*/
-/*}*/
-
-/*!* Hover effect *!*/
-/*.favorite-button:hover {*/
-/*    text-shadow: 0 0px 5px rgb(195, 255, 238);*/
-/*}*/
-
-/*.remove-button {*/
-/*    width: 100%;*/
-/*    display: inline-flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    border: none;*/
-/*    background-color: #ffffff;*/
-/*    color:  rgb(234, 80, 80);*/
-/*    font-family: Arial, sans-serif;*/
-/*    font-size: 16px;*/
-/*    font-weight: bold;*/
-/*    cursor: pointer;*/
-/*    padding: 5%;*/
-/*}*/
-
-/*.remove-icon {*/
-/*    width: 20px;*/
-/*    height: 20px;*/
-/*    background-size: cover;*/
-/*    margin-right: 6px;*/
-/*    vertical-align: middle;*/
-/*}*/
-
-/*!* Hover effect *!*/
-/*.remove-button:hover {*/
-/*    text-shadow: 0 0px 5px  rgb(250, 152, 152);*/
-/*}*/
 
 .image-container {
     display: flex;
@@ -731,8 +619,6 @@ body {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
-
-
 h2 {
     font-size: 24px;
     margin: 0;
@@ -830,6 +716,338 @@ table tr:last-child td {
     padding-bottom:2%;
 }
 
+.highlight {
+    background-color: #FFCCCC;
+}
+
+.rating {
+    direction: rtl;
+}
+
+.rating input[type="radio"] {
+    display: none;
+}
+
+.rating label {
+    display: inline-block;
+    font-size: 1rem;
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding-bottom: 2.5%;
+}
+
+.rating.modal-rating-star label {
+    display: inline-block;
+    font-size: 1.6rem;
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding-bottom: 2.5%;
+}
+
+.rating-text {
+    text-align: center;
+    margin-top: 5px;
+}
+
+#information-box {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#information-box div {
+    padding: 20px;
+}
+
+#rating-button{
+    max-width: 120px;
+    min-width: 100px;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    text-overflow: ellipsis;
+    height: 40px;
+    font-weight:bold;
+    font-size: 1em;
+    margin:5px;
+}
+
+#comment-button{
+    max-width: 120px;
+    min-width: 100px;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    text-overflow: ellipsis;
+    height: 40px;
+    font-weight:bold;
+    font-size: 1em;
+    margin:5px;
+}
+
+.interaction-buttons{
+    flex-direction: column;
+}
+
+#save-rating{
+    width: 70px;
+    max-width: 55%;
+    cursor: pointer;
+    border: none;
+    height: 30px;
+    text-align: center;
+    justify-content: center;
+}
+
+#cancel-rating{
+    width: 70px;
+    max-width: 55%;
+    cursor: pointer;
+    border: none;
+    height: 30px;
+    text-align: center;
+    justify-content: center;
+}
+
+#commentInput {
+    display: block;
+    resize: none;
+    height: 75px;
+    min-width: 70%;
+    max-width: 100%;
+    border-radius: 20px;
+    padding: 5px;
+    overflow: hidden;
+    overflow-y: auto;
+    margin: 10px auto;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+}
+
+#commentInput::-webkit-scrollbar {
+    width: 6px;
+}
+
+#commentInput::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+.comment-rating {
+    direction: rtl;
+    text-align: center;
+    height: 20px;
+    display: flex;
+    flex-direction:row !important;
+    margin: 0;
+}
+
+.comment-rating label {
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s;
+    display: inline;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.comment-rating input {
+    display: none;
+}
+
+.comment-label-date{
+    padding-top: 10px !important;
+    font-size: 14px;
+    font-style:italic;
+}
+
+.comment-rating input[type="radio"] {
+    display: none;
+}
+
+.comment-row{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.comment-label-text {
+    margin-top: -5px;
+}
+
+.nav-arrows {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.navigate-button{
+    min-width: 50px;
+    cursor: pointer;
+    padding: 4px;
+    border: none;
+    text-overflow: ellipsis;
+    font-size: 15px;
+    font-weight:bold;
+    margin:5px;
+}
+
+.comment-infos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: start;
+    height: 100%;
+
+}
+
+.comment-profile-image{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    margin-bottom:5px;
+}
+
+.comment-section{
+    display:flex;
+}
+
+.comment-content{
+    padding-top: 7px;
+    padding-left: 15px;
+}
+
+.comment-label,
+.comment-label-date,
+.comment-rating {
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.loading-modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.checkmark-button-profile {
+    width: 20px;
+    height: 21px;
+    background: transparent;
+    vertical-align: middle;
+    cursor: pointer;
+    border:none;
+    margin-right: 10px;
+}
+
+.cancel-button-profile{
+    width: 20px;
+    height: 21px;
+    background: transparent;
+    vertical-align: middle;
+    cursor: pointer;
+    border:none;
+    margin-right: 12px;
+}
+
+.profile-button-icon-sure{
+    height: 18px;
+    width: 18px
+}
+
+.smaller-div {
+    min-width: 50px;
+    max-width: 150px;
+    display: flex;
+}
+
+.main-div {
+    margin:2%;
+    width:90%;
+    border: 4px solid rgb(22, 175, 132);
+    border-radius: 25px;
+    flex-direction: column;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    z-index: 1;
+    opacity:60%;
+    padding: 20px;
+}
+
+.main-div:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(22, 175, 132, 0.8);
+    z-index: 2;
+    margin-top:20px;
+    margin-bottom: 20px;
+    opacity: 100%;
+}
+
+.small-div-image{
+    max-width:100%;
+    border: 4px solid rgb(22, 175, 132);
+    border-radius: 25px;
+
+}
+
+.mygroup-pics{
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.main-div p{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.comment-section {
+    display: none;
+}
+.comment-section.active {
+    display: flex;
+}
+
+#showCommentsButton{
+    width: 200px;
+    height: 45px;
+    font-size: large;
+}
+
+.icon {
+    width: 30px;
+    position: relative;
+    top: 3px;
+}
+
+.show{
+    position: relative;
+}
+
+.comment-row p{
+    text-align: center;
+}
+
 @media screen and (max-width: 768px) {
     .image-cell {
         flex: 0 0 calc(33.333% - 10px);
@@ -896,10 +1114,8 @@ table tr:last-child td {
     .left-search-box{
         height: fit-content;
         width: 100%;
-        border-radius: 0px;
         order: -1;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
+        border-radius: 0px 0px 15px 15px;
         padding-left: 0;
     }
 
@@ -929,9 +1145,7 @@ table tr:last-child td {
     .search-content {
         margin-top: 0;
     }
-}
 
-@media (max-width: 600px) {
     .info-tooltip {
         position: absolute;
         color: white;
@@ -948,266 +1162,6 @@ table tr:last-child td {
     .dropdown-myGroup:hover .dropdown-content-myGroup {
         display: block;
     }
-}
-
-@media (max-width: 600px) {
-
-}
-
-
-.highlight {
-    background-color: #FFCCCC;
-}
-
-.rating {
-    direction: rtl;
-}
-
-.rating input[type="radio"] {
-    display: none;
-}
-
-.rating label {
-    display: inline-block;
-    font-size: 1rem;
-    color: gray;
-    cursor: pointer;
-    transition: color 0.2s;
-    padding-bottom: 2.5%;
-}
-
-.rating.modal-rating-star label {
-    display: inline-block;
-    font-size: 1.6rem;
-    color: gray;
-    cursor: pointer;
-    transition: color 0.2s;
-    padding-bottom: 2.5%;
-}
-
-.rating-text {
-    text-align: center;
-    margin-top: 5px;
-}
-
-#information-box {
-    width: 80%;
-    margin: 0 auto; /* KÃ¶zÃ©pre igazÃ­tÃ¡s */
-    text-align: center;
-}
-
-#information-box div {
-    padding: 20px;
-    /* border-radius: 5px; */
-}
-
-#rating-button{
-    color: rgb(255, 255, 255);
-    background-color: rgb(40, 152, 200);
-    border-radius: 15px;
-    max-width: 120px;
-    min-width: 100px;
-    cursor: pointer;
-    padding: 10px;
-    border: none;
-    text-overflow: ellipsis;
-    height: 40px;
-    font-weight:bold;
-    font-size: 1em;
-    margin:5px;
-}
-
-#rating-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-    background-color: rgb(1, 187, 255);
-    border: 2px solid white;
-}
-
-#comment-button{
-    color: rgb(255, 255, 255);
-    background-color: rgb(40, 152, 200);
-    border-radius: 15px;
-    max-width: 120px;
-    min-width: 100px;
-    cursor: pointer;
-    padding: 10px;
-    border: none;
-    text-overflow: ellipsis;
-    height: 40px;
-    font-weight:bold;
-    font-size: 1em;
-    margin:5px;
-}
-
-.interaction-buttons{
-    flex-direction: column;
-}
-
-#save-rating{
-    color: rgb(255, 255, 255);
-    background-color: rgb(50, 189, 149);
-    border-radius: 10px;
-    width: 70px;
-    max-width: 55%;
-    cursor: pointer;
-    border: none;
-    height: 30px;
-    text-align: center;
-    justify-content: center;
-}
-
-#save-rating:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-}
-
-#cancel-rating{
-    color: rgb(255, 255, 255);
-    background-color: rgb(238, 84, 76);
-    border-radius: 10px;
-    width: 70px;
-    max-width: 55%;
-    cursor: pointer;
-    border: none;
-    height: 30px;
-    text-align: center;
-    justify-content: center;
-}
-
-#cancel-rating:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: #f07373;
-    border: 2px solid white;
-}
-
-#commentInput {
-    display: block;
-    margin:0 auto;
-    resize: none;
-    height: 75px;
-    min-width: 70%;
-    max-width: 100%;
-    border-radius: 20px;
-    padding: 5px;
-    overflow: hidden;
-    overflow-y: auto;  /* Enable vertical scrolling when the content exceeds the height */
-    margin-bottom: 10px;
-    margin-top: 10px;
-    /* Style scrollbar for WebKit browsers (Chrome, Safari) */
-    scrollbar-color: transparent transparent; /* thumb and track color */
-    scrollbar-width: thin; /* width of the scrollbar */
-}
-
-/* Style scrollbar for Firefox */
-#commentInput::-webkit-scrollbar {
-    width: 6px; /* width of the scrollbar */
-}
-
-#commentInput::-webkit-scrollbar-thumb {
-    background-color: transparent; /* color of the thumb */
-}
-
-.comment-rating {
-    direction: rtl;
-    text-align: center;
-    height: 20px;
-    margin-left: 10px;
-    display: flex;
-    flex-direction:row !important;
-    margin: 0;
-}
-
-.comment-rating label {
-    color: gray;
-    cursor: pointer;
-    transition: color 0.2s;
-    display: inline;
-    font-size: 1rem;
-    margin-top: 10px;/* Adjust the margin as needed */
-}
-
-.comment-rating input {
-    display: none; /* Hide the radio buttons */
-}
-
-.comment-label-date{
-    padding-top: 10px !important;
-    font-size: 14px;
-    font-style:italic;
-}
-
-.comment-rating input[type="radio"] {
-    display: none;
-}
-
-.comment-row{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-}
-
-.comment-label-text {
-    margin-top: -5px;
-}
-
-.nav-arrows {
-    display: flex;
-    justify-content: flex-end; /* Align items along the main axis to the end (right) */
-    align-items: flex-end; /* Align items along the cross axis to the end (bottom) */
-}
-
-.navigate-button{
-    color: rgb(255, 255, 255);
-    background-color: rgb(40, 152, 200);
-    border-radius: 15px;
-    min-width: 50px;
-    cursor: pointer;
-    padding: 4px;
-    border: none;
-    text-overflow: ellipsis;
-    font-size: 15px;
-    font-weight:bold;
-    margin:5px;
-}
-
-.navigate-button:hover{
-    background-color: rgb(119 193 225);
-    border: 2px solid white;
-}
-
-
-.comment-infos{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: start;
-    height: 100%;
-
-}
-
-.comment-profile-image{
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-    margin-bottom:5px;
-}
-
-.comment-section{
-    display:flex;
-}
-
-.comment-content{
-    padding-top: 7px;
-    padding-left: 15px;
-}
-
-.comment-label,
-.comment-label-date,
-.comment-rating {
-    margin: 0; /* Remove margin */
-    padding: 0; /* Remove padding */
 }
 
 @media (max-width: 800px) {
@@ -1238,132 +1192,3 @@ table tr:last-child td {
     }
 }
 
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* Style the modal content */
-.loading-modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 100px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.checkmark-button-profile {
-    width: 20px;
-    height: 21px;
-    background: transparent;
-    vertical-align: middle;
-    cursor: pointer;
-    border:none;
-    margin-right: 10px;
-}
-
-.cancel-button-profile{
-    width: 20px;
-    height: 21px;
-    background: transparent;
-    vertical-align: middle;
-    cursor: pointer;
-    border:none;
-    margin-right: 12px;
-}
-
-.profile-button-icon-sure{
-    height: 18px;
-    width: 18px
-}
-
-.smaller-div {
-    min-width: 50px;
-    max-width: 150px;
-    display: flex;
-}
-
-.main-div {
-    margin:2%;
-    width:90%;
-    border: 4px solid rgb(22, 175, 132);
-    border-radius: 25px;
-    flex-direction: column;
-    display: flex;
-    text-align: center;
-    align-items: center;
-    transition: all 0.3s ease;
-    z-index: 1; /* Initial z-index value */
-    opacity:60%;
-    padding: 20px;
-}
-
-.main-div:hover {
-    transform: scale(1.1); /* Scale by 110% on hover */
-    box-shadow: 0 0 20px rgba(22, 175, 132, 0.8); /* Add a glow effect */
-    z-index: 2; /* Increase z-index on hover to make it overlap */
-    margin-top:20px;
-    margin-bottom: 20px;
-    opacity: 100%;
-}
-
-.small-div-image{
-    max-width:100%;
-    border: 4px solid rgb(22, 175, 132);
-    border-radius: 25px;
-
-}
-
-.mygroup-pics{
-    display: flex;
-    margin: 0 auto;
-    align-items: center;
-}
-
-.main-div p{
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-
-.comment-section {
-    display: none;
-}
-.comment-section.active {
-    display: flex;
-}
-
-#showCommentsButton{
-    width: 200px;
-    height: 45px;
-    font-size: large;
-    background-color: rgb(22, 175, 132);
-}
-
-#showCommentsButton:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-}
-
-.icon {
-    width: 30px;
-    position: relative;
-    top: 3px;
-}
-
-.show{
-    position: relative;
-}
-
-.comment-row p{
-    text-align: center;
-}

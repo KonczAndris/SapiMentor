@@ -1,11 +1,10 @@
+/*CSS TO ALL PAGES*/
+
 @font-face {
     font-family: 'CustomFont';
     src: url('../fonts/roundfont.ttf') format('truetype')
 
 }
-
-
-
 
 @keyframes transitionIn{
     from{
@@ -15,6 +14,18 @@
     to{
         opacity: 1;
         transform: rotateX(0);
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
     }
 }
 
@@ -50,14 +61,66 @@ body {
     background-attachment:fixed;
     overflow: hidden;
     margin: 0;
-    padding: 0;
-    padding-top: 1%;
 }
 
 button{
     font-family: 'CustomFont';
 }
 
+.green-button{
+    background-color: rgb(22, 175, 132);
+    color: white !important;
+    border: none;
+    border-radius: 100px;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.green-button:hover{
+    background-color: rgb(88, 207, 174);
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    border: 1px solid white;
+    transform: scale(1.05);
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.red-button{
+    background-color: rgb(238, 84, 76);
+    color: white !important;
+    border: none;
+    border-radius: 100px;
+}
+
+.red-button:hover{
+    background-color: rgb(253, 124, 107);
+    border: 1px solid white;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
+.blue-button{
+    background-color: rgb(40, 152, 200);
+    color: white !important;
+    border: none;
+    border-radius: 100px;
+}
+
+.blue-button:hover{
+    background-color: rgb(1, 187, 255);
+    border: 1px solid white;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
+/*PAGE CONTENT*/
 .center {
     display: flex;
     position: fixed;
@@ -127,10 +190,8 @@ button{
 }
 
 a{
-    /* display: flex; */
     text-decoration: none !important;
     color: white;
-    /* flex-direction: row; */
 }
 
 .menu-function-profile a{
@@ -145,12 +206,10 @@ a{
     justify-content: flex-end;
 }
 
-
 .menu-function a {
     color: rgb(255, 255, 255);
     text-decoration: none;
     font-size: 120%;
-    transition: font-size 0.2s;
     transition: box-shadow 0.2s;
     border-radius: 50px;
     padding: 15px 15px;
@@ -163,7 +222,6 @@ a{
     color: rgb(255, 255, 255);
     text-decoration: none;
     font-size: 100%;
-    transition: font-size 0.2s;
     transition: box-shadow 0.2s;
     border-radius: 50px;
     white-space: nowrap;
@@ -171,7 +229,6 @@ a{
     text-overflow: ellipsis;
     z-index: 0;
 }
-
 
 .menu-function:last-child {
     justify-content: flex-end;
@@ -192,10 +249,7 @@ a{
 }
 
 .rounded-icon-top{
-    margin-top: 6px !important;
-    margin-left: 6px !important;
-    margin-bottom: 1px !important;
-    margin-right: 10px !important;
+    margin: 6px 10px 1px 6px !important;
     width: 35px;
     border-radius: 50%;
     padding: 0;
@@ -225,13 +279,9 @@ a{
     max-width: 55px;
     margin-top: -15px;
     align-self: center;
-    transition: box-shadow 0.2s, transform 0.2s; /* Added transform transition */
-    /* padding: 10%; */
-    margin-top: 6px;
+    transition: box-shadow 0.2s, transform 0.2s;
     margin-right: 10px;
-    padding-top: 2px;
     padding-bottom: 2px;
-    padding: 4px;
     border-radius: 50px;
     overflow: hidden;
     border: 2px solid white;
@@ -248,7 +298,6 @@ a{
 .back-icon:active {
     transform: scale(0.95);
 }
-
 
 .center-image {
     text-align: center;
@@ -286,96 +335,6 @@ a{
     text-align: center;
 }
 
-@media (max-width: 1000px) {
-
-    .menu-function-profile{
-        display: none !important;
-    }
-
-    .menu-divider{
-        display: none;
-    }
-
-    .center {
-        width: 100%;
-        flex-direction: column;
-        margin-top: 90px;
-    }
-    .right{
-        display: flex;
-        width: 100%;
-        margin: 0;
-        border-radius: 0;
-    }
-    .left {
-        display: flex;
-        width: 100%;
-        text-align: start;
-        padding-left: 10%;
-        padding-bottom: 10%;
-    }
-
-    .form-group{
-        margin-left: 0;
-    }
-
-    #index-text {
-        letter-spacing: 2px;
-        text-align: start;
-        margin: 25px;
-        color: white;
-        font-size: xx-large;
-        margin-left: 0;
-        margin-right: 18%;
-        width: 50%;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .taskbar{
-        display: flex;
-    }
-
-    .loading-gif {
-        width: 100%;
-        margin: 30px;
-        border-radius: 38px;
-    }
-
-    .center-image {
-        text-align: start;
-    }
-    .modal-content {
-        position: absolute;
-        top: 50%;
-        left: 43%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-    }
-
-    #sapimentor-logo{
-        letter-spacing: 2px;
-        text-align: center;
-        justify-content: center;
-        margin: 25px;
-        width: 26%;
-    }
-
-}
-
-@media (max-width: 450px) {
-    #sapimentor-logo{
-        letter-spacing: 2px;
-        text-align: center;
-        justify-content: center;
-        margin: 25px;
-        width: 40%;
-    }
-}
-
-/*MESSAGE-ALERT*/
 .user-img-container {
     position: relative;
     display: inline-block;
@@ -389,9 +348,9 @@ a{
     top: 25px;
     background-color: #e3596b;
     color: white;
-    padding: 6px; /* Adjust padding */
-    width: 10px; /* Adjust size */
-    height: 10px; /* Adjust size */
+    padding: 6px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -431,7 +390,6 @@ a{
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
     padding-top: 60px;
-
 }
 
 .info-modal-content {
@@ -446,7 +404,6 @@ a{
     flex-direction: column;
     justify-content: space-between;
 }
-
 
 .close-info-modal {
     color: #aaa;
@@ -481,8 +438,7 @@ a{
 .info-image{
     width: 120px;
     height: 120px;
-    padding: 10px;
-    padding-right: 20px;
+    padding: 10px 20px 10px 10px;
     display: flex;
     bottom: 0;
     align-self: center;
@@ -500,6 +456,101 @@ a{
     padding-left: 25px;
 }
 
+.pagination{
+    display: flex;
+    align-self: center;
+    bottom: 0;
+}
+
+/*RESPONSIVE DESIGN*/
+@media (max-width: 1000px) {
+    .menu-function-profile{
+        display: none !important;
+    }
+
+    .menu-divider{
+        display: none;
+    }
+
+    .center {
+        width: 100%;
+        flex-direction: column;
+        margin-top: 90px;
+    }
+
+    .right{
+        display: flex;
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .left {
+        display: flex;
+        width: 100%;
+        text-align: start;
+        padding-left: 10%;
+        padding-bottom: 10%;
+    }
+
+    .form-group{
+        margin-left: 0;
+    }
+
+    #index-text {
+        letter-spacing: 2px;
+        text-align: start;
+        color: white;
+        font-size: xx-large;
+        margin: 25px 18% 25px 0;
+        width: 50%;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .taskbar{
+        display: flex;
+    }
+
+    .loading-gif {
+        width: 100%;
+        margin: 30px;
+        border-radius: 38px;
+    }
+
+    .center-image {
+        text-align: start;
+    }
+
+    .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 43%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    #sapimentor-logo{
+        letter-spacing: 2px;
+        text-align: center;
+        justify-content: center;
+        margin: 25px;
+        width: 26%;
+    }
+}
+
+@media (max-width: 450px) {
+    #sapimentor-logo{
+        letter-spacing: 2px;
+        text-align: center;
+        justify-content: center;
+        margin: 25px;
+        width: 40%;
+    }
+}
+
 @media screen and (max-width: 800px) {
     .left-content{
         display: flex;
@@ -512,10 +563,4 @@ a{
         display: flex;
         flex-direction: column;
     }
-}
-
-.pagination{
-    display: flex;
-    align-self: center;
-    bottom: 0;
 }

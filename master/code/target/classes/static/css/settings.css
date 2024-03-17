@@ -1,7 +1,3 @@
-@font-face {
-    font-family: 'CustomFont';
-    src: url('../fonts/roundfont.ttf') format('truetype')}
-
 @keyframes animatetop {
     from {
         top: -500px;
@@ -12,11 +8,6 @@
         top: 0;
         opacity: 1
     }
-}
-
-body {
-    margin: 0;
-    font-family: 'CustomFont';
 }
 
 .large-settings-div{
@@ -41,11 +32,7 @@ body {
     user-select: none;
 }
 
-
 .save-settings-btn{
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 15px;
     cursor: pointer;
     padding: 4px;
     border: none;
@@ -54,14 +41,6 @@ body {
     margin:5px;
     width: 180px;
     height: 35px;
-    font-family: 'CustomFont';
-}
-
-.save-settings-btn:hover{
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-    font-weight: bold;
 }
 
 .icon {
@@ -72,9 +51,6 @@ body {
 }
 
 .deactivate-btn{
-    color: rgb(255, 255, 255);
-    background-color: #f07373;
-    border-radius: 15px;
     cursor: pointer;
     padding: 4px;
     border: none;
@@ -83,14 +59,6 @@ body {
     margin:5px;
     width: 180px;
     height: 35px;
-    font-family: 'CustomFont';
-}
-
-.deactivate-btn:hover{
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(238, 84, 76);
-    border: 2px solid white;
-    font-weight: bold;
 }
 
 .settings-buttons-div{
@@ -98,28 +66,12 @@ body {
     flex-direction: column;
 }
 
-@media (max-width: 800px) {
-    .large-settings-div{
-        flex-direction: column;
-        width: 90%;
-    }
-
-    .left-settings-div,
-    .right-settings-div {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 0 auto; /* Center horizontally */
-    }
-}
-
 .language-div, .theme-div {
     display: inline-block;
     position: relative;
     margin-bottom: 12px;
     cursor: pointer;
-    padding-bottom: 20px; /* Adjust as needed */
+    padding-bottom: 20px;
     width: 45%;
     align-items: flex-start !important;
 }
@@ -128,7 +80,6 @@ body {
     display: flex;
     padding-right: 5px;
     padding-top: 10px;
-    padding-bottom: px;
 }
 
 span{
@@ -218,38 +169,35 @@ h2 {
 }
 
 .divider-icon {
-    width: 100px; /* Adjust as needed */
-    height: auto; /* Maintain aspect ratio */
+    width: 100px;
+    height: auto;
     position: relative;
-    top: 6px; /* Resetting top position to make sure only margin is applied */
+    top: 6px;
 }
 
-/* Modal container */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 9999; /* Sit on top */
+    display: none;
+    position: fixed;
+    z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Enable scrolling if needed */
-    background-color: rgb(71 71 71 / 40%); /* Black with opacity */
+    overflow: auto;
+    background-color: rgb(71 71 71 / 40%);
 
 }
 
-/* Modal content */
 .modal-content {
     background-color: #fefefe;
     position: absolute;
     left: 50%;
     top: 50%;
     padding: 20px;
-    border: 2px solid #e07373;
-    width: 80%; /* Could be more or less, depending on screen size */
-    max-width: 300px; /* Adjust max-width if needed */
+    width: 80%;
+    max-width: 300px;
     border-radius: 50px;
-    color: #e74c4c;
+    color: rgb(238, 84, 76);
     font-size: large;
     font-weight: bold;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -262,7 +210,6 @@ h2 {
     font-weight: 100;
 }
 
-/* Close button */
 .close {
     color: #aaaaaa;
     float: right;
@@ -278,9 +225,6 @@ h2 {
 }
 
 #deactivate-yes{
-    color: rgb(255, 255, 255);
-    background-color: rgb(50, 189, 149);
-    border-radius: 10px;
     width: 70px;
     max-width: 55%;
     cursor: pointer;
@@ -288,18 +232,9 @@ h2 {
     height: 30px;
     text-align: center;
     justify-content: center;
-}
-
-#deactivate-yes:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
 }
 
 #deactivate-no{
-    color: rgb(255, 255, 255);
-    background-color: rgb(238, 84, 76);
-    border-radius: 10px;
     width: 70px;
     max-width: 55%;
     cursor: pointer;
@@ -307,12 +242,6 @@ h2 {
     height: 30px;
     text-align: center;
     justify-content: center;
-}
-
-#deactivate-no:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: #f07373;
-    border: 2px solid white;
 }
 
 .contact-div, .get-in-touch-div {
@@ -320,7 +249,6 @@ h2 {
     display: flex;
     flex-direction: column;
     width: 75%;
-
 }
 
 .get-in-touch-div input[type="text"],
@@ -340,9 +268,6 @@ h2 {
 }
 
 .get-in-touch-div button {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 15px;
     cursor: pointer;
     padding: 4px;
     border: none;
@@ -351,17 +276,25 @@ h2 {
     margin: 5px;
     width: 180px;
     height: 35px;
-    font-family: 'CustomFont';
-}
-
-.get-in-touch-div button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
 }
 
 .setting-icon{
     width: 30px;
     vertical-align:middle;
     margin-right: 0 !important;
+}
+
+@media (max-width: 800px) {
+    .large-settings-div{
+        flex-direction: column;
+        width: 90%;
+    }
+    .left-settings-div,
+    .right-settings-div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto; /* Center horizontally */
+    }
 }

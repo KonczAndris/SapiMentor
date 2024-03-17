@@ -1,6 +1,26 @@
-@font-face {
-    font-family: 'CustomFont';
-    src: url('../fonts/roundfont.ttf') format('truetype')}
+@-webkit-keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
 
 /* PROFILE CONTAINER */
 .profile-container {
@@ -12,12 +32,7 @@
     padding: 0;
 }
 
-button{
-    font-family: 'CustomFont';
-}
-
 /* LEFT CONTAINTER */
-
 .profile-left {
     text-align: center;
     justify-content: center !important;
@@ -62,9 +77,9 @@ button{
     align-items: center;
     opacity: 0.5;
 }
+
 #change-image-icon img {
     width: 70%;
-
 }
 
 #change-image-icon:hover {
@@ -125,11 +140,6 @@ button{
     transition: color 0.2s;
 }
 
-/*.rating label:hover{*/
-/*    color: gold;*/
-/*}*/
-
-
 .rating input[type="radio"]:checked~label {
     color: gold;
 }
@@ -144,6 +154,7 @@ button{
     flex-direction: row;
     justify-content: center;
 }
+
 /* RIGHT CONTAINER */
 .show{
     padding-right: none;
@@ -233,7 +244,6 @@ h2 {
     margin-left: 5px;
 }
 
-
 /* MODAL BOXES */
 .modal-profile, .modal-skills, .modal-mentor, .modal-upload {
     display: none;
@@ -313,7 +323,6 @@ h2 {
 }
 
 /* UPLOAD MODAL BOX */
-
 .modal-content-upload{
     width: 400px;
 }
@@ -334,13 +343,13 @@ h2 {
     max-width: 80%;
     padding: 5px; /* Modified */
     margin-bottom:2%;
-    background-color: rgb(50, 189, 149);
+    background-color: rgb(22, 175, 132);
     border-radius: 30px;
     margin-top: 0;
 }
 
 .alert-danger{
-    color: rgb(204, 80, 80);
+    color: rgb(238, 84, 76);
     text-align: center;
     padding: 5px;
     margin-bottom:2%;
@@ -359,9 +368,6 @@ h2 {
 }
 
 #upload-save, #upload-upload {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 100px;
     max-width: 150px;
     min-width: 120px;
     cursor: pointer;
@@ -375,30 +381,13 @@ h2 {
     text-align: center;
 }
 
-#upload-upload {
-    background-color: rgb(40, 152, 200);
-}
-
-#upload-save:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-}
-
-#upload-upload:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(1, 187, 255);
-    border: 2px solid white;
-}
-
-/* UPLOAD MODAL BOX */
-
 /* MENTOR MODAL BOX */
 #myMentorBtn{
     background: transparent;
     border:none;
     cursor: pointer;
 }
+
 .modal-content-mentor{
     width: 300px;
 }
@@ -408,12 +397,14 @@ h2 {
     flex-direction: column;
     align-items: flex-start;
 }
+
 .edit-input-mentor label {
     display: flex;
     margin: 5px;
     font-size: large;
     align-items: center;
 }
+
 .edit-input-mentor label input[type="checkbox"] {
     display: none;
 }
@@ -441,14 +432,12 @@ h2 {
     transform: rotate(45deg);
     opacity: 0;
 }
+
 .edit-input-mentor input[type="checkbox"]:checked + .checkbox-custom::before {
     opacity: 1;
 }
 
 #mentor-save {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 100px;
     width: 120px;
     max-width: 55%;
     cursor: pointer;
@@ -458,12 +447,6 @@ h2 {
     float: right;
     margin: 0;
     margin-bottom: 15px;
-}
-
-#mentor-save:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
 }
 
 .form-group-mentor{
@@ -495,7 +478,6 @@ h2 {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-/* MENTOR MODAL BOX END*/
 
 /* ABOUT MODAL BOX */
 .edit-input {
@@ -509,9 +491,6 @@ h2 {
 }
 
 #edit-save {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 100px;
     width: 100px;
     max-width: 55%;
     cursor: pointer;
@@ -523,13 +502,6 @@ h2 {
     margin-right: 21%;
     opacity: 0.5;
     pointer-events: none;
-}
-
-#edit-save:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-    cursor: pointer;
 }
 
 .highlight {
@@ -551,14 +523,14 @@ h2 {
     color: white;
     right: -5px;
     top: -10px;
-    background-color: rgb(50, 189, 149);
-    padding: 5px 10px; /* Adjust padding to provide space around the text */
+    background-color: rgb(22, 175, 132);
+    padding: 5px 10px;
     border-radius: 50px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    white-space: nowrap; /* Prevent line breaks */
+    white-space: nowrap;
     visibility: hidden;
-    transition: opacity 0.2s, visibility 0.2s, transform 0.2s; /* Added transform */
-    align-self: flex-start; /* Align tooltip to the top of the detail row */
+    transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+    align-self: flex-start;
     margin-left: auto;
 
 }
@@ -593,7 +565,6 @@ h2 {
     text-overflow: ellipsis;
 }
 
-
 /* SKILLS MODAL BOX */
 .dropdown-container{
     display: flex;
@@ -604,6 +575,8 @@ h2 {
 
 .dropbtn{
     display: flex;
+    background-color: rgb(22, 175, 132);
+    color: white;
     width: 100%;
     min-width: 140px;
     border: none;
@@ -611,13 +584,17 @@ h2 {
     justify-content: center;
     font-size: 15px;
     padding: 10px;
-    background-color: rgb(50, 189, 149);
-    color: white;
     cursor: pointer;
     border-radius: 50px 50px 50px 50px;
     box-sizing: border-box;
     border: 0;
     margin: 0;
+}
+
+.dropbtn:hover {
+    transform: scale(1) !important;
+    background-color: rgb(88, 207, 174);
+    cursor: pointer;
 }
 
 .dropdown-skill-modal {
@@ -628,7 +605,7 @@ h2 {
 
 .dropdown-content {
     display: none;
-    background-color: rgb(101, 237, 198);
+    background-color: rgb(88, 207, 174);
     width: 100%;
     position: absolute;
     top: 100%;
@@ -666,9 +643,6 @@ h2 {
 }
 
 #skills-add {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 100px;
     width: 100%;
     min-width: 70px;
     cursor: pointer;
@@ -679,12 +653,6 @@ h2 {
     margin-right: 20px;
 }
 
-#skills-add:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-}
-
 .modal-content-skills{
     min-height: 400px;
     justify-content: flex-start;
@@ -692,9 +660,6 @@ h2 {
 }
 
 #skills-save {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 100px;
     width: 100px;
     max-width: 55%;
     cursor: pointer;
@@ -704,12 +669,6 @@ h2 {
     float: right;
     margin-left: auto;
     margin-right: 10%;
-}
-
-#skills-save:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
 }
 
 /* TABLE IN SKILLS MODAL */
@@ -817,14 +776,12 @@ table tr:last-child td {
 }
 
 .topic-tag-display:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(22, 175, 132);
+    background-color: rgb(88, 207, 174);
     opacity:1;
 }
 
 .topic-tag:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: #f07373;
+    background-color: rgb(253, 124, 107);
 }
 
 .func-buttons {
@@ -833,9 +790,6 @@ table tr:last-child td {
 }
 
 .add-button, .delete-button {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 100px;
     width: 100%;
     min-width: 70px;
     cursor: pointer;
@@ -844,23 +798,16 @@ table tr:last-child td {
     margin: 0;
 }
 
-.delete-button{
-    background-color: rgb(245, 125, 125);
+.message-modal-content-mentor-container {
+    text-align: center;
+    margin-bottom: 9px
 }
 
-.add-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
+.error-message-modal-content-mentor {
+    color: rgb(238, 84, 76);
+    font-size: 16px;
+    font-weight: bold;
 }
-
-.delete-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: #f07373;
-    border: 2px solid white;
-}
-
-/* TABLE IN SKILLS MODAL END */
 
 @media (max-width: 450px) {
     .info-tooltip {
@@ -912,9 +859,6 @@ table tr:last-child td {
     }
 
     #skills-add {
-        color: rgb(255, 255, 255);
-        background-color: rgb(22, 175, 132);
-        border-radius: 100px;
         width: 100%;
         min-width: 70px;
         cursor: pointer;
@@ -955,6 +899,7 @@ table tr:last-child td {
     .profile-left{
         margin-top: 0;
     }
+
     .section-profile{
         display: flex;
         width: 100%;
@@ -966,6 +911,7 @@ table tr:last-child td {
         margin: 0;
         box-shadow: none;
     }
+
     @media (max-width: 600px) {
         .section-profile{
             display: flex;
@@ -1038,39 +984,4 @@ table tr:last-child td {
         width: 75%;
     }
 
-}
-
-@-webkit-keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0
-    }
-
-    to {
-        top: 0;
-        opacity: 1
-    }
-}
-
-@keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0
-    }
-
-    to {
-        top: 0;
-        opacity: 1
-    }
-}
-
-.message-modal-content-mentor-container {
-    text-align: center;
-    margin-bottom: 9px /* Igazítsd az elhelyezést igény szerint */
-}
-
-.error-message-modal-content-mentor {
-    color: red;
-    font-size: 16px;
-    font-weight: bold;
 }

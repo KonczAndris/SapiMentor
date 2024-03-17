@@ -1,7 +1,3 @@
-@font-face {
-    font-family: 'CustomFont';
-    src: url('../fonts/roundfont.ttf') format('truetype')}
-
 @keyframes animatetop {
     from {
         top: -300px;
@@ -16,10 +12,6 @@
 
 body {
     margin: 0;
-    font-family: 'CustomFont';
-}
-
-button{
     font-family: 'CustomFont';
 }
 
@@ -94,8 +86,6 @@ button{
     display: none;
 }
 
-/* MENU BAR START */
-
 /* FILTER BAR */
 .filter-container {
     display: flex;
@@ -129,10 +119,8 @@ button{
     cursor: pointer;
     border-radius: 10px;
     box-sizing: border-box;
-    border: 0;
     margin: 0;
     border: 2px solid rgb(0, 0, 0);
-    box-sizing: border-box;
     color: gray;
     background-color: white;
 }
@@ -149,15 +137,11 @@ button{
 .topic-checkboxes {
     display: none;
     flex-direction: column;
-    display: none;
     border: 2px solid rgb(0, 0, 0);
     box-sizing: border-box;
-    margin: 0;
-    width: max-content;
     padding: 0;
     width: 100%;
-    position: relative;
-    margin-top: -9px;
+    margin: -9px 0 0;
     background-color: white;
     border-end-start-radius: 10px;
     border-end-end-radius: 10px;
@@ -189,7 +173,7 @@ button{
     background-color: white;
     padding: 10px 10px;
     text-decoration: none;
-    color: rgb(50, 189, 149);
+    color: rgb(22, 175, 132);
     display: block;
 }
 
@@ -205,9 +189,6 @@ button{
 }
 
 .search-button {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 20px;
     width: 100px;
     max-width: 55%;
     cursor: pointer;
@@ -220,17 +201,8 @@ button{
     align-items: start;
 }
 
-.search-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-}
-
 .cancel-button {
     display: none;
-    color: rgb(255, 255, 255);
-    background-color: rgb(238, 84, 76);
-    border-radius: 20px;
     width: 150px;
     max-width: 55%;
     cursor: pointer;
@@ -244,12 +216,6 @@ button{
     margin-right: 15px;
 }
 
-.cancel-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(233, 99, 81);
-    border: 2px solid white;
-}
-
 .func-buttons {
     display: flex;
     position: relative;
@@ -259,36 +225,7 @@ button{
     margin-left: -10px;
 }
 
-.reverse-button {
-    align-items: start;
-    justify-content: center;
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 10px;
-    cursor: pointer;
-    border: none;
-    height: 40px;
-    min-width: 40px;
-    padding: 5px;
-    margin-right: 15px;
-}
-
-.reverse-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-}
-
-.reverse-icon {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
-}
-
 #myFilterBtn {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 20px;
     width: 120px;
     max-width: 55%;
     cursor: pointer;
@@ -297,12 +234,6 @@ button{
     height: 40px;
     font-size: 15px;
     margin: 10px;
-}
-
-#myFilterBtn:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
 }
 
 .open-search-buttons {
@@ -319,9 +250,7 @@ button{
 
 .filter-dropdown-container,
 .topic-dropdown-container {
-    margin: 0 auto;
-    margin-left: 15px;
-    margin-right: 15px;
+    margin: 0 15px;
 }
 
 .divider {
@@ -331,11 +260,7 @@ button{
     margin-top: 8px;
 }
 
-
 #upload-upload, #upload-hidden {
-    color: rgb(255, 255, 255);
-    background-color: rgb(40, 152, 200);
-    border-radius: 100px;
     max-width: 80px;
     min-width: 70px;
     cursor: pointer;
@@ -345,121 +270,8 @@ button{
     height: 40px;
 }
 
-#upload-upload:hover, #upload-hidden:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(1, 187, 255);
-    border: 2px solid white;
-}
-
 .menu-icon {
     margin: 0;
-}
-
-@media screen and (max-width: 1000px) {
-
-    .filter-container {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 15px;
-    }
-
-    .filter-ddowns {
-        margin-top: 15px;
-        margin-bottom: 15px;
-        flex-direction: row;
-    }
-
-    .open-search-buttons {
-        display: flex;
-        align-items: center;
-    }
-
-    .open-search-buttons button {
-        margin-right: 10px;
-    }
-
-    .cancel-button {
-        display: flex;
-    }
-
-    #reverseButton {
-        display: none;
-    }
-
-    .func-buttons {
-        display: flex;
-        align-items: center;
-    }
-
-    .filter-dropbtn {
-        margin-right: 0;
-    }
-
-    #upload-upload{
-        display:none;
-    }
-
-    .search-button {
-        width: 150px;
-    }
-}
-
-
-@media screen and (max-width: 600px) {
-    .button-container {
-        display: none;
-    }
-
-    .dropbtn {
-        background-color: rgb(255 255 255) !important;
-        color: rgb(22, 175, 132) !important;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
-        width: 100%;
-        font-weight: bold;
-    }
-
-    .dropdown {
-        position: relative;
-        display: inline-block;
-        width: 100%;
-        text-align: center;
-        font-weight: bold;
-        color: rgb(22, 175, 132);
-    }
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        background-color: rgb(22, 175, 132) !important;
-    }
-
-    .dropdown-content a {
-        color: rgb(255 255 255);
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-        cursor: pointer;
-    }
-
-    .dropdown-content a:hover {
-        background-color: rgb(55 143 119);
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-        width: 100%;
-    }
-
-    .dropdown:hover .dropbtn {
-        background-color: rgb(22, 175, 132);
-    }
-
 }
 
 /* RESOURCE MODAL */
@@ -480,10 +292,8 @@ button{
 .modal-content-resource {
     position: relative;
     background-color: #fefefe;
-    margin: auto;
-    margin-top: 5%;
-    padding: 10px;
-    padding-top: 20px;
+    margin: 5% auto auto;
+    padding: 20px 10px 10px;
     border: 1px solid #888;
     border-radius: 25px;
     width: 600px;
@@ -569,7 +379,7 @@ button{
     color: white;
     right: 120px;
     top: -10px;
-    background-color: rgb(50, 189, 149);
+    background-color:  rgb(22, 175, 132);
     padding: 5px 10px;
     border-radius: 50px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -597,7 +407,6 @@ button{
     z-index: 9999;
 }
 
-
 .func-buttons-modal {
     display: flex;
     position: relative;
@@ -608,9 +417,6 @@ button{
 }
 
 .upload-button-modal {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 20px;
     width: 150px;
     max-width: 55%;
     cursor: pointer;
@@ -622,16 +428,7 @@ button{
     align-items: start;
 }
 
-.upload-button-modal:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-}
-
 .cancel-button-modal {
-    color: rgb(255, 255, 255);
-    background-color: rgb(238, 84, 76);
-    border-radius: 20px;
     width: 150px;
     max-width: 55%;
     cursor: pointer;
@@ -642,12 +439,6 @@ button{
     text-align: center;
     justify-content: center;
     margin: 15px;
-}
-
-.cancel-button-modal:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(249 110 91);
-    border: 2px solid white;
 }
 
 .topic-dropbtn-modal {
@@ -698,6 +489,274 @@ button{
     font-weight: bold;
 }
 
+.table-container {
+    width: 90%;
+    height: 90%;
+    overflow-x: auto;
+    border: 3px solid rgb(22, 175, 132);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(22, 175, 132, 0.5) rgba(0, 0, 0, 0);
+}
+
+.link-table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead{
+    background: rgb(22, 175, 132);
+    height: 40px;
+    color: white;
+    z-index: 1;
+}
+
+tr {
+    align-items: center;
+    text-align: center;
+    height: 54px;
+    text-overflow: ellipsis;
+    justify-content: space-between;
+}
+
+.table-number{
+    min-width: 30px;
+    max-width: 30px;
+}
+
+.table-link{
+    min-width: 180px;
+    max-width: 180px;
+}
+
+.table-topic{
+    min-width: 130px;
+    max-width: 130px;
+}
+
+.table-user{
+    min-width: 100px;
+    max-width: 100px;
+}
+
+.table-likes{
+    min-width: 50px;
+    max-width: 50px;
+}
+
+.like-color-text {
+    color:  rgb(22, 175, 132);
+}
+
+.dislike-color-text {
+    color: rgb(238, 84, 76);
+}
+
+.like-dislike-space {
+    margin-right: 1em;
+}
+
+.table-actions{
+    min-width: 120px;
+    max-width: 120px;
+}
+
+.like-button-link, .like-button-link-active {
+    width: 90px;
+    max-width: 55%;
+    min-width: 70px;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    font-size: 15px;
+    opacity: 0.5;
+}
+
+.like-button-link-active{
+    opacity: 1;
+}
+
+.dislike-button-link, .dislike-button-link-active{
+    width: 90px;
+    min-width: 70px;
+    max-width: 55%;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    font-size: 15px;
+    text-align: center;
+    justify-content: center;
+    opacity: 0.5;
+    margin-top: 4px;
+}
+
+.dislike-button-link-active{
+    opacity: 1;
+}
+
+.like-active{
+    opacity: 1;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#prev-page-button{
+    background-color: transparent;
+    margin-right: 20px;
+    border: none;
+    font-size: medium;
+    color: rgb(22, 175, 132);
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+#prev-page-button:hover {
+    opacity: 1;
+}
+
+#next-page-button{
+    background-color: transparent;
+    margin-left: 20px;
+    border: none;
+    font-size: medium;
+    color: rgb(22, 175, 132);
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+#next-page-button:hover {
+    opacity: 1;
+}
+
+.highlight {
+    background-color: #FFCCCC;
+}
+
+.sortable{
+    cursor: pointer;
+}
+
+.message-modal-content-container {
+    text-align: center;
+    margin-bottom: 9px;
+}
+
+.error-message-modal-content {
+    color: rgb(238, 84, 76);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 1000px) {
+    .filter-container {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    .filter-ddowns {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        flex-direction: row;
+    }
+
+    .open-search-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .open-search-buttons button {
+        margin-right: 10px;
+    }
+
+    .cancel-button {
+        display: flex;
+    }
+
+    #reverseButton {
+        display: none;
+    }
+
+    .func-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .filter-dropbtn {
+        margin-right: 0;
+    }
+
+    #upload-upload{
+        display:none;
+    }
+
+    .search-button {
+        width: 150px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .button-container {
+        display: none;
+    }
+
+    .dropbtn {
+        background-color: rgb(255 255 255) !important;
+        color: rgb(22, 175, 132) !important;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        width: 100%;
+        font-weight: bold;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        color: rgb(22, 175, 132);
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        background-color: rgb(22, 175, 132) !important;
+    }
+
+    .dropdown-content a {
+        color: rgb(255 255 255);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        cursor: pointer;
+    }
+
+    .dropdown-content a:hover {
+        background-color: rgb(55 143 119);
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+        width: 100%;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: rgb(22, 175, 132);
+    }
+
+}
+
 @media (max-width: 450px) {
     .info-tooltip {
         position: absolute;
@@ -733,193 +792,4 @@ button{
         max-width: 90%;
         max-height: 90%;
     }
-}
-
-/* LINK TABLE START */
-.table-container {
-    width: 90%;
-    height: 90%;
-    overflow-x: auto;
-    border: 3px solid rgb(22, 175, 132);
-    scrollbar-width: thin;
-    scrollbar-color: rgba(22, 175, 132, 0.5) rgba(0, 0, 0, 0);
-}
-
-.link-table{
-    width: 100%;
-    border-collapse: collapse;
-}
-
-thead{
-    background: rgb(22, 175, 132);
-    height: 40px;
-    color: white;
-    z-index: 1; /* Ensure the header appears above the table body */
-}
-
-tr {
-    align-items: center;
-    text-align: center;
-    height: 54px;
-    text-overflow: ellipsis;
-    justify-content: space-between; /* Add space between columns */
-}
-
-.table-number{
-    min-width: 30px;
-    max-width: 30px;
-}
-
-.table-link{
-    min-width: 180px;
-    max-width: 180px;
-}
-
-.table-topic{
-    min-width: 130px;
-    max-width: 130px;
-}
-
-.table-user{
-    min-width: 100px;
-    max-width: 100px;
-}
-
-.table-likes{
-    min-width: 50px;
-    max-width: 50px;
-}
-
-.like-color-text {
-    color: rgb(50, 189, 149);
-}
-
-.dislike-color-text {
-    color: rgb(238, 84, 76);
-}
-
-.like-dislike-space {
-    margin-right: 1em;
-}
-
-.table-actions{
-    min-width: 120px;
-    max-width: 120px;
-}
-
-.like-button-link, .like-button-link-active {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 20px;
-    width: 90px;
-    max-width: 55%;
-    min-width: 70px;
-    cursor: pointer;
-    padding: 10px;
-    border: none;
-    height: 35px;
-    font-size: 15px;
-    opacity: 0.5;
-}
-
-.like-button-link-active{
-    opacity: 1;
-}
-
-.like-button-link:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-    opacity: 1;
-}
-
-.dislike-button-link, .dislike-button-link-active{
-    color: rgb(255, 255, 255);
-    background-color: rgb(238, 84, 76);
-    border-radius: 20px;
-    width: 90px;
-    min-width: 70px;
-    max-width: 55%;
-    cursor: pointer;
-    padding: 10px;
-    border: none;
-    height: 35px;
-    font-size: 15px;
-    text-align: center;
-    justify-content: center;
-    opacity: 0.5;
-    margin-top: 4px;
-}
-
-.dislike-button-link-active{
-    opacity: 1;
-}
-
-.dislike-button-link:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(233, 99, 81);
-    border: 2px solid white;
-    opacity: 1;
-}
-
-.like-active{
-    opacity: 1;
-}
-
-.pagination-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-    margin-bottom: 20px;/* Adjust the margin as needed */
-}
-
-#prev-page-button{
-    background-color: transparent;
-    margin-right: 20px;
-    border: none;
-    font-size: medium;
-    color: rgb(30, 214, 162);
-    opacity: 0.5;
-    cursor: pointer;
-}
-
-#prev-page-button:hover {
-    text-shadow: 2px 2px 2px rgba(111, 255, 241, 0.5);
-    opacity: 1;
-}
-
-#next-page-button{
-    background-color: transparent;
-    margin-left: 20px;
-    border: none;
-    font-size: medium;
-    color: rgb(30, 214, 162);
-    opacity: 0.5;
-    cursor: pointer;
-}
-
-#next-page-button:hover {
-    text-shadow: 2px 2px 2px rgba(111, 255, 241, 0.5);
-    opacity: 1;
-}
-/* LINK TABLE END */
-
-.highlight {
-    background-color: #FFCCCC;
-}
-
-.sortable{
-    cursor: pointer;
-}
-
-.message-modal-content-container {
-    text-align: center;
-    margin-bottom: 9px /* Igazítsd az elhelyezést igény szerint */
-}
-
-.error-message-modal-content {
-    color: red;
-    font-size: 16px;
-    font-weight: bold;
 }
