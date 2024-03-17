@@ -191,8 +191,8 @@ public class SapimentorDemoProjectApplication {
 	// a CommandLineRunner interfesz implementalas segitsegevel
 //	@Bean
 //	public CommandLineRunner InformaticsPDFUploadRunner(DiplomaServices diplomaServices,
-//														 findKeywordsInAbstract findKeywordsInAbstract,
-//														 GPT3Service gpt3Service) {
+//														findKeywordsInAbstract findKeywordsInAbstract,
+//														GPT3Service gpt3Service) {
 //		return args -> {
 //			String pdfDirectoryPath = "src/main/resources/static/pdf";
 //
@@ -244,7 +244,8 @@ public class SapimentorDemoProjectApplication {
 //							//System.out.println("GPT-3 response: " + gpt3Response);
 //							if(gpt3Response.contains("Error GPT-3 API")){
 //								System.out.println("Error GPT-3 API");
-//								continue;
+//								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
+//								//continue;
 //							} else {
 //								// ide teszem be a gpt3 tol kapott valaszt
 //								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
@@ -292,7 +293,7 @@ public class SapimentorDemoProjectApplication {
 //						e.printStackTrace();
 //					}
 //
-//					Thread.sleep(30000);
+//					Thread.sleep(23000);
 //					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
 //					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords);
 //				}
@@ -353,13 +354,16 @@ public class SapimentorDemoProjectApplication {
 //						PdfReader pdfReaderForPageNumber3 = new PdfReader(new ByteArrayInputStream(pdfBytes));
 //						thesesNamePageNumber = findDiplomaThesesName.findThesesNamePageNumber(pdfReaderForPageNumber3, searchName3);
 //					}
+//					if(thesesNamePageNumber == -1) {
+//						thesesNamePageNumber = 1;
+//					}
 //					System.out.println("Name: " + formattedName);
 //					//System.out.println("Theses name page number: " + thesesNamePageNumber);
 //
 //					PdfReader pdfReaderForName = new PdfReader(new ByteArrayInputStream(pdfBytes));
 //					String thesesNamePageText = findDiplomaThesesName.getThesesNamePage(pdfReaderForName, thesesNamePageNumber);
 //					//thesesName = thesesName.replaceAll("[\\r\\n]+", "");
-//					//System.out.println("Theses name page text: " + thesesNamePageText);
+//					System.out.println("Theses name page text: " + thesesNamePageText);
 //					//System.out.println("-----------------------------------------------------------------------------------\n");
 //
 //					String formattedText = findDiplomaThesesName.formatText(thesesNamePageText);
@@ -369,7 +373,7 @@ public class SapimentorDemoProjectApplication {
 //					if(thesesName.length() < formattedText.length()) {
 //						thesesName = formattedText;
 //					}
-//					//System.out.println("Theses name: " + thesesName);
+//					System.out.println("Theses name: " + thesesName);
 //
 //					//System.out.println("-----------------------------------------------------------------------------------\n");
 //
@@ -399,7 +403,7 @@ public class SapimentorDemoProjectApplication {
 //
 //
 //							String finalabstractText = findKeywordsInAbstract.removeKeywords(abstractTextForCSV);
-//							System.out.println("Keyword nelkul: " + finalabstractText);
+//							//System.out.println("Keyword nelkul: " + finalabstractText);
 //
 //							System.out.println("-----------------------------------------------------------------------------------\n");
 //							System.out.println("-----------------------------------------------------------------------------------\n");
@@ -472,8 +476,8 @@ public class SapimentorDemoProjectApplication {
 //					} catch (IOException e) {
 //						e.printStackTrace();
 //					}
-//					//Thread.sleep(30000);
-//					Thread.sleep(2000);
+//					Thread.sleep(23000);
+//					//Thread.sleep(2000);
 //					//System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
 //				}
 //
@@ -765,7 +769,7 @@ public class SapimentorDemoProjectApplication {
 //							}
 //							System.out.println("-----------------------------------------------------------------------------------\n");
 //							System.out.println("-----------------------------------------------------------------------------------\n");
-//							//data.add(new String[]{formattedName, thesesName, finalabstractText, keywordsForCSV, finalyKeywords, year});
+//							data.add(new String[]{formattedName, thesesName, finalabstractText, keywordsForCSV, finalyKeywords, year});
 //						} else {
 //							System.out.println("Abstract not found in the PDF.");
 //						}
@@ -775,12 +779,12 @@ public class SapimentorDemoProjectApplication {
 //					} catch (IOException e) {
 //						e.printStackTrace();
 //					}
-//					//Thread.sleep(30000);
-//					Thread.sleep(2000);
+//					Thread.sleep(23000);
+//					//Thread.sleep(2000);
 //					//System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
 //				}
 //
-//				//csvService.writeDataToCSV(data, "/Users/szotyoricsongor-botond/Documents/GitHub/SapiMentor/master/code/Diploma_Theses_Data.csv");
+//				csvService.writeDataToCSV(data, "/Users/szotyoricsongor-botond/Documents/GitHub/SapiMentor/master/code/Diploma_Theses_Data.csv");
 //			}
 //
 //			//System.out.println("PDF files found in the directory: " + pdfFiles.length);
@@ -1045,52 +1049,52 @@ public class SapimentorDemoProjectApplication {
 //							System.out.println("Abstract text for ChatGPT: " + abstractText);
 //
 //							//////// Itt van a GPT3-as verzio ////////////
-////							 String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
-////
-////							// System.out.println("GPT-3 response: " + gpt3Response);
-////							if(gpt3Response.contains("Error GPT-3 API")){
-////								System.out.println("Error GPT-3 API");
-////								continue;
-////							} else {
-////								// ide teszem be a gpt3 tol kapott valaszt
-////								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
-////
-////								// itt kiszedem a hasznos reszt a valaszbol
-////								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
-////										.getJSONObject(0)
-////										.getJSONObject("message")
-////										.getString("content");
-////
-////								/////// Idaig van a GPT3-as verzio //////////
-////
-////								// System.out.println("Keywords: " + gpt3Keywords);
-////
-////								String patternString = "^\\d+\\. (.+)";
-////								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
-////
-////								if (!gpt3Keywords.isEmpty()) {
-////									Matcher matcher = pattern.matcher(gpt3Keywords);
-////									while (matcher.find()){
-////										allKeywords.append(matcher.group(1)).append(", ");
-////									}
-////									if(allKeywords.length() > 0){
-////										System.out.println("GPT-3 keywords: " + allKeywords.toString());
-////										finalyKeywords = allKeywords.toString();
-////									} else {
-////										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
-////										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
-////										finalyKeywords = finalKeywordsString;
-////									}
-////
-////								} else {
-////									allKeywords.append("No keywords found");
-////									finalyKeywords = "No keywords found";
-////								}
-////
-////							}
+//							 String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
+//
+//							// System.out.println("GPT-3 response: " + gpt3Response);
+//							if(gpt3Response.contains("Error GPT-3 API")){
+//								System.out.println("Error GPT-3 API");
+//								continue;
+//							} else {
+//								// ide teszem be a gpt3 tol kapott valaszt
+//								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
+//
+//								// itt kiszedem a hasznos reszt a valaszbol
+//								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
+//										.getJSONObject(0)
+//										.getJSONObject("message")
+//										.getString("content");
+//
+//								/////// Idaig van a GPT3-as verzio //////////
+//
+//								// System.out.println("Keywords: " + gpt3Keywords);
+//
+//								String patternString = "^\\d+\\. (.+)";
+//								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
+//
+//								if (!gpt3Keywords.isEmpty()) {
+//									Matcher matcher = pattern.matcher(gpt3Keywords);
+//									while (matcher.find()){
+//										allKeywords.append(matcher.group(1)).append(", ");
+//									}
+//									if(allKeywords.length() > 0){
+//										System.out.println("GPT-3 keywords: " + allKeywords.toString());
+//										finalyKeywords = allKeywords.toString();
+//									} else {
+//										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
+//										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
+//										finalyKeywords = finalKeywordsString;
+//									}
+//
+//								} else {
+//									allKeywords.append("No keywords found");
+//									finalyKeywords = "No keywords found";
+//								}
+//
+//							}
 //							System.out.println("-----------------------------------------------------------------------------------\n");
 //							System.out.println("-----------------------------------------------------------------------------------\n");
-//							//data.add(new String[]{formattedName, thesesName, finalabstractText, keywordsForCSV, finalyKeywords, year});
+//							data.add(new String[]{formattedName, thesesName, finalabstractText, keywordsForCSV, finalyKeywords, year});
 //						} else {
 //							System.out.println("Abstract not found in the PDF.");
 //						}
@@ -1100,12 +1104,12 @@ public class SapimentorDemoProjectApplication {
 //					} catch (IOException e) {
 //						e.printStackTrace();
 //					}
-//					//Thread.sleep(30000);
-//					Thread.sleep(2000);
+//					Thread.sleep(23000);
+//					//Thread.sleep(2000);
 //					//System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
 //				}
 //
-//				//csvService.writeDataToCSV(data, "/Users/szotyoricsongor-botond/Documents/GitHub/SapiMentor/master/code/Diploma_Theses_Data.csv");
+//				csvService.writeDataToCSV(data, "/Users/szotyoricsongor-botond/Documents/GitHub/SapiMentor/master/code/Diploma_Theses_Data.csv");
 //			}
 //
 //			//System.out.println("PDF files found in the directory: " + pdfFiles.length);
@@ -1347,52 +1351,52 @@ public class SapimentorDemoProjectApplication {
 //							System.out.println("Abstract text for ChatGPT: " + abstractText);
 //
 //							//////// Itt van a GPT3-as verzio ////////////
-////							 String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
-////
-////							// System.out.println("GPT-3 response: " + gpt3Response);
-////							if(gpt3Response.contains("Error GPT-3 API")){
-////								System.out.println("Error GPT-3 API");
-////								continue;
-////							} else {
-////								// ide teszem be a gpt3 tol kapott valaszt
-////								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
-////
-////								// itt kiszedem a hasznos reszt a valaszbol
-////								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
-////										.getJSONObject(0)
-////										.getJSONObject("message")
-////										.getString("content");
-////
-////								/////// Idaig van a GPT3-as verzio //////////
-////
-////								// System.out.println("Keywords: " + gpt3Keywords);
-////
-////								String patternString = "^\\d+\\. (.+)";
-////								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
-////
-////								if (!gpt3Keywords.isEmpty()) {
-////									Matcher matcher = pattern.matcher(gpt3Keywords);
-////									while (matcher.find()){
-////										allKeywords.append(matcher.group(1)).append(", ");
-////									}
-////									if(allKeywords.length() > 0){
-////										System.out.println("GPT-3 keywords: " + allKeywords.toString());
-////										finalyKeywords = allKeywords.toString();
-////									} else {
-////										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
-////										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
-////										finalyKeywords = finalKeywordsString;
-////									}
-////
-////								} else {
-////									allKeywords.append("No keywords found");
-////									finalyKeywords = "No keywords found";
-////								}
-////
-////							}
+//							 String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
+//
+//							// System.out.println("GPT-3 response: " + gpt3Response);
+//							if(gpt3Response.contains("Error GPT-3 API")){
+//								System.out.println("Error GPT-3 API");
+//								continue;
+//							} else {
+//								// ide teszem be a gpt3 tol kapott valaszt
+//								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
+//
+//								// itt kiszedem a hasznos reszt a valaszbol
+//								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
+//										.getJSONObject(0)
+//										.getJSONObject("message")
+//										.getString("content");
+//
+//								/////// Idaig van a GPT3-as verzio //////////
+//
+//								// System.out.println("Keywords: " + gpt3Keywords);
+//
+//								String patternString = "^\\d+\\. (.+)";
+//								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
+//
+//								if (!gpt3Keywords.isEmpty()) {
+//									Matcher matcher = pattern.matcher(gpt3Keywords);
+//									while (matcher.find()){
+//										allKeywords.append(matcher.group(1)).append(", ");
+//									}
+//									if(allKeywords.length() > 0){
+//										System.out.println("GPT-3 keywords: " + allKeywords.toString());
+//										finalyKeywords = allKeywords.toString();
+//									} else {
+//										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
+//										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
+//										finalyKeywords = finalKeywordsString;
+//									}
+//
+//								} else {
+//									allKeywords.append("No keywords found");
+//									finalyKeywords = "No keywords found";
+//								}
+//
+//							}
 //							System.out.println("-----------------------------------------------------------------------------------\n");
 //							System.out.println("-----------------------------------------------------------------------------------\n");
-//							//data.add(new String[]{formattedName, thesesName, finalabstractText, keywordsForCSV, finalyKeywords, year});
+//							data.add(new String[]{formattedName, thesesName, finalabstractText, keywordsForCSV, finalyKeywords, year});
 //						} else {
 //							System.out.println("Abstract not found in the PDF.");
 //						}
@@ -1402,12 +1406,12 @@ public class SapimentorDemoProjectApplication {
 //					} catch (IOException e) {
 //						e.printStackTrace();
 //					}
-//					//Thread.sleep(30000);
-//					Thread.sleep(2000);
+//					Thread.sleep(23000);
+//					//Thread.sleep(2000);
 //					//System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
 //				}
 //
-//				//csvService.writeDataToCSV(data, "/Users/szotyoricsongor-botond/Documents/GitHub/SapiMentor/master/code/Diploma_Theses_Data.csv");
+//				csvService.writeDataToCSV(data, "/Users/szotyoricsongor-botond/Documents/GitHub/SapiMentor/master/code/Diploma_Theses_Data.csv");
 //			}
 //
 //			//System.out.println("PDF files found in the directory: " + pdfFiles.length);
@@ -1687,52 +1691,52 @@ public class SapimentorDemoProjectApplication {
 //							System.out.println("Abstract text for ChatGPT: " + abstractText);
 //
 //							//////// Itt van a GPT3-as verzio ////////////
-////							 String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
-////
-////							// System.out.println("GPT-3 response: " + gpt3Response);
-////							if(gpt3Response.contains("Error GPT-3 API")){
-////								System.out.println("Error GPT-3 API");
-////								continue;
-////							} else {
-////								// ide teszem be a gpt3 tol kapott valaszt
-////								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
-////
-////								// itt kiszedem a hasznos reszt a valaszbol
-////								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
-////										.getJSONObject(0)
-////										.getJSONObject("message")
-////										.getString("content");
-////
-////								/////// Idaig van a GPT3-as verzio //////////
-////
-////								// System.out.println("Keywords: " + gpt3Keywords);
-////
-////								String patternString = "^\\d+\\. (.+)";
-////								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
-////
-////								if (!gpt3Keywords.isEmpty()) {
-////									Matcher matcher = pattern.matcher(gpt3Keywords);
-////									while (matcher.find()){
-////										allKeywords.append(matcher.group(1)).append(", ");
-////									}
-////									if(allKeywords.length() > 0){
-////										System.out.println("GPT-3 keywords: " + allKeywords.toString());
-////										finalyKeywords = allKeywords.toString();
-////									} else {
-////										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
-////										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
-////										finalyKeywords = finalKeywordsString;
-////									}
-////
-////								} else {
-////									allKeywords.append("No keywords found");
-////									finalyKeywords = "No keywords found";
-////								}
-////
-////							}
+//							 String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
+//
+//							// System.out.println("GPT-3 response: " + gpt3Response);
+//							if(gpt3Response.contains("Error GPT-3 API")){
+//								System.out.println("Error GPT-3 API");
+//								continue;
+//							} else {
+//								// ide teszem be a gpt3 tol kapott valaszt
+//								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
+//
+//								// itt kiszedem a hasznos reszt a valaszbol
+//								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
+//										.getJSONObject(0)
+//										.getJSONObject("message")
+//										.getString("content");
+//
+//								/////// Idaig van a GPT3-as verzio //////////
+//
+//								// System.out.println("Keywords: " + gpt3Keywords);
+//
+//								String patternString = "^\\d+\\. (.+)";
+//								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
+//
+//								if (!gpt3Keywords.isEmpty()) {
+//									Matcher matcher = pattern.matcher(gpt3Keywords);
+//									while (matcher.find()){
+//										allKeywords.append(matcher.group(1)).append(", ");
+//									}
+//									if(allKeywords.length() > 0){
+//										System.out.println("GPT-3 keywords: " + allKeywords.toString());
+//										finalyKeywords = allKeywords.toString();
+//									} else {
+//										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
+//										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
+//										finalyKeywords = finalKeywordsString;
+//									}
+//
+//								} else {
+//									allKeywords.append("No keywords found");
+//									finalyKeywords = "No keywords found";
+//								}
+//
+//							}
 //							System.out.println("-----------------------------------------------------------------------------------\n");
 //							System.out.println("-----------------------------------------------------------------------------------\n");
-//							//data.add(new String[]{formattedName, thesesName, finalabstractText, keywordsForCSV, finalyKeywords, year});
+//							data.add(new String[]{formattedName, thesesName, finalabstractText, keywordsForCSV, finalyKeywords, year});
 //						} else {
 //							System.out.println("Abstract not found in the PDF.");
 //						}
@@ -1742,12 +1746,12 @@ public class SapimentorDemoProjectApplication {
 //					} catch (IOException e) {
 //						e.printStackTrace();
 //					}
-//					//Thread.sleep(30000);
-//					Thread.sleep(2000);
+//					Thread.sleep(23000);
+//					//Thread.sleep(2000);
 //					//System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
 //				}
 //
-//				//csvService.writeDataToCSV(data, "/Users/szotyoricsongor-botond/Documents/GitHub/SapiMentor/master/code/Diploma_Theses_Data.csv");
+//				csvService.writeDataToCSV(data, "/Users/szotyoricsongor-botond/Documents/GitHub/SapiMentor/master/code/Diploma_Theses_Data.csv");
 //			}
 //
 //			//System.out.println("PDF files found in the directory: " + pdfFiles.length);
