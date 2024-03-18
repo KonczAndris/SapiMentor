@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--  <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
   <title>SapiMentor</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/diplomaTheses.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
   <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
   <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
-
 </head>
 
 <body>
@@ -29,7 +27,7 @@
         <span class="nbr-msg hiddenMsg toMessenger-btn"></span>
       </div>
       <span class="username-container" th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a> </p>
-    <img th:src="@{/img/back.png}" alt="Icon" class="back-icon" onclick="toggleDivs()"> </p>
+    <img th:src="@{/img/back.png}" alt="Icon" class="back-icon green-button" onclick="toggleDivs()"> </p>
 </div>
 
 <div class="center" th:id="'userIdForDiplomaThesesPage-' + ${diplomathesesUserId}">
@@ -54,25 +52,47 @@
     </div>
 
     <div class="menu-divider"></div>
+
     <div class="form-group" >
       <p class="menu-function">
-        <a th:onclick="${not userRolesToDisplayResources.contains('MENTOR') and not userRolesToDisplayResources.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
+        <a th:onclick="${not userRolesToDisplayResources.contains('MENTOR') and not userRolesToDisplayResources.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">My Group</span>
+          <span class="hungarian-text">Csoportom</span>
+        </a>
+      </p>
     </div>
+
     <div class="form-group">
       <p class="menu-function">
-        <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
+        <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">Topics</span>
+          <span class="hungarian-text">Témák</span>
+        </a>
+      </p>
     </div>
     <div class="form-group current-page">
       <p class="menu-function">
-        <a href="/" th:href="@{/resources}"> <img th:src="@{/img/current-page-icon.png}" alt="Icon" class="menu-icon current-menu-icon"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resources</a> </p>
+        <a href="/" th:href="@{/resources}"> <img th:src="@{/img/current-page-icon.png}" alt="Icon" class="menu-icon current-menu-icon"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">Resources</span>
+          <span class="hungarian-text">Segédanyagok</span>
+        </a>
+      </p>
     </div>
     <div class="form-group">
       <p class="menu-function">
-        <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon"> Settings</a> </p>
+        <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">Settings</span>
+          <span class="hungarian-text">Beállítások</span>
+        </a>
+      </p>
     </div>
+
     <div class="form-group">
       <p class="menu-function">
-        <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
+        <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">Logout</span>
+          <span class="hungarian-text">Kijelentkezés</span>
+        </a> </p>
     </div>
   </div>
 
@@ -80,16 +100,34 @@
     <!-- MENU BAR START-->
     <div class="resource-menu">
       <div class="button-container">
-        <button id="resources"> LINKS</button>
-        <button id="examExamples"> EXAMS </button>
-        <button class="selected"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon"> DIPLOMA THESES</button>
+        <button id="resources">
+          <span class="english-text">LINKS</span>
+          <span class="hungarian-text">LINKEK</span>
+        </button>
+        <button id="examExamples">
+          <span class="english-text">EXAMS</span>
+          <span class="hungarian-text">VIZSGATÉTELEK</span>
+        </button>
+        <button class="selected"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon">
+          <span class="english-text">DIPLOMA THESES</span>
+          <span class="hungarian-text">DIPLOMA DOLGOZATOK</span>
+        </button>
       </div>
 
       <div class="dropdown">
-        <button class="dropbtn"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon"> DIPLOMA THESES</button>
+        <button class="dropbtn"> <img th:src="@{/img/house-icon.png}" alt="Icon" class="menu-icon current-page-icon">
+          <span class="english-text">DIPLOMA THESES</span>
+          <span class="hungarian-text">DIPLOMA DOLGOZATOK</span>
+        </button>
         <div class="dropdown-content">
-          <a id="resourcesDrop">LINKS</a>
-          <a id="examExamplesDrop">EXAMS</a>
+          <a id="resourcesDrop">
+            <span class="english-text">LINKS</span>
+            <span class="hungarian-text">LINKEK</span>
+          </a>
+          <a id="examExamplesDrop">
+            <span class="english-text">EXAMS</span>
+            <span class="hungarian-text">VIZSGATÉTELEK</span>
+          </a>
         </div>
       </div>
 
@@ -99,8 +137,11 @@
 
     <!-- SEARCH BUTTON BAR START-->
     <div class="open-search-buttons">
-      <button class="search-button" id="myFilterBtn" onclick="showFilterContainer()">Search</button>
-      <button type="button" id="upload-hidden" class="btn btn-success" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
+      <button class="search-button green-button" id="myFilterBtn" onclick="showFilterContainer()">
+        <span class="english-text">Search</span>
+        <span class="hungarian-text">Keresés</span>
+      </button>
+      <button type="button" id="upload-hidden" class="btn btn-success blue-button" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
         <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
     </div>
     <!-- SEARCH BUTTON BAR END-->
@@ -117,22 +158,37 @@
           <div class="info-modal-content">
             <span class="close-info-modal" onclick="closeInfoModal()">&times;</span>
               <div class="left-content">
-                <p id="diploma-info-1">On this page, you can view the diploma theses uploaded by your peers. Get inspired and browse through different theses.</p>
-                <p id="diploma-info-2" style="display: none;">Utilize the search functionality! Search by name, or check the keyword search and make use of our AI-powered search with keywords. Filter by topics.</p>
-                <p id="diploma-info-3" style="display: none;">Help your peers and be a contributor. Whether you are a MENTOR or MENTEE, you can upload your diploma theses, thereby aiding the learning of others.</p>
-                <p id="diploma-info-4" style="display: none;">Evaluate your peers' uploads, providing easier visibility for those who visit here!</p>
+                <p id="diploma-info-1">
+                  <span class="english-text">On this page, you can view the diploma theses uploaded by your peers. Get inspired and browse through different theses.</span>
+                  <span class="hungarian-text">Ezen az oldalon megtekintheted a társaid által feltöltött diploma dolgozatokat. Inspirálódj és nézz körül a különböző munkák között.</span>
+                </p>
+                <p id="diploma-info-2" style="display: none;">
+                  <span class="english-text">Utilize the search functionality! Search by name and topics, or check the keyword search and make use of our AI-powered search with keywords.</span>
+                  <span class="hungarian-text">Vedd igénybe a keresés funkciót! Keress név és téma alapján vagy vedd igénybe a mesterséges intelligenciát felhasználó kulcsszavas keresést! </span>
+                </p>
+                <p id="diploma-info-3" style="display: none;">
+                  <span class="english-text">Help your peers and be a contributor. Whether you are a MENTOR or MENTEE, you can upload your diploma theses, thereby aiding the learning of others.</span>
+                  <span class="hungarian-text">Segítsd társaidat és járulj hozzá a diploma dolgozatok feltöltéséhez. Amennyiben MENTOR vagy MENTORÁLT a szerepköröd, lehetőséget van a feltöltésre.</span>
+                </p>
+                <p id="diploma-info-4" style="display: none;">
+                  <span class="english-text">Evaluate your peers' uploads, providing easier visibility for those who visit here!</span>
+                  <span class="hungarian-text">Értékeld a feltöltéseket, hogy a legjobb dolgozatok ne maradjanak észrevétlenek!</span>
+                </p>
                 <img th:src="@{/img/info-monster3.jpg}" alt="Thesis Image" class="info-image">
               </div>
               <div class="pagination">
-                <button onclick="prevInfoPage()" class="navigate-button"> ←</button>
-                <button onclick="nextInfoPage()" class="navigate-button"> →</button>
+                <button onclick="prevInfoPage()" class="navigate-button blue-button"> ←</button>
+                <button onclick="nextInfoPage()" class="navigate-button blue-button"> →</button>
               </div>
             </div>
         </div>
 
-        <input type="text" class="filter-input" id="filter-input" placeholder="Search by Name..." required>
+        <input type="text" class="filter-input english-text" id="filter-input" placeholder="Search by Name..." required>
 
-        <div class="tag-box"><p class="tag-box-text">KEYWORD<br>SEARCH</p>
+        <div class="tag-box"><p class="tag-box-text">
+          <span class="english-text">KEYWORD<br>SEARCH</span>
+          <span class="hungarian-text">KULCSSZAVAS<br>KERESÉS</span>
+        </p>
         <div class="checkbox-container">
         <label class="container-checkbox-diplomaTags">
         <input type="checkbox" class="tags-checkbox">
@@ -143,7 +199,10 @@
       </div>
       <div class="topic-dropdown-container">
         <div class="topic-dropdown">
-          <button class="topic-dropbtn" onclick="toggleDiplomaDropdown()">Choose topics</button>
+          <button class="topic-dropbtn" onclick="toggleDiplomaDropdown()">
+            <span class="english-text">Choose topics</span>
+            <span class="hungarian-text">Válassz témákat</span>
+          </button>
           <div class="topic-checkboxes" id="topic-myCheckboxes">
             <label th:each="topic : ${topics}">
               <input type="checkbox" th:value="${topic.topic}" th:id="${'checkbox-' + topic}" checked>
@@ -153,9 +212,15 @@
         </div>
       </div>
       <div class="func-buttons">
-        <button class="search-button" id="search-button">Search</button>
-        <button class="cancel-button" onclick="cancelFilterWindow()">Cancel</button>
-        <button type="button" class="upload-hidden btn btn-success" id="upload-upload" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
+        <button class="search-button green-button" id="search-button">
+          <span class="english-text">Search</span>
+          <span class="hungarian-text">Keresés</span>
+        </button>
+        <button class="cancel-button red-button" onclick="cancelFilterWindow()">
+          <span class="english-text">Cancel</span>
+          <span class="hungarian-text">Mégse</span>
+        </button>
+        <button type="button" class="upload-hidden btn btn-success blue-button" id="upload-upload" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
           <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
       </div>
     </div>
@@ -169,37 +234,32 @@
         <thead id="link-table-head">
         <tr>
           <th class="table-number sortable">NR</th>
-          <th class="table-link sortable" data-column="name">Name</th>
-          <th class="table-number sortable" data-column="year">Year</th>
-          <th class="table-topic sortable" data-column="topic">Topic</th>
-          <th class="table-user sortable" data-column="user">User</th>
-          <th class="table-likes sortable" data-column="likes">Likes</th>
-          <th class="table-actions">Actions</th>
+          <th class="table-link sortable" data-column="name">
+            <span class="english-text">Name</span>
+            <span class="hungarian-text">Név</span></th>
+          <th class="table-number sortable" data-column="year">
+            <span class="english-text">Year</span>
+            <span class="hungarian-text">Év</span>
+          </th>
+          <th class="table-topic sortable" data-column="topic">
+            <span class="english-text">Topic</span>
+            <span class="hungarian-text">Téma</span></th>
+          <th class="table-user sortable" data-column="user">
+            <span class="english-text">User</span>
+            <span class="hungarian-text">Feltöltő</span>
+          </th>
+          <th class="table-likes sortable" data-column="likes">
+            <span class="english-text">Likes</span>
+            <span class="hungarian-text">Értékelések</span>
+          </th>
+          <th class="table-actions">
+            <span class="english-text">Actions</span>
+            <span class="hungarian-text">Lehetőségek</span>
+          </th>
           <th class="table-tags sortable" data-column="tags" style="display: none;">Tags</th>
         </tr>
         </thead>
         <tbody id="link-table-body">
-
-<!--        <tr>-->
-<!--          <td>1</td>-->
-<!--          <td class="pdf-container-column">-->
-<!--            <div class="pdf-image-image-container">-->
-<!--              Majom Majon - Számítástechnika-->
-<!--              <span class="zoom-icon">&#128269;</span>-->
-<!--              <div class="pdf-image-modal">-->
-<!--                <embed class="pdf-image-modal-content" src="/pdf/teszt.pdf" type='application/pdf'>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td> Info</td>-->
-<!--          <td> Majom</td>-->
-<!--          <td>1</td>-->
-<!--          <td>-->
-<!--            <button class="like-button-link">Like</button>-->
-<!--            <button class="dislike-button-link">Dislike</button>-->
-<!--          </td>-->
-<!--        </tr>-->
-
           <tr th:each="diploma, stat : ${diplomaThesesData}" th:id="'diploma-row-' + ${diploma.id}">
             <td th:text="${stat.index + 1}"></td>
             <td class="pdf-container-column">
@@ -225,8 +285,13 @@
               </span>
             </td>
             <td>
-              <button class="like-button-link">Like</button>
-              <button class="dislike-button-link">Dislike</button>
+              <button class="like-button-link green-button">
+                <span class="english-text">Like</span>
+                <span class="hungarian-text">Tetszik</span>
+              </button>
+              <button class="dislike-button-link red-button">
+                <span class="english-text">Dislike</span>
+                <span class="hungarian-text">Nem tetszik</span></button>
             </td>
             <td style="display: none;">
               <span id="tagWords" th:text="${diploma.keywords}"></span>
@@ -237,9 +302,15 @@
       </table>
     </div>
     <div class="pagination-container">
-      <button id="prev-page-button">Previous</button>
+      <button id="prev-page-button">
+        <span class="english-text">Previous</span>
+        <span class="hungarian-text">Előző</span>
+      </button>
       <div id="page-counter"></div>
-      <button id="next-page-button">Next</button>
+      <button id="next-page-button">
+        <span class="english-text">Next</span>
+        <span class="hungarian-text">Következő</span>
+      </button>
     </div>
     <!-- LINK TABLE END -->
   </div>
@@ -258,43 +329,64 @@
       </div>
       <div class="form-group-edit">
         <div class="detail-row">
-          <label for="fileUpload" class="detail-label">Choose File:</label>
+          <label for="fileUpload" class="detail-label">
+            <span class="english-text">Choose file:</span>
+            <span class="hungarian-text">Fájl kiválasztása:</span>
+          </label>
           <div class="fileUpload-row">
             <input type="file" class="edit-input" id="fileUpload" accept=".pdf" style="display: none;">
-            <button type="button" class="upload-button" id="fileUploadButton">Select</button>
+            <button type="button" class="upload-button blue-button" id="fileUploadButton">
+              <span class="english-text">Select</span>
+              <span class="hungarian-text">Kiválaszt</span>
+            </button>
             <input type="text" class="edit-input" id="diplomaThesesFileName-edit" placeholder="" required autofocus="autofocus" readonly>
           </div> </div>
       </div>
 
       <div class="form-group-edit">
         <div class="detail-row">
-          <p class="detail-label">Name:</p>
+          <p class="detail-label">
+            <span class="english-text">Name:</span>
+            <span class="hungarian-text">Név:</span></p>
           <input type="text" class="edit-input" id="diplomaTheses-edit" placeholder="" required
                  autofocus="autofocus">
           <div class="info-icon" data-tooltip="">
             <i class="fas fa-info-circle"></i>
           </div>
-          <div class="info-tooltip">Enter an accurate name!</div>
+          <div class="info-tooltip">
+            <span class="english-text">Enter an accurate name!</span>
+            <span class="hungarian-text">Valós nevet adj meg!</span></div>
         </div>
       </div>
 
       <div class="form-group-edit">
         <div class="detail-row">
-          <p class="detail-label">Year:</p>
+          <p class="detail-label">
+            <span class="english-text">Year:</span>
+            <span class="hungarian-text">Év:</span>
+          </p>
           <input type="text" class="edit-input" id="diplomaTheses-edit-year" placeholder="" required
                  autofocus="autofocus">
           <div class="info-icon" data-tooltip="">
             <i class="fas fa-info-circle"></i>
           </div>
-          <div class="info-tooltip">Enter a valid year!</div>
+          <div class="info-tooltip">
+            <span class="english-text">Enter a valid year!</span>
+            <span class="hungarian-text">Valós évszámot adj meg!</span></div>
         </div>
       </div>
 
       <div class="form-group-edit" id="topicDD-edit">
         <div class="detail-row">
-          <p class="detail-label">Topic:</p>
+          <p class="detail-label">
+            <span class="english-text">Topic:</span>
+            <span class="hungarian-text">Téma:</span>
+          </p>
           <div class="topic-dropdown-modal">
-            <button class="topic-dropbtn-modal" onclick="toggleDropdownModal()">Choose a topic</button>
+            <button class="topic-dropbtn-modal" onclick="toggleDropdownModal()">
+              <span class="english-text">Choose a topic</span>
+              <span class="hungarian-text">Válassz témát</span>
+            </button>
             <input type="hidden" id="topic-selected-modal" value="Choose a topic">
             <div class="topic-dropdown-content" id="topic-myDropdown">
               <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
@@ -307,9 +399,15 @@
       <div class="func-buttons-modal">
         <!--<form id="diplomaTheses-form"  th:action="@{/saveResourceLinks}" method="post" >-->
         <!--<input type="hidden" name="diplomaThesesDataItems" id="diplomaThesesDataItems" value="">-->
-        <button type="submit" class="upload-button-modal" id="upload-button-modal" th:onclick="saveDiplomaThesesDataToServer()" >Upload</button>
+        <button type="submit" class="upload-button-modal blue-button" id="upload-button-modal" th:onclick="saveDiplomaThesesDataToServer()" >
+          <span class="english-text">Upload</span>
+          <span class="hungarian-text">Feltölt</span>
+        </button>
         <!--</form>-->
-        <button class="cancel-button-modal close-diplomaTheses">Cancel</button>
+        <button class="cancel-button-modal close-diplomaTheses red-button">
+          <span class="english-text">Cancel</span>
+          <span class="hungarian-text">Mégse</span>
+        </button>
       </div>
 
 

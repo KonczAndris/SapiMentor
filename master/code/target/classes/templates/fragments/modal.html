@@ -42,7 +42,7 @@
 
       <div class="interaction-buttons" th:if="${userRolesToDisplayMentorSelector.contains('MENTEE')}">
         <!-- RATE button -->
-        <button id="rating-button" onclick="showRateSection()"> RATE </button>
+        <button id="rating-button" class="blue-button" onclick="showRateSection()"> RATE </button>
 
         <!-- Rating Section -->
         <div id="ratingSection" style="display: none;">
@@ -63,8 +63,8 @@
           </div>
           <textarea id="commentInput" maxlength="500" placeholder="Write your comment..." th:text="${ratingForThisUser != null ? ratingForThisUser.comment : ''}"></textarea>
           <!-- SAVE and CANCEL buttons for rating -->
-          <button id="save-rating" onclick="saveRating()" >SAVE</button>
-          <button id="cancel-rating" onclick="cancelRating()">CANCEL</button>
+          <button id="save-rating" class="green-button" onclick="saveRating()" >SAVE</button>
+          <button id="cancel-rating" class="red-button" onclick="cancelRating()">CANCEL</button>
         </div>
       </div>
     </div>
@@ -130,7 +130,7 @@
         <!-- SKILLS INFO END -->
       </div>
 
-      <button class="navigate-button" id="showCommentsButton" onclick="toggleAndShowNext()">
+      <button class="navigate-button green-button" id="showCommentsButton" onclick="toggleAndShowNext(); scrollToBottom()">
         <img th:src="@{/img/see-comments.png}" alt="See Comments Icon" class="icon"> SEE COMMENTS</button>
       <!-- COMMENT CONTAINER START -->
       <div class="section" id="comment-section-container" style="display: none;">
@@ -182,8 +182,8 @@
               </div>
 
               <div class="nav-arrows">
-                <button class="navigate-button" onclick="showPreviousCommentSection()">←</button>
-                <button class="navigate-button" onclick="showNextCommentSection()">→</button>
+                <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
+                <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
               </div>
           </div>
             <!-- COMMENT INFO END -->

@@ -1,19 +1,3 @@
-@font-face {
-    font-family: 'CustomFont';
-    src: url('../fonts/roundfont.ttf') format('truetype')}
-
-@keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0
-    }
-
-    to {
-        top: 0;
-        opacity: 1
-    }
-}
-
 body {
     margin: 0;
     font-family: 'CustomFont';
@@ -139,7 +123,6 @@ button{
 
 .topic-dropdown {
     position: relative;
-    /* z-index: 1; */
 }
 
 .topic-checkboxes {
@@ -202,9 +185,6 @@ button{
 }
 
 .search-button {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 20px;
     width: 100px;
     max-width: 55%;
     cursor: pointer;
@@ -217,17 +197,8 @@ button{
     align-items: start;
 }
 
-.search-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-}
-
 .cancel-button {
     display: none;
-    color: rgb(255, 255, 255);
-    background-color: rgb(238, 84, 76);
-    border-radius: 20px;
     width: 150px;
     max-width: 55%;
     cursor: pointer;
@@ -239,12 +210,6 @@ button{
     justify-content: center;
     margin-left: 15px;
     margin-right: 15px;
-}
-
-.cancel-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(233, 99, 81);
-    border: 2px solid white;
 }
 
 .func-buttons {
@@ -259,21 +224,12 @@ button{
 .reverse-button {
     align-items: start;
     justify-content: center;
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 10px;
     cursor: pointer;
     border: none;
     height: 40px;
     min-width: 40px;
     padding: 5px;
     margin-right: 15px;
-}
-
-.reverse-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
 }
 
 .reverse-icon {
@@ -283,9 +239,6 @@ button{
 }
 
 #myFilterBtn {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 20px;
     width: 120px;
     max-width: 55%;
     cursor: pointer;
@@ -294,12 +247,6 @@ button{
     height: 40px;
     font-size: 15px;
     margin: 10px;
-}
-
-#myFilterBtn:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
 }
 
 .open-search-buttons {
@@ -317,9 +264,7 @@ button{
 
 .filter-dropdown-container,
 .topic-dropdown-container {
-    margin: 0 auto;
-    margin-left: 15px;
-    margin-right: 15px;
+    margin: 0 15px;
 }
 
 .divider {
@@ -329,11 +274,7 @@ button{
     margin-top: 8px;
 }
 
-
 #upload-upload, #upload-hidden {
-    color: rgb(255, 255, 255);
-    background-color: rgb(40, 152, 200);
-    border-radius: 100px;
     max-width: 80px;
     min-width: 70px;
     cursor: pointer;
@@ -341,12 +282,6 @@ button{
     border: none;
     text-overflow: ellipsis;
     height: 40px;
-}
-
-#upload-upload:hover, #upload-hidden:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(1, 187, 255);
-    border: 2px solid white;
 }
 
 .menu-icon {
@@ -357,114 +292,7 @@ button{
     margin: 0;
     height: 20px;
     width:auto;
-    transform: translateY(-15%);}
-
-
-@media screen and (max-width: 1000px) {
-
-    .filter-container {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 15px;
-    }
-
-    .filter-ddowns {
-        margin-top: 15px;
-        margin-bottom: 15px;
-        flex-direction: row;
-    }
-
-    .open-search-buttons {
-        display: flex;
-        align-items: center;
-    }
-
-    .open-search-buttons button {
-        margin-right: 10px;
-    }
-
-    .cancel-button {
-        display: flex;
-    }
-
-    #reverseButton {
-        display: none;
-    }
-
-    .func-buttons {
-        display: flex;
-        align-items: center;
-    }
-
-    .filter-dropbtn {
-        margin-right: 0;
-    }
-
-    .upload-hidden {
-        display: none;
-    }
-
-    .search-button {
-        width: 150px;
-    }
-}
-
-
-@media screen and (max-width: 600px) {
-    .button-container {
-        display: none;
-    }
-
-    .dropbtn {
-        background-color: rgb(255 255 255) !important;
-        color: rgb(22, 175, 132) !important;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
-        width: 100%;
-        font-weight: bold;
-    }
-
-    .dropdown {
-        position: relative;
-        display: inline-block;
-        width: 100%;
-        text-align: center;
-        font-weight: bold;
-        color: rgb(22, 175, 132);
-    }
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        background-color: rgb(22, 175, 132) !important;
-    }
-
-    .dropdown-content a {
-        color: rgb(255 255 255);
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-        cursor: pointer;
-    }
-
-    .dropdown-content a:hover {
-        background-color: rgb(55 143 119);
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-        width: 100%;
-    }
-
-    .dropdown:hover .dropbtn {
-        background-color: rgb(22, 175, 132);
-    }
-
+    transform: translateY(-15%);
 }
 
 /* RESOURCE MODAL */
@@ -485,8 +313,7 @@ button{
 .modal-content-diplomaTheses {
     position: relative;
     background-color: #fefefe;
-    margin: auto;
-    margin-top: 5%;
+    margin: 5% auto auto;
     padding: 10px;
     border: 1px solid #888;
     border-radius: 25px;
@@ -535,7 +362,6 @@ button{
     text-overflow: ellipsis;
 }
 
-
 .detail-label {
     width: 150px;
     font-weight: bold;
@@ -571,22 +397,10 @@ button{
 
 .upload-button{
     width: 90px;
-    border-radius: 7px;
-    border: 2px solid rgb(0, 0, 0);
     box-sizing: border-box;
-    background: rgb(40, 152, 200);
-    color: white;
-    font-weight: 550;
     padding: 10px;
-    margin: 5px 0;
-    margin-right: 10px;
+    margin: 5px 10px 5px 0;
     cursor: pointer;
-}
-
-.upload-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(1, 187, 255);
-    border: 2px solid white;
 }
 
 .fileUpload-row{
@@ -647,7 +461,6 @@ button{
     z-index: 9999;
 }
 
-
 .func-buttons-modal {
     display: flex;
     position: relative;
@@ -658,9 +471,6 @@ button{
 }
 
 .upload-button-modal {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 20px;
     width: 150px;
     max-width: 55%;
     cursor: pointer;
@@ -672,16 +482,7 @@ button{
     align-items: start;
 }
 
-.upload-button-modal:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-}
-
 .cancel-button-modal {
-    color: rgb(255, 255, 255);
-    background-color: rgb(238, 84, 76);
-    border-radius: 20px;
     width: 150px;
     max-width: 55%;
     cursor: pointer;
@@ -692,12 +493,6 @@ button{
     text-align: center;
     justify-content: center;
     margin: 15px;
-}
-
-.cancel-button-modal:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(249 110 91);
-    border: 2px solid white;
 }
 
 .topic-dropbtn-modal {
@@ -727,7 +522,6 @@ button{
 
 .topic-dropdown-content.active {
     display: block;
-    margin-top: 0;
     margin-top: -45px;
     z-index: 10000;
 }
@@ -749,53 +543,6 @@ button{
     font-weight: bold;
 }
 
-@media (max-width: 450px) {
-    .info-tooltip {
-        position: absolute;
-        color: white;
-        right: 75px;
-        top: 40px;
-    }
-
-    .close-resource {
-        position: relative;
-        color: #aaaaaa;
-        float: left;
-        font-size: 28px;
-        font-weight: bold;
-
-        margin-left: auto;
-    }
-
-    .detail-row {
-        flex-direction: column;
-    }
-
-    .upload-button-modal {
-        width: 100px;
-    }
-
-    .cancel-button-modal {
-        width: 100px;
-    }
-
-}
-
-@media (max-width: 600px) {
-    .detail-row {
-        align-items: start;
-    }
-
-    .modal-content-resource {
-        margin-top: 15%;
-    }
-
-    .modal-content-resource {
-        max-width: 90%;
-        max-height: 90%;
-    }
-}
-
 /* LINK TABLE START */
 .table-container {
     width: 90%;
@@ -813,8 +560,8 @@ thead{
     background: rgb(22, 175, 132);
     height: 40px;
     color: white;
-    top: 0; /* Stick the header to the top */
-    z-index: 1; /* Ensure the header appears above the table body */
+    top: 0;
+    z-index: 1;
 }
 
 tr {
@@ -822,7 +569,7 @@ tr {
     text-align: center;
     height: 54px;
     text-overflow: ellipsis;
-    justify-content: space-between; /* Add space between columns */
+    justify-content: space-between;
 }
 
 .table-number{
@@ -850,8 +597,8 @@ tr {
     position: fixed;
     top: -20%;
     left: -20%;
-    width: 140%; /* 100% + 2 * 20% */
-    height: 140%; /* 100% + 2 * 20% */
+    width: 140%;
+    height: 140%;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 9999;
 }
@@ -884,9 +631,8 @@ tr {
     max-width: 50px;
 }
 
-
 .like-color-text {
-    color: rgb(50, 189, 149);
+    color: rgb(22, 175, 132);
 }
 
 .dislike-color-text {
@@ -903,16 +649,10 @@ tr {
 }
 
 .like-button-link, .like-button-link-active {
-    color: rgb(255, 255, 255);
-    background-color: rgb(22, 175, 132);
-    border-radius: 20px;
-    width: 90px;
-    max-width: 55%;
-    min-width: 70px;
+    width: 100px;
     cursor: pointer;
     padding: 10px;
     border: none;
-    height: 35px;
     font-size: 15px;
     opacity: 0.5;
 }
@@ -921,24 +661,11 @@ tr {
     opacity: 1;
 }
 
-.like-button-link:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(30, 214, 162);
-    border: 2px solid white;
-    opacity: 1;
-}
-
 .dislike-button-link, .dislike-button-link-active{
-    color: rgb(255, 255, 255);
-    background-color: rgb(238, 84, 76);
-    border-radius: 20px;
-    width: 90px;
-    min-width: 70px;
-    max-width: 55%;
+    width: 100px;
     cursor: pointer;
     padding: 10px;
     border: none;
-    height: 35px;
     font-size: 15px;
     text-align: center;
     justify-content: center;
@@ -950,37 +677,6 @@ tr {
     opacity: 1;
 }
 
-.dislike-button-link:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(233, 99, 81);
-    border: 2px solid white;
-    opacity: 1;
-}
-
-.download-button{
-    color: rgb(255, 255, 255);
-    background-color: rgb(40, 152, 200);
-    border-radius: 20px;
-    width: 90px;
-    min-width: 85px;
-    max-width: 55%;
-    cursor: pointer;
-    padding: 10px;
-    border: none;
-    height: 35px;
-    font-size: 15px;
-    text-align: center;
-    justify-content: center;
-    opacity: 1;
-    margin-top: 4px;
-}
-
-.download-button:hover {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(1, 187, 255);
-    border: 2px solid white;
-}
-
 .like-active{
     opacity: 1;
 }
@@ -990,7 +686,7 @@ tr {
     justify-content: center;
     align-items: center;
     margin-top: 10px;
-    margin-bottom: 20px;/* Adjust the margin as needed */
+    margin-bottom: 20px;
 }
 
 #prev-page-button{
@@ -998,13 +694,12 @@ tr {
     margin-right: 20px;
     border: none;
     font-size: medium;
-    color: rgb(30, 214, 162);
+    color: rgb(22, 175, 132);
     opacity: 0.5;
     cursor: pointer;
 }
 
 #prev-page-button:hover {
-    text-shadow: 2px 2px 2px rgba(111, 255, 241, 0.5);
     opacity: 1;
 }
 
@@ -1013,46 +708,40 @@ tr {
     margin-left: 20px;
     border: none;
     font-size: medium;
-    color: rgb(30, 214, 162);
+    color: rgb(22, 175, 132);
     opacity: 0.5;
     cursor: pointer;
 }
 
 #next-page-button:hover {
-    text-shadow: 2px 2px 2px rgba(111, 255, 241, 0.5);
     opacity: 1;
 }
-/* LINK TABLE END */
 
 .sortable{
     cursor: pointer;
 }
 
-/* BezÃ¡rÃ³ gomb stÃ­lusÃ¡nak meghatÃ¡rozÃ¡sa */
-/* BezÃ¡rÃ³ gomb stÃ­lusÃ¡nak meghatÃ¡rozÃ¡sa a jobb felsÅ‘ sarokban */
 .close-pdf-modal-btn {
     position: fixed;
     top: 20px;
     right: 20px;
     font-size: 24px;
     cursor: pointer;
-    color: #fff; /* PÃ©ldÃ¡ul fehÃ©r szÃ­nÅ±re Ã¡llÃ­tva, hogy lÃ¡thatÃ³ legyen a sÃ¶tÃ©t hÃ¡ttÃ©ren */
-    z-index: 10000; /* AzÃ©rt, hogy mindig a legfelsÅ‘ rÃ©tegben jelenjen meg */
+    color: #fff;
+    z-index: 10000;
 }
 
-
-/* OpcionÃ¡lis: Ha szeretnÃ©d stilizÃ¡lni a gombot a felhasznÃ¡lÃ³ interakciÃ³ihoz */
 .close-pdf-modal-btn:hover {
-    color: #999; /* PÃ©ldÃ¡ul szÃ¼rkÃ©re vÃ¡ltoztathatod a szÃ­nt a hover esemÃ©nyre */
+    color: #999;
 }
 
 .message-diploma-modal-content-container {
     text-align: center;
-    margin-bottom: 9px /* IgazÃ­tsd az elhelyezÃ©st igÃ©ny szerint */
+    margin-bottom: 9px;
 }
 
 .error-message-diploma-modal-content {
-    color: red;
+    color: rgb(238, 84, 76);
     font-size: 16px;
     font-weight: bold;
 }
@@ -1069,12 +758,7 @@ tr {
 }
 
 .container-checkbox-diplomaTags input:checked ~ .checkmark-diplomaTags {
-    background-color: #2196F3;
-}
-
-
-.container-checkbox-diplomaTags:hover input ~ .checkmark-diplomaTags {
-    background-color: rgb(204, 252, 234);
+    background-color: rgb(40, 152, 200);
 }
 
 .container-checkbox-diplomaTags input:checked ~ .checkmark-diplomaTags {
@@ -1138,8 +822,161 @@ tr {
     display: none !important;
 }
 
-
-
 .tags-checkbox:hover + label::before {
     opacity: 1;
 }
+
+/*RESPONSIVE DESIGN*/
+@media screen and (max-width: 1000px) {
+
+    .filter-container {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    .filter-ddowns {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        flex-direction: row;
+    }
+
+    .open-search-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .open-search-buttons button {
+        margin-right: 10px;
+    }
+
+    .cancel-button {
+        display: flex;
+    }
+
+    #reverseButton {
+        display: none;
+    }
+
+    .func-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .filter-dropbtn {
+        margin-right: 0;
+    }
+
+    .upload-hidden {
+        display: none;
+    }
+
+    .search-button {
+        width: 150px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .button-container {
+        display: none;
+    }
+
+    .dropbtn {
+        background-color: rgb(255 255 255) !important;
+        color: rgb(22, 175, 132) !important;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        width: 100%;
+        font-weight: bold;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        color: rgb(22, 175, 132);
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        background-color: rgb(22, 175, 132) !important;
+    }
+
+    .dropdown-content a {
+        color: rgb(255 255 255);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        cursor: pointer;
+    }
+
+    .dropdown-content a:hover {
+        background-color: rgb(55 143 119);
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+        width: 100%;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: rgb(22, 175, 132);
+    }
+
+}
+
+@media (max-width: 450px) {
+    .info-tooltip {
+        position: absolute;
+        color: white;
+        right: 75px;
+        top: 40px;
+    }
+
+    .close-resource {
+        position: relative;
+        color: #aaaaaa;
+        float: left;
+        font-size: 28px;
+        font-weight: bold;
+
+        margin-left: auto;
+    }
+
+    .detail-row {
+        flex-direction: column;
+    }
+
+    .upload-button-modal {
+        width: 100px;
+    }
+
+    .cancel-button-modal {
+        width: 100px;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .detail-row {
+        align-items: start;
+    }
+
+    .modal-content-resource {
+        margin-top: 15%;
+    }
+
+    .modal-content-resource {
+        max-width: 90%;
+        max-height: 90%;
+    }
+}
+

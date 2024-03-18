@@ -9,6 +9,7 @@
   <link rel="stylesheet"  type="text/css" th:href="@{/css/myGroup.css}">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/profile.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
   <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
   <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/cropper.css}">
@@ -63,23 +64,38 @@
     <div class="menu-divider"></div>
     <div class="form-group" >
       <p class="menu-function">
-        <a th:onclick="${not userRolesToDisplay.contains('MENTOR') and not userRolesToDisplay.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"> My Group</a> </p>
+        <a th:onclick="${not userRolesToDisplay.contains('MENTOR') and not userRolesToDisplay.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">My Group</span>
+          <span class="hungarian-text">Csoportom</span>
+        </a> </p>
     </div>
     <div class="form-group" >
       <p class="menu-function">
-        <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon"> Topics</a> </p>
+        <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">Topics</span>
+          <span class="hungarian-text">Témák</span>
+        </a> </p>
     </div>
     <div class="form-group">
       <p class="menu-function">
-        <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon"> Resources</a> </p>
+        <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">Resources</span>
+          <span class="hungarian-text">Segédanyagok</span>
+        </a> </p>
     </div>
     <div class="form-group">
       <p class="menu-function">
-        <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon"> Settings</a> </p>
+        <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">Settings</span>
+          <span class="hungarian-text">Beállítások</span>
+        </a> </p>
     </div>
     <div class="form-group">
       <p class="menu-function">
-        <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon"> Logout</a> </p>
+        <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon">
+          <span class="english-text">Logout</span>
+          <span class="hungarian-text">Kijelentkezés</span>
+        </a> </p>
     </div>
 
   </div>
@@ -90,16 +106,6 @@
     <div class="profile-container" th:id="${'profile-container-Id_' + UserId}">
       <div class="profile-left">
         <div class="section-profile">
-<!--          <div class="image-container">-->
-<!--            <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">-->
-<!--            <div class="change-icon" id="change-image-icon">-->
-<!--              <img th:src="@{/img/change.png}" alt="Change Icon">-->
-<!--            </div>-->
-<!--          </div>-->
-
-          <!--/*@thymesVar id="errorMessage" type=""*/-->
-          <!--A hibaüzenet megjelenítése itt-->
-          <!--A regi verzioban ez nem kell-->
           <div style="color: red;">
             <p th:text="${errorMessage}"></p>
           </div>
@@ -124,10 +130,9 @@
               <div class="modal-content-upload">
                 <span class="close-upload">&times;</span>
 
-<!--                <div class="info-tooltip-upload"><p> 1x1 picture is recommanded. </p></div>-->
-
                 <div id="error-message" class="alert alert-danger">
-                  The size of the image is too large.
+                  <span class="english-text">The size of the image is too large.</span>
+                  <span class="hungarian-text">A kép mérete túl nagy.</span>
                 </div>
 
                 <div class="image-container">
@@ -144,31 +149,18 @@
                 <div class="upload-buttons">
 
                   <div class="btn btn-success" id="upload-upload">
-                    <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"> Select
+                    <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon blue-button">
+                    <span class="english-text">Select</span>
+                    <span class="hungarian-text">Kiválaszt</span>
                   </div>
-
-<!--                  <form th:action="@{/upload-profile-image}" method="post" enctype="multipart/form-data">-->
-<!--                    <input type="file" id="imageUpload" style="display: none;" accept="image/*" name="image">-->
-<!--                    <button type="submit" id="upload-save" class="btn btn-success">Upload</button>-->
-<!--                  </form>-->
                   <input type="file" id="imageUpload" style="display: none;" accept="image/*" name="image">
-                  <button type="submit" id="upload-save" class="btn btn-success">Upload</button>
+                  <button type="submit" id="upload-save" class="btn btn-success green-button">
+                    <span class="english-text">Upload</span>
+                    <span class="hungarian-text">Feltölt</span>
+                  </button>
                 </div>
               </div>
             </div>
-            <!-- UPLOAD MODAL END -->
-
-
-<!--          <div class="image-container">-->
-<!--            <img th:src="@{/img/anonym.jpg}" alt="Profile Image" class="profile-image">-->
-<!--            <div class="change-icon" id="change-image-icon">-->
-<!--              <label for="image-upload" class="upload-label">-->
-<!--                <img th:src="@{/img/change.png}" alt="Change Icon">-->
-<!--                <input type="file" id="image-upload" style="display:none">-->
-<!--              </label>-->
-<!--            </div>-->
-<!--          </div>-->
-
 
           <div class="status-box">
             <div class="name-box">
@@ -193,11 +185,6 @@
                   <div class="form-group-mentor">
                     <div class="detail-row-mentor">
                       <div class="edit-input-mentor" id="role-edit" required>
-<!--                        <label>-->
-<!--                          <input type="checkbox" name="role" value="USER" th:checked="${#lists.contains(userRegistrationDetails.roles, 'USER')}" required>-->
-<!--                          <span class="checkbox-custom"></span>-->
-<!--                          USER-->
-<!--                        </label>-->
                         <label>
                           <input type="checkbox" name="role" value="MENTOR" th:checked="${#lists.contains(userRegistrationDetails.roles, 'MENTOR')}" required>
                           <span class="checkbox-custom"></span>
@@ -206,13 +193,17 @@
                         <label>
                           <input type="checkbox" name="role" value="MENTEE" th:checked="${#lists.contains(userRegistrationDetails.roles, 'MENTEE')}" required>
                           <span class="checkbox-custom"></span>
-                          MENTEE
+                          <span class="english-text">MENTEE</span>
+                          <span class="hungarian-text">MENTORÁLT</span>
                         </label>
                       </div>
                     </div>
                   </div>
                 </div>
-                <button type="submit" id="mentor-save" class="btn btn-success" th:onclick="updateRoleStatus()">Save</button>
+                <button type="submit" id="mentor-save" class="btn btn-success green-button" th:onclick="updateRoleStatus()">
+                  <span class="english-text">Save</span>
+                  <span class="hungarian-text">Mentés</span>
+                </button>
               </div>
             </div>
             <!-- MENTOR MODAL END -->
@@ -232,7 +223,9 @@
             </div>
 
             <div class="rating-text">
-              <span id="rating-number" th:text="${countOfRating}"></span> Ratings
+              <span id="rating-number" th:text="${countOfRating}"></span>
+              <span class="english-text">Ratings</span>
+              <span class="hungarian-text">Értékelés</span>
             </div>
           </div>
         </div>
@@ -242,7 +235,8 @@
       <div class="profile-right">
         <!-- ABOUT CONTAINER  START -->
         <div class="section">
-          <h2>ABOUT
+          <h2><span class="english-text">ABOUT</span>
+            <span class="hungarian-text">RÓLAM</span>
             <div class="edit-button">
               <button id="myBtn"> <img th:src="@{/img/edit-profile.png}" alt="Edit Profile" /> </button>
             </div>
@@ -257,60 +251,91 @@
 
                 <div class="form-group-edit">
                   <div class="detail-row">
-                    <p class="detail-label">First Name:</p>
+                    <p class="detail-label">
+                      <span class="english-text">First name:</span>
+                      <span class="hungarian-text">Keresztnév:</span>
+                    </p>
                     <input type="text" class="edit-input" id="firstName-edit" placeholder="" name="firstName"
                            required autofocus="autofocus" oninput="validateFirstName(), checkValidationAndSetOpacity()" th:value="${userRegistrationDetails.firstName}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
-                    <div class="info-tooltip">Enter your real name!</div>
+                    <div class="info-tooltip">
+                      <span class="english-text">Enter your real name!</span>
+                      <span class="hungarian-text">Valós nevet adj meg!</span>
+                    </div>
                   </div> </div>
 
                 <div class="form-group-edit">
                   <div class="detail-row">
-                    <p class="detail-label">Last Name:</p>
+                    <p class="detail-label">
+                      <span class="english-text">Last name:</span>
+                      <span class="hungarian-text">Vezetéknév:</span>
+                    </p>
                     <input type="text" class="edit-input" id="lastName-edit" placeholder="" name="lastName"
                            required autofocus="autofocus" oninput="validateLastName(), checkValidationAndSetOpacity()" th:value="${userRegistrationDetails.lastName}">
                     <div class="info-icon" data-tooltip="Tooltip text for Last Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
-                    <div class="info-tooltip">Enter your real name!</div>
+                    <div class="info-tooltip">
+                      <span class="english-text">Enter your real name!</span>
+                      <span class="hungarian-text">Valós nevet adj meg!</span>
+                    </div>
                   </div> </div>
 
                 <div class="form-group-edit">
                   <div class="detail-row">
-                    <p class="detail-label">Specialization:</p>
+                    <p class="detail-label">
+                      <span class="english-text">Specialization:</span>
+                      <span class="hungarian-text">Szak:</span>
+                    </p>
                     <input type="text" class="edit-input" id="specialization-edit" placeholder="ex: Software Engineering" name="specialization"
                            required autofocus="autofocus" oninput="validateSpecialization(), checkValidationAndSetOpacity()" th:value="${userRegistrationDetails.specialization ?: ''}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
-                    <div class="info-tooltip">Enter your specialization!</div>
+                    <div class="info-tooltip">
+                      <span class="english-text">Enter your specialization!</span>
+                      <span class="hungarian-text">Add meg a szakodat!</span>
+                    </div>
                   </div> </div>
 
                 <div class="form-group-edit">
                   <div class="detail-row">
-                    <p class="detail-label">Year:</p>
+                    <p class="detail-label">
+                      <span class="english-text">Year:</span>
+                      <span class="hungarian-text">Év:</span>
+                    </p>
                     <input type="number" class="edit-input" id="year-edit" placeholder="ex: 3" name="year"
                            required autofocus="autofocus" oninput="validateYear(), checkValidationAndSetOpacity()" th:value="${userRegistrationDetails.year ?: ''}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
-                    <div class="info-tooltip">Only 1-4 year is accepted!</div>
+                    <div class="info-tooltip">
+                      <span class="english-text">Only 1-4 year is accepted!</span>
+                      <span class="hungarian-text">Csak 1-től 4-ig elfogadott!</span>
+                    </div>
                   </div> </div>
 
                 <div class="form-group-edit">
                   <div class="detail-row">
-                    <p class="detail-label">Phone:</p>
+                    <p class="detail-label"><span class="english-text">Phone:</span>
+                      <span class="hungarian-text">Telefonszám:</span>
+                    </p>
                     <input type="tel" class="edit-input" id="phone-edit" placeholder="ex: 0734155510" name="phoneNumber"
                            autofocus="autofocus" oninput="validatePhone()" th:value="${userRegistrationDetails.phoneNumber ?: ''}">
                     <div class="info-icon" data-tooltip="Tooltip text for First Name">
                       <i class="fas fa-info-circle"></i>
                     </div>
-                    <div class="info-tooltip">Enter your 10 digit phone number!</div>
+                    <div class="info-tooltip">
+                      <span class="english-text">Enter your 10 digit phone number!</span>
+                      <span class="hungarian-text">Add meg a 10 jegyű telefonszámodat!</span></div>
                   </div> </div>
               </div>
-              <button type="submit" id="edit-save" class="btn btn-success">Save</button>
+              <button type="submit" id="edit-save" class="btn btn-success green-button">
+                <span class="english-text">Save</span>
+                <span class="hungarian-text">Mentés</span>
+              </button>
             </div>
             </form>
             <div id="whitespace"> </div>
@@ -322,24 +347,37 @@
           <div class="divider"></div>
           <div class="details">
             <div class="detail-row">
-              <p class="detail-label">Name:</p>
+              <p class="detail-label">
+                <span class="english-text">Name:</span>
+                <span class="hungarian-text">Név:</span></p>
               <p class="detail-value" th:text="${userRegistrationDetails.firstName}"></p>
               <p class="detail-value" th:text="${userRegistrationDetails.lastName}"></p>
             </div>
             <div class="detail-row">
-              <p class="detail-label">Specialization:</p>
+              <p class="detail-label">
+                <span class="english-text">Specialization:</span>
+                <span class="hungarian-text">Szak:</span>
+              </p>
               <p th:text="${userRegistrationDetails.specialization ?: 'ex: Software Engineering'}"></p>
             </div>
             <div class="detail-row">
-              <p class="detail-label">Year:</p>
+              <p class="detail-label">
+                <span class="english-text">Year:</span>
+                <span class="hungarian-text">Év:</span>
+              </p>
               <p th:text="${userRegistrationDetails.year ?: 'ex: 3'}"></p>
             </div>
             <div class="detail-row">
-              <p class="detail-label">E-mail:</p>
+              <p class="detail-label">
+                <span class="english-text">E-mail:</span>
+                <span class="hungarian-text">E-mail cím:</span>:</p>
               <p class="detail-value" th:text="${userRegistrationDetails.username}"></p>
             </div>
             <div class="detail-row">
-              <p class="detail-label">Phone:</p>
+              <p class="detail-label">
+                <span class="english-text">Phone:</span>
+                <span class="hungarian-text">Telefonszám:</span>
+              </p>
               <p th:text="${userRegistrationDetails.phoneNumber ?: 'ex: 0734155510'}"></p>
             </div>
           </div>
@@ -349,7 +387,9 @@
 
         <!-- SKILLS CONTAINER START -->
         <div class="section">
-          <h2>SKILLS
+          <h2>
+            <span class="english-text">SKILLS</span>
+            <span class="hungarian-text">KÉSZSÉGEIM</span>
             <div class="edit-button">
               <button id="mySkillBtn"> <img th:src="@{/img/edit-profile.png}" alt="Edit Profile" /> </button>
             </div>
@@ -362,13 +402,19 @@
               <span class="close-skill">&times;</span>
 
               <div id="error-message-for-skills" style="color: red">
-                <p>This topic has already been added!</p>
+                <p>
+                  <span class="english-text">This topic has already been added!</span>
+                  <span class="hungarian-text">Ez a téma már hozzáadásra került!</span>
+                </p>
               </div>
 
               <div class="dropdown-container">
 
                 <div class="dropdown-skill-modal">
-                  <button class="dropbtn" onclick="toggleDropdown()">Choose a topic</button>
+                  <button class="dropbtn" onclick="toggleDropdown()">
+                    <span class="english-text">Choose a topic</span>
+                    <span class="hungarian-text">Válassz témát</span>
+                  </button>
                   <div class="dropdown-content" id="myDropdown">
                     <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
                        th:attr="onclick='closeDropdown(\'' + ${topic.topic} + '\')'"></a>
@@ -376,7 +422,10 @@
                 </div>
                 <input type="text" class="skills-input" id="topic-input" placeholder="Selected Topic"
                        required autofocus="autofocus" readonly >
-                <button type="submit" id="skills-add" class="btn btn-success" th:onclick="addSelectedTopic()">Add Topic</button>
+                <button type="submit" id="skills-add" class="btn btn-success green-button" th:onclick="addSelectedTopic()">
+                  <span class="english-text">Add topic</span>
+                  <span class="hungarian-text">Add hozzá</span>
+                </button>
 
               </div>
               <div class="divider"></div>
@@ -389,11 +438,10 @@
                 </div>
 
                 <div class="divider"></div>
-              <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>
-<!--              <form id="skills-form"  th:action="@{/saveProfileTopics}" method="post" >-->
-<!--                <input type="hidden" name="profileTopicsDataItems" id="profileTopicsDataItems" value="">-->
-<!--                <button type="submit" id="skills-save" class="btn btn-success" th:onclick="saveDataToServer()">Save</button>-->
-<!--              </form>-->
+              <button type="submit" id="skills-save" class="btn btn-success green-button" th:onclick="saveDataToServer()">
+                <span class="english-text">Save</span>
+                <span class="hungarian-text">Mentés</span>
+              </button>
             </div>
           </div>
           <!-- SKILLS MODAL END -->
@@ -416,11 +464,17 @@
         </div>
         <!-- SKILLS CONTAINER END -->
 
-        <button class="navigate-button" id="showCommentsButton" onclick="toggleAndShowNext()">
-          <img th:src="@{/img/see-comments.png}" alt="See Comments Icon" class="icon"> SEE COMMENTS</button>
+        <button class="navigate-button green-button" id="showCommentsButton" onclick="toggleAndShowNext(); scrollToBottom()">
+          <img th:src="@{/img/see-comments.png}" alt="See Comments Icon" class="icon">
+          <span class="english-text">Comment Section</span>
+          <span class="hungarian-text">Hozzászólások</span>
+        </button>
         <!-- COMMENT CONTAINER START -->
         <div class="section" id="comment-section-container" style="display: none;">
-          <h2>COMMENTS</h2>
+          <h2>
+            <span class="english-text">COMMENTS</span>
+            <span class="hungarian-text">HOZZÁSZÓLÁSOK</span>
+          </h2>
           <div class="divider"></div>
           <!-- COMMENT INFO START -->
 
@@ -457,8 +511,8 @@
             </div>
 
             <div class="nav-arrows">
-              <button class="navigate-button" onclick="showPreviousCommentSection()">←</button>
-              <button class="navigate-button" onclick="showNextCommentSection()">→</button>
+              <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
+              <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
             </div>
           </div>
           <!-- COMMENT INFO END -->
