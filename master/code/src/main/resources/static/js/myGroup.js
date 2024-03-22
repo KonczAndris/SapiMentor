@@ -1390,7 +1390,7 @@ function saveRating() {
                     .filter(input => input.hasAttribute('checked') );
                 console.log("Checked inputs: ", checkedInputs);
 
-                if (checkedInputs.length > 0) {
+                if (checkedInputs.length >= 0) {
                     var lastCheckedValue = checkedInputs.length;
                     console.log('Az utolsó kiválasztott érték: ' + lastCheckedValue);
                     console.log('Rating: ' + rating);
