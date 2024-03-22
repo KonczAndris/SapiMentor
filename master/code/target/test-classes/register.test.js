@@ -179,3 +179,17 @@ describe('Registration functionality', () => {
         expect(submitSpy).toHaveBeenCalled();
     });
 });
+
+// Redirection to Login page testing
+describe('Thymeleaf redirection', () => {
+    test('redirects to /login', () => {
+        const { document } = window;
+        const registerHTMLContent = fs.readFileSync(path.resolve(__dirname, './../../main/resources/templates/register.html'), 'utf-8');
+        const registerDOM = new JSDOM(registerHTMLContent);
+        const registerDocument = registerDOM.window.document;
+        const loginLink = registerDocument.querySelector('.login-link');
+
+        expect(loginLink).toBeTruthy();
+        expect(loginLink.getAttribute('th:href')).toBe('@{/login}');
+    });
+});

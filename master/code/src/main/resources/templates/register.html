@@ -20,7 +20,7 @@
         <p class="register-text">
             <span class="english-text">Already registered?</span>
             <span class="hungarian-text">Már regisztráltál?</span>
-            <a href="/" th:href="@{/login}">
+            <a class="login-link" href="/" th:href="@{/login}">
                 <span class="english-text">Log in here!</span>
                 <span class="hungarian-text">Jelentkezz be itt!</span>
             </a></p>
@@ -95,5 +95,6 @@
     </div>
 </div>
 <script th:src="@{/js/register.js}"></script>
+<script th:src="@{/js/localSettings.js}"></script>
 </body>
 </html>

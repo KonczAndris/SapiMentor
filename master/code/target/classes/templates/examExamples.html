@@ -38,7 +38,7 @@
             <img th:src="@{/img/white.png}" id="sapimentor-logo" alt="image">
         </div>
         <div class="form-group form-group-profile menu-function-profile">
-            <a href="/" th:href="@{/profile}">
+            <a th:href="@{/profile}">
                 <div class="user-img-container">
                     <img th:if="${profileImageBase64 != ''}"
                          th:src="@{|data:image/jpeg;base64,${profileImageBase64}|}"
@@ -61,24 +61,24 @@
         </div>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon">
+                <a th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon">
                     <span class="english-text">Topics</span>
                     <span class="hungarian-text">Témák</span>
                 </a> </p>
         </div>
         <div class="form-group current-page">
             <p class="menu-function">
-                <a href="/" th:href="@{/resources}"> <img th:src="@{/img/current-page-icon.png}" alt="Icon" class="menu-icon current-menu-icon"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon">
+                <a th:href="@{/resources}"> <img th:src="@{/img/current-page-icon.png}" alt="Icon" class="menu-icon current-menu-icon"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon">
                     <span class="english-text">Resources</span>
                     <span class="hungarian-text">Segédanyagok</span>
                 </a> </p>
         </div>
         <div class="form-group">
             <p class="menu-function">
-                <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon">
+                <a th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon">
                     <span class="english-text">Settings</span>
                     <span class="hungarian-text">Beállítások</span>
-                </a> </p>
+                </a></p>
         </div>
         <div class="form-group">
             <p class="menu-function">
@@ -348,13 +348,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{/js/functions.js}"></script>
 <script th:src="@{/js/examExamples.js}"></script>
-<script>
-    if (localStorage.getItem('theme') === 'dark') {
-        const darkThemeLink = document.createElement('link');
-        darkThemeLink.rel = 'stylesheet';
-        darkThemeLink.href = '/css/darkTheme.css';
-        document.head.appendChild(darkThemeLink);
-    }
-</script></body>
-
+<script th:src="@{/js/localSettings.js}"></script>
+</body>
 </html>

@@ -123,7 +123,7 @@
                 <span class="english-text">BROWSE IN RESOURCES</span>
                 <span class="hungarian-text">BÖNGÉSSZ A SEGÉDANYAGOK KÖZÖTT</span>
             </p>
-            <p class="index-infos">ű
+            <p class="index-infos">
                 <span class="english-text">Browse through the <strong>Resources</strong> page and take advantage of shared study materials, exam papers, and diploma theses. Support your peers by contributing your own materials. Make learning easier and collaborative!</span>
                 <span class="hungarian-text">Tekintsd át az <strong>Segédanyagok</strong> oldalt, és használd ki a megosztott tananyagokat, vizsgafeladatokat és szakdolgozatokat. Támogasd társaidat a saját anyagaiddal való hozzájárulással. Segítsd elő a könnyebb és együttműködő tanulást!</span>
             </p>
@@ -196,13 +196,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
   <script th:src="@{/js/WebSocketForIndexPage.js}"></script>
   <script th:src="@{/js/functions.js}"></script>
-<script>
-    if (localStorage.getItem('theme') === 'dark') {
-        const darkThemeLink = document.createElement('link');
-        darkThemeLink.rel = 'stylesheet';
-        darkThemeLink.href = '/css/darkTheme.css';
-        document.head.appendChild(darkThemeLink);
-    }
-</script>
+<script th:src="@{/js/localSettings.js}"></script>
+
 </body>
 </html>

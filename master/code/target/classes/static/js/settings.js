@@ -156,7 +156,6 @@ function handleCheckboxCheck(checkboxes) {
 handleCheckboxCheck(languageCheckboxes);
 handleCheckboxCheck(themeCheckboxes);
 
-
 const darkCheckbox = document.getElementById('dark');
 const saveSettingsButton = document.getElementById('saveSettings');
 
@@ -180,12 +179,6 @@ function applyDarkTheme() {
     }
 }
 
-// Event listener for the save button
-saveSettingsButton.addEventListener('click', function() {
-    applyDarkTheme();
-    location.reload(); // Reload the page
-});
-
 const lightCheckbox = document.getElementById('light');
 // Check if dark theme was selected previously and apply it
 if (localStorage.getItem('theme') === 'dark') {
@@ -197,3 +190,65 @@ else{
  lightCheckbox.checked = true;
 }
 
+const hungarianCheckbox = document.getElementById('hungarian');
+const englishCheckbox = document.getElementById('english');
+
+// Function to apply language settings
+function applyLanguageSettings() {
+    const hungarianTextElements = document.querySelectorAll('.hungarian-text');
+    const englishTextElements = document.querySelectorAll('.english-text');
+
+    if (hungarianCheckbox.checked) {
+        hungarianTextElements.forEach(element => {
+            element.style.display = 'inline'; // Show Hungarian text
+        });
+        englishTextElements.forEach(element => {
+            element.style.display = 'none'; // Hide English text
+        });
+        // Save language preference locally
+        localStorage.setItem('language', 'hungarian');
+    } else {
+        hungarianTextElements.forEach(element => {
+            element.style.display = 'none'; // Hide Hungarian text
+        });
+        englishTextElements.forEach(element => {
+            element.style.display = 'inline'; // Show English text
+        });
+        // Save language preference locally
+        localStorage.setItem('language', 'english');
+    }
+}
+
+// Check if language preference was selected previously and apply it
+const savedLanguage = localStorage.getItem('language');
+if (savedLanguage === 'hungarian') {
+    hungarianCheckbox.checked = true;
+} else {
+    englishCheckbox.checked = true;
+}
+
+// Event listener for the save button
+saveSettingsButton.addEventListener('click', function() {
+    applyDarkTheme();
+    applyLanguageSettings();
+    location.reload(); // Reload the page
+});
+
+function setPlaceholdersBasedOnLanguage() {
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageTextarea = document.getElementById('message');
+
+    if (localStorage.getItem('language') === 'hungarian') {
+        nameInput.placeholder = 'Teljes név';
+        emailInput.placeholder = 'Email cím';
+        messageTextarea.placeholder = 'Üzenet';
+    } else {
+        nameInput.placeholder = 'Your Name';
+        emailInput.placeholder = 'Your Email';
+        messageTextarea.placeholder = 'Your Message';
+    }
+}
+
+// Hívjuk meg a függvényt az oldal betöltésekor
+setPlaceholdersBasedOnLanguage();

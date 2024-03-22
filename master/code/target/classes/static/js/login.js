@@ -108,6 +108,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// Language placeholder text
+function setPlaceholdersBasedOnLanguage() {
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const loginButton = document.getElementById('login-submit');
+
+    if (localStorage.getItem('language') === 'hungarian') {
+        usernameInput.placeholder = 'Email cím';
+        passwordInput.placeholder = 'Jelszó';
+        loginButton.value = 'Bejelentkezés';
+    } else {
+        usernameInput.placeholder = 'Enter Email';
+        passwordInput.placeholder = 'Enter Password';
+        loginButton.value = 'Login';
+    }
+}
+
+setPlaceholdersBasedOnLanguage();
+
 // Jest testing exports
 module.exports = {validateUsername, validatePassword, performXMLHttpRequest};
 

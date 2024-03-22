@@ -1,14 +1,16 @@
+// Validate Email
 function validateEmail() {
     var emailInput = document.getElementById("email");
     var emailValue = emailInput.value.trim();
 
-    if (!emailValue.endsWith("@student.ms.sapientia.ro")) {
+    if (!emailValue.endsWith("@student.ms.sapientia.ro") && !emailValue.endsWith("@ms.sapientia.ro")) {
         emailInput.classList.add("highlight");
     } else {
         emailInput.classList.remove("highlight");
     }
 }
 
+// Forgot Password Form Validation
 document.addEventListener("DOMContentLoaded", function () {
     var emailInput = document.getElementById("email");
     var errorEmail = document.getElementById("invalid-email");
@@ -40,3 +42,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+// Language placeholder text
+function setPlaceholdersBasedOnLanguage() {
+    const emailInput = document.getElementById('email');
+    const sendEmailButton = document.getElementById('send-email');
+
+    if (localStorage.getItem('language') === 'hungarian') {
+        emailInput.placeholder = 'Email cím';
+        sendEmailButton.innerText = 'Elküld';
+    } else {
+        emailInput.placeholder = 'Enter Email';
+        sendEmailButton.innerText = 'Send';
+    }
+}
+
+setPlaceholdersBasedOnLanguage();
+
+// Jest testing exports
+module.exports = {validateEmail};

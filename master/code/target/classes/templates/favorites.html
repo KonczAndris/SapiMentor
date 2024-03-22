@@ -215,14 +215,8 @@
     <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js}"></script>
     <script th:src="@{/js/functions.js}"></script>
     <script th:src="@{/js/favorites.js}"></script>
-<script>
-    if (localStorage.getItem('theme') === 'dark') {
-        const darkThemeLink = document.createElement('link');
-        darkThemeLink.rel = 'stylesheet';
-        darkThemeLink.href = '/css/darkTheme.css';
-        document.head.appendChild(darkThemeLink);
-    }
-</script>
+    <script th:src="@{/js/localSettings.js}"></script>
+
 </body>
 
 </html>

@@ -6,7 +6,6 @@
   <title>SapiMentor</title>
 <!--      <meta name="_csrf" th:content="${_csrf.token}"/>-->
 <!--      <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
-  <link rel="stylesheet"  type="text/css" th:href="@{/css/index-home.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/settings.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
@@ -185,9 +184,11 @@
             <span class="hungarian-text">Lépj kapcsolatba velünk</span>
           </h3>
           <form id="contact-form" th:action="@{/settings/sendContactEmail}" method="post">
+
             <input type="text" id="name" name="name" placeholder="Your Name" required>
             <input type="email" id="email" name="email" placeholder="Your Email" required>
             <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+
             <button type="submit" class="green-button">
               <span class="english-text">Send email</span>
               <span class="hungarian-text">Elküld</span>
@@ -228,5 +229,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{/js/functions.js}"></script>
 <script th:src="@{/js/settings.js}"></script>
+<script th:src="@{/js/localSettings.js}"></script>
 </body>
 </html>

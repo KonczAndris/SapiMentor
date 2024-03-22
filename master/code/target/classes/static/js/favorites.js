@@ -143,11 +143,17 @@ async function fetchAndDisplayUserChat() {
     const userChatResponse = await fetch(`/messages/${IdForUser}/${selectedUserId}`);
     const userChat = await userChatResponse.json();
     chatArea.innerHTML = '';
-    //document.querySelector('.infoBox').classList.remove('hiddenInfo');
+
     const infoContainer = document.createElement('h3');
-    infoContainer.classList.add('info');
-    infoContainer.textContent = "If you both are not favorites to each other, the message will not be retained!" +
-        "If you want the message to be retained and easily reach each other, then add each other to favorites!";
+
+    if (localStorage.getItem('language') === 'hungarian') {
+        infoContainer.textContent = "Ez az üzenet csak akkor marad megőrizve, ha mindketten kedvencei vagytok egymásnak! " +
+            "Ha azt szeretnéd, hogy az üzenet megmaradjon, akkor adjátok hozzá egymást a kedvenceitek listájához!";
+    }
+    else {
+        infoContainer.textContent = "If you both are not favorites to each other, the message will not be retained! " +
+            "If you want the message to be retained and easily reach each other, then add each other to favorites!";
+    }
     infoContainer.style.color = '#bd532c';
     infoContainer.style.textAlign = 'center';
     chatArea.appendChild(infoContainer);

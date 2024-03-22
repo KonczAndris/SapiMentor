@@ -148,8 +148,8 @@
 
                 <div class="upload-buttons">
 
-                  <div class="btn btn-success" id="upload-upload">
-                    <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon blue-button">
+                  <div class="btn btn-success blue-button" id="upload-upload">
+                    <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon">
                     <span class="english-text">Select</span>
                     <span class="hungarian-text">Kiválaszt</span>
                   </div>
@@ -556,14 +556,8 @@
   });
 
 </script>
-<script>
-  if (localStorage.getItem('theme') === 'dark') {
-    const darkThemeLink = document.createElement('link');
-    darkThemeLink.rel = 'stylesheet';
-    darkThemeLink.href = '/css/darkTheme.css';
-    document.head.appendChild(darkThemeLink);
-  }
-</script>
+<script th:src="@{/js/localSettings.js}"></script>
+
 </body>
 </html>
 

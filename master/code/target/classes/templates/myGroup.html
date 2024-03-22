@@ -206,11 +206,11 @@
                             <div class="smaller-div"><img th:src="@{/img/meeting-monsters.jpg}" alt="Error Image" class="small-div-image"></div>
                             </div>
                             <p><strong><span class="english-text">Select Your Role:</span></strong><br> <span class="english-text">Choose whether you're seeking to mentor or be mentored by clicking the respective button.</span></p>
-                            <p><strong><span class="english-text">Explore Topics:</span></strong><br> <span class="english-text">Once you've chosen your role, explore the available topics that align with your interests or expertise.</span></p>
-                            <p><strong><span class="english-text">Refine Your Search:</span></strong><br> <span class="english-text">Use the provided tags to narrow down your search further and find individuals specializing in specific areas.</span></p>
                             <p><strong><span class="hungarian-text">Válaszd ki a szerepkört:</span></strong><br> <span class="hungarian-text">Válaszd ki, hogy a mentoráltak, vagy a mentorok között szeretnél keresni a megfelelő gomb megnyomásával.</span></p>
+                            <p><strong><span class="english-text">Explore Topics:</span></strong><br> <span class="english-text">Once you've chosen your role, explore the available topics that align with your interests or expertise.</span></p>
                             <p><strong><span class="hungarian-text">Válaszd ki a témákat:</span></strong><br> <span class="hungarian-text">Miután kiválasztottad a szerepkört, válassz a rendelkezésre álló témák között, amelyek összhangban vannak az érdeklődéseddel vagy szakértelmeddel.</span></p>
-                            <p><strong><span class="hungarian-text">Finomítsd a keresését:</span></strong><br> <span class="hungarian-text">Használd a rendelkezésre álló címkéket a keresés további szűkítéséhez, és találj olyan szakembereket, akik egyes területekre szakosodtak.</span></p>
+                            <p><strong><span class="english-text">Refine Your Search:</span></strong><br> <span class="english-text">Use the provided tags to narrow down your search further and find individuals specializing in specific areas.</span></p>
+                            <p><strong><span class="hungarian-text">Finomítsd a keresést:</span></strong><br> <span class="hungarian-text">Használd a rendelkezésre álló címkéket a keresés további szűkítéséhez, és találj olyan szakembereket, akik egyes területekre szakosodtak.</span></p>
                         </div>
                     </div>
                 </div>
@@ -271,15 +271,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{/js/functions.js}"></script>
 <script th:src="@{/js/myGroup.js}"></script>
+<script th:src="@{/js/localSettings.js}"></script>
 
-<script>
-    if (localStorage.getItem('theme') === 'dark') {
-        const darkThemeLink = document.createElement('link');
-        darkThemeLink.rel = 'stylesheet';
-        darkThemeLink.href = '/css/darkTheme.css';
-        document.head.appendChild(darkThemeLink);
-    }
-</script>
 
 </body>
 

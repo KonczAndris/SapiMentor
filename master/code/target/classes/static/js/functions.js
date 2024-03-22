@@ -847,7 +847,7 @@ function showTopicsAndSkillsInModal() {
                 topicSkillsFuncButtons.className = "func-buttons";
 
                 var saveButton = document.createElement("button");
-                saveButton.className = "add-button";
+                saveButton.className = "add-button green-button";
                 saveButton.id = "save-button";
                 saveButton.textContent = "Save";
                 saveButton.onclick = function () {
@@ -855,7 +855,7 @@ function showTopicsAndSkillsInModal() {
                 }
 
                 var cancelButton = document.createElement("button");
-                cancelButton.className = "delete-button";
+                cancelButton.className = "delete-button red-button";
                 cancelButton.textContent = "Cancel";
                 cancelButton.onclick = function () {
                     closeRow(this);

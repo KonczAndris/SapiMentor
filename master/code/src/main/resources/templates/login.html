@@ -21,7 +21,7 @@
       <p class="register-text">
         <span class="english-text">Not a member?</span>
         <span class="hungarian-text">Új vagy?</span>
-        <a href="/" th:href="@{/register}">
+        <a class="register-link" href="/" th:href="@{/register}">
         <span class="english-text">Register now!</span>
         <span class="hungarian-text">Regisztrálj most!</span>
       </a></p>
@@ -102,18 +102,20 @@
         </div>
 
         <div class="form-group">
-            <p class="forgotpassword-text"> <a th:href="@{/forgotPassword}">
+            <p class="forgotpassword-text"> <a class="forgotPassword-link" th:href="@{/forgotPassword}">
               <span class="english-text">Forgot your password?</span>
               <span class="hungarian-text">Elfelejtetted a jelszavad?</span>
             </a> </p>
           </div>
 
         <div class="form-group">
-              <input type="submit" name="login-submit" id="login-submit" value="Log In" class="form-control btn btn-primary green-button">
+              <input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-primary green-button">
         </div>
       </form>
     </div>
   </div>
   <script th:src="@{/js/login.js}"></script>
+  <script th:src="@{/js/localSettings.js}"></script>
+
 </body>
 </html>

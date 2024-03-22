@@ -106,5 +106,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+// Language placeholder text
+function setPlaceholdersBasedOnLanguage() {
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const registerButton = document.getElementById('register-submit');
+
+    if (localStorage.getItem('language') === 'hungarian') {
+        firstNameInput.placeholder = 'Keresztnév';
+        lastNameInput.placeholder = 'Vezetéknév';
+        emailInput.placeholder = 'Email cím';
+        passwordInput.placeholder = 'Jelszó';
+        registerButton.textContent = 'Regisztráció';
+    } else {
+        firstNameInput.placeholder = 'Enter First Name';
+        lastNameInput.placeholder = 'Enter Last Name';
+        emailInput.placeholder = 'Enter Email';
+        passwordInput.placeholder = 'Enter Password';
+        registerButton.textContent = 'Register';
+    }
+}
+
+// Hívjuk meg a függvényt az oldal betöltésekor
+setPlaceholdersBasedOnLanguage();
+
+
 // Jest testing exports
 module.exports = {validateFirstName, validateLastName, validateEmail, validatePassword};
