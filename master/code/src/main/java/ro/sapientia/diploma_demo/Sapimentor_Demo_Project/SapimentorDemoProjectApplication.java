@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @SpringBootApplication
 public class SapimentorDemoProjectApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(SapimentorDemoProjectApplication.class, args);
 		System.out.println("Run Successfully!");
@@ -189,6 +188,7 @@ public class SapimentorDemoProjectApplication {
 
 	// Informatika_2023 szakos diakok diplomamunkainak feltoltese
 	// a CommandLineRunner interfesz implementalas segitsegevel
+
 //	@Bean
 //	public CommandLineRunner InformaticsPDFUploadRunner(DiplomaServices diplomaServices,
 //														findKeywordsInAbstract findKeywordsInAbstract,
@@ -311,7 +311,7 @@ public class SapimentorDemoProjectApplication {
 	// Szamitastechnika_2023 szakos diakok diplomamunka adatainak a CSV-be irasa
 	// a CommandLineRunner interfesz implementalas segitsegevel
 //	@Bean
-//	public CommandLineRunner InformaticsGetDiplomaThesesData(DiplomaServices diplomaServices,
+//	public CommandLineRunner EngineerGetDiplomaThesesData(DiplomaServices diplomaServices,
 //															 findKeywordsInAbstract findKeywordsInAbstract,
 //															 GPT3Service gpt3Service,
 //															 findDiplomaThesesName findDiplomaThesesName,
@@ -556,7 +556,8 @@ public class SapimentorDemoProjectApplication {
 //							//System.out.println("GPT-3 response: " + gpt3Response);
 //							if(gpt3Response.contains("Error GPT-3 API")){
 //								System.out.println("Error GPT-3 API");
-//								continue;
+//								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
+//								//continue;
 //							} else {
 //								// ide teszem be a gpt3 tol kapott valaszt
 //								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
@@ -603,7 +604,7 @@ public class SapimentorDemoProjectApplication {
 //						e.printStackTrace();
 //					}
 //
-//					Thread.sleep(30000);
+//					Thread.sleep(23000);
 //					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
 //					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords);
 //				}
@@ -819,10 +820,10 @@ public class SapimentorDemoProjectApplication {
 //					String finalKeywordsString = null;
 //
 //
-//					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
-//						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
-//						continue;
-//					}
+////					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
+////						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
+////						continue;
+////					}
 //					byte[] pdfBytes = Files.readAllBytes(pdfFile.toPath());
 //					//System.out.println("PDF file name: " + formattedName + " | PDF file size: " + pdfFile.length() + " bytes");
 //					//System.out.println(pdfFile.getName().replace(".pdf", ""));
@@ -859,7 +860,8 @@ public class SapimentorDemoProjectApplication {
 //							//System.out.println("GPT-3 response: " + gpt3Response);
 //							if(gpt3Response.contains("Error GPT-3 API")){
 //								System.out.println("Error GPT-3 API");
-//								continue;
+//								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
+//								// continue;
 //							} else {
 //								// ide teszem be a gpt3 tol kapott valaszt
 //								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
@@ -906,7 +908,7 @@ public class SapimentorDemoProjectApplication {
 //						e.printStackTrace();
 //					}
 //
-//					Thread.sleep(30000);
+//					Thread.sleep(23000);
 //					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
 //					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords);
 //				}
@@ -1184,7 +1186,8 @@ public class SapimentorDemoProjectApplication {
 //							//System.out.println("GPT-3 response: " + gpt3Response);
 //							if(gpt3Response.contains("Error GPT-3 API")){
 //								System.out.println("Error GPT-3 API");
-//								continue;
+//								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
+//								// continue;
 //							} else {
 //								// ide teszem be a gpt3 tol kapott valaszt
 //								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
@@ -1231,7 +1234,7 @@ public class SapimentorDemoProjectApplication {
 //						e.printStackTrace();
 //					}
 //
-//					Thread.sleep(2000);
+//					Thread.sleep(23000);
 //					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
 //					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords);
 //				}
@@ -1424,7 +1427,7 @@ public class SapimentorDemoProjectApplication {
 	// a CommandLineRunner interfesz implementalas segitsegevel
 //	@Bean
 //	public CommandLineRunner InformaticPDFUploadRunner(DiplomaServices diplomaServices
-//														,findKeywordsInAbstract findKeywordsInAbstract,
+//														, findKeywordsInAbstract findKeywordsInAbstract,
 //													   GPT3Service gpt3Service) {
 //		return args -> {
 //			String pdfDirectoryPath = "src/main/resources/static/pdf";
@@ -1446,10 +1449,10 @@ public class SapimentorDemoProjectApplication {
 //					String finalKeywordsString = null;
 //
 //
-//					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
-//						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
-//						continue;
-//					}
+////					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
+////						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
+////						continue;
+////					}
 //					byte[] pdfBytes = Files.readAllBytes(pdfFile.toPath());
 //					//System.out.println("PDF file name: " + formattedName + " | PDF file size: " + pdfFile.length() + " bytes");
 //					//System.out.println(pdfFile.getName().replace(".pdf", ""));
@@ -1485,7 +1488,8 @@ public class SapimentorDemoProjectApplication {
 //							//System.out.println("GPT-3 response: " + gpt3Response);
 //							if(gpt3Response.contains("Error GPT-3 API")){
 //								System.out.println("Error GPT-3 API");
-//								continue;
+//								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
+//								// continue;
 //							} else {
 //								// ide teszem be a gpt3 tol kapott valaszt
 //								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
@@ -1532,7 +1536,7 @@ public class SapimentorDemoProjectApplication {
 //						e.printStackTrace();
 //					}
 //
-//					Thread.sleep(30000);
+//					Thread.sleep(23000);
 //					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
 //					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords);
 //				}
@@ -1764,8 +1768,8 @@ public class SapimentorDemoProjectApplication {
 	// a CommandLineRunner interfesz implementalas segitsegevel
 //	@Bean
 //	public CommandLineRunner CalculatoarePDFUploadRunner(DiplomaServices diplomaServices
-//														,findKeywordsInAbstract findKeywordsInAbstract,
-//													   GPT3Service gpt3Service) {
+//														, findKeywordsInAbstract findKeywordsInAbstract,
+//														 GPT3Service gpt3Service) {
 //		return args -> {
 //			String pdfDirectoryPath = "src/main/resources/static/pdf";
 //
@@ -1786,10 +1790,10 @@ public class SapimentorDemoProjectApplication {
 //					String finalKeywordsString = null;
 //
 //
-//					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
-//						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
-//						continue;
-//					}
+////					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
+////						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
+////						continue;
+////					}
 //					byte[] pdfBytes = Files.readAllBytes(pdfFile.toPath());
 //					//System.out.println("PDF file name: " + formattedName + " | PDF file size: " + pdfFile.length() + " bytes");
 //					//System.out.println(pdfFile.getName().replace(".pdf", ""));
@@ -1823,7 +1827,8 @@ public class SapimentorDemoProjectApplication {
 //							//System.out.println("GPT-3 response: " + gpt3Response);
 //							if(gpt3Response.contains("Error GPT-3 API")){
 //								System.out.println("Error GPT-3 API");
-//								continue;
+//								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
+//								// continue;
 //							} else {
 //								// ide teszem be a gpt3 tol kapott valaszt
 //								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
@@ -1870,7 +1875,7 @@ public class SapimentorDemoProjectApplication {
 //						e.printStackTrace();
 //					}
 //
-//					Thread.sleep(30000);
+//					Thread.sleep(23000);
 //					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
 //					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords);
 //				}

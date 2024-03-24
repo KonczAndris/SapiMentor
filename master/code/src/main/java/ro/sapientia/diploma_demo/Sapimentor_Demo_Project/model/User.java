@@ -11,13 +11,12 @@ import java.util.*;
 
 
 //megkerdezni chat-tol hogy ez pontosan miaz
-@Entity
+
 @Getter
 @Setter
 @AllArgsConstructor
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-//user tablaba menti el az adatokat
-//ez a  user objektum
+@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +41,7 @@ public class User {
     private Integer status = 0;
 
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(

@@ -28,6 +28,7 @@ public class IndexController {
         this.userProfileNotification = userProfileNotification;
     }
 
+
     @GetMapping("/")
     public String showIndex(Model model, Principal principal) {
         if (principal == null) {

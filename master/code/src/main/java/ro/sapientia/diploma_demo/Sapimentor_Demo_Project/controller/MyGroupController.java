@@ -150,12 +150,6 @@ public class MyGroupController {
         String comment = ratingRequest.getComment();
         String date = ratingRequest.getDate();
 
-//        System.out.println("ratingUserEmail: " + ratingUserEmail);
-//        System.out.println("ratedUserId: " + ratedUserId);
-//        System.out.println("score: " + score);
-//        System.out.println("comment: " + comment);
-//        System.out.println("date: " + date);
-
         try {
             ratingService.saveRating(ratingUserEmail, ratingRequest);
             return ResponseEntity.ok("ok");
@@ -163,7 +157,6 @@ public class MyGroupController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during saving rating!");
         }
-
     }
 
     @PostMapping("/revokeRating")

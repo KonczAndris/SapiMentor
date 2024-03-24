@@ -46,9 +46,6 @@ public class VirusTotalService {
             // itt a response body-bol kell kinyerni az "analysisId"-t
             String analysisId = extractAnalysisId(response.body());
 
-            // ez a parhuzamos reszhez kell
-            // CompletableFuture<String> analysisStatusFuture = getAnalysisStatus(analysisId);
-
             String analysisStatus = getAnalysisStatus(analysisId);
             if(!"completed".equals(analysisStatus)){
                 while (true){
@@ -60,23 +57,6 @@ public class VirusTotalService {
                     TimeUnit.SECONDS.sleep(3);
                 }
             }
-//            while (!"completed".equals(analysisStatus)) {
-//                // itt lekerdezzuk az analysis status-t
-//                analysisStatus = getAnalysisStatus(analysisId);
-//                // ha az analysis status meg nem completed, akkor varunk 3 masodpercet es ujra lekerdezzuk az analysis status-t
-//                TimeUnit.SECONDS.sleep(5);
-//                //Thread.sleep(1000);
-//            }
-//            System.out.println("Analysis status2: " + analysisStatusFuture.get());
-//            while (true) {
-//                String analysisStatus = analysisStatusFuture.get(); // Várakozás a párhuzamos eredményre
-//                System.out.println("Analysis status3: " + analysisStatus);
-//                if ("completed".equals(analysisStatus)) {
-//                    break;
-//                }
-//                // ha az analysis status még nem completed, akkor várunk egy kicsit
-//                TimeUnit.SECONDS.sleep(3);
-//            }
 
             // itt a response body-bol kinyert "analysisId"-t kell hasznalni a safety ellenorzeshez
             //String safetyResult = checkSafety(analysisId);

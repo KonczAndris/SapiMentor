@@ -45,23 +45,6 @@ public class DiplomaServices {
         return diplomaThesesRepository.findAll();
     }
 
-
-//    @Async
-//    @Cacheable(value = "getAllDiplomaPdfById")
-//    public List<Object[]> getAllDiplomaPdfById() {
-//        return diplomaThesesRepository.findAllDiplomaPDFById();
-//    }
-//
-//    ///////////
-//    @Async
-//    @Cacheable(value = "getDiplomaPdfById")
-//    public byte[] getDiplomaPdfById(Long diplomaId) {
-//        return diplomaThesesRepository.findDiplomaPDFById(diplomaId);
-//    }
-//    ///////////
-
-
-
     @Cacheable("getAllDiplomaThesesWithSelectedFields")
     public List<Diploma_Theses> getAllDiplomaThesesWithSelectedFields() {
         List<Object[]> results = diplomaThesesRepository.findProjectedBy();
@@ -85,21 +68,11 @@ public class DiplomaServices {
 
     @Cacheable("getLikeAndDislikeCounts")
     public Map<String, Integer> getLikeAndDislikeCounts(Long diplomaId) {
-        //System.out.println("diplomaId: " + diplomaId);
-//        Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeDislikeById(diplomaId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with ID: " + diplomaId));
-
         List<Diploma_TLikeDislike_DTO> userLikeAndDislikes = diplomaThesesRepository.findLikeDislikeById(diplomaId);
 
         // Készíts egy Map objektumot a like és dislike értékekkel
         Map<String, Integer> likeAndDislikeCounts = new HashMap<>();
         for (Diploma_TLikeDislike_DTO dto : userLikeAndDislikes) {
-//            System.out.println("ID: " + dto.getId());
-//            System.out.println("User ID: " + dto.getUser_id());
-//            System.out.println("Diploma ID: " + dto.getDiploma_id());
-//            System.out.println("Like: " + dto.getLike());
-//            System.out.println("Dislike: " + dto.getDislike());
-//            System.out.println("------------------------");
             likeAndDislikeCounts.put("like", dto.getLike());
             likeAndDislikeCounts.put("dislike", dto.getDislike());
             likeAndDislikeCounts.put("rowId", Math.toIntExact(dto.getId()));
@@ -269,9 +242,9 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
                                           String keywords){
     try {
 
-        if (pdfBytes.length > MAX_PDF_SIZE) {
-            return "Too large";
-        }
+//        if (pdfBytes.length > MAX_PDF_SIZE) {
+//            return "Too large";
+//        }
 
         // Először alakítsd át InputStream-re
         ByteArrayInputStream pdfInputStream = new ByteArrayInputStream(pdfBytes);
