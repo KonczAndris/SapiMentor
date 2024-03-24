@@ -142,7 +142,12 @@
         <!-- FILTER BAR START-->
         <div class="filter-container">
             <div class="filter-ddowns">
-            <input type="text" class="filter-input" id="filter-input" placeholder="Search by Name..." required>
+
+                <div class="input-container">
+                    <input type="text" class="filter-input" id="filter-input" placeholder="Search by Name..." required>
+                    <div id="suggestion-list"></div>
+                </div>
+
                 <div class="topic-dropdown-container">
                     <div class="topic-dropdown">
                         <button class="topic-dropbtn" onclick="toggleDropdown()">

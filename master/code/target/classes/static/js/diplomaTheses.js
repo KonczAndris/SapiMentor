@@ -105,6 +105,23 @@ function closeDropdown(selectedItem) {
     dropdownContent.classList.remove("active");
 }
 
+function resetInputValue() {
+    const input = document.getElementById('filter-input');
+    const sugList = document.querySelector('#suggestion-list');
+    const topicList = document.querySelector('.topic-checkboxes');
+    if (input) {
+        topicList.style.display = 'none';
+        sugList.style.display = 'none';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const dropBtn = document.querySelector('.dropbtn');
+    if (dropBtn) {
+        dropBtn.addEventListener('click', resetInputValue);
+    }
+});
+
 // ez az uj amivel bezarja a dropdownot
 function closeDropdownTopics(selectedItem) {
     var dropdownContent = document.getElementById("topic-myDropdown");
@@ -1262,10 +1279,73 @@ function searchTable() {
     });
 }
 
+
 document.getElementById('search-button').addEventListener('click', () => {
     document.getElementById('search-button').click();
     searchTable();
 });
+
+function listSuggestions() {
+    const input = document.getElementById('filter-input');
+    const filter = input.value.trim().toUpperCase();
+    const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
+    const selectedValues = Array.from(checkboxes).map(checkbox => checkbox.value.trim().toUpperCase());
+    const suggestionList = document.getElementById('suggestion-list');
+    suggestionList.innerHTML = ''; // Törli a korábbi sugalmakat
+
+    let suggestionCount = 0;
+
+    const table = document.getElementById('dataTable');
+    const rows = table.getElementsByTagName('tr');
+
+    if (filter === '') {
+        const suggestionList = document.getElementById('suggestion-list');
+        suggestionList.style.display = 'none';
+        return;
+    }
+
+    for (let i = 1; i < rows.length && suggestionCount < 5; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        const nameCell = cells[1];
+        const topicCell = cells[3];
+
+        if (nameCell && topicCell) {
+            const nameText = nameCell.textContent.trim().toUpperCase();
+            const topicText = topicCell.textContent.trim().toUpperCase();
+
+            if (nameText.includes(filter) && selectedValues.includes(topicText)) {
+                // Ha mindkét feltétel teljesül, hozzáadja az ajánlatot a listához
+                const span = nameCell.querySelector('span');
+                if (span) {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.textContent = span.textContent;
+
+                    // Az ajánlatokra kattintva beállítja az input mező értékét
+                    suggestionItem.addEventListener('click', function() {
+                        input.value = span.textContent;
+                        suggestionList.style.display = 'none'; // Ajánlatlista elrejtése kattintás után
+                    });
+
+                    suggestionList.appendChild(suggestionItem);
+                    suggestionCount++;
+                }
+            }
+        }
+    }
+
+    // Ha nincs találat, üres üzenet jelenik meg
+    if (suggestionCount === 0) {
+        suggestionList.style.display = 'none';
+        return;
+    }
+
+    // Megjeleníti a sugalmakat
+    suggestionList.style.display = 'block';
+}
+
+// Hozzárendeli az input mezőhöz a függvényt a bevitel eseményre
+document.getElementById('filter-input').addEventListener('input', listSuggestions);
+
 
 document.querySelectorAll('.sortable').forEach(headerCell => {
     headerCell.addEventListener('click', () => {
