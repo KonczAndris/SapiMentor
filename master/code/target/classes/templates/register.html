@@ -10,17 +10,18 @@
     <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 </head>
 
-<body>
+<body class="register-page">
 <div class="center">
     <div class="left">
         <img th:src="@{/img/student.png}" id="image" alt="image">
+        <img th:src="@{/img/student2.png}" id="darkImage" alt="image" style="display:none;">
     </div>
 
     <div class="right">
         <p class="register-text">
             <span class="english-text">Already registered?</span>
             <span class="hungarian-text">Már regisztráltál?</span>
-            <a href="/" th:href="@{/login}">
+            <a class="login-link" href="/" th:href="@{/login}">
                 <span class="english-text">Log in here!</span>
                 <span class="hungarian-text">Jelentkezz be itt!</span>
             </a></p>
@@ -95,5 +96,6 @@
     </div>
 </div>
 <script th:src="@{/js/register.js}"></script>
+<script th:src="@{/js/localSettings.js}"></script>
 </body>
 </html>

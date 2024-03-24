@@ -11,7 +11,7 @@
   <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 </head>
 
-<body>
+<body class="diploma-page">
 
 <div class="taskbar">
     <a href="/" th:href="@{/profile}">
@@ -183,7 +183,10 @@
             </div>
         </div>
 
-        <input type="text" class="filter-input english-text" id="filter-input" placeholder="Search by Name..." required>
+        <div class="input-container">
+        <input type="text" class="filter-input" id="filter-input" placeholder="Search by Name..." required>
+        <div id="suggestion-list"></div>
+        </div>
 
         <div class="tag-box"><p class="tag-box-text">
           <span class="english-text">KEYWORD<br>SEARCH</span>
@@ -421,14 +424,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{/js/diplomaTheses.js}"></script>
 <script th:src="@{/js/functions.js}"></script>
-<script>
-  if (localStorage.getItem('theme') === 'dark') {
-    const darkThemeLink = document.createElement('link');
-    darkThemeLink.rel = 'stylesheet';
-    darkThemeLink.href = '/css/darkTheme.css';
-    document.head.appendChild(darkThemeLink);
-  }
-</script>
+<script th:src="@{/js/localSettings.js}"></script>
 </body>
 
 </html>

@@ -798,6 +798,42 @@ table tr:last-child td {
     margin: 0;
 }
 
+.add-button{
+    background-color: rgb(22, 175, 132);
+    color: white !important;
+    border: none;
+    border-radius: 100px;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.add-button:hover{
+    background-color: rgb(88, 207, 174);
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    border: 1px solid white;
+    transform: scale(1.05);
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.delete-button{
+    background-color: rgb(238, 84, 76);
+    color: white !important;
+    border: none;
+    border-radius: 100px;
+}
+
+.delete-button:hover{
+    background-color: rgb(253, 124, 107);
+    border: 1px solid white;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
 .message-modal-content-mentor-container {
     text-align: center;
     margin-bottom: 9px

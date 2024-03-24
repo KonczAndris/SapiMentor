@@ -847,7 +847,7 @@ function showTopicsAndSkillsInModal() {
                 topicSkillsFuncButtons.className = "func-buttons";
 
                 var saveButton = document.createElement("button");
-                saveButton.className = "add-button";
+                saveButton.className = "add-button green-button";
                 saveButton.id = "save-button";
                 saveButton.textContent = "Save";
                 saveButton.onclick = function () {
@@ -855,7 +855,7 @@ function showTopicsAndSkillsInModal() {
                 }
 
                 var cancelButton = document.createElement("button");
-                cancelButton.className = "delete-button";
+                cancelButton.className = "delete-button red-button";
                 cancelButton.textContent = "Cancel";
                 cancelButton.onclick = function () {
                     closeRow(this);
@@ -1101,7 +1101,7 @@ function notMenteeOrMentor() {
     alertModal.classList.add('alertModal');
     alertModal.innerHTML = `
         <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;  user-select: none;">
-            <div style="background-color: white; padding: 20px; border-radius: 25px; text-align: center;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            <div class="alertModal-content" style="background-color: white; padding: 20px; border-radius: 25px; text-align: center;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                 -webkit-animation-name: animatetop;
                 -webkit-animation-duration: 0.4s;
                 animation-name: animatetop;

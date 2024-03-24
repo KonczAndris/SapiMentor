@@ -98,3 +98,21 @@ function confirmpasswordToggleVisibility(inputId, iconId) {
     }
 }
 
+// Language placeholder text
+function setPlaceholdersBasedOnLanguage() {
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm-password');
+    const changePasswordBtn = document.getElementById('change-password');
+
+    if (localStorage.getItem('language') === 'hungarian') {
+        passwordInput.placeholder = 'Jelszó';
+        confirmPasswordInput.placeholder = 'Jelszó megerősítése';
+        changePasswordBtn.innerText = 'Mentés';
+    } else {
+        passwordInput.placeholder = 'Password';
+        confirmPasswordInput.placeholder = 'Confirm Password';
+        changePasswordBtn.innerText = 'Save';
+    }
+}
+
+setPlaceholdersBasedOnLanguage();

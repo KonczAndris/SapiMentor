@@ -109,7 +109,7 @@
 }
 
 .topic-dropdown {
-    position: relative;
+    /* position: relative; */
     z-index: 1;
 }
 
@@ -122,18 +122,21 @@
     margin: 0;
     width: max-content;
     padding: 0;
-    width: 100%;
+    width: 140px;
     position: relative;
     margin-top: -9px;
     background-color: white;
     border-end-start-radius: 10px;
     border-end-end-radius: 10px;
     position: absolute;
-    z-index: 1000;
+    /* Keep this as 'absolute' */
+    z-index: 2;
+    align-items: start;
 }
 
 .topic-checkboxes label {
     margin-bottom: 5px;
+    margin-left: 10px;
 }
 
 .filter-dropdown-content {
@@ -515,6 +518,8 @@
     height: 90%;
     overflow-x: auto;
     border: 3px solid rgb(22, 175, 132);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(22, 175, 132, 0.5) rgba(0, 0, 0, 0);
 }
 
 .link-table{
@@ -721,6 +726,36 @@ tr {
     color: rgb(238, 84, 76);
     font-size: 16px;
     font-weight: bold;
+}
+
+#suggestion-list {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    display: none;
+    border: 2px solid rgb(0, 0, 0);
+    box-sizing: border-box;
+    margin: 0;
+    width: max-content;
+    padding: 0;
+    width: 150px;
+    position: relative;
+    margin-top: -9px;
+    background-color: white;
+    border-end-start-radius: 10px;
+    border-end-end-radius: 10px;
+    position: absolute;
+    z-index: 2;
+}
+
+#suggestion-list div {
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+#suggestion-list div:hover {
+    opacity: 1;
 }
 
 /* RESPONSIVE DESIGN*/

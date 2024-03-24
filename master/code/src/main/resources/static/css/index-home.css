@@ -1,9 +1,5 @@
 /*CSS TO HOME PAGE*/
 
-.right{
-    height: 100%;
-}
-
 .loading-gif {
     margin: 20px;
     border-radius: 100px;
@@ -11,7 +7,7 @@
 
 @media (max-width: 1000px) {
     .center {
-        height: 90%;
+        height: 100%;
     }
 
     .right{
@@ -21,12 +17,11 @@
 
 #right-content {
     flex-direction: column;
+    width: 100% !important;
 }
 
 .smaller-div {
-    width: 150px;
-    height: 150px;
-    margin: 15px;
+    margin-bottom: 10px;
 }
 
 .div-row{
@@ -36,30 +31,39 @@
     padding-bottom: 0;
 }
 
+.right {
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
 .main-div {
-    margin:2%;
-    width:90%;
+    display: flex;
+    margin: 15px; /* CsÃ¶kkentjÃ¼k a margin-t */
+    width: calc(50% - 20px); /* A main-divek 50%-os szÃ©lessÃ©get kapnak, Ã©s levonjuk a margin Ã©rtÃ©kÃ©t */
     border: 4px solid rgb(22, 175, 132);
     border-radius: 25px;
-    flex-direction: column;
-    display: flex;
-    text-align: center;
-    align-items: center;
+    flex-grow: 1; /* KitÃ¶lti a rendelkezÃ©sre Ã¡llÃ³ helyet */
+    flex-shrink: 1; /* Megengedi a main-divek csÃ¶kkenÃ©sÃ©t, ha kisebb a hely, de nem engedi Å‘ket nÃ¶vekedni */
+    text-align: center !important;
+    align-items: center !important;
     transition: all 0.3s ease;
-    z-index: 1; /* Initial z-index value */
-    opacity:60%;
-    padding: 20px;
+    opacity: 60%;
     user-select: none;
+    flex-direction: column;
+    padding: 25px;
 }
 
 .main-div:hover {
     transform: scale(1.1); /* Scale by 110% on hover */
-    box-shadow: 0 0 20px rgba(22, 175, 132, 0.8); /* Add a glow effect */
     z-index: 2; /* Increase z-index on hover to make it overlap */
     margin-top:20px;
     margin-bottom: 20px;
     opacity: 100%;
-    height:88%;
+    height:100%;
+    border: none;
 }
 
 .index-titles {
@@ -82,47 +86,55 @@
 }
 
 @media (max-width:700px) {
-    .main-div{
-        width: 80%;
+    .main-div {
+        width: calc(100% - 100px); /* A main-divek szÃ©lessÃ©gÃ©t csÃ¶kkentjÃ¼k a margin Ã©rtÃ©kkel */
     }
 
     .column-row{
         display:flex;
         height:100%;
         flex-direction:column;
-        margin-right:20px;
+        margin-left:10px;
         align-items: center;
     }
     .row-row{
         display: none;
+    }
+    .right{
+        overflow-y: auto;
+        overflow-x: auto;
     }
 }
 
 
 @media (max-height: 700px) {
-    .main-div{
-        width: 80%;
+    .main-div {
+        width: calc(100% - 100px); /* A main-divek szÃ©lessÃ©gÃ©t csÃ¶kkentjÃ¼k a margin Ã©rtÃ©kkel */
+        margin: 20px;
     }
 
     .column-row{
         display:flex;
         height:100%;
         flex-direction:column;
-        margin-right:20px;
+        margin-left:10px;
         align-items: center;
     }
     .row-row{
         display: none;
     }
+    .right{
+        overflow-y: auto;
+        overflow-x: auto;
+    }
 
 }
 
 
-
 .small-div-image{
-    max-width: 100%;
+    width: 100px;
     min-width:50px;
+    display: flex;
     border: 4px solid rgb(22, 175, 132);
     border-radius: 25px;
-
 }

@@ -12,7 +12,7 @@
     <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
     <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 </head>
-<body>
+<body class="topics-page">
 <div class="taskbar">
         <a href="/" th:href="@{/profile}">
             <div class="user-img-container">
@@ -96,13 +96,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{/js/functions.js}"></script>
 <script th:src="@{/js/topics.js}"></script>
-<script>
-    if (localStorage.getItem('theme') === 'dark') {
-        const darkThemeLink = document.createElement('link');
-        darkThemeLink.rel = 'stylesheet';
-        darkThemeLink.href = '/css/darkTheme.css';
-        document.head.appendChild(darkThemeLink);
-    }
-</script>
+<script th:src="@{/js/localSettings.js}"></script>
 </body>
 </html>

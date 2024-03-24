@@ -14,7 +14,7 @@
 
 </head>
 
-<body>
+<body class="resources-page">
 <div class="taskbar">
     <a href="/" th:href="@{/profile}">
 
@@ -137,7 +137,12 @@
         <!-- FILTER BAR START-->
         <div class="filter-container">
             <div class="filter-ddowns">
-            <input type="text" class="filter-input" id="filter-input" placeholder="Search by Link-Name..." required>
+
+                <div class="input-container">
+                    <input type="text" class="filter-input" id="filter-input" placeholder="Search by Link-Name..." required>
+                    <div id="suggestion-list"></div>
+                </div>
+
                 <div class="topic-dropdown-container">
                     <div class="topic-dropdown">
                         <button class="topic-dropbtn" onclick="toggleDropdown()">
@@ -331,14 +336,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{/js/functions.js}"></script>
 <script th:src="@{/js/resources.js}"></script>
-<script>
-    if (localStorage.getItem('theme') === 'dark') {
-        const darkThemeLink = document.createElement('link');
-        darkThemeLink.rel = 'stylesheet';
-        darkThemeLink.href = '/css/darkTheme.css';
-        document.head.appendChild(darkThemeLink);
-    }
-</script>
+<script th:src="@{/js/localSettings.js}"></script>
 </body>
 
 </html>

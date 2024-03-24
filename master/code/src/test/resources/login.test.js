@@ -160,3 +160,35 @@ describe('Login functionality', () => {
         expect(submitSpy).toHaveBeenCalled();
     });
 });
+
+// Redirection to Register page testing
+describe('Thymeleaf redirection', () => {
+    test('redirects to /register', () => {
+        const { document } = window;
+        const loginHTMLContent = fs.readFileSync(path.resolve(__dirname, './../../main/resources/templates/login.html'), 'utf-8');
+        const loginDOM = new JSDOM(loginHTMLContent);
+        const loginDocument = loginDOM.window.document;
+        const registerLink = loginDocument.querySelector('.register-link');
+
+        expect(registerLink).toBeTruthy();
+        registerLink.click();
+        expect(registerLink.getAttribute('th:href')).toBe('@{/register}');
+    });
+});
+
+// Redirection to Forgot Password page testing
+describe('Thymeleaf redirection', () => {
+    test('redirects to /forgotPassword', () => {
+        const { document } = window;
+        const loginHTMLContent = fs.readFileSync(path.resolve(__dirname, './../../main/resources/templates/login.html'), 'utf-8');
+        const loginDOM = new JSDOM(loginHTMLContent);
+        const loginDocument = loginDOM.window.document;
+        const forgotPasswordLink = loginDocument.querySelector('.forgotPassword-link');
+
+        expect(forgotPasswordLink).toBeTruthy();
+        forgotPasswordLink.click();
+        expect(forgotPasswordLink.getAttribute('th:href')).toBe('@{/forgotPassword}');
+    });
+});
+
+

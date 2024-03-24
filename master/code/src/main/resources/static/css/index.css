@@ -154,6 +154,7 @@ button{
     box-shadow:  2px 2px 20px rgb(10, 145, 107);
     border-radius: 50px;
     display: flex;
+    align-self: center;
 }
 
 #sapimentor-logo{
@@ -277,7 +278,6 @@ a{
 
 .back-icon {
     max-width: 55px;
-    margin-top: -15px;
     align-self: center;
     transition: box-shadow 0.2s, transform 0.2s;
     margin-right: 10px;
@@ -538,6 +538,10 @@ a{
         justify-content: center;
         margin: 25px;
         width: 26%;
+    }
+
+    .username-container{
+        transform: translate(0, 25%) !important;
     }
 }
 

@@ -2,131 +2,76 @@ body {
     background-color: rgb(34, 75, 63);
 }
 
-/*Profile*/
-
-.profile-container {
-    background-color: rgb(48 48 48);
+#darkImage{
+    max-width: 100%;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    display: block !important;
 }
 
-.profile-left {
+#image{
+    display: none;
+}
+
+.login-page .register-text,
+.register-page, .forgotPassword-page,
+.newPassword-page{
+    color: white !important;
+}
+
+.login-page .right, .login-page .left, .login-page .center,
+.register-page .right, .register-page .left, .register-page .center,
+.forgotPassword-page .right, .forgotPassword-page .left, .forgotPassword-page .center,
+.newPassword-page .right, .newPassword-page .left, .newPassword-page .center,
+.myGroup-page .large-search-box, .myGroup-page .right-search-box
+{
     background-color: rgb(48 48 48);
+    border-radius: 20px;
+    background-image: linear-gradient(to left, rgb(48 48 48), rgb(48 48 48));
+    border: 3px solid rgb(48 48 48);
+}
+
+.index-page .right, .profile-page .right,
+.profile-page .profile-container, .profile-page .profile-left, .profile-page .profile-right,
+.profile-page .section, .myGroup-page .mentor-side.active.selected, .myGroup-page .mentee-side.active.selected,
+.myGroup-page .selected-page, .myGroup-page .profile-modal, .myGroup-page .section, .myGroup-page .profile-right,
+.myGroup-page .profile-modal-right-box, .favorites-page .selected, .favorites-page .left-message-box,
+.favorites-page .right-message-box, .favorites-page .chat-input-box, .resources-page .selected, .exams-page .selected,
+.diploma-page .selected, .resources-page .right, .resources-page .modal-content-resource, .resources-page .dropbtn,
+.exams-page .right, .exams-page .modal-content-examExamples, .diploma-page .right, .diploma-page .modal-content-diplomaTheses,
+.settings-page .right, .settings-page .modal-content, .exams-page .dropbtn, .diploma-page .dropbtn{
+    background-color: rgb(48 48 48) !important;
+    box-shadow: none !important;
+}
+
+.index-page .right span,
+.profile-page, .myGroup-page, .myGroup-page .dropbtn-myGroup, .myGroup-page .dropdown-content-myGroup,
+.myGroup-page .myGroupName, .favorites-page .username-messenger, .favorites-page .profile-button-container-sure,
+.resources-page, .exams-page, .exams-page td, .diploma-page, .diploma-page td, .settings-page{
     color: white;
 }
 
-.modal-content-profile, .modal-content-skills, .modal-content-mentor, .modal-content-upload {
-    border: none;
-    background-color: rgb(34, 75, 63);
-    color: white;
+.profile-page .divider, .myGroup-page .dropbtn-myGroup, .myGroup-page .dropdown-content-myGroup,
+.myGroup-page .divider, .settings-page .divider{
+    background-color: rgb(22, 175, 132) !important;
 }
 
-.profile-right {
-    background-color: rgb(48 48 48);
-    color: white;
+.profile-page td:hover, .profile-page tr:hover, .profile-page .modal-content-profile,
+.profile-page .modal-content-skills, .profile-page .modal-content-upload, .profile-page .modal-content-mentor,
+.alertModal-content, .myGroup-page .left-search-box, .myGroup-page #favorites, .favorites-page #searchMyGroup,
+.resources-page #examExamples, .resources-page #diplomaTheses, .exams-page #resources, .exams-page #diplomaTheses,
+.diploma-page #resources, .diploma-page #exams{
+    background-color: rgb(34, 75, 63) !important;
+    border: none !important;
 }
 
-.section {
-    background-color: rgb(48 48 48);
-    color: white;
+.myGroup-page .mentor-side, .myGroup-page .mentee-side{
+    background-color: rgb(34, 75, 63) !important;
+    color: white !important;
 }
 
-.divider {
-    background-color: #ffffff;
-}
-
-tr:hover {
-    background-color: rgb(40 41 41);
-}
-
-/*MyGroup*/
-
-.large-search-box{
-    background-color: rgb(48 48 48);
-}
-
-.right-search-box{
-    background-color: rgb(48 48 48);
-    color: white
-}
-
-.left-search-box{
-    background-color: rgb(34, 75, 63);
-}
-
-#favorites{
-    background-color: rgb(48 48 48);
-}
-
-/*Favorites*/
-
-#searchMyGroup, .chat-box, .large-message-box, .chat-input-box, .chat-container {
-    background-color: rgb(48 48 48);
-}
-
-.left-message-box {
-    background-color: rgb(48 48 48);
-    color: white;
-}
-
-.emojionearea {
-    background-color: rgb(238 238 238);
-    color: white;
-}
-
-/*Resources*/
-
-#examExamples, #diplomaTheses {
-    background-color: rgb(48 48 48);
-}
-
-.right{
-    background-color: rgb(48 48 48);
-    color: white;
-}
-
-a{
-    color: #9ad6ef;
-}
-
-.modal-content-resource{
-    border: none;
-    background-color: rgb(34, 75, 63);
-    color: white;
-}
-
-.topic-checkboxes{
-    color: black !important;
-}
-
-/*Exams */
-
-#resources{
-    background-color: rgb(48 48 48);
-}
-
-span{
-    color: #48f9cd;
-}
-
-.modal-content-examExamples{
-    border: none;
-    background-color: rgb(34, 75, 63);
-    color: white;
-}
-
-/*Diploma Theses*/
-
-.modal-content-diplomaTheses{
-    border: none;
-    background-color: rgb(34, 75, 63);
-    color: white;
-}
-
-/*Settings*/
-
-.checkmark-setting{
-    background-color: rgb(48 48 48);
-}
-
-.modal-content{
-    background-color: rgb(34, 75, 63);
+.resources-page #topic-myCheckboxes, .diploma-page #topic-myCheckboxes, .exams-page #topic-myCheckboxes {
+    color: rgb(48 48 48) !important;
 }
