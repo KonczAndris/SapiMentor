@@ -45,7 +45,7 @@
     </div>
 
     <div class="form-group form-group-profile menu-function-profile current-page">
-        <a href="/" th:href="@{/profile}">
+        <a href="/" th:href="@{/profile}" id="profile-navigation-btn">
 
           <div class="user-img-container">
           <img th:if="${profileImageBase64 != ''}"
@@ -64,35 +64,35 @@
     <div class="menu-divider"></div>
     <div class="form-group" >
       <p class="menu-function">
-        <a th:onclick="${not userRolesToDisplay.contains('MENTOR') and not userRolesToDisplay.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
+        <a id="myGroup-navigation-btn" th:onclick="${not userRolesToDisplay.contains('MENTOR') and not userRolesToDisplay.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
           <span class="english-text">My Group</span>
           <span class="hungarian-text">Csoportom</span>
         </a> </p>
     </div>
     <div class="form-group" >
       <p class="menu-function">
-        <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon">
+        <a id="topics-navigation-btn" href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon">
           <span class="english-text">Topics</span>
           <span class="hungarian-text">Témák</span>
         </a> </p>
     </div>
     <div class="form-group">
       <p class="menu-function">
-        <a href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon">
+        <a id="resources-navigation-btn" href="/" th:href="@{/resources}"> <img th:src="@{/img/resource.png}" alt="Icon" class="menu-icon">
           <span class="english-text">Resources</span>
           <span class="hungarian-text">Segédanyagok</span>
         </a> </p>
     </div>
     <div class="form-group">
       <p class="menu-function">
-        <a href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon">
+        <a id="settings-navigation-btn" href="/" th:href="@{/settings}"> <img th:src="@{/img/settings.png}" alt="Icon" class="menu-icon">
           <span class="english-text">Settings</span>
           <span class="hungarian-text">Beállítások</span>
         </a> </p>
     </div>
     <div class="form-group">
       <p class="menu-function">
-        <a href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon">
+        <a id="logout-navigation-btn" href="/logout"  > <img th:src="@{/img/logout.png}" alt="Icon" class="menu-icon">
           <span class="english-text">Logout</span>
           <span class="hungarian-text">Kijelentkezés</span>
         </a> </p>
@@ -126,7 +126,7 @@
             </div>
 
             <!-- UPLOAD MODAL START -->
-            <div id="uploadModal" class="modal-upload">
+            <div id="uploadModal" class="modal-upload" style="display: none">
               <div class="modal-content-upload">
                 <span class="close-upload">&times;</span>
 
@@ -175,7 +175,7 @@
             </div>
 
             <!-- MENTOR MODAL START -->
-            <div id="mentorModal" class="modal-mentor">
+            <div id="mentorModal" class="modal-mentor" style="display: none">
               <div class="modal-content-mentor">
                 <span class="close-mentor">&times;</span>
                 <div class="message-modal-content-mentor-container">
@@ -243,7 +243,7 @@
           </h2>
 
           <!-- ABOUT MODAL START -->
-          <div id="myModal" class="modal-profile">
+          <div id="myModal" class="modal-profile" style="display: none">
             <form id="edit-form" th:action="@{/profile/save}" method="post">
             <div class="modal-content-profile">
               <span class="close">&times;</span>
@@ -395,7 +395,7 @@
             </div>
           </h2>
           <!-- SKILLS MODAL START -->
-          <div id="skillsModal" class="modal-skills">
+          <div id="skillsModal" class="modal-skills" style="display: none">
             <div class="modal-content-skills">
               <!-- Hibaüzenet megjelenítése -->
 

@@ -6,5 +6,8 @@ module.exports = {
     moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'node'],
     setupFiles: [
         './setupJest.js'
-    ]
+    ],
+    transform: {
+        '^.+\\.css$': 'jest-transform-stub',
+    }
 };

@@ -259,6 +259,10 @@ h2 {
     overflow-x: scroll;
 }
 
+#myModal{
+    display: none;
+}
+
 .modal-content-profile, .modal-content-skills, .modal-content-mentor, .modal-content-upload {
     position: relative;
     background-color: #fefefe;
