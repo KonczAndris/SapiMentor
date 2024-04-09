@@ -30,8 +30,7 @@ public class UserLoginControllerUnitTest {
     @Test
     public void TestShowNewPasswordPage() {
         String token = "exampleToken";
-        // ez a model csak egy példa, hogy hogyan lehet mockolni a modelt
-        // a mockolas azt jelenti hogy a tesztben a valodi model helyett egy olyan modelt hasznalunk amit mi irunk
+
         Model model = new ExtendedModelMap();
         String result = userLoginController.showNewPasswordForm(token, model);
         assertEquals("newPassword", result);

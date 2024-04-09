@@ -284,6 +284,7 @@ public class DiplomaThesesController {
         }
     }
 
+
     // TODO: /setDislikeToInactive
     @PostMapping("/setDislikeToInactive")
     public ResponseEntity<String> setDislikeToInactive(@RequestParam Long diplomaId, Principal principal){

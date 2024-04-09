@@ -169,25 +169,6 @@ public class ProfileController {
         return "redirect:/profile";// Visszatérés a profil oldalra
     }
 
-
-//    @PostMapping("/upload-profile-image")
-//    public String uploadProfileImage(final @RequestParam("image") MultipartFile image,
-//                                     Principal principal,
-//                                     Model model,
-//                                     HttpServletResponse response) {
-//        String username = principal.getName(); // Aktuális felhasználó neve
-//
-//        userService.uploadProfileImage(username, image);
-//
-//        // Frissítsük a felhasználó adatait a modellben
-//        User user = userRepository.findByEmail(username);
-//        UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
-//        System.out.println("IGENJASFJASHKF" + userRegistrationDetails);
-//        model.addAttribute("userRegistrationDetails", userRegistrationDetails);
-//
-//        return "redirect:/profile"; // Visszairányítás a profil oldalra
-//    }
-
     @PostMapping("/upload-profile-image")
     public String uploadProfileImage(final @RequestParam("image") MultipartFile image,
                                      Principal principal,
@@ -198,7 +179,7 @@ public class ProfileController {
         String errorMessage = userService.uploadProfileImage(username, image);
         if (errorMessage != null) {
             model.addAttribute("errorMessage", errorMessage);
-            return "redirect:/profile?errorMessage=" + UriUtils.encode(errorMessage, StandardCharsets.UTF_8);
+            return "redirect:https://profile?errorMessage=" + UriUtils.encode(errorMessage, StandardCharsets.UTF_8);
         }
 
         userService.uploadProfileImage(username, image);
@@ -207,7 +188,7 @@ public class ProfileController {
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
 
         //System.out.println("User details after upload: " + userRegistrationDetails);
-        return "redirect:/profile";
+        return "redirect:https://profile";
     }
 
 
