@@ -9,8 +9,6 @@ const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
 const { window } = new JSDOM(htmlContent);
 
 const { validateEmail } = require('./../../main/resources/static/js/forgotPassword.js');
-require('./../../main/resources/static/js/forgotPassword.js')
-const {validateFirstName, validateLastName, validatePassword} = require("../../main/resources/static/js/register");
 
 // Forgot Password page load testing
 describe('Forgot Password page loading', () => {

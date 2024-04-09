@@ -268,26 +268,19 @@ function setupModal() {
     var btn = document.getElementById("myBtn");
     var span = document.getElementsByClassName("close")[0];
 
-    if (modal && btn && span) {
-        btn.onclick = function() {
+    if (btn && modal) {
+        btn.addEventListener("click", function() {
             modal.style.display = "block";
-        };
-        span.onclick = function() {
+        });
+    }
+
+    // Add event listener to the close button to hide the modal
+    if (span && modal) {
+        span.addEventListener("click", function() {
             modal.style.display = "none";
-        };
+        });
     }
 }
-
-function setupAboutModal() {
-    var modal = document.getElementById("myModal");
-    modal.style.display = "block";
-}
-
-const aboutButton = document.querySelector('#myBtn');
-
-aboutButton.onclick = function() {
-    setupAboutModal();
-};
 
 function validateFirstName() {
     var firstNameInput = document.getElementById("firstName-edit");
@@ -608,8 +601,6 @@ function addSelectedTopic() {
 
             topicSkills.appendChild(skillContainerTdElement);
             topicSkills.appendChild(TopicSkillsfuncButtonsCell);
-
-
 
             var tableContainer = document.querySelector(".table-container table tbody");
 
@@ -957,8 +948,15 @@ function redirectToMyGroup() {
 document.addEventListener("DOMContentLoaded", function() {
     setupMentorModal();
 });
-setupModal();
-setupSkillsModal();
+
+document.addEventListener("DOMContentLoaded", function() {
+    setupModal();
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    setupSkillsModal();
+});
+
 document.addEventListener("DOMContentLoaded", function() {
     setupUploadModal();
 });
@@ -986,4 +984,4 @@ window.onload = showTopicsAndSkillsInModal();
 
 
 // Jest testing exports
-module.exports = {setupModal, setupAboutModal};
+module.exports = {setupModal, setupMentorModal, setupUploadModal, setupSkillsModal, validatePhone, validateFirstName, validateLastName, validateYear, validateSpecialization, checkValidationAndSetOpacity, toggleDropdown};

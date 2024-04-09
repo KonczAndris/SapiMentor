@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Language placeholder text
 function setPlaceholdersBasedOnLanguage() {
+    document.addEventListener('DOMContentLoaded', function() {
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const loginButton = document.getElementById('login-submit');
@@ -123,10 +124,10 @@ function setPlaceholdersBasedOnLanguage() {
         passwordInput.placeholder = 'Enter Password';
         loginButton.value = 'Login';
     }
+    });
 }
 
 setPlaceholdersBasedOnLanguage();
 
 // Jest testing exports
 module.exports = {validateUsername, validatePassword, performXMLHttpRequest};
-

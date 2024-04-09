@@ -45,19 +45,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Language placeholder text
 function setPlaceholdersBasedOnLanguage() {
-    const emailInput = document.getElementById('email');
-    const sendEmailButton = document.getElementById('send-email');
+    document.addEventListener('DOMContentLoaded', function() {
+        const emailInput = document.getElementById('email');
+        const sendEmailButton = document.getElementById('send-email');
 
-    if (localStorage.getItem('language') === 'hungarian') {
-        emailInput.placeholder = 'Email cím';
-        sendEmailButton.innerText = 'Elküld';
-    } else {
-        emailInput.placeholder = 'Enter Email';
-        sendEmailButton.innerText = 'Send';
-    }
+        if (emailInput) { // Check if emailInput is not null
+            if (localStorage.getItem('language') === 'hungarian') {
+                emailInput.placeholder = 'Email cím';
+                sendEmailButton.innerText = 'Elküld';
+            } else {
+                emailInput.placeholder = 'Enter Email';
+                sendEmailButton.innerText = 'Send';
+            }
+        }
+    });
 }
 
 setPlaceholdersBasedOnLanguage();
+
 
 // Jest testing exports
 module.exports = {validateEmail};

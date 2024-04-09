@@ -108,6 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Language placeholder text
 function setPlaceholdersBasedOnLanguage() {
+    document.addEventListener('DOMContentLoaded', function() {
     const firstNameInput = document.getElementById('firstName');
     const lastNameInput = document.getElementById('lastName');
     const emailInput = document.getElementById('email');
@@ -127,6 +128,7 @@ function setPlaceholdersBasedOnLanguage() {
         passwordInput.placeholder = 'Enter Password';
         registerButton.textContent = 'Register';
     }
+    });
 }
 
 // Hívjuk meg a függvényt az oldal betöltésekor
