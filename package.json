@@ -18,6 +18,7 @@
     "expect": "^29.7.0",
     "fetch-mock": "^9.11.0",
     "jsdom": "^24.0.0",
+    "react-dom": "^18.2.0",
     "sinon": "^17.0.1",
     "test": "^3.3.0",
     "text-encoding": "^0.7.0"
