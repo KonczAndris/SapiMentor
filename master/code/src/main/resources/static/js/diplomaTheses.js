@@ -77,22 +77,26 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
+document.addEventListener("DOMContentLoaded", function() {
 document.getElementById("examExamples").addEventListener("click", function () {
     window.location.href = "/resources/examExamples";
 });
+});
 
+document.addEventListener("DOMContentLoaded", function() {
 document.getElementById("resources").addEventListener("click", function () {
     window.location.href = "/resources";
-});
+});});
 
+document.addEventListener("DOMContentLoaded", function() {
 document.getElementById("examExamplesDrop").addEventListener("click", function () {
     window.location.href = "/resources/examExamples";
-});
+});});
 
+document.addEventListener("DOMContentLoaded", function() {
 document.getElementById("resourcesDrop").addEventListener("click", function () {
     window.location.href = "/resources";
-});
+});});
 
 function toggleFilterDropdown() {
     var dropdownContent = document.getElementById("filter-myDropdown");
@@ -317,7 +321,9 @@ function closeModal() {
 
 // Add click event listener to the "Cancel" button
 var cancelButton = document.querySelector('.cancel-button-modal.close-diplomaTheses');
-cancelButton.addEventListener('click', closeModal);
+document.addEventListener("DOMContentLoaded", function() {
+    cancelButton.addEventListener('click', closeModal);
+});
 
 function closeModalOnClickOutside() {
     var modal1 = document.getElementById("diplomaThesesModal");
@@ -333,7 +339,7 @@ setupSkillsModal();
 closeModalOnClickOutside();
 
 
-// Function to handle file selection and update the input field
+document.addEventListener("DOMContentLoaded", function() {
 document.getElementById("fileUpload").addEventListener("change", function() {
     const fileInput = document.getElementById("fileUpload");
     const fileNameInput = document.getElementById("diplomaThesesFileName-edit");
@@ -346,11 +352,13 @@ document.getElementById("fileUpload").addEventListener("change", function() {
         fileNameInput.value = selectedFile.name;
     }
 });
+});
 
-// Function to trigger the file input when the upload button is clicked
-document.getElementById("fileUploadButton").addEventListener("click", function() {
-    const fileInput = document.getElementById("fileUpload");
-    fileInput.click();
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("fileUploadButton").addEventListener("click", function() {
+        const fileInput = document.getElementById("fileUpload");
+        fileInput.click();
+    });
 });
 
 var linkCounter = 0;
@@ -576,6 +584,7 @@ var pdfImageModal = document.querySelector(".pdf-image-modal");
 //     });
 // }
 //
+if (typeof jQuery !== 'undefined') {
 $(document).ready(async function () {
     $(document).trigger('myCustomLoadEvent');
 
@@ -851,6 +860,9 @@ $(document).ready(async function () {
         });
     });
 });
+} else {
+    console.warn('jQuery is not defined. Skipping jQuery-dependent code.');
+}
 
 ////////ezt kell megnezni mert ez ker le egy csomo mindent valamiert
 // NEGYEDIK VERZIO (vegleges)
@@ -1279,11 +1291,52 @@ function searchTable() {
     });
 }
 
+// Search function for testing
+function searchTableForTesting(input, table, selectedValues) {
+    const filter = input.value.toUpperCase();
+    const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
 
+
+    const rows = table.getElementsByTagName('tr');
+    const filteredRows = [];
+
+    for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        let nameFound = false;
+        let topicFound = false;
+
+        const cell = cells[1];
+
+        if (cell) {
+            const cellText = cell.textContent || cell.innerText;
+            if (cellText.toUpperCase().indexOf(filter) > -1) {
+                nameFound = true;
+            }
+        }
+
+        const topicCell = cells[3];
+
+        if (topicCell) {
+            const cellContent = topicCell.textContent || topicCell.innerText;
+            if (selectedValues.includes(cellContent.trim())) {
+                topicFound = true;
+            }
+        }
+
+        if (nameFound && topicFound) {
+            filteredRows.push(rows[i]);
+            rows[i].style.display = '';
+        } else {
+            rows[i].style.display = 'none';
+        }
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
 document.getElementById('search-button').addEventListener('click', () => {
     document.getElementById('search-button').click();
     searchTable();
-});
+});});
 
 function listSuggestions() {
     const input = document.getElementById('filter-input');
@@ -1343,9 +1396,9 @@ function listSuggestions() {
     suggestionList.style.display = 'block';
 }
 
-// Hozzárendeli az input mezőhöz a függvényt a bevitel eseményre
-document.getElementById('filter-input').addEventListener('input', listSuggestions);
-
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('filter-input').addEventListener('input', listSuggestions);
+});
 
 document.querySelectorAll('.sortable').forEach(headerCell => {
     headerCell.addEventListener('click', () => {
@@ -1446,4 +1499,5 @@ function prevInfoPage() {
     }
 }
 
-
+// Jest testing exports
+module.exports = {searchTableForTesting};
