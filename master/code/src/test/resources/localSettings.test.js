@@ -44,6 +44,7 @@ describe('localSettings', () => {
 
             const englishTextElement = document.querySelector('.english-text');
             expect(englishTextElement.style.display).toBe('none');
+
         });
 
         test('should hide Hungarian texts if language is not Hungarian', () => {
