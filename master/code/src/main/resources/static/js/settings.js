@@ -185,7 +185,6 @@ if (localStorage.getItem('theme') === 'dark') {
     darkCheckbox.checked = true;
     applyDarkTheme();
 }
-
 else{
  lightCheckbox.checked = true;
 }
