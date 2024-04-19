@@ -39,9 +39,7 @@ async function onMessageReceivedNotificationInDiplomaThesesPage(payload) {
     });
 }
 
-// ez azert hogy a valosideju ertesiteseket is megkapjuk
-// es ha frissitunk vagy ha csak siman ugy kapunk ertesitest hogy nem vagyunk
-// belepve akkor is megkapjuk az ertesitest
+
 document.addEventListener('DOMContentLoaded', () => {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -76,23 +74,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-
-
+document.addEventListener("DOMContentLoaded", function() {
 document.getElementById("examExamples").addEventListener("click", function () {
     window.location.href = "/resources/examExamples";
 });
+});
 
+document.addEventListener("DOMContentLoaded", function() {
 document.getElementById("resources").addEventListener("click", function () {
     window.location.href = "/resources";
-});
+});});
 
+document.addEventListener("DOMContentLoaded", function() {
 document.getElementById("examExamplesDrop").addEventListener("click", function () {
     window.location.href = "/resources/examExamples";
-});
+});});
 
+document.addEventListener("DOMContentLoaded", function() {
 document.getElementById("resourcesDrop").addEventListener("click", function () {
     window.location.href = "/resources";
-});
+});});
 
 function toggleFilterDropdown() {
     var dropdownContent = document.getElementById("filter-myDropdown");
@@ -317,7 +318,9 @@ function closeModal() {
 
 // Add click event listener to the "Cancel" button
 var cancelButton = document.querySelector('.cancel-button-modal.close-diplomaTheses');
-cancelButton.addEventListener('click', closeModal);
+document.addEventListener("DOMContentLoaded", function() {
+    cancelButton.addEventListener('click', closeModal);
+});
 
 function closeModalOnClickOutside() {
     var modal1 = document.getElementById("diplomaThesesModal");
@@ -333,7 +336,7 @@ setupSkillsModal();
 closeModalOnClickOutside();
 
 
-// Function to handle file selection and update the input field
+document.addEventListener("DOMContentLoaded", function() {
 document.getElementById("fileUpload").addEventListener("change", function() {
     const fileInput = document.getElementById("fileUpload");
     const fileNameInput = document.getElementById("diplomaThesesFileName-edit");
@@ -346,11 +349,13 @@ document.getElementById("fileUpload").addEventListener("change", function() {
         fileNameInput.value = selectedFile.name;
     }
 });
+});
 
-// Function to trigger the file input when the upload button is clicked
-document.getElementById("fileUploadButton").addEventListener("click", function() {
-    const fileInput = document.getElementById("fileUpload");
-    fileInput.click();
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("fileUploadButton").addEventListener("click", function() {
+        const fileInput = document.getElementById("fileUpload");
+        fileInput.click();
+    });
 });
 
 var linkCounter = 0;
@@ -470,7 +475,7 @@ function saveDiplomaThesesDataToServer() {
     //console.log(data);
     // sendDiplomaThesesDataToServer(data);
 }
-// ezt is andrisnak
+
 function showLoadingModal() {
     var modal = document.getElementById("loading-modal");
     modal.style.display = "block"; // Megjelenítjük a modal ablakot
@@ -538,44 +543,189 @@ function showErrorMessageInDiploma(message) {
     // További stílusok vagy műveletek hozzáadhatók a látványosság érdekében
 }
 
-//NEW
-// Get the elements
 var pdfImageContainer = document.querySelector(".pdf-image-image-container");
 var pdfImageModal = document.querySelector(".pdf-image-modal");
-// Show the modal on hover
-// pdfImageContainer.addEventListener("click", function() {
-//     pdfImageModal.style.display = "block";
-//     pdfImageModal.style.cursor = "default";
-// });
 
-// Hide the modal when clicking outside of it
-// window.addEventListener("click", function(event) {
-//     if (event.target == pdfImageModal) {
-//         pdfImageModal.style.display = "none";
-//     }
-// });
 
-// Eltároljuk az összes sor és modális ablak elemet
-// const pdfImageContainers = document.querySelectorAll('.pdf-image-image-container');
-// const pdfImageModals = document.querySelectorAll('.pdf-image-modal');
-// // Az egyes sorokhoz rendelt modális ablakok kezelése
-// for (let i = 0; i < pdfImageContainers.length; i++) {
-//     const pdfImageContainer = pdfImageContainers[i];
-//     const pdfImageModal = pdfImageModals[i];
-//
-//     pdfImageContainer.addEventListener("click", function() {
-//         pdfImageModal.style.display = "block";
-//         pdfImageModal.style.cursor = "default";
-//     });
-//
-//     // Az egyes modális ablakok elrejtése, ha a modális ablakon kívülre kattintunk
-//     window.addEventListener("click", function(event) {
-//         if (event.target == pdfImageModal) {
-//             pdfImageModal.style.display = "none";
-//         }
-//     });
-// }
-//
+// Like és Dislike buttons
+function sendLikeOrDislike(diplomaId, action) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    const sseUrl = "/sse/sendLikeOrDislikeForDiploma"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
+
+    const url = `/resources/diplomaTheses/${action}?diplomaId=${diplomaId}`;
+    //console.log("URL: " + url);
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log("Lassu vagyok");
+                // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
+                // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
+                fetch(sseUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({message: `${action}:${diplomaId}`}), // Konvertáljuk JSON formátumra
+                    headers: {
+                        'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
+                        'X-CSRF-TOKEN': token
+                    },
+                })
+                response.text().then(data => {
+                    // Kezeld itt a szöveget (data)
+                    //console.log('sendLikeOrDislike Response:', data);
+                    //console.log(data);
+                    // Például: frissítheted a DOM-ot adataink alapján
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                throw new Error('Request failed');
+            }
+        })
+        .then(data => {
+            //console.log('Response:', data);
+            // A válaszban érkező adatokat kezelheted itt (opcionális)
+            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(diplomaId, action) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    const sseUrl = "/sse/sendLikeOrDislikeForDiploma"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
+
+    const url = `/resources/diplomaTheses/${action}?diplomaId=${diplomaId}`;
+    //console.log("URL: " + url);
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
+                // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
+                fetch(sseUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({message: `${action}:${diplomaId}`}), // Konvertáljuk JSON formátumra
+                    headers: {
+                        'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
+                        'X-CSRF-TOKEN': token
+                    },
+                })
+                response.text().then(data => {
+                    // Kezeld itt a szöveget (data)
+                    //console.log('sendLikeOrDislike Response:', data);
+                    //console.log(data);
+                    // Például: frissítheted a DOM-ot adataink alapján
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                throw new Error('Request failed');
+            }
+        })
+        .then(data => {
+            //console.log('Response:', data);
+            // A válaszban érkező adatokat kezelheted itt (opcionális)
+            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function setLikeOrDislikeStatusToActiveOrInactive(diplomaId, action) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    //const sseUrl = "/sse/sendLikeOrDislike"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
+
+    const url = `/resources/diplomaTheses/${action}?diplomaId=${diplomaId}`;
+    //console.log("URL: " + url);
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        },
+    }).then(response => {
+        if (response.ok) {
+            //console.log(response.text());
+            return response.text();
+        } else {
+            throw new Error('Request failed');
+        }
+    }).then(data => {
+        //console.log(data);
+    }).catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function handleLikeButtonClick(likeButton) {
+    console.log("likeButtonelso", likeButton);
+    const rowId = likeButton.closest('tr').id;
+    const diplomaId = rowId.replace('diploma-row-', '');
+    if (likeButton.classList.contains('like-button-link-active')) {
+        sendLikeOrDislike(diplomaId, 'revokelike');
+
+        likeButton.classList.remove('like-button-link-active');
+        setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setLikeToInactive');
+    } else {
+        const activeDislikeButton = document.querySelector(`#${rowId} .dislike-button-link.dislike-button-link-active`);
+        if (activeDislikeButton) {
+            activeDislikeButton.classList.remove('dislike-button-link-active');
+            sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(diplomaId, 'likeDiplomaAndRevokeDislike');
+            likeButton.classList.add('like-button-link-active');
+
+            setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setLikeToActiveAndDislikeToInactive');
+        } else {
+            sendLikeOrDislike(diplomaId, 'like');
+            likeButton.classList.add('like-button-link-active');
+            setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setLikeToActive');
+        }
+    }
+}
+
+function handleDislikeButtonClick(dislikeButton) {
+    const rowId = dislikeButton.closest('tr').id;
+    const diplomaId = rowId.replace('diploma-row-', '');
+    if (dislikeButton.classList.contains('dislike-button-link-active')) {
+        // Dislike visszavonása
+        sendLikeOrDislike(diplomaId, 'revokedislike');
+
+        dislikeButton.classList.remove('dislike-button-link-active');
+        // Távolítsuk el az aktív dislike gomb állapotát a helyi tárolóból is
+        setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setDislikeToInactive');
+        //localStorage.removeItem(`dislikeButtonState_${UserId}_${resourceId}`);
+    } else {
+        const activeLikeButton = document.querySelector(`#${rowId} .like-button-link.like-button-link-active`);
+        if (activeLikeButton) {
+            activeLikeButton.classList.remove('like-button-link-active');
+            sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(diplomaId, 'dislikeDiplomaAndRevokeLike');
+            dislikeButton.classList.add('dislike-button-link-active');
+            setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setDislikeToActiveAndLikeToInactive');
+        } else {
+            sendLikeOrDislike(diplomaId, 'dislike');
+            dislikeButton.classList.add('dislike-button-link-active');
+            setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setDislikeToActive');
+        }
+    }}
+
+if (typeof jQuery !== 'undefined') {
 $(document).ready(async function () {
     $(document).trigger('myCustomLoadEvent');
 
@@ -606,255 +756,24 @@ $(document).ready(async function () {
         dislikeCountElement.textContent = data.dislike;
     });
 
-
-    function sendLikeOrDislike(diplomaId, action) {
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-
-        const sseUrl = "/sse/sendLikeOrDislikeForDiploma"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
-
-        const url = `/resources/diplomaTheses/${action}?diplomaId=${diplomaId}`;
-        //console.log("URL: " + url);
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRF-TOKEN': token
-            },
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log("Lassu vagyok");
-                    // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
-                    // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
-                    fetch(sseUrl, {
-                        method: 'POST',
-                        body: JSON.stringify({message: `${action}:${diplomaId}`}), // Konvertáljuk JSON formátumra
-                        headers: {
-                            'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
-                            'X-CSRF-TOKEN': token
-                        },
-                    })
-                    response.text().then(data => {
-                        // Kezeld itt a szöveget (data)
-                        //console.log('sendLikeOrDislike Response:', data);
-                        //console.log(data);
-                        // Például: frissítheted a DOM-ot adataink alapján
-                    }).catch(error => {
-                        console.error('Error:', error);
-                    });
-                } else {
-                    throw new Error('Request failed');
-                }
-            })
-            .then(data => {
-                //console.log('Response:', data);
-                // A válaszban érkező adatokat kezelheted itt (opcionális)
-                // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
-
-    function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(diplomaId, action) {
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-
-        const sseUrl = "/sse/sendLikeOrDislikeForDiploma"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
-
-        const url = `/resources/diplomaTheses/${action}?diplomaId=${diplomaId}`;
-        //console.log("URL: " + url);
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRF-TOKEN': token
-            },
-        })
-            .then(response => {
-                if (response.ok) {
-                    // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
-                    // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
-                    fetch(sseUrl, {
-                        method: 'POST',
-                        body: JSON.stringify({message: `${action}:${diplomaId}`}), // Konvertáljuk JSON formátumra
-                        headers: {
-                            'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
-                            'X-CSRF-TOKEN': token
-                        },
-                    })
-                    response.text().then(data => {
-                        // Kezeld itt a szöveget (data)
-                        //console.log('sendLikeOrDislike Response:', data);
-                        //console.log(data);
-                        // Például: frissítheted a DOM-ot adataink alapján
-                    }).catch(error => {
-                        console.error('Error:', error);
-                    });
-                } else {
-                    throw new Error('Request failed');
-                }
-            })
-            .then(data => {
-                //console.log('Response:', data);
-                // A válaszban érkező adatokat kezelheted itt (opcionális)
-                // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
-
-    // ide azt hogy allitsuk at a like gomb erteket 0-ra vagyis inaktivra
-    function setLikeOrDislikeStatusToActiveOrInactive(diplomaId, action) {
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-
-        //const sseUrl = "/sse/sendLikeOrDislike"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
-
-        const url = `/resources/diplomaTheses/${action}?diplomaId=${diplomaId}`;
-        //console.log("URL: " + url);
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRF-TOKEN': token
-            },
-        }).then(response => {
-            if (response.ok) {
-                //console.log(response.text());
-                return response.text();
-            } else {
-                throw new Error('Request failed');
-            }
-        }).then(data => {
-            //console.log(data);
-        }).catch(error => {
-            console.error('Error:', error);
-        });
-    }
-
-
-// A like gomb eseménykezelője
     document.querySelectorAll('.like-button-link').forEach(likeButton => {
-
         likeButton.addEventListener('click', () => {
-            console.log("likeButtonelso", likeButton);
-            // Az adott sor azonosítójának megszerzése
-            const rowId = likeButton.closest('tr').id;
-            const diplomaId = rowId.replace('diploma-row-', '');
-            //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setLikeToActive');
-            if (likeButton.classList.contains('like-button-link-active')) {
-                // Like visszavonása
-                sendLikeOrDislike(diplomaId, 'revokelike');
-
-                likeButton.classList.remove('like-button-link-active');
-                // Távolítsuk el az aktív like gomb állapotát a helyi tárolóból is
-                setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setLikeToInactive');
-                //localStorage.removeItem(`likeButtonState_${UserId}_${resourceId}`);
-            } else {
-                const activeDislikeButton = document.querySelector(`#${rowId} .dislike-button-link.dislike-button-link-active`);
-                if (activeDislikeButton) {
-                    activeDislikeButton.classList.remove('dislike-button-link-active');
-                    //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setDislikeToInactive');
-                    //localStorage.removeItem(`dislikeButtonState_${UserId}_${resourceId}`);
-                    sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(diplomaId, 'likeDiplomaAndRevokeDislike');
-                    // Módosítsuk az osztályt a "like-button-link-active"-ra
-                    likeButton.classList.add('like-button-link-active');
-
-
-                    setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setLikeToActiveAndDislikeToInactive');
-                    // Mentsük el az aktív like gomb állapotát a helyi tárolóban
-                    //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setLikeToActive');
-                    //localStorage.setItem(`likeButtonState_${UserId}_${resourceId}`, 'active');
-                } else {
-                    // Like küldése a szervernek
-                    sendLikeOrDislike(diplomaId, 'like');
-
-                    // Módosítsuk az osztályt a "like-button-link-active"-ra
-                    likeButton.classList.add('like-button-link-active');
-
-                    // Mentsük el az aktív like gomb állapotát a helyi tárolóban
-                    setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setLikeToActive');
-                    //localStorage.setItem(`likeButtonState_${UserId}_${resourceId}`, 'active');
-                }
-            }
-
-            // Ellenőrizze, hogy az adott sorban már van aktív dislike gomb
-            // const activeDislikeButton = document.querySelector(`#${rowId} .dislike-button-link.dislike-button-link-active`);
-            // if (activeDislikeButton) {
-            //     sendRevokeLikeOrDislike(resourceId, 'revokedislike');
-            //     activeDislikeButton.classList.remove('dislike-button-link-active');
-            //     localStorage.removeItem(`dislikeButtonState_${resourceId}`);
-            // }
-
-
+            handleLikeButtonClick(likeButton);
         });
     });
 
-// A dislike gomb eseménykezelője
     document.querySelectorAll('.dislike-button-link').forEach(dislikeButton => {
         dislikeButton.addEventListener('click', () => {
-            // Az adott sor azonosítójának megszerzése
-            const rowId = dislikeButton.closest('tr').id;
-            const diplomaId = rowId.replace('diploma-row-', '');
-
-            // Ellenőrizze, hogy az adott sorban már van aktív like gomb
-            // const activeLikeButton = document.querySelector(`#${rowId} .like-button-link.like-button-link-active`);
-            // if (activeLikeButton) {
-            //     sendRevokeLikeOrDislike(resourceId, 'revokelike');
-            //     activeLikeButton.classList.remove('like-button-link-active');
-            //     localStorage.removeItem(`likeButtonState_${resourceId}`);
-            // }
-            //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setDislikeToActive');
-            if (dislikeButton.classList.contains('dislike-button-link-active')) {
-                // Dislike visszavonása
-                sendLikeOrDislike(diplomaId, 'revokedislike');
-
-                dislikeButton.classList.remove('dislike-button-link-active');
-                // Távolítsuk el az aktív dislike gomb állapotát a helyi tárolóból is
-                setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setDislikeToInactive');
-                //localStorage.removeItem(`dislikeButtonState_${UserId}_${resourceId}`);
-            } else {
-                const activeLikeButton = document.querySelector(`#${rowId} .like-button-link.like-button-link-active`);
-                if (activeLikeButton) {
-                    activeLikeButton.classList.remove('like-button-link-active');
-
-                    // itt a kozosbe kicserelni ezt a meghivast
-                    //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setLikeToInactive');
-                    //localStorage.removeItem(`likeButtonState_${UserId}_${resourceId}`);
-                    sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(diplomaId, 'dislikeDiplomaAndRevokeLike');
-                    // Módosítsuk az osztályt a "dislike-button-link-active"-ra
-                    dislikeButton.classList.add('dislike-button-link-active');
-
-                    setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setDislikeToActiveAndLikeToInactive');
-
-                    // Mentsük el az aktív dislike gomb állapotát a helyi tárolóban
-                    //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setDislikeToActive');
-                    //localStorage.setItem(`dislikeButtonState_${UserId}_${resourceId}`, 'active');
-                } else {
-                    // Dislike küldése a szervernek
-                    sendLikeOrDislike(diplomaId, 'dislike');
-
-                    // Módosítsuk az osztályt a "dislike-button-link-active"-ra
-                    dislikeButton.classList.add('dislike-button-link-active');
-
-                    // Mentsük el az aktív dislike gomb állapotát a helyi tárolóban
-                    setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setDislikeToActive');
-                    //localStorage.setItem(`dislikeButtonState_${UserId}_${resourceId}`, 'active');
-                }
-
-            }
+            handleDislikeButtonClick(dislikeButton);
         });
     });
+
 });
 
-////////ezt kell megnezni mert ez ker le egy csomo mindent valamiert
-// NEGYEDIK VERZIO (vegleges)
-//lekerni az osszes like es dislike allasat az adatbazisbol
+} else {
+    console.warn('jQuery is not defined. Skipping jQuery-dependent code.');
+}
+
 let likeAndDislikeStatuses = [];
 document.addEventListener('DOMContentLoaded', async function () {
     try {
@@ -1144,8 +1063,27 @@ function restoreOriginalTable() {
     const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
     tableBody.innerHTML = '';
 
-    originalRows.forEach(row => tableBody.appendChild(row.cloneNode(true)));
+    originalRows.forEach(row => {
+        const clonedRow = row.cloneNode(true);
+        tableBody.appendChild(clonedRow);
+
+        const likeButton = clonedRow.querySelector('.like-button-link');
+        if (likeButton) {
+            likeButton.addEventListener('click', () => {
+                handleLikeButtonClick(likeButton);
+            });
+        }
+
+        const dislikeButton = clonedRow.querySelector('.dislike-button-link');
+        if (dislikeButton) {
+            dislikeButton.addEventListener('click', () => {
+                handleDislikeButtonClick(dislikeButton);
+            });
+        }
+    });
 }
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const checkbox = document.querySelector('.tags-checkbox');
@@ -1279,11 +1217,52 @@ function searchTable() {
     });
 }
 
+// Search function for testing
+function searchTableForTesting(input, table, selectedValues) {
+    const filter = input.value.toUpperCase();
+    const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
 
+
+    const rows = table.getElementsByTagName('tr');
+    const filteredRows = [];
+
+    for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        let nameFound = false;
+        let topicFound = false;
+
+        const cell = cells[1];
+
+        if (cell) {
+            const cellText = cell.textContent || cell.innerText;
+            if (cellText.toUpperCase().indexOf(filter) > -1) {
+                nameFound = true;
+            }
+        }
+
+        const topicCell = cells[3];
+
+        if (topicCell) {
+            const cellContent = topicCell.textContent || topicCell.innerText;
+            if (selectedValues.includes(cellContent.trim())) {
+                topicFound = true;
+            }
+        }
+
+        if (nameFound && topicFound) {
+            filteredRows.push(rows[i]);
+            rows[i].style.display = '';
+        } else {
+            rows[i].style.display = 'none';
+        }
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
 document.getElementById('search-button').addEventListener('click', () => {
     document.getElementById('search-button').click();
     searchTable();
-});
+});});
 
 function listSuggestions() {
     const input = document.getElementById('filter-input');
@@ -1343,9 +1322,9 @@ function listSuggestions() {
     suggestionList.style.display = 'block';
 }
 
-// Hozzárendeli az input mezőhöz a függvényt a bevitel eseményre
-document.getElementById('filter-input').addEventListener('input', listSuggestions);
-
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('filter-input').addEventListener('input', listSuggestions);
+});
 
 document.querySelectorAll('.sortable').forEach(headerCell => {
     headerCell.addEventListener('click', () => {
@@ -1446,4 +1425,5 @@ function prevInfoPage() {
     }
 }
 
-
+// Jest testing exports
+module.exports = {searchTableForTesting};

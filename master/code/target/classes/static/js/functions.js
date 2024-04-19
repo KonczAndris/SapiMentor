@@ -944,6 +944,32 @@ function redirectToMyGroup() {
     window.location.href = "/myGroup";
 }
 
+//Preload
+const loader = document.getElementById('preloader');
+let loaderStartTime = Date.now();
+
+// Function to hide the loader
+function hideLoader() {
+    const elapsedTime = Date.now() - loaderStartTime;
+    const minimumDisplayTime = 1200;
+
+    // Check if the loader has been displayed for at least 2 seconds
+    if (elapsedTime >= minimumDisplayTime) {
+        loader.style.display = 'none';
+    } else {
+        // If the minimum time hasn't elapsed yet, wait until it does
+        setTimeout(hideLoader, minimumDisplayTime - elapsedTime);
+    }
+}
+
+// Show the loader
+loader.style.display = 'block';
+
+// Call hideLoader function after window load event
+window.addEventListener('load', hideLoader);
+
+
+
 // Function calls
 document.addEventListener("DOMContentLoaded", function() {
     setupMentorModal();

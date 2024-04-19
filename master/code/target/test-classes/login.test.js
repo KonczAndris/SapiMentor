@@ -127,26 +127,23 @@ describe('validatePassword function', () => {
 
 // Login redirecting testing
 describe('Login functionality', () => {
-    test('Login successful login', async () => {
+    test('Successful login', async () => {
         var usernameTestValue = "validUsername@ms.sapientia.ro";
         var passwordTestValue = "validPassword";
-
         document.body.innerHTML = htmlContent;
-
         const usernameInput = document.getElementById('username');
         usernameInput.value = usernameTestValue;
         const passwordInput = document.getElementById('password');
         passwordInput.value = passwordTestValue;
-        const loginForm = document.querySelector('form');
-        const loginButton = document.getElementById('login-submit');
-        const errorMessage = document.getElementById('error-message');
 
         validateUsername();
         validatePassword();
-
         expect(usernameInput.classList.contains("highlight")).toBe(false);
         expect(passwordInput.classList.contains("highlight")).toBe(false);
 
+        const loginForm = document.querySelector('form');
+        const loginButton = document.getElementById('login-submit');
+        const errorMessage = document.getElementById('error-message');
         const submitSpy = jest.spyOn(loginForm, 'dispatchEvent');
         loginForm.dispatchEvent(new Event('submit'));
 

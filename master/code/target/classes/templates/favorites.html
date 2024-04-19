@@ -7,15 +7,18 @@
 <!--        <meta name="_csrf" th:content="${_csrf.token}"/>-->
 <!--        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+    <link rel="preload" th:href="@{/css/favorites.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" th:href="@{/css/favorites.css}"></noscript>
     <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css}" />
     <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
     <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" th:href="@{/css/favorites.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
-
+    <script th:src="@{/js/localThemeSettings.js}"></script>
 </head>
 
 <body class="favorites-page">
+<div id="preloader"> </div>
 
 <div class="taskbar">
     <a href="/" th:href="@{/profile}">
@@ -215,7 +218,7 @@
     <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js}"></script>
     <script th:src="@{/js/functions.js}"></script>
     <script th:src="@{/js/favorites.js}"></script>
-    <script th:src="@{/js/localSettings.js}"></script>
+    <script th:src="@{/js/localLanguageSettings.js}"></script>
 
 </body>
 

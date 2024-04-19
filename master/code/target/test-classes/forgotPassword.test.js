@@ -98,7 +98,7 @@ describe('Forgot Password functionality', () => {
 });
 
 // Redirection to Login page testing
-describe('Thymeleaf redirection', () => {
+describe('Login redirection', () => {
     test('redirects to /login', () => {
         const { document } = window;
         const forgotPasswordHTMLContent = fs.readFileSync(path.resolve(__dirname, './../../main/resources/templates/forgotPassword.html'), 'utf-8');

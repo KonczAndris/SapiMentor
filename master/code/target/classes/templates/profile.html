@@ -8,8 +8,11 @@
   <title>SapiMentor</title>
   <link rel="stylesheet"  type="text/css" th:href="@{/css/myGroup.css}">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/index.css}">
+  <link rel="preload" th:href="@{/css/profile.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" th:href="@{/css/profile.css}"></noscript>
   <link rel="stylesheet"  type="text/css" th:href="@{/css/profile.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
+  <script th:src="@{/js/localThemeSettings.js}"></script>
   <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
   <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
   <link rel="stylesheet"  type="text/css" th:href="@{/css/cropper.css}">
@@ -17,7 +20,7 @@
   <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js}"></script>
 </head>
 <body class="profile-page">
-
+<div id="preloader"> </div>
 <div class="taskbar">
     <a href="/" th:href="@{/profile}">
 
@@ -556,7 +559,7 @@
   });
 
 </script>
-<script th:src="@{/js/localSettings.js}"></script>
+<script th:src="@{/js/localLanguageSettings.js}"></script>
 
 </body>
 </html>

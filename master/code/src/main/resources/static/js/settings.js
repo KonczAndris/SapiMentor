@@ -179,7 +179,8 @@ function applyDarkTheme() {
     }
 }
 
-const lightCheckbox = document.getElementById('light');
+document.addEventListener('DOMContentLoaded', function() {
+    const lightCheckbox = document.getElementById('light');
 // Check if dark theme was selected previously and apply it
 if (localStorage.getItem('theme') === 'dark') {
     darkCheckbox.checked = true;
@@ -188,6 +189,13 @@ if (localStorage.getItem('theme') === 'dark') {
 else{
  lightCheckbox.checked = true;
 }
+    if (localStorage.getItem('theme') === 'dark') {
+        darkCheckbox.checked = true;
+        applyDarkTheme();
+    } else {
+        lightCheckbox.checked = true;
+    }
+});
 
 const hungarianCheckbox = document.getElementById('hungarian');
 const englishCheckbox = document.getElementById('english');
@@ -218,22 +226,24 @@ function applyLanguageSettings() {
     }
 }
 
-// Check if language preference was selected previously and apply it
-const savedLanguage = localStorage.getItem('language');
+document.addEventListener('DOMContentLoaded', function() {
+    const savedLanguage = localStorage.getItem('language');
 if (savedLanguage === 'hungarian') {
     hungarianCheckbox.checked = true;
 } else {
     englishCheckbox.checked = true;
-}
+} });
 
-// Event listener for the save button
-saveSettingsButton.addEventListener('click', function() {
-    applyDarkTheme();
-    applyLanguageSettings();
-    location.reload(); // Reload the page
-});
+document.addEventListener('DOMContentLoaded', function() {
+    saveSettingsButton.addEventListener('click', function() {
+        applyDarkTheme();
+        applyLanguageSettings();
+        location.reload(); // Reload the page
+    });
+} );
 
 function setPlaceholdersBasedOnLanguage() {
+    document.addEventListener('DOMContentLoaded', function() {
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
     const messageTextarea = document.getElementById('message');
@@ -246,8 +256,13 @@ function setPlaceholdersBasedOnLanguage() {
         nameInput.placeholder = 'Your Name';
         emailInput.placeholder = 'Your Email';
         messageTextarea.placeholder = 'Your Message';
-    }
+    } });
 }
 
 // Hívjuk meg a függvényt az oldal betöltésekor
 setPlaceholdersBasedOnLanguage();
+
+// Jest testing exports
+module.exports = {onMessageReceivedNotificationInSettingsPage,
+    applyDarkTheme,
+    applyLanguageSettings };

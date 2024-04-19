@@ -602,19 +602,12 @@ function searchUsers(){
     var header = $("meta[name='_csrf_header']").attr("content");
 
     if (menteebutton.classList.contains('active')) {
-        showLoadingModal();
+        // showLoadingModal();
         window.location.href = "/myGroup/mentees";
     } else if (mentorbutton.classList.contains('active')) {
-        showLoadingModal();
+        // showLoadingModal();
         window.location.href = "/myGroup/mentors";
-    } else {
-        //Meg kell jelenitse hogy valamelyiket muszaj kivalasztani
-        // es esetleg azt a mentor/mentee div-nek adjon piros keretet
-        alert("Hibat kell megjelenitsen, ")
-        //window.location.href = "/myGroup/myCustomGroup";
     }
-
-
 }
 
 
@@ -916,10 +909,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             if (menteebutton.classList.contains('active')) {
-                showLoadingModal();
+                // showLoadingModal();
                 window.location.href = "/myGroup/mentees";
             } else if (mentorbutton.classList.contains('active')) {
-                showLoadingModal();
+                // showLoadingModal();
                 window.location.href = "/myGroup/mentors";
             } else {
                 //Meg kell jelenitse hogy valamelyiket muszaj kivalasztani
@@ -928,21 +921,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 //window.location.href = "/myGroup/myCustomGroup";
             }
         } else {
-            // console.log("Kiválasztott skill-ek: ");
-            // Object.keys(selectedSkillsByTopic).forEach(function (topic) {
-            //     console.log("Téma: " + topic);
-            //     console.log("Kijelölt skill-ek: " + selectedSkillsByTopic[topic].join(", "));
-            // });
-
-            //console.log("Adatok: ", searchData);
-
             if (menteebutton.classList.contains('active')) {
                 const queryString = Object.keys(selectedSkillsByTopic).map(topic => {
                     const skills = selectedSkillsByTopic[topic].map(skill => encodeURIComponent(skill)).join(',');
                     return `${encodeURIComponent(topic)}=${skills}`;
                 }).join('&');
                 const url = `/myGroup/mentees/filtered?${queryString}`;
-                showLoadingModal();
+                // showLoadingModal();
                 window.location.href = url;
 
             } else if (mentorbutton.classList.contains('active')) {
@@ -951,7 +936,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     return `${encodeURIComponent(topic)}=${skills}`;
                 }).join('&');
                 const url = `/myGroup/mentors/filtered?${queryString}`;
-                showLoadingModal();
+                // showLoadingModal();
                 window.location.href = url;
             }
 

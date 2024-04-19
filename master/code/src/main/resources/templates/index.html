@@ -5,13 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SapiMentor</title>
     <link rel="stylesheet"  type="text/css" th:href="@{/css/index.css}">
+    <link rel="preload" th:href="@{/css/index-home.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" th:href="@{/css/index-home.css}"></noscript>
     <link rel="stylesheet"  type="text/css" th:href="@{/css/index-home.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
-
+    <script th:src="@{/js/localThemeSettings.js}"></script>
     <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
     <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 </head>
 <body class="index-page">
+
+<div id="preloader"> </div>
+
 <div class="taskbar">
         <a href="/" th:href="@{/profile}">
             <div class="user-img-container">
@@ -194,9 +199,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-  <script th:src="@{/js/WebSocketForIndexPage.js}"></script>
-  <script th:src="@{/js/functions.js}"></script>
-<script th:src="@{/js/localSettings.js}"></script>
+<script th:src="@{/js/WebSocketForIndexPage.js}"></script>
+<script th:src="@{/js/functions.js}"></script>
+<script th:src="@{/js/localLanguageSettings.js}"></script>
 
 </body>
 </html>
