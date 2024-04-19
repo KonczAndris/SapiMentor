@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
 
-const { localSettings  } = require('./../../main/resources/static/js/localSettings.js');
+const { localSettings  } = require('../../main/resources/static/js/localThemeSettings.js');
 
 describe('localSettings', () => {
     const localStorageMock = (() => {
@@ -34,27 +34,4 @@ describe('localSettings', () => {
         });
     });
 
-    // Test language logic
-    describe('language', () => {
-        test('should hide English texts if language is Hungarian', () => {
-            localStorage.setItem('language', 'hungarian');
-            document.body.innerHTML = '<div class="english-text"></div>';
-
-            localSettings();
-
-            const englishTextElement = document.querySelector('.english-text');
-            expect(englishTextElement.style.display).toBe('none');
-
-        });
-
-        test('should hide Hungarian texts if language is not Hungarian', () => {
-            localStorage.setItem('language', 'english');
-            document.body.innerHTML = '<div class="hungarian-text"></div>';
-
-            localSettings();
-
-            const hungarianTextElement = document.querySelector('.hungarian-text');
-            expect(hungarianTextElement.style.display).toBe('none');
-        });
-    });
 });

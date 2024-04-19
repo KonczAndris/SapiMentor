@@ -7,14 +7,18 @@
 <!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
 <!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+    <link rel="preload" th:href="@{/css/resources.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" th:href="@{/css/resources.css}"></noscript>
     <link rel="stylesheet" type="text/css" th:href="@{/css/resources.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
+    <script th:src="@{/js/localThemeSettings.js}"></script>
     <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
     <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 
 </head>
 
 <body class="resources-page">
+<div id="preloader"> </div>
 <div class="taskbar">
     <a href="/" th:href="@{/profile}">
 
@@ -336,7 +340,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{/js/functions.js}"></script>
 <script th:src="@{/js/resources.js}"></script>
-<script th:src="@{/js/localSettings.js}"></script>
+<script th:src="@{/js/localLanguageSettings.js}"></script>
 </body>
 
 </html>

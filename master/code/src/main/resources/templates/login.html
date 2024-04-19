@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Login</title>
+  <link rel="preload" th:href="@{/css/login.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" th:href="@{/css/login.css}"></noscript>
   <link rel="stylesheet"  type="text/css" th:href="@{/css/login.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
+  <script th:src="@{/js/localThemeSettings.js}"></script>
   <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
   <link rel="shortcut icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
 
 </head>
 <body class="login-page">
+
   <div class="center">
     <div class="left">
         <img th:src="@{/img/student.png}" id="image" alt="image">
@@ -116,7 +120,7 @@
     </div>
   </div>
   <script th:src="@{/js/login.js}"></script>
-  <script th:src="@{/js/localSettings.js}"></script>
+<script th:src="@{/js/localLanguageSettings.js}"></script>
 
 </body>
 </html>

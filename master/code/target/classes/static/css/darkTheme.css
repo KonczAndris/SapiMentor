@@ -62,7 +62,7 @@ body {
 .profile-page .modal-content-skills, .profile-page .modal-content-upload, .profile-page .modal-content-mentor,
 .alertModal-content, .myGroup-page .left-search-box, .myGroup-page #favorites, .favorites-page #searchMyGroup,
 .resources-page #examExamples, .resources-page #diplomaTheses, .exams-page #resources, .exams-page #diplomaTheses,
-.diploma-page #resources, .diploma-page #exams{
+.diploma-page #resources, .diploma-page #exams, .diploma-page #examExamples{
     background-color: rgb(34, 75, 63) !important;
     border: none !important;
 }
@@ -74,4 +74,17 @@ body {
 
 .resources-page #topic-myCheckboxes, .diploma-page #topic-myCheckboxes, .exams-page #topic-myCheckboxes {
     color: rgb(48 48 48) !important;
+}
+
+#preloader{
+    background: rgb(48 48 48) url('../gif/preload.gif') no-repeat center;
+    background-size: 15%;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 1000000;
+}
+
+#suggestion-list{
+    color: black !important;
 }
