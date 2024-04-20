@@ -33,15 +33,6 @@
     animation: transitionIn 0.75s;
 }
 
-#preloader{
-    background: #ffffff url('../gif/preload.gif') no-repeat center;
-    background-size: 15%;
-    height: 100vh;
-    width: 100%;
-    position: fixed;
-    z-index: 1000000;
-}
-
 .left::-webkit-scrollbar {
     width: 0;
     background: transparent;
@@ -70,6 +61,27 @@ body {
     background-attachment:fixed;
     overflow: hidden;
     margin: 0;
+}
+
+#preloader {
+    background: linear-gradient(to bottom, #ffffff, rgb(50, 189, 149));
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 1000000;
+    background-size: 15%;
+}
+
+#preloader::after {
+    content: '';
+    background-image: url('../gif/preload.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 15%;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 1000001;
 }
 
 button{
@@ -321,7 +333,8 @@ a{
 }
 
 .loading-gif {
-    width: 20%;
+    margin: 20px;
+    border-radius: 100px;
 }
 
 .modal {
@@ -483,7 +496,7 @@ a{
     .center {
         width: 100%;
         flex-direction: column;
-        margin-top: 90px;
+        margin-top: 40px;
     }
 
     .right{
@@ -491,6 +504,10 @@ a{
         width: 100%;
         margin: 0;
         border-radius: 0;
+    }
+
+    .right-content{
+        margin-bottom:40px !important;
     }
 
     .left {

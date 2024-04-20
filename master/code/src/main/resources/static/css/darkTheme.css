@@ -41,7 +41,7 @@ body {
 .favorites-page .right-message-box, .favorites-page .chat-input-box, .resources-page .selected, .exams-page .selected,
 .diploma-page .selected, .resources-page .right, .resources-page .modal-content-resource, .resources-page .dropbtn,
 .exams-page .right, .exams-page .modal-content-examExamples, .diploma-page .right, .diploma-page .modal-content-diplomaTheses,
-.settings-page .right, .settings-page .modal-content, .exams-page .dropbtn, .diploma-page .dropbtn{
+.settings-page .right, .myGroup-page .right, .settings-page .modal-content, .exams-page .dropbtn, .diploma-page .dropbtn{
     background-color: rgb(48 48 48) !important;
     box-shadow: none !important;
 }
@@ -76,13 +76,24 @@ body {
     color: rgb(48 48 48) !important;
 }
 
-#preloader{
-    background: rgb(48 48 48) url('../gif/preload.gif') no-repeat center;
-    background-size: 15%;
+#preloader {
+    background: linear-gradient(to bottom, #000000, rgb(50, 189, 149));
     height: 100vh;
     width: 100%;
     position: fixed;
     z-index: 1000000;
+}
+
+#preloader::after {
+    content: '';
+    background-image: url('../gif/preload.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 15%;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 1000001;
 }
 
 #suggestion-list{
