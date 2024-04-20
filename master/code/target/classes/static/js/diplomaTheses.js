@@ -478,7 +478,7 @@ function saveDiplomaThesesDataToServer() {
 
 function showLoadingModal() {
     var modal = document.getElementById("loading-modal");
-    modal.style.display = "block"; // Megjelenítjük a modal ablakot
+    modal.style.display = "block";
 }
 
 // ezt is andrisnak
@@ -828,65 +828,6 @@ function handleLikeAndDislikeStatuses() {
     }
 }
 
-
-
-// let diplomaPDF = [];
-// document.addEventListener("DOMContentLoaded", function () {
-//     var token = $("meta[name='_csrf']").attr("content");
-//     var header = $("meta[name='_csrf_header']").attr("content");
-//
-//     fetch("/resources/diplomaTheses/getalldiplomapdf", {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded',
-//             'X-CSRF-TOKEN': token
-//         }
-//     }).then(response => {
-//         if (response.ok) {
-//             return response.json();
-//         } else {
-//             throw new Error('Request failed');
-//         }
-//     })
-//         .then(data => {
-//             //console.log(data.igenigen);
-//             diplomaPDF = data.diplomaPdfsandid;
-//             //console.log(diplomaPDF);
-//             // Elindítjuk a PDF fájlok egyenkénti betöltését
-//             for (let i = 0; i < diplomaPDF.length; i++) {
-//                 const diplomaThesesData = diplomaPDF[i];
-//                 const PDF = diplomaThesesData[0];
-//                 const diplomaId = diplomaThesesData[1];
-//
-//                 loadAndDisplayPDF(PDF, diplomaId);
-//             }
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         })
-//     function loadAndDisplayPDF(pdfContent, diplomaId) {
-//         //console.log('PDF Content:', pdfContent); // Logoljuk az adatot
-//         // A base64 kódolt adatok dekódolása
-//         var binaryPDF = atob(pdfContent);
-//         var arrayPDF = new Uint8Array(binaryPDF.length);
-//         for (var j = 0; j < binaryPDF.length; j++) {
-//             arrayPDF[j] = binaryPDF.charCodeAt(j);
-//         }
-//
-//         // Blob létrehozása a PDF adatokból
-//         var pdfBlob = new Blob([arrayPDF], { type: 'application/pdf;charset=utf-8' });
-//
-//         // Blob URL létrehozása
-//         var blobUrl = URL.createObjectURL(pdfBlob);
-//
-//         var modalPDF = document.getElementById('modalPDF-' + diplomaId);
-//         console.log(modalPDF);
-//
-//         // PDF megjelenítése
-//         modalPDF.href = blobUrl;
-//     }
-// });
-//
 let diplomaPDF = [];
 function getDiplomaId (diplomaId) {
     var token = $("meta[name='_csrf']").attr("content");
@@ -1100,7 +1041,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function searchTable() {
+async function searchTable() {
     if (originalRows.length === 0) {
         saveOriginalRows();
     } else {
@@ -1143,13 +1084,14 @@ function searchTable() {
             }
         }
 
-        if(isCheckboxChecked()){
-        if (tagCell) {
-            const cellText = tagCell.textContent || tagCell.innerText;
-            if (cellText.toUpperCase().indexOf(filter) > -1) {
-                nameFound = true;
+        if (isCheckboxChecked()) {
+            if (tagCell) {
+                const cellText = tagCell.textContent || tagCell.innerText;
+                if (cellText.toUpperCase().indexOf(filter) > -1) {
+                    nameFound = true;
+                }
             }
-        }}
+        }
 
         const topicCell = cells[3];
 
@@ -1197,12 +1139,10 @@ function searchTable() {
     updatePageCounter();
     showRowsForCurrentPage();
 
-
     document.getElementById("next-page-button").addEventListener("click", () => {
         if (currentPage < Math.ceil(filteredRows.length / rowsPerPage)) {
             setPage(currentPage + 1);
-        }
-        else{
+        } else {
             setPage(1);
         }
     });
@@ -1210,11 +1150,14 @@ function searchTable() {
     document.getElementById("prev-page-button").addEventListener("click", () => {
         if (currentPage > 1) {
             setPage(currentPage - 1);
-        }
-        else    {
+        } else {
             setPage(Math.ceil(filteredRows.length / rowsPerPage));
         }
     });
+
+    await new Promise(resolve => setTimeout(resolve, 200)); // Várakozás az eseményfolyamat ciklus végéig
+
+    hideLoadingModal();
 }
 
 // Search function for testing
@@ -1261,7 +1204,8 @@ function searchTableForTesting(input, table, selectedValues) {
 document.addEventListener("DOMContentLoaded", function() {
 document.getElementById('search-button').addEventListener('click', () => {
     document.getElementById('search-button').click();
-    searchTable();
+    showLoadingModal();
+    setTimeout(searchTable, 50);
 });});
 
 function listSuggestions() {
