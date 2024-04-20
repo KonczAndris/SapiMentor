@@ -335,6 +335,7 @@ a{
 .loading-gif {
     margin: 20px;
     border-radius: 100px;
+    width: 20%;
 }
 
 .modal {
