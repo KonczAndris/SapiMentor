@@ -694,7 +694,7 @@ function sendDataToServer(data) {
     }).then(data => {
         console.log(data);
         if (data === "Success") {
-            //location.reload();
+            location.reload();
         }
     })
         .catch(error => {
