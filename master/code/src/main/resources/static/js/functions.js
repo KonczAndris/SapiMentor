@@ -472,9 +472,9 @@ function deleteTopicAndSkills(topicId) {
         type: "POST",
         url: "/deleteTopicAndSkills",
         data: { topicId: topicId },
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader(header, token);
-        },
+        // beforeSend: function (xhr) {
+        //     xhr.setRequestHeader(header, token);
+        // },
         success: function (response) {
             console.log("Sikeres törlés: " + response);
         },
@@ -694,7 +694,7 @@ function sendDataToServer(data) {
     }).then(data => {
         console.log(data);
         if (data === "Success") {
-            location.reload();
+            //location.reload();
         }
     })
         .catch(error => {
@@ -1006,8 +1006,9 @@ document.addEventListener("DOMContentLoaded", function() {
     addSelectedTopic();
 });
 
-window.onload = showTopicsAndSkillsInModal();
-
+if (window.location.href.includes("profile")){
+    window.onload = showTopicsAndSkillsInModal();
+}
 
 // Jest testing exports
 module.exports = {setupModal, setupMentorModal, setupUploadModal, setupSkillsModal, validatePhone, validateFirstName, validateLastName, validateYear, validateSpecialization, checkValidationAndSetOpacity, toggleDropdown};

@@ -182,6 +182,13 @@ function applyDarkTheme() {
 document.addEventListener('DOMContentLoaded', function() {
     const lightCheckbox = document.getElementById('light');
 // Check if dark theme was selected previously and apply it
+if (localStorage.getItem('theme') === 'dark') {
+    darkCheckbox.checked = true;
+    applyDarkTheme();
+}
+else{
+ lightCheckbox.checked = true;
+}
     if (localStorage.getItem('theme') === 'dark') {
         darkCheckbox.checked = true;
         applyDarkTheme();
