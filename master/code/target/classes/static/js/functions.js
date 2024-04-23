@@ -671,7 +671,7 @@ function saveDataToServer() {
     });
     console.log(data);
     sendDataToServer(data);
-    location.reload();
+    showLoadingModal();
 }
 
 function sendDataToServer(data) {
@@ -695,8 +695,7 @@ function sendDataToServer(data) {
     }).then(data => {
         console.log(data);
         if (data === "Success") {
-
-
+            location.reload();
         }
     })
         .catch(error => {
