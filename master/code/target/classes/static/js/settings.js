@@ -234,10 +234,18 @@ if (savedLanguage === 'hungarian') {
     englishCheckbox.checked = true;
 } });
 
+function showPreLoadModal() {
+    var modal = document.getElementById("preloader");
+    modal.style.display = "block";
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     saveSettingsButton.addEventListener('click', function() {
         applyDarkTheme();
         applyLanguageSettings();
+        if (localStorage.getItem('theme') === 'dark') {
+            showPreLoadModal();
+        }
         location.reload(); // Reload the page
     });
 } );

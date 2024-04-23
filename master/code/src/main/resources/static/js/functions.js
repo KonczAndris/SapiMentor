@@ -969,8 +969,6 @@ loader.style.display = 'block';
 // Call hideLoader function after window load event
 window.addEventListener('load', hideLoader);
 
-
-
 // Function calls
 document.addEventListener("DOMContentLoaded", function() {
     setupMentorModal();

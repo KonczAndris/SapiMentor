@@ -670,8 +670,8 @@ function saveDataToServer() {
         }
     });
     console.log(data);
-    sendDataToServer(data);
     showLoadingModal();
+    sendDataToServer(data);
 }
 
 function sendDataToServer(data) {
@@ -968,8 +968,6 @@ loader.style.display = 'block';
 
 // Call hideLoader function after window load event
 window.addEventListener('load', hideLoader);
-
-
 
 // Function calls
 document.addEventListener("DOMContentLoaded", function() {

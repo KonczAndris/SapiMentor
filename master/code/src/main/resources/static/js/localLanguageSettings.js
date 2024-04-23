@@ -9,4 +9,3 @@ function localLanguageSettings() {
 }
 
 localLanguageSettings();
-
