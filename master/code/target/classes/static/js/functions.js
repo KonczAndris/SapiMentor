@@ -670,8 +670,8 @@ function saveDataToServer() {
         }
     });
     console.log(data);
-    sendDataToServer(data);
     showLoadingModal();
+    sendDataToServer(data);
 }
 
 function sendDataToServer(data) {
