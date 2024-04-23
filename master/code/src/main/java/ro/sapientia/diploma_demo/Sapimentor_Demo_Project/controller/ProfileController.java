@@ -294,7 +294,7 @@ public class ProfileController {
     @PostMapping("/updateUserRoleStatus")
     public ResponseEntity<String> updateUserRoleStatus(String selectedRole,
                                                        Principal principal) throws JsonProcessingException {
-        System.out.println("Selected role: " + selectedRole);
+        //System.out.println("Selected role: " + selectedRole);
         String email = principal.getName();
         Long userId = userRepository.findByEmail(email).getId();
 
