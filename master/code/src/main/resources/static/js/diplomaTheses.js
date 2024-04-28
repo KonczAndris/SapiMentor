@@ -870,8 +870,7 @@ function getDiplomaId (diplomaId) {
         .catch(error => {
             hideLoadingModal()
             console.error('Error:', error);
-        })
-
+        });
 }
 
 

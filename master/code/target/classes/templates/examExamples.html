@@ -214,7 +214,6 @@
                 </tr>
                 </thead>
                 <tbody id="link-table-body">
-
                 <tr th:each="exam, stat : ${examsData}" th:id="'exam-row-' + ${exam.id}">
                     <td th:text="${stat.index + 1}"></td>
                     <td class="image-container-column">
@@ -225,6 +224,11 @@
                                 <div class="exam-image-modal-content">
                                     <img th:id="'modalImg-' + ${exam.id}" th:alt="${exam.name}" class="dynamic-resize" />
                                 </div>
+                            </div>
+                            <div class="pdf-image-modal-exams" th:id="'myExModal-' + ${exam.id}" t>
+                                <span class="close-pdf-modal-btn-exams" th:id="'closeModalExBtn-' + ${exam.id}" >&times;</span>
+                                <iframe th:id="'modalExPDF-' + ${exam.id}" th:alt="${exam.name}" class="pdf-image-modal-content-exams" ></iframe>
+                                <a th:id="'modalExPDFMobile-' + ${exam.id}" th:alt="${exam.name}" ></a>
                             </div>
                         </div>
                     </td>
@@ -268,7 +272,7 @@
     </div>
     <div id="loading-modal" class="modal">
         <div class="modal-content">
-            <img class="loading-gif" th:src="@{/gif/loading.gif}" alt="Loading..." />
+            <img class="loading-gif" th:src="@{/gif/preload.gif}" alt="Loading..." />
         </div>
     </div>
     <!-- RESOURCE MODAL START -->
@@ -282,8 +286,8 @@
             <div class="form-group-edit">
                 <div class="detail-row">
                     <label for="fileUpload" class="detail-label">
-                        <span class="english-text">Choose image:</span>
-                        <span class="hungarian-text">Kép kiválasztása:</span>
+                        <span class="english-text">Image or PDF selection:</span>
+                        <span class="hungarian-text">Kép vagy PDF kiválasztása:</span>
                     </label>
                     <div class="fileUpload-row">
                         <input type="file" class="edit-input" id="fileUpload" accept=".jpg, .jpeg, .png, .heic, .pdf " style="display: none;">

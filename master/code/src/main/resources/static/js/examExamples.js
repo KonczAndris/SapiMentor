@@ -486,7 +486,7 @@ function sendExamsDataToServer(data) {
         } else if(data === "Too large"){
             //alert("The file is too large!");
             showErrorMessageInExam("The file is too large!\n" +
-                "The maximum file size is 2MB!");
+                "The maximum file size is 6MB!");
         } else if(data === "Wrong type"){
             //alert("This type png is not supported!");
             showErrorMessageInExam("This type of png is not supported!\n"); // Egyéb hiba esetén
@@ -520,12 +520,13 @@ for (let i = 0; i < examImageContainers.length; i++) {
     const examImageModal = examImageModals[i];
 
         examImageContainer.addEventListener("click", function() {
-            console.log("Igen2 "+ examImageModal.id);
+            //console.log("Igen2 "+ examImageModal.id);
             if (examImageModal.id.includes("ItIsNotAnImage")) {
-                console.log("Igen");
+                //console.log("Igen");
                 getExamImgPdf(examImageModal.id.split("-")[1]);
+                examImageModal.style.cursor = "pointer";
             } else {
-                console.log("Nem");
+                //console.log("Nem");
                 examImageModal.style.display = "block";
                 examImageModal.style.cursor = "default";
             }
@@ -534,15 +535,13 @@ for (let i = 0; i < examImageContainers.length; i++) {
 
     // Az egyes modális ablakok elrejtése, ha a modális ablakon kívülre kattintunk
     window.addEventListener("click", function(event) {
-        if (event.target == examImageModal) {
+        if (event.target === examImageModal) {
             examImageModal.style.display = "none";
         }
     });
 }
 
-function getExamImgPdf(examId) {
-    console.log('Kattintottál az examImageContainer elemre!'+examId);
-}
+
 
 
 // Like Dislike buttons
@@ -1068,15 +1067,15 @@ function searchTable() {
         const examImageContainer = row.querySelector('.exam-image-image-container');
         const examImageModal = row.querySelector('.exam-image-modal');
         const examId = row.id.split('-')[1];
-        console.log("Igenke: " + examId)// Az examId kinyerése a sor ID-jéből
+        //console.log("Igenke: " + examId)// Az examId kinyerése a sor ID-jéből
 
         examImageContainer.addEventListener("click", function() {
-            console.log("Igen2 "+ examImageModal.id);
+            //console.log("Igen2 "+ examImageModal.id);
             if (examImageModal.id.includes("ItIsNotAnImage")) {
-                console.log("Igen");
+                //console.log("Igen");
                 getExamImgPdf(examImageModal.id.split("-")[1]);
             } else {
-                console.log("Nem");
+                //console.log("Nem");
                 examImageModal.style.display = "block";
                 examImageModal.style.cursor = "default";
             }
@@ -1086,7 +1085,7 @@ function searchTable() {
         });
 
         window.addEventListener("click", function(event) {
-            if (event.target == examImageModal) {
+            if (event.target === examImageModal) {
                 examImageModal.style.display = "none";
             }
         });
@@ -1270,5 +1269,128 @@ document.querySelectorAll('.sortable').forEach(headerCell => {
 // document.querySelectorAll('.exam-image-image-container').forEach(imageContainer => {
 //     imageContainer.addEventListener("click", openImageModal);
 // });
+
+
+//// proba ///////////////
+let examPDF = [];
+function getExamImgPdf(examId) {
+    console.log('Kattintottál az examImageContainer elemre!'+examId);
+
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    showLoadingModal()
+    const url = `/resources/examExamples/getexampdfbyid?examId=${examId}`;
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Request failed');
+        }
+    })
+        .then(data => {
+            for (let i = 0; i < data.length; i++) {
+                const id = data[i][0];
+                const examExamplesFile = data[i][1];
+                console.log(id); // exam ID
+                console.log(examExamplesFile); // exam fájl
+                examPDF.push({
+                    id: id,
+                    examExamplesFile: examExamplesFile
+                });
+            }
+            hideLoadingModal()
+            // examPDF = data.diploma;
+            //console.log(diplomaPDF);
+            handlerexamPDFs();
+        })
+        .catch(error => {
+            hideLoadingModal()
+            console.error('Error:', error);
+        });
+}
+
+function handlerexamPDFs() {
+    // Itt már rendelkezésre állnak az adatok
+    //console.log(likeAndDislikeStatuses);
+    //console.log(diplomaPDF.length);
+    // Most már kezelheted az adatokat
+    for (let i = 0; i < examPDF.length; i++) {
+        const examExamplesData = examPDF[i];
+        const PDF = examExamplesData.examExamplesFile;
+        const examId = examExamplesData.id;
+        console.log("PDF ADAT:" + PDF)
+        console.log("Exam ID:" + examId)
+
+        // A base64 kódolt adatok dekódolása
+        var binaryPDF = atob(PDF);
+        var arrayPDF = new Uint8Array(binaryPDF.length);
+        for (var j = 0; j < binaryPDF.length; j++) {
+            arrayPDF[j] = binaryPDF.charCodeAt(j);
+        }
+
+        // Blob létrehozása a PDF adatokból
+        var pdfBlob = new Blob([arrayPDF], { type: 'application/pdf;charset=utf-8' });
+        // Blob URL létrehozása
+        var blobUrl = URL.createObjectURL(pdfBlob);
+        //console.log(blobUrl);
+
+        //console.log(base64Image);
+        var modal = document.getElementById('myExModal-' + examId);
+        var modalPDF = document.getElementById('modalExPDF-' + examId);
+        var modalPDFMobile = document.getElementById('modalExPDFMobile-' + examId);
+        var closeModalBtn = document.getElementById('closeModalExBtn-' + examId);
+        console.log("Igen123: " + modalPDF);
+        console.log("Igen124: " + modal);
+
+        // modal.style.display = 'block';
+        // modalPDF.src = blobUrl;
+        // modalPDF.href = blobUrl;
+        // modalPDF.click();
+        //console.log(modalPDF.src);
+
+        if (isMobileOrTabletScreen()) {
+            // Mobil eszköz esetén
+            modalPDFMobile.href = blobUrl;
+            modalPDFMobile.click();
+        } else {
+            // Nem mobil eszköz esetén
+            modal.style.display = 'block';
+            modalPDF.src = blobUrl;
+            // Adj hozzá egy eseménykezelőt az iframe-hez, hogy megakadályozza az újratöltést, ha a modális ablakon belül kattintasz, de az iframe-en kívül
+            modalPDF.addEventListener("click", function(event) {
+                if (event.target.tagName !== 'IFRAME') {
+                    event.stopPropagation();
+                }
+            });
+
+            // Adj hozzá egy eseménykezelőt a modális ablakhoz, hogy megakadályozza az újratöltést, ha a modális ablakon belül kattintasz, de semmire sem
+            modal.addEventListener("click", function(event) {
+                if (event.target !== modalPDF && event.target !== modalPDFMobile) {
+                    event.stopPropagation();
+                }
+            });
+
+            // Adj hozzá egy eseménykezelőt az "x" ikonhoz, hogy bezárja a modális ablakot
+            closeModalBtn.addEventListener("click", function() {
+                modal.style.display = 'none';
+            });
+        }
+
+    }
+    examPDF = [];
+}
+
+function isMobileOrTabletScreen() {
+    return window.innerWidth <= 1024; // Például, 767 pixel vagy alatta van mobilnak tekintve
+}
+
+
 
 

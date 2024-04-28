@@ -23,6 +23,9 @@ public interface ExamsRepository extends JpaRepository<Exams, Long> {
     @Query("SELECT e.examImage, e.id FROM Exams e")
     List<Object[]> findAllExamImageById();
 
+    @Query("SELECT ex.id, ex.examPDF FROM Exams ex WHERE ex.id = :examId")
+    List<Object[]> findExamPDFById (Long examId);
+
     @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.ExamsLikeDislikeDTO(ex.id, ex.like, ex.dislike) FROM Exams ex WHERE ex.id = :examId")
     List<ExamsLikeDislikeDTO> findLikeDislikeById(Long examId);
 

@@ -145,6 +145,17 @@ public class ExamsController {
         }
     }
 
+    @GetMapping("/getexampdfbyid")
+    public ResponseEntity<List<Object[]>> getExamPdfById(@RequestParam Long examId) {
+        try {
+            List<Object[]> exams = examServices.getExamPdfById(examId);
+            return ResponseEntity.ok(exams);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 
     @PostMapping("/uploadExams")
     public ResponseEntity<String> uploadExams(@RequestParam("image") MultipartFile image,

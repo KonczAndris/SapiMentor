@@ -54,6 +54,11 @@ public class ExamServices {
         return examsRepository.findAllExamImageById();
     }
 
+    @Cacheable("getExamPdfById")
+    public List<Object[]> getExamPdfById(Long examId) {
+        return examsRepository.findExamPDFById(examId);
+    }
+
     //@Cacheable("getExamImage")
 //    public List<Object[]> getExamImage(Long examId) {
 //        //System.out.println("examId: " + examId);
@@ -110,7 +115,7 @@ public class ExamServices {
 
 
     //Ezzel tudod beallitani hogy mekkora legyen a maximalis meret amit feltolthet a felhasznalo
-    private static final long MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2 MB
+    private static final long MAX_IMAGE_SIZE = 6 * 1024 * 1024; // 2 MB
     //private static final long MAX_IMAGE_SIZE = 10 * 1024; // 10 KB
     //private static final long MAX_IMAGE_SIZE = 20 * 1024; // 20 KB
     //private static final long MAX_IMAGE_SIZE = 40 * 1024; // 40 KB
