@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-
 document.getElementById("diplomaTheses").addEventListener("click", function () {
     window.location.href = "/resources/diplomaTheses";
 });
@@ -97,7 +96,6 @@ function toggleFilterDropdown() {
     var dropdownContent = document.getElementById("filter-myDropdown");
     dropdownContent.classList.toggle("active");
 }
-
 
 function closeDropdown(selectedItem) {
     var dropdownContent = document.getElementById("filter-myDropdown");
@@ -202,10 +200,8 @@ function adjustLayout() {
     }
 }
 
-
 adjustLayout();
 window.addEventListener("resize", adjustLayout);
-
 
 function setupExamExamplesModal() {
     var modal = document.getElementById("examExamplesModal");
@@ -229,7 +225,6 @@ function setupExamExamplesModal() {
 }
 
 setupExamExamplesModal();
-
 
 function closeModalOnClickOutside() {
     var modal1 = document.getElementById("examExamplesModal");
@@ -422,25 +417,8 @@ function addLinkRow() {
 }
 
 function saveExamExamplesDataToServer() {
-    //var tableRows = document.querySelectorAll(".table-container table tbody tr");
     var data = [];
 
-    // tableRows.forEach(function (row) {
-    //     var linkNumber = row.querySelector("td:first-child").textContent;
-    //     var linkName = row.querySelector("td:nth-child(2)").textContent;
-    //     var linkTopic = row.querySelector("td:nth-child(3)").textContent;
-    //
-    //     // Assuming you have an array for storing likes and dislikes for each row
-    //     var linkLikes = row.querySelector("td:nth-child(4)").textContent;
-    //
-    //     // Push the data into the 'data' array
-    //     data.push({
-    //         linkNumber: linkNumber,
-    //         linkName: linkName,
-    //         linkTopic: linkTopic,
-    //         linkLikes: linkLikes,
-    //     });
-    // });
     var image = document.getElementById("fileUpload").files[0];
     var imageFileName = document.getElementById("examExampleName-edit").value;
     var imageTopic = document.getElementById("topic-selected-modal").value;
@@ -449,7 +427,6 @@ function saveExamExamplesDataToServer() {
        name: imageFileName,
        image: image,
        topic: imageTopic,
-
     });
 
     if (image === undefined || imageFileName === "" || imageTopic === "Choose a topic") {
@@ -473,7 +450,7 @@ function hideLoadingModal() {
 }
 function sendExamsDataToServer(data) {
     // ide kell majd hogy behozza a toltokepernyot
-    showLoadingModal()
+    showLoadingModal();
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -533,6 +510,7 @@ var examImageContainer = document.querySelector(".exam-image-image-container");
 var examImageModal = document.querySelector(".exam-image-modal");
 var examImageCloseButton = document.querySelector(".exam-image-close-button");
 
+
 // Eltároljuk az összes sor és modális ablak elemet
 const examImageContainers = document.querySelectorAll('.exam-image-image-container');
 const examImageModals = document.querySelectorAll('.exam-image-modal');
@@ -541,10 +519,18 @@ for (let i = 0; i < examImageContainers.length; i++) {
     const examImageContainer = examImageContainers[i];
     const examImageModal = examImageModals[i];
 
-    examImageContainer.addEventListener("click", function() {
-        examImageModal.style.display = "block";
-        examImageModal.style.cursor = "default";
-    });
+        examImageContainer.addEventListener("click", function() {
+            console.log("Igen2 "+ examImageModal.id);
+            if (examImageModal.id.includes("ItIsNotAnImage")) {
+                console.log("Igen");
+                getExamImgPdf(examImageModal.id.split("-")[1]);
+            } else {
+                console.log("Nem");
+                examImageModal.style.display = "block";
+                examImageModal.style.cursor = "default";
+            }
+        });
+
 
     // Az egyes modális ablakok elrejtése, ha a modális ablakon kívülre kattintunk
     window.addEventListener("click", function(event) {
@@ -553,6 +539,11 @@ for (let i = 0; i < examImageContainers.length; i++) {
         }
     });
 }
+
+function getExamImgPdf(examId) {
+    console.log('Kattintottál az examImageContainer elemre!'+examId);
+}
+
 
 // Like Dislike buttons
 function sendLikeOrDislike(examId, action) {
@@ -772,7 +763,6 @@ function handleDislikeButtonClick(dislikeButton) {
             setLikeOrDislikeStatusToActiveOrInactive(examId, 'setDislikeToActive');
             //localStorage.setItem(`dislikeButtonState_${UserId}_${resourceId}`, 'active');
         }
-
     }}
 
 $(document).ready(async function () {
@@ -812,7 +802,6 @@ $(document).ready(async function () {
     });
 })
 
-
 // NEGYEDIK VERZIO (vegleges)
 let likeAndDislikeStatuses = [];
 document.addEventListener('DOMContentLoaded', function () {
@@ -841,7 +830,6 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         })
 });
-
 
 function handleLikeAndDislikeStatuses() {
     // Itt már rendelkezésre állnak az adatok
@@ -910,12 +898,14 @@ function handlerexmaimages() {
         var modal = document.getElementById('myModal-' + examId);
         var modalImg = document.getElementById('modalImg-' + examId);
 
-        //modal.style.display = 'block';
-        modalImg.src = 'data:image/jpeg;base64,' + image;
+        if (image !== null) {
+            modalImg.src = 'data:image/jpeg;base64,' + image;
+        } else {
+            modal.id = modal.id + '-' +'ItIsNotAnImage';
+        }
+
     }
 }
-
-
 
 
 $(document).ready(function() {
@@ -1073,15 +1063,24 @@ function searchTable() {
     const rowsPerPage = 20;
     let currentPage = 1;
 
+    // itt kell viccelodni
     filteredRows.forEach(row => {
         const examImageContainer = row.querySelector('.exam-image-image-container');
         const examImageModal = row.querySelector('.exam-image-modal');
-        const examId = row.id.split('-')[1]; // Az examId kinyerése a sor ID-jéből
+        const examId = row.id.split('-')[1];
+        console.log("Igenke: " + examId)// Az examId kinyerése a sor ID-jéből
 
         examImageContainer.addEventListener("click", function() {
-            examImageModal.style.display = "block";
-            examImageModal.style.cursor = "default";
-
+            console.log("Igen2 "+ examImageModal.id);
+            if (examImageModal.id.includes("ItIsNotAnImage")) {
+                console.log("Igen");
+                getExamImgPdf(examImageModal.id.split("-")[1]);
+            } else {
+                console.log("Nem");
+                examImageModal.style.display = "block";
+                examImageModal.style.cursor = "default";
+            }
+            
             var modalImg = document.getElementById('modalImg-' + examId);
             modalImg.src = 'data:image/jpeg;base64,' + examimages.find(data => data[1] === examId)[0];
         });
@@ -1254,19 +1253,22 @@ document.querySelectorAll('.sortable').forEach(headerCell => {
     });
 });
 
-// A kép megnyitásáért felelős függvény
-function openImageModal(event) {
-    const clickedImage = event.target; // A kattintott kép elem
-    const modal = clickedImage.nextElementSibling; // A kép melletti modális elem
+// // A kép megnyitásáért felelős függvény
+// function openImageModal(event) {
+//     const clickedImage = event.target; // A kattintott kép elem
+//     const modal = clickedImage.nextElementSibling; // A kép melletti modális elem
+//
+//     // Ellenőrizze, hogy a kattintott elem valóban egy kép-e
+//     if (clickedImage.tagName === 'IMG' && modal.classList.contains('exam-image-modal')) {
+//         modal.style.display = "block";
+//     } else {
+//         console.error('The clicked element is not an image or the modal is not found.');
+//     }
+// }
+//
+// // Kép megnyitásának eseménykezelője
+// document.querySelectorAll('.exam-image-image-container').forEach(imageContainer => {
+//     imageContainer.addEventListener("click", openImageModal);
+// });
 
-    // Ellenőrizze, hogy a kattintott elem valóban egy kép-e
-    if (clickedImage.tagName === 'IMG' && modal.classList.contains('exam-image-modal')) {
-        modal.style.display = "block";
-    }
-}
-
-// Kép megnyitásának eseménykezelője
-document.querySelectorAll('.exam-image-image-container').forEach(imageContainer => {
-    imageContainer.addEventListener("click", openImageModal);
-});
 

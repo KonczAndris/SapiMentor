@@ -828,6 +828,8 @@ function handleLikeAndDislikeStatuses() {
     }
 }
 
+// pdf megnyitasahoz /////////////////////////////////////////////////////////
+
 let diplomaPDF = [];
 function getDiplomaId (diplomaId) {
     var token = $("meta[name='_csrf']").attr("content");
@@ -927,6 +929,8 @@ function handlerdiplomaPDFs() {
 function isMobileOrTabletScreen() {
     return window.innerWidth <= 1024; // Például, 767 pixel vagy alatta van mobilnak tekintve
 }
+
+// idaig ////////////////////////////////////////////////////////////////////////////
 
 // Az eseménykezelő, ami bezárja a modalt a bezáró gombra kattintva
 // Bezáró gomb eseménykezelője a modal bezárására

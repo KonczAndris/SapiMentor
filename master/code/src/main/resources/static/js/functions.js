@@ -66,70 +66,77 @@ document.addEventListener('DOMContentLoaded', function () {
         imageUploadInput.click();
     });
 
-    imageUploadInput.addEventListener('change', function (event) {
-        const selectedImage = event.target.files[0];
-        const reader = new FileReader();
+    // ezt javitottam !!!!!!!!!!!!!!!!!
+    if (imageUploadInput !== null) {
+        imageUploadInput.addEventListener('change', function (event) {
+            const selectedImage = event.target.files[0];
+            const reader = new FileReader();
 
-        reader.onload = function (e) {
-            if (profileImage == null) {
-                let profileImage = document.getElementById('change-profile-image-sec');
-                profileImage.src = e.target.result;
-                profileImage.onload = function () {
-                    if (cropper) {
-                        cropper.destroy();
-                    }
+            reader.onload = function (e) {
+                if (profileImage == null) {
+                    let profileImage = document.getElementById('change-profile-image-sec');
+                    profileImage.src = e.target.result;
+                    profileImage.onload = function () {
+                        if (cropper) {
+                            cropper.destroy();
+                        }
 
-                    cropper = new Cropper(profileImage, {
-                        aspectRatio: 1,
-                        viewMode: 1,
+                        cropper = new Cropper(profileImage, {
+                            aspectRatio: 1,
+                            viewMode: 1,
+                        });
+                    };
+                } else {
+                    profileImage.src = e.target.result;
+                    profileImage.onload = function () {
+                        if (cropper) {
+                            console.log("destroy");
+                            cropper.destroy();
+                        }
+                        cropper = new Cropper(profileImage, {
+                            aspectRatio: 1,
+                            viewMode: 1,
+                        });
+                    };
+                }
+                uploadModal.style.display = 'block';
+            };
+            reader.readAsDataURL(selectedImage);
+        });
+    }
+
+    // ezt javitottam !!!!!!!!!!!!!!!!!
+    if (document.getElementById('upload-save') !== null) {
+        document.getElementById('upload-save').addEventListener('click', function (event) {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            if (cropper) {
+                const croppedCanvas = cropper.getCroppedCanvas();
+                if (!croppedCanvas) {
+                    console.error('No cropped image data.');
+                    return;
+                }
+                croppedCanvas.toBlob(function (blob) {
+                    const formData = new FormData();
+                    formData.append('image', blob, 'cropped-image.jpg', { type: 'image/jpeg' });
+                    console.log(formData.getAll('image'));
+                    fetch('/upload-profile-image', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': token
+                        }
+                    }).then(response => {
+                        location.reload();
+                    }).catch(error => {
+                        console.error('An error occurred while uploading the image: ', error);
                     });
-                };
-            } else {
-                profileImage.src = e.target.result;
-                profileImage.onload = function () {
-                    if (cropper) {
-                        console.log("destroy");
-                        cropper.destroy();
-                    }
-                    cropper = new Cropper(profileImage, {
-                        aspectRatio: 1,
-                        viewMode: 1,
-                    });
-                };
+                }, 'image/jpeg');
             }
-            uploadModal.style.display = 'block';
-        };
-        reader.readAsDataURL(selectedImage);
-    });
+        });
+    }
 
-    document.getElementById('upload-save').addEventListener('click', function (event) {
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-
-        if (cropper) {
-            const croppedCanvas = cropper.getCroppedCanvas();
-            if (!croppedCanvas) {
-                console.error('No cropped image data.');
-                return;
-            }
-            croppedCanvas.toBlob(function (blob) {
-                const formData = new FormData();
-                formData.append('image', blob, 'cropped-image.jpg', { type: 'image/jpeg' });
-                console.log(formData.getAll('image'));
-                fetch('/upload-profile-image', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': token
-                    }
-                }).then(response => {
-                    location.reload();
-                }).catch(error => {
-                    console.error('An error occurred while uploading the image: ', error);
-                });
-            }, 'image/jpeg');
-        }
-    });
 
     document.querySelector('.close-upload').addEventListener('click', function () {
         uploadModal.style.display = 'none';
@@ -156,9 +163,12 @@ function setupMentorModal() {
     var mentorBtn = document.getElementById("myMentorBtn");
     var mentorClose = document.getElementsByClassName("close-mentor")[0];
 
-    mentorBtn.onclick = function() {
-        mentorModal.style.display = "flex";
-    };
+    // javitottam !!!!!!!!!!!!!!!!!
+    if (mentorBtn !== null) {
+        mentorBtn.onclick = function() {
+            mentorModal.style.display = "flex";
+        };
+    }
 
     mentorClose.onclick = function() {
         mentorModal.style.display = "none";
@@ -825,10 +835,12 @@ function showTopicsAndSkillsInModal() {
             console.error("Hiba történt az adatok lekérése közben:", error);
         });
 }
-
+// itt javitottam !!!!!!!!!!!!!!!!!
 document.addEventListener('DOMContentLoaded', function() {
     var errorMessageForSkills = document.getElementById('error-message-for-skills');
-    errorMessageForSkills.style.display = 'none';
+    if (errorMessageForSkills !== null){
+        errorMessageForSkills.style.display = 'none';
+    }
 
     var checkboxes = document.querySelectorAll('input[type="checkbox"][name="role"]');
 
@@ -1009,5 +1021,7 @@ if (window.location.href.includes("profile")){
     window.onload = showTopicsAndSkillsInModal();
 }
 
-// Jest testing exports
-module.exports = {setupModal, setupMentorModal, setupUploadModal, setupSkillsModal, validatePhone, validateFirstName, validateLastName, validateYear, validateSpecialization, checkValidationAndSetOpacity, toggleDropdown};
+if (typeof module !== 'undefined') {
+    // Jest testing exports
+    module.exports = {setupModal, setupMentorModal, setupUploadModal, setupSkillsModal, validatePhone, validateFirstName, validateLastName, validateYear, validateSpecialization, checkValidationAndSetOpacity, toggleDropdown};
+}

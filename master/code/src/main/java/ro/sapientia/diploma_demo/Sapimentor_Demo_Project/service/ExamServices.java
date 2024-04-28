@@ -1,5 +1,6 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 
+import com.itextpdf.kernel.pdf.*;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -122,11 +123,11 @@ public class ExamServices {
 
         if (!image.isEmpty()){
             try{
-//                System.out.println("Image size: " + image.getSize());
-//                System.out.println("MAX_IMAGE_SIZE: " + MAX_IMAGE_SIZE);
-//                System.out.println("Image name: " + name);
-//                System.out.println("Image topic: " + topic);
-//                System.out.println("Image user_name: " + user_name);
+                System.out.println("Image size: " + image.getSize());
+                System.out.println("MAX_IMAGE_SIZE: " + MAX_IMAGE_SIZE);
+                System.out.println("Image name: " + name);
+                System.out.println("Image topic: " + topic);
+                System.out.println("Image user_name: " + user_name);
                 if (image.getSize() > MAX_IMAGE_SIZE){
                     return "Too large";
                 }
@@ -156,8 +157,9 @@ public class ExamServices {
 //                        .outputQuality(0.8)  // Itt állítsd be a kívánt minőséget
 //                        .asBufferedImage();
 
+
                 BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
-//                System.out.println("Original image size: " + originalImageBytes.length);
+                System.out.println("Original image size: " + originalImage);
 
                 if (originalImage != null) {
                     // itt folytathatod a képfeldolgozást
@@ -182,18 +184,45 @@ public class ExamServices {
 //
 //                        System.out.println("Scaled image size2: " + scaledImageBytesJPEG.length);
                         //exam.setExamImage(scaledImageBytesJPEG);
-
                         return "Wrong type";
                     } else {
                         exam.setExamImage(scaledImageBytes);
                     }
 
                 } else {
-                    System.out.println("Hiba a kép betöltésekor.");
+                    System.out.println("Error while image loading.");
+                    // itt kell a kep helyett a pdf-et kezelni.
+                    ByteArrayInputStream pdfInputStream = new ByteArrayInputStream(originalImageBytes);
+
+                    // Tömörítés előkészítése iText segítségével
+                    ByteArrayOutputStream compressedPdfStream = new ByteArrayOutputStream();
+                    PdfReader pdfReader = new PdfReader(pdfInputStream);
+                    PdfWriter pdfWriter = new PdfWriter(compressedPdfStream);
+
+                    PdfDocument pdfDocument = new PdfDocument(pdfReader, pdfWriter);
+                    int numPages = pdfDocument.getNumberOfPages();
+
+                    for (int i = 1; i <= numPages; i++) {
+                        PdfPage page = pdfDocument.getPage(i);
+                        PdfDictionary resources = page.getPdfObject().getAsDictionary(PdfName.Resources);
+                        if (resources != null) {
+                            PdfDictionary xObject = resources.getAsDictionary(PdfName.XObject);
+                            if (xObject != null) {
+                                PdfDictionary imageDict = xObject.getAsDictionary(PdfName.Image);
+                                if (imageDict != null) {
+                                    imageDict.put(PdfName.Filter, PdfName.DCTDecode);
+                                }
+                            }
+                        }
+                    }
+
+                    pdfDocument.close();
+                    pdfReader.close();
+                    byte[] compressedPdfBytes = compressedPdfStream.toByteArray();
+                    exam.setExamPDF(compressedPdfBytes);
                 }
 
-                // itt hozza adom a kepet az Exams objektumhoz
-
+                // itt hozza adom a kepet vagy pdf-eket az Exams objektumhoz
                 examsRepository.save(exam);
 
             } catch (Exception e){

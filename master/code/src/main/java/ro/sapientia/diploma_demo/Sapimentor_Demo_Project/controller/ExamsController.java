@@ -151,6 +151,11 @@ public class ExamsController {
                                               @RequestParam("name") String name,
                                               @RequestParam("topic") String topic,
                                               Principal principal){
+        System.out.println("Name: " + name);
+        System.out.println("Topic: " + topic);
+        System.out.println("Image: " + image);
+
+
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
 

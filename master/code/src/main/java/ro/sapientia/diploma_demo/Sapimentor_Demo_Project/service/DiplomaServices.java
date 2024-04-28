@@ -117,17 +117,17 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
 
             try {
                 String searchText = "Abstract";
-                System.out.println("Search text: " + searchText);
+                //System.out.println("Search text: " + searchText);
                 PdfReader pdfReaderForAbstract = new PdfReader(pdf.getInputStream());
                 int abstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReaderForAbstract, searchText);
-                System.out.println("Abstract page number: " + abstractPageNumber);
+                //System.out.println("Abstract page number: " + abstractPageNumber);
 
                 if (abstractPageNumber > 0) {
                     PdfReader pdfReaderForAbstractText = new PdfReader(pdf.getInputStream());
                     // Itt kijavitottam az abstractText-et a GPT3-as verziora
                     String abstractText = "Get 5 or 3 keywords from this text: " + findKeywordsInAbstract.getAbstractText(pdfReaderForAbstractText, abstractPageNumber);
                     abstractText = abstractText.replaceAll("[\\r\\n]+", "");
-                    System.out.println("Abstract text: " + abstractText);
+                    //System.out.println("Abstract text: " + abstractText);
 
                     //////// Itt van a GPT3-as verzio ////////////
 
@@ -146,13 +146,10 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
                                 .getJSONObject("message")
                                 .getString("content");
 
-
-
                         /////// Idaig van a GPT3-as verzio //////////
 
                         //List<String> keywords = findKeywordsInAbstract.extractKeywords(abstractText);
-                        System.out.println("Keywords: " + gpt3Keywords);
-
+                        //System.out.println("Keywords: " + gpt3Keywords);
 
                         String patternString = "^\\d+\\. (.+)";
                         Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
@@ -162,8 +159,7 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
                             while (matcher.find()){
                                 allKeywords.append(matcher.group(1)).append(", ");
                             }
-
-                            System.out.println("GPT-3 keywords: " + allKeywords.toString());
+                            //System.out.println("GPT-3 keywords: " + allKeywords.toString());
                             finalyKeywords = allKeywords.toString();
                             //finalyKeywords = String.join(", ", keywords);
                         } else {
@@ -171,13 +167,9 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
                             finalyKeywords = "No keywords found";
                         }
                     }
-
-
-
                 } else {
                     System.out.println("Abstract not found in the PDF.");
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

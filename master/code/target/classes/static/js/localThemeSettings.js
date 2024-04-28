@@ -14,4 +14,7 @@ function localThemeSettings() {
     localThemeSettings();
 
 // Export the function
-module.exports = {localSettings: localThemeSettings};
+if (typeof module !== 'undefined'){
+    module.exports = {localSettings: localThemeSettings};
+}
+

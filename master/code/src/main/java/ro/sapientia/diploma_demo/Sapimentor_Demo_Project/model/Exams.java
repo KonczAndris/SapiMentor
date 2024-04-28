@@ -22,6 +22,10 @@ public class Exams {
     @Lob
     private byte[] examImage;
 
+    @Column(name = "exampdf")
+    @Lob
+    private byte[] examPDF;
+
     private String topic_name;
 
     private String user_name;
