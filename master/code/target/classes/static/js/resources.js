@@ -126,6 +126,13 @@ function closeDropdownTopics(selectedItem) {
     dropdownContent.style.display = "none";
 }
 
+function closeDropdownModifyTopics(resourceId, selectedItem) {
+    var dropdownContentId = "topic-myDropdown-modify-" + resourceId;
+    var dropdownContent = document.getElementById(dropdownContentId);
+
+    dropdownContent.style.display = "none";
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const dropdownLinks = document.querySelectorAll(".filter-dropdown-content a");
     const dropdownButton = document.querySelector(".filter-dropbtn");
@@ -196,39 +203,55 @@ function adjustLayout() {
 adjustLayout();
 window.addEventListener("resize", adjustLayout);
 
-function setupResourceModal() {
-    var modal = document.getElementById("myResourceModal");
+// function setupResourceModal() {
+//     var modal = document.getElementById("myResourceModal");
+//
+//     if (modal) {
+//         var btn1 = document.getElementById("upload-upload");
+//         var span = document.getElementsByClassName("close-resource")[0];
+//
+//         if (btn1) {
+//             btn1.onclick = function() {
+//                 modal.style.display = "flex";
+//             }
+//         }
+//
+//         if (span) {
+//             span.onclick = function() {
+//                 modal.style.display = "none";
+//             }
+//         }
+//     }
+// }
+//
+// function closeModalOnClickOutside() {
+//     var modal1 = document.getElementById("myResourceModal");
+//
+//     window.addEventListener("click", function(event) {
+//         if (event.target == modal1) {
+//             modal1.style.display = "none";
+//         }
+//     });
+// }
+//
+// setupResourceModal();
+// closeModalOnClickOutside();
+
+function setupModifyResourceModal(resourceId) {
+    console.log("resourceId: " + resourceId);
+    var modalId = "resourceModifyModal-" + resourceId;
+    var modal = document.getElementById(modalId);
+    console.log("modal: " + modal);
+    console.log("modalId: " + modalId);
 
     if (modal) {
-        var btn1 = document.getElementById("upload-upload");
-        var span = document.getElementsByClassName("close-resource")[0];
-
-        if (btn1) {
-            btn1.onclick = function() {
-                modal.style.display = "flex";
-            }
-        }
-
-        if (span) {
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-        }
+        var btnId = "modifyIcon";
+        var btn1 = document.getElementById(btnId);
+        console.log("btn1: " + btn1);
+        console.log("btnId: " + btnId);
+        modal.style.display = "flex";
     }
 }
-
-function closeModalOnClickOutside() {
-    var modal1 = document.getElementById("myResourceModal");
-
-    window.addEventListener("click", function(event) {
-        if (event.target == modal1) {
-            modal1.style.display = "none";
-        }
-    });
-}
-
-setupResourceModal();
-closeModalOnClickOutside();
 
 function toggleDropdownModal() {
     var dropdown = document.getElementById("topic-myDropdown");
@@ -245,6 +268,17 @@ function closeDropdownModal(option) {
     dropdown.style.display = "none";
     document.getElementById("topic-selected-modal").value = option;
     button.innerHTML = option;
+}
+
+function toggleDropdownModifyModal(resourceId) {
+    var dropdownId = "topic-myDropdown-modify-" + resourceId;
+    var dropdown = document.getElementById(dropdownId);
+
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+    } else {
+        dropdown.style.display = "block";
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -268,6 +302,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const dropdownLinks = document.querySelectorAll(".topic-dropdown-content-modify a");
+
+    dropdownLinks.forEach((link) => {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            const resourceId = link.dataset.resourceId;
+            const selectedValueInputId = "topic-selected-modal-modify-" + resourceId;
+            const dropdownButtonId = "topic-dropbtn-modal-modify-" + resourceId;
+            const selectedValueInput = document.getElementById(selectedValueInputId);
+            const dropdownButton = document.getElementById(dropdownButtonId);
+
+            selectedValueInput.value = link.textContent;
+            dropdownButton.textContent = link.textContent;
+
+            if (resourceId && resourceId !== "Choose a topic") {
+                dropdownButton.style.backgroundColor = "rgb(50, 189, 149)";
+                dropdownButton.style.color = "white";
+            } else {
+                dropdownButton.style.backgroundColor = "";
+                dropdownButton.style.color = "";
+            }
+        });
+    });
 });
 
 function setupSkillsModal() {
@@ -308,6 +368,15 @@ function closeModalOnClickOutside() {
 
 setupSkillsModal();
 closeModalOnClickOutside();
+
+function closeModifyModal(id) {
+    var modal = document.getElementById(id);
+    if (modal) {
+        modal.style.display = "none";
+    } else {
+        console.error("Modal with id '" + id + "' not found.");
+    }
+}
 
 //NEW
 var linkCounter = 0;
@@ -1236,4 +1305,64 @@ document.querySelectorAll('.sortable').forEach(headerCell => {
     });
 });
 
+// MODIFY
+function saveModifiedResourceDataToServer(resourceId) {
+    var data = [];
 
+    const linkNameId = "resourceName-edit-modify-" + resourceId;
+    const linkName = document.getElementById(linkNameId).value;
+    const linkTopicId = "topic-dropbtn-modal-modify-" + resourceId;
+    const linkTopicElement = document.getElementById(linkTopicId);
+    const linkTopicValue = linkTopicElement.innerText;
+    console.log("linkName: " + linkName);
+    console.log("linkTopic: " + linkTopicValue);
+    console.log("resourceId: " + resourceId);
+
+    data.push({
+        name: linkName,
+        topic: linkTopicValue,
+        resource_id: resourceId
+    });
+
+    if ( linkName === "" || linkTopicValue === "") {
+        showErrorMessageInExam("Please fill out all fields!");
+    } else {
+        sendModifiedExamExamplesDataToServer(data);
+    }
+}
+
+function sendModifiedResourceDataToServer(data) {
+    showLoadingModal()
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    var formData = new FormData();
+    formData.append("name", data[0].name);
+    formData.append("topic", data[0].topic);
+    formData.append("exam_id", data[0].exam_id);
+
+    fetch('/resources/modifyResources', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        body: formData
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            return response.text();
+        }
+    }).then(data => {
+        hideLoadingModal()
+        if (data === "Success") {
+            location.reload();
+        } else if(data === "Too large"){
+            showErrorMessageInExam("The file is too large!");
+        } else if (data === "TOO LARGE FILE"){
+            showErrorMessageInExam("The file size exceeds the maximum limit of 10 MB!");
+        }
+    }).catch(error => {
+        hideLoadingModal()
+        console.error('An error occurred:', error);
+    });
+}

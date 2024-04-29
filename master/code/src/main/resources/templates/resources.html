@@ -210,7 +210,10 @@
 
                 <tr th:each="resource, stat : ${resourcesData}" th:id="'resource-row-' + ${resource.id}">
                     <td th:text="${stat.index + 1}"></td>
-                    <td><a th:href="${resource.link}" target="_blank" th:text="${resource.name}" style="color: #2196F3"></a></td>
+                    <td><a th:href="${resource.link}" target="_blank" th:text="${resource.name}" style="color: #2196F3"></a>
+                    <span id="modifyIcon" class="modify-icon" th:onclick="'setupModifyResourceModal(' + ${resource.id} + ')'"
+                        >&#9999;&#65039;</span>
+                        </td>
                     <td th:text="${resource.topic_name}"></td>
                     <td th:text="${resource.user_name}"></td>
                     <td>
@@ -229,6 +232,72 @@
                             <span class="hungarian-text">Nem tetszik</span>
                         </button>
                     </td>
+                    <!-- MODIFY MODAL START -->
+                    <div id="resourceModifyModal" class="modal-resource" th:id="'resourceModifyModal-' + ${resource.id}">
+                        <div class="modal-content-resource">
+                            <div class="message-modal-content-container">
+                                <p class="error-message-modal-content" id="error-message-modal-content-modify"></p>
+                            </div>
+
+                            <div class="form-group-edit">
+                                <div class="detail-row">
+                                    <p class="detail-label">
+                                        <span class="english-text">Link-name:</span>
+                                        <span class="hungarian-text">Link-név:</span>
+                                    </p>
+                                    <input type="text" class="edit-input" th:id="'resourceName-edit-modify-' + ${resource.id}" placeholder="" required
+                                           autofocus="autofocus" th:oninput="validateName()" th:value="${resource.name}">
+                                    <div class="info-icon" data-tooltip="">
+                                        <i class="fas fa-info-circle"></i>
+                                    </div>
+                                    <div class="info-tooltip">
+                                        <span class="english-text">Enter an accurate name!</span>
+                                        <span class="hungarian-text">Értelmes nevet adj meg!</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group-edit" id="topicDD-edit-modify">
+                                <div class="detail-row">
+                                    <p class="detail-label">
+                                        <span class="english-text">Topic:</span>
+                                        <span class="hungarian-text">Téma:</span>
+                                    </p>
+                                    <div class="topic-dropdown-modal-modify">
+                                        <button class="topic-dropbtn-modal-modify" th:id="'topic-dropbtn-modal-modify-' + ${resource.id}" th:onclick="'toggleDropdownModifyModal(\'' + ${resource.id} + '\')' ">
+                                            <span class="english-text" th:text="${resource.topic_name}"></span>
+                                            <span class="hungarian-text" th:text="${resource.topic_name}" ></span>
+                                        </button>
+                                        <input type="hidden" th:id="'topic-selected-modal-modify-' + ${resource.id}">
+                                        <div class="topic-dropdown-content-modify" th:id="'topic-myDropdown-modify-' + ${resource.id}">
+                                            <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
+                                               th:data-resource-id="${resource.id}"
+                                               th:attr="onclick='closeDropdownModifyTopics(\'' + ${resource.id} + '\',\'' + ${topic.topic} + '\')'"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="func-buttons-modal">
+                                <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal"
+                                        th:onclick="'saveModifiedLinkDataToServer(\'' + ${resource.id} + '\')'">
+                                    <span class="english-text">Modify</span>
+                                    <span class="hungarian-text">Módosít</span>
+                                </button>
+                                <button class="cancel-button-modal-modify close-resource-modify red-button" id="modify-modal-delete">
+                                    <span class="english-text">Delete</span>
+                                    <span class="hungarian-text">Töröl</span>
+                                </button>
+                                <button class="cancel-button-modal-modify close-resource-modify red-button" th:onclick="'closeModifyModal(\'resourceModifyModal-' + ${resource.id} + '\')'">
+                                    <span class="english-text">Cancel</span>
+                                    <span class="hungarian-text">Mégse</span>
+                                </button>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <!-- RESOURCE MODAL END -->
                 </tr>
 
                 </tbody>

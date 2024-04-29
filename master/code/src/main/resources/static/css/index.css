@@ -497,7 +497,7 @@ a{
     .center {
         width: 100%;
         flex-direction: column;
-        margin-top: 40px;
+        margin-top: 10vh;
     }
 
     .right{
