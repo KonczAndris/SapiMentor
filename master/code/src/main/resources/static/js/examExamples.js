@@ -514,12 +514,16 @@ var examImageCloseButton = document.querySelector(".exam-image-close-button");
 // Eltároljuk az összes sor és modális ablak elemet
 const examImageContainers = document.querySelectorAll('.exam-image-image-container');
 const examImageModals = document.querySelectorAll('.exam-image-modal');
+const examImageZooms = document.querySelectorAll('.zoom-icon');
+const examNameIds = document.querySelectorAll('#exam-name-id');
 // Az egyes sorokhoz rendelt modális ablakok kezelése
 for (let i = 0; i < examImageContainers.length; i++) {
     const examImageContainer = examImageContainers[i];
     const examImageModal = examImageModals[i];
+    const examImageZoom = examImageZooms[i];
+    const examNameId = examNameIds[i];
 
-        examImageContainer.addEventListener("click", function() {
+    examNameId.addEventListener("click", function() {
             //console.log("Igen2 "+ examImageModal.id);
             if (examImageModal.id.includes("ItIsNotAnImage")) {
                 //console.log("Igen");
@@ -530,7 +534,20 @@ for (let i = 0; i < examImageContainers.length; i++) {
                 examImageModal.style.display = "block";
                 examImageModal.style.cursor = "default";
             }
-        });
+    });
+
+    examImageZoom.addEventListener("click", function() {
+        //console.log("Igen2 "+ examImageModal.id);
+        if (examImageModal.id.includes("ItIsNotAnImage")) {
+            //console.log("Igen");
+            getExamImgPdf(examImageModal.id.split("-")[1]);
+            examImageModal.style.cursor = "pointer";
+        } else {
+            //console.log("Nem");
+            examImageModal.style.display = "block";
+            examImageModal.style.cursor = "default";
+        }
+    });
 
 
     // Az egyes modális ablakok elrejtése, ha a modális ablakon kívülre kattintunk

@@ -137,6 +137,60 @@ public class DiplomaThesesController {
     }
 
 
+    //////////////////////// ez kell a tobbihez is /////////////////////////////////////////////////////////////////
+    @PostMapping("/modifyDiplomaTheses")
+    public ResponseEntity<String> modifyDiplomaTheses(@RequestParam("name") String name,
+                                                      @RequestParam("topic") String topic,
+                                                      @RequestParam("year") String year,
+                                                      @RequestParam("diploma_id") Long diploma_id,
+                                                      Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+
+        if (user != null){
+            String user_name = user.getFirst_Name() + " " + user.getLast_Name();
+            //System.out.println("Szia1");
+            try {
+                //System.out.println("Szia");
+                String errorMessage = diplomaServices.modifyDiplomaThesesPdf(name, topic, user_name, year, diploma_id);
+                //System.out.println("Error message: " + errorMessage);
+                if (errorMessage != null){
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+                }
+
+                return ResponseEntity.ok("Success");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a modositas közben.");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
+    }
+
+
+    //////////////////////// ez kell a tobbihez is /////////////////////////////////////////////////////////////////
+    @PostMapping("/deleteDiplomaTheses")
+    public ResponseEntity<String> deleteDiplomaTheses(@RequestParam("diploma_id") Long diploma_id,
+                                                      Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+
+        if (user != null){
+            try {
+                String errorMessage = diplomaServices.deleteDiplomaThesesPdf(diploma_id);
+                if (errorMessage != null){
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+                }
+
+                return ResponseEntity.ok("Success");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a modositas közben.");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
+    }
+
     @PostMapping("/uploadDiplomaTheses")
     public ResponseEntity<String> uploadDiplomaTheses(@RequestParam("pdf") MultipartFile pdf,
                                                       @RequestParam("name") String name,
@@ -149,10 +203,11 @@ public class DiplomaThesesController {
 
         if (user != null){
             String user_name = user.getFirst_Name() + " " + user.getLast_Name();
+            Long user_id = user.getId();
             //System.out.println("Szia1");
             try {
                 //System.out.println("Szia");
-                String errorMessage = diplomaServices.uploadDiplomaThesesPdf(pdf, name, topic, user_name, year);
+                String errorMessage = diplomaServices.uploadDiplomaThesesPdf(pdf, name, topic, user_name, year, user_id);
                 //System.out.println("Error message: " + errorMessage);
                 if (errorMessage != null){
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
@@ -166,6 +221,7 @@ public class DiplomaThesesController {
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
     }
+
 
     // TODO: /like
     @PostMapping("/like")

@@ -48,5 +48,10 @@ public interface UserDiplomaLikeDislikeRepository extends JpaRepository<UserDipl
     @Query("DELETE FROM UserDiploma_TLikeDislike udtld WHERE udtld.user.id = :userId")
     void deleteByUserId(Long userId);
 
+    //////////////////////// ez kell a tobbihez is /////////////////////////////////////////////////////////////////
+    @Modifying
+    @Query("DELETE FROM UserDiploma_TLikeDislike udtld WHERE udtld.diplomaTheses.id = :diplomaId")
+    void deleteByDiplomaId(Long diplomaId);
+
 
 }
