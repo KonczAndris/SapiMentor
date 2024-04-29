@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Resources;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ExamsRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ResourcesRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserResourceLikeDislikeRepository;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -17,17 +19,21 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional
 public class ResourceServices {
     private final ResourcesRepository resourcesRepository;
     private final VirusTotalService virusTotalService;
     private final ExamsRepository examsRepository;
+    private final UserResourceLikeDislikeRepository userResourceLikeDislikeRepository;
 
     public ResourceServices(ResourcesRepository resourcesRepository,
                             VirusTotalService virusTotalService,
-                            ExamsRepository examsRepository) {
+                            ExamsRepository examsRepository,
+                            UserResourceLikeDislikeRepository userResourceLikeDislikeRepository) {
         this.resourcesRepository = resourcesRepository;
         this.virusTotalService = virusTotalService;
         this.examsRepository = examsRepository;
+        this.userResourceLikeDislikeRepository = userResourceLikeDislikeRepository;
     }
 
     // van teszt irva ra
@@ -210,10 +216,44 @@ public class ResourceServices {
         return false;
     }
 
+    public String deleteResources(Long linkId) {
+        try {
+            userResourceLikeDislikeRepository.deleteByResourceId(linkId);
+            resourcesRepository.deleteById(linkId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error";
+        }
+        return null;
+    }
 
+    public String modifyResources(String name,
+                                  String topic,
+                                  String user_name,
+                                  Long resourceId) {
+        try {
+            Resources resource = resourcesRepository.findById(resourceId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Resource not found!"));
+            if (resource != null) {
+                resource.setName(name);
+                resource.setTopic_name(topic);
+                resource.setUser_name(user_name);
+
+                resourcesRepository.save(resource);
+            } else {
+                return "Not found!";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error";
+        }
+        return null;
+    }
 
     // van ra irva teszt
-    public String processAndSaveResources(Resources[] resourcesDataItems, String fullUserName) {
+    public String processAndSaveResources(Resources[] resourcesDataItems,
+                                          String fullUserName,
+                                          Long user_id) {
         try {
             for (Resources resourcesData : resourcesDataItems){
                 String name = resourcesData.getName();
@@ -236,6 +276,7 @@ public class ResourceServices {
                             resources.setUser_name(user_name);
                             resources.setLike(like);
                             resources.setDislike(dislike);
+                            resources.setUser_id(user_id);
                             // Resources entitas elmentese az adatbazisba
                              resourcesRepository.save(resources);
                         } else {

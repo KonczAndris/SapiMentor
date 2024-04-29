@@ -38,4 +38,8 @@ public interface UserExamLikeDislikeRepository extends JpaRepository<UserExamLik
     @Modifying
     @Query("DELETE FROM UserExamLikeDislike ueld WHERE ueld.user.id = :userId")
     void deleteByUserId(Long userId);
+
+    @Modifying
+    @Query("DELETE FROM UserExamLikeDislike ueld WHERE ueld.exams.id = :examId")
+    void deleteByExamId(Long examId);
 }

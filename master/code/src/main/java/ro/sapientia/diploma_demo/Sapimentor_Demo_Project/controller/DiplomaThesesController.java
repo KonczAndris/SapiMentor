@@ -158,7 +158,7 @@ public class DiplomaThesesController {
                 return ResponseEntity.ok("Success");
             } catch (Exception e) {
                 e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a modositas közben.");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while modifying the diploma thesis.");
             }
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
@@ -182,7 +182,7 @@ public class DiplomaThesesController {
                 return ResponseEntity.ok("Success");
             } catch (Exception e) {
                 e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a modositas közben.");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while deleting the diploma thesis.");
             }
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
@@ -213,7 +213,7 @@ public class DiplomaThesesController {
                 return ResponseEntity.ok("Success");
             } catch (Exception e) {
                 e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a fájl feltöltése közben.");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while uploading the diploma thesis.");
             }
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");

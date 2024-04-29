@@ -1477,7 +1477,7 @@ function isMobileOrTabletScreen() {
 function saveModifiedExamExamplesDataToServer(examId) {
     var data = [];
 
-    const fileNameId = "examExampleName-edit-" + examId;
+    const fileNameId = "examExampleName-edit-modify-" + examId;
     const fileName = document.getElementById(fileNameId).value;
     const pdfTopicId = "topic-dropbtn-modal-modify-" + examId;
     const pdfTopicElement = document.getElementById(pdfTopicId);
@@ -1527,12 +1527,40 @@ function sendModifiedExamExamplesDataToServer(data) {
         } else if(data === "Too large"){
             showErrorMessageInExam("The file is too large!");
         } else if (data === "TOO LARGE FILE"){
-            showErrorMessageInExam("The file size exceeds the maximum limit of 10 MB!");
+            showErrorMessageInExam("The file size exceeds the maximum limit of 6 MB!");
         }
     }).catch(error => {
         hideLoadingModal()
         console.error('An error occurred:', error);
     });
+}
+
+//DELETE
+function deleteExamExamplesData(examId) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    showLoadingModal()
+    fetch(`/resources/examExamples/deleteExamExamples?exam_id=${examId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            return response.text();
+        }
+    }).then(data => {
+        if (data === "Success") {
+            location.reload();
+        }
+    }).catch(error => {
+        console.error('An error occurred:', error);
+        hideLoadingModal()
+    });
+
 }
 
 

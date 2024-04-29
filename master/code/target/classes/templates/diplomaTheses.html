@@ -377,7 +377,8 @@
                       <span class="english-text">Modify</span>
                       <span class="hungarian-text">Módosít</span>
                     </button>
-                    <button class="cancel-button-modal-modify close-diplomaTheses-modify red-button" id="modify-modal-delete">
+                    <button class="cancel-button-modal-modify close-diplomaTheses-modify red-button" id="modify-modal-delete"
+                            th:onclick="'deleteDiplomaThesesData(\'' + ${diploma.id} + '\')'">
                       <span class="english-text">Delete</span>
                       <span class="hungarian-text">Töröl</span>
                     </button>

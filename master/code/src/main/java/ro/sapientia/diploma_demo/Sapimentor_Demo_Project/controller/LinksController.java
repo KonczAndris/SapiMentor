@@ -125,6 +125,55 @@ public class LinksController {
         return "resources";
     }
 
+    //////////////////////// DELETE /////////////////////////////////////////////////////////////////
+    @PostMapping("/deleteResources")
+    public ResponseEntity<String> deleteResources(@RequestParam("link_id") Long link_id,
+                                                  Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+
+        if(user != null){
+            try{
+                String errorMessage = resourceServices.deleteResources(link_id );
+                if (errorMessage != null) {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+                }
+                return ResponseEntity.ok("Success");
+            } catch (Exception e){
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while deleting the resource!");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    //////////////////////// MODIFY /////////////////////////////////////////////////////////////////
+    @PostMapping("/modifyResources")
+    public ResponseEntity<String> modifyResources(@RequestParam("name") String name,
+                                                  @RequestParam("topic") String topic,
+                                                  @RequestParam("link_id") Long link_id,
+                                                  Principal principal){
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+
+        if(user != null){
+            String user_name = user.getFirst_Name() + " " + user.getLast_Name();
+            try{
+                String errorMessage = resourceServices.modifyResources(name, topic, user_name, link_id );
+                if (errorMessage != null) {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+                }
+                return ResponseEntity.ok("Success");
+            } catch (Exception e){
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while modifying the resource!");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 
     @PostMapping("/uploadResources")
     public ResponseEntity<String> uploadResources(String resourcesUploadDataItems,
@@ -141,7 +190,7 @@ public class LinksController {
             // JSON string deszerializálása objektumokká
             Resources[] resources_dataItems = objectMapper.readValue(resourcesUploadDataItems, Resources[].class);
 
-            String answer = resourceServices.processAndSaveResources(resources_dataItems, Full_User_Name);
+            String answer = resourceServices.processAndSaveResources(resources_dataItems, Full_User_Name, user_id);
 
             if(answer.equals("Success")){
                 return ResponseEntity.ok("Success");
@@ -155,44 +204,6 @@ public class LinksController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
             }
 
-//            for (Resources resourcesData : resources_dataItems){
-//                String name = resourcesData.getName();
-//                String link = resourcesData.getLink();
-//                String topic_name = resourcesData.getTopic_name();
-//                String user_name = Full_User_Name;
-//                Integer like = 0;
-//                Integer dislike = 0;
-//
-//                // link ervenyessegenek ellenorzese
-//                if (resourceServices.isLinkAccessible(link)){
-//                    // linkben talalhato-e karterek
-//                    if(!resourceServices.containsMaliciousContent(link)){
-//                        if(resourceServices.isURLSafe(link)){
-//                            // Adatok elmentese a Resources entitasba
-//                            Resources resources = new Resources();
-//                            resources.setName(name);
-//                            resources.setLink(link);
-//                            resources.setTopic_name(topic_name);
-//                            resources.setUser_name(user_name);
-//                            resources.setLike(like);
-//                            resources.setDislike(dislike);
-//                            // Resources entitas elmentese az adatbazisba
-//                             resourcesRepository.save(resources);
-//                        } else {
-//                            // link biztonsagos-e vagy karos
-//                            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NotSafe");
-//                        }
-//                    } else {
-//                        // linkben talalhato karterek
-//                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("MaliciousContent");
-//                    }
-//                } else {
-//                    // link ervenytelen
-//                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("InvalidLink");
-//                }
-//            }
-//
-//            return ResponseEntity.ok("Success");
         } catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");

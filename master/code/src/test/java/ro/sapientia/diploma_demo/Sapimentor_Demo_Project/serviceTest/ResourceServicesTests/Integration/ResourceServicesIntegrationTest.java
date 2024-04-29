@@ -364,7 +364,7 @@ public class ResourceServicesIntegrationTest {
         String fullUserNameTestData = "Szotyori Csongor";
 
         // When
-        String result = resourceServices.processAndSaveResources(resourcesDataItems, fullUserNameTestData);
+        String result = resourceServices.processAndSaveResources(resourcesDataItems, fullUserNameTestData, 1L);
 
         // Then
         assertThat(result).isEqualTo("Success");
@@ -386,7 +386,7 @@ public class ResourceServicesIntegrationTest {
         String fullUserNameTestData = "Szotyori Csongor";
 
         // When
-        String result = resourceServices.processAndSaveResources(resourcesDataItems, fullUserNameTestData);
+        String result = resourceServices.processAndSaveResources(resourcesDataItems, fullUserNameTestData, 1L);
 
         // Then
         assertThat(result).isEqualTo("InvalidLink");
@@ -408,7 +408,7 @@ public class ResourceServicesIntegrationTest {
         String fullUserNameTestData = "Szotyori Csongor";
 
         // When
-        String result = resourceServices.processAndSaveResources(resourcesDataItems, fullUserNameTestData);
+        String result = resourceServices.processAndSaveResources(resourcesDataItems, fullUserNameTestData, 1L);
 
         // Then
         assertThat(result).isEqualTo("NotSafe");

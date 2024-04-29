@@ -590,6 +590,33 @@ function sendDiplomaThesesDataToServer(data) {
 
 }
 
+//DELETE
+function deleteDiplomaThesesData(diplomaId) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    showLoadingModal()
+    fetch(`/resources/diplomaTheses/deleteDiplomaTheses?diploma_id=${diplomaId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            return response.text();
+        }
+    }).then(data => {
+        if (data === "Success") {
+            location.reload();
+        }
+    }).catch(error => {
+        console.error('An error occurred:', error);
+        hideLoadingModal()
+    });
+}
+
 // MODIFY
 function saveModifiedDiplomaThesesDataToServer(diplomaId) {
     var data = [];
@@ -601,10 +628,10 @@ function saveModifiedDiplomaThesesDataToServer(diplomaId) {
     const pdfTopicId = "topic-dropbtn-modal-modify-" + diplomaId;
     const pdfTopicElement = document.getElementById(pdfTopicId);
     const pdfTopicValue = pdfTopicElement.innerText;
-    console.log("pdfFileName: " + pdfFileName);
-    console.log("pdfFileYear: " + pdfFileYear);
-    console.log("pdfTopic: " + pdfTopicValue);
-    console.log("diplomaId: " + diplomaId);
+    // console.log("pdfFileName: " + pdfFileName);
+    // console.log("pdfFileYear: " + pdfFileYear);
+    // console.log("pdfTopic: " + pdfTopicValue);
+    // console.log("diplomaId: " + diplomaId);
 
     data.push({
         name: pdfFileName,
