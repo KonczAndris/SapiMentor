@@ -601,10 +601,10 @@ function saveModifiedDiplomaThesesDataToServer(diplomaId) {
     const pdfTopicId = "topic-dropbtn-modal-modify-" + diplomaId;
     const pdfTopicElement = document.getElementById(pdfTopicId);
     const pdfTopicValue = pdfTopicElement.innerText;
-    console.log("pdfFileName: " + pdfFileName);
-    console.log("pdfFileYear: " + pdfFileYear);
-    console.log("pdfTopic: " + pdfTopicValue);
-    console.log("diplomaId: " + diplomaId);
+    // console.log("pdfFileName: " + pdfFileName);
+    // console.log("pdfFileYear: " + pdfFileYear);
+    // console.log("pdfTopic: " + pdfTopicValue);
+    // console.log("diplomaId: " + diplomaId);
 
     data.push({
         name: pdfFileName,
