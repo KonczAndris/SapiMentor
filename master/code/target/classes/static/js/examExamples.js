@@ -486,7 +486,7 @@ function sendExamsDataToServer(data) {
         } else if(data === "Too large"){
             //alert("The file is too large!");
             showErrorMessageInExam("The file is too large!\n" +
-                "The maximum file size is 2MB!");
+                "The maximum file size is 6MB!");
         } else if(data === "Wrong type"){
             //alert("This type png is not supported!");
             showErrorMessageInExam("This type of png is not supported!\n"); // Egyéb hiba esetén

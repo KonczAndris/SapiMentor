@@ -123,11 +123,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ez az uj amivel bezarja a dropdownot
-function closeDropdownTopics(selectedItem) {
-    var dropdownContent = document.getElementById("topic-myDropdown");
-    dropdownContent.style.display = "none";
-}
 
 function cancelFilterWindow(){
     const filterContainer = document.querySelector(".filter-container");
@@ -208,42 +203,68 @@ adjustLayout();
 window.addEventListener("resize", adjustLayout);
 
 
-function setupDiplomaThesesModal() {
-    var modal = document.getElementById("diplomaThesesModal");
+// function setupDiplomaThesesModal() {
+//     var modal = document.getElementById("diplomaThesesModal");
+//
+//     if (modal) {
+//         var btn1 = document.getElementById("upload-upload");
+//         var span = document.getElementsByClassName("close-diplomaTheses")[0];
+//
+//         if (btn1) {
+//             btn1.onclick = function () {
+//                 modal.style.display = "flex";
+//             }
+//         }
+//
+//         if (span) {
+//             span.onclick = function () {
+//                 modal.style.display = "none";
+//             }
+//         }
+//     }
+// }
+//
+// setupDiplomaThesesModal();
+
+function setupModifyDiplomaThesesModal(diplomaId) {
+    console.log("diplomaId: " + diplomaId);
+    var modalId = "diplomaThesesModifyModal-" + diplomaId;
+    var modal = document.getElementById(modalId);
+    console.log("modal: " + modal);
+    console.log("modalId: " + modalId);
 
     if (modal) {
-        var btn1 = document.getElementById("upload-upload");
-        var span = document.getElementsByClassName("close-diplomaTheses")[0];
-
-        if (btn1) {
-            btn1.onclick = function () {
-                modal.style.display = "flex";
-            }
-        }
-
-        if (span) {
-            span.onclick = function () {
-                modal.style.display = "none";
-            }
-        }
+        var btnId = "modifyIcon";
+        var btn1 = document.getElementById(btnId);
+        console.log("btn1: " + btn1);
+        console.log("btnId: " + btnId);
+        modal.style.display = "flex";
     }
-
 }
 
-setupDiplomaThesesModal();
+// function closeModalOnClickOutside() {
+//     var modal1 = document.getElementById("diplomaThesesModal");
+//
+//     window.addEventListener("click", function(event) {
+//         if (event.target == modal1) {
+//             modal1.style.display = "none";
+//         }
+//     });
+// }
 
-
-function closeModalOnClickOutside() {
-    var modal1 = document.getElementById("diplomaThesesModal");
-
-    window.addEventListener("click", function(event) {
-        if (event.target == modal1) {
-            modal1.style.display = "none";
-        }
-    });
-}
-
-closeModalOnClickOutside();
+// closeModalOnClickOutside();
+//
+// function closeModifyModalOnClickOutside() {
+//     var modal1 = document.getElementById("diplomaThesesModifyModal");
+//
+//     window.addEventListener("click", function(event) {
+//         if (event.target == modal1) {
+//             modal1.style.display = "none";
+//         }
+//     });
+// }
+//
+// closeModifyModalOnClickOutside();
 
 function toggleDropdownModal() {
     var dropdown = document.getElementById("topic-myDropdown");
@@ -254,12 +275,27 @@ function toggleDropdownModal() {
     }
 }
 
-function closeDropdownModal(option) {
-    var dropdown = document.getElementById("topic-myDropdown");
-    var button = document.querySelector(".topic-dropbtn-modal");
-    dropdown.style.display = "none";
-    document.getElementById("topic-selected-modal").value = option;
-    button.innerHTML = option;
+function toggleDropdownModifyModal(diplomaId) {
+    var dropdownId = "topic-myDropdown-modify-" + diplomaId;
+    var dropdown = document.getElementById(dropdownId);
+
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+    } else {
+        dropdown.style.display = "block";
+    }
+}
+
+function closeDropdownTopics(selectedItem) {
+    var dropdownContent = document.getElementById("topic-myDropdown");
+    dropdownContent.style.display = "none";
+}
+
+function closeDropdownModifyTopics(diplomaId, selectedItem) {
+    var dropdownContentId = "topic-myDropdown-modify-" + diplomaId;
+    var dropdownContent = document.getElementById(dropdownContentId);
+
+    dropdownContent.style.display = "none";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -282,12 +318,37 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+});
 
+document.addEventListener("DOMContentLoaded", function () {
+    const dropdownLinks = document.querySelectorAll(".topic-dropdown-content-modify a");
+
+    dropdownLinks.forEach((link) => {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            const diplomaId = link.dataset.diplomaId;
+            const selectedValueInputId = "topic-selected-modal-modify-" + diplomaId;
+            const dropdownButtonId = "topic-dropbtn-modal-modify-" + diplomaId;
+            const selectedValueInput = document.getElementById(selectedValueInputId);
+            const dropdownButton = document.getElementById(dropdownButtonId);
+
+
+            selectedValueInput.value = link.textContent;
+            dropdownButton.textContent = link.textContent;
+
+            if (diplomaId && diplomaId !== "Choose a topic") {
+                dropdownButton.style.backgroundColor = "rgb(50, 189, 149)";
+                dropdownButton.style.color = "white";
+            } else {
+                dropdownButton.style.backgroundColor = "";
+                dropdownButton.style.color = "";
+            }
+        });
+    });
 });
 
 function setupSkillsModal() {
     var modal = document.getElementById("diplomaThesesModal");
-
     var btn1 = document.getElementById("upload-upload");
     var btn2 = document.getElementById("upload-hidden");
     var span = document.getElementsByClassName("close-diplomaTheses")[0];
@@ -316,7 +377,6 @@ function closeModal() {
     modal.style.display = 'none';
 }
 
-// Add click event listener to the "Cancel" button
 var cancelButton = document.querySelector('.cancel-button-modal.close-diplomaTheses');
 document.addEventListener("DOMContentLoaded", function() {
     cancelButton.addEventListener('click', closeModal);
@@ -324,7 +384,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function closeModalOnClickOutside() {
     var modal1 = document.getElementById("diplomaThesesModal");
-
     window.addEventListener("click", function(event) {
         if (event.target == modal1) {
             modal1.style.display = "none";
@@ -335,6 +394,14 @@ function closeModalOnClickOutside() {
 setupSkillsModal();
 closeModalOnClickOutside();
 
+function closeModifyModal(id) {
+    var modal = document.getElementById(id);
+    if (modal) {
+        modal.style.display = "none";
+    } else {
+        console.error("Modal with id '" + id + "' not found.");
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function() {
 document.getElementById("fileUpload").addEventListener("change", function() {
@@ -472,8 +539,6 @@ function saveDiplomaThesesDataToServer() {
         sendDiplomaThesesDataToServer(data);
     }
 
-    //console.log(data);
-    // sendDiplomaThesesDataToServer(data);
 }
 
 function showLoadingModal() {
@@ -481,13 +546,11 @@ function showLoadingModal() {
     modal.style.display = "block";
 }
 
-// ezt is andrisnak
 function hideLoadingModal() {
     var modal = document.getElementById("loading-modal");
-    modal.style.display = "none"; // Elrejtjük a modal ablakot
+    modal.style.display = "none";
 }
 function sendDiplomaThesesDataToServer(data) {
-    // ide kell majd hogy behozza a toltokepernyot
     showLoadingModal()
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -497,9 +560,7 @@ function sendDiplomaThesesDataToServer(data) {
     formData.append("name", data[0].name);
     formData.append("year", data[0].year);
     formData.append("topic", data[0].topic);
-    // for (var pair of formData.entries()) {
-    //     console.log(pair[0] + ': ' + pair[1]);
-    // }
+
 
     fetch('/resources/diplomaTheses/uploadDiplomaTheses', {
         method: 'POST',
@@ -512,29 +573,89 @@ function sendDiplomaThesesDataToServer(data) {
             return response.text();
         } else {
             return response.text();
-            // throw new Error('Hiba történt a válaszban');
         }
     }).then(data => {
-        // ezt is andrisnak
-        //hideLoadingModal(); // Elrejtjük a modal ablakot
-        // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-        //console.log(data)
         hideLoadingModal()
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){
-            //alert("The file is too large!");
             showErrorMessageInExam("The file is too large!");
         } else if (data === "TOO LARGE FILE"){
-            //alert("The file size exceeds the maximum limit of 10 MB!");
             showErrorMessageInExam("The file size exceeds the maximum limit of 10 MB!"); // Egyéb hiba esetén
         }
     }).catch(error => {
         hideLoadingModal()
         console.error('An error occurred:', error);
-        //alert("An error occurred. Please try again later.");
     });
 
+}
+
+// MODIFY
+function saveModifiedDiplomaThesesDataToServer(diplomaId) {
+    var data = [];
+
+    const pdfFileNameId = "diplomaTheses-edit-modify-" + diplomaId;
+    const pdfFileName = document.getElementById(pdfFileNameId).value;
+    const pdfFileYearId = "diplomaTheses-edit-year-modify-" + diplomaId;
+    const pdfFileYear = document.getElementById(pdfFileYearId).value;
+    const pdfTopicId = "topic-dropbtn-modal-modify-" + diplomaId;
+    const pdfTopicElement = document.getElementById(pdfTopicId);
+    const pdfTopicValue = pdfTopicElement.innerText;
+
+    console.log("pdfFileName: " + pdfFileName);
+    console.log("pdfFileYear: " + pdfFileYear);
+    console.log("pdfTopic: " + pdfTopicValue);
+    console.log("diplomaId: " + diplomaId);
+
+    data.push({
+        name: pdfFileName,
+        year: pdfFileYear,
+        topic: pdfTopicValue,
+        diplomaId: diplomaId
+    });
+
+    // if ( pdfFileName === "" || pdfFileYear === "") {
+    //     showErrorMessageInDiploma("Please fill out all fields!");
+    // } else {
+    //     sendModifiedDiplomaThesesDataToServer(data);
+    // }
+
+}
+
+function sendModifiedDiplomaThesesDataToServer(data) {
+    showLoadingModal()
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    var formData = new FormData();
+    formData.append("name", data[0].name);
+    formData.append("year", data[0].year);
+    formData.append("topic", data[0].topic);
+
+    fetch('/resources/diplomaTheses/', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        body: formData
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            return response.text();
+        }
+    }).then(data => {
+        hideLoadingModal()
+        if (data === "Success") {
+            location.reload();
+        } else if(data === "Too large"){
+            showErrorMessageInExam("The file is too large!");
+        } else if (data === "TOO LARGE FILE"){
+            showErrorMessageInExam("The file size exceeds the maximum limit of 10 MB!");
+        }
+    }).catch(error => {
+        hideLoadingModal()
+        console.error('An error occurred:', error);
+    });
 }
 
 function showErrorMessageInDiploma(message) {

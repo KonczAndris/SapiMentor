@@ -275,6 +275,8 @@
               <div class="pdf-image-image-container">
                 <span th:text="${diploma.name}" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'"></span>
                 <span id="zoomIcon" class="zoom-icon" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'">&#128269;</span>
+                <span id="modifyIcon" class="zoom-icon" th:onclick="'setupModifyDiplomaThesesModal(' + ${diploma.id} + ')'">&#9999;&#65039;</span>
+
                 <div class="pdf-image-modal" th:id="'myModal-' + ${diploma.id}">
                   <span class="close-pdf-modal-btn" th:id="'closeModalBtn-' + ${diploma.id}">&times;</span>
                   <!--                  <embed th:id="'modalPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content"  type='application/pdf'>-->
@@ -305,8 +307,89 @@
             <td style="display: none;">
               <span id="tagWords" th:text="${diploma.keywords}"></span>
             </td>
-          </tr>
 
+
+            <!-- MODIFY MODAL START -->
+            <div id="diplomaThesesModifyModal" th:id="'diplomaThesesModifyModal-' + ${diploma.id}" class="modal-diplomaTheses">
+              <div class="modal-content-diplomaTheses">
+                <div class="message-diploma-modal-content-container">
+                  <p class="error-message-diploma-modal-content" id="error-message-diploma-modify-modal-content"></p>
+                </div>
+                <div class="form-group-edit">
+
+                  <div class="form-group-edit">
+                    <div class="detail-row">
+                      <p class="detail-label">
+                        <span class="english-text">Name:</span>
+                        <span class="hungarian-text">Név:</span></p>
+                      <input type="text" class="edit-input" th:id="'diplomaTheses-edit-modify-' + ${diploma.id}" placeholder="*.pdf" required
+                             autofocus="autofocus" th:value="${diploma.name}">
+                      <div class="info-icon" data-tooltip="">
+                        <i class="fas fa-info-circle"></i>
+                      </div>
+                      <div class="info-tooltip">
+                        <span class="english-text">Enter an accurate name!</span>
+                        <span class="hungarian-text">Valós nevet adj meg!</span></div>
+                    </div>
+                  </div>
+
+                  <div class="form-group-edit">
+                    <div class="detail-row">
+                      <p class="detail-label">
+                        <span class="english-text">Year:</span>
+                        <span class="hungarian-text">Év:</span>
+                      </p>
+                      <input type="text" class="edit-input" th:id="'diplomaTheses-edit-year-modify-' + ${diploma.id}" placeholder="" required
+                             autofocus="autofocus" th:value="${diploma.year}">
+                      <div class="info-icon" data-tooltip="">
+                        <i class="fas fa-info-circle"></i>
+                      </div>
+                      <div class="info-tooltip">
+                        <span class="english-text">Enter a valid year!</span>
+                        <span class="hungarian-text">Valós évszámot adj meg!</span></div>
+                    </div>
+                  </div>
+
+                  <div class="form-group-edit" id="topicDD-edit-modify">
+                    <div class="detail-row">
+                      <p class="detail-label">
+                        <span class="english-text">Topic:</span>
+                        <span class="hungarian-text">Téma:</span>
+                      </p>
+                      <div class="topic-dropdown-modal-modify">
+                        <button class="topic-dropbtn-modal-modify" th:id="'topic-dropbtn-modal-modify-' + ${diploma.id}" th:onclick="'toggleDropdownModifyModal(\'' + ${diploma.id} + '\')' ">
+                          <span class="english-text" th:text="${diploma.topic_name}"></span>
+                          <span class="hungarian-text"th:text="${diploma.topic_name}" ></span>
+                        </button>
+                        <input type="hidden" th:id="'topic-selected-modal-modify-' + ${diploma.id}">
+                        <div class="topic-dropdown-content-modify" th:id="'topic-myDropdown-modify-' + ${diploma.id}">
+                          <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
+                             th:data-diploma-id="${diploma.id}"
+                             th:attr="onclick='closeDropdownModifyTopics(\'' + ${diploma.id} + '\',\'' + ${topic.topic} + '\')'"></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="func-buttons-modal">
+                    <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal"
+                            th:onclick="'saveModifiedDiplomaThesesDataToServer(\'' + ${diploma.id} + '\')'">
+                      <span class="english-text">Modify</span>
+                      <span class="hungarian-text">Módosít</span>
+                    </button>
+                    <button class="cancel-button-modal-modify close-diplomaTheses-modify red-button" id="modify-modal-delete">
+                      <span class="english-text">Delete</span>
+                      <span class="hungarian-text">Töröl</span>
+                    </button>
+                    <button class="cancel-button-modal-modify close-diplomaTheses-modify red-button" th:onclick="'closeModifyModal(\'diplomaThesesModifyModal-' + ${diploma.id} + '\')'">
+                      <span class="english-text">Cancel</span>
+                      <span class="hungarian-text">Mégse</span>
+                    </button>
+                  </div>
+                </div>
+              </div> </div>
+              <!-- MODIFY MODAL END -->
+          </tr>
         </tbody>
       </table>
     </div>
@@ -328,11 +411,10 @@
       <img class="loading-gif" th:src="@{/gif/preload.gif}" alt="Loading..." />
     </div>
   </div>
+
   <!-- RESOURCE MODAL START -->
   <div id="diplomaThesesModal" class="modal-diplomaTheses">
     <div class="modal-content-diplomaTheses">
-<!--      <span class="close-diplomaTheses">&times;</span>-->
-      <!-- Új rész hozzáadása a modalhoz -->
       <div class="message-diploma-modal-content-container">
         <p class="error-message-diploma-modal-content" id="error-message-diploma-modal-content"></p>
       </div>
@@ -418,11 +500,10 @@
           <span class="hungarian-text">Mégse</span>
         </button>
       </div>
-
-
     </div>
   </div>
   <!-- RESOURCE MODAL END -->
+
 
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
