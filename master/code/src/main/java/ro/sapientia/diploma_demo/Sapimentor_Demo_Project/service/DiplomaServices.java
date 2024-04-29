@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_TLikeDislike_DTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.DiplomaThesesRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserDiplomaLikeDislikeRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.GPT3Service;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.findKeywordsInAbstract;
 
@@ -32,13 +33,16 @@ public class DiplomaServices {
     private final DiplomaThesesRepository diplomaThesesRepository;
     private final findKeywordsInAbstract findKeywordsInAbstract;
     private final GPT3Service gpt3Service;
+    private final UserDiplomaLikeDislikeRepository userDiplomaLikeDislikeRepository;
 
     public DiplomaServices(DiplomaThesesRepository diplomaThesesRepository,
                            findKeywordsInAbstract findKeywordsInAbstract,
-                           GPT3Service gpt3Service) {
+                           GPT3Service gpt3Service,
+                           UserDiplomaLikeDislikeRepository userDiplomaLikeDislikeRepository) {
         this.diplomaThesesRepository = diplomaThesesRepository;
         this.findKeywordsInAbstract = findKeywordsInAbstract;
         this.gpt3Service = gpt3Service;
+        this.userDiplomaLikeDislikeRepository = userDiplomaLikeDislikeRepository;
     }
 
     public List<Diploma_Theses> getAllDiplomaTheses() {
@@ -86,13 +90,53 @@ public class DiplomaServices {
     //private static final long MAX_PDF_SIZE = 3 * 1024 * 1024; // 3 MB
 
 
+    public String modifyDiplomaThesesPdf(String name,
+                                         String topic,
+                                         String user_name,
+                                         String year,
+                                         Long diplomaId) {
+            try {
+                Diploma_Theses optionalDiplomaTheses = diplomaThesesRepository.findById(diplomaId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id: 1"));
+                if(optionalDiplomaTheses != null){
+                    // itt hozom letre a Diploma_Theses objektumot
+                    // es teszem bele a megadott adatokat
+                    optionalDiplomaTheses.setName(name);
+                    optionalDiplomaTheses.setTopic_name(topic);
+                    optionalDiplomaTheses.setUser_name(user_name);
+                    optionalDiplomaTheses.setYear(year);
+
+                    diplomaThesesRepository.save(optionalDiplomaTheses);
+                } else {
+                    return "Not found";
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Error";
+            }
+        return null;
+    }
+
+    //////////////////////// ez kell a tobbihez is /////////////////////////////////////////////////////////////////
+    public String deleteDiplomaThesesPdf(Long diplomaId) {
+        try {
+            userDiplomaLikeDislikeRepository.deleteByDiplomaId(diplomaId);
+            diplomaThesesRepository.deleteById(diplomaId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error";
+        }
+        return null;
+    }
+
 
 // oldalon a felhasznalo altal hasznalt metodus
 public String uploadDiplomaThesesPdf(MultipartFile pdf,
                                      String name,
                                      String topic,
                                      String user_name,
-                                     String year){
+                                     String year,
+                                     Long user_id){
     if(!pdf.isEmpty()) {
         try {
 
@@ -208,6 +252,7 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
             diploma_theses.setLike(0);
             diploma_theses.setDislike(0);
             diploma_theses.setKeywords(allKeywords.toString());
+            diploma_theses.setUser_id(user_id);
 
 
 //            // itt adom hozzá a tömörítetlen PDF-et az objektumhoz

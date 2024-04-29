@@ -218,7 +218,7 @@
                     <td th:text="${stat.index + 1}"></td>
                     <td class="image-container-column">
                         <div class="exam-image-image-container">
-                            <span th:text="${exam.name}"></span>
+                            <span id="exam-name-id" th:text="${exam.name}"></span>
                             <span id="zoomIcon" class="zoom-icon">&#128269;</span>
                             <div class="exam-image-modal" th:id="'myModal-' + ${exam.id}">
                                 <div class="exam-image-modal-content">

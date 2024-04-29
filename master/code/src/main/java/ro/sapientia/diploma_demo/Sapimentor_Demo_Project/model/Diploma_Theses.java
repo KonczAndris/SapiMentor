@@ -36,6 +36,8 @@ public class Diploma_Theses {
     @Column(name = "diploma_theses_keywords")
     private String keywords;
 
+    private Long user_id;
+
     public Diploma_Theses(String name,
                           byte[] diploma_theses_file,
                           String topic_name,
@@ -43,7 +45,8 @@ public class Diploma_Theses {
                           Integer like,
                           Integer dislike,
                           String year,
-                          String keywords) {
+                          String keywords,
+                          Long user_id) {
         this.name = name;
         this.diploma_theses_file = diploma_theses_file;
         this.topic_name = topic_name;
@@ -52,6 +55,7 @@ public class Diploma_Theses {
         this.dislike = dislike;
         this.year = year;
         this.keywords = keywords;
+        this.user_id = user_id;
     }
 
     public Diploma_Theses(Long id,

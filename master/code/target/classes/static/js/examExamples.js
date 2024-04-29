@@ -486,7 +486,7 @@ function sendExamsDataToServer(data) {
         } else if(data === "Too large"){
             //alert("The file is too large!");
             showErrorMessageInExam("The file is too large!\n" +
-                "The maximum file size is 2MB!");
+                "The maximum file size is 6MB!");
         } else if(data === "Wrong type"){
             //alert("This type png is not supported!");
             showErrorMessageInExam("This type of png is not supported!\n"); // Egyéb hiba esetén
@@ -514,12 +514,16 @@ var examImageCloseButton = document.querySelector(".exam-image-close-button");
 // Eltároljuk az összes sor és modális ablak elemet
 const examImageContainers = document.querySelectorAll('.exam-image-image-container');
 const examImageModals = document.querySelectorAll('.exam-image-modal');
+const examImageZooms = document.querySelectorAll('.zoom-icon');
+const examNameIds = document.querySelectorAll('#exam-name-id');
 // Az egyes sorokhoz rendelt modális ablakok kezelése
 for (let i = 0; i < examImageContainers.length; i++) {
     const examImageContainer = examImageContainers[i];
     const examImageModal = examImageModals[i];
+    const examImageZoom = examImageZooms[i];
+    const examNameId = examNameIds[i];
 
-        examImageContainer.addEventListener("click", function() {
+    examNameId.addEventListener("click", function() {
             //console.log("Igen2 "+ examImageModal.id);
             if (examImageModal.id.includes("ItIsNotAnImage")) {
                 //console.log("Igen");
@@ -530,7 +534,20 @@ for (let i = 0; i < examImageContainers.length; i++) {
                 examImageModal.style.display = "block";
                 examImageModal.style.cursor = "default";
             }
-        });
+    });
+
+    examImageZoom.addEventListener("click", function() {
+        //console.log("Igen2 "+ examImageModal.id);
+        if (examImageModal.id.includes("ItIsNotAnImage")) {
+            //console.log("Igen");
+            getExamImgPdf(examImageModal.id.split("-")[1]);
+            examImageModal.style.cursor = "pointer";
+        } else {
+            //console.log("Nem");
+            examImageModal.style.display = "block";
+            examImageModal.style.cursor = "default";
+        }
+    });
 
 
     // Az egyes modális ablakok elrejtése, ha a modális ablakon kívülre kattintunk

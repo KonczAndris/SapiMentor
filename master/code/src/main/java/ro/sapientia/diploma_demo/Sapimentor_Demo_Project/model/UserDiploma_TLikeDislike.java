@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @Table(name = "user_diploma_like_dislike")
-public class UserDiploma_TLikeDislike extends UserResourceLikeDislike {
+public class UserDiploma_TLikeDislike{
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
