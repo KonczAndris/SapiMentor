@@ -418,7 +418,7 @@ body {
     margin-left: -10px;
 }
 
-.upload-button-modal {
+.upload-button-modal, .upload-button-modal-modify {
     width: 150px;
     max-width: 55%;
     cursor: pointer;
@@ -430,7 +430,7 @@ body {
     align-items: start;
 }
 
-.cancel-button-modal {
+.cancel-button-modal, .cancel-button-modal-modify {
     width: 150px;
     max-width: 55%;
     cursor: pointer;
@@ -443,7 +443,7 @@ body {
     margin: 15px;
 }
 
-.topic-dropbtn-modal {
+.topic-dropbtn-modal, .topic-dropbtn-modal-modify {
     width: 200px;
     background-color: white;
     border-radius: 7px;
@@ -453,11 +453,11 @@ body {
     margin: 5px 0;
 }
 
-.topic-dropdown-modal {
+.topic-dropdown-modal, .topic-dropdown-modal-modify {
     width: 200px;
 }
 
-.topic-dropdown-content {
+.topic-dropdown-content, .topic-dropdown-content-modify {
     display: none;
     width: 196px;
     border: 2px solid rgb(0, 0, 0);
@@ -468,14 +468,14 @@ body {
     position: absolute;
 }
 
-.topic-dropdown-content.active {
+.topic-dropdown-content.active, .topic-dropdown-content-modify.active {
     display: block;
     margin-top: 0;
     margin-top: -45px;
     z-index: 10000;
 }
 
-.topic-dropdown-content a {
+.topic-dropdown-content a, .topic-dropdown-content-modify a {
     background-color: white;
     padding: 10px 10px;
     text-decoration: none;
@@ -486,7 +486,7 @@ body {
     font-size: small;
 }
 
-.topic-dropdown-content a:hover {
+.topic-dropdown-content a:hover, .topic-dropdown-content-modify a:hover {
     text-decoration: none;
     font-weight: bold;
 }
@@ -680,6 +680,12 @@ tr {
     opacity: 1;
 }
 
+#modifyIcon{
+    display: inline-block;
+    transform: scaleX(-1);
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1000px) {
     .filter-container {
         display: none;
@@ -726,6 +732,12 @@ tr {
 
     .search-button {
         width: 150px;
+    }
+
+    .upload-button-modal-modify, .cancel-button-modal-modify{
+        margin-left:5px;
+        margin-right: 5px;
+        width: 100px;
     }
 }
 
