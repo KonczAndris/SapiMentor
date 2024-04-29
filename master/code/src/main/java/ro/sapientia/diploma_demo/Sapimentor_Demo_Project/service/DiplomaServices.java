@@ -64,6 +64,7 @@ public class DiplomaServices {
             diplomas.setLike((Integer) result[5]);
             diplomas.setDislike((Integer) result[6]);
             diplomas.setKeywords((String) result[7]);
+            diplomas.setUser_id((Long) result[8]);
             diploma_theses.add(diplomas);
         }
 

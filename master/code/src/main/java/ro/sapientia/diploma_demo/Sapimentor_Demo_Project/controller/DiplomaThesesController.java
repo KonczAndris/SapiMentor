@@ -149,11 +149,8 @@ public class DiplomaThesesController {
 
         if (user != null){
             String user_name = user.getFirst_Name() + " " + user.getLast_Name();
-            //System.out.println("Szia1");
             try {
-                //System.out.println("Szia");
                 String errorMessage = diplomaServices.modifyDiplomaThesesPdf(name, topic, user_name, year, diploma_id);
-                //System.out.println("Error message: " + errorMessage);
                 if (errorMessage != null){
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
                 }
