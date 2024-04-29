@@ -107,6 +107,13 @@ function closeDropdownTopics(selectedItem) {
     dropdownContent.style.display = "none";
 }
 
+function closeDropdownModifyTopics(examId, selectedItem) {
+    var dropdownContentId = "topic-myDropdown-modify-" + examId;
+    var dropdownContent = document.getElementById(dropdownContentId);
+
+    dropdownContent.style.display = "none";
+}
+
 function resetInputValue() {
     const input = document.getElementById('filter-input');
     const sugList = document.querySelector('#suggestion-list');
@@ -203,40 +210,56 @@ function adjustLayout() {
 adjustLayout();
 window.addEventListener("resize", adjustLayout);
 
-function setupExamExamplesModal() {
-    var modal = document.getElementById("examExamplesModal");
+// function setupExamExamplesModal() {
+//     var modal = document.getElementById("examExamplesModal");
+//     if (modal) {
+//         var btn1 = document.getElementById("upload-upload");
+//         var span = document.getElementsByClassName("close-examExamples")[0];
+//
+//         if (btn1) {
+//             btn1.onclick = function() {
+//                 modal.style.display = "flex";
+//             }
+//         }
+//
+//         if (span) {
+//             span.onclick = function() {
+//                 modal.style.display = "none";
+//             }
+//         }
+//
+//     }
+// }
+// setupExamExamplesModal();
+//
+//
+// function closeModalOnClickOutside() {
+//     var modal1 = document.getElementById("examExamplesModal");
+//
+//     window.addEventListener("click", function(event) {
+//         if (event.target == modal1) {
+//             modal1.style.display = "none";
+//         }
+//     });
+// }
+//
+// closeModalOnClickOutside();
+
+function setupModifyExamsModal(examId) {
+    console.log("examId: " + examId);
+    var modalId = "examExamplesModifyModal-" + examId;
+    var modal = document.getElementById(modalId);
+    console.log("modal: " + modal);
+    console.log("modalId: " + modalId);
+
     if (modal) {
-        var btn1 = document.getElementById("upload-upload");
-        var span = document.getElementsByClassName("close-examExamples")[0];
-
-        if (btn1) {
-            btn1.onclick = function() {
-                modal.style.display = "flex";
-            }
-        }
-
-        if (span) {
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-        }
-
+        var btnId = "modifyIcon";
+        var btn1 = document.getElementById(btnId);
+        console.log("btn1: " + btn1);
+        console.log("btnId: " + btnId);
+        modal.style.display = "flex";
     }
 }
-
-setupExamExamplesModal();
-
-function closeModalOnClickOutside() {
-    var modal1 = document.getElementById("examExamplesModal");
-
-    window.addEventListener("click", function(event) {
-        if (event.target == modal1) {
-            modal1.style.display = "none";
-        }
-    });
-}
-
-closeModalOnClickOutside();
 
 function toggleDropdownModal() {
     var dropdown = document.getElementById("topic-myDropdown");
@@ -253,6 +276,17 @@ function closeDropdownModal(option) {
     dropdown.style.display = "none";
     document.getElementById("topic-selected-modal").value = option;
     button.innerHTML = option;
+}
+
+function toggleDropdownModifyModal(examId) {
+    var dropdownId = "topic-myDropdown-modify-" + examId;
+    var dropdown = document.getElementById(dropdownId);
+
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+    } else {
+        dropdown.style.display = "block";
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -276,6 +310,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const dropdownLinks = document.querySelectorAll(".topic-dropdown-content-modify a");
+
+    dropdownLinks.forEach((link) => {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            const examId = link.dataset.examId;
+            const selectedValueInputId = "topic-selected-modal-modify-" + examId;
+            const dropdownButtonId = "topic-dropbtn-modal-modify-" + examId;
+            const selectedValueInput = document.getElementById(selectedValueInputId);
+            const dropdownButton = document.getElementById(dropdownButtonId);
+
+            selectedValueInput.value = link.textContent;
+            dropdownButton.textContent = link.textContent;
+
+            if (examId && examId !== "Choose a topic") {
+                dropdownButton.style.backgroundColor = "rgb(50, 189, 149)";
+                dropdownButton.style.color = "white";
+            } else {
+                dropdownButton.style.backgroundColor = "";
+                dropdownButton.style.color = "";
+            }
+        });
+    });
 });
 
 function setupSkillsModal() {
@@ -325,6 +385,15 @@ function closeModalOnClickOutside() {
 
 setupSkillsModal();
 closeModalOnClickOutside();
+
+function closeModifyModal(id) {
+    var modal = document.getElementById(id);
+    if (modal) {
+        modal.style.display = "none";
+    } else {
+        console.error("Modal with id '" + id + "' not found.");
+    }
+}
 
 // Function to handle file selection and update the input field
 document.getElementById("fileUpload").addEventListener("change", function() {
@@ -1334,10 +1403,6 @@ function getExamImgPdf(examId) {
 }
 
 function handlerexamPDFs() {
-    // Itt már rendelkezésre állnak az adatok
-    //console.log(likeAndDislikeStatuses);
-    //console.log(diplomaPDF.length);
-    // Most már kezelheted az adatokat
     for (let i = 0; i < examPDF.length; i++) {
         const examExamplesData = examPDF[i];
         const PDF = examExamplesData.examExamplesFile;
@@ -1406,6 +1471,68 @@ function handlerexamPDFs() {
 
 function isMobileOrTabletScreen() {
     return window.innerWidth <= 1024; // Például, 767 pixel vagy alatta van mobilnak tekintve
+}
+
+// MODIFY
+function saveModifiedExamExamplesDataToServer(examId) {
+    var data = [];
+
+    const fileNameId = "examExampleName-edit-" + examId;
+    const fileName = document.getElementById(fileNameId).value;
+    const pdfTopicId = "topic-dropbtn-modal-modify-" + examId;
+    const pdfTopicElement = document.getElementById(pdfTopicId);
+    const pdfTopicValue = pdfTopicElement.innerText;
+    console.log("pdfFileName: " + fileName);
+    console.log("pdfTopic: " + pdfTopicValue);
+    console.log("examId: " + examId);
+
+    data.push({
+        name: fileName,
+        topic: pdfTopicValue,
+        exam_id: examId
+    });
+
+    if ( fileName === "" || pdfTopicValue === "") {
+        showErrorMessageInExam("Please fill out all fields!");
+    } else {
+        sendModifiedExamExamplesDataToServer(data);
+    }
+}
+
+function sendModifiedExamExamplesDataToServer(data) {
+    showLoadingModal()
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    var formData = new FormData();
+    formData.append("name", data[0].name);
+    formData.append("topic", data[0].topic);
+    formData.append("exam_id", data[0].exam_id);
+
+    fetch('/resources/examExamples/modifyExamExamples', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        body: formData
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            return response.text();
+        }
+    }).then(data => {
+        hideLoadingModal()
+        if (data === "Success") {
+            location.reload();
+        } else if(data === "Too large"){
+            showErrorMessageInExam("The file is too large!");
+        } else if (data === "TOO LARGE FILE"){
+            showErrorMessageInExam("The file size exceeds the maximum limit of 10 MB!");
+        }
+    }).catch(error => {
+        hideLoadingModal()
+        console.error('An error occurred:', error);
+    });
 }
 
 

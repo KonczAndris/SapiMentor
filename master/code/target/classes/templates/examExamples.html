@@ -220,6 +220,8 @@
                         <div class="exam-image-image-container">
                             <span id="exam-name-id" th:text="${exam.name}"></span>
                             <span id="zoomIcon" class="zoom-icon">&#128269;</span>
+                            <span id="modifyIcon" class="modify-icon" th:onclick="'setupModifyExamsModal(' + ${exam.id} + ')'"
+                                  >&#9999;&#65039;</span>
                             <div class="exam-image-modal" th:id="'myModal-' + ${exam.id}">
                                 <div class="exam-image-modal-content">
                                     <img th:id="'modalImg-' + ${exam.id}" th:alt="${exam.name}" class="dynamic-resize" />
@@ -251,9 +253,72 @@
                             <span class="hungarian-text">Nem tetszik</span>
                         </button>
                     </td>
+                    <!-- MODIFY MODAL START -->
+                    <div id="examExamplesModifyModal" class="modal-examExamples" th:id="'examExamplesModifyModal-' + ${exam.id}">
+                        <div class="modal-content-examExamples">
+                            <div class="message-exam-modal-content-container">
+                                <p class="error-message-exam-modal-content" id="error-message-exam-modal-content-modify"></p>
+                            </div>
+
+                            <div class="form-group-edit">
+                                <div class="detail-row">
+                                    <p class="detail-label">
+                                        <span class="english-text">Name:</span>
+                                        <span class="hungarian-text">Név:</span>
+                                    </p>
+                                    <input type="text" class="edit-input" th:id="'examExampleName-edit-modify-' + ${exam.id}" placeholder="" required
+                                           autofocus="autofocus" th:value="${exam.name}">
+                                    <div class="info-icon" data-tooltip="">
+                                        <i class="fas fa-info-circle"></i>
+                                    </div>
+                                    <div class="info-tooltip">
+                                        <span class="english-text">Enter an accurate name!</span>
+                                        <span class="hungarian-text">Valós nevet adj meg!</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group-edit" id="topicDD-edit-modify">
+                                <div class="detail-row">
+                                    <p class="detail-label">
+                                        <span class="english-text">Topic:</span>
+                                        <span class="hungarian-text">Téma:</span>
+                                    </p>
+                                    <div class="topic-dropdown-modal-modify">
+                                        <button class="topic-dropbtn-modal-modify" th:id="'topic-dropbtn-modal-modify-' + ${exam.id}" th:onclick="'toggleDropdownModifyModal(\'' + ${exam.id} + '\')' ">
+                                            <span class="english-text" th:text="${exam.topic_name}"></span>
+                                            <span class="hungarian-text" th:text="${exam.topic_name}" ></span>
+                                        </button>
+                                        <input type="hidden" th:id="'topic-selected-modal-modify-' + ${exam.id}">
+                                        <div class="topic-dropdown-content-modify" th:id="'topic-myDropdown-modify-' + ${exam.id}">
+                                            <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
+                                               th:data-exam-id="${exam.id}"
+                                               th:attr="onclick='closeDropdownModifyTopics(\'' + ${exam.id} + '\',\'' + ${topic.topic} + '\')'"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="func-buttons-modal">
+                                <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal"
+                                        th:onclick="'saveModifiedExamsDataToServer(\'' + ${exam.id} + '\')'">
+                                    <span class="english-text">Modify</span>
+                                    <span class="hungarian-text">Módosít</span>
+                                </button>
+                                <button class="cancel-button-modal-modify close-examExamples-modify red-button" id="modify-modal-delete">
+                                    <span class="english-text">Delete</span>
+                                    <span class="hungarian-text">Töröl</span>
+                                </button>
+                                <button class="cancel-button-modal-modify close-examExamples-modify red-button" th:onclick="'closeModifyModal(\'examExamplesModifyModal-' + ${exam.id} + '\')'">
+                                    <span class="english-text">Cancel</span>
+                                    <span class="hungarian-text">Mégse</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- RESOURCE MODAL END -->
                 </tr>
-
-
                 </tbody>
             </table>
         </div>
@@ -278,8 +343,6 @@
     <!-- RESOURCE MODAL START -->
     <div id="examExamplesModal" class="modal-examExamples">
         <div class="modal-content-examExamples">
-<!--            <span class="close-examExamples">&times;</span>-->
-            <!-- Új rész hozzáadása a modalhoz -->
             <div class="message-exam-modal-content-container">
                 <p class="error-message-exam-modal-content" id="error-message-exam-modal-content"></p>
             </div>
