@@ -601,7 +601,6 @@ function saveModifiedDiplomaThesesDataToServer(diplomaId) {
     const pdfTopicId = "topic-dropbtn-modal-modify-" + diplomaId;
     const pdfTopicElement = document.getElementById(pdfTopicId);
     const pdfTopicValue = pdfTopicElement.innerText;
-
     console.log("pdfFileName: " + pdfFileName);
     console.log("pdfFileYear: " + pdfFileYear);
     console.log("pdfTopic: " + pdfTopicValue);
@@ -611,14 +610,14 @@ function saveModifiedDiplomaThesesDataToServer(diplomaId) {
         name: pdfFileName,
         year: pdfFileYear,
         topic: pdfTopicValue,
-        diplomaId: diplomaId
+        diploma_id: diplomaId
     });
 
-    // if ( pdfFileName === "" || pdfFileYear === "") {
-    //     showErrorMessageInDiploma("Please fill out all fields!");
-    // } else {
-    //     sendModifiedDiplomaThesesDataToServer(data);
-    // }
+    if ( pdfFileName === "" || pdfFileYear === "" || pdfTopicValue === "") {
+        showErrorMessageInDiploma("Please fill out all fields!");
+    } else {
+        sendModifiedDiplomaThesesDataToServer(data);
+    }
 
 }
 
@@ -630,8 +629,9 @@ function sendModifiedDiplomaThesesDataToServer(data) {
     formData.append("name", data[0].name);
     formData.append("year", data[0].year);
     formData.append("topic", data[0].topic);
+    formData.append("diploma_id", data[0].diploma_id);
 
-    fetch('/resources/diplomaTheses/', {
+    fetch('/resources/diplomaTheses/modifyDiplomaTheses', {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': token
