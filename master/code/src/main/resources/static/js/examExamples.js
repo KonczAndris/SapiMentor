@@ -1521,7 +1521,6 @@ function sendModifiedExamExamplesDataToServer(data) {
             return response.text();
         }
     }).then(data => {
-        hideLoadingModal()
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){

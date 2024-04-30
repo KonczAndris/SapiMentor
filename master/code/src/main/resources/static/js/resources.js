@@ -1349,7 +1349,6 @@ function sendModifiedResourceDataToServer(data) {
             return response.text();
         }
     }).then(data => {
-        hideLoadingModal()
         if (data === "Success") {
             location.reload();
         }
