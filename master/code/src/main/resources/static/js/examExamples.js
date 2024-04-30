@@ -582,7 +582,7 @@ function sendExamsDataToServer(data) {
         // ezt is andrisnak
         //hideLoadingModal(); // Elrejtjük a modal ablakot
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-        hideLoadingModal()
+        //hideLoadingModal()
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){
