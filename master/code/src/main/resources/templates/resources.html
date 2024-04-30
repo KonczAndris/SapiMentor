@@ -246,7 +246,7 @@
                                         <span class="hungarian-text">Link-név:</span>
                                     </p>
                                     <input type="text" class="edit-input" th:id="'resourceName-edit-modify-' + ${resource.id}" placeholder="" required
-                                           autofocus="autofocus"  th:value="${resource.name}" th:oninput="'validateModifiedName(\'' + ${resource.id} + '\')' ">
+                                           autofocus="autofocus"  th:value="${resource.name}" th:oninput="'validateModifiedName(\'' + ${resource.id} + '\')'">
                                     <div class="info-icon" data-tooltip="">
                                         <i class="fas fa-info-circle"></i>
                                     </div>
@@ -279,13 +279,8 @@
                             </div>
 
                             <div class="func-buttons-modal">
-<<<<<<< HEAD
                                 <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal" th:id="'modify-button-modal-' + ${resource.id}"
                                         th:onclick="'saveModifiedLinkDataToServer(\'' + ${resource.id} + '\')'">
-=======
-                                <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal"
-                                        th:onclick="'saveModifiedResourceDataToServer(\'' + ${resource.id} + '\')'">
->>>>>>> 670c90511ddd21288b6d741fc43e123bb0a94544
                                     <span class="english-text">Modify</span>
                                     <span class="hungarian-text">Módosít</span>
                                 </button>
@@ -299,8 +294,6 @@
                                     <span class="hungarian-text">Mégse</span>
                                 </button>
                             </div>
-
-
                         </div>
                     </div>
                     <!-- RESOURCE MODAL END -->

@@ -267,7 +267,7 @@
                                         <span class="hungarian-text">Név:</span>
                                     </p>
                                     <input type="text" class="edit-input" th:id="'examExampleName-edit-modify-' + ${exam.id}" placeholder="" required
-                                           autofocus="autofocus" th:value="${exam.name}">
+                                           autofocus="autofocus" th:value="${exam.name}" th:oninput="'validateModifiedName(\'' + ${exam.id} + '\')'">
                                     <div class="info-icon" data-tooltip="">
                                         <i class="fas fa-info-circle"></i>
                                     </div>
@@ -300,7 +300,7 @@
                             </div>
 
                             <div class="func-buttons-modal">
-                                <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal"
+                                <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal" th:id="'modify-button-modal-' + ${exam.id}"
                                         th:onclick="'saveModifiedExamExamplesDataToServer(\'' + ${exam.id} + '\')'">
                                     <span class="english-text">Modify</span>
                                     <span class="hungarian-text">Módosít</span>
@@ -359,7 +359,7 @@
                             <span class="english-text">Select</span>
                             <span class="hungarian-text">Kiválaszt</span>
                         </button>
-                        <input type="text" class="edit-input" id="examExampleFileName-edit" placeholder="" required autofocus="autofocus" readonly>
+                        <input type="text" class="edit-input" id="examExampleFileName-edit" placeholder=".jpg, .pdf" required autofocus="autofocus" readonly>
                     </div> </div>
             </div>
 
@@ -371,7 +371,7 @@
                         <span class="hungarian-text">Név:</span>
                     </p>
                     <input type="text" class="edit-input" id="examExampleName-edit" placeholder="" required
-                           autofocus="autofocus">
+                           autofocus="autofocus" th:oninput="validateName()">
                     <div class="info-icon" data-tooltip="">
                         <i class="fas fa-info-circle"></i>
                     </div>

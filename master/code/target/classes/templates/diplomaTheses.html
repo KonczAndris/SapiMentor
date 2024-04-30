@@ -323,7 +323,7 @@
                         <span class="english-text">Name:</span>
                         <span class="hungarian-text">Név:</span></p>
                       <input type="text" class="edit-input" th:id="'diplomaTheses-edit-modify-' + ${diploma.id}" placeholder="" required
-                             autofocus="autofocus" th:value="${diploma.name}">
+                             autofocus="autofocus" th:value="${diploma.name}" th:oninput="'validateModifiedName(\'' + ${diploma.id} + '\')'">
                       <div class="info-icon" data-tooltip="">
                         <i class="fas fa-info-circle"></i>
                       </div>
@@ -340,7 +340,7 @@
                         <span class="hungarian-text">Év:</span>
                       </p>
                       <input type="text" class="edit-input" th:id="'diplomaTheses-edit-year-modify-' + ${diploma.id}" placeholder="" required
-                             autofocus="autofocus" th:value="${diploma.year}">
+                             autofocus="autofocus" th:value="${diploma.year}" th:oninput="'validateModifiedName(\'' + ${diploma.id} + '\')'">
                       <div class="info-icon" data-tooltip="">
                         <i class="fas fa-info-circle"></i>
                       </div>
@@ -372,7 +372,7 @@
                   </div>
 
                   <div class="func-buttons-modal">
-                    <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal"
+                    <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal" th:id="'modify-button-modal-' + ${diploma.id}"
                             th:onclick="'saveModifiedDiplomaThesesDataToServer(\'' + ${diploma.id} + '\')'">
                       <span class="english-text">Modify</span>
                       <span class="hungarian-text">Módosít</span>
@@ -431,7 +431,7 @@
               <span class="english-text">Select</span>
               <span class="hungarian-text">Kiválaszt</span>
             </button>
-            <input type="text" class="edit-input" id="diplomaThesesFileName-edit" placeholder="" required autofocus="autofocus" readonly>
+            <input type="text" class="edit-input" id="diplomaThesesFileName-edit" placeholder=".pdf" required autofocus="autofocus" readonly>
           </div> </div>
       </div>
 
@@ -441,7 +441,7 @@
             <span class="english-text">Name:</span>
             <span class="hungarian-text">Név:</span></p>
           <input type="text" class="edit-input" id="diplomaTheses-edit" placeholder="" required
-                 autofocus="autofocus">
+                 autofocus="autofocus" th:oninput="validateName()">
           <div class="info-icon" data-tooltip="">
             <i class="fas fa-info-circle"></i>
           </div>
@@ -458,7 +458,7 @@
             <span class="hungarian-text">Év:</span>
           </p>
           <input type="text" class="edit-input" id="diplomaTheses-edit-year" placeholder="" required
-                 autofocus="autofocus">
+                 autofocus="autofocus" oninput="validateName()">
           <div class="info-icon" data-tooltip="">
             <i class="fas fa-info-circle"></i>
           </div>

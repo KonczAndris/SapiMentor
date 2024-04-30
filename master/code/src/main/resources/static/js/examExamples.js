@@ -395,6 +395,39 @@ function closeModifyModal(id) {
     }
 }
 
+function validateName() {
+    var nameInput = document.getElementById("examExampleName-edit");
+    var nameValue = nameInput.value.trim();
+    var uploadButton = document.getElementById("upload-button-modal");
+    if (!/.{3,}/.test(nameValue)) {
+        nameInput.classList.add("highlight");
+        uploadButton.disabled = true;
+        uploadButton.style.opacity = 0.5;
+        uploadButton.style.cursor = "not-allowed";
+    } else {
+        nameInput.classList.remove("highlight");
+        uploadButton.disabled = false;
+        uploadButton.style.opacity = 1;
+    }
+}
+
+function validateModifiedName(examId) {
+    var nameInput = document.getElementById("examExampleName-edit-modify-" + examId);
+    var nameValue = nameInput.value.trim();
+    var modifyButton = document.getElementById("modify-button-modal-" + examId);
+    if (!/.{3,}/.test(nameValue)) {
+        nameInput.classList.add("highlight");
+        modifyButton.disabled = true;
+        modifyButton.style.opacity = 0.5;
+        modifyButton.style.cursor = "not-allowed";
+    } else {
+        nameInput.classList.remove("highlight");
+        modifyButton.disabled = false;
+        modifyButton.style.opacity = 1;
+        modifyButton.style.cursor = "pointer";
+    }
+}
+
 // Function to handle file selection and update the input field
 document.getElementById("fileUpload").addEventListener("change", function() {
     const fileInput = document.getElementById("fileUpload");

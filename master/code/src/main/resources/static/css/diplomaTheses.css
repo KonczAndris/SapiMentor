@@ -865,7 +865,9 @@ tr {
     transform: scaleX(-1);
 }
 
-
+.highlight {
+    background-color: #FFCCCC;
+}
 /*RESPONSIVE DESIGN*/
 @media screen and (max-width: 1000px) {
     .filter-container {

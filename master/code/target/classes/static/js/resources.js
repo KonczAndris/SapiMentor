@@ -571,22 +571,22 @@ function validateName() {
     }
 }
 
-// function validateModifiedName(resourceId) {
-//     var nameInput = document.getElementById("resourceName-edit-modify-" + resourceId);
-//     var nameValue = nameInput.value.trim();
-//     var modifyButton = document.getElementById("modify-button-modal-" + resourceId);
-//     if (!/.{3,}/.test(nameValue)) {
-//         nameInput.classList.add("highlight");
-//         modifyButton.disabled = true;
-//         modifyButton.style.opacity = 0.5;
-//         modifyButton.style.cursor = "not-allowed";
-//     } else {
-//         nameInput.classList.remove("highlight");
-//         modifyButton.disabled = false;
-//         modifyButton.style.opacity = 1;
-//         modifyButton.style.cursor = "pointer";
-//     }
-// }
+function validateModifiedName(resourceId) {
+    var nameInput = document.getElementById("resourceName-edit-modify-" + resourceId);
+    var nameValue = nameInput.value.trim();
+    var modifyButton = document.getElementById("modify-button-modal-" + resourceId);
+    if (!/.{3,}/.test(nameValue)) {
+        nameInput.classList.add("highlight");
+        modifyButton.disabled = true;
+        modifyButton.style.opacity = 0.5;
+        modifyButton.style.cursor = "not-allowed";
+    } else {
+        nameInput.classList.remove("highlight");
+        modifyButton.disabled = false;
+        modifyButton.style.opacity = 1;
+        modifyButton.style.cursor = "pointer";
+    }
+}
 
 // Like Dislike Buttons
 function sendLikeOrDislike(resourceId, action) {
@@ -1321,7 +1321,7 @@ document.querySelectorAll('.sortable').forEach(headerCell => {
 });
 
 // MODIFY
-function saveModifiedResourceDataToServer(resourceId) {
+function saveModifiedLinkDataToServer(resourceId) {
     var data = [];
 
     const linkNameId = "resourceName-edit-modify-" + resourceId;

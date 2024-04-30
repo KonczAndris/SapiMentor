@@ -1321,7 +1321,7 @@ document.querySelectorAll('.sortable').forEach(headerCell => {
 });
 
 // MODIFY
-function saveModifiedResourceDataToServer(resourceId) {
+function saveModifiedLinkDataToServer(resourceId) {
     var data = [];
 
     const linkNameId = "resourceName-edit-modify-" + resourceId;
