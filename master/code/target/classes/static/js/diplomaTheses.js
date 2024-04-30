@@ -298,6 +298,75 @@ function closeDropdownModifyTopics(diplomaId, selectedItem) {
     dropdownContent.style.display = "none";
 }
 
+function validateName() {
+    var nameInput = document.getElementById("diplomaTheses-edit");
+    var nameValue = nameInput.value.trim();
+    var uploadButton = document.getElementById("upload-button-modal");
+    var yearInput = document.getElementById("diplomaTheses-edit-year");
+    var yearValue = yearInput.value.trim();
+    var currentYear = new Date().getFullYear();
+
+    var nameValid = /^[a-zA-Zéáűúőíöü\s'-]{1,30}$/.test(nameValue);
+    var yearValid = /^(2000|[2-9]\d{3}|1\d{4}|20[01]\d)$/.test(yearValue) && !isNaN(yearValue) && parseInt(yearValue) <= currentYear;
+
+    if (!nameValid) {
+        nameInput.classList.add("highlight");
+    } else {
+        nameInput.classList.remove("highlight");
+    }
+
+    if (!yearValid) {
+        yearInput.classList.add("highlight");
+    } else {
+        yearInput.classList.remove("highlight");
+    }
+
+    if (!nameValid || !yearValid) {
+        uploadButton.disabled = true;
+        uploadButton.style.opacity = 0.5;
+        uploadButton.style.cursor = "not-allowed";
+    } else {
+        uploadButton.disabled = false;
+        uploadButton.style.opacity = 1;
+        uploadButton.style.cursor = "pointer";
+    }
+}
+
+function validateModifiedName(diplomaId) {
+    var nameInput = document.getElementById("diplomaTheses-edit-modify-" + diplomaId);
+    var nameValue = nameInput.value.trim();
+    var modifyButton = document.getElementById("modify-button-modal-" + diplomaId);
+    var yearInput = document.getElementById("diplomaTheses-edit-year-modify-" + diplomaId);
+    var yearValue = yearInput.value.trim();
+    var currentYear = new Date().getFullYear();
+
+    var nameValid = /^[a-zA-Zéáűúőíöü\s'-]{1,30}$/.test(nameValue);
+    var yearValid = /^(2000|[2-9]\d{3}|1\d{4}|20[01]\d)$/.test(yearValue) && !isNaN(yearValue) && parseInt(yearValue) <= currentYear;
+
+    if (!nameValid) {
+        nameInput.classList.add("highlight");
+    } else {
+        nameInput.classList.remove("highlight");
+    }
+
+    if (!yearValid) {
+        yearInput.classList.add("highlight");
+    } else {
+        yearInput.classList.remove("highlight");
+    }
+
+    if (!nameValid || !yearValid) {
+        modifyButton.disabled = true;
+        modifyButton.style.opacity = 0.5;
+        modifyButton.style.cursor = "not-allowed";
+    } else {
+        modifyButton.disabled = false;
+        modifyButton.style.opacity = 1;
+        modifyButton.style.cursor = "pointer";
+    }
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const dropdownLinks = document.querySelectorAll(".topic-dropdown-content a");
     const dropdownButton = document.querySelector(".topic-dropbtn-modal");
