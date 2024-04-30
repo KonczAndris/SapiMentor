@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface ExamsRepository extends JpaRepository<Exams, Long> {
     Exams save(Exams exams);
-    @Query("SELECT e.id, e.name, e.topic_name,e.user_name,e.like,e.dislike FROM Exams e")
+    @Query("SELECT e.id, e.name, e.topic_name,e.user_name,e.like,e.dislike, e.user_id FROM Exams e")
     List<Object[]> findProjectedBy();
 
 //    @Query("SELECT e.id, e.examImage FROM Exams e WHERE e.id = :examId")
@@ -35,5 +35,9 @@ public interface ExamsRepository extends JpaRepository<Exams, Long> {
     @Modifying
     @Query("UPDATE Exams ex SET ex.like = :#{#exam.like}, ex.dislike = :#{#exam.dislike} WHERE ex.id = :#{#exam.id}")
     void update(@Param("exam") Exams exam);
+
+    @Modifying
+    @Query("DELETE FROM Exams ex WHERE ex.id = :examId")
+    void deleteById(Long examId);
 
 }

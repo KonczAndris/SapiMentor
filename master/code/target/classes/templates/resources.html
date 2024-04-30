@@ -211,8 +211,8 @@
                 <tr th:each="resource, stat : ${resourcesData}" th:id="'resource-row-' + ${resource.id}">
                     <td th:text="${stat.index + 1}"></td>
                     <td><a th:href="${resource.link}" target="_blank" th:text="${resource.name}" style="color: #2196F3"></a>
-                    <span id="modifyIcon" class="modify-icon" th:onclick="'setupModifyResourceModal(' + ${resource.id} + ')'"
-                        >&#9999;&#65039;</span>
+                        <span id="modifyIcon" class="modify-icon" th:onclick="'setupModifyResourceModal(' + ${resource.id} + ')'"
+                              th:if="${linksUserId == resource.user_id}">&#9999;&#65039;</span>
                         </td>
                     <td th:text="${resource.topic_name}"></td>
                     <td th:text="${resource.user_name}"></td>
@@ -279,12 +279,18 @@
                             </div>
 
                             <div class="func-buttons-modal">
+<<<<<<< HEAD
                                 <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal" th:id="'modify-button-modal-' + ${resource.id}"
                                         th:onclick="'saveModifiedLinkDataToServer(\'' + ${resource.id} + '\')'">
+=======
+                                <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal"
+                                        th:onclick="'saveModifiedResourceDataToServer(\'' + ${resource.id} + '\')'">
+>>>>>>> 670c90511ddd21288b6d741fc43e123bb0a94544
                                     <span class="english-text">Modify</span>
                                     <span class="hungarian-text">Módosít</span>
                                 </button>
-                                <button class="cancel-button-modal-modify close-resource-modify red-button" id="modify-modal-delete">
+                                <button class="cancel-button-modal-modify close-resource-modify red-button" id="modify-modal-delete"
+                                        th:onclick="'deleteResourcesData(\'' + ${resource.id} + '\')'">
                                     <span class="english-text">Delete</span>
                                     <span class="hungarian-text">Töröl</span>
                                 </button>

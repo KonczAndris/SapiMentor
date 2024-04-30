@@ -483,8 +483,7 @@ function sendResourcesDataToServer(data) {
     showLoadingModal(); // Megjelenítjük a modal ablakot
 
     var resourcesUploadDataItems = JSON.stringify(data);
-    //document.getElementById("resourceDataItems").value = profileTopicsDataItems;
-    //console.log("Adatok: " + resourcesUploadDataItems);
+
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -1330,20 +1329,17 @@ function saveModifiedResourceDataToServer(resourceId) {
     const linkTopicId = "topic-dropbtn-modal-modify-" + resourceId;
     const linkTopicElement = document.getElementById(linkTopicId);
     const linkTopicValue = linkTopicElement.innerText;
-    console.log("linkName: " + linkName);
-    console.log("linkTopic: " + linkTopicValue);
-    console.log("resourceId: " + resourceId);
 
     data.push({
         name: linkName,
         topic: linkTopicValue,
-        resource_id: resourceId
+        link_id: resourceId
     });
 
     if ( linkName === "" || linkTopicValue === "") {
         showErrorMessageInExam("Please fill out all fields!");
     } else {
-        sendModifiedExamExamplesDataToServer(data);
+        sendModifiedResourceDataToServer(data);
     }
 }
 
@@ -1354,7 +1350,7 @@ function sendModifiedResourceDataToServer(data) {
     var formData = new FormData();
     formData.append("name", data[0].name);
     formData.append("topic", data[0].topic);
-    formData.append("exam_id", data[0].exam_id);
+    formData.append("link_id", data[0].link_id);
 
     fetch('/resources/modifyResources', {
         method: 'POST',
@@ -1372,13 +1368,37 @@ function sendModifiedResourceDataToServer(data) {
         hideLoadingModal()
         if (data === "Success") {
             location.reload();
-        } else if(data === "Too large"){
-            showErrorMessageInExam("The file is too large!");
-        } else if (data === "TOO LARGE FILE"){
-            showErrorMessageInExam("The file size exceeds the maximum limit of 10 MB!");
         }
     }).catch(error => {
         hideLoadingModal()
         console.error('An error occurred:', error);
+    });
+}
+
+
+//DELETE
+function deleteResourcesData(linkId) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    showLoadingModal()
+    fetch(`/resources/deleteResources?link_id=${linkId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            return response.text();
+        }
+    }).then(data => {
+        if (data === "Success") {
+            location.reload();
+        }
+    }).catch(error => {
+        console.error('An error occurred:', error);
+        hideLoadingModal()
     });
 }

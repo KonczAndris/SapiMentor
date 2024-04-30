@@ -221,7 +221,7 @@
                             <span id="exam-name-id" th:text="${exam.name}"></span>
                             <span id="zoomIcon" class="zoom-icon">&#128269;</span>
                             <span id="modifyIcon" class="modify-icon" th:onclick="'setupModifyExamsModal(' + ${exam.id} + ')'"
-                                  >&#9999;&#65039;</span>
+                                  th:if="${examsUserId == exam.user_id}">&#9999;&#65039;</span>
                             <div class="exam-image-modal" th:id="'myModal-' + ${exam.id}">
                                 <div class="exam-image-modal-content">
                                     <img th:id="'modalImg-' + ${exam.id}" th:alt="${exam.name}" class="dynamic-resize" />
@@ -301,11 +301,12 @@
 
                             <div class="func-buttons-modal">
                                 <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal"
-                                        th:onclick="'saveModifiedExamsDataToServer(\'' + ${exam.id} + '\')'">
+                                        th:onclick="'saveModifiedExamExamplesDataToServer(\'' + ${exam.id} + '\')'">
                                     <span class="english-text">Modify</span>
                                     <span class="hungarian-text">Módosít</span>
                                 </button>
-                                <button class="cancel-button-modal-modify close-examExamples-modify red-button" id="modify-modal-delete">
+                                <button class="cancel-button-modal-modify close-examExamples-modify red-button" id="modify-modal-delete"
+                                        th:onclick="'deleteExamExamplesData(\'' + ${exam.id} + '\')'">
                                     <span class="english-text">Delete</span>
                                     <span class="hungarian-text">Töröl</span>
                                 </button>

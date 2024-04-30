@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.ExamsLikeDislikeDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Exams;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ExamsRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserExamLikeDislikeRepository;
 
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
@@ -29,12 +30,15 @@ import java.util.Map;
 @Transactional
 public class ExamServices {
     private final ExamsRepository examsRepository;
+    private final UserExamLikeDislikeRepository userExamLikeDislikeRepository;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public ExamServices(ExamsRepository examsRepository) {
+    public ExamServices(ExamsRepository examsRepository,
+                        UserExamLikeDislikeRepository userExamLikeDislikeRepository) {
         this.examsRepository = examsRepository;
+        this.userExamLikeDislikeRepository = userExamLikeDislikeRepository;
     }
 
     @Cacheable("getAllExams")
@@ -78,6 +82,7 @@ public class ExamServices {
             exam.setUser_name((String) result[3]);
             exam.setLike((Integer) result[4]);
             exam.setDislike((Integer) result[5]);
+            exam.setUser_id((Long) result[6]);
             exams.add(exam);
         }
 
@@ -120,19 +125,54 @@ public class ExamServices {
     //private static final long MAX_IMAGE_SIZE = 20 * 1024; // 20 KB
     //private static final long MAX_IMAGE_SIZE = 40 * 1024; // 40 KB
 
+    //////////////////////// MODIFY ///////////////////////////////////////////////////////////////////////////////////////////
+    public String modifyExam(String name,
+                             String topic,
+                             String user_name,
+                             Long examId) {
+        try {
+            Exams exam = examsRepository.findById(examId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Exam not found"));
+            if(exam != null) {
+                exam.setName(name);
+                exam.setTopic_name(topic);
+                exam.setUser_name(user_name);
+
+                examsRepository.save(exam);
+            } else {
+                return "Not found";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error";
+        }
+        return null;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////// DELETE ///////////////////////////////////////////////////////////////////////////////////////////
+    public String deleteExam(Long examId) {
+        try {
+            userExamLikeDislikeRepository.deleteByExamId(examId);
+            examsRepository.deleteById(examId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error";
+        }
+        return null;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     // innen folytatni holnap
     public String uploadExamImage(MultipartFile image,
                                   String name,
                                   String topic,
-                                  String user_name){
+                                  String user_name,
+                                  Long examId) {
 
         if (!image.isEmpty()){
             try{
-                System.out.println("Image size: " + image.getSize());
-                System.out.println("MAX_IMAGE_SIZE: " + MAX_IMAGE_SIZE);
-                System.out.println("Image name: " + name);
-                System.out.println("Image topic: " + topic);
-                System.out.println("Image user_name: " + user_name);
                 if (image.getSize() > MAX_IMAGE_SIZE){
                     return "Too large";
                 }
@@ -147,21 +187,7 @@ public class ExamServices {
                 exam.setUser_name(user_name);
                 exam.setLike(0);
                 exam.setDislike(0);
-
-//                // itt skalazom a kepet a megadott meretekre
-//                BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
-//
-//                int minDimension = Math.min(originalImage.getWidth(), originalImage.getHeight());
-//                int x = (originalImage.getWidth() - minDimension) / 2;
-//                int y = (originalImage.getHeight() - minDimension) / 2;
-//
-//                BufferedImage croppedImage = originalImage.getSubimage(x, y, minDimension, minDimension);
-//
-//                BufferedImage scaledImage = Thumbnails.of(croppedImage)
-//                        .scale(1.0) // 100%-os méretarány (eredeti méret megtartva)
-//                        .outputQuality(0.8)  // Itt állítsd be a kívánt minőséget
-//                        .asBufferedImage();
-
+                exam.setUser_id(examId);
 
                 BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
                 System.out.println("Original image size: " + originalImage);
@@ -177,18 +203,6 @@ public class ExamServices {
                     byte[] scaledImageBytes = baos.toByteArray();
 //                    System.out.println("Scaled image size: " + scaledImageBytes.length);
                     if (scaledImageBytes.length == 0) {
-//                        ByteArrayOutputStream pngBaos = new ByteArrayOutputStream();
-//                        BufferedImage scaledImage2 = Thumbnails.of(originalImage)
-//                                .scale(0.85) // itt allitom be hogy mennyire legyen kicsinyitve a kep
-//                                .outputQuality(0.7)  // itt allitom be a kivant minoseget
-//                                .outputFormat("png") // Megőrzi az eredeti PNG formátumot
-//                                .asBufferedImage();
-//                        ImageIO.write(scaledImage2, "png", pngBaos);
-//
-//                        byte[] scaledImageBytesJPEG = pngBaos.toByteArray();
-//
-//                        System.out.println("Scaled image size2: " + scaledImageBytesJPEG.length);
-                        //exam.setExamImage(scaledImageBytesJPEG);
                         return "Wrong type";
                     } else {
                         exam.setExamImage(scaledImageBytes);

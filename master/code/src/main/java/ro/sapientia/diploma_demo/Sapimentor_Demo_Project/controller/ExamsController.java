@@ -157,15 +157,38 @@ public class ExamsController {
     }
 
 
-    @PostMapping("/uploadExams")
-    public ResponseEntity<String> uploadExams(@RequestParam("image") MultipartFile image,
-                                              @RequestParam("name") String name,
-                                              @RequestParam("topic") String topic,
+    ///////////////// DELETE /////////////////////////////////////////////////
+    @PostMapping("/deleteExamExamples")
+    public ResponseEntity<String> deleteExams(@RequestParam("exam_id") Long exam_id,
                                               Principal principal){
-        System.out.println("Name: " + name);
-        System.out.println("Topic: " + topic);
-        System.out.println("Image: " + image);
 
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+
+        if (user != null) {
+            try {
+                String errorMessage = examServices.deleteExam(exam_id);
+                System.out.println("Error message: " + errorMessage);
+                if(errorMessage != null){
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+                }
+
+                return ResponseEntity.ok("Success");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while deleting the exam!");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////// MODIFY /////////////////////////////////////////////////
+    @PostMapping("/modifyExamExamples")
+    public ResponseEntity<String> modifyExams(@RequestParam("name") String name,
+                                              @RequestParam("topic") String topic,
+                                              @RequestParam("exam_id") Long exam_id,
+                                              Principal principal){
 
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
@@ -173,7 +196,36 @@ public class ExamsController {
         if (user != null) {
             String user_name = user.getFirst_Name() + " " + user.getLast_Name();
             try {
-                String errorMessage = examServices.uploadExamImage(image, name, topic, user_name);
+                String errorMessage = examServices.modifyExam(name, topic, user_name, exam_id);
+                System.out.println("Error message: " + errorMessage);
+                if(errorMessage != null){
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+                }
+
+                return ResponseEntity.ok("Success");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while modifying the exam!");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @PostMapping("/uploadExams")
+    public ResponseEntity<String> uploadExams(@RequestParam("image") MultipartFile image,
+                                              @RequestParam("name") String name,
+                                              @RequestParam("topic") String topic,
+                                              Principal principal){
+
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+
+        if (user != null) {
+            String user_name = user.getFirst_Name() + " " + user.getLast_Name();
+            Long user_id = user.getId();
+            try {
+                String errorMessage = examServices.uploadExamImage(image, name, topic, user_name, user_id);
                 System.out.println("Error message: " + errorMessage);
                 if(errorMessage != null){
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);

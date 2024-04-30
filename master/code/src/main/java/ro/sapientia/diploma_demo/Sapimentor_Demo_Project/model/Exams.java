@@ -36,18 +36,22 @@ public class Exams {
     @Column(name = "exam_dislike")
     private Integer dislike;
 
+    private Long user_id;
+
     public Exams(String name,
                  byte[] examImage,
                  String topic_name,
                  String user_name,
                  Integer like,
-                 Integer dislike) {
+                 Integer dislike,
+                 Long user_id) {
         this.name = name;
         this.examImage = examImage;
         this.topic_name = topic_name;
         this.user_name = user_name;
         this.like = like;
         this.dislike = dislike;
+        this.user_id = user_id;
     }
 
     public Exams(Long id,

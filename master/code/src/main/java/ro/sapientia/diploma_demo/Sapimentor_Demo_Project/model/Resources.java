@@ -22,6 +22,7 @@ public class Resources {
     private Integer like;
     @Column(name = "resource_dislike")
     private Integer dislike;
+    private Long user_id;
 
     public Resources(String name,
                      String link,

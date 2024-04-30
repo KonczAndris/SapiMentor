@@ -19,4 +19,8 @@ public interface UserResourceLikeDislikeRepository extends JpaRepository<UserRes
     @Modifying
     @Query("DELETE FROM UserResourceLikeDislike urld WHERE urld.user.id = :userId")
     void deleteByUserId(Long userId);
+
+    @Modifying
+    @Query("DELETE FROM UserResourceLikeDislike urld WHERE urld.resources.id = :resourceId")
+    void deleteByResourceId(Long resourceId);
 }

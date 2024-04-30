@@ -98,10 +98,8 @@ public class DiplomaServices {
                                          Long diplomaId) {
             try {
                 Diploma_Theses optionalDiplomaTheses = diplomaThesesRepository.findById(diplomaId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id: 1"));
+                        .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found"));
                 if(optionalDiplomaTheses != null){
-                    // itt hozom letre a Diploma_Theses objektumot
-                    // es teszem bele a megadott adatokat
                     optionalDiplomaTheses.setName(name);
                     optionalDiplomaTheses.setTopic_name(topic);
                     optionalDiplomaTheses.setUser_name(user_name);
