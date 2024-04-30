@@ -560,16 +560,32 @@ function validateName() {
     var nameInput = document.getElementById("resourceName-edit");
     var nameValue = nameInput.value.trim();
     var uploadButton = document.getElementById("upload-button-modal");
-
-    // The regular expression checks for at least 5 letters followed by an optional number
-    if (!/^[a-zA-Zéáűúőíöü\s'-]{5,}(?:\d)?$/.test(nameValue)) {
+    if (!/.{3,}/.test(nameValue)) {
         nameInput.classList.add("highlight");
         uploadButton.disabled = true;
-        uploadButton.cursor = "not-allowed";
+        uploadButton.style.opacity = 0.5;
+        uploadButton.style.cursor = "not-allowed";
     } else {
         nameInput.classList.remove("highlight");
         uploadButton.disabled = false;
-        uploadButton.opacity = 1;
+        uploadButton.style.opacity = 1;
+    }
+}
+
+function validateModifiedName(resourceId) {
+    var nameInput = document.getElementById("resourceName-edit-modify-" + resourceId);
+    var nameValue = nameInput.value.trim();
+    var modifyButton = document.getElementById("modify-button-modal-" + resourceId);
+    if (!/.{3,}/.test(nameValue)) {
+        nameInput.classList.add("highlight");
+        modifyButton.disabled = true;
+        modifyButton.style.opacity = 0.5;
+        modifyButton.style.cursor = "not-allowed";
+    } else {
+        nameInput.classList.remove("highlight");
+        modifyButton.disabled = false;
+        modifyButton.style.opacity = 1;
+        modifyButton.style.cursor = "pointer";
     }
 }
 
