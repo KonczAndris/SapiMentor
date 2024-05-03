@@ -233,7 +233,9 @@ public class MyGroupController {
     }
 
     @GetMapping("/mentees/filtered")
-    public String showFilteredMentees(Model model, Principal principal, @RequestParam MultiValueMap<String, String> params) {
+    public String showFilteredMentees(Model model,
+                                      Principal principal,
+                                      @RequestParam MultiValueMap<String, String> params) {
         try {
             if (principal == null) {
                 return "redirect:/login";

@@ -739,7 +739,7 @@ function sendModifiedDiplomaThesesDataToServer(data) {
             return response.text();
         }
     }).then(data => {
-        hideLoadingModal()
+        //hideLoadingModal()
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){

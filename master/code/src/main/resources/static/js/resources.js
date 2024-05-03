@@ -1207,9 +1207,38 @@ function searchTable() {
 }
 
 document.getElementById('search-button').addEventListener('click', () => {
-    document.getElementById('search-button').click();
-    searchTable();
+    //document.getElementById('search-button').click();
+    searchInTheTable();
+    //searchTable();
 });
+
+function searchInTheTable() {
+    const searchinput = document.getElementById('filter-input');
+    const filter = searchinput.value.toLowerCase();
+    const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
+    const selectedValues = Array.from(checkboxes).map(checkbox => checkbox.value.trim().toUpperCase());
+    // console.log("Keresési szöveg: " + filter);
+    // console.log("Mik vonnak bepipalva: " + selectedValues);
+    const queryString = 'filter=' + encodeURIComponent(filter) + '&selectedTopics=' + encodeURIComponent(selectedValues.join(','));
+    fetch('/resources/filtered?' + queryString, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            throw new Error('Request failed');
+        }
+    }).then(data => {
+        //console.log(data);
+        window.location.href = '/resources/filtered?' + queryString;
+
+    }).catch(error => {
+        console.error('Error:', error);
+    })
+}
 
 function listSuggestions() {
     const input = document.getElementById('filter-input');
