@@ -996,7 +996,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             //console.log(data.igenigen);
             examimages = data.examimagesandid;
-            //console.log(examimages);
+            console.log(examimages);
             handlerexmaimages();
             //console.log(likeAndDislikeStatuses);
         })
@@ -1016,11 +1016,14 @@ function handlerexmaimages() {
         var modal = document.getElementById('myModal-' + examId);
         var modalImg = document.getElementById('modalImg-' + examId);
 
-        if (image !== null) {
-            modalImg.src = 'data:image/jpeg;base64,' + image;
-        } else {
-            modal.id = modal.id + '-' +'ItIsNotAnImage';
+        if(modal !== null && modalImg !== null) {
+            if (image !== null ) {
+                modalImg.src = 'data:image/jpeg;base64,' + image;
+            } else {
+                modal.id = modal.id + '-' +'ItIsNotAnImage';
+            }
         }
+
 
     }
 }
@@ -1258,9 +1261,37 @@ function searchTable() {
 }
 
 document.getElementById('search-button').addEventListener('click', () => {
-    document.getElementById('search-button').click();
-    searchTable();
+    //document.getElementById('search-button').click();
+    searchInExamExamples();
+    //searchTable();
 });
+
+function searchInExamExamples() {
+    const searchinput = document.getElementById('filter-input');
+    const filter = searchinput.value.trim().toLowerCase();
+    const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
+    const selectedValues = Array.from(checkboxes).map(checkbox => checkbox.value.trim().toUpperCase());
+    // console.log("Keresési szöveg: " + filter);
+    // console.log("Kiválasztott témák: " + selectedValues);
+    const queryString = 'filter=' + encodeURIComponent(filter) + '&selectedTopics=' + encodeURIComponent(selectedValues.join(','));
+    fetch('/resources/examExamples/filtered?' + queryString, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            throw new Error('Request failed');
+        }
+    }).then(data => {
+        //console.log(data);
+        window.location.href = '/resources/examExamples/filtered?' + queryString;
+    }).catch(error => {
+        console.error('Error:', error);
+    });
+}
 
 function listSuggestions() {
     const input = document.getElementById('filter-input');

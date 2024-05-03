@@ -40,4 +40,7 @@ public interface ExamsRepository extends JpaRepository<Exams, Long> {
     @Query("DELETE FROM Exams ex WHERE ex.id = :examId")
     void deleteById(Long examId);
 
+    @Query("SELECT e.id, e.name, e.topic_name,e.user_name,e.like,e.dislike, e.user_id FROM Exams e WHERE LOWER(e.name) LIKE %:name% AND e.topic_name IN :topicNames")
+    List<Object[]> findAllByNameAndTopicName(String name, String[] topicNames);
+
 }
