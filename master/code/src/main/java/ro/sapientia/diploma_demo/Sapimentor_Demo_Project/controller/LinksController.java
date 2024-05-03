@@ -1,6 +1,7 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.*;
 
 @RequestMapping("/resources")
 @Controller
+@Slf4j
 public class LinksController {
     private final UserRepository userRepository;
     private final TopicService topicService;
@@ -124,6 +126,32 @@ public class LinksController {
 
         return "resources";
     }
+
+    @GetMapping("/filtered")
+    public String showFilteredResources(Model model,
+                                      Principal principal,
+                                      @RequestParam("filter") String filter,
+                                      @RequestParam("selectedTopics") String[] selectedValues) {
+        try {
+//            System.out.println("Filter: " + filter);
+//            System.out.println("Selected values: " + Arrays.toString(selectedValues));
+            if (principal == null) {
+                return "redirect:/login";
+            }
+            showUserRolesToDisplayResources(model, principal);
+            showTopicsToDisplayResources(model);
+            List<Resources> resourcesFiltered = resourceServices.getAllResourcesByFilter(model, filter, selectedValues);
+            model.addAttribute("resourcesData", resourcesFiltered);
+            showProfileImageAndName(model, principal);
+            return "resources";
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Error while filtering resources!");
+            return "error";
+        }
+    }
+
+
 
     //////////////////////// DELETE /////////////////////////////////////////////////////////////////
     @PostMapping("/deleteResources")

@@ -239,7 +239,6 @@ public class MyGroupService {
             //System.out.println("Favorites id: " + favorite.getId() + ", Status: " + favorite.getStatus() + ", User_id: " + favorite.getUser_id() + ", Favorite_id: " + favorite.getFavorite_id());
             favoriteIdsByUserId.put(favorite.getFavorite_id(), favorite.getStatus());
         }
-
         // Map<Long, String> profileImagesByUserId = new HashMap<>();
         Map<Long, Double> averageRatingsByUserId = new HashMap<>();
         for (MyGroupProfileDetailDTO user : allMentees) {
@@ -247,29 +246,20 @@ public class MyGroupService {
             double averageRating = ratingService.getAverageRating(user_Id).get("average");
             averageRatingsByUserId.put(user_Id, averageRating);
         }
-
         for (MyGroupProfileDetailDTO userDTO : allMentees) {
-
             Long userDTOId = userDTO.getId();
            // System.out.println("User: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
             List<Profile_Topics> userTopics = profileTopicsRepository.findByUserId(userDTOId);
-
             boolean userMatchesFilter = true;
-
             for (Map.Entry<String, List<String>> entry : params.entrySet()) {
                 String paramName = entry.getKey();
                 List<String> paramValues = new ArrayList<>();
                 paramValues = Arrays.asList(entry.getValue().get(0).split(","));
-
                // System.out.println("ELSO paramName: " + paramName + ", paramValues: " + paramValues);
-
                 for (Profile_Topics profile_topics : userTopics) {
                   //  System.out.println("Profile_topics: " +profile_topics.getTopic() + ": " + profile_topics.getTags());
-
                     if(paramName.equals(profile_topics.getTopic()) ) {
                       //  System.out.println("Egyenlo a topic a felhasznalo topicjaval");
-
-
                         if (!filteredUsers.contains(userDTO)) {
                             filteredUsers.add(userDTO);
                         }
@@ -302,13 +292,6 @@ public class MyGroupService {
                // System.out.println("userMatchesFilter: " + userMatchesFilter);
             }
         }
-
-        //System.out.println("filteredUsers: " + filteredUsers);
-//        for (MyGroupProfileDetailDTO userDTO : filteredUsers) {
-//
-//            System.out.println("Userutolso: " + userDTO.getFirstName() + " " + userDTO.getLastName() + ", id: " + userDTO.getId());
-//        }
-
         model.addAttribute("allMenteesOrMentors", filteredUsers);
         model.addAttribute("allRatings", allRatings);
         model.addAttribute("averageRatingsByUserId", averageRatingsByUserId);

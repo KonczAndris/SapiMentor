@@ -5,6 +5,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Resources;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ExamsRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ResourcesRepository;
@@ -14,9 +15,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -40,6 +39,23 @@ public class ResourceServices {
     @Cacheable("getAllResources")
     public List<Resources> getAllResources() {
         return resourcesRepository.findAll();
+    }
+
+    @Cacheable("getAllResourcesByFilter")
+    public List<Resources> getAllResourcesByFilter(Model model,
+                                        String filter,
+                                        String[] selectedValues) {
+        List<Resources> filteredResources = new ArrayList<>();
+        String filterValue = filter;
+        String[] selectedValuesArray = selectedValues;
+//        System.out.println("Igen1:" + filterValue);
+//        System.out.println("Igen2:" + Arrays.toString(selectedValuesArray));
+        filteredResources = resourcesRepository.findAllByNameAndTopicName(filterValue, selectedValuesArray);
+//        for(Resources resourcesList : filteredResources) {
+//            System.out.println("Igen3:" + resourcesList.getName()
+//            + " , " + resourcesList.getTopic_name());
+//        }
+        return filteredResources;
     }
 
     // van teszt irva ra
