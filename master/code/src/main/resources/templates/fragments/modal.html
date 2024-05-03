@@ -5,14 +5,23 @@
   <!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
   <!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
   <link rel="stylesheet" type="text/css" th:href="@{../css/index.css}">
+  <link rel="preload" th:href="@{../css/myGroup.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" th:href="@{../css/myGroup.css}"></noscript>
   <link rel="stylesheet" type="text/css" th:href="@{../css/myGroup.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{../css/languages.css}">
   <title>Title</title>
 </head>
 <body>
-<div th:fragment="modal-content" class="profile-modal" th:id="${'profileMainModal_' + uId}" >
+<div th:fragment="modal-content" class="profile-modal" th:id="${'profileMainModal_' + uId}"  >
   <span class="close-profile-modal">&times;</span>
 
   <div class="profile-modal-left-box">
+
+    <button th:onclick="'redirectToFavorites(' + ${uId} + ')'" class="btn btn-success blue-button" id="modal-contact-button"
+            th:classappend="${not userRolesToDisplayMentorSelector.contains('MENTEE') ? 'notmentee' : ''} + ${not userRolesToDisplayMentorSelector.contains('MENTOR') ? 'notmentor' : ''}">
+      <span class="english-text">Send a message</span>
+    </button>
+
 
     <div class="image-container">
       <img th:if="${profileImageForMyGroupBase64 != ''}"
@@ -199,5 +208,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{src/main/resources/static/js/functions.js}"></script>
 <script th:src="@{src/main/resources/static/js/myGroup.js}"></script>
+<script th:src="@{src/main/resources/static/js/localLanguageSettings.js}"></script>
 </body>
 </html>

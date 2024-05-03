@@ -37,6 +37,38 @@ document.querySelectorAll(".toMessenger-btn").forEach(function(element) {
     });
 });
 
+//Info box redirection
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("profile-info-box").addEventListener("click", function () {
+        window.location.href = "/profile";
+    });
+});
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("mentor-info-box").addEventListener("click", function () {
+        window.location.href = "/myGroup";
+    });
+});
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("resources-info-box").addEventListener("click", function () {
+        window.location.href = "/resources";
+    });
+});
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("profile-mini-info-box").addEventListener("click", function () {
+        window.location.href = "/profile";
+    });
+});
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("mentor-mini-info-box").addEventListener("click", function () {
+        window.location.href = "/myGroup";
+    });
+});
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("resources-mini-info-box").addEventListener("click", function () {
+        window.location.href = "/resources";
+    });
+});
+
 // Profile pic uploading modal
 function setupUploadModal() {
     var modal = document.getElementById("uploadModal");

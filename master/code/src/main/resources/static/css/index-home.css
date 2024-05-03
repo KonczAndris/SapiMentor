@@ -54,6 +54,7 @@
     user-select: none;
     flex-direction: column;
     padding: 25px;
+    cursor: pointer;
 }
 
 .main-div:hover {

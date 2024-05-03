@@ -582,7 +582,7 @@ function sendExamsDataToServer(data) {
         // ezt is andrisnak
         //hideLoadingModal(); // Elrejtjük a modal ablakot
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-        hideLoadingModal()
+        //hideLoadingModal()
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){
@@ -1594,6 +1594,13 @@ function deleteExamExamplesData(examId) {
     });
 
 }
+
+document.addEventListener('click', function(event) {
+    var suggestionList = document.getElementById('suggestion-list');
+    if (event.target !== suggestionList) {
+        suggestionList.style.display = 'none';
+    }
+});
 
 
 

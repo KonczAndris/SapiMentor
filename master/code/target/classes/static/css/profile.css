@@ -116,7 +116,7 @@
     text-overflow: ellipsis;
     margin: 0;
     text-transform: uppercase;
-    font-size: larger;
+    font-size: 17px;
     font-weight: bold;
     color: rgb(22, 175, 132);
 }
@@ -151,8 +151,9 @@
 
 #edit-role{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 /* RIGHT CONTAINER */
@@ -387,9 +388,13 @@ h2 {
 
 /* MENTOR MODAL BOX */
 #myMentorBtn{
-    background: transparent;
+    width: 130px;
+    font-size: 17px;
+    height: 40px;
     border:none;
     cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .modal-content-mentor{

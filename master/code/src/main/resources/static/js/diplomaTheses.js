@@ -1588,5 +1588,12 @@ function prevInfoPage() {
     }
 }
 
+document.addEventListener('click', function(event) {
+    var suggestionList = document.getElementById('suggestion-list');
+    if (event.target !== suggestionList) {
+        suggestionList.style.display = 'none';
+    }
+});
+
 // Jest testing exports
 module.exports = {searchTableForTesting};

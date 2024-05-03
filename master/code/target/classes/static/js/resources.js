@@ -502,9 +502,9 @@ function sendResourcesDataToServer(data) {
             // throw new Error('Hiba történt a válaszban');
         }
     }).then(data => {
-        hideLoadingModal(); // Elrejtjük a modal ablakot
+        //hideLoadingModal(); // Elrejtjük a modal ablakot
         // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-        console.log(data);
+        //console.log(data);
         // itt kell majd andrisnak megmondani hogy mit csinaljon
         if (data === "Success") {
             location.reload();
@@ -1401,3 +1401,10 @@ function deleteResourcesData(linkId) {
         hideLoadingModal()
     });
 }
+
+document.addEventListener('click', function(event) {
+    var suggestionList = document.getElementById('suggestion-list');
+    if (event.target !== suggestionList) {
+        suggestionList.style.display = 'none';
+    }
+});

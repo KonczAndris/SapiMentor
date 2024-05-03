@@ -739,7 +739,7 @@ function sendModifiedDiplomaThesesDataToServer(data) {
             return response.text();
         }
     }).then(data => {
-        hideLoadingModal()
+        //hideLoadingModal()
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){
@@ -1587,6 +1587,13 @@ function prevInfoPage() {
         paragraphs[currentPage - 1].style.display = 'block'; // Show last page
     }
 }
+
+document.addEventListener('click', function(event) {
+    var suggestionList = document.getElementById('suggestion-list');
+    if (event.target !== suggestionList) {
+        suggestionList.style.display = 'none';
+    }
+});
 
 // Jest testing exports
 module.exports = {searchTableForTesting};

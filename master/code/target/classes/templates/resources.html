@@ -58,6 +58,13 @@
        <div class="menu-divider"></div>
        <div class="form-group">
            <p class="menu-function">
+               <a href="/" th:href="@{/}"> <img th:src="@{/img/home.png}" alt="Icon" class="menu-icon">
+                   <span class="english-text">Home</span>
+                   <span class="hungarian-text">Főoldal</span>
+               </a></p>
+       </div>
+       <div class="form-group">
+           <p class="menu-function">
                <a th:onclick="${not userRolesToDisplayResources.contains('MENTOR') and not userRolesToDisplayResources.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"><span class="english-text">My Group</span>
                    <span class="hungarian-text">Csoportom</span>
                </a> </p>

@@ -57,6 +57,13 @@
                 <span th:text="${userRegistrationDetails.firstName + ' ' + userRegistrationDetails.lastName}"></span> </a>
         </div>
         <div class="menu-divider"></div>
+        <div class="form-group">
+            <p class="menu-function">
+                <a href="/" th:href="@{/}"> <img th:src="@{/img/home.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">Home</span>
+                    <span class="hungarian-text">Főoldal</span>
+                </a></p>
+        </div>
         <div class="form-group current-page" >
             <p class="menu-function">
                 <a href="/" th:href="@{/myGroup}"> <img th:src="@{/img/current-page-icon.png}" alt="Icon" class="menu-icon current-menu-icon"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon selected-menu-icon">

@@ -1401,3 +1401,10 @@ function deleteResourcesData(linkId) {
         hideLoadingModal()
     });
 }
+
+document.addEventListener('click', function(event) {
+    var suggestionList = document.getElementById('suggestion-list');
+    if (event.target !== suggestionList) {
+        suggestionList.style.display = 'none';
+    }
+});

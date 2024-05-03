@@ -470,15 +470,11 @@ $(document).ready(function() {
 
 });
 
-
-
-
 if(document.getElementById("favorites") !== null) {
     document.getElementById("favorites").addEventListener("click", function () {
         window.location.href = "/myGroup/favorites";
     });
 }
-
 
 // Function to show the filter container
 function showFilterContainer() {
@@ -954,6 +950,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Get the button element by its class name
 const profileButtons = document.querySelectorAll('.profile-button-watch');
 const profileModal = document.getElementById('profileModal');
+const profileImageButtons = document.querySelectorAll('.rounded-image');
 
 
 // Function to display the modal
@@ -968,8 +965,6 @@ function displayModal() {
         var interaction_buttons = document.querySelector('.interaction-buttons');
         var comments = document.getElementById('showCommentsButton');
 
-        //console.log("Interaction:" + interaction_buttons);
-
         if(rating !== null && comments !== null){
             rating.style.display = "none";
             comments.style.display = "none";
@@ -980,8 +975,6 @@ function displayModal() {
         if (interaction_buttons !== null) {
             interaction_buttons.style.display = "none";
         }
-        
-
     }
 }
 
@@ -999,15 +992,11 @@ function specialCloseModal() {
 }
 
 let profileimagesforSelectedUsers = [];
-// Event listener for each profile button
 profileButtons.forEach(button => {
-    // button.addEventListener('click', displayModal);
     button.addEventListener('click', function() {
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
-       //console.log("Button clicked", button.id);
        var userId = button.id.split("-")[1];
-       //console.log("User id: ", userId);
        var url = '/myGroup/getSelectedUserDetails?selectedUserId=' + userId;
 
        fetch(url, {
@@ -1024,9 +1013,6 @@ profileButtons.forEach(button => {
            }
        }).then(data => {
            if (data !== 'error') {
-               //console.log("Sikeres lekerdezes");
-               //console.log("Data: ", data);
-
                document.getElementById('profileModal').innerHTML = data;
                const closeBtn = document.querySelector('.close-profile-modal');
                if (closeBtn !== null){
@@ -1055,12 +1041,10 @@ profileButtons.forEach(button => {
                 throw new Error('Something went wrong');
             }
         }).then(data => {
-            //console.log("Data: ", data);
             profileimagesforSelectedUsers = data.selectedUserImages;
-            //console.log("Igen: " + profileimagesforSelectedUsers);
             setInterval(() => {
                 handlereselectedimages();
-            }, 1000); // 2000 milliszekundum = 2 másodperc
+            }, 1000);
         }).catch(error => {
             console.log("Error: ", error);
         });
@@ -1068,21 +1052,74 @@ profileButtons.forEach(button => {
     });
 });
 
+profileImageButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        var userId = button.id.split("-")[1];
+        var url = '/myGroup/getSelectedUserDetails?selectedUserId=' + userId;
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).then(data => {
+            if (data !== 'error') {
+                document.getElementById('profileModal').innerHTML = data;
+                const closeBtn = document.querySelector('.close-profile-modal');
+                if (closeBtn !== null){
+                    closeBtn.addEventListener('click', closeModal);
+                }
+                displayModal();
+            } else {
+                throw new Error('Something went wrong');
+            }
+
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
+
+        var url2 = '/myGroup/getSelectedUsersImages?selectedUserId=' + userId;
+        fetch(url2, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).then(data => {
+            profileimagesforSelectedUsers = data.selectedUserImages;
+            setInterval(() => {
+                handlereselectedimages();
+            }, 1000);
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
+
+    });
+});
 
 function handlereselectedimages() {
-
-    //console.log("Profile images hossz : ", profileimages.length);
     for (let i = 0; i < profileimagesforSelectedUsers.length; i++) {
         //console.log("Profile images : ", profileimages[i]);
         const commentprofileData = profileimagesforSelectedUsers[i];
         const commentprofileImage = commentprofileData[0];
         const commentprofileId = commentprofileData[1];
 
-        //console.log("Profil image: ", commentprofileImage);
-        //console.log("Profil id: ", commentprofileId);
-
          var commentedProfileImg  = document.getElementById('commentProfileImg-' + commentprofileId);
-        //console.log("Profile image div: ", commentedProfileImg);
         if (commentprofileImage != null && commentedProfileImg != null ) {
             commentedProfileImg.src = 'data:image/jpeg;base64,' + commentprofileImage;
         }
@@ -1091,14 +1128,11 @@ function handlereselectedimages() {
 }
 
 
-// Function to close the modal when clicking outside the modal content
 window.addEventListener('click', function(event) {
     if (event.target === profileModal) {
         profileModal.style.display = 'none';
     }
 });
-
-
 
 function showHeartIcons() {
     var token = $("meta[name='_csrf']").attr("content");
@@ -1127,17 +1161,12 @@ function showHeartIcons() {
             checkedHeart.style.display = 'inline';
         }
 
-
         var parentCellId = parentCell.id.split("-")[2];
         //console.log("Parent cell id: ", parentCellId);
         var favoriteButton = document.getElementById('favoriteButton-' + parentCellId);
-        //console.log("Favorite button: ", favoriteButton);
 
         favoriteButton.addEventListener('click', function() {
-
-
-                //console.log("Favorite " + parentCellId + " button clicked");
-                if (uncheckedHeart.classList.contains('active')) {
+             if (uncheckedHeart.classList.contains('active')) {
 
                     if (favoriteButton.classList.contains('notmentee') && window.location.href.includes('mentors')) {
                         alert("You are not a mentee,so you can't add this mentor to your favorites!");
@@ -1238,16 +1267,42 @@ function showHeartIcons() {
                         }
                     });
                 }
-
-
-
-
         });
     });
 }
 
-// Hívás a függvényre, például az oldal betöltésekor vagy más eseményre
 showHeartIcons();
+
+var favoriteButton = document.getElementById('modal-contact-button');
+favoriteButton.addEventListener('click', function() {
+    var urlforsave = '/myGroup/saveFavorite?favoriteUserId=' + parentCellId;
+
+    fetch(urlforsave, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }).then(data => {
+        if (data === 'ok') {
+            console.log("Sikeres mentes");
+
+            // Átirányítás a kedvencek oldalára
+            window.location.href = '/myGroup/favorites'; // Változtasd az útvonalat az oldalad szerkezetének megfelelően
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }).catch(error => {
+        console.log("Error: ", error);
+    });
+});
+
 
 function showRateSection() {
     document.getElementById('ratingSection').style.display = 'block';
@@ -1281,11 +1336,6 @@ document.getElementById('commentInput').addEventListener('focus', function () {
     this.selectionStart = this.selectionEnd = this.value.length;
 });
 
-// SSE a kommentekhez
-
-
-
-
 function saveRating() {
 
     var token = $("meta[name='_csrf']").attr("content");
@@ -1298,29 +1348,17 @@ function saveRating() {
         errorMessages.textContent = 'Please select a rating first!';
         errorMessages.style.display = 'block';
         errorMessages.style.color = 'red';
-        //console.log("Nincs kivalasztva rating")
     } else {
         var rating = document.querySelector('input[name="selectrating"]:checked').value;
         //console.log("Rating: ", rating);
         var comment = document.getElementById('commentInput').value;
 
 
-       // console.log("Comment: ", comment);
-
         var profileModalElement = document.querySelector('[id*="profileMainModal_"]');
-        //console.log("Igen: ", profileModalElement);
         var userId = profileModalElement.id.split("_")[1];
-        //console.log("User id: ", userId);
 
-        // Az aktuális dátum létrehozása
         var currentDate = new Date();
-        //console.log('Jelenlegi_1 dátum:', currentDate);
-        // Dátum formázása 2024.01.20. formátumra
         var formattedDate = currentDate.toLocaleDateString('hu-HU', { year: 'numeric', month: '2-digit', day: '2-digit' });
-
-        // Eredmény kiíratása a konzolra
-        //console.log('Jelenlegi_2 dátum:', formattedDate);
-
         const sseUrl = "/sse/sendCommentInMyGroup";
 
         fetch('/myGroup/saveRating', {
@@ -1351,8 +1389,7 @@ function saveRating() {
                     })
                 }).then(response => {
                     if (response.ok) {
-                        //console.log("Nagyoasfajsofosa");
-                        //return response.text();
+
                     } else {
                         throw new Error('Error in SSE fetch');
                     }
@@ -1418,14 +1455,12 @@ function saveRating() {
 }
 
 
-
-
 function cancelRating() {
     document.getElementById('ratingSection').style.display = 'none';
 }
 
 function rateWithStars(rating) {
-    // Get all the star elements
+    // Get all  star elements
     var stars = document.querySelectorAll('.rating-rate .modal-rating-star-rate label');
 
     // Loop through each star and apply the color based on the rating
@@ -1440,20 +1475,6 @@ function rateWithStars(rating) {
     }
 }
 
-// function showCommentSection1() {
-//     console.log("showCommentSection1 called");
-//     // Hide all comment sections
-//     var commentSections = document.querySelectorAll('.comment-section');
-//     commentSections.forEach(function(section) {
-//         section.style.display = 'none';
-//     });
-//
-//     // Show the specific comment section with ID 'comment-section-1'
-//     var commentSection1 = document.getElementById('comment-section-2');
-//     if (commentSection1) {
-//         commentSection1.style.display = 'block';
-//     }
-// }
 
 var currentCommentIndex = 0;
 
@@ -1543,9 +1564,43 @@ function toggleComments() {
     }
 }
 
-
 function notMentee() {
     alert("You are not a mentee, so you cannot add this mentor to your favorites!");
-
 }
 
+function redirectToFavorites(uId) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    var contactButton = document.getElementById('modal-contact-button');
+    var urlforsave = '/myGroup/saveFavorite?favoriteUserId=' + uId;
+
+    if (contactButton.classList.contains('notmentee') && window.location.href.includes('mentors')) {
+        alert("You are not a mentee,so you can't add this mentor to your favorites!");
+    } else if (contactButton.classList.contains('notmentor') && window.location.href.includes('mentees')) {
+        alert("You are not a mentor,so you can't add this mentee to your favorites!");
+    } else {
+        fetch(urlforsave, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).then(data => {
+            if (data === 'ok') {
+                console.log("Sikeres mentes");
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
+        window.location.href = "/myGroup/favorites";
+    }
+}

@@ -56,6 +56,16 @@
         </div>
 
         <div class="menu-divider"></div>
+
+        <div class="form-group current-page">
+            <p class="menu-function">
+                <a href="/" th:href="@{/}"> <img th:src="@{/img/current-page-icon.png}" alt="Icon" class="menu-icon current-menu-icon"> <img th:src="@{/img/home.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">Home</span>
+                    <span class="hungarian-text">Főoldal</span>
+                </a>
+            </p>
+        </div>
+
         <div class="form-group" >
             <p class="menu-function">
                 <a  th:onclick="${not userRolesToDisplayIndex.contains('MENTOR') and not userRolesToDisplayIndex.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
@@ -98,7 +108,7 @@
 
         <div class="row-row">
         <div class="div-row">
-        <div class="main-div">
+        <div class="main-div" id="profile-info-box">
             <div class="smaller-div"><img th:src="@{/img/helping-monster.jpg}" alt="Error Image" class="small-div-image"></div>
             <p class="index-titles">
                 <span class="english-text">BE A MENTOR OR MENTEE</span>
@@ -109,20 +119,21 @@
                 <span class="hungarian-text">Csatlakozz mentorként, és támogasd társaidat, vagy válaszd a mentorált szerepet, és kapj iránymutatást másoktól! Egyszerűen állítsd be az állapotod a <strong>Profil</strong> menüben. Válaszd ki azokat a témákat, amelyek érdekelnek, és indulj el mentoráló utadon.</span>
             </p>
         </div>
-        <div class="main-div">
+
+        <div class="main-div" id="mentor-info-box">
             <div class="smaller-div"><img th:src="@{/img/friendly-monster.jpg}" alt="Error Image" class="small-div-image"></div>
             <p class="index-titles">
-                <span class="english-text">MEET NEW PEOPLE</span>
-                <span class="hungarian-text">ISMERKEDJ</span>
+                <span class="english-text">FIND MENTORS</span>
+                <span class="hungarian-text">SZEREZZ MENTOROKAT</span>
             </p>
             <p class="index-infos">
-                <span class="english-text">Expand your social circle and explore the vibrant community in the <strong>My Group</strong> section. Make use of the chat function to engage with and get to know your fellow members! Foster connections, share experiences, and enhance your networking opportunities.</span>
-                <span class="hungarian-text">Szocializálódj és fedezd fel az oldalunk közösségét a <strong>Csoportom</strong> menüpont alatt. Használd a chat funkciót és lépj kapcsolatba társaiddal! Építs kapcsolatokat és osszd meg tapasztalataidat!</span>
+                <span class="english-text">Expand your social circle and explore the vibrant community in the <strong>My Group</strong> section. Utilize the chat function to engage with potential mentors and mentees! Foster connections, share experiences, and enhance your networking opportunities while seeking or offering mentorship.</span>
+                <span class="hungarian-text">Bővítsd szociális körödet és fedezd fel a közösséget a <strong>Csoportom</strong> szekcióban. Használd a chat funkciót, hogy kapcsolatba lépj lehetséges mentorokkal és mentoráltakkal! Építs kapcsolatokat, osszd meg tapasztalataidat, miközben mentort keresel vagy mentorálási lehetőséget kínálsz.</span>
             </p>
         </div>
         </div>
         <div class="div-row">
-        <div class="main-div">
+        <div class="main-div" id="resources-info-box">
             <div class="smaller-div"><img th:src="@{/img/browsing-monster.jpg}" alt="Error Image" class="small-div-image"></div>
             <p class="index-titles">
                 <span class="english-text">BROWSE IN RESOURCES</span>
@@ -147,7 +158,7 @@
         </div>
         </div>
         <div class="column-row">
-                <div class="main-div">
+                <div class="main-div" id="profile-mini-info-box">
                     <div class="smaller-div"><img th:src="@{/img/helping-monster.jpg}" alt="Error Image" class="small-div-image"></div>
                     <p class="index-titles">
                         <span class="english-text">BE A MENTOR OR MENTEE</span>
@@ -158,18 +169,18 @@
                         <span class="hungarian-text">Csatlakozz mentorként, és támogasd társaidat, vagy válaszd a mentorált szerepet, és kapj iránymutatást másoktól! Egyszerűen állítsd be az állapotod a <strong>Profil</strong> menüben. Válaszd ki azokat a témákat, amelyek érdekelnek, és indulj el mentoráló utadon.</span>
                     </p>
                 </div>
-                <div class="main-div">
+                <div class="main-div" id="mentor-mini-info-box">
                     <div class="smaller-div"><img th:src="@{/img/friendly-monster.jpg}" alt="Error Image" class="small-div-image"></div>
                     <p class="index-titles">
-                        <span class="english-text">MEET NEW PEOPLE</span>
-                        <span class="hungarian-text">ISMERKEDJ</span>
+                        <span class="english-text">FIND MENTOR</span>
+                        <span class="hungarian-text">SZEREZZ MENTOROKAT</span>
                     </p>
                     <p class="index-infos">
-                        <span class="english-text">Expand your social circle and explore the vibrant community in the <strong>My Group</strong> section. Make use of the chat function to engage with and get to know your fellow members! Foster connections, share experiences, and enhance your networking opportunities.</span>
-                        <span class="hungarian-text">Szocializálódj és fedezd fel az oldalunk közösségét a <strong>Csoportom</strong> menüpont alatt. Használd a chat funkciót és lépj kapcsolatba társaiddal! Építs kapcsolatokat és osszd meg tapasztalataidat!</span>
+                        <span class="english-text">Expand your social circle and explore the vibrant community in the <strong>My Group</strong> section. Utilize the chat function to engage with potential mentors and mentees! Foster connections, share experiences, and enhance your networking opportunities while seeking or offering mentorship.</span>
+                        <span class="hungarian-text">Bővítsd szociális körödet és fedezd fel a közösséget a <strong>Csoportom</strong> szekcióban. Használd a chat funkciót, hogy kapcsolatba lépj lehetséges mentorokkal és mentoráltakkal! Építs kapcsolatokat, osszd meg tapasztalataidat, miközben mentort keresel vagy mentorálási lehetőséget kínálsz.</span>
                     </p>
                 </div>
-                <div class="main-div">
+                <div class="main-div" id="resources-mini-info-box">
                     <div class="smaller-div"><img th:src="@{/img/browsing-monster.jpg}" alt="Error Image" class="small-div-image"></div>
                     <p class="index-titles">
                         <span class="english-text">BROWSE IN RESOURCES</span>
