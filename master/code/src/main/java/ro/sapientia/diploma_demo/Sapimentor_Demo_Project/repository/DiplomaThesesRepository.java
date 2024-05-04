@@ -36,4 +36,10 @@ public interface DiplomaThesesRepository extends JpaRepository<Diploma_Theses, L
     @Query("DELETE FROM Diploma_Theses dt WHERE dt.id = :diplomaId")
     void deleteById(Long diplomaId);
 
+    @Query("SELECT d.id, d.name, d.year, d.topic_name,d.user_name,d.like,d.dislike,d.keywords, d.user_id FROM Diploma_Theses d WHERE LOWER(d.name) LIKE %:name% AND d.topic_name IN :topicNames")
+    List<Object[]> findAllByNameAndTopicName(String name, String[] topicNames);
+
+    @Query("SELECT d.id, d.name, d.year, d.topic_name,d.user_name,d.like,d.dislike,d.keywords, d.user_id FROM Diploma_Theses d WHERE LOWER(d.keywords) LIKE %:keyword% AND d.topic_name IN :topicNames")
+    List<Object[]> findAllByKeywordAndTopicName(String keyword, String[] topicNames);
+
 }

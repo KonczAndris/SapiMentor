@@ -8,6 +8,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.json.JSONObject;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.Diploma_TLikeDislike_DTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Diploma_Theses;
@@ -53,7 +54,6 @@ public class DiplomaServices {
     public List<Diploma_Theses> getAllDiplomaThesesWithSelectedFields() {
         List<Object[]> results = diplomaThesesRepository.findProjectedBy();
         List<Diploma_Theses> diploma_theses = new ArrayList<>();
-
         for (Object[] result : results) {
             Diploma_Theses diplomas = new Diploma_Theses();
             diplomas.setId((Long) result[0]);
@@ -67,8 +67,51 @@ public class DiplomaServices {
             diplomas.setUser_id((Long) result[8]);
             diploma_theses.add(diplomas);
         }
-
         return diploma_theses;
+    }
+
+    @Cacheable("getAllFilteredDiplomaThesesByNameWithSelectedFields")
+    public List<Diploma_Theses> getAllFilteredDiplomaThesesByNameWithSelectedFields(Model model,
+                                                                    String name,
+                                                                    String[] selectedValues) {
+        List<Object[]> resultDiplomaTheses = diplomaThesesRepository.findAllByNameAndTopicName(name, selectedValues);
+        List<Diploma_Theses> filteredDiploma_Theses = new ArrayList<>();
+        for (Object[] result : resultDiplomaTheses) {
+            Diploma_Theses filteredDiplomasByName = new Diploma_Theses();
+            filteredDiplomasByName.setId((Long) result[0]);
+            filteredDiplomasByName.setName((String) result[1]);
+            filteredDiplomasByName.setYear((String) result[2]);
+            filteredDiplomasByName.setTopic_name((String) result[3]);
+            filteredDiplomasByName.setUser_name((String) result[4]);
+            filteredDiplomasByName.setLike((Integer) result[5]);
+            filteredDiplomasByName.setDislike((Integer) result[6]);
+            filteredDiplomasByName.setKeywords((String) result[7]);
+            filteredDiplomasByName.setUser_id((Long) result[8]);
+            filteredDiploma_Theses.add(filteredDiplomasByName);
+        }
+        return filteredDiploma_Theses;
+    }
+
+    @Cacheable("getAllFilteredDiplomaThesesByKeywordWithSelectedFields")
+    public List<Diploma_Theses> getAllFilteredDiplomaThesesByKeywordWithSelectedFields(Model model,
+                                                                                    String keyword,
+                                                                                    String[] selectedValues) {
+        List<Object[]> resultDiplomaTheses = diplomaThesesRepository.findAllByKeywordAndTopicName(keyword, selectedValues);
+        List<Diploma_Theses> filteredDiploma_Theses = new ArrayList<>();
+        for (Object[] result : resultDiplomaTheses) {
+            Diploma_Theses filteredDiplomasByName = new Diploma_Theses();
+            filteredDiplomasByName.setId((Long) result[0]);
+            filteredDiplomasByName.setName((String) result[1]);
+            filteredDiplomasByName.setYear((String) result[2]);
+            filteredDiplomasByName.setTopic_name((String) result[3]);
+            filteredDiplomasByName.setUser_name((String) result[4]);
+            filteredDiplomasByName.setLike((Integer) result[5]);
+            filteredDiplomasByName.setDislike((Integer) result[6]);
+            filteredDiplomasByName.setKeywords((String) result[7]);
+            filteredDiplomasByName.setUser_id((Long) result[8]);
+            filteredDiploma_Theses.add(filteredDiplomasByName);
+        }
+        return filteredDiploma_Theses;
     }
 
     @Cacheable("getLikeAndDislikeCounts")

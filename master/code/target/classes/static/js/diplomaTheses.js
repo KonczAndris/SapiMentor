@@ -1035,11 +1035,14 @@ function handleLikeAndDislikeStatuses() {
         const dislikeCountElement = document.querySelector(`#diploma-row-${diplomaId} .dislike-button-link`);
         //console.log(likeCountElement);
         //console.log(dislikeCountElement);
-        if (like === 1) {
-            likeCountElement.classList.add('like-button-link-active');
-        } else if (dislike === 1){
-            dislikeCountElement.classList.add('dislike-button-link-active');
+        if(likeCountElement !== null || dislikeCountElement !== null) {
+            if (like === 1) {
+                likeCountElement.classList.add('like-button-link-active');
+            } else if (dislike === 1){
+                dislikeCountElement.classList.add('dislike-button-link-active');
+            }
         }
+
 
     }
 }
@@ -1251,7 +1254,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     checkbox.addEventListener('change', function() {
         if (this.checked) {
-            filterInput.setAttribute('placeholder', 'Search by Name/Keywords...');
+            filterInput.setAttribute('placeholder', 'Search by Keywords...');
             filterInput.style.fontSize = 'smaller';
         } else {
             filterInput.setAttribute('placeholder', 'Search by Name...');
@@ -1420,12 +1423,66 @@ function searchTableForTesting(input, table, selectedValues) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-document.getElementById('search-button').addEventListener('click', () => {
-    document.getElementById('search-button').click();
-    showLoadingModal();
-    setTimeout(searchTable, 50);
-});});
+//document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('search-button').addEventListener('click', () => {
+        //document.getElementById('search-button').click();
+        //showLoadingModal();
+        //setTimeout(searchTable, 50);
+        searchInDiplomaThesesTable();
+    });
+//});
+
+
+function searchInDiplomaThesesTable() {
+    const searchInput = document.getElementById('filter-input');
+    const filter = searchInput.value.trim().toLowerCase();
+    const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
+    const selectedValues = Array.from(checkboxes).map(checkbox => checkbox.value.trim().toUpperCase());
+    const tagCheckbox = document.querySelector('.tags-checkbox');
+
+
+    if(tagCheckbox.checked === false) {
+        const queryString = 'name=' + encodeURIComponent(filter) + '&selectedTopics=' + encodeURIComponent(selectedValues.join(','));
+        //console.log("Nevszerinti kereses");
+        fetch ('/resources/diplomaTheses/filteredByName?' + queryString, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Request failed');
+            }
+        }).then(data => {
+            //console.log(data);
+            window.location.href = '/resources/diplomaTheses/filteredByName?' + queryString;
+        }).catch(error => {
+            console.error('Error:', error);
+        })
+    } else {
+        const queryString = 'keyword=' + encodeURIComponent(filter) + '&selectedTopics=' + encodeURIComponent(selectedValues.join(','));
+        //console.log("Kulcsszoszerinti kereses");
+        fetch ('/resources/diplomaTheses/filteredByKeyword?' + queryString, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Request failed');
+            }
+        }).then(data => {
+            //console.log(data);
+            window.location.href = '/resources/diplomaTheses/filteredByKeyword?' + queryString;
+        }).catch(error => {
+            console.error('Error:', error);
+        })
+    }
+}
 
 function listSuggestions() {
     const input = document.getElementById('filter-input');
@@ -1537,7 +1594,6 @@ document.querySelectorAll('.sortable').forEach(headerCell => {
     });
 });
 
-
 // Get the modal
 var infoModal = document.getElementById("infoModal");
 
@@ -1595,5 +1651,8 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Jest testing exports
-module.exports = {searchTableForTesting};
+if (typeof module !== 'undefined') {
+    // Jest testing exports
+    module.exports = {searchTableForTesting};
+}
+
