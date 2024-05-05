@@ -1267,6 +1267,9 @@ document.getElementById('search-button').addEventListener('click', () => {
 });
 
 function searchInExamExamples() {
+    // ide a loading modalt
+    showLoadingModal();
+
     const searchinput = document.getElementById('filter-input');
     const filter = searchinput.value.trim().toLowerCase();
     const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
@@ -1290,6 +1293,7 @@ function searchInExamExamples() {
         window.location.href = '/resources/examExamples/filtered?' + queryString;
     }).catch(error => {
         console.error('Error:', error);
+        hideLoadingModal();
     });
 }
 

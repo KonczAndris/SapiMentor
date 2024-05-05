@@ -1434,6 +1434,9 @@ function searchTableForTesting(input, table, selectedValues) {
 
 
 function searchInDiplomaThesesTable() {
+    // ide a loading modalt
+    showLoadingModal();
+
     const searchInput = document.getElementById('filter-input');
     const filter = searchInput.value.trim().toLowerCase();
     const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
@@ -1460,6 +1463,7 @@ function searchInDiplomaThesesTable() {
             window.location.href = '/resources/diplomaTheses/filteredByName?' + queryString;
         }).catch(error => {
             console.error('Error:', error);
+            hideLoadingModal();
         })
     } else {
         const queryString = 'keyword=' + encodeURIComponent(filter) + '&selectedTopics=' + encodeURIComponent(selectedValues.join(','));

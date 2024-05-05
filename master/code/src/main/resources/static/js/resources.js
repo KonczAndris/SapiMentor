@@ -1213,6 +1213,9 @@ document.getElementById('search-button').addEventListener('click', () => {
 });
 
 function searchInResourcesTable() {
+    // ide a loading modalt
+    showLoadingModal();
+
     const searchinput = document.getElementById('filter-input');
     const filter = searchinput.value.toLowerCase();
     const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
@@ -1237,6 +1240,7 @@ function searchInResourcesTable() {
 
     }).catch(error => {
         console.error('Error:', error);
+        hideLoadingModal();
     });
 }
 
