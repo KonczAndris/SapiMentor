@@ -35,18 +35,18 @@
     flex-direction: column;
     flex-wrap: wrap;
     position: relative;
-    overflow-y: hidden;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
 .main-div {
     display: flex;
-    margin: 15px; /* CsÃ¶kkentjÃ¼k a margin-t */
-    width: calc(50% - 20px); /* A main-divek 50%-os szÃ©lessÃ©get kapnak, Ã©s levonjuk a margin Ã©rtÃ©kÃ©t */
+    margin: 15px;
+    width: calc(50% - 20px);
     border: 4px solid rgb(22, 175, 132);
     border-radius: 25px;
-    flex-grow: 1; /* KitÃ¶lti a rendelkezÃ©sre Ã¡llÃ³ helyet */
-    flex-shrink: 1; /* Megengedi a main-divek csÃ¶kkenÃ©sÃ©t, ha kisebb a hely, de nem engedi Å‘ket nÃ¶vekedni */
+    flex-grow: 1;
+    flex-shrink: 1;
     text-align: center !important;
     align-items: center !important;
     transition: all 0.3s ease;
@@ -58,8 +58,8 @@
 }
 
 .main-div:hover {
-    transform: scale(1.1); /* Scale by 110% on hover */
-    z-index: 2; /* Increase z-index on hover to make it overlap */
+    transform: scale(1.1);
+    z-index: 2;
     margin-top:20px;
     margin-bottom: 20px;
     opacity: 100%;
@@ -68,8 +68,8 @@
 }
 
 .index-titles {
-    margin-top: 2px; /* Adjust the margin top to reduce space */
-    margin-bottom: 5px; /* Adjust the margin bottom to reduce space */
+    margin-top: 2px;
+    margin-bottom: 5px;
     font-style: italic;
     font-weight: bold;
 }
