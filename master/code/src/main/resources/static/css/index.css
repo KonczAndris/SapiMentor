@@ -147,10 +147,11 @@ button{
     position: fixed;
     justify-content: start;
     width: 100%;
-    height: 100%;
+    height: 95%;
     background: transparent;
     animation: transitionIn 0.75s;
     padding-top: 5px;
+    overflow-y: auto;
 }
 
 .left{
@@ -168,7 +169,7 @@ button{
     margin-top: 0;
     margin-right: 2%;
     width: 80%;
-    height: 95%;
+    height: 100%;
     background-color: white;
     overflow-y: auto;
     overflow-x: hidden;
@@ -288,7 +289,6 @@ a{
 .taskbar {
     position: fixed;
     top: 0;
-    height: 45px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -494,10 +494,15 @@ a{
         display: none;
     }
 
+    .taskbar{
+        height:50px;
+    }
+
     .center {
         width: 100%;
         flex-direction: column;
-        margin-top: 10vh;
+        margin-top:100px;
+        height:100%;
     }
 
     .right{
@@ -505,6 +510,10 @@ a{
         width: 100%;
         margin: 0;
         border-radius: 0;
+    }
+
+    .left-hidden{
+        height:20px;
     }
 
     .right-content{
@@ -592,5 +601,16 @@ a{
     .left-content{
         display: flex;
         flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .center {
+        position: relative;
+    }
+
+    .right {
+        margin-left: 0;
+        margin-bottom:100px;
     }
 }
