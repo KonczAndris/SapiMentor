@@ -15,6 +15,8 @@ public class SkillService {
     }
 
     public List<Skill> getAllSkills() {
-        return skillRepository.findAll();
+        List<Skill> skills = skillRepository.findAllByASC();
+        return skills;
+        //return skillRepository.findAll();
     }
 }

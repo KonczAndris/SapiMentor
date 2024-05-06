@@ -66,9 +66,9 @@ public class UtilityForSomeCotroller {
     public void showSkillsToMyGroupPage(Model model){
         List<Skill> skills = skillService.getAllSkills();
         //System.out.println("Skills: " + skills.toString());
-        for (Skill skill : skills) {
-            System.out.println("Skill: " + skill.getSkill() + " : " + skill.getTopic().getTopic());
-        }
+//        for (Skill skill : skills) {
+//            System.out.println("Skill: " + skill.getSkill() + " : " + skill.getTopic().getTopic());
+//        }
         model.addAttribute("skills", skills);
     }
 
