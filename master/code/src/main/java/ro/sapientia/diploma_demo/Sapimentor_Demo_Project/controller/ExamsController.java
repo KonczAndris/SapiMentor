@@ -1,5 +1,6 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import java.util.*;
 
 @RequestMapping("/resources/examExamples")
 @Controller
+@Slf4j
 public class ExamsController {
     private final UserRepository userRepository;
     private final TopicService topicService;
@@ -130,6 +132,37 @@ public class ExamsController {
 
         return "examExamples";
     }
+
+
+    @GetMapping("/filtered")
+    public String showFilteredExamExamples(Model model,
+                                         Principal principal,
+                                         @RequestParam("filter") String filter,
+                                         @RequestParam("selectedTopics") String[] selectedValues){
+        try {
+//            System.out.println("Filter: " + filter);
+//            System.out.println("Selected topics: " + Arrays.toString(selectedValues));
+            if (principal == null) {
+                return "redirect:/login";
+            }
+            showUserRolesToDisplayResources(model, principal);
+            showTopicsToDisplayResources(model, principal);
+
+            List<Exams> examsFiltered = examServices.getAllExamExamplesByFilter(model, filter, selectedValues);
+
+            model.addAllAttributes(Map.of(
+                    "examsData", examsFiltered
+            ));
+            showProfileImageAndName(model, principal);
+
+            return "examExamples";
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Error while filtering the exams!");
+            return "error";
+        }
+    }
+
 
     @GetMapping("/getallexamimage")
     public ResponseEntity<Map<String,Object>> getAllExamImage() {

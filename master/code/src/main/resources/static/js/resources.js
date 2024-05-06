@@ -1208,11 +1208,14 @@ function searchTable() {
 
 document.getElementById('search-button').addEventListener('click', () => {
     //document.getElementById('search-button').click();
-    searchInTheTable();
+    searchInResourcesTable();
     //searchTable();
 });
 
-function searchInTheTable() {
+function searchInResourcesTable() {
+    // ide a loading modalt
+    showLoadingModal();
+
     const searchinput = document.getElementById('filter-input');
     const filter = searchinput.value.toLowerCase();
     const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
@@ -1237,7 +1240,8 @@ function searchInTheTable() {
 
     }).catch(error => {
         console.error('Error:', error);
-    })
+        hideLoadingModal();
+    });
 }
 
 function listSuggestions() {

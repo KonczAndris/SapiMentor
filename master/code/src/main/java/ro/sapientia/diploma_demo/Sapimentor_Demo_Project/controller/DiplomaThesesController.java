@@ -1,5 +1,6 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import java.util.*;
 
 @RequestMapping("/resources/diplomaTheses")
 @Controller
+@Slf4j
 public class DiplomaThesesController {
 
     private final UserRepository userRepository;
@@ -111,18 +113,66 @@ public class DiplomaThesesController {
         showProfileImageAndName(model, principal);
 
         List<Diploma_Theses> diplomaTheses = diplomaServices.getAllDiplomaThesesWithSelectedFields();
-
         model.addAllAttributes(Map.of(
                 "diplomaThesesData", diplomaTheses
         ));
-
-        diplomaTheses.forEach(diploma_theses -> {
-            System.out.println("Diploma_theses: " + diploma_theses.getKeywords());
-        });
-
-
-
+//        diplomaTheses.forEach(diploma_theses -> {
+//            System.out.println("Diploma_theses: " + diploma_theses.getKeywords());
+//        });
         return "diplomaTheses";
+    }
+
+    ////////// Kereses nev alapjan ///////////////////////////////
+    @GetMapping("/filteredByName")
+    public String showFilteredByNameDiplomaTheses(Model model,
+                                          Principal principal,
+                                          @RequestParam("name") String name,
+                                          @RequestParam("selectedTopics") String[] selectedValues) {
+
+        try {
+            if (principal == null) {
+                return "redirect:/login";
+            }
+            showUserRolesToDisplayResources(model, principal);
+            showTopicsToDisplayResources(model, principal);
+            showProfileImageAndName(model, principal);
+            List<Diploma_Theses> filteredDiplomaThesesByName = diplomaServices.getAllFilteredDiplomaThesesByNameWithSelectedFields(model, name, selectedValues);
+            model.addAllAttributes(Map.of(
+                    "diplomaThesesData", filteredDiplomaThesesByName
+            ));
+            return "diplomaTheses";
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Error while filtering diploma theses by name.");
+            return "error";
+        }
+    }
+
+
+    ////////// Kereses kulcsszo alapjan ///////////////////////////////
+    @GetMapping("/filteredByKeyword")
+    public String showFilteredByKeywordDiplomaTheses(Model model,
+                                          Principal principal,
+                                          @RequestParam("keyword") String keyword,
+                                          @RequestParam("selectedTopics") String[] selectedValues) {
+
+        try {
+            if (principal == null) {
+                return "redirect:/login";
+            }
+            showUserRolesToDisplayResources(model, principal);
+            showTopicsToDisplayResources(model, principal);
+            showProfileImageAndName(model, principal);
+            List<Diploma_Theses> filteredDiplomaThesesByKeyword = diplomaServices.getAllFilteredDiplomaThesesByKeywordWithSelectedFields(model, keyword, selectedValues);
+            model.addAllAttributes(Map.of(
+                    "diplomaThesesData", filteredDiplomaThesesByKeyword
+            ));
+            return "diplomaTheses";
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Error while filtering diploma theses by keyword.");
+            return "error";
+        }
     }
 
     @GetMapping("/getdiplomabyid")

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.ExamsLikeDislikeDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Exams;
@@ -21,10 +22,7 @@ import javax.transaction.Transactional;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -45,6 +43,37 @@ public class ExamServices {
     public List<Exams> getAllExams() {
         return examsRepository.findAll();
     }
+
+
+    @Cacheable("getAllExamExamplesByFilter")
+    public List<Exams> getAllExamExamplesByFilter(Model model,
+                                                  String filter,
+                                                  String[] selectedValues) {
+        //List<Object[]> filteredExams = new ArrayList<>();
+        String filterValue = filter;
+        String[] selectedValuesArray = selectedValues;
+        // System.out.println("Igen1:" + filterValue);
+        // System.out.println("Igen2:" + Arrays.toString(selectedValuesArray));
+
+        List<Object[]> filteredExamS = examsRepository.findAllByNameAndTopicName(filterValue, selectedValuesArray);
+        List<Exams> filteredExams = new ArrayList<>();
+
+        for (Object[] result : filteredExamS) {
+            Exams exam = new Exams();
+            exam.setId((Long) result[0]);
+            exam.setName((String) result[1]);
+            exam.setTopic_name((String) result[2]);
+            exam.setUser_name((String) result[3]);
+            exam.setLike((Integer) result[4]);
+            exam.setDislike((Integer) result[5]);
+            exam.setUser_id((Long) result[6]);
+            //System.out.println("Igenke: " + result[0] + " " + result[1] + " " + result[2] + " " + result[3] + " " + result[4] + " " + result[5] + " " + result[6]);
+            filteredExams.add(exam);
+        }
+        return filteredExams;
+    }
+
+
 
 //    public List<ExamsDTO> getExamsWithSelectedFields() {
 //        List<Exams> exams = examsRepository.findAll();
