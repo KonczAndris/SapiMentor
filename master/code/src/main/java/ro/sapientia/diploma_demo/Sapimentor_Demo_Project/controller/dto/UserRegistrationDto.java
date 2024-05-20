@@ -1,7 +1,5 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto;
 
-
-//megkerdezni, hogy ez miert kell!!!!!
 public class UserRegistrationDto {
     private String firstName;
     private String lastName;

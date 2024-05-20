@@ -65,7 +65,7 @@
           <span class="hungarian-text">Főoldal</span>
         </a></p>
     </div>
-    <div class="form-group" >
+    <div class="form-group" th:if="${not userRolesToDisplayResources.contains('ADMIN')}">
       <p class="menu-function">
         <a th:onclick="${not userRolesToDisplayResources.contains('MENTOR') and not userRolesToDisplayResources.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
           <span class="english-text">My Group</span>
@@ -282,7 +282,7 @@
                 <span th:text="${diploma.name}" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'"></span>
                 <span id="zoomIcon" class="zoom-icon" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'">&#128269;</span>
                 <span id="modifyIcon" class="zoom-icon" th:onclick="'setupModifyDiplomaThesesModal(' + ${diploma.id} + ')'"
-                      th:if="${diplomathesesUserId == diploma.user_id}">&#9999;&#65039;</span>
+                      th:if="${diplomathesesUserId == diploma.user_id or userRolesToDisplayResources.contains('ADMIN')}">&#9999;&#65039;</span>
 
                 <div class="pdf-image-modal" th:id="'myModal-' + ${diploma.id}">
                   <span class="close-pdf-modal-btn" th:id="'closeModalBtn-' + ${diploma.id}">&times;</span>

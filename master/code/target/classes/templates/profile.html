@@ -72,9 +72,12 @@
           <span class="hungarian-text">Főoldal</span>
         </a></p>
     </div>
-    <div class="form-group" >
-      <p class="menu-function">
-        <a id="myGroup-navigation-btn" th:onclick="${not userRolesToDisplay.contains('MENTOR') and not userRolesToDisplay.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
+    <div class="form-group" th:if="${not userRolesToDisplay.contains('ADMIN')}">
+      <p class="menu-function" >
+        <a id="myGroup-navigation-btn"
+           th:onclick="${not userRolesToDisplay.contains('MENTOR')
+           and not userRolesToDisplay.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'">
+          <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
           <span class="english-text">My Group</span>
           <span class="hungarian-text">Csoportom</span>
         </a> </p>
@@ -179,7 +182,8 @@
 
             <div id="edit-role">
               <h2 th:text="${userRolesToDisplay}" class="status"> </h2>
-              <button type="button" id="myMentorBtn" class="btn btn-success blue-button">
+              <button type="button" id="myMentorBtn" class="btn btn-success blue-button"
+                      th:if="${not userRolesToDisplay.contains('ADMIN')}">
                 <span class="english-text">Modify Role</span>
                 <span class="hungarian-text">Szerepkör módosítása</span></button>
             </div>
@@ -219,7 +223,7 @@
             <!-- MENTOR MODAL END -->
 
 
-            <div class="rating">
+            <div class="rating" th:if="${not userRolesToDisplay.contains('ADMIN')}">
               <input type="radio" id="star5" name="ratingProfile" value="5" th:checked="${averageOfRating >= 4.5 && averageOfRating <= 5}" disabled />
               <label for="star5">&#9733;</label>
               <input type="radio" id="star4" name="ratingProfile" value="4" th:checked="${averageOfRating >= 3.5 && averageOfRating < 4.5}" disabled />
@@ -232,7 +236,7 @@
               <label for="star1">&#9733;</label>
             </div>
 
-            <div class="rating-text">
+            <div class="rating-text" th:if="${not userRolesToDisplay.contains('ADMIN')}">
               <span id="rating-number" th:text="${countOfRating}"></span>
               <span class="english-text">Ratings</span>
               <span class="hungarian-text">Értékelés</span>
@@ -474,7 +478,9 @@
         </div>
         <!-- SKILLS CONTAINER END -->
 
-        <button class="navigate-button green-button" id="showCommentsButton" onclick="toggleAndShowNext(); scrollToBottom()">
+        <button class="navigate-button green-button" id="showCommentsButton"
+                onclick="toggleAndShowNext(); scrollToBottom()"
+                th:if="${not userRolesToDisplay.contains('ADMIN')}">
           <img th:src="@{/img/see-comments.png}" alt="See Comments Icon" class="icon">
           <span class="english-text">Comment Section</span>
           <span class="hungarian-text">Hozzászólások</span>

@@ -2,7 +2,9 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
@@ -175,11 +177,32 @@ public class DiplomaThesesController {
         }
     }
 
+    // diplomamunkak lekerdezese
     @GetMapping("/getdiplomabyid")
     public ResponseEntity<List<Object[]>> getDiplomaById(@RequestParam Long diplomaId) {
         try {
             List<Object[]> diplomas = diplomaServices.getDiplomaById(diplomaId);
             return ResponseEntity.ok(diplomas);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    // diplomamunkak letoltesenek megvalositasa
+    @GetMapping("/downloadDiplomaThese")
+    public ResponseEntity<byte[]> downloadDiplomaTheses(@RequestParam Long diplomaId) {
+        try {
+            Diploma_Theses diploma_theses = diplomaServices.downloadDiplomaThesePdf(diplomaId);
+            String filename = diploma_theses.getName();
+            if(!filename.toLowerCase().endsWith(".pdf")){
+                filename = filename + "_" + diploma_theses.getYear();
+                filename += ".pdf";
+            }
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(diploma_theses.getDiploma_theses_file());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

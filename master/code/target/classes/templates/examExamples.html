@@ -64,7 +64,7 @@
                     <span class="hungarian-text">Főoldal</span>
                 </a></p>
         </div>
-        <div class="form-group">
+        <div class="form-group" th:if="${not userRolesToDisplayResources.contains('ADMIN')}">
             <p class="menu-function">
                 <a th:onclick="${not userRolesToDisplayResources.contains('MENTOR') and not userRolesToDisplayResources.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
                     <span class="english-text">My Group</span>
@@ -228,7 +228,7 @@
                             <span id="exam-name-id" th:text="${exam.name}"></span>
                             <span id="zoomIcon" class="zoom-icon">&#128269;</span>
                             <span id="modifyIcon" class="modify-icon" th:onclick="'setupModifyExamsModal(' + ${exam.id} + ')'"
-                                  th:if="${examsUserId == exam.user_id}">&#9999;&#65039;</span>
+                                  th:if="${examsUserId == exam.user_id or userRolesToDisplayResources.contains('ADMIN')}">&#9999;&#65039;</span>
                             <div class="exam-image-modal" th:id="'myModal-' + ${exam.id}">
                                 <div class="exam-image-modal-content">
                                     <img th:id="'modalImg-' + ${exam.id}" th:alt="${exam.name}" class="dynamic-resize" />

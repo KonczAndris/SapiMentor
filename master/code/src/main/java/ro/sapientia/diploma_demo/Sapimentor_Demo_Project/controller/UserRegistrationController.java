@@ -2,7 +2,6 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UserRegistrationDto;
@@ -15,7 +14,6 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.Url;
 
 import javax.servlet.http.HttpServletRequest;
 
-//megkerdezni, hogy ez miert kell
 @Controller
 @RequestMapping("/register")
 public class UserRegistrationController {
@@ -23,30 +21,31 @@ public class UserRegistrationController {
     private final ApplicationEventPublisher eventPublisher;
     private final ConfirmationTokenRepository confirmationTokenRepository;
 
-    public UserRegistrationController(UserService userService, ApplicationEventPublisher eventPublisher, ConfirmationTokenRepository confirmationTokenRepository) {
+    public UserRegistrationController(UserService userService,
+                                      ApplicationEventPublisher eventPublisher,
+                                      ConfirmationTokenRepository confirmationTokenRepository) {
         this.userService = userService;
         this.eventPublisher = eventPublisher;
         this.confirmationTokenRepository = confirmationTokenRepository;
     }
 
-    //fontos lepes a regisztraciohoz
-    @ModelAttribute("user") //ezzel a userrel tudja a register.html-ben a formot kitolteni
+    @ModelAttribute("user")
     public UserRegistrationDto userRegistrationDto(){
         return new UserRegistrationDto();
     }
 
-    //ezzel a getmappinggel a registration.html-t hivja meg
     @GetMapping
     public String showRegistrationForm(){
         return "register";
     }
 
-    //ezzel a postmappinggel a register.html-ben levo formot tolti ki
-    //es ha sikeres a regisztracio, akkor megjelenik a message
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto,
                                       final HttpServletRequest request){
         try {
+            if (!registrationDto.getEmail().endsWith("@student.ms.sapientia.ro")){
+                return "redirect:/register?emailError";
+            }
             User user = userService.save(registrationDto);
             //System.out.println("User: " + user.getEmail() + " has been registered successfully");
             sendRegistrationCompleteEventAsync(user, request);

@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const formData = new FormData();
                     formData.append('image', blob, 'cropped-image.jpg', { type: 'image/jpeg' });
                     console.log(formData.getAll('image'));
-                    fetch('/upload-profile-image', {
+                    fetch('/profile/upload-profile-image', {
                         method: 'POST',
                         body: formData,
                         headers: {

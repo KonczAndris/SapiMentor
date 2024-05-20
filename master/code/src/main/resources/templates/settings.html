@@ -63,7 +63,7 @@
           <span class="hungarian-text">Főoldal</span>
         </a></p>
     </div>
-    <div class="form-group" >
+    <div class="form-group" th:if="${not userRolesToDisplaySettings.contains('ADMIN')}">
       <p class="menu-function">
         <a th:onclick="${not userRolesToDisplaySettings.contains('MENTOR') and not userRolesToDisplaySettings.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
           <span class="english-text">My Group</span>
