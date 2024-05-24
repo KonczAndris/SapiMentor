@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -39,6 +40,8 @@ public class User {
     private byte[] profileImage;
     @Column(name = "status")
     private Integer status = 0;
+    private LocalDateTime online_at;
+    private String modified_by;
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

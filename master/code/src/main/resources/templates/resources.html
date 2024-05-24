@@ -179,7 +179,7 @@
                     <span class="english-text">Cancel</span>
                     <span class="hungarian-text">Mégse</span>
                 </button>
-                <button type="button" id="upload-upload" class="btn btn-success blue-button" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
+                <button type="button" id="upload-upload" class="btn btn-success blue-button" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')  or userRolesToDisplayResources.contains('ADMIN')}">
                     <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
             </div>
         </div>

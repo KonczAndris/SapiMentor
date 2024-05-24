@@ -43,10 +43,10 @@ public class SessionListener implements ApplicationListener<HttpSessionDestroyed
         Long userId = userRepository.findIdByEmail(email);
         if (userId != null) {
             // Ha igen, akkor frissítjük a státuszát
-            userRepository.updateUserStatusById(userId, 0);
+            userRepository.updateUserStatusByIdToOffline(userId, 0);
 
             // Értesítés küldése a felhasználó státuszfrissítésről
-            webSocketController.sendUserStatusUpdate(userId, 0);
+            webSocketController.sendUserStatusUpdate(userId, 0, null);
             System.out.println("Ertesites kuldese a felhasznalo statuszfrissitesrol: " + userId);
         } else {
             // Ha nem, akkor hibát dobunk

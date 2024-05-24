@@ -146,7 +146,7 @@
                 <span class="english-text">Search</span>
                 <span class="hungarian-text">Keresés</span>
             </button>
-            <button type="button" id="upload-hidden" class="btn btn-success blue-button" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
+            <button type="button" id="upload-hidden" class="btn btn-success blue-button" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE') or userRolesToDisplayResources.contains('ADMIN')}">
                 <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
         </div>
         <!-- SEARCH BUTTON BAR END-->
@@ -185,7 +185,7 @@
                     <span class="english-text">Cancel</span>
                     <span class="hungarian-text">Mégse</span>
                 </button>
-                <button type="button" class="upload-hidden btn btn-success blue-button" id="upload-upload" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
+                <button type="button" class="upload-hidden btn btn-success blue-button" id="upload-upload" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')  or userRolesToDisplayResources.contains('ADMIN')}">
                     <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon "></button>
             </div>
         </div>

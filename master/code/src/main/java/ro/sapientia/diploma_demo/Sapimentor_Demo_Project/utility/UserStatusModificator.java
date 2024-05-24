@@ -7,6 +7,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.WebSocketCon
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
 @Transactional
 @Component
@@ -28,11 +29,20 @@ public class UserStatusModificator {
         //System.out.println("userId: " + userId);
         // Ellenőrizzük, hogy találtunk-e felhasználót
         if (userId != null) {
-            // Ha igen, akkor frissítjük a státuszát
-            userRepository.updateUserStatusById(userId, status);
-            // Értesítés küldése a felhasználó státuszfrissítésről
-            webSocketController.sendUserStatusUpdate(userId, status);
+            if (status == 1){
+                LocalDateTime online_at = LocalDateTime.now();
+                // Ha igen, akkor frissítjük a státuszát
+                userRepository.updateUserStatusByIdToOnline(userId, status, online_at);
+                // Értesítés küldése a felhasználó státuszfrissítésről
+                webSocketController.sendUserStatusUpdate(userId, status, online_at);
 
+            }else {
+                // Ha igen, akkor frissítjük a státuszát
+                userRepository.updateUserStatusByIdToOffline(userId, status);
+                // Értesítés küldése a felhasználó státuszfrissítésről
+                webSocketController.sendUserStatusUpdate(userId, status, null);
+
+            }
         } else {
             // Ha nem, akkor hibát dobunk
             throw new RuntimeException("Don't find user with this email address: " + email);

@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.MyGroupProfileDetailDTO;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,9 +24,19 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.id FROM User u WHERE u.email = :email")
     Long findIdByEmail(String email);
 
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO( user.id, user.first_Name, user.last_Name, user.email, user.enabled, user.specialization, user.year, user.phoneNumber, user.profileImage, user.status, user.online_at) FROM User user ")
+    List<UsersDetailsToAdminDTO> findAllUsersToAdmin();
+
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO( user.id, user.first_Name, user.last_Name, user.email, user.enabled, user.specialization, user.year, user.phoneNumber, user.profileImage, user.status, user.online_at) FROM User user WHERE LOWER(user.first_Name) LIKE %:filter% OR LOWER(user.last_Name) LIKE %:filter%")
+    List<UsersDetailsToAdminDTO> findFilteredUsersToAdmin(String filter);
+
+    @Modifying
+    @Query("UPDATE User u SET u.status = :status, u.online_at = :online_at WHERE u.id = :id")
+    void updateUserStatusByIdToOnline(Long id, int status, LocalDateTime online_at);
+
     @Modifying
     @Query("UPDATE User u SET u.status = :status WHERE u.id = :id")
-    void updateUserStatusById(Long id, int status);
+    void updateUserStatusByIdToOffline(Long id, int status);
 
     @Query("SELECT u.first_Name, u.last_Name FROM User u WHERE u.id = :id")
     String findNameById(Long id);
