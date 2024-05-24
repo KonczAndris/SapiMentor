@@ -121,10 +121,6 @@ public class SettingsController {
     public String sendContactEmail( String name,
                                     String email,
                                     String message) {
-        System.out.println("Email: " + name);
-        System.out.println("Name: " + email);
-        System.out.println("Message: " + message);
-
         sendContactEmail.sendContactEmail(name, email, message);
 
         return "redirect:/settings";

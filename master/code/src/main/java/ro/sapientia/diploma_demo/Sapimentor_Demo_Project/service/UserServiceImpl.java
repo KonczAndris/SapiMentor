@@ -4,6 +4,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -13,9 +14,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.token.Confir
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Rating;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.ConfirmationTokenRepository;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.RatingRepository;
-import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.*;
 
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
@@ -31,6 +30,7 @@ import java.util.List;
 
 //megkerdezni, hogy ez miert kell!!!!!
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
@@ -38,6 +38,16 @@ public class UserServiceImpl implements UserService{
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final RatingRepository ratingRepository;
+    private final UserResourceLikeDislikeRepository userResourceLikeDislikeRepository;
+    private final UserExamLikeDislikeRepository userExamLikeDislikeRepository;
+    private final UserDiplomaLikeDislikeRepository userDiplomaLikeDislikeRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
+    private final FavoriteRepository favoriteRepository;
+    private final ChatMessageRepository chatMessageRepository;
+    private final ChatRoomRepository chatRoomRepository;
+    private final ChatMessageReadOrNotRepository chatMessageReadOrNotRepository;
+    private final ProfileTopicsRepository profileTopicsRepository;
 
     //Ezzel tudod beallitani hogy mekkora legyen a maximalis meret amit feltolthet a felhasznalo
     private static final long MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2 MB
@@ -49,11 +59,31 @@ public class UserServiceImpl implements UserService{
     public UserServiceImpl(UserRepository userRepository,
                            BCryptPasswordEncoder passwordEncoder,
                            ConfirmationTokenRepository confirmationTokenRepository,
-                           RatingRepository ratingRepository) {
+                           RatingRepository ratingRepository,
+                           UserResourceLikeDislikeRepository userResourceLikeDislikeRepository,
+                           UserExamLikeDislikeRepository userExamLikeDislikeRepository,
+                           UserDiplomaLikeDislikeRepository userDiplomaLikeDislikeRepository,
+                           RoleRepository roleRepository,
+                           PasswordResetTokenRepository passwordResetTokenRepository,
+                           FavoriteRepository favoriteRepository,
+                           ChatMessageRepository chatMessageRepository,
+                           ChatRoomRepository chatRoomRepository,
+                           ChatMessageReadOrNotRepository chatMessageReadOrNotRepository,
+                           ProfileTopicsRepository profileTopicsRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.ratingRepository = ratingRepository;
+        this.userResourceLikeDislikeRepository = userResourceLikeDislikeRepository;
+        this.userExamLikeDislikeRepository = userExamLikeDislikeRepository;
+        this.userDiplomaLikeDislikeRepository = userDiplomaLikeDislikeRepository;
+        this.roleRepository = roleRepository;
+        this.passwordResetTokenRepository = passwordResetTokenRepository;
+        this.favoriteRepository = favoriteRepository;
+        this.chatMessageRepository = chatMessageRepository;
+        this.chatRoomRepository = chatRoomRepository;
+        this.chatMessageReadOrNotRepository = chatMessageReadOrNotRepository;
+        this.profileTopicsRepository = profileTopicsRepository;
     }
 
 
@@ -226,6 +256,69 @@ public class UserServiceImpl implements UserService{
         List<Object[]> allSelectedUsers = userRepository.findAllSelectedUserImages(allUserId);
 
         return allSelectedUsers;
+    }
+
+    public String modifyUser(Long user_id, String first_Name, String last_Name, String email, boolean enabled, String specialization, Integer year, String phoneNumber, String user_name) {
+        try{
+            User selectedUser = userRepository.findById(user_id)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found with this Id:" + user_id));
+            if (selectedUser != null) {
+                selectedUser.setFirst_Name(first_Name);
+                selectedUser.setLast_Name(last_Name);
+                selectedUser.setEmail(email);
+                selectedUser.setEnabled(enabled);
+                selectedUser.setSpecialization(specialization);
+                selectedUser.setYear(year);
+                selectedUser.setPhone(phoneNumber);
+                selectedUser.setModified_by(user_name);
+                selectedUser.setModified_at(java.time.LocalDateTime.now());
+
+                userRepository.save(selectedUser);
+            } else {
+                return "User not found!";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error while modifying user!";
+        }
+        return "User modified successfully!";
+    }
+
+    public String deleteSelectedUser(Long user_id){
+        try {
+            if (user_id == null) {
+                return "User not found!";
+            }
+            userResourceLikeDislikeRepository.deleteByUserId(user_id);
+            userExamLikeDislikeRepository.deleteByUserId(user_id);
+            userDiplomaLikeDislikeRepository.deleteByUserId(user_id);
+            userRepository.deleteUserRoleRecordsByUserId(user_id);
+
+            roleRepository.getAllRole_idByUserId(user_id).forEach(role -> {
+                //System.out.println("Rolek: " + role[0]);
+                roleRepository.updateRolesStatusByIdCustom((Integer) role[0]);
+            });
+            passwordResetTokenRepository.deleteByUserId(user_id);
+            confirmationTokenRepository.deleteByUserId(user_id);
+            favoriteRepository.deleteAllUserById(user_id);
+            chatMessageRepository.deleteByUserId(user_id);
+            chatRoomRepository.deleteBySenderIdOrRecipientId(user_id);
+            chatMessageReadOrNotRepository.deleteBySenderIdOrRecipientId(user_id);
+            ratingRepository.deleteAllByUserId(user_id);
+            profileTopicsRepository.findPTIdByUserId(user_id).forEach(pt -> {
+                //System.out.println("ProfileTopics: " + pt[0]);
+                profileTopicsRepository.deleteById((Long) pt[0]);
+            });
+
+            profileTopicsRepository.deleteByUserId(user_id);
+            userRepository.deleteUserById(user_id);
+
+            //System.out.println("UserResourceLikeDislike deleted");
+            return "DELETED";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error while deleting the user!";
+        }
     }
 
 }

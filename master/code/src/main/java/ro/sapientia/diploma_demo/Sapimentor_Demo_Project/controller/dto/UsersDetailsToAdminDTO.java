@@ -19,6 +19,8 @@ public class UsersDetailsToAdminDTO {
     public byte[] profileImage;
     public Integer status;
     public LocalDateTime online_at;
+    public String modified_by;
+    public LocalDateTime modified_at;
 
     public UsersDetailsToAdminDTO() {
     }
@@ -33,7 +35,9 @@ public class UsersDetailsToAdminDTO {
                                   String phoneNumber,
                                   byte[] profileImage,
                                   Integer status,
-                                  LocalDateTime online_at) {
+                                  LocalDateTime online_at,
+                                  String modified_by,
+                                  LocalDateTime modified_at) {
         this.user_id = user_id;
         this.first_Name = first_Name;
         this.last_Name = last_Name;
@@ -45,5 +49,7 @@ public class UsersDetailsToAdminDTO {
         this.profileImage = profileImage;
         this.status = status;
         this.online_at = online_at;
+        this.modified_by = modified_by;
+        this.modified_at = modified_at;
     }
 }

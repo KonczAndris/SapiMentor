@@ -24,10 +24,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.id FROM User u WHERE u.email = :email")
     Long findIdByEmail(String email);
 
-    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO( user.id, user.first_Name, user.last_Name, user.email, user.enabled, user.specialization, user.year, user.phoneNumber, user.profileImage, user.status, user.online_at) FROM User user ")
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO( user.id, user.first_Name, user.last_Name, user.email, user.enabled, user.specialization, user.year, user.phoneNumber, user.profileImage, user.status, user.online_at, user.modified_by, user.modified_at) FROM User user ")
     List<UsersDetailsToAdminDTO> findAllUsersToAdmin();
 
-    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO( user.id, user.first_Name, user.last_Name, user.email, user.enabled, user.specialization, user.year, user.phoneNumber, user.profileImage, user.status, user.online_at) FROM User user WHERE LOWER(user.first_Name) LIKE %:filter% OR LOWER(user.last_Name) LIKE %:filter%")
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO( user.id, user.first_Name, user.last_Name, user.email, user.enabled, user.specialization, user.year, user.phoneNumber, user.profileImage, user.status, user.online_at, user.modified_by, user.modified_at) FROM User user WHERE LOWER(user.first_Name) LIKE %:filter% OR LOWER(user.last_Name) LIKE %:filter%")
     List<UsersDetailsToAdminDTO> findFilteredUsersToAdmin(String filter);
 
     @Modifying

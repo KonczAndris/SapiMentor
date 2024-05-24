@@ -151,7 +151,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/modifyUsers")
+    @PostMapping("/modifyUser")
     public ResponseEntity<String> modifyUsers(@RequestParam("user_id") Long user_id,
                                               @RequestParam("first_Name") String first_Name,
                                               @RequestParam("last_Name") String last_Name,
@@ -165,12 +165,12 @@ public class UserController {
         User modifing_user = userRepository.findByEmail(user_email);
 
         if(modifing_user != null){
-            String user_name = modifing_user.getFirst_Name() + " " + modifing_user.getLast_Name();
+            String user_name = modifing_user.getFirst_Name() + "_" + modifing_user.getLast_Name() + "_" + modifing_user.getId();
             try{
-//                String errorMessage = userServiceImpl.modifyUser(user_id, first_Name, last_Name, email, enabled, specialization, year, phoneNumber, user_name);
-//                if (errorMessage != null) {
-//                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
-//                }
+                String errorMessage = userServiceImpl.modifyUser(user_id, first_Name, last_Name, email, enabled, specialization, year, phoneNumber, user_name);
+                if (errorMessage != null) {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+                }
                 return ResponseEntity.ok("Success");
             } catch (Exception e){
                 e.printStackTrace();
@@ -178,6 +178,25 @@ public class UserController {
             }
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
+    }
+
+    @PostMapping("/deleteUser")
+    public ResponseEntity<String> deleteUser(@RequestParam("user_id") Long user_id
+                                            , Principal principal) {
+        try {
+            if (principal == null) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
+            }
+            if (userServiceImpl.deleteSelectedUser(user_id).equals("DELETED")){
+                System.out.println("Deleted: successfully");
+                return ResponseEntity.ok("DELETED");
+            } else {
+                return ResponseEntity.ok("NOTDELETED");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while deleting the user!");
+        }
     }
 
 }
