@@ -98,7 +98,7 @@ public class UserController {
         }
 
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
-        model.addAttribute("linksUserId", user.getId());
+        model.addAttribute("userIdForUsersPage", user.getId());
     }
 
     @GetMapping("")
@@ -111,11 +111,11 @@ public class UserController {
         showTopicsToDisplayUsers(model, principal);
 
         List<UsersDetailsToAdminDTO> users = userRepository.findAllUsersToAdmin();
-        for ( var igen : users) {
-            System.out.println(igen.user_id);
-            System.out.println(igen.getEmail());
-            System.out.println(igen.online_at);
-        }
+//        for ( var igen : users) {
+//            System.out.println(igen.user_id);
+//            System.out.println(igen.getEmail());
+//            System.out.println(igen.online_at);
+//        }
         model.addAttribute("usersData", users);
         showProfileImageAndName(model, principal);
 
@@ -136,12 +136,12 @@ public class UserController {
             List<UsersDetailsToAdminDTO> filteredUsers = userRepository.findFilteredUsersToAdmin(filter);
             model.addAttribute("usersData", filteredUsers);
             showProfileImageAndName(model, principal);
-            System.out.println("IGEN:");
-            for ( var igen : filteredUsers) {
-                System.out.println(igen.user_id);
-                System.out.println(igen.getEmail());
-                System.out.println(igen.online_at);
-            }
+//            System.out.println("IGEN:");
+//            for ( var igen : filteredUsers) {
+//                System.out.println(igen.user_id);
+//                System.out.println(igen.getEmail());
+//                System.out.println(igen.online_at);
+//            }
 
             return "users";
         } catch (Exception e) {

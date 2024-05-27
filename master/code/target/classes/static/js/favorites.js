@@ -30,14 +30,6 @@ function connectToWebSocket() {
     }
     stompClient = Stomp.over(socket);
 
-    // stompClient.connect({}, function (frame) {
-    //     // Feliratkozás a /topic/userStatusUpdate-re
-    //     stompClient.subscribe('/user/public/userStatusUpdate', function (message) {
-    //         var userStatusUpdate = JSON.parse(message.body);
-    //         handleUserStatusUpdate(userStatusUpdate.userId, userStatusUpdate.status);
-    //     });
-    // });
-
     stompClient.connect({}, onConnected, onError);
 }
 
@@ -407,9 +399,6 @@ function scrollToBottom() {
 }
 
 // idaig tart a chat funkcio megvalositasa
-
-
-
 $(document).ready(function () {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
