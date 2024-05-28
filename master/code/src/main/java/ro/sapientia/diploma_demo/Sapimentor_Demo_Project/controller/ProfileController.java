@@ -169,7 +169,7 @@ public class ProfileController {
         return "redirect:/profile";// Visszatérés a profil oldalra
     }
 
-    @PostMapping("/upload-profile-image")
+    @PostMapping("/profile/upload-profile-image")
     public String uploadProfileImage(final @RequestParam("image") MultipartFile image,
                                      Principal principal,
                                      Model model) {
@@ -179,7 +179,7 @@ public class ProfileController {
         String errorMessage = userService.uploadProfileImage(username, image);
         if (errorMessage != null) {
             model.addAttribute("errorMessage", errorMessage);
-            return "redirect:https://profile?errorMessage=" + UriUtils.encode(errorMessage, StandardCharsets.UTF_8);
+            return "profile?errorMessage=" + UriUtils.encode(errorMessage, StandardCharsets.UTF_8);
         }
 
         userService.uploadProfileImage(username, image);
@@ -188,7 +188,7 @@ public class ProfileController {
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
 
         //System.out.println("User details after upload: " + userRegistrationDetails);
-        return "redirect:https://profile";
+        return "profile";
     }
 
 

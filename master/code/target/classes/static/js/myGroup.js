@@ -1274,34 +1274,37 @@ function showHeartIcons() {
 showHeartIcons();
 
 var favoriteButton = document.getElementById('modal-contact-button');
-favoriteButton.addEventListener('click', function() {
-    var urlforsave = '/myGroup/saveFavorite?favoriteUserId=' + parentCellId;
+if (favoriteButton !== null) {
+    favoriteButton.addEventListener('click', function() {
+        var urlforsave = '/myGroup/saveFavorite?favoriteUserId=' + parentCellId;
 
-    fetch(urlforsave, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    }).then(response => {
-        if (response.ok) {
-            return response.text();
-        } else {
-            throw new Error('Something went wrong');
-        }
-    }).then(data => {
-        if (data === 'ok') {
-            console.log("Sikeres mentes");
+        fetch(urlforsave, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': token
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).then(data => {
+            if (data === 'ok') {
+                console.log("Sikeres mentes");
 
-            // Átirányítás a kedvencek oldalára
-            window.location.href = '/myGroup/favorites'; // Változtasd az útvonalat az oldalad szerkezetének megfelelően
-        } else {
-            throw new Error('Something went wrong');
-        }
-    }).catch(error => {
-        console.log("Error: ", error);
+                // Átirányítás a kedvencek oldalára
+                window.location.href = '/myGroup/favorites'; // Változtasd az útvonalat az oldalad szerkezetének megfelelően
+            } else {
+                throw new Error('Something went wrong');
+            }
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
     });
-});
+}
+
 
 
 function showRateSection() {
@@ -1604,3 +1607,20 @@ function redirectToFavorites(uId) {
         window.location.href = "/myGroup/favorites";
     }
 }
+
+function scrollToBottomInMyGroupPage() {
+    var commentSection = document.getElementById('comment-section-container');
+    if (commentSection.style.display === 'none' || commentSection.style.display === '') {
+        commentSection.style.display = 'block';  // Show the comment section if it is hidden
+    }
+
+    // Check if the comment section exists
+    if (commentSection) {
+        // Scroll to the bottom of the comment section
+        commentSection.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+}
+
+// Attach the function to the button click event
+document.getElementById('showCommentsButton').addEventListener('click', scrollToBottomInMyGroupPage);
+

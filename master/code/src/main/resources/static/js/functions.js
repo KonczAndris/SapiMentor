@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('upload-save').addEventListener('click', function (event) {
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
-
+            showLoadingModal();
             if (cropper) {
                 const croppedCanvas = cropper.getCroppedCanvas();
                 if (!croppedCanvas) {
@@ -1057,3 +1057,18 @@ if (typeof module !== 'undefined') {
     // Jest testing exports
     module.exports = {setupModal, setupMentorModal, setupUploadModal, setupSkillsModal, validatePhone, validateFirstName, validateLastName, validateYear, validateSpecialization, checkValidationAndSetOpacity, toggleDropdown};
 }
+
+function scrollToBottomInProfilePage() {
+    var commentSection = document.getElementById('comment-section-container');
+    commentSection.style.display = 'block';  // Megnyitja a komment szekciót, ha szükséges
+
+    // Ellenőrzi, hogy a commentSection létezik-e
+    if (commentSection) {
+        // Görgetés az elem aljára
+        commentSection.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+}
+
+// Kapcsolja össze a függvényt a gomb nyomásával
+document.getElementById('showCommentsButton').addEventListener('click', scrollToBottomInProfilePage);
+

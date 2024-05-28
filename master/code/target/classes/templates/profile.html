@@ -479,7 +479,7 @@
         <!-- SKILLS CONTAINER END -->
 
         <button class="navigate-button green-button" id="showCommentsButton"
-                onclick="toggleAndShowNext(); scrollToBottom()"
+                onclick="toggleAndShowNext(); scrollToBottomInProfilePage()"
                 th:if="${not userRolesToDisplay.contains('ADMIN')}">
           <img th:src="@{/img/see-comments.png}" alt="See Comments Icon" class="icon">
           <span class="english-text">Comment Section</span>
