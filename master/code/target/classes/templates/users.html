@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SapiMentor</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
-    <link rel="preload" th:href="@{/css/examExamples.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" th:href="@{/css/examExamples.css}"></noscript>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/examExamples.css}">
+    <link rel="preload" th:href="@{/css/users.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" th:href="@{/css/users.css}"></noscript>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/users.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
     <script th:src="@{/js/localThemeSettings.js}"></script>
     <link rel="icon" th:href="@{/img/mini_logo.png}" type="image/x-icon">
@@ -235,6 +235,106 @@
                         </span>
                         <span th:unless="${#strings.isEmpty(user.modified_at)}" th:text="${user.modified_at}"></span>
                     </td>
+                    <td>
+                        <button class="user-modify-btn blue-button" th:onclick="'setupModifyUsersModal(' + ${user.user_id} + ')'" th:id="'user-modify-btn-' + ${user.user_id}">
+                            <span class="english-text">Modify</span>
+                            <span class="hungarian-text">Módosít</span>
+                        </button>
+
+                        <!-- MODIFY MODAL START -->
+                        <div id="usersModifyModal" class="modal-users" th:id="'usersModifyModal-' + ${user.user_id}">
+                            <div class="modal-content-users">
+                                <div class="message-exam-modal-content-container">
+                                    <p class="error-message-exam-modal-content" id="error-message-exam-modal-content-modify"></p>
+                                </div>
+
+                                <div class="form-group-edit">
+                                    <div class="detail-row">
+                                        <p class="detail-label">
+                                            <span class="english-text">First Name:</span>
+                                            <span class="hungarian-text">Keresztnév:</span>
+                                        </p>
+                                        <input type="text" class="edit-input" th:id="'userFirstName-edit-modify-' + ${user.user_id}" placeholder="" required
+                                               autofocus="autofocus" th:value="${user.first_Name}">
+                                    </div>
+                                    <div class="detail-row">
+                                        <p class="detail-label">
+                                            <span class="english-text">Last Name:</span>
+                                            <span class="hungarian-text">Vezetéknév:</span>
+                                        </p>
+                                        <input type="text" class="edit-input" th:id="'userLastName-edit-modify-' + ${user.user_id}" placeholder="" required
+                                               autofocus="autofocus" th:value="${user.last_Name}">
+                                    </div>
+                                    <div class="detail-row">
+                                        <p class="detail-label">
+                                            <span class="english-text">Email:</span>
+                                            <span class="hungarian-text">Email cím:</span>
+                                        </p>
+                                        <input type="text" class="edit-input" th:id="'userEmail-edit-modify-' + ${user.user_id}" placeholder="" required
+                                               autofocus="autofocus" th:value="${user.email}">
+                                    </div>
+                                    <div class="detail-row">
+                                        <p class="detail-label">
+                                            <span class="english-text">Enabled:</span>
+                                            <span class="hungarian-text">Megerősítés:</span>
+                                        </p>
+                                        <select class="edit-input"
+                                                th:id="'userEnabled-edit-modify-' + ${user.user_id}"
+                                                required autofocus="autofocus">
+                                            <option value="true" th:selected="${user.specialization == 'true'}">True</option>
+                                            <option value="false" th:selected="${user.specialization == 'false'}">False</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="detail-row">
+                                        <p class="detail-label">
+                                            <span class="english-text">Specialization:</span>
+                                            <span class="hungarian-text">Szakosodás:</span>
+                                        </p>
+                                        <input type="text" class="edit-input" th:id="'userSpecialization-edit-modify-' + ${user.user_id}" placeholder="" required
+                                               autofocus="autofocus" th:value="${user.specialization}">
+                                    </div>
+
+                                    <div class="detail-row">
+                                        <p class="detail-label">
+                                            <span class="english-text">Year:</span>
+                                            <span class="hungarian-text">Év:</span>
+                                        </p>
+                                        <input type="text" class="edit-input" th:id="'userYear-edit-modify-' + ${user.user_id}" placeholder="" required
+                                               autofocus="autofocus" th:value="${user.year}">
+                                    </div>
+                                    <div class="detail-row">
+                                        <p class="detail-label">
+                                            <span class="english-text">Phone:</span>
+                                            <span class="hungarian-text">Telefonszám:</span>
+                                        </p>
+                                        <input type="text" class="edit-input" th:id="'userPhoneNumber-edit-modify-' + ${user.user_id}" placeholder="" required
+                                               autofocus="autofocus" th:value="${user.phoneNumber}">
+                                    </div>
+                                </div>
+
+
+                                <div class="func-buttons-modal">
+                                    <button type="submit" class="upload-button-modal-modify blue-button" id="modify-button-modal" th:id="'modify-button-modal-' + ${user.user_id}"
+                                            th:onclick="'saveModifiedUserDataToServer(\'' + ${user.user_id} + '\')'">
+                                        <span class="english-text">Modify</span>
+                                        <span class="hungarian-text">Módosít</span>
+                                    </button>
+                                    <button class="cancel-button-modal-modify close-examExamples-modify red-button" id="modify-modal-delete"
+                                            th:onclick="'deleteExamExamplesData(\'' + ${user.user_id} + '\')'">
+                                        <span class="english-text">Delete</span>
+                                        <span class="hungarian-text">Töröl</span>
+                                    </button>
+                                    <button class="cancel-button-modal-modify close-users-modify red-button" th:onclick="'closeModifyModal(\'usersModifyModal-' + ${user.user_id} + '\')'">
+                                        <span class="english-text">Cancel</span>
+                                        <span class="hungarian-text">Mégse</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            </div>
+                        <!-- MODIFY MODAL END -->
+                    </td>
                 </tr>
 
 
@@ -265,9 +365,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{/js/functions.js}"></script>
+<<<<<<< HEAD
+<script th:src="@{/js/examExamples.js}"></script>
+<script th:src="@{/js/users.js}"></script>
+=======
 <!--<script th:src="@{/js/examExamples.js}"></script>-->
 <script th:src="@{/js/users.js}"></script>
 <script th:src="@{/js/WebSocketForUsersPage.js}"></script>
+>>>>>>> 184af3abdee9f2cff58213e60a38293ffe3fb228
 <script th:src="@{/js/localLanguageSettings.js}"></script>
 
 </body>
