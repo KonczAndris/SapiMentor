@@ -4,17 +4,15 @@ let stompClient = null;
 let IdForUserInUsersPage = null;
 function connectToWebSocketForUsersPage() {
     var elementToGetUserId = document.querySelector('[id^="userIdForUsersPage-"]');
-    // console.log("elementToGetUserId: ", elementToGetUserId);
     IdForUserInUsersPage = elementToGetUserId.id.split("-")[1];
-    // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
 
     var socket;
     if (window.location.protocol === "http:") {
         socket = new SockJS('http://' + window.location.host + '/ws');
-        console.log("http" + socket);
+        //console.log("http" + socket);
     } else {
         socket = new SockJS('https://' + window.location.host + '/ws');
-        console.log("https" + socket);
+        //console.log("https" + socket);
     }
     stompClient = Stomp.over(socket);
 
@@ -22,7 +20,6 @@ function connectToWebSocketForUsersPage() {
 }
 
 function onConnectedForUsersPage() {
-    //stompClient.subscribe(`/user/${IdForUserInUsersPage}/queue/messages`, onMessageReceived)
     stompClient.subscribe('/user/public/userStatusUpdate', function (message) {
         var userStatusUpdate = JSON.parse(message.body);
         handleUserStatusUpdateInUsersPage(userStatusUpdate.userId, userStatusUpdate.status, userStatusUpdate.online_at);
@@ -30,7 +27,7 @@ function onConnectedForUsersPage() {
 }
 
 function handleUserStatusUpdateInUsersPage(userId, status, online_at) {
-    var userElement = document.getElementById('user-' + userId);
+    var userElement = document.getElementById('user-row-' + userId);
     if (userElement) {
         var statusElement = userElement.querySelector('.user-status');
         if (statusElement) {
@@ -38,6 +35,17 @@ function handleUserStatusUpdateInUsersPage(userId, status, online_at) {
         }
 
         // itt kell majd beallitani az online_at erteket
+        var onlineAtElement = userElement.querySelector('.user-online_at');
+        if(onlineAtElement && online_at !== null){
+            onlineAtElement.textContent = online_at.year
+                + "-" + online_at.monthValue
+                + "-" + online_at.dayOfMonth
+                + "T" + online_at.hour
+                + ":" + online_at.minute
+                + ":" + online_at.second;
+
+            console.log(online_at.year.length);
+        }
     }
 }
 

@@ -196,43 +196,43 @@
                              th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
                     </td>
                     <td>
-        <span th:if="${#strings.isEmpty(user.first_Name) || #strings.isEmpty(user.last_Name)}"
-              style="font-style: italic; color: grey;">
-            NULL
-        </span>
-                        <span th:unless="${#strings.isEmpty(user.first_Name) || #strings.isEmpty(user.last_Name)}"
-                              th:text="${user.first_Name + ' ' + user.last_Name}">
-        </span>
+                        <span th:if="${#strings.isEmpty(user.first_Name) || #strings.isEmpty(user.last_Name)}"
+                              style="font-style: italic; color: grey;">
+                            NULL
+                        </span>
+                                        <span th:unless="${#strings.isEmpty(user.first_Name) || #strings.isEmpty(user.last_Name)}"
+                                              th:text="${user.first_Name + ' ' + user.last_Name}">
+                        </span>
                     </td>
                     <td th:text="${#strings.isEmpty(user.email) ? 'NULL' : user.email}"></td>
                     <td>
-        <span th:if="${#strings.isEmpty(user.phoneNumber)}" style="font-style: italic; color: grey;">
-            NULL
-        </span>
+                        <span th:if="${#strings.isEmpty(user.phoneNumber)}" style="font-style: italic; color: grey;">
+                            NULL
+                        </span>
                         <span th:unless="${#strings.isEmpty(user.phoneNumber)}" th:text="${user.phoneNumber}"></span>
                     </td>
                     <td>
-        <span th:if="${#strings.isEmpty(user.specialization)}" style="font-style: italic; color: grey;">
-            NULL
-        </span>
+                        <span th:if="${#strings.isEmpty(user.specialization)}" style="font-style: italic; color: grey;">
+                            NULL
+                        </span>
                         <span th:unless="${#strings.isEmpty(user.specialization)}" th:text="${user.specialization}"></span>
                     </td>
                     <td>
-        <span th:if="${#strings.isEmpty(user.online_at)}" style="font-style: italic; color: grey;">
-            NULL
-        </span>
-                        <span th:unless="${#strings.isEmpty(user.online_at)}" th:text="${user.online_at}"></span>
+                        <span th:if="${#strings.isEmpty(user.online_at)}" style="font-style: italic; color: grey;">
+                            NULL
+                        </span>
+                        <span class="user-online_at" th:unless="${#strings.isEmpty(user.online_at)}" th:text="${user.online_at}" ></span>
                     </td>
                     <td>
-        <span th:if="${#strings.isEmpty(user.modified_by)}" style="font-style: italic; color: grey;">
-            NULL
-        </span>
+                        <span th:if="${#strings.isEmpty(user.modified_by)}" style="font-style: italic; color: grey;">
+                            NULL
+                        </span>
                         <span th:unless="${#strings.isEmpty(user.modified_by)}" th:text="${user.modified_by}"></span>
                     </td>
                     <td>
-        <span th:if="${#strings.isEmpty(user.modified_at)}" style="font-style: italic; color: grey;">
-            NULL
-        </span>
+                        <span th:if="${#strings.isEmpty(user.modified_at)}" style="font-style: italic; color: grey;">
+                            NULL
+                        </span>
                         <span th:unless="${#strings.isEmpty(user.modified_at)}" th:text="${user.modified_at}"></span>
                     </td>
                 </tr>
