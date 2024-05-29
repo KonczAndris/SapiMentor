@@ -73,6 +73,15 @@
                     <span class="hungarian-text">Csoportom</span>
                 </a> </p>
         </div>
+
+        <div class="form-group" th:if="${userRolesToDisplayIndex.contains('ADMIN')}">
+            <p class="menu-function">
+                <a href="/" th:href="@{/users}"> <img th:src="@{/img/users.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">Users</span>
+                    <span class="hungarian-text">Felhasználók</span>
+                </a> </p>
+        </div>
+
         <div class="form-group">
             <p class="menu-function">
                 <a href="/" th:href="@{/topics}"> <img th:src="@{/img/topics.png}" alt="Icon" class="menu-icon">
