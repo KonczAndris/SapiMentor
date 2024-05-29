@@ -135,7 +135,7 @@
 .small-div-image{
     width: 100px;
     min-width:50px;
-    display: flex;
+    display: flex; 
     border: 4px solid rgb(22, 175, 132);
     border-radius: 25px;
 }
