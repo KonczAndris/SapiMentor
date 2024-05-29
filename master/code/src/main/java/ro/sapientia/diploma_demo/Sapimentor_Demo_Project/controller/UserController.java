@@ -113,7 +113,7 @@ public class UserController {
         showUserRolesToDisplayUsers(model, principal);
         showTopicsToDisplayUsers(model, principal);
 
-        List<UsersDetailsToAdminDTO> users = userRepository.findAllUsersToAdmin();
+        List<UsersDetailsToAdminDTO> users = userRepository.findAllUsersToAdmin(principal.getName());
 
         List<UsersDetailsToAdminToShowDTO> usersToShow = new ArrayList<>();
         for (UsersDetailsToAdminDTO user : users) {
