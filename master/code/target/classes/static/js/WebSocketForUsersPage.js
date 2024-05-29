@@ -29,12 +29,11 @@ function onConnectedForUsersPage() {
 function handleUserStatusUpdateInUsersPage(userId, status, online_at) {
     var userElement = document.getElementById('user-row-' + userId);
     if (userElement) {
-        var statusElement = userElement.querySelector('.user-status');
-        if (statusElement) {
-            statusElement.className = 'user-status ' + (status === 1 ? 'online' : 'offline');
-        }
+        // var statusElement = userElement.querySelector('.user-status');
+        // if (statusElement) {
+        //     statusElement.className = 'user-status ' + (status === 1 ? 'online' : 'offline');
+        // }
 
-        // itt kell majd beallitani az online_at erteket
         var onlineAtElement = userElement.querySelector('.user-online_at');
         if(onlineAtElement && online_at !== null){
             onlineAtElement.textContent = online_at.year
@@ -44,7 +43,7 @@ function handleUserStatusUpdateInUsersPage(userId, status, online_at) {
                 + ":" + online_at.minute
                 + ":" + online_at.second;
 
-            console.log(online_at.year.length);
+            console.log((online_at.year).length);
         }
     }
 }
@@ -54,39 +53,8 @@ function onErrorForUsersPage(error) {
     //connectingElement.style.color = 'red';
 }
 
-// ez azert hogy a valosideju ertesiteseket is megkapjuk
-// es ha frissitunk vagy ha csak siman ugy kapunk ertesitest hogy nem vagyunk
-// belepve akkor is megkapjuk az ertesitest
 document.addEventListener('DOMContentLoaded', () => {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-
     connectToWebSocketForUsersPage();
-
-    // var elementToGetProfileProfileUserId = document.querySelector('[id^="userIdForProfilePage-"]');
-    // var profileprofileUserId = elementToGetProfileProfileUserId.id.split("-")[1];
-    //
-    // fetch(`/profile/getProfileNotificationStatus?userId=${profileprofileUserId}`, {
-    //     method: "GET",
-    //     headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded',
-    //         'X-CSRF-TOKEN': token
-    //     }
-    // }).then(response => {
-    //     if (response.ok) {
-    //         return response.text();
-    //     } else {
-    //         throw new Error('Request failed!');
-    //     }
-    // }).then(data => {
-    //     if (data === "OK") {
-    //         document.querySelectorAll('.nbr-msg').forEach(item => {
-    //             item.classList.remove('hiddenMsg');
-    //             item.textContent = '';
-    //         });
-    //     }
-    // }).catch((error) => {
-    //     console.log("Error:" + error);
-    // });
-
 });
