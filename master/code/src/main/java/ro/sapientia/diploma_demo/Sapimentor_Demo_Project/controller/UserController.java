@@ -2,6 +2,7 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -102,6 +103,7 @@ public class UserController {
         model.addAttribute("userIdForUsersPage", user.getId());
     }
 
+    @Cacheable("users")
     @GetMapping("")
     public String showUsers(Model model,
                             Principal principal){
@@ -135,19 +137,20 @@ public class UserController {
                     user.modified_at);
             usersToShow.add(userToShow);
         }
-        System.out.println("IGEN:");
-        for ( var igen : usersToShow) {
-            System.out.println(igen.user_id);
-            System.out.println(igen.email);
-            System.out.println(igen.online_at);
-            System.out.println(igen.profileImage);
-        }
+//        System.out.println("IGEN:");
+//        for ( var igen : usersToShow) {
+//            System.out.println(igen.user_id);
+//            System.out.println(igen.email);
+//            System.out.println(igen.online_at);
+//            System.out.println(igen.profileImage);
+//        }
         model.addAttribute("usersData", usersToShow);
         showProfileImageAndName(model, principal);
 
         return "users";
     }
 
+    @Cacheable("searchedUsers")
     @GetMapping("/search")
     public String showFilteredUsers(Model model,
                                     Principal principal,
