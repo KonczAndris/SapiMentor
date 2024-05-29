@@ -137,13 +137,6 @@ public class UserController {
                     user.modified_at);
             usersToShow.add(userToShow);
         }
-//        System.out.println("IGEN:");
-//        for ( var igen : usersToShow) {
-//            System.out.println(igen.user_id);
-//            System.out.println(igen.email);
-//            System.out.println(igen.online_at);
-//            System.out.println(igen.profileImage);
-//        }
         model.addAttribute("usersData", usersToShow);
         showProfileImageAndName(model, principal);
 
@@ -163,15 +156,32 @@ public class UserController {
             showUserRolesToDisplayUsers(model, principal);
             showTopicsToDisplayUsers(model, principal);
             List<UsersDetailsToAdminDTO> filteredUsers = userRepository.findFilteredUsersToAdmin(filter);
-            model.addAttribute("usersData", filteredUsers);
             showProfileImageAndName(model, principal);
-//            System.out.println("IGEN:");
-//            for ( var igen : filteredUsers) {
-//                System.out.println(igen.user_id);
-//                System.out.println(igen.getEmail());
-//                System.out.println(igen.online_at);
-//            }
 
+            List<UsersDetailsToAdminToShowDTO> filteredUsersToShow = new ArrayList<>();
+            for (UsersDetailsToAdminDTO user : filteredUsers) {
+                String encodedProfileImage = null;
+                if (user.profileImage != null) {
+                    encodedProfileImage = Base64.getEncoder().encodeToString(user.profileImage);
+                }
+
+                UsersDetailsToAdminToShowDTO userToShow = new UsersDetailsToAdminToShowDTO(user.user_id,
+                        user.first_Name,
+                        user.last_Name,
+                        user.email,
+                        user.enabled,
+                        user.specialization,
+                        user.year,
+                        user.phoneNumber,
+                        encodedProfileImage,
+                        user.status,
+                        user.online_at,
+                        user.modified_by,
+                        user.modified_at);
+                filteredUsersToShow.add(userToShow);
+            }
+
+            model.addAttribute("usersData", filteredUsersToShow);
             return "users";
         } catch (Exception e) {
             e.printStackTrace();
