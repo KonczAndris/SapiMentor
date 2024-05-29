@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminToShowDTO;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topic;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
@@ -111,12 +112,32 @@ public class UserController {
         showTopicsToDisplayUsers(model, principal);
 
         List<UsersDetailsToAdminDTO> users = userRepository.findAllUsersToAdmin();
+
+        List<UsersDetailsToAdminToShowDTO> usersToShow = new ArrayList<>();
+        for (UsersDetailsToAdminDTO user : users) {
+            UsersDetailsToAdminToShowDTO userToShow = new UsersDetailsToAdminToShowDTO(user.user_id,
+                    user.first_Name,
+                    user.last_Name,
+                    user.email,
+                    user.enabled,
+                    user.specialization,
+                    user.year,
+                    user.phoneNumber,
+                    Base64.getEncoder().encodeToString(user.profileImage),
+                    user.status,
+                    user.online_at,
+                    user.modified_by,
+                    user.modified_at);
+            usersToShow.add(userToShow);
+        }
+//        System.out.println("IGEN:");
 //        for ( var igen : users) {
 //            System.out.println(igen.user_id);
-//            System.out.println(igen.getEmail());
+//            System.out.println(igen.email);
 //            System.out.println(igen.online_at);
+//            System.out.println(igen.profileImage);
 //        }
-        model.addAttribute("usersData", users);
+        model.addAttribute("usersData", usersToShow);
         showProfileImageAndName(model, principal);
 
         return "users";
