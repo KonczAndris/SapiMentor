@@ -115,6 +115,11 @@ public class UserController {
 
         List<UsersDetailsToAdminToShowDTO> usersToShow = new ArrayList<>();
         for (UsersDetailsToAdminDTO user : users) {
+            String encodedProfileImage = null;
+            if (user.profileImage != null) {
+                encodedProfileImage = Base64.getEncoder().encodeToString(user.profileImage);
+            }
+
             UsersDetailsToAdminToShowDTO userToShow = new UsersDetailsToAdminToShowDTO(user.user_id,
                     user.first_Name,
                     user.last_Name,
@@ -123,20 +128,20 @@ public class UserController {
                     user.specialization,
                     user.year,
                     user.phoneNumber,
-                    Base64.getEncoder().encodeToString(user.profileImage),
+                    encodedProfileImage,
                     user.status,
                     user.online_at,
                     user.modified_by,
                     user.modified_at);
             usersToShow.add(userToShow);
         }
-//        System.out.println("IGEN:");
-//        for ( var igen : users) {
-//            System.out.println(igen.user_id);
-//            System.out.println(igen.email);
-//            System.out.println(igen.online_at);
-//            System.out.println(igen.profileImage);
-//        }
+        System.out.println("IGEN:");
+        for ( var igen : usersToShow) {
+            System.out.println(igen.user_id);
+            System.out.println(igen.email);
+            System.out.println(igen.online_at);
+            System.out.println(igen.profileImage);
+        }
         model.addAttribute("usersData", usersToShow);
         showProfileImageAndName(model, principal);
 
