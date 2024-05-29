@@ -207,7 +207,7 @@ public class UserController {
             String user_name = modifing_user.getFirst_Name() + "_" + modifing_user.getLast_Name() + "_" + modifing_user.getId();
             try{
                 String errorMessage = userServiceImpl.modifyUser(user_id, first_Name, last_Name, email, enabled, specialization, year, phoneNumber, user_name);
-                if (errorMessage != null) {
+                if (errorMessage == null) {
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
                 }
                 return ResponseEntity.ok("Success");
