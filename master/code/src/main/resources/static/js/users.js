@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+'use strict';
 function setupModifyUsersModal(userId) {
     var modalId = "usersModifyModal-" + userId;
     var modal = document.getElementById(modalId);
@@ -73,15 +73,14 @@ function sendModifiedUserDataToServer(data) {
         }
     }).then(data => {
 
-        if (data === "User modified successfully!") {
+        if (data === "Success") {
             location.reload();
         }
     }).catch(error => {
         hideLoadingModal()
         console.error('An error occurred:', error);
     });
-=======
-'use strict';
+}
 
 document.getElementById('search-button').addEventListener('click', () => {
     searchInUsersTable();
@@ -115,5 +114,4 @@ function searchInUsersTable() {
 function showLoadingModal() {
     var modal = document.getElementById("loading-modal");
     modal.style.display = "block";
->>>>>>> 184af3abdee9f2cff58213e60a38293ffe3fb228
 }
