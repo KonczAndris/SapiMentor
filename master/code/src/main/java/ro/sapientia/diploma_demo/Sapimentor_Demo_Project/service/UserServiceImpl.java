@@ -275,11 +275,11 @@ public class UserServiceImpl implements UserService{
 
                 userRepository.save(selectedUser);
             } else {
-                return "User not found!";
+                return null;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error while modifying user!";
+            return null;
         }
         return "User modified successfully!";
     }
