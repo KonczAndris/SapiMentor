@@ -43,6 +43,7 @@ public class User {
     private LocalDateTime online_at;
     private String modified_by;
     private LocalDateTime modified_at;
+    private Integer signed_in = 0;
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -24,17 +24,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.id FROM User u WHERE u.email = :email")
     Long findIdByEmail(String email);
 
-    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO( user.id, user.first_Name, user.last_Name, user.email, user.enabled, user.specialization, user.year, user.phoneNumber, user.profileImage, user.status, user.online_at, user.modified_by, user.modified_at) FROM User user WHERE user.email != :email")
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO( user.id, user.first_Name, user.last_Name, user.email, user.enabled, user.specialization, user.year, user.phoneNumber, user.profileImage, user.status, user.online_at, user.modified_by, user.modified_at, user.signed_in) FROM User user WHERE user.email != :email")
     List<UsersDetailsToAdminDTO> findAllUsersToAdmin(String email);
 
-    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO( user.id, user.first_Name, user.last_Name, user.email, user.enabled, user.specialization, user.year, user.phoneNumber, user.profileImage, user.status, user.online_at, user.modified_by, user.modified_at) FROM User user WHERE (LOWER(user.first_Name) LIKE %:filter% OR LOWER(user.last_Name) LIKE %:filter%) AND user.email != :email")
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO( user.id, user.first_Name, user.last_Name, user.email, user.enabled, user.specialization, user.year, user.phoneNumber, user.profileImage, user.status, user.online_at, user.modified_by, user.modified_at, user.signed_in) FROM User user WHERE (LOWER(user.first_Name) LIKE %:filter% OR LOWER(user.last_Name) LIKE %:filter%) AND user.email != :email")
     List<UsersDetailsToAdminDTO> findFilteredUsersToAdmin(String filter, String email);
 
-    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO( user.id, user.first_Name, user.last_Name, user.email, user.enabled, user.specialization, user.year, user.phoneNumber, user.profileImage, user.status, user.online_at, user.modified_by, user.modified_at) FROM User user WHERE (LOWER(user.first_Name) LIKE %:first_Name% AND LOWER(user.last_Name) LIKE %:last_Name%) OR (LOWER(user.first_Name) LIKE %:last_Name% AND LOWER(user.last_Name) LIKE %:first_Name%) AND user.email != :email")
+    @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.UsersDetailsToAdminDTO( user.id, user.first_Name, user.last_Name, user.email, user.enabled, user.specialization, user.year, user.phoneNumber, user.profileImage, user.status, user.online_at, user.modified_by, user.modified_at, user.signed_in) FROM User user WHERE (LOWER(user.first_Name) LIKE %:first_Name% AND LOWER(user.last_Name) LIKE %:last_Name%) OR (LOWER(user.first_Name) LIKE %:last_Name% AND LOWER(user.last_Name) LIKE %:first_Name%) AND user.email != :email")
     List<UsersDetailsToAdminDTO> findFilteredUsersToAdminFirstLast(String first_Name, String last_Name, String email);
 
     @Modifying
-    @Query("UPDATE User u SET u.status = :status, u.online_at = :online_at WHERE u.id = :id")
+    @Query("UPDATE User u SET u.status = :status, u.online_at = :online_at, u.signed_in = u.signed_in + 1  WHERE u.id = :id")
     void updateUserStatusByIdToOnline(Long id, int status, LocalDateTime online_at);
 
     @Modifying

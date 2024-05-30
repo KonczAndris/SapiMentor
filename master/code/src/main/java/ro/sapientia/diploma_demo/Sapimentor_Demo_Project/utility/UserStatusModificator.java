@@ -34,13 +34,13 @@ public class UserStatusModificator {
                 // Ha igen, akkor frissítjük a státuszát
                 userRepository.updateUserStatusByIdToOnline(userId, status, online_at);
                 // Értesítés küldése a felhasználó státuszfrissítésről
-                webSocketController.sendUserStatusUpdate(userId, status, online_at);
+                webSocketController.sendUserStatusUpdate(userId, status, online_at, true);
 
             }else {
                 // Ha igen, akkor frissítjük a státuszát
                 userRepository.updateUserStatusByIdToOffline(userId, status);
                 // Értesítés küldése a felhasználó státuszfrissítésről
-                webSocketController.sendUserStatusUpdate(userId, status, null);
+                webSocketController.sendUserStatusUpdate(userId, status, null, false);
 
             }
         } else {

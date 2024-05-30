@@ -16,6 +16,7 @@ public class UsersDetailsToAdminToShowDTO {
     public LocalDateTime online_at;
     public String modified_by;
     public LocalDateTime modified_at;
+    public Integer signed_in;
 
     public UsersDetailsToAdminToShowDTO() {
     }
@@ -32,7 +33,8 @@ public class UsersDetailsToAdminToShowDTO {
                                   Integer status,
                                   LocalDateTime online_at,
                                   String modified_by,
-                                  LocalDateTime modified_at) {
+                                  LocalDateTime modified_at,
+                                        Integer signed_in) {
         this.user_id = user_id;
         this.first_Name = first_Name;
         this.last_Name = last_Name;
@@ -46,5 +48,6 @@ public class UsersDetailsToAdminToShowDTO {
         this.online_at = online_at;
         this.modified_by = modified_by;
         this.modified_at = modified_at;
+        this.signed_in = signed_in;
     }
 }

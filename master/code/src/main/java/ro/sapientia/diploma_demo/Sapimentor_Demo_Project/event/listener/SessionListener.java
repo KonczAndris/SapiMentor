@@ -46,7 +46,7 @@ public class SessionListener implements ApplicationListener<HttpSessionDestroyed
             userRepository.updateUserStatusByIdToOffline(userId, 0);
 
             // Értesítés küldése a felhasználó státuszfrissítésről
-            webSocketController.sendUserStatusUpdate(userId, 0, null);
+            webSocketController.sendUserStatusUpdate(userId, 0, null, false);
             System.out.println("Ertesites kuldese a felhasznalo statuszfrissitesrol: " + userId);
         } else {
             // Ha nem, akkor hibát dobunk

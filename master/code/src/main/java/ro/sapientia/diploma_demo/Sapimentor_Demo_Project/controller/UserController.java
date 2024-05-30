@@ -134,7 +134,8 @@ public class UserController {
                     user.status,
                     user.online_at,
                     user.modified_by,
-                    user.modified_at);
+                    user.modified_at,
+                    user.signed_in);
             usersToShow.add(userToShow);
         }
         model.addAttribute("usersData", usersToShow);
@@ -194,7 +195,8 @@ public class UserController {
                         user.status,
                         user.online_at,
                         user.modified_by,
-                        user.modified_at);
+                        user.modified_at
+                        , user.signed_in);
                 filteredUsersToShow.add(userToShow);
             }
 
