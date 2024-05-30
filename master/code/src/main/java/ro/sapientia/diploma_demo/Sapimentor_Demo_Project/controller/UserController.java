@@ -143,6 +143,16 @@ public class UserController {
         return "users";
     }
 
+    private String[] splitFilter(String filter) {
+        int spaceIndex = filter.indexOf(' ');
+        if (spaceIndex == -1) {
+            return new String[] { filter };  // Nincs szóköz, az egész filter egy név
+        }
+        String firstName = filter.substring(0, spaceIndex);
+        String lastName = filter.substring(spaceIndex + 1);
+        return new String[] { firstName, lastName };
+    }
+
     @Cacheable("searchedUsers")
     @GetMapping("/search")
     public String showFilteredUsers(Model model,
@@ -155,8 +165,15 @@ public class UserController {
             }
             showUserRolesToDisplayUsers(model, principal);
             showTopicsToDisplayUsers(model, principal);
-            List<UsersDetailsToAdminDTO> filteredUsers = userRepository.findFilteredUsersToAdmin(filter);
             showProfileImageAndName(model, principal);
+            String[] filterParts = splitFilter(filter.toLowerCase());
+            List<UsersDetailsToAdminDTO> filteredUsers = null;
+            if(filterParts.length >= 2) {
+                filteredUsers = userRepository.findFilteredUsersToAdminFirstLast(filterParts[0], filterParts[1]);
+            }
+            else {
+                filteredUsers = userRepository.findFilteredUsersToAdmin(filter);
+            }
 
             List<UsersDetailsToAdminToShowDTO> filteredUsersToShow = new ArrayList<>();
             for (UsersDetailsToAdminDTO user : filteredUsers) {
