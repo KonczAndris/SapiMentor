@@ -506,3 +506,33 @@ tr {
 .close-pdf-modal-btn-exams:hover {
     color: #999;
 }
+
+#suggestion-list {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    display: none;
+    border: 2px solid rgb(0, 0, 0);
+    box-sizing: border-box;
+    margin: 0;
+    width: max-content;
+    padding: 0;
+    width: 200px;
+    position: relative;
+    margin-top: -9px;
+    background-color: white;
+    border-end-start-radius: 10px;
+    border-end-end-radius: 10px;
+    position: absolute;
+    z-index: 2;
+}
+
+#suggestion-list div {
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+#suggestion-list div:hover {
+    opacity: 1;
+}

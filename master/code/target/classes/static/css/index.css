@@ -618,6 +618,6 @@ a{
 .link-table th {
     position: sticky;
     top: 0;
-    background-color: rgb(50, 189, 149); /* Background color for the sticky header */
+    background-color: rgb(22, 175, 132); /* Background color for the sticky header */
     z-index: 1; /* Ensure the header is above the other cells */
 }
