@@ -8,15 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.ChatMessageReadOrNot;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.FavoritesService;
 
 import java.security.Principal;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequestMapping("/myGroup/favorites")
 @Controller
@@ -50,12 +48,37 @@ public class FavoritesMyGroupController {
         model.addAttribute("userId", user.getId());
     }
 
+    private void showUserRolesToDisplayFavorites(Model model, Principal principal){
+        String email = principal.getName();
+
+        Long userId = userRepository.findIdByEmail(email);
+        Collection<Role> roles = userRepository.findRolesByUserId(userId);
+
+        List<String> rolesToDisplayFavorites = new ArrayList<>();
+        boolean hasOtherRole = false;
+
+        for (Role role : roles){
+            if(!role.getName().equals("USER")){
+                rolesToDisplayFavorites.add(role.getName());
+                hasOtherRole = true;
+            }
+        }
+
+        if(!hasOtherRole){
+            rolesToDisplayFavorites.add("USER");
+        }
+
+        String rolesAsString = String.join(",", rolesToDisplayFavorites);
+        model.addAttribute("userRolesToDisplayFavorites", rolesAsString);
+    }
+
     @GetMapping("")
     public String showFavoritesMyGroup(Model model, Principal principal) {
         if (principal == null) {
             return "redirect:/login";
         }
         showProfileImageAndName(model, principal);
+        showUserRolesToDisplayFavorites(model, principal);
         favoritesService.showAllFavorites(model, principal);
 
         return "favorites";

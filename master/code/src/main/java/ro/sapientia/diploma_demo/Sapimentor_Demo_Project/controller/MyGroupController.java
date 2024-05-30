@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Rating;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.RatingRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.MyGroupService;
@@ -19,9 +20,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UserProfileNoti
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UtilityForSomeCotroller;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequestMapping("/myGroup")
 @Controller
@@ -57,6 +56,30 @@ public class MyGroupController {
         this.userProfileNotification = userProfileNotification;
     }
 
+    private void showUserRolesToDisplayMyGroup(Model model, Principal principal){
+        String email = principal.getName();
+
+        Long userId = userRepository.findIdByEmail(email);
+        Collection<Role> roles = userRepository.findRolesByUserId(userId);
+
+        List<String> rolesToDisplayMyGroup = new ArrayList<>();
+        boolean hasOtherRole = false;
+
+        for (Role role : roles){
+            if(!role.getName().equals("USER")){
+                rolesToDisplayMyGroup.add(role.getName());
+                hasOtherRole = true;
+            }
+        }
+
+        if(!hasOtherRole){
+            rolesToDisplayMyGroup.add("USER");
+        }
+
+        String rolesAsString = String.join(",", rolesToDisplayMyGroup);
+        model.addAttribute("userRolesToDisplayMyGroup", rolesAsString);
+    }
+
     @GetMapping("")
     public String showMyGroup(Model model, Principal principal) {
         if (principal == null) {
@@ -65,7 +88,7 @@ public class MyGroupController {
         utilityForSomeCotroller.showTopicsToMyGroupPage(model);
         utilityForSomeCotroller.showSkillsToMyGroupPage(model);
         utilityForSomeCotroller.showProfileImageAndName(model, principal);
-
+        showUserRolesToDisplayMyGroup(model, principal);
 //        model.addAttribute("ButtonClicked", false);
 
         return "myGroup";
@@ -80,6 +103,7 @@ public class MyGroupController {
         utilityForSomeCotroller.showTopicsToMyGroupPage(model);
         utilityForSomeCotroller.showSkillsToMyGroupPage(model);
         utilityForSomeCotroller.showProfileImageAndName(model, principal);
+        showUserRolesToDisplayMyGroup(model, principal);
 
         // ez helyett esetleg a hosszu menet
         myGroupService.getAllMeneesDetails(model, principal);
@@ -98,6 +122,7 @@ public class MyGroupController {
         utilityForSomeCotroller.showTopicsToMyGroupPage(model);
         utilityForSomeCotroller.showSkillsToMyGroupPage(model);
         utilityForSomeCotroller.showProfileImageAndName(model, principal);
+        showUserRolesToDisplayMyGroup(model, principal);
 
         // ez helyett esetleg a hosszu menet
         myGroupService.getAllMentorsDetails(model, principal);
@@ -205,6 +230,7 @@ public class MyGroupController {
             myGroupService.getSelectedUserProfile(selectedUserId, model);
             myGroupService.getSelectedUserComments(selectedUserId, model, principal);
             utilityForSomeCotroller.getUserRolesToDisplayMentorSelector(model, principal);
+
             //model.addAttribute("isButtonClicked", true);
             //model.addAttribute("showDetails", true);
             return "fragments/modal :: modal-content";
@@ -247,6 +273,7 @@ public class MyGroupController {
             utilityForSomeCotroller.showProfileImageAndName(model, principal);
             myGroupService.getAllMenteesDetailsByFilter(principal, model, params);
             utilityForSomeCotroller.getUserRolesToDisplayMentorSelector(model, principal);
+            showUserRolesToDisplayMyGroup(model, principal);
 
             return "myGroup";
         } catch (Exception e) {
@@ -269,6 +296,7 @@ public class MyGroupController {
             utilityForSomeCotroller.showProfileImageAndName(model, principal);
             myGroupService.getAllMentorsDetailsByFilter(principal, model, params);
             utilityForSomeCotroller.getUserRolesToDisplayMentorSelector(model, principal);
+            showUserRolesToDisplayMyGroup(model, principal);
 
             return "myGroup";
         } catch (Exception e) {

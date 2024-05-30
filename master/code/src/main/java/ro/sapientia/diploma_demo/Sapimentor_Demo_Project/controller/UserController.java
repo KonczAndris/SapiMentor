@@ -169,10 +169,10 @@ public class UserController {
             String[] filterParts = splitFilter(filter.toLowerCase());
             List<UsersDetailsToAdminDTO> filteredUsers = null;
             if(filterParts.length >= 2) {
-                filteredUsers = userRepository.findFilteredUsersToAdminFirstLast(filterParts[0], filterParts[1]);
+                filteredUsers = userRepository.findFilteredUsersToAdminFirstLast(filterParts[0], filterParts[1], principal.getName());
             }
             else {
-                filteredUsers = userRepository.findFilteredUsersToAdmin(filter);
+                filteredUsers = userRepository.findFilteredUsersToAdmin(filter, principal.getName());
             }
 
             List<UsersDetailsToAdminToShowDTO> filteredUsersToShow = new ArrayList<>();

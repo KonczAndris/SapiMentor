@@ -63,6 +63,13 @@
                 </a></p>
         </div>
 
+        <div class="form-group">
+            <!--             th:if="${not userRolesToDisplayUsers.contains('ADMIN')}">-->
+            <p class="menu-function">
+                <a th:onclick="${not userRolesToDisplayUsers.contains('MENTOR') and not userRolesToDisplayUsers.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
+                    <span class="english-text">My Group</span>
+                    <span class="hungarian-text">Csoportom</span></a> </p>
+        </div>
 
         <div class="form-group current-page">
             <p class="menu-function">
