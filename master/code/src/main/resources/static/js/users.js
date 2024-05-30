@@ -115,3 +115,60 @@ function showLoadingModal() {
     var modal = document.getElementById("loading-modal");
     modal.style.display = "block";
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const table = document.querySelector(".link-table");
+    const tableBody = table.querySelector("tbody");
+    const rows = Array.from(tableBody.querySelectorAll("tr"));
+    const rowsPerPage = 20;
+    let currentPage = 1;
+
+    function updatePageCounter() {
+        const pageCount = Math.ceil(rows.length / rowsPerPage);
+        document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
+    }
+
+    function showRowsForCurrentPage() {
+        const startIdx = (currentPage - 1) * rowsPerPage;
+        const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
+
+        rows.forEach((row, index) => {
+            if (index >= startIdx && index < endIdx) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    function setPage(page) {
+        currentPage = page;
+        showRowsForCurrentPage();
+        updatePageCounter();
+    }
+
+    updatePageCounter();
+    showRowsForCurrentPage();
+
+    document.getElementById("next-page-button").addEventListener("click", () => {
+        if (currentPage < Math.ceil(rows.length / rowsPerPage)) {
+            setPage(currentPage + 1);
+        }
+        else {
+            setPage(1);
+        }
+    });
+
+    document.getElementById("prev-page-button").addEventListener("click", () => {
+        if (currentPage > 1) {
+            setPage(currentPage - 1);
+        }
+        else {
+            setPage(Math.ceil(rows.length / rowsPerPage));
+        }
+    });
+});
+
+document.getElementById('search-button').addEventListener('click', () => {
+    searchInExamExamples();
+});

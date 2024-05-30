@@ -144,39 +144,43 @@
                 <tr>
                     <th class="table-number sortable">NR</th>
                     <th class="table-number sortable" style="display: none">ID</th>
-                    <th class="table-topic sortable">
+                    <th class="table-picture sortable">
                         <span class="english-text">Picture</span>
                         <span class="hungarian-text">Kép</span>
                     </th>
-                    <th class="table-link sortable">
+                    <th class="table-name sortable">
                         <span class="english-text">Name</span>
                         <span class="hungarian-text">Név</span>
                     </th>
-                    <th class="table-user sortable">
+                    <th class="table-email sortable">
                         <span class="english-text">Email</span>
                         <span class="hungarian-text">Email cím</span>
                     </th>
-                    <th class="table-user sortable">
+                    <th class="table-phone sortable">
                         <span class="english-text">Phone</span>
                         <span class="hungarian-text">Telefonszám</span>
                     </th>
-                    <th class="table-likes sortable">
+                    <th class="table-specialization sortable">
                         <span class="english-text">Specialization</span>
                         <span class="hungarian-text">Szak</span>
                     </th>
-                    <th class="table-actions">
+                    <th class="table-online">
                         <span class="english-text">Online at</span>
                         <span class="hungarian-text">Elérhető</span>
                     </th>
-                    <th class="table-actions">
+                    <th class="table-modifier">
                         <span class="english-text">Modifier</span>
                         <span class="hungarian-text">Módosító</span>
                     </th>
-                    <th class="table-actions">
+                    <th class="table-modified">
                         <span class="english-text">Modified at</span>
                         <span class="hungarian-text">Módosítás</span>
                     </th>
-                    <th class="table-actions">
+                    <th class="table-enabled">
+                        <span class="english-text">Enabled</span>
+                        <span class="hungarian-text">Megerősítés</span>
+                    </th>
+                    <th class="table-modify">
                         <span class="english-text">Modify</span>
                         <span class="hungarian-text">Módosítás</span>
                     </th>
@@ -189,11 +193,11 @@
                     <td>
                         <img th:if="${user.profileImage != null && user.profileImage != ''}"
                              th:src="@{|data:image/jpeg;base64,${user.profileImage}|}"
-                             alt="Profile Image" class="menu-icon rounded-icon"
+                             alt="Profile Image" class="menu-icon rounded-icon table-user-icon"
                              th:async="async"
                              th:attr="data-cache='no-cache'">
                         <img th:unless="${user.profileImage != null && user.profileImage != ''}"
-                             th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon">
+                             th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon table-user-icon">
                     </td>
                     <td>
                         <span th:if="${#strings.isEmpty(user.first_Name) || #strings.isEmpty(user.last_Name)}"
@@ -234,6 +238,12 @@
                             NULL
                         </span>
                         <span th:unless="${#strings.isEmpty(user.modified_at)}" th:text="${user.modified_at}"></span>
+                    </td>
+                    <td>
+                        <span th:if="${#strings.isEmpty(user.enabled)}" style="font-style: italic; color: grey;">
+                            NULL
+                        </span>
+                        <span th:unless="${#strings.isEmpty(user.enabled)}" th:text="${user.enabled}"></span>
                     </td>
                     <td>
                         <button class="user-modify-btn blue-button" th:onclick="'setupModifyUsersModal(' + ${user.user_id} + ')'" th:id="'user-modify-btn-' + ${user.user_id}">
@@ -365,12 +375,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{/js/functions.js}"></script>
-<<<<<<< HEAD
-<script th:src="@{/js/examExamples.js}"></script>
-<script th:src="@{/js/users.js}"></script>
-<!--<script th:src="@{/js/examExamples.js}"></script>-->
-=======
->>>>>>> be592ead7d745c3c800dbe15f9c373dd377924bc
 <script th:src="@{/js/users.js}"></script>
 <script th:src="@{/js/WebSocketForUsersPage.js}"></script>
 <script th:src="@{/js/localLanguageSettings.js}"></script>

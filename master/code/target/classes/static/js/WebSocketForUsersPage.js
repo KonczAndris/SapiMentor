@@ -42,8 +42,6 @@ function handleUserStatusUpdateInUsersPage(userId, status, online_at) {
                 + "T" + online_at.hour
                 + ":" + online_at.minute
                 + ":" + online_at.second;
-
-            console.log((online_at.year).length);
         }
     }
 }

@@ -1189,12 +1189,9 @@ function searchTable() {
         const examImageContainer = row.querySelector('.exam-image-image-container');
         const examImageModal = row.querySelector('.exam-image-modal');
         const examId = row.id.split('-')[1];
-        //console.log("Igenke: " + examId)// Az examId kinyerése a sor ID-jéből
 
         examImageContainer.addEventListener("click", function() {
-            //console.log("Igen2 "+ examImageModal.id);
             if (examImageModal.id.includes("ItIsNotAnImage")) {
-                //console.log("Igen");
                 getExamImgPdf(examImageModal.id.split("-")[1]);
             } else {
                 //console.log("Nem");

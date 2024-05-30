@@ -283,6 +283,46 @@ tr {
     font-size: medium;
 }
 
+.table-number{
+    min-width: 50px;
+}
+
+.table-picture{
+    min-width: 70px;
+}
+
+.table-name{
+    min-width: 120px;
+}
+
+.table-email{
+    min-width: 150px;
+}
+
+.table-phone{
+    min-width: 120px;
+}
+
+.table-specialization{
+    min-width: 140px;
+}
+
+.table-online{
+    min-width: 100px;
+}
+
+.table-modifier{
+    min-width: 150px;
+}
+
+.table-enabled{
+    min-width: 120px;
+}
+
+.table-user-icon{
+    box-shadow: none !important;
+}
+
 @media screen and (max-width: 1000px) {
     .filter-container {
         display: none;
