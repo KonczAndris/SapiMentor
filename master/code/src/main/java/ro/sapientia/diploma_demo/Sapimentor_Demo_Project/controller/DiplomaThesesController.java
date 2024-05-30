@@ -118,9 +118,6 @@ public class DiplomaThesesController {
         model.addAllAttributes(Map.of(
                 "diplomaThesesData", diplomaTheses
         ));
-//        diplomaTheses.forEach(diploma_theses -> {
-//            System.out.println("Diploma_theses: " + diploma_theses.getKeywords());
-//        });
         return "diplomaTheses";
     }
 
@@ -269,16 +266,12 @@ public class DiplomaThesesController {
                                                       Principal principal){
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
-        //System.out.println("User: " + user.getEmail());
 
         if (user != null){
             String user_name = user.getFirst_Name() + " " + user.getLast_Name();
             Long user_id = user.getId();
-            //System.out.println("Szia1");
             try {
-                //System.out.println("Szia");
                 String errorMessage = diplomaServices.uploadDiplomaThesesPdf(pdf, name, topic, user_name, year, user_id);
-                //System.out.println("Error message: " + errorMessage);
                 if (errorMessage != null){
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
                 }

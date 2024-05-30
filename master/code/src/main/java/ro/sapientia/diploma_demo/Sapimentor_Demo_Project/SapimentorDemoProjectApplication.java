@@ -21,10 +21,10 @@ public class SapimentorDemoProjectApplication {
 	// a CommandLineRunner interfesz implementalas segitsegevel
 //	@Bean
 //	public CommandLineRunner InformaticsGetDiplomaThesesData(DiplomaServices diplomaServices,
-//													   findKeywordsInAbstract findKeywordsInAbstract,
-//													   GPT3Service gpt3Service,
-//													   findDiplomaThesesName findDiplomaThesesName,
-//													   CSVFileWriter csvService) {
+//															 findKeywordsInAbstract findKeywordsInAbstract,
+//															 GPT3Service gpt3Service,
+//															 findDiplomaThesesName findDiplomaThesesName,
+//															 CSVFileWriter csvService) {
 //		return args -> {
 //			String pdfDirectoryPath = "src/main/resources/static/pdf";
 //

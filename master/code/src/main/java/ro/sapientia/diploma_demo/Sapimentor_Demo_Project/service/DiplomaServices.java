@@ -129,7 +129,7 @@ public class DiplomaServices {
         return likeAndDislikeCounts;
     }
 
-    private static final long MAX_PDF_SIZE = 10 * 1024 * 1024; // 10 MB(11500000)
+    private static final long MAX_PDF_SIZE = 30 * 1024 * 1024; // 10 MB(11500000)
     //private static final long MAX_PDF_SIZE = 5 * 1024 * 1024; // 5 MB
     //private static final long MAX_PDF_SIZE = 3 * 1024 * 1024; // 3 MB
 
@@ -211,7 +211,10 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
                 if (abstractPageNumber > 0) {
                     PdfReader pdfReaderForAbstractText = new PdfReader(pdf.getInputStream());
                     // Itt kijavitottam az abstractText-et a GPT3-as verziora
-                    String abstractText = "Get 5 or 3 keywords from this text: " + findKeywordsInAbstract.getAbstractText(pdfReaderForAbstractText, abstractPageNumber);
+                    // itt az angol nyelvu kivonat ebbol kell csinalni majd pdf-et
+                    String realAbstractText = findKeywordsInAbstract.getAbstractText(pdfReaderForAbstractText, abstractPageNumber);
+
+                    String abstractText = "Get 5 or 3 keywords from this text: " + realAbstractText;
                     abstractText = abstractText.replaceAll("[\\r\\n]+", "");
                     //System.out.println("Abstract text: " + abstractText);
 
@@ -282,8 +285,6 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
 
             byte[] compressedPdfBytes = compressedPdfStream.toByteArray();
 
-            //System.out.println("Compressed PDF size: " + compressedPdfBytes.length);
-
             // itt hozom letre a Diploma_Theses objektumot
             // es teszem bele a megadott adatokat
             Diploma_Theses diploma_theses = new Diploma_Theses();
@@ -295,10 +296,6 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
             diploma_theses.setDislike(0);
             diploma_theses.setKeywords(allKeywords.toString());
             diploma_theses.setUser_id(user_id);
-
-
-//            // itt adom hozzá a tömörítetlen PDF-et az objektumhoz
-//            diploma_theses.setDiploma_theses_file(originalPdfBytes);
 
             // Tömörített PDF hozzáadása az objektumhoz
             diploma_theses.setDiploma_theses_file(compressedPdfBytes);
@@ -320,10 +317,6 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
                                           String year,
                                           String keywords){
     try {
-
-//        if (pdfBytes.length > MAX_PDF_SIZE) {
-//            return "Too large";
-//        }
 
         // Először alakítsd át InputStream-re
         ByteArrayInputStream pdfInputStream = new ByteArrayInputStream(pdfBytes);
