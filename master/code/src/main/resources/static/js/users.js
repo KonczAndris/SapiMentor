@@ -115,3 +115,119 @@ function showLoadingModal() {
     var modal = document.getElementById("loading-modal");
     modal.style.display = "block";
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const table = document.querySelector(".link-table");
+    const tableBody = table.querySelector("tbody");
+    const rows = Array.from(tableBody.querySelectorAll("tr"));
+    const rowsPerPage = 20;
+    let currentPage = 1;
+
+    function updatePageCounter() {
+        const pageCount = Math.ceil(rows.length / rowsPerPage);
+        document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
+    }
+
+    function showRowsForCurrentPage() {
+        const startIdx = (currentPage - 1) * rowsPerPage;
+        const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
+
+        rows.forEach((row, index) => {
+            if (index >= startIdx && index < endIdx) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    function setPage(page) {
+        currentPage = page;
+        showRowsForCurrentPage();
+        updatePageCounter();
+    }
+
+    updatePageCounter();
+    showRowsForCurrentPage();
+
+    document.getElementById("next-page-button").addEventListener("click", () => {
+        if (currentPage < Math.ceil(rows.length / rowsPerPage)) {
+            setPage(currentPage + 1);
+        }
+        else {
+            setPage(1);
+        }
+    });
+
+    document.getElementById("prev-page-button").addEventListener("click", () => {
+        if (currentPage > 1) {
+            setPage(currentPage - 1);
+        }
+        else {
+            setPage(Math.ceil(rows.length / rowsPerPage));
+        }
+    });
+});
+
+document.getElementById('search-button').addEventListener('click', () => {
+    searchInExamExamples();
+});
+
+function listSuggestions() {
+    const input = document.getElementById('filter-input');
+    const filter = input.value.trim().toUpperCase();
+    const suggestionList = document.getElementById('suggestion-list');
+    suggestionList.innerHTML = '';
+
+    let suggestionCount = 0;
+
+    const table = document.getElementById('dataTable');
+    const rows = table.getElementsByTagName('tr');
+
+    if (filter === '') {
+        const suggestionList = document.getElementById('suggestion-list');
+        suggestionList.style.display = 'none';
+        return;
+    }
+
+    for (let i = 1; i < rows.length && suggestionCount < 5; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        const nameCell = cells[3];
+
+        if (nameCell) {
+            const nameText = nameCell.textContent.trim().toUpperCase();
+
+            if (nameText.includes(filter)) {
+
+                const span = nameCell.querySelector('span');
+                if (span) {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.textContent = span.textContent;
+
+                    suggestionItem.addEventListener('click', function() {
+                        input.value = span.textContent;
+                        suggestionList.style.display = 'none';
+                    });
+
+                    suggestionList.appendChild(suggestionItem);
+                    suggestionCount++;
+                }
+            }
+        }
+    }
+
+    if (suggestionCount === 0) {
+        suggestionList.style.display = 'none';
+        return;
+    }
+    suggestionList.style.display = 'block';
+}
+
+document.getElementById('filter-input').addEventListener('input', listSuggestions);
+
+document.addEventListener('click', function(event) {
+    var suggestionList = document.getElementById('suggestion-list');
+    if (event.target !== suggestionList) {
+        suggestionList.style.display = 'none';
+    }
+});

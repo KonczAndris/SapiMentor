@@ -11,7 +11,7 @@
 }
 
 .filter-input {
-    width: 150px;
+    width: 200px;
     min-width: 140px;
     height: 40px;
     border-radius: 10px;
@@ -23,16 +23,6 @@
     font-size: smaller;
 }
 
-.filter-dropdown-content {
-    display: none;
-    border: 2px solid rgb(0, 0, 0);
-    box-sizing: border-box;
-    width: 100%;
-    position: absolute;
-    top: 100%;
-    margin: 0;
-    padding: 0;
-}
 
 .filter-dropdown-content.active {
     display: block;
@@ -59,7 +49,7 @@
 }
 
 .search-button {
-    width: 100px;
+    width: 200px;
     max-width: 55%;
     cursor: pointer;
     padding: 10px;
@@ -89,10 +79,10 @@
 .func-buttons {
     display: flex;
     position: relative;
-    flex-direction: row;
+    flex-direction: column;
     align-items: start;
     margin-top: 0;
-    margin-left: -10px;
+    width: 100%;
 }
 
 #myFilterBtn {
@@ -283,9 +273,48 @@ tr {
     font-size: medium;
 }
 
+.table-number{
+    min-width: 50px;
+}
+
+.table-picture{
+    min-width: 70px;
+}
+
+.table-name{
+    min-width: 120px;
+}
+
+.table-email{
+    min-width: 150px;
+}
+
+.table-phone{
+    min-width: 120px;
+}
+
+.table-specialization{
+    min-width: 140px;
+}
+
+.table-online{
+    min-width: 100px;
+}
+
+.table-modifier{
+    min-width: 150px;
+}
+
+.table-enabled{
+    min-width: 120px;
+}
+
+.table-user-icon{
+    box-shadow: none !important;
+}
+
 @media screen and (max-width: 1000px) {
     .filter-container {
-        display: none;
         flex-direction: column;
         align-items: center;
         margin-top: 15px;
@@ -328,7 +357,7 @@ tr {
     }
 
     .search-button {
-        width: 150px;
+        width: 200px;
     }
 
     .upload-button-modal-modify, .cancel-button-modal-modify{
@@ -476,4 +505,34 @@ tr {
 
 .close-pdf-modal-btn-exams:hover {
     color: #999;
+}
+
+#suggestion-list {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    display: none;
+    border: 2px solid rgb(0, 0, 0);
+    box-sizing: border-box;
+    margin: 0;
+    width: max-content;
+    padding: 0;
+    width: 200px;
+    position: relative;
+    margin-top: -9px;
+    background-color: white;
+    border-end-start-radius: 10px;
+    border-end-end-radius: 10px;
+    position: absolute;
+    z-index: 2;
+}
+
+#suggestion-list div {
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+#suggestion-list div:hover {
+    opacity: 1;
 }
