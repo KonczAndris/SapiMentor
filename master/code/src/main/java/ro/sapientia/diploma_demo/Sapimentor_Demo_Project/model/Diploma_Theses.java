@@ -38,6 +38,16 @@ public class Diploma_Theses {
 
     private Long user_id;
 
+    @Column(name = "abstract_file_en")
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] abstract_file_en;
+
+    @Column(name = "abstract_file_hu")
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] abstract_file_hu;
+
     public Diploma_Theses(String name,
                           byte[] diploma_theses_file,
                           String topic_name,
@@ -46,7 +56,9 @@ public class Diploma_Theses {
                           Integer dislike,
                           String year,
                           String keywords,
-                          Long user_id) {
+                          Long user_id,
+                          byte[] abstract_file_en,
+                          byte[] abstract_file_hu) {
         this.name = name;
         this.diploma_theses_file = diploma_theses_file;
         this.topic_name = topic_name;
@@ -56,6 +68,8 @@ public class Diploma_Theses {
         this.year = year;
         this.keywords = keywords;
         this.user_id = user_id;
+        this.abstract_file_en = abstract_file_en;
+        this.abstract_file_hu = abstract_file_hu;
     }
 
     public Diploma_Theses(Long id,

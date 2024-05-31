@@ -42,4 +42,7 @@ public interface DiplomaThesesRepository extends JpaRepository<Diploma_Theses, L
     @Query("SELECT d.id, d.name, d.year, d.topic_name,d.user_name,d.like,d.dislike,d.keywords, d.user_id FROM Diploma_Theses d WHERE LOWER(d.keywords) LIKE %:keyword% AND d.topic_name IN :topicNames")
     List<Object[]> findAllByKeywordAndTopicName(String keyword, String[] topicNames);
 
+    @Query("SELECT  d FROM Diploma_Theses d WHERE d.name = :name AND d.topic_name = :topicName AND d.year = :year")
+    Diploma_Theses findNameAndTopic(String name, String topicName, String year);
+
 }

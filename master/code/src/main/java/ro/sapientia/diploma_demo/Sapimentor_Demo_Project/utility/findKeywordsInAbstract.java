@@ -3,7 +3,10 @@ package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.canvas.parser.PdfCanvasProcessor;
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor;
+import com.itextpdf.kernel.pdf.canvas.parser.listener.ITextExtractionStrategy;
+import com.itextpdf.kernel.pdf.canvas.parser.listener.SimpleTextExtractionStrategy;
 import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
@@ -114,6 +117,24 @@ public class findKeywordsInAbstract {
 
             // Most már a PdfPage példányon hívjuk meg a getTextFromPage metódust
             return PdfTextExtractor.getTextFromPage(page);
+        }
+    }
+
+    public String getAbstract_HU_Text(PdfReader pdfReader, int pageNumber) throws IOException {
+        StringBuilder formattedText = new StringBuilder();
+        try (PdfDocument pdfDocument = new PdfDocument(pdfReader)) {
+            // Lekérjük a megfelelő oldalt a PdfDocument példánytól
+            PdfPage page = pdfDocument.getPage(pageNumber);
+
+            ITextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
+            PdfCanvasProcessor parser = new PdfCanvasProcessor(strategy);
+            parser.processPageContent(page);
+
+            formattedText.append(strategy.getResultantText());
+            return formattedText.toString();
+
+//            // Most már a PdfPage példányon hívjuk meg a getTextFromPage metódust
+//            return PdfTextExtractor.getTextFromPage(page);
         }
     }
 

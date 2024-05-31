@@ -186,6 +186,12 @@ public class DiplomaThesesController {
         }
     }
 
+    // TODO: megcsinalni a getAbstract_en-et az angol nyelvu kivonatokhoz
+
+
+    // TODO: megcsinalni a getAbstract_hu-et a magyar nyelvu kivonatokhoz
+
+
     // diplomamunkak letoltesenek megvalositasa
     @GetMapping("/downloadDiplomaThese")
     public ResponseEntity<byte[]> downloadDiplomaTheses(@RequestParam Long diplomaId) {
