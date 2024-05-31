@@ -349,7 +349,6 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
     return null;
 }
 
-    // TODO: likeDiploma
     public void likeDiploma(Long diplomaId) {
         Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeAndDislikeById(diplomaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
@@ -360,7 +359,6 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
         diplomaThesesRepository.update(diploma_theses);
     }
 
-    // TODO: dislikeDiploma
     public void dislikeDiploma(Long diplomaId) {
         Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeAndDislikeById(diplomaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
@@ -371,7 +369,6 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
         diplomaThesesRepository.update(diploma_theses);
     }
 
-    // TODO: revokeLike
     public void revokeLike(Long diplomaId) {
         Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeAndDislikeById(diplomaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
@@ -382,7 +379,6 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
         diplomaThesesRepository.update(diploma_theses);
     }
 
-    // TODO: revokeDislike
     public void revokeDislike(Long diplomaId) {
         Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeAndDislikeById(diplomaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
@@ -393,7 +389,6 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
         diplomaThesesRepository.update(diploma_theses);
     }
 
-    // TODO: likeDiplomaAndRevokeDislike
     public void likeDiplomaAndRevokeDislike(Long diplomaId) {
         Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeAndDislikeById(diplomaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
@@ -404,7 +399,6 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
         diplomaThesesRepository.update(diploma_theses);
     }
 
-    // TODO: dislikeDiplomaAndRevokeLike
     public void dislikeDiplomaAndRevokeLike(Long diplomaId) {
         Diploma_Theses diploma_theses = diplomaThesesRepository.findLikeAndDislikeById(diplomaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Diploma Theses not found with Id:" + diplomaId));
@@ -430,7 +424,7 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
 
 
 
-
+// TODO: Ez a pelda a tobbihez
 
 //    @Bean
 //    public CommandLineRunner InformaticsPDFUploadRunner(DiplomaServices diplomaServices,

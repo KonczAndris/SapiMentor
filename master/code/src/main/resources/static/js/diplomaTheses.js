@@ -1073,22 +1073,19 @@ function getDiplomaId (diplomaId) {
             for (let i = 0; i < data.length; i++) {
                 const id = data[i][0];
                 const diplomaThesesFile = data[i][1];
-                // console.log(id); // diploma ID
-                // console.log(diplomaThesesFile); // diploma fájl
                 diplomaPDF.push({
                     id: id,
                     diplomaThesesFile: diplomaThesesFile
                 });
             }
             hideLoadingModal()
-            // diplomaPDF = data.diploma;
-            //console.log(diplomaPDF);
             handlerdiplomaPDFs();
 
         })
         .catch(error => {
             hideLoadingModal()
             console.error('Error:', error);
+            // TODO: Egy modalt jelenitsen meg hogy nem nyithato meg a pdf jelenleg probalja meg ujra kesobb
         });
 }
 

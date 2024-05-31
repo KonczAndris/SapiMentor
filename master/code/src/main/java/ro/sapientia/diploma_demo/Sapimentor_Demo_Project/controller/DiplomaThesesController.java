@@ -292,7 +292,6 @@ public class DiplomaThesesController {
     }
 
 
-    // TODO: /like
     @PostMapping("/like")
     public ResponseEntity<String> likeDiploma(@RequestParam Long diplomaId){
         try {
@@ -304,7 +303,6 @@ public class DiplomaThesesController {
         }
     }
 
-    // TODO: /dislike
     @PostMapping("/dislike")
     public ResponseEntity<String> dislikeDiploma(@RequestParam Long diplomaId){
         try {
@@ -316,7 +314,6 @@ public class DiplomaThesesController {
         }
     }
 
-    // TODO: /revokelike
     @PostMapping("/revokelike")
     public ResponseEntity<String> revokeLike(@RequestParam Long diplomaId){
         try {
@@ -328,7 +325,6 @@ public class DiplomaThesesController {
         }
     }
 
-    // TODO: /revokedislike
     @PostMapping("/revokedislike")
     public ResponseEntity<String> revokeDislike(@RequestParam Long diplomaId){
         try {
@@ -340,7 +336,6 @@ public class DiplomaThesesController {
         }
     }
 
-    // TODO: /likeDiplomaAndRevokeDislike
     @PostMapping("/likeDiplomaAndRevokeDislike")
     public ResponseEntity<String> likeDiplomaAndRevokeDislike(@RequestParam Long diplomaId){
         try {
@@ -352,7 +347,6 @@ public class DiplomaThesesController {
         }
     }
 
-    // TODO: /dislikeDiplomaAndRevokeLike
     @PostMapping("/dislikeDiplomaAndRevokeLike")
     public ResponseEntity<String> dislikeDiplomaAndRevokeLike(@RequestParam Long diplomaId){
         try {
@@ -364,7 +358,6 @@ public class DiplomaThesesController {
         }
     }
 
-    // TODO: /setLikeToActive
     @PostMapping("/setLikeToActive")
     public ResponseEntity<String> setLikeToActive(@RequestParam Long diplomaId, Principal principal){
         try {
@@ -379,7 +372,6 @@ public class DiplomaThesesController {
         }
     }
 
-    // TODO: /setLikeToInactive
     @PostMapping("/setLikeToInactive")
     public ResponseEntity<String> setLikeToInactive(@RequestParam Long diplomaId, Principal principal){
         try {
@@ -394,7 +386,6 @@ public class DiplomaThesesController {
         }
     }
 
-    // TODO: /setDislikeToActive
     @PostMapping("/setDislikeToActive")
     public ResponseEntity<String> setDislikeToActive(@RequestParam Long diplomaId, Principal principal){
         try {
@@ -409,8 +400,6 @@ public class DiplomaThesesController {
         }
     }
 
-
-    // TODO: /setDislikeToInactive
     @PostMapping("/setDislikeToInactive")
     public ResponseEntity<String> setDislikeToInactive(@RequestParam Long diplomaId, Principal principal){
         try {
@@ -425,7 +414,6 @@ public class DiplomaThesesController {
         }
     }
 
-    // TODO: /setLikeToActiveAndDislikeToInactive
     @PostMapping("/setLikeToActiveAndDislikeToInactive")
     public ResponseEntity<String> setLikeToActiveAndDislikeToInactive(@RequestParam Long diplomaId, Principal principal){
         try {
@@ -441,7 +429,6 @@ public class DiplomaThesesController {
 
     }
 
-    // TODO: /setDislikeToActiveAndLikeToInactive
     @PostMapping("/setDislikeToActiveAndLikeToInactive")
     public ResponseEntity<String> setDislikeToActiveAndLikeToInactive(@RequestParam Long diplomaId, Principal principal){
         try {
@@ -457,7 +444,6 @@ public class DiplomaThesesController {
 
     }
 
-    // TODO: /getLikeStatus
     @GetMapping("/getLikeStatus")
     public ResponseEntity<String> getLikeStatus(@RequestParam Long diplomaId, Principal principal){
         try {
@@ -473,7 +459,6 @@ public class DiplomaThesesController {
 
     }
 
-    // TODO: /getDislikeStatus
     @GetMapping("/getDislikeStatus")
     public ResponseEntity<String> getDislikeStatus(@RequestParam Long diplomaId, Principal principal){
         try {
@@ -489,7 +474,6 @@ public class DiplomaThesesController {
 
     }
 
-    // TODO: /getLikeAndDislikeStatues
     @GetMapping("/getLikeAndDislikeStatuses")
     public ResponseEntity<Map<String,Object>> getLikeAndDislikeStatus(Principal principal){
         try {
