@@ -162,6 +162,10 @@
                         <span class="english-text">Online at</span>
                         <span class="hungarian-text">Elérhető</span>
                     </th>
+                    <th class="table-online">
+                        <span class="english-text">Entries</span>
+                        <span class="hungarian-text">Belépések</span>
+                    </th>
                     <th class="table-modifier">
                         <span class="english-text">Modifier</span>
                         <span class="hungarian-text">Módosító</span>
@@ -220,6 +224,12 @@
                             NULL
                         </span>
                         <span class="user-online_at" th:unless="${#strings.isEmpty(user.online_at)}" th:text="${user.online_at}" ></span>
+                    </td>
+                    <td>
+                        <span th:if="${#strings.isEmpty(user.signed_in)}" style="font-style: italic; color: grey;">
+                            NULL
+                        </span>
+                        <span class="user-online_at" th:unless="${#strings.isEmpty(user.signed_in)}" th:text="${user.signed_in}" ></span>
                     </td>
                     <td>
                         <span th:if="${#strings.isEmpty(user.modified_by)}" style="font-style: italic; color: grey;">

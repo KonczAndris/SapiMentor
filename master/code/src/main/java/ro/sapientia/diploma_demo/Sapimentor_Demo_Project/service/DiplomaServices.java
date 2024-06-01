@@ -414,6 +414,15 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
         return diplomaThesesRepository.findDiplomaPDFById(diplomaId);
     }
 
+//    @Cacheable("getDiplomaEnAbstractById")
+//    public List<Object[]> getDiplomaEnAbstractById(Long diplomaId) {
+//        return diplomaThesesRepository.findDiplomaEnAbstractPDFById(diplomaId);
+//    }
+//
+//    @Cacheable("getDiplomaHunAbstractById")
+//    public List<Object[]> getDiplomaHunAbstractById(Long diplomaId) {
+//        return diplomaThesesRepository.findDiplomaHunAbstractPDFById(diplomaId);
+//    }
 
     public Diploma_Theses downloadDiplomaThesePdf(Long diplomaId) {
         return diplomaThesesRepository.findById(diplomaId)

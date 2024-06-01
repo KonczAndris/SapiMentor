@@ -31,6 +31,13 @@ public interface DiplomaThesesRepository extends JpaRepository<Diploma_Theses, L
     @Query("SELECT d.id, d.diploma_theses_file FROM Diploma_Theses d WHERE d.id = :diplomaId")
     List<Object[]> findDiplomaPDFById(Long diplomaId);
 
+//    @Query("SELECT d.id, d.abstract_file_en FROM Diploma_Theses d WHERE d.id = :diplomaId")
+//    List<Object[]> findDiplomaEnAbstractPDFById(Long diplomaId);
+//
+//    @Query("SELECT d.id, d.abstract_file_hu FROM Diploma_Theses d WHERE d.id = :diplomaId")
+//    List<Object[]> findDiplomaHunAbstractPDFById(Long diplomaId);
+
+
     //////////////////////// ez kell a tobbihez is /////////////////////////////////////////////////////////////////
     @Modifying
     @Query("DELETE FROM Diploma_Theses dt WHERE dt.id = :diplomaId")

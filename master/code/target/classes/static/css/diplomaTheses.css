@@ -585,6 +585,11 @@ tr {
     max-width: 180px;
 }
 
+.table-abstract{
+    min-width: 100px;
+    max-width: 100px;
+}
+
 .table-pic{
     height: 200px;
     display: none;
@@ -616,6 +621,11 @@ tr {
 }
 
 .pdf-container-column{
+    color: rgb(25, 150, 114);
+    min-width: 100px;
+}
+
+.abstract-container-column{
     color: rgb(25, 150, 114);
 }
 
