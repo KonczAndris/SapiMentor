@@ -229,7 +229,7 @@
                         <span th:if="${#strings.isEmpty(user.signed_in)}" style="font-style: italic; color: grey;">
                             NULL
                         </span>
-                        <span class="user-online_at" th:unless="${#strings.isEmpty(user.signed_in)}" th:text="${user.signed_in}" ></span>
+                        <span class="user-signed_in" th:unless="${#strings.isEmpty(user.signed_in)}" th:text="${user.signed_in}" ></span>
                     </td>
                     <td>
                         <span th:if="${#strings.isEmpty(user.modified_by)}" style="font-style: italic; color: grey;">

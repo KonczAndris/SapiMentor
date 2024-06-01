@@ -22,19 +22,19 @@ function connectToWebSocketForUsersPage() {
 function onConnectedForUsersPage() {
     stompClient.subscribe('/user/public/userStatusUpdate', function (message) {
         var userStatusUpdate = JSON.parse(message.body);
-        handleUserStatusUpdateInUsersPage(userStatusUpdate.userId, userStatusUpdate.status, userStatusUpdate.online_at);
+        handleUserStatusUpdateInUsersPage(userStatusUpdate.userId, userStatusUpdate.status, userStatusUpdate.online_at, userStatusUpdate.signed_in);
     });
 }
 
-function handleUserStatusUpdateInUsersPage(userId, status, online_at) {
-    var userElement = document.getElementById('user-row-' + userId);
+function handleUserStatusUpdateInUsersPage(userId, status, online_at, signed_in) {
+    let userElement = document.getElementById('user-row-' + userId);
     if (userElement) {
         // var statusElement = userElement.querySelector('.user-status');
         // if (statusElement) {
         //     statusElement.className = 'user-status ' + (status === 1 ? 'online' : 'offline');
         // }
 
-        var onlineAtElement = userElement.querySelector('.user-online_at');
+        let onlineAtElement = userElement.querySelector('.user-online_at');
         if(onlineAtElement && online_at !== null){
             onlineAtElement.textContent = online_at.year
                 + "-" + online_at.monthValue
@@ -43,6 +43,14 @@ function handleUserStatusUpdateInUsersPage(userId, status, online_at) {
                 + ":" + online_at.minute
                 + ":" + online_at.second;
         }
+
+        let entriesElement = userElement.querySelector('.user-signed_in');
+            if (signed_in === true){
+                console.log("signed_in === true");
+                let currentEntires = parseInt(entriesElement.textContent);
+                let newEntries = currentEntires + 1;
+                entriesElement.textContent = newEntries;
+            }
     }
 }
 
