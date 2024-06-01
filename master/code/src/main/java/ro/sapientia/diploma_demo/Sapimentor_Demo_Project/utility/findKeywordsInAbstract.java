@@ -132,9 +132,6 @@ public class findKeywordsInAbstract {
 
             formattedText.append(strategy.getResultantText());
             return formattedText.toString();
-
-//            // Most már a PdfPage példányon hívjuk meg a getTextFromPage metódust
-//            return PdfTextExtractor.getTextFromPage(page);
         }
     }
 

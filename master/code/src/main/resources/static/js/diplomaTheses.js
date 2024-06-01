@@ -1125,7 +1125,7 @@ function getDiplomaEnAbstractId (diplomaId) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
     showLoadingModal()
-    const url = `/resources/diplomaTheses/getdiplomaenabstractbyid?diplomaId=${diplomaId}`;
+    const url = `/resources/diplomaTheses/geten_abstractbyid?diplomaId=${diplomaId}`;
 
     fetch(url, {
         method: 'GET',
@@ -1195,7 +1195,7 @@ function getDiplomaHunAbstractId (diplomaId) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
     showLoadingModal()
-    const url = `/resources/diplomaTheses/getdiplomahunabstractbyid?diplomaId=${diplomaId}`;
+    const url = `/resources/diplomaTheses/gethu_abstractbyid?diplomaId=${diplomaId}`;
 
     fetch(url, {
         method: 'GET',
