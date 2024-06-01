@@ -484,6 +484,17 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
         return diplomaThesesRepository.findDiplomaPDFById(diplomaId);
     }
 
+<<<<<<< HEAD
+//    @Cacheable("getDiplomaEnAbstractById")
+//    public List<Object[]> getDiplomaEnAbstractById(Long diplomaId) {
+//        return diplomaThesesRepository.findDiplomaEnAbstractPDFById(diplomaId);
+//    }
+//
+//    @Cacheable("getDiplomaHunAbstractById")
+//    public List<Object[]> getDiplomaHunAbstractById(Long diplomaId) {
+//        return diplomaThesesRepository.findDiplomaHunAbstractPDFById(diplomaId);
+//    }
+=======
     @Cacheable("getHU_AbstractById")
     public List<Object[]> getHU_AbstractById(Long diplomaId) {
         return diplomaThesesRepository.findHu_AbstractPDFById(diplomaId);
@@ -494,6 +505,7 @@ public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,
         return diplomaThesesRepository.findEn_AbstractPDFById(diplomaId);
     }
 
+>>>>>>> dd9e4f490795e131009ef4fd4e0231d2421ef7b7
 
     public Diploma_Theses downloadDiplomaThesePdf(Long diplomaId) {
         return diplomaThesesRepository.findById(diplomaId)

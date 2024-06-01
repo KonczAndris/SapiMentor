@@ -261,6 +261,9 @@
           <th class="table-link sortable" data-column="name">
             <span class="english-text">Name</span>
             <span class="hungarian-text">Név</span></th>
+          <th class="table-abstract sortable" data-column="name">
+            <span class="english-text">Abstract</span>
+            <span class="hungarian-text">Kivonat</span></th>
           <th class="table-number sortable" data-column="year">
             <span class="english-text">Year</span>
             <span class="hungarian-text">Év</span>
@@ -286,6 +289,7 @@
         <tbody id="link-table-body">
           <tr th:each="diploma, stat : ${diplomaThesesData}" th:id="'diploma-row-' + ${diploma.id}">
             <td th:text="${stat.index + 1}"></td>
+
             <td class="pdf-container-column">
               <div class="pdf-image-image-container">
                 <span th:text="${diploma.name}" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'"></span>
@@ -301,6 +305,31 @@
                 </div>
               </div>
             </td>
+
+            <td class="abstract-container-column english-text">
+              <div class="pdf-image-image-container">
+                <span th:text="${'Abstract'}" th:onclick="'getDiplomaEnAbstractId(' + ${diploma.id} + ')'"></span>
+                <span class="zoom-icon" th:onclick="'getDiplomaEnAbstractId(' + ${diploma.id} + ')'">📄</span>
+                <div class="pdf-image-modal" th:id="'myEnAbstractModal-' + ${diploma.id}">
+                  <span class="close-pdf-modal-btn" th:id="'closeEnModalBtn-' + ${diploma.id}">&times;</span>
+                  <iframe th:id="'modalEnPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content" ></iframe>
+                  <a th:id="'modalEnPDFMobile-' + ${diploma.id}" th:alt="${diploma.name}" ></a>
+                </div>
+              </div>
+            </td>
+
+            <td class="abstract-container-column hungarian-text">
+              <div class="pdf-image-image-container">
+                <span th:text="${'Kivonat'}" th:onclick="'getDiplomaHunAbstractId(' + ${diploma.id} + ')'"></span>
+                <span class="zoom-icon" th:onclick="'getDiplomaHunAbstractId(' + ${diploma.id} + ')'">📄</span>
+                <div class="pdf-image-modal" th:id="'myHunAbstractModal-' + ${diploma.id}">
+                  <span class="close-pdf-modal-btn" th:id="'closeHunModalBtn-' + ${diploma.id}">&times;</span>
+                  <iframe th:id="'modalHunPDF-' + ${diploma.id}" th:alt="${diploma.name}" class="pdf-image-modal-content" ></iframe>
+                  <a th:id="'modalHunPDFMobile-' + ${diploma.id}" th:alt="${diploma.name}" ></a>
+                </div>
+              </div>
+            </td>
+
             <td th:text="${diploma.year}"></td>
             <td th:text="${diploma.topic_name}"></td>
             <td th:text="${diploma.user_name}"></td>

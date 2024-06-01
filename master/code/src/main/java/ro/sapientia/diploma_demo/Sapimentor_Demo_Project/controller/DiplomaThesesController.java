@@ -186,6 +186,31 @@ public class DiplomaThesesController {
         }
     }
 
+<<<<<<< HEAD
+//    // TODO: megcsinalni a getAbstract_en-et az angol nyelvu kivonatokhoz
+//    @GetMapping("/getdiplomaenabstractbyid")
+//    public ResponseEntity<List<Object[]>> getDiplomaEnAbstractById(@RequestParam Long diplomaId) {
+//        try {
+//            List<Object[]> diplomas = diplomaServices.getDiplomaEnAbstractById(diplomaId);
+//            return ResponseEntity.ok(diplomas);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
+//
+//    // TODO: megcsinalni a getAbstract_hu-et a magyar nyelvu kivonatokhoz
+//    @GetMapping("/getdiplomahunabstractbyid")
+//    public ResponseEntity<List<Object[]>> getDiplomaHunAbstractById(@RequestParam Long diplomaId) {
+//        try {
+//            List<Object[]> diplomas = diplomaServices.getDiplomaHunAbstractById(diplomaId);
+//            return ResponseEntity.ok(diplomas);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
+=======
     @GetMapping("/gethu_abstractbyid")
     public ResponseEntity<List<Object[]>> getHU_AbstractById(@RequestParam Long diplomaId) {
         try {
@@ -207,6 +232,7 @@ public class DiplomaThesesController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+>>>>>>> dd9e4f490795e131009ef4fd4e0231d2421ef7b7
 
     // diplomamunkak letoltesenek megvalositasa
     @GetMapping("/downloadDiplomaThese")
