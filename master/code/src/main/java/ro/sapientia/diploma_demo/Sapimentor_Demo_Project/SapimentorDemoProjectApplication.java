@@ -869,8 +869,8 @@ public class SapimentorDemoProjectApplication {
 //	}
 
 
-	// Informatika_2022 szakos diakok diplomamunkainak feltoltese
-	// a CommandLineRunner interfesz implementalas segitsegevel
+//	// Informatika_2022 szakos diakok diplomamunkainak feltoltese
+//	// a CommandLineRunner interfesz implementalas segitsegevel
 //	@Bean
 //	public CommandLineRunner InformaticPDFUploadRunner(DiplomaServices diplomaServices,
 //													   findKeywordsInAbstract findKeywordsInAbstract,
@@ -893,89 +893,122 @@ public class SapimentorDemoProjectApplication {
 //					String finalyKeywords = null;
 //					StringBuilder allKeywords = new StringBuilder();
 //					String finalKeywordsString = null;
+//					byte[] abstractPdfBytes_en = null;
+//					byte[] abstractPdfBytes_hu = null;
 //
-//
-////					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
-////						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
-////						continue;
-////					}
 //					byte[] pdfBytes = Files.readAllBytes(pdfFile.toPath());
-//					//System.out.println("PDF file name: " + formattedName + " | PDF file size: " + pdfFile.length() + " bytes");
-//					//System.out.println(pdfFile.getName().replace(".pdf", ""));
 //
 //					try {
 //						String searchText = "Abstract";
+//						String searchText_HU = "Kivonat";
 //
 //						System.out.println("Search text: " + searchText);
 //
 //						PdfReader pdfReader = new PdfReader(new ByteArrayInputStream(pdfBytes));
-//						//System.out.println("Number of pages: " + pdfReader.getNumberOfPages());
-//
 //						int abstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReader, searchText);
-//						System.out.println("Abstract page number: " + abstractPageNumber);
+//						//System.out.println("Abstract page number: " + abstractPageNumber);
 //
 //						if (abstractPageNumber > 0) {
 //							PdfReader pdfReaderForText = new PdfReader(new ByteArrayInputStream(pdfBytes));
 //							String abstractTextForCSV = findKeywordsInAbstract.getAbstractText(pdfReaderForText, abstractPageNumber);
 //
-//							String finalabstractText = findKeywordsInAbstract.removeKeywords(abstractTextForCSV);
+//							ByteArrayOutputStream out_en = new ByteArrayOutputStream();
+//							PdfWriter writer_en = new PdfWriter(out_en);
+//							PdfDocument pdfDoc_en = new PdfDocument(writer_en);
+//							Document document_en = new Document(pdfDoc_en);
 //
-//							String abstractText = "Get 5 or 3 keywords from this text: " + finalabstractText;
-//							abstractText = abstractText.replaceAll("[\\r\\n]+", " ")
-//									.replaceAll("\"", "'")
-//									.replaceAll("-", " ");
+//							document_en.add(new Paragraph(abstractTextForCSV));
 //
-//							System.out.println("Abstract text for ChatGPT: " + abstractText);
+//							document_en.close();
 //
+//							// Byte tömb a PDF adatokkal
+//							abstractPdfBytes_en = out_en.toByteArray();
 //
-//							//////// Itt van a GPT3-as verzio ////////////
-//
-//							String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
-//
-//							//System.out.println("GPT-3 response: " + gpt3Response);
-//							if(gpt3Response.contains("Error GPT-3 API")){
-//								System.out.println("Error GPT-3 API");
-//								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
-//								// continue;
-//							} else {
-//								// ide teszem be a gpt3 tol kapott valaszt
-//								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
-//
-//								// itt kiszedem a hasznos reszt a valaszbol
-//								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
-//										.getJSONObject(0)
-//										.getJSONObject("message")
-//										.getString("content");
-//
-//								/////// Idaig van a GPT3-as verzio //////////
-//
-//								System.out.println("Keywords: " + gpt3Keywords);
-//
-//								String patternString = "^\\d+\\. (.+)";
-//								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
-//
-//								if (!gpt3Keywords.isEmpty()) {
-//									Matcher matcher = pattern.matcher(gpt3Keywords);
-//									while (matcher.find()){
-//										allKeywords.append(matcher.group(1)).append(", ");
-//									}
-//									if(allKeywords.length() > 0){
-//										System.out.println("GPT-3 keywords: " + allKeywords.toString());
-//										finalyKeywords = allKeywords.toString();
-//									} else {
-//										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
-//										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
-//										finalyKeywords = finalKeywordsString;
-//									}
-//
-//								} else {
-//									allKeywords.append("No keywords found");
-//									finalyKeywords = "No keywords found";
-//								}
-//							}
+////							String finalabstractText = findKeywordsInAbstract.removeKeywords(abstractTextForCSV);
+////
+////							String abstractText = "Get 5 or 3 keywords from this text: " + finalabstractText;
+////							abstractText = abstractText.replaceAll("[\\r\\n]+", " ")
+////									.replaceAll("\"", "'")
+////									.replaceAll("-", " ");
+////
+////							System.out.println("Abstract text for ChatGPT: " + abstractText);
+////
+////
+////							//////// Itt van a GPT3-as verzio ////////////
+////
+////							String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
+////
+////							//System.out.println("GPT-3 response: " + gpt3Response);
+////							if(gpt3Response.contains("Error GPT-3 API")){
+////								System.out.println("Error GPT-3 API");
+////								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
+////								// continue;
+////							} else {
+////								// ide teszem be a gpt3 tol kapott valaszt
+////								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
+////
+////								// itt kiszedem a hasznos reszt a valaszbol
+////								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
+////										.getJSONObject(0)
+////										.getJSONObject("message")
+////										.getString("content");
+////
+////								/////// Idaig van a GPT3-as verzio //////////
+////
+////								System.out.println("Keywords: " + gpt3Keywords);
+////
+////								String patternString = "^\\d+\\. (.+)";
+////								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
+////
+////								if (!gpt3Keywords.isEmpty()) {
+////									Matcher matcher = pattern.matcher(gpt3Keywords);
+////									while (matcher.find()){
+////										allKeywords.append(matcher.group(1)).append(", ");
+////									}
+////									if(allKeywords.length() > 0){
+////										System.out.println("GPT-3 keywords: " + allKeywords.toString());
+////										finalyKeywords = allKeywords.toString();
+////									} else {
+////										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
+////										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
+////										finalyKeywords = finalKeywordsString;
+////									}
+////
+////								} else {
+////									allKeywords.append("No keywords found");
+////									finalyKeywords = "No keywords found";
+////								}
+////							}
 //
 //						} else {
 //							System.out.println("Abstract not found in the PDF.");
+//						}
+//
+//						/////////////////////// Magyar kivonat kinyerese /////////////////////////////////////////////////////////////////
+//						PdfReader pdfReaderForHuAbstract = new PdfReader(new ByteArrayInputStream(pdfBytes));
+//						int huAbstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReaderForHuAbstract, searchText_HU);
+//						//System.out.println("Abstract page number: " + huAbstractPageNumber);
+//
+//						if (huAbstractPageNumber > 0) {
+//							PdfReader pdfReaderForTextHU = new PdfReader(new ByteArrayInputStream(pdfBytes));
+//							String huAbstractTextForCSV = findKeywordsInAbstract.getAbstract_HU_Text(pdfReaderForTextHU, huAbstractPageNumber);
+//							System.out.println("Magyar kivonat: " + huAbstractTextForCSV + "\n");
+//
+//							ByteArrayOutputStream out_hu = new ByteArrayOutputStream();
+//							PdfWriter writer_hu = new PdfWriter(out_hu);
+//							PdfDocument pdfDoc_hu = new PdfDocument(writer_hu);
+//							Document document_hu = new Document(pdfDoc_hu);
+//
+//							document_hu.add(new Paragraph(huAbstractTextForCSV));
+//
+//							document_hu.close();
+//
+//							// Byte tömb a PDF adatokkal
+//							abstractPdfBytes_hu = out_hu.toByteArray();
+//
+//
+//						} else {
+//							System.out.println("Kivonat not found in the PDF.");
 //						}
 //
 //						pdfReader.close();
@@ -983,9 +1016,9 @@ public class SapimentorDemoProjectApplication {
 //						e.printStackTrace();
 //					}
 //
-//					Thread.sleep(23000);
+//					Thread.sleep(2000);
 //					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
-//					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords);
+//					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords, abstractPdfBytes_en, abstractPdfBytes_hu);
 //				}
 //			}
 //
@@ -1220,88 +1253,122 @@ public class SapimentorDemoProjectApplication {
 //					String finalyKeywords = null;
 //					StringBuilder allKeywords = new StringBuilder();
 //					String finalKeywordsString = null;
+//					byte[] abstractPdfBytes_en = null;
+//					byte[] abstractPdfBytes_hu = null;
 //
 //
-////					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
-////						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
-////						continue;
-////					}
 //					byte[] pdfBytes = Files.readAllBytes(pdfFile.toPath());
-//					//System.out.println("PDF file name: " + formattedName + " | PDF file size: " + pdfFile.length() + " bytes");
-//					//System.out.println(pdfFile.getName().replace(".pdf", ""));
 //
 //					try {
 //						String searchText = "Abstract";
+//						String searchText_HU = "Kivonat";
 //
 //						System.out.println("Search text: " + searchText);
 //
 //						PdfReader pdfReader = new PdfReader(new ByteArrayInputStream(pdfBytes));
-//						//System.out.println("Number of pages: " + pdfReader.getNumberOfPages());
-//
 //						int abstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReader, searchText);
-//						System.out.println("Abstract page number: " + abstractPageNumber);
+//						// System.out.println("Abstract page number: " + abstractPageNumber);
 //
 //						if (abstractPageNumber > 0) {
 //							PdfReader pdfReaderForText = new PdfReader(new ByteArrayInputStream(pdfBytes));
 //							String abstractTextForCSV = findKeywordsInAbstract.getAbstractText(pdfReaderForText, abstractPageNumber);
 //
-//							String finalabstractText = findKeywordsInAbstract.removeKeywords(abstractTextForCSV);
+//							ByteArrayOutputStream out_en = new ByteArrayOutputStream();
+//							PdfWriter writer_en = new PdfWriter(out_en);
+//							PdfDocument pdfDoc_en = new PdfDocument(writer_en);
+//							Document document_en = new Document(pdfDoc_en);
 //
-//							String abstractText = "Get 5 or 3 keywords from this text: " + finalabstractText;
-//							abstractText = abstractText.replaceAll("[\\r\\n]+", " ")
-//									.replaceAll("\"", "'")
-//									.replaceAll("-", " ");
+//							document_en.add(new Paragraph(abstractTextForCSV));
 //
-//							System.out.println("Abstract text for ChatGPT: " + abstractText);
+//							document_en.close();
 //
-//							//////// Itt van a GPT3-as verzio ////////////
+//							// Byte tömb a PDF adatokkal
+//							abstractPdfBytes_en = out_en.toByteArray();
 //
-//							String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
-//
-//							//System.out.println("GPT-3 response: " + gpt3Response);
-//							if(gpt3Response.contains("Error GPT-3 API")){
-//								System.out.println("Error GPT-3 API");
-//								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
-//								// continue;
-//							} else {
-//								// ide teszem be a gpt3 tol kapott valaszt
-//								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
-//
-//								// itt kiszedem a hasznos reszt a valaszbol
-//								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
-//										.getJSONObject(0)
-//										.getJSONObject("message")
-//										.getString("content");
-//
-//								/////// Idaig van a GPT3-as verzio //////////
-//
-//								System.out.println("Keywords: " + gpt3Keywords);
-//
-//								String patternString = "^\\d+\\. (.+)";
-//								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
-//
-//								if (!gpt3Keywords.isEmpty()) {
-//									Matcher matcher = pattern.matcher(gpt3Keywords);
-//									while (matcher.find()){
-//										allKeywords.append(matcher.group(1)).append(", ");
-//									}
-//									if(allKeywords.length() > 0){
-//										System.out.println("GPT-3 keywords: " + allKeywords.toString());
-//										finalyKeywords = allKeywords.toString();
-//									} else {
-//										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
-//										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
-//										finalyKeywords = finalKeywordsString;
-//									}
-//
-//								} else {
-//									allKeywords.append("No keywords found");
-//									finalyKeywords = "No keywords found";
-//								}
-//							}
+////							String finalabstractText = findKeywordsInAbstract.removeKeywords(abstractTextForCSV);
+////
+////							String abstractText = "Get 5 or 3 keywords from this text: " + finalabstractText;
+////							abstractText = abstractText.replaceAll("[\\r\\n]+", " ")
+////									.replaceAll("\"", "'")
+////									.replaceAll("-", " ");
+////
+////							System.out.println("Abstract text for ChatGPT: " + abstractText);
+////
+////							//////// Itt van a GPT3-as verzio ////////////
+////
+////							String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
+////
+////							//System.out.println("GPT-3 response: " + gpt3Response);
+////							if(gpt3Response.contains("Error GPT-3 API")){
+////								System.out.println("Error GPT-3 API");
+////								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
+////								// continue;
+////							} else {
+////								// ide teszem be a gpt3 tol kapott valaszt
+////								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
+////
+////								// itt kiszedem a hasznos reszt a valaszbol
+////								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
+////										.getJSONObject(0)
+////										.getJSONObject("message")
+////										.getString("content");
+////
+////								/////// Idaig van a GPT3-as verzio //////////
+////
+////								System.out.println("Keywords: " + gpt3Keywords);
+////
+////								String patternString = "^\\d+\\. (.+)";
+////								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
+////
+////								if (!gpt3Keywords.isEmpty()) {
+////									Matcher matcher = pattern.matcher(gpt3Keywords);
+////									while (matcher.find()){
+////										allKeywords.append(matcher.group(1)).append(", ");
+////									}
+////									if(allKeywords.length() > 0){
+////										System.out.println("GPT-3 keywords: " + allKeywords.toString());
+////										finalyKeywords = allKeywords.toString();
+////									} else {
+////										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
+////										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
+////										finalyKeywords = finalKeywordsString;
+////									}
+////
+////								} else {
+////									allKeywords.append("No keywords found");
+////									finalyKeywords = "No keywords found";
+////								}
+////							}
 //
 //						} else {
 //							System.out.println("Abstract not found in the PDF.");
+//						}
+//
+//						/////////////////////// Magyar kivonat kinyerese /////////////////////////////////////////////////////////////////
+//						PdfReader pdfReaderForHuAbstract = new PdfReader(new ByteArrayInputStream(pdfBytes));
+//						int huAbstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReaderForHuAbstract, searchText_HU);
+//						//System.out.println("Abstract page number: " + huAbstractPageNumber);
+//
+//						if (huAbstractPageNumber > 0) {
+//							PdfReader pdfReaderForTextHU = new PdfReader(new ByteArrayInputStream(pdfBytes));
+//							String huAbstractTextForCSV = findKeywordsInAbstract.getAbstract_HU_Text(pdfReaderForTextHU, huAbstractPageNumber);
+//							System.out.println("Magyar kivonat: " + huAbstractTextForCSV + "\n");
+//
+//							ByteArrayOutputStream out_hu = new ByteArrayOutputStream();
+//							PdfWriter writer_hu = new PdfWriter(out_hu);
+//							PdfDocument pdfDoc_hu = new PdfDocument(writer_hu);
+//							Document document_hu = new Document(pdfDoc_hu);
+//
+//							document_hu.add(new Paragraph(huAbstractTextForCSV));
+//
+//							document_hu.close();
+//
+//							// Byte tömb a PDF adatokkal
+//							abstractPdfBytes_hu = out_hu.toByteArray();
+//
+//
+//						} else {
+//							System.out.println("Kivonat not found in the PDF.");
 //						}
 //
 //						pdfReader.close();
@@ -1309,9 +1376,9 @@ public class SapimentorDemoProjectApplication {
 //						e.printStackTrace();
 //					}
 //
-//					Thread.sleep(23000);
+//					Thread.sleep(2000);
 //					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
-//					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords);
+//					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords, abstractPdfBytes_en, abstractPdfBytes_hu);
 //				}
 //			}
 //
@@ -1522,7 +1589,8 @@ public class SapimentorDemoProjectApplication {
 //					String finalyKeywords = null;
 //					StringBuilder allKeywords = new StringBuilder();
 //					String finalKeywordsString = null;
-//
+//					byte[] abstractPdfBytes_en = null;
+//					byte[] abstractPdfBytes_hu = null;
 //
 ////					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
 ////						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
@@ -1534,7 +1602,7 @@ public class SapimentorDemoProjectApplication {
 //
 //					try {
 //						String searchText = "Abstract";
-//
+//						String searchText_HU = "Kivonat";
 //						System.out.println("Search text: " + searchText);
 //
 //						PdfReader pdfReader = new PdfReader(new ByteArrayInputStream(pdfBytes));
@@ -1547,63 +1615,102 @@ public class SapimentorDemoProjectApplication {
 //							PdfReader pdfReaderForText = new PdfReader(new ByteArrayInputStream(pdfBytes));
 //							String abstractTextForCSV = findKeywordsInAbstract.getAbstractText(pdfReaderForText, abstractPageNumber);
 //
-//							String finalabstractText = findKeywordsInAbstract.removeKeywords(abstractTextForCSV);
+//							ByteArrayOutputStream out_en = new ByteArrayOutputStream();
+//							PdfWriter writer_en = new PdfWriter(out_en);
+//							PdfDocument pdfDoc_en = new PdfDocument(writer_en);
+//							Document document_en = new Document(pdfDoc_en);
 //
-//							String abstractText = "Get 5 or 3 keywords from this text: " + finalabstractText;
-//							abstractText = abstractText.replaceAll("[\\r\\n]+", " ")
-//									.replaceAll("\"", "'")
-//									.replaceAll("-", " ");
+//							document_en.add(new Paragraph(abstractTextForCSV));
 //
-//							System.out.println("Abstract text for ChatGPT: " + abstractText);
+//							document_en.close();
 //
-//							//////// Itt van a GPT3-as verzio ////////////
+//							// Byte tömb a PDF adatokkal
+//							abstractPdfBytes_en = out_en.toByteArray();
 //
-//							String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
-//
-//							//System.out.println("GPT-3 response: " + gpt3Response);
-//							if(gpt3Response.contains("Error GPT-3 API")){
-//								System.out.println("Error GPT-3 API");
-//								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
-//								// continue;
-//							} else {
-//								// ide teszem be a gpt3 tol kapott valaszt
-//								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
-//
-//								// itt kiszedem a hasznos reszt a valaszbol
-//								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
-//										.getJSONObject(0)
-//										.getJSONObject("message")
-//										.getString("content");
-//
-//								/////// Idaig van a GPT3-as verzio //////////
-//
-//								System.out.println("Keywords: " + gpt3Keywords);
-//
-//								String patternString = "^\\d+\\. (.+)";
-//								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
-//
-//								if (!gpt3Keywords.isEmpty()) {
-//									Matcher matcher = pattern.matcher(gpt3Keywords);
-//									while (matcher.find()){
-//										allKeywords.append(matcher.group(1)).append(", ");
-//									}
-//									if(allKeywords.length() > 0){
-//										System.out.println("GPT-3 keywords: " + allKeywords.toString());
-//										finalyKeywords = allKeywords.toString();
-//									} else {
-//										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
-//										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
-//										finalyKeywords = finalKeywordsString;
-//									}
-//
-//								} else {
-//									allKeywords.append("No keywords found");
-//									finalyKeywords = "No keywords found";
-//								}
-//							}
+////							String finalabstractText = findKeywordsInAbstract.removeKeywords(abstractTextForCSV);
+////
+////							String abstractText = "Get 5 or 3 keywords from this text: " + finalabstractText;
+////							abstractText = abstractText.replaceAll("[\\r\\n]+", " ")
+////									.replaceAll("\"", "'")
+////									.replaceAll("-", " ");
+////
+////							System.out.println("Abstract text for ChatGPT: " + abstractText);
+////
+////							//////// Itt van a GPT3-as verzio ////////////
+////
+////							String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
+////
+////							//System.out.println("GPT-3 response: " + gpt3Response);
+////							if(gpt3Response.contains("Error GPT-3 API")){
+////								System.out.println("Error GPT-3 API");
+////								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
+////								// continue;
+////							} else {
+////								// ide teszem be a gpt3 tol kapott valaszt
+////								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
+////
+////								// itt kiszedem a hasznos reszt a valaszbol
+////								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
+////										.getJSONObject(0)
+////										.getJSONObject("message")
+////										.getString("content");
+////
+////								/////// Idaig van a GPT3-as verzio //////////
+////
+////								System.out.println("Keywords: " + gpt3Keywords);
+////
+////								String patternString = "^\\d+\\. (.+)";
+////								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
+////
+////								if (!gpt3Keywords.isEmpty()) {
+////									Matcher matcher = pattern.matcher(gpt3Keywords);
+////									while (matcher.find()){
+////										allKeywords.append(matcher.group(1)).append(", ");
+////									}
+////									if(allKeywords.length() > 0){
+////										System.out.println("GPT-3 keywords: " + allKeywords.toString());
+////										finalyKeywords = allKeywords.toString();
+////									} else {
+////										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
+////										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
+////										finalyKeywords = finalKeywordsString;
+////									}
+////
+////								} else {
+////									allKeywords.append("No keywords found");
+////									finalyKeywords = "No keywords found";
+////								}
+////							}
 //
 //						} else {
 //							System.out.println("Abstract not found in the PDF.");
+//						}
+//
+//						/////////////////////// Magyar kivonat kinyerese /////////////////////////////////////////////////////////////////
+//						PdfReader pdfReaderForHuAbstract = new PdfReader(new ByteArrayInputStream(pdfBytes));
+//						int huAbstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReaderForHuAbstract, searchText_HU);
+//						//System.out.println("Abstract page number: " + huAbstractPageNumber);
+//
+//						if (huAbstractPageNumber > 0) {
+//							PdfReader pdfReaderForTextHU = new PdfReader(new ByteArrayInputStream(pdfBytes));
+//							String huAbstractTextForCSV = findKeywordsInAbstract.getAbstract_HU_Text(pdfReaderForTextHU, huAbstractPageNumber);
+//							System.out.println("Magyar kivonat: " + huAbstractTextForCSV + "\n");
+//
+//							ByteArrayOutputStream out_hu = new ByteArrayOutputStream();
+//							PdfWriter writer_hu = new PdfWriter(out_hu);
+//							PdfDocument pdfDoc_hu = new PdfDocument(writer_hu);
+//							Document document_hu = new Document(pdfDoc_hu);
+//
+//							document_hu.add(new Paragraph(huAbstractTextForCSV));
+//
+//							document_hu.close();
+//
+//							// Byte tömb a PDF adatokkal
+//							abstractPdfBytes_hu = out_hu.toByteArray();
+//
+//
+//						} else {
+//							System.out.println("Kivonat not found in the PDF.");
 //						}
 //
 //						pdfReader.close();
@@ -1611,9 +1718,9 @@ public class SapimentorDemoProjectApplication {
 //						e.printStackTrace();
 //					}
 //
-//					Thread.sleep(23000);
+//					Thread.sleep(2000);
 //					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
-//					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords);
+//					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords, abstractPdfBytes_en, abstractPdfBytes_hu);
 //				}
 //			}
 //
@@ -1863,18 +1970,14 @@ public class SapimentorDemoProjectApplication {
 //					String finalyKeywords = null;
 //					StringBuilder allKeywords = new StringBuilder();
 //					String finalKeywordsString = null;
+//					byte[] abstractPdfBytes_en = null;
+//					byte[] abstractPdfBytes_hu = null;
 //
-//
-////					if (pdfFile.length() > MAX_PDF_FILE_SIZE) {
-////						System.out.println("PDF file " + formattedName + " is larger than 10MB. Skipping...");
-////						continue;
-////					}
 //					byte[] pdfBytes = Files.readAllBytes(pdfFile.toPath());
-//					//System.out.println("PDF file name: " + formattedName + " | PDF file size: " + pdfFile.length() + " bytes");
-//					//System.out.println(pdfFile.getName().replace(".pdf", ""));
 //
 //					try {
 //						String searchText = "Abstract";
+//						String searchText_HU = "Kivonat";
 //
 //						System.out.println("Search text: " + searchText);
 //
@@ -1888,61 +1991,100 @@ public class SapimentorDemoProjectApplication {
 //							PdfReader pdfReaderForText = new PdfReader(new ByteArrayInputStream(pdfBytes));
 //							String abstractTextForCSV = findKeywordsInAbstract.getAbstractText(pdfReaderForText, abstractPageNumber);
 //
-//							String finalabstractText = findKeywordsInAbstract.removeKeywords(abstractTextForCSV);
+//							ByteArrayOutputStream out_en = new ByteArrayOutputStream();
+//							PdfWriter writer_en = new PdfWriter(out_en);
+//							PdfDocument pdfDoc_en = new PdfDocument(writer_en);
+//							Document document_en = new Document(pdfDoc_en);
 //
-//							String abstractText = "Get 5 or 3 keywords from this text: " + finalabstractText;
-//							abstractText = abstractText.replaceAll("[\\r\\n]+", " ")
-//									.replaceAll("\"", "'")
-//									.replaceAll("-", " ");
+//							document_en.add(new Paragraph(abstractTextForCSV));
 //
-//							//////// Itt van a GPT3-as verzio ////////////
+//							document_en.close();
 //
-//							String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
+//							// Byte tömb a PDF adatokkal
+//							abstractPdfBytes_en = out_en.toByteArray();
 //
-//							//System.out.println("GPT-3 response: " + gpt3Response);
-//							if(gpt3Response.contains("Error GPT-3 API")){
-//								System.out.println("Error GPT-3 API");
-//								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
-//								// continue;
-//							} else {
-//								// ide teszem be a gpt3 tol kapott valaszt
-//								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
-//
-//								// itt kiszedem a hasznos reszt a valaszbol
-//								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
-//										.getJSONObject(0)
-//										.getJSONObject("message")
-//										.getString("content");
-//
-//								/////// Idaig van a GPT3-as verzio //////////
-//
-//								System.out.println("Keywords: " + gpt3Keywords);
-//
-//								String patternString = "^\\d+\\. (.+)";
-//								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
-//
-//								if (!gpt3Keywords.isEmpty()) {
-//									Matcher matcher = pattern.matcher(gpt3Keywords);
-//									while (matcher.find()){
-//										allKeywords.append(matcher.group(1)).append(", ");
-//									}
-//									if(allKeywords.length() > 0){
-//										System.out.println("GPT-3 keywords: " + allKeywords.toString());
-//										finalyKeywords = allKeywords.toString();
-//									} else {
-//										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
-//										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
-//										finalyKeywords = finalKeywordsString;
-//									}
-//
-//								} else {
-//									allKeywords.append("No keywords found");
-//									finalyKeywords = "No keywords found";
-//								}
-//							}
+////							String finalabstractText = findKeywordsInAbstract.removeKeywords(abstractTextForCSV);
+////
+////							String abstractText = "Get 5 or 3 keywords from this text: " + finalabstractText;
+////							abstractText = abstractText.replaceAll("[\\r\\n]+", " ")
+////									.replaceAll("\"", "'")
+////									.replaceAll("-", " ");
+////
+////							//////// Itt van a GPT3-as verzio ////////////
+////
+////							String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
+////
+////							//System.out.println("GPT-3 response: " + gpt3Response);
+////							if(gpt3Response.contains("Error GPT-3 API")){
+////								System.out.println("Error GPT-3 API");
+////								finalyKeywords = findKeywordsInAbstract.extractKeywords(finalabstractText).toString();
+////								// continue;
+////							} else {
+////								// ide teszem be a gpt3 tol kapott valaszt
+////								JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
+////
+////								// itt kiszedem a hasznos reszt a valaszbol
+////								String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
+////										.getJSONObject(0)
+////										.getJSONObject("message")
+////										.getString("content");
+////
+////								/////// Idaig van a GPT3-as verzio //////////
+////
+////								System.out.println("Keywords: " + gpt3Keywords);
+////
+////								String patternString = "^\\d+\\. (.+)";
+////								Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
+////
+////								if (!gpt3Keywords.isEmpty()) {
+////									Matcher matcher = pattern.matcher(gpt3Keywords);
+////									while (matcher.find()){
+////										allKeywords.append(matcher.group(1)).append(", ");
+////									}
+////									if(allKeywords.length() > 0){
+////										System.out.println("GPT-3 keywords: " + allKeywords.toString());
+////										finalyKeywords = allKeywords.toString();
+////									} else {
+////										finalKeywordsString = gpt3Keywords.replaceAll("Keywords:\\s*", "");
+////										System.out.println("GPT-3 final keywords: " + finalKeywordsString);
+////										finalyKeywords = finalKeywordsString;
+////									}
+////
+////								} else {
+////									allKeywords.append("No keywords found");
+////									finalyKeywords = "No keywords found";
+////								}
+////							}
 //
 //						} else {
 //							System.out.println("Abstract not found in the PDF.");
+//						}
+//
+//						/////////////////////// Magyar kivonat kinyerese /////////////////////////////////////////////////////////////////
+//						PdfReader pdfReaderForHuAbstract = new PdfReader(new ByteArrayInputStream(pdfBytes));
+//						int huAbstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReaderForHuAbstract, searchText_HU);
+//						//System.out.println("Abstract page number: " + huAbstractPageNumber);
+//
+//						if (huAbstractPageNumber > 0) {
+//							PdfReader pdfReaderForTextHU = new PdfReader(new ByteArrayInputStream(pdfBytes));
+//							String huAbstractTextForCSV = findKeywordsInAbstract.getAbstract_HU_Text(pdfReaderForTextHU, huAbstractPageNumber);
+//							System.out.println("Magyar kivonat: " + huAbstractTextForCSV + "\n");
+//
+//							ByteArrayOutputStream out_hu = new ByteArrayOutputStream();
+//							PdfWriter writer_hu = new PdfWriter(out_hu);
+//							PdfDocument pdfDoc_hu = new PdfDocument(writer_hu);
+//							Document document_hu = new Document(pdfDoc_hu);
+//
+//							document_hu.add(new Paragraph(huAbstractTextForCSV));
+//
+//							document_hu.close();
+//
+//							// Byte tömb a PDF adatokkal
+//							abstractPdfBytes_hu = out_hu.toByteArray();
+//
+//
+//						} else {
+//							System.out.println("Kivonat not found in the PDF.");
 //						}
 //
 //						pdfReader.close();
@@ -1950,9 +2092,9 @@ public class SapimentorDemoProjectApplication {
 //						e.printStackTrace();
 //					}
 //
-//					Thread.sleep(23000);
+//					Thread.sleep(2000);
 //					System.out.println("PDF file " + formattedName + " is smaller than 10MB. Uploading...");
-//					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords);
+//					diplomaServices.uploadDiplomaThesesPdfByCLR(pdfBytes, formattedName, topic, user_Name, year, finalyKeywords, abstractPdfBytes_en, abstractPdfBytes_hu);
 //				}
 //			}
 //
