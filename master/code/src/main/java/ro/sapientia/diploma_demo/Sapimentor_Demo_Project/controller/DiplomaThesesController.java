@@ -186,6 +186,7 @@ public class DiplomaThesesController {
         }
     }
 
+<<<<<<< HEAD
 //    // TODO: megcsinalni a getAbstract_en-et az angol nyelvu kivonatokhoz
 //    @GetMapping("/getdiplomaenabstractbyid")
 //    public ResponseEntity<List<Object[]>> getDiplomaEnAbstractById(@RequestParam Long diplomaId) {
@@ -209,6 +210,29 @@ public class DiplomaThesesController {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 //        }
 //    }
+=======
+    @GetMapping("/gethu_abstractbyid")
+    public ResponseEntity<List<Object[]>> getHU_AbstractById(@RequestParam Long diplomaId) {
+        try {
+            List<Object[]> hu_abstract = diplomaServices.getHU_AbstractById(diplomaId);
+            return ResponseEntity.ok(hu_abstract);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/geten_abstractbyid")
+    public ResponseEntity<List<Object[]>> getEN_AbstractById(@RequestParam Long diplomaId) {
+        try {
+            List<Object[]> en_abstract = diplomaServices.getEN_AbstractById(diplomaId);
+            return ResponseEntity.ok(en_abstract);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+>>>>>>> dd9e4f490795e131009ef4fd4e0231d2421ef7b7
 
     // diplomamunkak letoltesenek megvalositasa
     @GetMapping("/downloadDiplomaThese")
