@@ -16,10 +16,8 @@ import java.util.List;
 public class ScheduledTaskService {
     @Autowired
     private RoleRepository roleRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
 
@@ -35,7 +33,6 @@ public class ScheduledTaskService {
     @Scheduled(fixedRate = 1000 * 60 * 60 * 24)
     public void deleteInactiveUsers() {
         List<Object[]> inactiveUsers = userRepository.findInactiveUsers();
-
         for (Object[] user : inactiveUsers) {
             Long userId = (Long) user[0];
             Boolean enabled = (Boolean) user[1];
