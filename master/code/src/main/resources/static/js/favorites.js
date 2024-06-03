@@ -354,12 +354,7 @@ async function onMessageReceived(payload) {
 
 
 function handleUserStatusUpdate(userId, status) {
-    // Kezelje a felhasználó státuszváltozását
-    //console.log('Received user status update:', userId, status);
-    // Implementáld a szükséges logikát a státuszváltozás kezelésére
-    // Ebben a példában csak kiírjuk a konzolra az értesítést, de itt érdemes frissíteni az UI-t stb.
     var userElement = document.getElementById('user-' + userId);
-    //console.log("userElement: ", userElement);
     if (userElement) {
         var statusElement = userElement.querySelector('.user-status');
         if (statusElement) {

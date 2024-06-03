@@ -536,3 +536,113 @@ tr {
 #suggestion-list div:hover {
     opacity: 1;
 }
+
+.user-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+
+}
+
+.online {
+    background-color: #007d00;
+}
+
+.offline {
+    background-color: gray;
+}
+
+.status-pic-box{
+    display: flex;
+    align-items: center;
+}
+
+.delete-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    overflow-x: scroll;
+}
+
+.delete-modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: 20% auto auto;
+    padding: 10px;
+    border: 1px solid #888;
+    border-radius: 25px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: rgb(238, 84, 76);
+    font-size: large;
+    font-weight: bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    user-select: none;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+.delete-modal-content  .p2{
+    font-size: 16px;
+    font-weight: 100;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#deactivate-yes{
+    width: 70px;
+    max-width: 55%;
+    cursor: pointer;
+    border: none;
+    height: 30px;
+    text-align: center;
+    justify-content: center;
+}
+
+#deactivate-no{
+    width: 70px;
+    max-width: 55%;
+    cursor: pointer;
+    border: none;
+    height: 30px;
+    text-align: center;
+    justify-content: center;
+}
+
+.delete-modal-btns{
+    display: flex;
+    flex-direction: row;
+}
+
+.delete-modal-btns button{
+    margin: 5px;
+    width: 100px !important;
+}

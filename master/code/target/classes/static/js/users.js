@@ -10,8 +10,9 @@ function setupModifyUsersModal(userId) {
     }
 }
 
-function closeModifyModal(id) {
-    var modal = document.getElementById(id);
+function closeModifyModal(userId) {
+    var modalId = "usersModifyModal-" + userId;
+    var modal = document.getElementById(modalId);
     if (modal) {
         modal.style.display = "none";
     } else {
@@ -231,3 +232,86 @@ document.addEventListener('click', function(event) {
         suggestionList.style.display = 'none';
     }
 });
+
+function handleUserStatusUpdate(userId, status) {
+    var userElement = document.getElementById('user-' + userId);
+    if (userElement) {
+        var statusElement = userElement.querySelector('.user-status');
+        if (statusElement) {
+            statusElement.className = 'user-status ' + (status === 1 ? 'online' : 'offline');
+        }
+    }
+}
+
+function onConnected() {
+    stompClient.subscribe(`/user/${IdForUser}/queue/messages`, onMessageReceived)
+    stompClient.subscribe('/user/public/userStatusUpdate', function (message) {
+        var userStatusUpdate = JSON.parse(message.body);
+        handleUserStatusUpdate(userStatusUpdate.userId, userStatusUpdate.status);
+    });
+}
+
+function connectToWebSocket() {
+    var element = document.querySelector('[id^="large-message-box-for-"]');
+    IdForUser = element.id.substring('large-message-box-for-'.length);
+
+    if(window.location.href.includes("http://")){
+        var socket = new SockJS('/ws');
+        console.log("sima ws-t hasznal");
+    }else {
+        var socket = new SockJS('https://' + window.location.host + '/ws');
+        console.log("wss-t hasznal");
+    }
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, onConnected, onError);
+}
+
+function deleteUserData(userId) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    showLoadingModal()
+    fetch(`/users/deleteUser?user_id=${userId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            return response.text();
+        }
+    }).then(data => {
+        if (data === "DELETED") {
+            location.reload();
+        }
+    }).catch(error => {
+        console.error('An error occurred:', error);
+        hideLoadingModal()
+    });
+
+}
+
+function setupDeleteUsersModal(userId) {
+    var modalId = "deleteUserModal-" + userId;
+    var modal = document.getElementById(modalId);
+
+    if (modal) {
+        modal.style.display = "flex";
+    }
+}
+
+function closeUsersModal(userId) {
+    var modalId = "deleteUserModal-" + userId;
+    var modal = document.getElementById(modalId);
+
+    if (modal) {
+        modal.style.display = "none";
+    } else {
+        console.error("Modal with id '" + id + "' not found.");
+    }
+}
+
+connectToWebSocket();

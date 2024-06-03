@@ -189,6 +189,8 @@
                     <td th:text="${iterStat.index + 1}"></td>
                     <td th:text="${user.user_id}" style="display: none;"></td>
                     <td>
+                        <div class="status-pic-box">
+                        <div class="user-status" th:classappend="${user.status == 0 ? 'offline' : 'online'}"></div>
                         <img th:if="${user.profileImage != null && user.profileImage != ''}"
                              th:src="@{|data:image/jpeg;base64,${user.profileImage}|}"
                              alt="Profile Image" class="menu-icon rounded-icon table-user-icon"
@@ -196,6 +198,7 @@
                              th:attr="data-cache='no-cache'">
                         <img th:unless="${user.profileImage != null && user.profileImage != ''}"
                              th:src="@{/img/anonym.jpg}" alt="Profile Image" class="menu-icon rounded-icon table-user-icon">
+                        </div>
                     </td>
                     <td>
                         <span th:if="${#strings.isEmpty(user.first_Name) || #strings.isEmpty(user.last_Name)}"
@@ -334,12 +337,35 @@
                                         <span class="english-text">Modify</span>
                                         <span class="hungarian-text">Módosít</span>
                                     </button>
-                                    <button class="cancel-button-modal-modify close-examExamples-modify red-button" id="modify-modal-delete"
-                                            th:onclick="'deleteExamExamplesData(\'' + ${user.user_id} + '\')'">
+
+                                    <button class="cancel-button-modal-modify close-examExamples-modify red-button" th:id="'delete-button-modal-' + ${user.user_id}"
+                                            th:onclick="'setupDeleteUsersModal(' + ${user.user_id} + ')'">
                                         <span class="english-text">Delete</span>
-                                        <span class="hungarian-text">Töröl</span>
-                                    </button>
-                                    <button class="cancel-button-modal-modify close-users-modify red-button" th:onclick="'closeModifyModal(\'usersModifyModal-' + ${user.user_id} + '\')'">
+                                        <span class="hungarian-text">Töröl</span> </button>
+
+                                    <div id="deleteUserModal"  th:id="'deleteUserModal-' + ${user.user_id}" class="delete-modal">
+                                            <div class="delete-modal-content">
+                                                <p>
+                                                    <span class="english-text">Are you sure?</span>
+                                                    <span class="hungarian-text">Biztos vagy benne?</span>
+                                                </p>
+                                                <p class="p2">
+                                                    <span class="english-text">After deleting you won't be able to retrieve the user's data!</span>
+                                                    <span class="hungarian-text">A felhasználó törlése után nem lesz lehetőséged visszanyerni az adatait!</span>
+                                                </p>
+                                                <div class="delete-modal-btns">
+                                                <button id="deactivate-yes" class="green-button" th:onclick="'deleteUserData(\'' + ${user.user_id} + '\')'">
+                                                    <span class="english-text">Yes</span>
+                                                    <span class="hungarian-text">Igen</span></button>
+                                                <button id="deactivate-no" class="red-button" th:onclick="'closeDeleteUserModal(\'usersModifyModal-' + ${user.user_id} + '\')'">
+                                                    <span class="english-text">No</span>
+                                                    <span class="hungarian-text">Nem</span>
+                                                </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    <button class="cancel-button-modal-modify close-users-modify red-button" th:onclick="'closeModifyModal(' + ${user.user_id} + ')'">
                                         <span class="english-text">Cancel</span>
                                         <span class="hungarian-text">Mégse</span>
                                     </button>
