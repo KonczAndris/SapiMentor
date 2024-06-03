@@ -216,7 +216,7 @@ public class UserController {
                                               @RequestParam("email") String email,
                                               @RequestParam("enabled") boolean enabled,
                                               @RequestParam("specialization") String specialization,
-                                              @RequestParam("year") Integer year,
+                                              @RequestParam("year") String year,
                                               @RequestParam("phoneNumber") String phoneNumber,
                                               Principal principal) {
         String user_email = principal.getName();

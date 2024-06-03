@@ -258,20 +258,33 @@ public class UserServiceImpl implements UserService{
         return allSelectedUsers;
     }
 
-    public String modifyUser(Long user_id, String first_Name, String last_Name, String email, boolean enabled, String specialization, Integer year, String phoneNumber, String user_name) {
+    public String modifyUser(Long user_id, String first_Name, String last_Name, String email, boolean enabled, String specialization, String year, String phoneNumber, String user_name) {
         try{
             User selectedUser = userRepository.findById(user_id)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found with this Id:" + user_id));
-            if (selectedUser != null) {
-                selectedUser.setFirst_Name(first_Name);
-                selectedUser.setLast_Name(last_Name);
-                selectedUser.setEmail(email);
-                selectedUser.setEnabled(enabled);
-                selectedUser.setSpecialization(specialization);
-                selectedUser.setYear(year);
-                selectedUser.setPhone(phoneNumber);
-                selectedUser.setModified_by(user_name);
-                selectedUser.setModified_at(java.time.LocalDateTime.now());
+            if (selectedUser != null ) {
+                if(year == null || year.equals("")) {
+                    selectedUser.setFirst_Name(first_Name);
+                    selectedUser.setLast_Name(last_Name);
+                    selectedUser.setEmail(email);
+                    selectedUser.setEnabled(enabled);
+                    selectedUser.setSpecialization(specialization);
+                    selectedUser.setPhone(phoneNumber);
+                    selectedUser.setYear(null);
+                    selectedUser.setModified_by(user_name);
+                    selectedUser.setModified_at(java.time.LocalDateTime.now());
+                } else {
+                    selectedUser.setFirst_Name(first_Name);
+                    selectedUser.setLast_Name(last_Name);
+                    selectedUser.setEmail(email);
+                    selectedUser.setEnabled(enabled);
+                    selectedUser.setSpecialization(specialization);
+                    selectedUser.setYear(Integer.parseInt(year));
+                    selectedUser.setPhone(phoneNumber);
+                    selectedUser.setModified_by(user_name);
+                    selectedUser.setModified_at(java.time.LocalDateTime.now());
+                }
+
 
                 userRepository.save(selectedUser);
             } else {
