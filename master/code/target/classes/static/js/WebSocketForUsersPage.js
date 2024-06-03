@@ -29,10 +29,10 @@ function onConnectedForUsersPage() {
 function handleUserStatusUpdateInUsersPage(userId, status, online_at, signed_in) {
     let userElement = document.getElementById('user-row-' + userId);
     if (userElement) {
-        // var statusElement = userElement.querySelector('.user-status');
-        // if (statusElement) {
-        //     statusElement.className = 'user-status ' + (status === 1 ? 'online' : 'offline');
-        // }
+        var statusElement = userElement.querySelector('.user-status');
+        if (statusElement) {
+            statusElement.className = 'user-status ' + (status === 1 ? 'online' : 'offline');
+        }
 
         let onlineAtElement = userElement.querySelector('.user-online_at');
         if(onlineAtElement && online_at !== null){
