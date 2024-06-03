@@ -303,14 +303,14 @@ function setupDeleteUsersModal(userId) {
     }
 }
 
-function closeUsersModal(userId) {
+function closeDeleteUserModal(userId) {
     var modalId = "deleteUserModal-" + userId;
     var modal = document.getElementById(modalId);
 
     if (modal) {
         modal.style.display = "none";
     } else {
-        console.error("Modal with id '" + id + "' not found.");
+        console.error("Modal with id '" + userId + "' not found.");
     }
 }
 
