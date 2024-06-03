@@ -357,7 +357,8 @@
                                                 <button id="deactivate-yes" class="green-button" th:onclick="'deleteUserData(\'' + ${user.user_id} + '\')'">
                                                     <span class="english-text">Yes</span>
                                                     <span class="hungarian-text">Igen</span></button>
-                                                <button id="deactivate-no" class="red-button" th:onclick="'closeDeleteUserModal(\'usersModifyModal-' + ${user.user_id} + '\')'">
+                                                <button id="deactivate-no" class="red-button"
+                                                        th:onclick="'closeDeleteUserModal(' + ${user.user_id} + ')'">
                                                     <span class="english-text">No</span>
                                                     <span class="hungarian-text">Nem</span>
                                                 </button>
