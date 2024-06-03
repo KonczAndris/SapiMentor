@@ -39,26 +39,11 @@ public class RatingService {
             String date = ratingData.getDate();
             Rating existingRating = ratingRepository.findByUserIdAndRatedUserId(ratingUserId, ratedUserId);
             if(existingRating != null) {
-                //existingRating.setScore(score);
-                //return ratingRepository.save(existingRating);
-//                System.out.println("Existing ratingUserId: " + ratingUserId);
-//                System.out.println("Existing ratedUserId: " + ratedUserId);
-//                System.out.println("Existing score: " + score);
-//                System.out.println("Existing comment: " + comment);
-//                System.out.println("Existing date: " + date);
-                // return null;
-
                 existingRating.setScore(score);
                 existingRating.setComment(comment);
                 existingRating.setDate(date);
                 return ratingRepository.save(existingRating);
             } else {
-//                System.out.println("New ratingUserId: " + ratingUserId);
-//                System.out.println("New ratedUserId: " + ratedUserId);
-//                System.out.println("New score: " + score);
-//                System.out.println("New comment: " + comment);
-//                System.out.println("New date: " + date);
-                // return null;
                 Rating newRating = new Rating();
                 newRating.setUserId(ratingUserId);
                 newRating.setRatedUserId(ratedUserId);
@@ -66,11 +51,6 @@ public class RatingService {
                 newRating.setComment(comment);
                 newRating.setDate(date);
                 return ratingRepository.save(newRating);
-//                Rating newRating = new Rating();
-//                newRating.setUserId(ratingUserId);
-//                newRating.setRatedUserId(ratedUserId);
-//                newRating.setScore(score);
-                // return ratingRepository.save(newRating);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -17,8 +17,8 @@ public abstract class CacheConfig implements CachingConfigurer {
     @Bean
     public Caffeine caffeineConfig() {
         return Caffeine.newBuilder()
-                .expireAfterWrite(1, TimeUnit.HOURS) // A gyorsítótárban tárolt elemek élettartama
-                .maximumSize(100); // A maximális méret, ezen túl az elemek automatikusan eltávolításra kerülnek
+                .expireAfterWrite(1, TimeUnit.HOURS)
+                .maximumSize(100);
     }
 
     @Bean
