@@ -1,0 +1,69 @@
+/*CSS TO TOPICS PAGE*/
+
+.loading-gif {
+    margin: 20px;
+    border-radius: 100px;
+}
+
+.large-topic-div{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.mid-topic-div{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.small-topic-div{
+    display: flex;
+    flex-direction:column;
+    width: 33%;
+    height: 33%;
+    align-items: center;
+    margin: 3%;
+    font-size: x-large;
+    font-weight: bold;
+    border: 4px solid rgb(22, 175, 132);
+    border-radius: 25px;
+    padding: 2%;
+    opacity: 0.6;
+}
+
+.small-topic-div:hover{
+    opacity: 1;
+    transform: scale(1.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.small-topic-div img{
+    width: 100px !important;
+    margin-bottom: 15%;
+}
+
+@media (max-width: 600px) {
+    .mid-topic-div{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .small-topic-div{
+        display: flex;
+        flex-direction:column;
+        width: 60%;
+        height: fit-content;
+        align-items: center;
+    }
+    .small-topic-div img{
+        width: 100px !important;
+        margin-bottom: 3%;
+    }
+}
