@@ -155,14 +155,15 @@ button{
 }
 
 .left{
-    width: 20%;
+    /*width: 20%;*/
+    width: 18%;
     overflow-y: auto;
     overflow-x: hidden;
     justify-content: flex-start;
     align-items: start;
     flex-direction: column;
-    margin-top: 2%;
-    display: flex;
+    /*margin-top: 2%;*/
+    /*display: flex;*/
 }
 
 .right{
