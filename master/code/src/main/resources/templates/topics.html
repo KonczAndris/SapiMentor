@@ -109,26 +109,143 @@
 
     <div class="right show" id="right-content">
 
-<!--LANGUAGE BOXES-->
-        <div class="large-topic-div">
+<!--TOPIC BOXES-->
+        <div class="large-topic-div active" id="large-topic-div">
             <div class="mid-topic-div">
-                <div class="small-topic-div">
+                <div class="small-topic-div" id="info-navigation-card">
                     <img th:src="@{/img/itlogo.png}" alt="Icon" class="menu-icon">
                     <span class="english-text">Informatics</span>
                     <span class="hungarian-text">Informatika</span></a>
                 </div>
-                <div class="small-topic-div">
-                    <img th:src="@{/img/engineeringlogo.png}" alt="Icon" class="menu-icon">
+                <div class="small-topic-div" id="engineering-navigation-card">
+                    <img th:src="@{/img/engineeringlogo.png}" alt="Icon" class="menu-icon" >
                     <span class="english-text">Engineering</span>
                     <span class="hungarian-text">Mérnöki</span></a>
                 </div>
-                <div class="small-topic-div">
-                    <img th:src="@{/img/languagesicon.png}" alt="Icon" class="menu-icon">
+                <div class="small-topic-div" id="languages-navigation-card">
+                    <img th:src="@{/img/languagesicon.png}" alt="Icon" class="menu-icon" >
                     <span class="english-text">Languages</span>
                     <span class="hungarian-text">Nyelvek</span></a>
                 </div>
             </div>
         </div>
+<!--TOPIC BOXES-->
+<!--INFORMATICS BOXES-->
+        <div class="large-info-div" id="large-info-div">
+                <button class="green-button" id="back-from-info">
+                    <img th:src="@{/img/back-to-topics.png}" alt="Icon">
+                    <span class="english-text">Back to Topics</span>
+                    <span class="hungarian-text">Vissza a témákhoz</span></a>
+                </button>
+
+            <div class="mid-info-div">
+                <div class="small-info-div">
+                    <img th:src="@{/img/info-topic.png}" alt="Icon">
+                    <div class="divider"></div>
+                    <div class="topic-text-box">
+                    <span class="english-text">Informatics</span>
+                    <span class="hungarian-text">Informatika</span></div>
+                </div>
+            </div>
+        </div>
+<!--INFORMATICS BOXES-->
+<!--ENGINEERING BOXES-->
+        <div class="large-engineering-div" id="large-engineering-div">
+            <button class="green-button" id="back-from-engineering">
+                <img th:src="@{/img/back-to-topics.png}" alt="Icon">
+                <span class="english-text">Back to Topics</span>
+                <span class="hungarian-text">Vissza a témákhoz</span></a>
+            </button>
+
+            <div class="mid-engineering-div">
+                <div class="small-engineering-div">
+                    <img th:src="@{/img/computer-topic.png}" alt="Icon">
+                    <div class="divider"></div>
+                    <div class="topic-text-box">
+                        <span class="english-text">Computer Science</span>
+                        <span class="hungarian-text">Számítástechnika</span>
+                    </div>
+                </div>
+
+                <div class="small-engineering-div">
+                    <img th:src="@{/img/automation-topic.png}" alt="Icon">
+                    <div class="divider"></div>
+                    <div class="topic-text-box">
+                    <span class="english-text">Automation</span>
+                    <span class="hungarian-text">Automatizálás</span>
+                    </div>
+                </div>
+
+                <div class="small-engineering-div">
+                    <img th:src="@{/img/machine-topic.png}" alt="Icon">
+                    <div class="divider"></div>
+                    <div class="topic-text-box">
+                    <span class="english-text">Machine Manufacturing</span>
+                    <span class="hungarian-text">Gépészmérnök</span></div>
+                </div>
+
+                <div class="small-engineering-div">
+                    <img th:src="@{/img/mecha-topic.png}" alt="Icon">
+                    <div class="divider"></div>
+                    <div class="topic-text-box">
+                    <span class="english-text">Machatronics</span>
+                    <span class="hungarian-text">Mechatronika</span></div>
+                </div>
+            </div>
+        <div class="mid-engineering-div">
+                <div class="small-engineering-div">
+                    <img th:src="@{/img/telecommunication-topic.png}" alt="Icon">
+                    <div class="divider"></div>
+                    <div class="topic-text-box">
+                    <span class="english-text">Telecommunication</span>
+                    <span class="hungarian-text">Távközlés</span></div>
+                </div>
+
+                <div class="small-engineering-div">
+                    <img th:src="@{/img/landcape-topic.png}" alt="Icon">
+                    <div class="divider"></div>
+                    <div class="topic-text-box">
+                    <span class="english-text">Landscape Architecture</span>
+                    <span class="hungarian-text">Tájépítészet</span></div>
+                </div>
+
+                <div class="small-engineering-div">
+                    <img th:src="@{/img/horticulture-topic.png}" alt="Icon">
+                    <div class="divider"></div>
+                    <div class="topic-text-box">
+                    <span class="english-text">Horticulture</span>
+                    <span class="hungarian-text">Kertészmérnök</span></div>
+                </div>
+            </div>
+        </div>
+<!--ENGINEERING BOXES-->
+<!--LANGUAGES BOXES-->
+        <div class="large-languages-div" id="large-languages-div">
+            <button class="green-button" id="back-from-languages">
+                <img th:src="@{/img/back-to-topics.png}" alt="Icon">
+                <span class="english-text">Back to Topics</span>
+                <span class="hungarian-text">Vissza a témákhoz</span></a>
+            </button>
+
+            <div class="mid-languages-div">
+                <div class="small-languages-div">
+                    <img th:src="@{/img/translation-topic.png}" alt="Icon">
+                    <div class="divider"></div>
+                    <div class="topic-text-box">
+                    <span class="english-text">Translation & Interpretation</span>
+                    <span class="hungarian-text">Fordító és tolmács</span></div>
+                </div>
+
+                <div class="small-languages-div">
+                    <img th:src="@{/img/communication-topic.png}" alt="Icon">
+                    <div class="divider"></div>
+                    <div class="topic-text-box">
+                    <span class="english-text">Communication & Public Relations</span>
+                    <span class="hungarian-text">Kommunikáció és közkapcsolatok</span></div>
+                </div>
+            </div>
+        </div>
+<!--LANGUAGES BOXES-->
 
     </div>
 </div>

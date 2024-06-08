@@ -25,8 +25,7 @@ function onConnectedForTopicsPage() {
 }
 
 function onErrorInTopicsPage(error) {
-    //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    //connectingElement.style.color = 'red';
+
 }
 
 async function onMessageReceivedNotificationInTopicsPage(payload) {
@@ -39,9 +38,6 @@ async function onMessageReceivedNotificationInTopicsPage(payload) {
     });
 }
 
-// ez azert hogy a valosideju ertesiteseket is megkapjuk
-// es ha frissitunk vagy ha csak siman ugy kapunk ertesitest hogy nem vagyunk
-// belepve akkor is megkapjuk az ertesitest
 document.addEventListener('DOMContentLoaded', () => {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -76,3 +72,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+document.getElementById('info-navigation-card').addEventListener('click', function() {
+    document.getElementById('large-topic-div').classList.remove('active');
+    document.getElementById('large-info-div').classList.add('active');
+
+});
+
+document.getElementById('engineering-navigation-card').addEventListener('click', function() {
+    document.getElementById('large-topic-div').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
+});
+
+document.getElementById('languages-navigation-card').addEventListener('click', function() {
+    document.getElementById('large-topic-div').classList.remove('active');
+    document.getElementById('large-languages-div').classList.add('active');
+});
+
+document.getElementById('back-from-info').addEventListener('click', function() {
+    document.getElementById('large-info-div').classList.remove('active');
+    document.getElementById('large-topic-div').classList.add('active');
+});
+
+document.getElementById('back-from-engineering').addEventListener('click', function() {
+    document.getElementById('large-engineering-div').classList.remove('active');
+    document.getElementById('large-topic-div').classList.add('active');
+});
+
+document.getElementById('back-from-languages').addEventListener('click', function() {
+    document.getElementById('large-languages-div').classList.remove('active');
+    document.getElementById('large-topic-div').classList.add('active');
+});
