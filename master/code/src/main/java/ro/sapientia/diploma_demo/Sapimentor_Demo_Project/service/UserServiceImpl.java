@@ -49,7 +49,6 @@ public class UserServiceImpl implements UserService{
     private final ChatMessageReadOrNotRepository chatMessageReadOrNotRepository;
     private final ProfileTopicsRepository profileTopicsRepository;
 
-    //Ezzel tudod beallitani hogy mekkora legyen a maximalis meret amit feltolthet a felhasznalo
     private static final long MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2 MB
     //private static final long MAX_IMAGE_SIZE = 10 * 1024; // 10 KB
     //private static final long MAX_IMAGE_SIZE = 20 * 1024; // 20 KB
@@ -85,8 +84,6 @@ public class UserServiceImpl implements UserService{
         this.chatMessageReadOrNotRepository = chatMessageReadOrNotRepository;
         this.profileTopicsRepository = profileTopicsRepository;
     }
-
-
 
     @Override
     public List<User> getUsers() {
@@ -151,16 +148,10 @@ public class UserServiceImpl implements UserService{
         return year != null && year >= 1;
     }
 
-
-
     public String uploadProfileImage(String email, MultipartFile image) {
         User user = userRepository.findByEmail(email);
         if (user != null && !image.isEmpty() ) {
-
             try {
-                //System.out.println("Image size: " + image.getSize());
-                //System.out.println("MAX_IMAGE_SIZE: " + MAX_IMAGE_SIZE);
-                //A regi verzional ez a sor nem kell !!!!
                 if (image.getSize() > MAX_IMAGE_SIZE) {
                     return "The uploaded image is too large. Please choose a smaller image.";
                 }
@@ -194,25 +185,6 @@ public class UserServiceImpl implements UserService{
                         user.setProfileImage(scaledImageBytes);
                     }
                 }
-                // ez a regiverzio
-//                int minDimension = Math.min(originalImage.getWidth(), originalImage.getHeight());
-//                int x = (originalImage.getWidth() - minDimension) / 2;
-//                int y = (originalImage.getHeight() - minDimension) / 2;
-//
-//                BufferedImage squareImage = originalImage.getSubimage(x, y, minDimension, minDimension);
-//
-//                BufferedImage scaledImage = Thumbnails.of(squareImage)
-//                        .size(400, 400)
-//                        .outputQuality(0.7)
-//                        .asBufferedImage();
-//
-//                //Be allitom a kimeneti fájltípust (pl. jpg)
-//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                ImageIO.write(scaledImage, "jpg", baos);
-//                byte[] scaledImageBytes = baos.toByteArray();
-//
-//
-//                user.setProfileImage(scaledImageBytes);
                 userRepository.save(user);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -223,18 +195,12 @@ public class UserServiceImpl implements UserService{
         return null;
     }
 
-
     public void getUserComments(Model model, Principal principal) {
         String email = principal.getName();
         Long userId = userRepository.findIdByEmail(email);
         List<Rating> allRatingsForThisUser = ratingRepository.findAllByRatedUserId(userId);
         ArrayList<Long> allUserId = new ArrayList<>();
         for (Rating rating : allRatingsForThisUser) {
-//            System.out.println("RatedUserId: " + rating.getRatedUserId() +
-//                    ", Score: " + rating.getScore() +
-//                    ", Comment: " + rating.getComment() +
-//                    ", Date: " + rating.getDate() +
-//                    ", Who rate : " + rating.getUserId());
             allUserId.add(rating.getUserId());
         }
 
@@ -258,20 +224,33 @@ public class UserServiceImpl implements UserService{
         return allSelectedUsers;
     }
 
-    public String modifyUser(Long user_id, String first_Name, String last_Name, String email, boolean enabled, String specialization, Integer year, String phoneNumber, String user_name) {
+    public String modifyUser(Long user_id, String first_Name, String last_Name, String email, boolean enabled, String specialization, String year, String phoneNumber, String user_name) {
         try{
             User selectedUser = userRepository.findById(user_id)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found with this Id:" + user_id));
-            if (selectedUser != null) {
-                selectedUser.setFirst_Name(first_Name);
-                selectedUser.setLast_Name(last_Name);
-                selectedUser.setEmail(email);
-                selectedUser.setEnabled(enabled);
-                selectedUser.setSpecialization(specialization);
-                selectedUser.setYear(year);
-                selectedUser.setPhone(phoneNumber);
-                selectedUser.setModified_by(user_name);
-                selectedUser.setModified_at(java.time.LocalDateTime.now());
+            if (selectedUser != null ) {
+                if(year == null || year.equals("")) {
+                    selectedUser.setFirst_Name(first_Name);
+                    selectedUser.setLast_Name(last_Name);
+                    selectedUser.setEmail(email);
+                    selectedUser.setEnabled(enabled);
+                    selectedUser.setSpecialization(specialization);
+                    selectedUser.setPhone(phoneNumber);
+                    selectedUser.setYear(null);
+                    selectedUser.setModified_by(user_name);
+                    selectedUser.setModified_at(java.time.LocalDateTime.now());
+                } else {
+                    selectedUser.setFirst_Name(first_Name);
+                    selectedUser.setLast_Name(last_Name);
+                    selectedUser.setEmail(email);
+                    selectedUser.setEnabled(enabled);
+                    selectedUser.setSpecialization(specialization);
+                    selectedUser.setYear(Integer.parseInt(year));
+                    selectedUser.setPhone(phoneNumber);
+                    selectedUser.setModified_by(user_name);
+                    selectedUser.setModified_at(java.time.LocalDateTime.now());
+                }
+
 
                 userRepository.save(selectedUser);
             } else {
@@ -293,9 +272,7 @@ public class UserServiceImpl implements UserService{
             userExamLikeDislikeRepository.deleteByUserId(user_id);
             userDiplomaLikeDislikeRepository.deleteByUserId(user_id);
             userRepository.deleteUserRoleRecordsByUserId(user_id);
-
             roleRepository.getAllRole_idByUserId(user_id).forEach(role -> {
-                //System.out.println("Rolek: " + role[0]);
                 roleRepository.updateRolesStatusByIdCustom((Integer) role[0]);
             });
             passwordResetTokenRepository.deleteByUserId(user_id);
@@ -306,14 +283,10 @@ public class UserServiceImpl implements UserService{
             chatMessageReadOrNotRepository.deleteBySenderIdOrRecipientId(user_id);
             ratingRepository.deleteAllByUserId(user_id);
             profileTopicsRepository.findPTIdByUserId(user_id).forEach(pt -> {
-                //System.out.println("ProfileTopics: " + pt[0]);
                 profileTopicsRepository.deleteById((Long) pt[0]);
             });
-
             profileTopicsRepository.deleteByUserId(user_id);
             userRepository.deleteUserById(user_id);
-
-            //System.out.println("UserResourceLikeDislike deleted");
             return "DELETED";
         } catch (Exception e) {
             e.printStackTrace();

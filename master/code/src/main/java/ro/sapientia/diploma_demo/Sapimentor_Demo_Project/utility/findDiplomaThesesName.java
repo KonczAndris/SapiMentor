@@ -92,14 +92,14 @@ public class findDiplomaThesesName {
                     || lines[i].contains("LUCRARE DE DIPLOMAˇ")){
                 if (i > 0){
                     if( lines[i-4].startsWith(" ")){
-                        System.out.println("CIM: " + lines[i-3] + " " + lines[i-2] + " " + lines[i-1]);
+                        //System.out.println("CIM: " + lines[i-3] + " " + lines[i-2] + " " + lines[i-1]);
                         return lines[i-3] + " " + lines[i-2] + " " + lines[i-1];
                     }
                     if (lines[i-5].startsWith(" ")){
-                        System.out.println("CIM: " + lines[i-4] + " " + lines[i-3] + " " + lines[i-2] + " " + lines[i-1]);
+                        //System.out.println("CIM: " + lines[i-4] + " " + lines[i-3] + " " + lines[i-2] + " " + lines[i-1]);
                         return lines[i-4] + " " + lines[i-3] + " " + lines[i-2] + " " + lines[i-1];
                     }
-                    System.out.println("SOROK: " + lines[i]);
+                    //System.out.println("SOROK: " + lines[i]);
                 } else {
                     return lines[0];
                 }
@@ -116,19 +116,19 @@ public class findDiplomaThesesName {
                     || lines[i].contains("LUCRARE DE DIPLOMAˇ")){
                 if (i > 0){
                     if( lines[i-4].startsWith(" ")){
-                        System.out.println("CIM1: " + lines[i-3] + " " + lines[i-2] + " " + lines[i-1]);
+                        //System.out.println("CIM1: " + lines[i-3] + " " + lines[i-2] + " " + lines[i-1]);
                         return lines[i-3] + " " + lines[i-2] + " " + lines[i-1];
                     }
                     if (lines[i-5].startsWith(" ")){
-                        System.out.println("CIM2: " + lines[i-4] + " " + lines[i-3] + " " + lines[i-2] + " " + lines[i-1]);
+                        //System.out.println("CIM2: " + lines[i-4] + " " + lines[i-3] + " " + lines[i-2] + " " + lines[i-1]);
                         return lines[i-4] + " " + lines[i-3] + " " + lines[i-2] + " " + lines[i-1];
                     }
 
                     if (lines[i-6].startsWith(" ")){
-                        System.out.println("CIM3: " + lines[i-5] + " " + lines[i-4] + " " + lines[i-3] + " " + lines[i-2]);
+                        //System.out.println("CIM3: " + lines[i-5] + " " + lines[i-4] + " " + lines[i-3] + " " + lines[i-2]);
                         return lines[i-5] + " " + lines[i-4] + " " + lines[i-3] + " " + lines[i-2];
                     }
-                    System.out.println("SOROK: " + lines[i]);
+                    //System.out.println("SOROK: " + lines[i]);
                 } else {
                     return lines[0];
                 }
@@ -145,10 +145,10 @@ public class findDiplomaThesesName {
                     || lines[i].contains("LUCRARE DE DIPLOMAˇ")){
                 if (i > 0){
                     if (lines[i-8].startsWith(" ")){
-                        System.out.println("CIM3: " + lines[i-5] + " " + lines[i-4] + " " + lines[i-3] + " " + lines[i-2]);
+                        //System.out.println("CIM3: " + lines[i-5] + " " + lines[i-4] + " " + lines[i-3] + " " + lines[i-2]);
                         return lines[i-7] + " " + lines[i-6] + " " + lines[i-5] + " " + lines[i-4] + " " + lines[i-3];
                     }
-                    System.out.println("SOROK: " + lines[i]);
+                    //System.out.println("SOROK: " + lines[i]);
                 } else {
                     return lines[0];
                 }
@@ -165,10 +165,10 @@ public class findDiplomaThesesName {
                     || lines[i].contains("LUCRARE DE DIPLOMAˇ")){
                 if (i > 0){
                     if (lines[i-9].startsWith(" ")){
-                        System.out.println("CIM3: " + lines[i-5] + " " + lines[i-4] + " " + lines[i-3] + " " + lines[i-2]);
+                        //System.out.println("CIM3: " + lines[i-5] + " " + lines[i-4] + " " + lines[i-3] + " " + lines[i-2]);
                         return lines[i-8];
                     }
-                    System.out.println("SOROK: " + lines[i]);
+                    //System.out.println("SOROK: " + lines[i]);
                 } else {
                     return lines[0];
                 }

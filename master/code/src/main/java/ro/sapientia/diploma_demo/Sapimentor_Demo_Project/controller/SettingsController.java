@@ -69,7 +69,7 @@ public class SettingsController {
         }
 
         String rolesAsString = String.join(",", rolesToDisplayResources);
-        System.out.println("Roles: " + rolesAsString);
+        //System.out.println("Roles: " + rolesAsString);
         model.addAttribute("userRolesToDisplaySettings", rolesAsString);
     }
 
@@ -129,7 +129,7 @@ public class SettingsController {
     @PostMapping("/deactivateAccount")
     public ResponseEntity<String> deactivateAccount(Principal principal) {
         if(settingsService.deactivateUserAccount(principal).equals("DELETED")){
-            System.out.println("Deleted: successfully");
+            //System.out.println("Deleted: successfully");
             return ResponseEntity.ok("DELETED");
         } else {
             return ResponseEntity.ok("NOTDELETED");

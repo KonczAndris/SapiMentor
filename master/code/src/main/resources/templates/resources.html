@@ -150,7 +150,7 @@
                 <span class="english-text">Search</span>
                 <span class="hungarian-text">Keresés</span>
             </button>
-            <button type="button" id="upload-hidden" class="btn btn-success blue-button" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE')}">
+            <button type="button" id="upload-hidden" class="btn btn-success blue-button" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE') or userRolesToDisplayResources.contains('ADMIN')}">
                 <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
 
         </div>

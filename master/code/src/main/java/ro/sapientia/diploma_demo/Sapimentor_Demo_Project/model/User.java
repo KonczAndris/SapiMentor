@@ -44,6 +44,7 @@ public class User {
     private String modified_by;
     private LocalDateTime modified_at;
     private Integer signed_in = 0;
+    private LocalDateTime registered_at = LocalDateTime.now().plusDays(1);
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

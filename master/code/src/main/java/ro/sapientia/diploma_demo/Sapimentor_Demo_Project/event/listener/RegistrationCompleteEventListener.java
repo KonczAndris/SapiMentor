@@ -30,14 +30,10 @@ public class RegistrationCompleteEventListener
 
     @Override
     public void onApplicationEvent(RegistrationCompleteEvent registrationCompleteEvent) {
-        //Get the newly registered user
         User theUser = registrationCompleteEvent.getUser();
         this.user = theUser;
-        //System.out.println("User:" + theUser.getEmail());
-
         //Generate a verification token
         String verificationToken = UUID.randomUUID().toString();
-        //System.out.println("Token:" + verificationToken);
 
         //Save the verification token
         userService.saveUserVerificationToken(theUser, verificationToken);

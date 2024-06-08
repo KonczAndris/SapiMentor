@@ -136,8 +136,6 @@ public class DatabaseInitializer implements CommandLineRunner {
             topic1.getSkills().add(Iskill30);
 
 
-
-
             topic2.getSkills().add(Lskill1);
             topic2.getSkills().add(Lskill2);
             topic2.getSkills().add(Lskill3);

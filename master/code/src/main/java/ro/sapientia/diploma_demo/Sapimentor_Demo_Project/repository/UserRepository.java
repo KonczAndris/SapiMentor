@@ -83,4 +83,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("DELETE FROM User u WHERE u.id = :userId")
     void deleteUserById(@Param("userId") Long userId);
 
+    @Query("SELECT u.id, u.enabled, u.registered_at FROM User u WHERE u.enabled = false")
+    List<Object[]> findInactiveUsers();
+
 }

@@ -216,7 +216,7 @@ public class UserController {
                                               @RequestParam("email") String email,
                                               @RequestParam("enabled") boolean enabled,
                                               @RequestParam("specialization") String specialization,
-                                              @RequestParam("year") Integer year,
+                                              @RequestParam("year") String year,
                                               @RequestParam("phoneNumber") String phoneNumber,
                                               Principal principal) {
         String user_email = principal.getName();
@@ -246,7 +246,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
             }
             if (userServiceImpl.deleteSelectedUser(user_id).equals("DELETED")){
-                System.out.println("Deleted: successfully");
+                //System.out.println("Deleted: successfully");
                 return ResponseEntity.ok("DELETED");
             } else {
                 return ResponseEntity.ok("NOTDELETED");
