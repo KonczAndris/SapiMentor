@@ -55,8 +55,8 @@
     flex-direction:column;
     width: 33%;
     height: 33%;
-    min-width: 150px;
-    max-width: 300px;
+    min-width: 120px;
+    max-width: 210px;
     align-items: center;
     margin: 2%;
     font-size: x-large;
@@ -73,9 +73,6 @@
     height: auto;
 }
 
-.small-info-div span, .small-engineering-div span, .small-languages-div span{
-    margin: 15px;
-}
 
 .small-topic-div:hover, .small-info-div:hover, .small-engineering-div:hover, .small-languages-div:hover{
     opacity: 1;
@@ -107,6 +104,8 @@
 .large-info-div.active, .large-engineering-div.active, .large-languages-div.active{
     display: block;
     padding-top: 40px;
+    align-content: center;
+    padding-bottom: 15%;
 }
 
 #back-from-info img, #back-from-engineering img, #back-from-languages img{

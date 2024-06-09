@@ -67,7 +67,7 @@ body {
     border: none !important;
 }
 
-.myGroup-page .mentor-side, .myGroup-page .mentee-side{
+.myGroup-page .mentor-side, .myGroup-page .mentee-side, .topics-page .right, .diploma-page .info-modal-content{
     background-color: rgb(34, 75, 63) !important;
     color: white !important;
 }
