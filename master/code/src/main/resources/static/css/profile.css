@@ -1030,3 +1030,12 @@ table tr:last-child td {
     }
 
 }
+@media (max-width: 800px) {
+    .upload-buttons{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .change-icon {
+        transform: translate(-25%, -5%);
+    }}
