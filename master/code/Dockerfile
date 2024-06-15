@@ -24,5 +24,5 @@ FROM openjdk:17.0.1-jdk-slim
 WORKDIR /code
 COPY --from=build /code/target/registration-login-spring-boot-security-thymeleaf-0.0.1-SNAPSHOT.jar SapiMentor_AWS.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","SapiMentor_AWS.jar"]
+ENTRYPOINT ["java", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=200", "-XX:G1HeapRegionSize=4m", "-jar","SapiMentor_AWS.jar"]
 
