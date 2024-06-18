@@ -508,8 +508,6 @@
 
           <div id="commentsDiv" class="comments">
             <div class="comment-entry" id="commentContainer" style="display: block;">
-
-
               <div class="comment-section active" th:id="${'comment-section-' + data.userId}" th:each="data, status : ${allRatingsForThisUser}">
                 <div class="comment-row">
                   <img  th:id="${'commentProfileImgProfilePage-' + data.userId}" th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">

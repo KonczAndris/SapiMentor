@@ -13,12 +13,14 @@
     border-radius: 100px;
 }
 
-.large-topic-div, .large-info-div, .large-engineering-div, .large-languages-div{
+.large-topic-div, .large-info-div, .large-engineering-div, .large-languages-div, .info-site, .computer-site,
+.automation-site, .machine-site, .mecha-site, .telecommunication-site, .landscape-site, .horticulture-site,
+.communication-site, .translation-site{
     flex-direction: row;
     width: 100%;
     height: 100%;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center; */
+    /* justify-content: center; */
     display: none;
     animation: fadeIn 0.5s ease forwards;
 }
@@ -73,7 +75,6 @@
     height: auto;
 }
 
-
 .small-topic-div:hover, .small-info-div:hover, .small-engineering-div:hover, .small-languages-div:hover{
     opacity: 1;
     transform: scale(1.1);
@@ -108,18 +109,26 @@
     padding-bottom: 15%;
 }
 
-#back-from-info img, #back-from-engineering img, #back-from-languages img{
+#back-from-info img, #back-from-engineering img, #back-from-languages img, #back-from-info-site img,
+#back-from-computer-site img, #back-from-automation-site img, #back-from-machine-site img,
+#back-from-mecha-site img, #back-from-telecommunication-site img, #back-from-landscape-site img,
+#back-from-horticulture-site img, #back-from-communication-site img, #back-from-translation-site img{
     height: 30px;
 }
 
-#back-from-info span, #back-from-engineering span, #back-from-languages span{
+#back-from-info span, #back-from-engineering span, #back-from-languages span, #back-from-info-site span,
+#back-from-computer-site span, #back-from-automation-site span, #back-from-machine-site span,
+#back-from-mecha-site span, #back-from-telecommunication-site span, #back-from-landscape-site span,
+#back-from-horticulture-site span, #back-from-communication-site span, #back-from-translation-site span{
     margin-left: 5px;
 }
 
-#back-from-info, #back-from-engineering, #back-from-languages{
+#back-from-info, #back-from-engineering, #back-from-languages, #back-from-info-site, #back-from-computer-site,
+#back-from-automation-site, #back-from-machine-site, #back-from-mecha-site, #back-from-telecommunication-site,
+#back-from-landscape-site, #back-from-horticulture-site, #back-from-communication-site, #back-from-translation-site{
     display: flex;
     width: 200px;
-    height: 40px;
+    /* height: 40px; */
     border-radius: 25px;
     position: absolute;
     top: 0;
@@ -131,7 +140,10 @@
     background: rgb(22, 175, 132);
 }
 
-#back-from-info:hover, #back-from-engineering:hover, #back-from-languages:hover{
+#back-from-info:hover, #back-from-engineering:hover, #back-from-languages:hover, #back-from-info-site:hover,
+#back-from-computer-site:hover, #back-from-automation-site:hover, #back-from-machine-site:hover,
+#back-from-mecha-site:hover, #back-from-telecommunication-site:hover, #back-from-landscape-site:hover,
+#back-from-horticulture-site:hover, #back-from-communication-site:hover, #back-from-translation-site:hover{
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -150,6 +162,209 @@
     flex-direction: column;
 }
 
+.info-site.active, .computer-site.active, .automation-site.active, .machine-site.active,.mecha-site.active,
+.telecommunication-site.active, .landscape-site.active, .horticulture-site.active,  .communication-site.active,
+.translation-site.active{
+    display: flex;
+    padding-top: 40px;
+    padding-bottom: 15%;
+}
+
+.info-site, .computer-site, .automation-site, .machine-site, .mecha-site, .telecommunication-site, .landscape-site,
+.horticulture-site, .communication-site, .translation-site{
+    flex-direction: row;
+    height: 100%;
+}
+
+.left-info-site{
+    flex-direction: column;
+    display: flex;
+    margin-top: 50px;
+    width: 34%;
+    height: 100%;
+    align-items: center;
+    align-content: center;
+    border-right: 3px solid rgb(22, 175, 132);
+}
+
+.right-info-site{
+    width: 60%;
+    margin: 15px;
+}
+
+.description-box{
+    text-align: center;
+    color:white;
+    background-color:rgb(22, 175, 132);
+    padding: 15px;
+    border-radius: 30px;
+    margin-top: 30px;
+
+}
+
+.info-site-img{
+    max-width: 200px;
+    border-radius: 10%;
+    margin-bottom: 20px;
+}
+
+.left-title{
+    font-size: x-large;
+    font-weight: bold;
+    color: rgb(22, 175, 132);
+    margin-bottom: 10px;
+}
+
+.subject-box{
+    text-align: center;
+    margin: 15px;
+    display: flex;
+    flex-direction:column;
+}
+
+.comment-row p{
+    text-align: center;
+}
+
+.comment-section {
+    display: flex;
+    margin-top: 10px;
+    flex-direction: row;
+
+}
+
+.comment-rating {
+    direction: rtl;
+    text-align: center;
+    height: 20px;
+    display: flex;
+    flex-direction:row !important;
+    margin: 0;
+}
+
+.comment-rating label {
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s;
+    display: inline;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.comment-rating input {
+    display: none;
+}
+
+.comment-label-date{
+    padding-top: 10px !important;
+    font-size: 14px;
+    font-style:italic;
+}
+
+.comment-rating input[type="radio"] {
+    display: none;
+}
+
+.comment-row{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.comment-label-text {
+    margin-top: -5px;
+}
+
+.comments{
+    width: 100%;
+}
+
+.nav-arrows {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.navigate-button{
+    min-width: 50px;
+    cursor: pointer;
+    padding: 4px;
+    border: none;
+    text-overflow: ellipsis;
+    font-size: 15px;
+    font-weight:bold;
+    margin:5px;
+}
+
+.comment-infos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: start;
+    height: 100%;
+}
+
+.comment-profile-image{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    margin-bottom:5px;
+}
+
+.comment-section{
+    display:flex;
+}
+
+.comment-content{
+    padding-left: 15px;
+}
+
+.comment-subject{
+    margin-bottom: 15px;
+}
+
+.comment-label,
+.comment-label-date,
+.comment-rating {
+    margin: 0;
+    padding: 0;
+}
+
+.writing-section{
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.subject-select{
+    height: 40px;
+    border-radius: 20px;
+    margin: 0 5px;
+    width: 150px;
+}
+
+.comment-box{
+    display: flex;
+    min-height: 50px;
+    max-height: 140px;
+    min-width: 150px;
+    border-radius: 20px;
+    margin: 0 5px;
+    width: 100%;
+}
+
+.send-button{
+    height: 40px;
+    width: 160px;
+    margin: 0 5px;
+}
+
+.comment-options{
+    display: flex;
+    margin-top: 5px;
+}
+
 @media (max-width: 600px) {
     .mid-topic-div, .mid-info-div, .mid-engineering-div, .mid-languages-div{
         display: flex;
@@ -163,12 +378,72 @@
         height: fit-content;
         align-items: center;
     }
-    .small-topic-div img{
+    .small-topic-div img {
         width: 100px !important;
         margin-bottom: 3%;
     }
     .large-info-div.active, .large-engineering-div.active, .large-languages-div.active{
         display: block;
         padding-top: 60px;
+    }
+
+    .info-site.active, .computer-site.active, .automation-site.active, .machine-site.active, .mecha-site.active,
+    .telecommunication-site.active, .landscape-site.active, .horticulture-site.active, .communication-site.active,
+    .translation-site.active{
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .right-info-site{
+        width: 90%;
+    }
+    .left-info-site{
+        width: 100%;
+    }
+
+    .description-box{
+        margin-top: 0px;
+    }
+
+    .comment-row{
+        flex-direction:row;
+        justify-content: center;
+        margin-bottom:10px;
+    }
+
+    .comment-infos{
+        align-items: flex-start;
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .comment-section{
+        display:flex;
+        flex-direction: column;
+    }
+
+    .comment-profile-image{
+        width:85px;
+        height: 85px;
+    }
+
+    .comment-content{
+        text-align: center;
+    }
+
+    .writing-section{
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .comment-box{
+        margin: 5px;
+    }
+
+    .subject-select{
+        width: 50%;    }
+
+    .send-button{
+        width: 50%;
     }
 }

@@ -102,3 +102,103 @@ document.getElementById('back-from-languages').addEventListener('click', functio
     document.getElementById('large-languages-div').classList.remove('active');
     document.getElementById('large-topic-div').classList.add('active');
 });
+
+document.getElementById('small-info-div').addEventListener('click', function() {
+    document.getElementById('large-info-div').classList.remove('active');
+    document.getElementById('info-site').classList.add('active');
+});
+
+document.getElementById('back-from-info-site').addEventListener('click', function() {
+    document.getElementById('info-site').classList.remove('active');
+    document.getElementById('large-info-div').classList.add('active');
+});
+
+document.getElementById('small-computer-div').addEventListener('click', function() {
+    document.getElementById('large-engineering-div').classList.remove('active');
+    document.getElementById('computer-site').classList.add('active');
+});
+
+document.getElementById('back-from-computer-site').addEventListener('click', function() {
+    document.getElementById('computer-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
+});
+
+document.getElementById('small-automation-div').addEventListener('click', function() {
+    document.getElementById('large-engineering-div').classList.remove('active');
+    document.getElementById('automation-site').classList.add('active');
+});
+
+document.getElementById('back-from-automation-site').addEventListener('click', function() {
+    document.getElementById('automation-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
+});
+
+document.getElementById('small-machine-div').addEventListener('click', function() {
+    document.getElementById('large-engineering-div').classList.remove('active');
+    document.getElementById('machine-site').classList.add('active');
+});
+
+document.getElementById('back-from-machine-site').addEventListener('click', function() {
+    document.getElementById('machine-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
+});
+
+document.getElementById('small-mecha-div').addEventListener('click', function() {
+    document.getElementById('large-engineering-div').classList.remove('active');
+    document.getElementById('mecha-site').classList.add('active');
+});
+
+document.getElementById('back-from-mecha-site').addEventListener('click', function() {
+    document.getElementById('mecha-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
+});
+
+document.getElementById('small-telecommunication-div').addEventListener('click', function() {
+    document.getElementById('large-engineering-div').classList.remove('active');
+    document.getElementById('telecommunication-site').classList.add('active');
+});
+
+document.getElementById('back-from-telecommunication-site').addEventListener('click', function() {
+    document.getElementById('telecommunication-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
+});
+
+document.getElementById('small-landscape-div').addEventListener('click', function() {
+    document.getElementById('large-engineering-div').classList.remove('active');
+    document.getElementById('landscape-site').classList.add('active');
+});
+
+document.getElementById('back-from-landscape-site').addEventListener('click', function() {
+    document.getElementById('landscape-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
+});
+
+document.getElementById('small-horticulture-div').addEventListener('click', function() {
+    document.getElementById('large-engineering-div').classList.remove('active');
+    document.getElementById('horticulture-site').classList.add('active');
+});
+
+document.getElementById('back-from-horticulture-site').addEventListener('click', function() {
+    document.getElementById('horticulture-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
+});
+
+document.getElementById('small-communication-div').addEventListener('click', function() {
+    document.getElementById('large-languages-div').classList.remove('active');
+    document.getElementById('communication-site').classList.add('active');
+});
+
+document.getElementById('back-from-communication-site').addEventListener('click', function() {
+    document.getElementById('communication-site').classList.remove('active');
+    document.getElementById('large-languages-div').classList.add('active');
+});
+
+document.getElementById('small-translation-div').addEventListener('click', function() {
+    document.getElementById('large-languages-div').classList.remove('active');
+    document.getElementById('translation-site').classList.add('active');
+});
+
+document.getElementById('back-from-translation-site').addEventListener('click', function() {
+    document.getElementById('translation-site').classList.remove('active');
+    document.getElementById('large-languages-div').classList.add('active');
+});
