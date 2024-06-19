@@ -301,21 +301,20 @@
                 <div class="comment-section">
                     <div class="comments">
                         <div class="comment-entry" style="display: block;">
-                            <div class="comment-section active">
+                            <div class="comment-section active" th:id="${'comment-section-' + data.userId}" th:each="data, status : ${allCommentsForTopics}" th:if="${data.specialization == 'info-site'}">
                                 <div class="comment-row">
-                                    <img  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
+                                    <img  th:id="${'commentProfileImg-' + data.userId}" th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
                                     <div class="comment-infos">
-                                        <div>
-                                            <p style="margin: 0">First Name Last Name</p>
+                                        <div th:each="user : ${allSelectedUsers}">
+                                            <p style="margin: 0" th:if="${user.id == data.userId}" th:text="${user.last_Name + ' ' + user.first_Name}"></p>
                                         </div>
-                                        <p class="comment-label-date">2024.11.10</p>
+                                        <p class="comment-label-date" th:id="${'comment-label-date-' + data.userId}" th:text="${data.date}"></p>
                                     </div>
                                 </div>
                                 <div class="comment-content">
-                                    <div class="comment-subject">
-                                        Subject
+                                    <div class="comment-subject" th:text="${data.subject}">
                                     </div>
-                                    <p class="comment-label-text"> TESZT </p>
+                                    <p class="comment-label-text" th:id="${'comment-label-text-' + data.userId}" th:text="${data.comment}"></p>
                                 </div>
                             </div>
                         </div>
@@ -332,31 +331,32 @@
                     <span class="hungarian-text">Szólj hozzá!</span>
                 </h2>
                 <div class="writing-section">
-                    <input type="text" placeholder="Write your comment here..." class="comment-box">
+                    <input type="text" id="info-comment-input" placeholder="Write your comment here..." class="comment-box">
+                    <div id="error-for-ratingSection" style="display: none"></div>
                     <div class="comment-options">
-                        <select class="subject-select english-text">
-                            <option class="english-text" value="programming">Programming</option>
-                            <option class="english-text" value="algorithms">Data Structures and algorithms</option>
-                            <option class="english-text" value="discrete">Discrete mathematics</option>
-                            <option class="english-text" value="oop">Object-Oriented Programming</option>
-                            <option class="english-text" value="ai">Artificial Intelligence</option>
-                            <option class="english-text" value="databases">Databases</option>
-                            <option class="english-text" value="graphs">Graph theory</option>
-                            <option class="english-text" value="software">Software development</option>
-                            <option class="english-text" value="testing">Software testing</option>
-                            <option class="english-text" value="mobile">Mobile development</option>
+                        <select class="subject-select english-text" id="info-english-select">
+                            <option class="english-text" value="programming-info">Programming</option>
+                            <option class="english-text" value="algorithms-info">Data Structures and algorithms</option>
+                            <option class="english-text" value="discrete-info">Discrete mathematics</option>
+                            <option class="english-text" value="oop-info">Object-Oriented Programming</option>
+                            <option class="english-text" value="ai-info">Artificial Intelligence</option>
+                            <option class="english-text" value="databases-info">Databases</option>
+                            <option class="english-text" value="graphs-info">Graph theory</option>
+                            <option class="english-text" value="software-info">Software development</option>
+                            <option class="english-text" value="testing-info">Software testing</option>
+                            <option class="english-text" value="mobile-info">Mobile development</option>
                         </select>
-                        <select class="subject-select hungarian-text">
-                            <option class="hungarian-text" value="programming">Programozás</option>
-                            <option class="hungarian-text" value="algorithms">Adatszerkezetek és Algoritmusok</option>
-                            <option class="hungarian-text" value="discrete">Diszkrét matematika</option>
-                            <option class="hungarian-text" value="oop">Objektum orientált programozás</option>
-                            <option class="hungarian-text" value="ai">Mesterséges intelligencia</option>
-                            <option class="hungarian-text" value="databases">Adatbázisok</option>
-                            <option class="hungarian-text" value="graphs">Gráfelmélet</option>
-                            <option class="hungarian-text" value="software">Szoftverfejlesztés</option>
-                            <option class="hungarian-text" value="testing">Szoftvertesztelés</option>
-                            <option class="hungarian-text" value="mobile">Mobilos alkalmazás fejlesztés</option>
+                        <select class="subject-select hungarian-text" id="info-hungarian-select">
+                            <option class="hungarian-text" value="programming-info">Programozás</option>
+                            <option class="hungarian-text" value="algorithms-info">Adatszerkezetek és Algoritmusok</option>
+                            <option class="hungarian-text" value="discrete-info">Diszkrét matematika</option>
+                            <option class="hungarian-text" value="oop-info">Objektum orientált programozás</option>
+                            <option class="hungarian-text" value="ai-info">Mesterséges intelligencia</option>
+                            <option class="hungarian-text" value="databases-info">Adatbázisok</option>
+                            <option class="hungarian-text" value="graphs-info">Gráfelmélet</option>
+                            <option class="hungarian-text" value="software-info">Szoftverfejlesztés</option>
+                            <option class="hungarian-text" value="testing-info">Szoftvertesztelés</option>
+                            <option class="hungarian-text" value="mobile-info">Mobilos alkalmazás fejlesztés</option>
                         </select>
                         <button class="send-button green-button">
                         <span class="english-text">Comment</span>
@@ -457,28 +457,28 @@
                         <input type="text" placeholder="Write your comment here..." class="comment-box">
                         <div class="comment-options">
                             <select class="subject-select english-text">
-                                <option class="english-text" value="programming">Programming</option>
-                                <option class="english-text" value="algorithms">Data Structures and Algorithms</option>
-                                <option class="english-text" value="computer-architecture">Computer Architectures</option>
-                                <option class="english-text" value="operating-systems">Operating Systems</option>
-                                <option class="english-text" value="computer-networks">Computer Networks</option>
-                                <option class="english-text" value="distributed-systems">Distributed Systems</option>
-                                <option class="english-text" value="digital-electronics">Digital Electronics</option>
-                                <option class="english-text" value="microprocessor-systems">Microprocessor Systems Design and Programming</option>
-                                <option class="english-text" value="artificial-intelligence">Artificial Intelligence</option>
-                                <option class="english-text" value="cryptography">Cryptography</option>
+                                <option class="english-text" value="programming-computer">Programming</option>
+                                <option class="english-text" value="algorithms-computer">Data Structures and Algorithms</option>
+                                <option class="english-text" value="computer-architecture-computer">Computer Architectures</option>
+                                <option class="english-text" value="operating-systems-computer">Operating Systems</option>
+                                <option class="english-text" value="computer-networks-computer">Computer Networks</option>
+                                <option class="english-text" value="distributed-systems-computer">Distributed Systems</option>
+                                <option class="english-text" value="digital-electronics-computer">Digital Electronics</option>
+                                <option class="english-text" value="microprocessor-systems-computer">Microprocessor Systems Design and Programming</option>
+                                <option class="english-text" value="artificial-intelligence-computer">Artificial Intelligence</option>
+                                <option class="english-text" value="cryptography-computer">Cryptography</option>
                             </select>
                             <select class="subject-select hungarian-text">
-                                <option class="hungarian-text" value="programming">Programozás</option>
-                                <option class="hungarian-text" value="algorithms">Adatszerkezetek és Algoritmusok</option>
-                                <option class="hungarian-text" value="computer-architecture">Számítógép-architektúrák</option>
-                                <option class="hungarian-text" value="operating-systems">Operációs rendszerek</option>
-                                <option class="hungarian-text" value="computer-networks">Számítógépes hálózatok</option>
-                                <option class="hungarian-text" value="distributed-systems">Osztott rendszerek</option>
-                                <option class="hungarian-text" value="digital-electronics">Digitális elektronika</option>
-                                <option class="hungarian-text" value="microprocessor-systems">Mikroprocesszor-rendszerek tervezése és programozása</option>
-                                <option class="hungarian-text" value="artificial-intelligence">Mesterséges intelligencia</option>
-                                <option class="hungarian-text" value="cryptography">Kriptográfia</option>
+                                <option class="hungarian-text" value="programming-computer">Programozás</option>
+                                <option class="hungarian-text" value="algorithms-computer">Adatszerkezetek és Algoritmusok</option>
+                                <option class="hungarian-text" value="computer-architecture-computer">Számítógép-architektúrák</option>
+                                <option class="hungarian-text" value="operating-systems-computer">Operációs rendszerek</option>
+                                <option class="hungarian-text" value="computer-networks-computer">Számítógépes hálózatok</option>
+                                <option class="hungarian-text" value="distributed-systems-computer">Osztott rendszerek</option>
+                                <option class="hungarian-text" value="digital-electronics-computer">Digitális elektronika</option>
+                                <option class="hungarian-text" value="microprocessor-systems-computer">Mikroprocesszor-rendszerek tervezése és programozása</option>
+                                <option class="hungarian-text" value="artificial-intelligence-computer">Mesterséges intelligencia</option>
+                                <option class="hungarian-text" value="cryptography-computer">Kriptográfia</option>
                             </select>
 
                             <button class="send-button green-button">
@@ -575,20 +575,20 @@
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
                         <select class="subject-select english-text">
-                            <option class="english-text" value="industrial-process-control-computers">Industrial Process Control Computers Programming</option>
-                            <option class="english-text" value="robot-control">Robot Control</option>
-                            <option class="english-text" value="operating-systems-computer-networks">Operating Systems and Computer Networks</option>
-                            <option class="english-text" value="microprocessor-systems-design-programming">Microprocessor Systems Design and Programming</option>
-                            <option class="english-text" value="digital-signal-processing">Digital Signal Processing</option>
-                            <option class="english-text" value="optimization-techniques">Optimization Techniques</option>
+                            <option class="english-text" value="industrial-process-control-computers-automation">Industrial Process Control Computers Programming</option>
+                            <option class="english-text" value="robot-control-automation">Robot Control</option>
+                            <option class="english-text" value="operating-systems-computer-networks-automation">Operating Systems and Computer Networks</option>
+                            <option class="english-text" value="microprocessor-systems-design-programming-automation">Microprocessor Systems Design and Programming</option>
+                            <option class="english-text" value="digital-signal-processing-automation">Digital Signal Processing</option>
+                            <option class="english-text" value="optimization-techniques-automation">Optimization Techniques</option>
                         </select>
                         <select class="subject-select hungarian-text">
-                            <option class="hungarian-text" value="industrial-process-control-computers">Ipari folyamatirányító számítógépek programozása</option>
-                            <option class="hungarian-text" value="robot-control">Robotok irányítása</option>
-                            <option class="hungarian-text" value="operating-systems-computer-networks">Operációs rendszerek és számítógépes hálózatok</option>
-                            <option class="hungarian-text" value="microprocessor-systems-design-programming">Mikroprocesszor-rendszerek tervezése és programozása</option>
-                            <option class="hungarian-text" value="digital-signal-processing">Digitális jelfeldolgozás</option>
-                            <option class="hungarian-text" value="optimization-techniques">Optimalizálási eljárások</option>
+                            <option class="hungarian-text" value="industrial-process-control-computers-automation">Ipari folyamatirányító számítógépek programozása</option>
+                            <option class="hungarian-text" value="robot-control-automation">Robotok irányítása</option>
+                            <option class="hungarian-text" value="operating-systems-computer-networks-automation">Operációs rendszerek és számítógépes hálózatok</option>
+                            <option class="hungarian-text" value="microprocessor-systems-design-programming-automation">Mikroprocesszor-rendszerek tervezése és programozása</option>
+                            <option class="hungarian-text" value="digital-signal-processing-automation">Digitális jelfeldolgozás</option>
+                            <option class="hungarian-text" value="optimization-techniques-automation">Optimalizálási eljárások</option>
                         </select>
 
                         <button class="send-button green-button">
@@ -688,28 +688,28 @@
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
                         <select class="subject-select english-text">
-                            <option class="english-text" value="programming">Programming</option>
-                            <option class="english-text" value="computer-design">Computer Design</option>
-                            <option class="english-text" value="machining-theory">Machining Theory</option>
-                            <option class="english-text" value="industrial-electronics">Industrial Electronics</option>
-                            <option class="english-text" value="mechanisms">Mechanisms</option>
-                            <option class="english-text" value="machine-elements">Machine Elements</option>
-                            <option class="english-text" value="manufacturing-theory">Manufacturing Theory</option>
-                            <option class="english-text" value="cnc-technologies">CNC Technologies</option>
-                            <option class="english-text" value="materials-science">Materials Science</option>
-                            <option class="english-text" value="tool-design">Tool, Fixture, and Jig Design</option>
+                            <option class="english-text" value="programming-machine">Programming</option>
+                            <option class="english-text" value="computer-design-machine">Computer Design</option>
+                            <option class="english-text" value="machining-theory-machine">Machining Theory</option>
+                            <option class="english-text" value="industrial-electronics-machine">Industrial Electronics</option>
+                            <option class="english-text" value="mechanisms-machine">Mechanisms</option>
+                            <option class="english-text" value="machine-elements-machine">Machine Elements</option>
+                            <option class="english-text" value="manufacturing-theory-machine">Manufacturing Theory</option>
+                            <option class="english-text" value="cnc-technologies-machine">CNC Technologies</option>
+                            <option class="english-text" value="materials-science-machine">Materials Science</option>
+                            <option class="english-text" value="tool-design-machine">Tool, Fixture, and Jig Design</option>
                         </select>
                         <select class="subject-select hungarian-text">
-                            <option class="hungarian-text" value="programming">Programozás</option>
-                            <option class="hungarian-text" value="computer-design">Számítógépes tervezés</option>
-                            <option class="hungarian-text" value="machining-theory">Forgácsoláselmélet</option>
-                            <option class="hungarian-text" value="industrial-electronics">Ipari elektronika</option>
-                            <option class="hungarian-text" value="mechanisms">Mechanizmusok</option>
-                            <option class="hungarian-text" value="machine-elements">Gépelemek</option>
-                            <option class="hungarian-text" value="manufacturing-theory">Gyártáselmélet</option>
-                            <option class="hungarian-text" value="cnc-technologies">CNC-technológiák</option>
-                            <option class="hungarian-text" value="materials-science">Anyagtudományok</option>
-                            <option class="hungarian-text" value="tool-design">Szerszám-, készülék- és idomszertervezés</option>
+                            <option class="hungarian-text" value="programming-machine">Programozás</option>
+                            <option class="hungarian-text" value="computer-design-machine">Számítógépes tervezés</option>
+                            <option class="hungarian-text" value="machining-theory-machine">Forgácsoláselmélet</option>
+                            <option class="hungarian-text" value="industrial-electronics-machine">Ipari elektronika</option>
+                            <option class="hungarian-text" value="mechanisms-machine">Mechanizmusok</option>
+                            <option class="hungarian-text" value="machine-elements-machine">Gépelemek</option>
+                            <option class="hungarian-text" value="manufacturing-theory-machine">Gyártáselmélet</option>
+                            <option class="hungarian-text" value="cnc-technologies-machine">CNC-technológiák</option>
+                            <option class="hungarian-text" value="materials-science-machine">Anyagtudományok</option>
+                            <option class="hungarian-text" value="tool-design-machine">Szerszám-, készülék- és idomszertervezés</option>
                         </select>
                         <button class="send-button green-button">
                             <span class="english-text">Comment</span>
@@ -802,22 +802,22 @@
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
                         <select class="subject-select english-text">
-                            <option class="english-text" value="mechanics">Mechanics</option>
-                            <option class="english-text" value="mechanisms">Mechanisms</option>
-                            <option class="english-text" value="computer-aided-design">Computer-Aided Design (CAD)</option>
-                            <option class="english-text" value="systems-theory">Systems Theory</option>
-                            <option class="english-text" value="analog-digital-electronics">Analog and Digital Electronics</option>
-                            <option class="english-text" value="cnc-control-programming">CNC Control and Programming</option>
-                            <option class="english-text" value="robotics-design-control">Robotics Design and Control</option>
+                            <option class="english-text" value="mechanics-mecha">Mechanics</option>
+                            <option class="english-text" value="mechanisms-mecha">Mechanisms</option>
+                            <option class="english-text" value="computer-aided-design-mecha">Computer-Aided Design (CAD)</option>
+                            <option class="english-text" value="systems-theory-mecha">Systems Theory</option>
+                            <option class="english-text" value="analog-digital-electronics-mecha">Analog and Digital Electronics</option>
+                            <option class="english-text" value="cnc-control-programming-mecha">CNC Control and Programming</option>
+                            <option class="english-text" value="robotics-design-control-mecha">Robotics Design and Control</option>
                         </select>
                         <select class="subject-select hungarian-text">
-                            <option class="hungarian-text" value="mechanics">Mechanika</option>
-                            <option class="hungarian-text" value="mechanisms">Mechanizmusok</option>
-                            <option class="hungarian-text" value="computer-aided-design">Számítógépes tervezés (CAD)</option>
-                            <option class="hungarian-text" value="systems-theory">Rendszerelmélet</option>
-                            <option class="hungarian-text" value="analog-digital-electronics">Analóg és digitális elektronika</option>
-                            <option class="hungarian-text" value="cnc-control-programming">CNC vezérlés és programozás</option>
-                            <option class="hungarian-text" value="robotics-design-control">Robotok tervezése és vezérlése</option>
+                            <option class="hungarian-text" value="mechanics-mecha">Mechanika</option>
+                            <option class="hungarian-text" value="mechanisms-mecha">Mechanizmusok</option>
+                            <option class="hungarian-text" value="computer-aided-design-mecha">Számítógépes tervezés (CAD)</option>
+                            <option class="hungarian-text" value="systems-theory-mecha">Rendszerelmélet</option>
+                            <option class="hungarian-text" value="analog-digital-electronics-mecha">Analóg és digitális elektronika</option>
+                            <option class="hungarian-text" value="cnc-control-programming-mecha">CNC vezérlés és programozás</option>
+                            <option class="hungarian-text" value="robotics-design-control-mecha">Robotok tervezése és vezérlése</option>
                         </select>
 
 
@@ -933,42 +933,42 @@
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
                         <select class="subject-select english-text">
-                            <option class="english-text" value="programming">Programming</option>
-                            <option class="english-text" value="databases">Databases</option>
-                            <option class="english-text" value="operating-systems">Operating Systems</option>
-                            <option class="english-text" value="computer-networks">Computer Networks</option>
-                            <option class="english-text" value="internet-protocols">Internet Protocols</option>
-                            <option class="english-text" value="software-design">Software Design</option>
-                            <option class="english-text" value="analog-digital-electronics">Analog and Digital Electronics</option>
-                            <option class="english-text" value="electrical-measurements">Electrical Measurements</option>
-                            <option class="english-text" value="digital-signal-processing">Digital Signal Processing</option>
-                            <option class="english-text" value="computer-circuit-design">Computer Circuit Design</option>
-                            <option class="english-text" value="telecommunication-theory">Telecommunication Theory</option>
-                            <option class="english-text" value="modulation-techniques">Modulation Techniques</option>
-                            <option class="english-text" value="radio-communication">Radio Communication</option>
-                            <option class="english-text" value="mobile-communication-systems">Mobile Communication Systems</option>
-                            <option class="english-text" value="ip-telephony">IP Telephony</option>
-                            <option class="english-text" value="optical-networks">Optical Networks</option>
-                            <option class="english-text" value="television-broadcasting">Television Broadcasting</option>
+                            <option class="english-text" value="programming-telecommunication">Programming</option>
+                            <option class="english-text" value="databases-telecommunication">Databases</option>
+                            <option class="english-text" value="operating-systems-telecommunication">Operating Systems</option>
+                            <option class="english-text" value="computer-networks-telecommunication">Computer Networks</option>
+                            <option class="english-text" value="internet-protocols-telecommunication">Internet Protocols</option>
+                            <option class="english-text" value="software-design-telecommunication">Software Design</option>
+                            <option class="english-text" value="analog-digital-electronics-telecommunication">Analog and Digital Electronics</option>
+                            <option class="english-text" value="electrical-measurements-telecommunication">Electrical Measurements</option>
+                            <option class="english-text" value="digital-signal-processing-telecommunication">Digital Signal Processing</option>
+                            <option class="english-text" value="computer-circuit-design-telecommunication">Computer Circuit Design</option>
+                            <option class="english-text" value="telecommunication--telecommunication">Telecommunication Theory</option>
+                            <option class="english-text" value="modulation-techniques-telecommunication">Modulation Techniques</option>
+                            <option class="english-text" value="radio-communication-telecommunication">Radio Communication</option>
+                            <option class="english-text" value="mobile-communication-systems-telecommunication">Mobile Communication Systems</option>
+                            <option class="english-text" value="ip-telephony-telecommunication">IP Telephony</option>
+                            <option class="english-text" value="optical-networks-telecommunication">Optical Networks</option>
+                            <option class="english-text" value="television-broadcasting-telecommunication">Television Broadcasting</option>
                         </select>
                         <select class="subject-select hungarian-text">
-                            <option class="hungarian-text" value="programming">Programozás</option>
-                            <option class="hungarian-text" value="databases">Adatbázisok</option>
-                            <option class="hungarian-text" value="operating-systems">Operációs rendszerek</option>
-                            <option class="hungarian-text" value="computer-networks">Számítógéphálózatok</option>
-                            <option class="hungarian-text" value="internet-protocols">Internetprotokollok</option>
-                            <option class="hungarian-text" value="software-design">Szoftvertervezés</option>
-                            <option class="hungarian-text" value="analog-digital-electronics">Analóg és digitális elektronika</option>
-                            <option class="hungarian-text" value="electrical-measurements">Villamos mérések</option>
-                            <option class="hungarian-text" value="digital-signal-processing">Digitális jel- és hangfeldolgozás</option>
-                            <option class="hungarian-text" value="computer-circuit-design">Számítógépes áramkörtervezés</option>
-                            <option class="hungarian-text" value="telecommunication-theory">Hírközléselmélet</option>
-                            <option class="hungarian-text" value="modulation-techniques">Modulációs technikák</option>
-                            <option class="hungarian-text" value="radio-communication">Rádiókommunikáció</option>
-                            <option class="hungarian-text" value="mobile-communication-systems">Mobil kommunikációs rendszerek</option>
-                            <option class="hungarian-text" value="ip-telephony">IP telefónia</option>
-                            <option class="hungarian-text" value="optical-networks">Optikai hálózatok</option>
-                            <option class="hungarian-text" value="television-broadcasting">Televíziózás</option>
+                            <option class="hungarian-text" value="programming-telecommunication">Programozás</option>
+                            <option class="hungarian-text" value="databases-telecommunication">Adatbázisok</option>
+                            <option class="hungarian-text" value="operating-systems-telecommunication">Operációs rendszerek</option>
+                            <option class="hungarian-text" value="computer-networks-telecommunication">Számítógéphálózatok</option>
+                            <option class="hungarian-text" value="internet-protocols-telecommunication">Internetprotokollok</option>
+                            <option class="hungarian-text" value="software-design-telecommunication">Szoftvertervezés</option>
+                            <option class="hungarian-text" value="analog-digital-electronics-telecommunication">Analóg és digitális elektronika</option>
+                            <option class="hungarian-text" value="electrical-measurements-telecommunication">Villamos mérések</option>
+                            <option class="hungarian-text" value="digital-signal-processing-telecommunication">Digitális jel- és hangfeldolgozás</option>
+                            <option class="hungarian-text" value="computer-circuit-design-telecommunication">Számítógépes áramkörtervezés</option>
+                            <option class="hungarian-text" value="telecommunication-theory-telecommunication">Hírközléselmélet</option>
+                            <option class="hungarian-text" value="modulation-techniques-telecommunication">Modulációs technikák</option>
+                            <option class="hungarian-text" value="radio-communication-telecommunication">Rádiókommunikáció</option>
+                            <option class="hungarian-text" value="mobile-communication-systems-telecommunication">Mobil kommunikációs rendszerek</option>
+                            <option class="hungarian-text" value="ip-telephony-telecommunication">IP telefónia</option>
+                            <option class="hungarian-text" value="optical-networks-telecommunication">Optikai hálózatok</option>
+                            <option class="hungarian-text" value="television-broadcasting-telecommunication">Televíziózás</option>
                         </select>
                         <button class="send-button green-button">
                             <span class="english-text">Comment</span>
@@ -1069,32 +1069,32 @@
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
                         <select class="subject-select english-text">
-                            <option class="english-text" value="drawing-design">Drawing and Design</option>
-                            <option class="english-text" value="descriptive-geometry">Descriptive Geometry</option>
-                            <option class="english-text" value="soil-science">Soil Science</option>
-                            <option class="english-text" value="architecture">Architecture</option>
-                            <option class="english-text" value="art-history">Art History</option>
-                            <option class="english-text" value="ethnography">Ethnography</option>
-                            <option class="english-text" value="topography">Topography</option>
-                            <option class="english-text" value="dendrology-plant-knowledge">Dendrology and Plant Knowledge</option>
-                            <option class="english-text" value="history-of-landscape-architecture">History of Landscape Architecture</option>
-                            <option class="english-text" value="green-area-design">Green Area Design</option>
-                            <option class="english-text" value="landscape-design">Landscape Design</option>
-                            <option class="english-text" value="landscape-rehabilitation">Landscape Rehabilitation</option>
+                            <option class="english-text" value="drawing-design-landscape">Drawing and Design</option>
+                            <option class="english-text" value="descriptive-geometry-landscape">Descriptive Geometry</option>
+                            <option class="english-text" value="soil-science-landscape">Soil Science</option>
+                            <option class="english-text" value="architecture-landscape">Architecture</option>
+                            <option class="english-text" value="art-history-landscape">Art History</option>
+                            <option class="english-text" value="ethnography-landscape">Ethnography</option>
+                            <option class="english-text" value="topography-landscape">Topography</option>
+                            <option class="english-text" value="dendrology-plant-knowledge-landscape">Dendrology and Plant Knowledge</option>
+                            <option class="english-text" value="history-of-landscape-architecture-landscape">History of Landscape Architecture</option>
+                            <option class="english-text" value="green-area-design-landscape">Green Area Design</option>
+                            <option class="english-text" value="landscape-design-landscape">Landscape Design</option>
+                            <option class="english-text" value="landscape-rehabilitation-landscape">Landscape Rehabilitation</option>
                         </select>
                         <select class="subject-select hungarian-text">
-                            <option class="hungarian-text" value="drawing-design">Rajz és tervezés</option>
-                            <option class="hungarian-text" value="descriptive-geometry">Ábrázoló geometria</option>
-                            <option class="hungarian-text" value="soil-science">Talajtan</option>
-                            <option class="hungarian-text" value="architecture">Építészet</option>
-                            <option class="hungarian-text" value="art-history">Művészettörténet</option>
-                            <option class="hungarian-text" value="ethnography">Néprajz</option>
-                            <option class="hungarian-text" value="topography">Topográfia</option>
-                            <option class="hungarian-text" value="dendrology-plant-knowledge">Dendrológia és dísznövényismeret</option>
-                            <option class="hungarian-text" value="history-of-landscape-architecture">A tájépítészet története</option>
-                            <option class="hungarian-text" value="green-area-design">Zöldfelület-tervezés</option>
-                            <option class="hungarian-text" value="landscape-design">Tájtervezés</option>
-                            <option class="hungarian-text" value="landscape-rehabilitation">Tájrehabilitáció</option>
+                            <option class="hungarian-text" value="drawing-design-landscape">Rajz és tervezés</option>
+                            <option class="hungarian-text" value="descriptive-geometry-landscape">Ábrázoló geometria</option>
+                            <option class="hungarian-text" value="soil-science-landscape">Talajtan</option>
+                            <option class="hungarian-text" value="architecture-landscape">Építészet</option>
+                            <option class="hungarian-text" value="art-history-landscape">Művészettörténet</option>
+                            <option class="hungarian-text" value="ethnography-landscape">Néprajz</option>
+                            <option class="hungarian-text" value="topography-landscape">Topográfia</option>
+                            <option class="hungarian-text" value="dendrology-plant-knowledge-landscape">Dendrológia és dísznövényismeret</option>
+                            <option class="hungarian-text" value="history-of-landscape-architecture-landscape">A tájépítészet története</option>
+                            <option class="hungarian-text" value="green-area-design-landscape">Zöldfelület-tervezés</option>
+                            <option class="hungarian-text" value="landscape-design-landscape">Tájtervezés</option>
+                            <option class="hungarian-text" value="landscape-rehabilitation-landscape">Tájrehabilitáció</option>
                         </select>
 
 
@@ -1197,30 +1197,30 @@
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
                         <select class="subject-select english-text">
-                            <option value="ornamental-plant-cultivation">Ornamental Plant Cultivation</option>
-                            <option value="medicinal-plant-cultivation">Medicinal Plant Cultivation</option>
-                            <option value="fruit-cultivation">Fruit Cultivation</option>
-                            <option value="fruit-variety-knowledge">Fruit Variety Knowledge</option>
-                            <option value="viticulture">Viticulture</option>
-                            <option value="winemaking">Winemaking</option>
-                            <option value="vegetable-cultivation">Vegetable Cultivation</option>
-                            <option value="micropropagation-breeding">Micropropagation and Breeding of Horticultural Plants</option>
-                            <option value="horticultural-entomology-pathology">Horticultural Entomology and Pathology</option>
-                            <option value="soil-science-agrochemistry">Soil Science and Agrochemistry</option>
-                            <option value="garden-design">Garden Design</option>
+                            <option value="ornamental-plant-cultivation-horticulture">Ornamental Plant Cultivation</option>
+                            <option value="medicinal-plant-cultivation-horticulture">Medicinal Plant Cultivation</option>
+                            <option value="fruit-cultivation-horticulture">Fruit Cultivation</option>
+                            <option value="fruit-variety-knowledge-horticulture">Fruit Variety Knowledge</option>
+                            <option value="viticulture-horticulture">Viticulture</option>
+                            <option value="winemaking-horticulture">Winemaking</option>
+                            <option value="vegetable-cultivation-horticulture">Vegetable Cultivation</option>
+                            <option value="micropropagation-breeding-horticulture">Micropropagation and Breeding of Horticultural Plants</option>
+                            <option value="horticultural-entomology-pathology-horticulture">Horticultural Entomology and Pathology</option>
+                            <option value="soil-science-agrochemistry-horticulture">Soil Science and Agrochemistry</option>
+                            <option value="garden-design-horticulture">Garden Design</option>
                         </select>
                         <select class="subject-select hungarian-text">
-                            <option value="ornamental-plant-cultivation">Dísznövénytermesztés</option>
-                            <option value="medicinal-plant-cultivation">Gyógynövénytermesztés</option>
-                            <option value="fruit-cultivation">Gyümölcstermesztés</option>
-                            <option value="fruit-variety-knowledge">Gyümölcsfajta-ismeret</option>
-                            <option value="viticulture">Szőlőtermesztés</option>
-                            <option value="winemaking">Borászat</option>
-                            <option value="vegetable-cultivation">Zöldségtermesztés</option>
-                            <option value="micropropagation-breeding">Kertészeti növények mikroszaporítása, nemesítése</option>
-                            <option value="horticultural-entomology-pathology">Kertészeti rovartan és kórtan</option>
-                            <option value="soil-science-agrochemistry">Talajtan és agrokémia</option>
-                            <option value="garden-design">Kerttervezés</option>
+                            <option value="ornamental-plant-cultivation-horticulture">Dísznövénytermesztés</option>
+                            <option value="medicinal-plant-cultivation-horticulture">Gyógynövénytermesztés</option>
+                            <option value="fruit-cultivation-horticulture">Gyümölcstermesztés</option>
+                            <option value="fruit-variety-knowledge-horticulture">Gyümölcsfajta-ismeret</option>
+                            <option value="viticulture-horticulture">Szőlőtermesztés</option>
+                            <option value="winemaking-horticulture">Borászat</option>
+                            <option value="vegetable-cultivation-horticulture">Zöldségtermesztés</option>
+                            <option value="micropropagation-breeding-horticulture">Kertészeti növények mikroszaporítása, nemesítése</option>
+                            <option value="horticultural-entomology-pathology-horticulture">Kertészeti rovartan és kórtan</option>
+                            <option value="soil-science-agrochemistry-horticulture">Talajtan és agrokémia</option>
+                            <option value="garden-design-horticulture">Kerttervezés</option>
                         </select>
 
                         <button class="send-button green-button">
@@ -1334,40 +1334,40 @@
                         <select class="subject-select english-text">
                         <option class="english-text" value="intercultural-communication">Intercultural Communication</option>
                         <option class="english-text" value="institutional-communication">Institutional Communication</option>
-                        <option class="english-text" value="communication-law">Communication Law</option>
-                        <option class="english-text" value="press-history">Press History</option>
-                        <option class="english-text" value="communication-theory">Communication Theory</option>
-                        <option class="english-text" value="stylistics-and-style-practice">Stylistics and Style Practice</option>
-                        <option class="english-text" value="mass-communication-systems">Mass Communication Systems</option>
-                        <option class="english-text" value="advertising">Advertising</option>
-                        <option class="english-text" value="marketing-and-management">Marketing and Management</option>
-                        <option class="english-text" value="press-genres">Press Genres</option>
-                        <option class="english-text" value="public-relations">Public Relations</option>
-                        <option class="english-text" value="cultural-and-art-history">Cultural History and Art History</option>
-                        <option class="english-text" value="sociology">Sociology</option>
-                        <option class="english-text" value="social-psychology">Social Psychology</option>
-                        <option class="english-text" value="political-science">Political Science</option>
-                        <option class="english-text" value="negotiation-techniques">Negotiation Techniques</option>
-                        <option class="english-text" value="consumer-behavior">Consumer Behavior</option>
+                        <option class="english-text" value="communication-law-communication">Communication Law</option>
+                        <option class="english-text" value="press-history-communication">Press History</option>
+                        <option class="english-text" value="communication-theory-communication">Communication Theory</option>
+                        <option class="english-text" value="stylistics-and-style-practice-communication">Stylistics and Style Practice</option>
+                        <option class="english-text" value="mass-communication-systems-communication">Mass Communication Systems</option>
+                        <option class="english-text" value="advertising-communication">Advertising</option>
+                        <option class="english-text" value="marketing-and-management-communication">Marketing and Management</option>
+                        <option class="english-text" value="press-genres-communication">Press Genres</option>
+                        <option class="english-text" value="public-relations-communication">Public Relations</option>
+                        <option class="english-text" value="cultural-and-art-history-communication">Cultural History and Art History</option>
+                        <option class="english-text" value="sociology-communication">Sociology</option>
+                        <option class="english-text" value="social-psychology-communication">Social Psychology</option>
+                        <option class="english-text" value="political-science-communication">Political Science</option>
+                        <option class="english-text" value="negotiation-techniques-communication">Negotiation Techniques</option>
+                        <option class="english-text" value="consumer-behavior-communication">Consumer Behavior</option>
                     </select>
                         <select class="subject-select hungarian-text">
                             <option class="hungarian-text" value="intercultural-communication">Interkulturális kommunikáció</option>
                             <option class="hungarian-text" value="institutional-communication">Intézményi kommunikáció</option>
-                            <option class="hungarian-text" value="communication-law">Kommunikációs jog</option>
-                            <option class="hungarian-text" value="press-history">Sajtótörténet</option>
-                            <option class="hungarian-text" value="communication-theory">Kommunikációelmélet</option>
-                            <option class="hungarian-text" value="stylistics-and-style-practice">Stilisztika és stílusgyakorlat</option>
-                            <option class="hungarian-text" value="mass-communication-systems">Tömegkommunikációs rendszerek</option>
-                            <option class="hungarian-text" value="advertising">Reklám</option>
-                            <option class="hungarian-text" value="marketing-and-management">Marketing és menedzsment</option>
-                            <option class="hungarian-text" value="press-genres">Sajtóműfajok</option>
-                            <option class="hungarian-text" value="public-relations">Közkapcsolatok (Public Relation)</option>
-                            <option class="hungarian-text" value="cultural-and-art-history">Művelődéstörténet és művészettörténet</option>
-                            <option class="hungarian-text" value="sociology">Szociológia</option>
-                            <option class="hungarian-text" value="social-psychology">Szociálpszichológia</option>
-                            <option class="hungarian-text" value="political-science">Politológia</option>
-                            <option class="hungarian-text" value="negotiation-techniques">Tárgyalási technikák</option>
-                            <option class="hungarian-text" value="consumer-behavior">Fogyasztói magatartás</option>
+                            <option class="hungarian-text" value="communication-law-communication">Kommunikációs jog</option>
+                            <option class="hungarian-text" value="press-history-communication">Sajtótörténet</option>
+                            <option class="hungarian-text" value="communication-theory-communication">Kommunikációelmélet</option>
+                            <option class="hungarian-text" value="stylistics-and-style-practice-communication">Stilisztika és stílusgyakorlat</option>
+                            <option class="hungarian-text" value="mass-communication-systems-communication">Tömegkommunikációs rendszerek</option>
+                            <option class="hungarian-text" value="advertising-communication">Reklám</option>
+                            <option class="hungarian-text" value="marketing-and-management-communication">Marketing és menedzsment</option>
+                            <option class="hungarian-text" value="press-genres-communication">Sajtóműfajok</option>
+                            <option class="hungarian-text" value="public-relations-communication">Közkapcsolatok (Public Relation)</option>
+                            <option class="hungarian-text" value="cultural-and-art-history-communication">Művelődéstörténet és művészettörténet</option>
+                            <option class="hungarian-text" value="sociology-communication">Szociológia</option>
+                            <option class="hungarian-text" value="social-psychology-communication">Szociálpszichológia</option>
+                            <option class="hungarian-text" value="political-science-communication">Politológia</option>
+                            <option class="hungarian-text" value="negotiation-techniques-communication">Tárgyalási technikák</option>
+                            <option class="hungarian-text" value="consumer-behavior-communication">Fogyasztói magatartás</option>
                         </select>
 
                         <button class="send-button green-button">
@@ -1462,22 +1462,22 @@
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
                         <select class="subject-select english-text">
-                            <option class="english-text" value="english">English Language and Culture</option>
-                            <option class="english-text" value="german">German Language and Culture</option>
-                            <option class="english-text" value="romanian">Romanian Language and Culture</option>
-                            <option class="english-text" value="hungarian">Hungarian Language and Culture</option>
-                            <option class="english-text" value="terminology">Terminology</option>
-                            <option class="english-text" value="specialized-language">Specialized Language</option>
-                            <option class="english-text" value="translation-theory">Translation Theory and Practice</option>
+                            <option class="english-text" value="english-translation">English Language and Culture</option>
+                            <option class="english-text" value="german-translation">German Language and Culture</option>
+                            <option class="english-text" value="romanian-translation">Romanian Language and Culture</option>
+                            <option class="english-text" value="hungarian-translation">Hungarian Language and Culture</option>
+                            <option class="english-text" value="terminology-translation">Terminology</option>
+                            <option class="english-text" value="specialized-language-translation">Specialized Language</option>
+                            <option class="english-text" value="translation-theory-translation">Translation Theory and Practice</option>
                         </select>
                         <select class="subject-select hungarian-text">
-                            <option class="hungarian-text" value="english">Angol Nyelv és Kultúra</option>
-                            <option class="hungarian-text" value="german">Német Nyelv és Kultúra</option>
-                            <option class="hungarian-text" value="romanian">Román Nyelv és Kultúra</option>
-                            <option class="hungarian-text" value="hungarian">Magyar Nyelv és Kultúra</option>
-                            <option class="hungarian-text" value="terminology">Terminológia</option>
-                            <option class="hungarian-text" value="specialized-language">Szaknyelv</option>
-                            <option class="hungarian-text" value="translation-theory">Fordításelmélet és -gyakorlat</option>
+                            <option class="hungarian-text" value="english-translation">Angol Nyelv és Kultúra</option>
+                            <option class="hungarian-text" value="german-translation">Német Nyelv és Kultúra</option>
+                            <option class="hungarian-text" value="romanian-translation">Román Nyelv és Kultúra</option>
+                            <option class="hungarian-text" value="hungarian-translation">Magyar Nyelv és Kultúra</option>
+                            <option class="hungarian-text" value="terminology-translation">Terminológia</option>
+                            <option class="hungarian-text" value="specialized-language-translation">Szaknyelv</option>
+                            <option class="hungarian-text" value="translation-theory-translation">Fordításelmélet és -gyakorlat</option>
                         </select>
 
                         <button class="send-button green-button">
