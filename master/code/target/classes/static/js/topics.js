@@ -202,3 +202,152 @@ document.getElementById('back-from-translation-site').addEventListener('click', 
     document.getElementById('translation-site').classList.remove('active');
     document.getElementById('large-languages-div').classList.add('active');
 });
+
+//COMMENTING
+function saveInfoComment() {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    if (document.getElementById('info-comment-input').value.trim() === ''){
+        var errorMessages = document.getElementById('error-for-ratingSection');
+        errorMessages.textContent = 'Please select a rating first!';
+        errorMessages.style.display = 'block';
+        errorMessages.style.color = 'red';
+    } else {
+
+        var commentValue = document.getElementById('info-comment-input').value;
+        var englishSelectValue = document.getElementById('english-select').value;
+        var subjectValue;
+        if (localStorage.getItem('language') === 'hungarian') {
+            subjectValue = document.getElementById('hungarian-select').value;
+        } else {
+            subjectValue = document.getElementById('english-select').value;
+        }
+        var specialization = document.getElementById('info-site');
+        var currentDate = new Date();
+        var formattedDate = currentDate.toLocaleDateString('hu-HU', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+        const sseUrl = "/sse/sendCommentInTopics";
+
+        fetch('/topics/saveComment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify({
+                specialization: specialization,
+                comment: commentValue,
+                subject: subjectValue,
+                date: formattedDate
+            })
+        }).then(response => {
+            if (response.ok) {
+                fetch(sseUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    },
+                    body: JSON.stringify({
+                        specialization: specialization,
+                        comment: commentValue,
+                        subject: subjectValue,
+                        date: formattedDate
+                    })
+                }).then(response => {
+                    if (response.ok) {
+
+                    } else {
+                        throw new Error('Error in SSE fetch');
+                    }
+                })
+
+                return response.text();
+            } else {
+                throw new Error('Something went wrong in rating save');
+            }
+        }).then(data => {
+            if (data === 'ok') {
+                console.log("Sikeres mentes");
+            }
+
+        }).catch(error => {
+            console.log("Error: ", error);
+        });
+    }
+
+}
+
+$(document).ready(function() {
+    var urlEndpoint = "/sse/subscribe"
+    const eventSource = new EventSource(urlEndpoint);
+
+    eventSource.onopen = function (event) {
+        console.log('SSE connection opened.');
+    };
+
+    eventSource.onerror = function (event) {
+        console.error('SSE error:', event);
+    };
+
+    eventSource.addEventListener('UserComment', function (event) {
+
+    const userCommentData = JSON.parse(event.data);
+    const commentUserId = userCommentData.commentUserId;
+
+    var commentSection = document.createElement('div');
+    commentSection.classList = 'comment-section';
+    commentSection.id = 'comment-section-' + commentUserId;
+
+    var commentRow = document.createElement('div');
+    commentRow.classList = 'comment-row';
+    commentSection.appendChild(commentRow);
+
+    var commentProfileImg = document.createElement('img');
+    commentProfileImg.id = 'commentProfileImg-' + commentUserId;
+    if (userCommentData.userImage == null || userCommentData.userImage === "") {
+                    commentProfileImg.src = "/img/anonym.jpg";
+                } else {
+                    commentProfileImg.src = 'data:image/jpeg;base64,' + userCommentData.userImage;
+                }
+    commentProfileImg.alt = 'Profile Image';
+    commentProfileImg.classList = 'comment-profile-image';
+    commentRow.appendChild(commentProfileImg);
+
+    var commentInfos = document.createElement('div');
+    commentInfos.classList = 'comment-infos';
+    commentRow.appendChild(commentInfos);
+
+    var commentUsernameDiv = document.createElement('div');
+    commentInfos.appendChild(commentUsernameDiv);
+
+    var commentUsername = document.createElement('p');
+    commentUsername.style.margin = '0';
+    commentUsername.textContent = userCommentData.firstName + " " + userCommentData.lastName;
+    commentUsernameDiv.appendChild(commentUsername);
+
+    var commentLabelDate = document.createElement('p');
+    commentLabelDate.classList = 'comment-label-date';
+    commentLabelDate.id = 'comment-label-date-' + commentUserId;
+    commentLabelDate.textContent = userCommentData.date;
+    commentInfos.appendChild(commentLabelDate);
+
+    var commentContent = document.createElement('div');
+    commentContent.classList = 'comment-content';
+    commentSection.appendChild(commentContent);
+
+    var commentSubject = document.createElement('p');
+    commentSubject.classList = 'comment-subject';
+    commentContent.appendChild(commentSubject);
+
+    var commentLabelText = document.createElement('p');
+    commentLabelText.classList = 'comment-label-text';
+    commentLabelText.id = 'comment-label-text-' + ratingUserId;
+    commentLabelText.textContent = userCommentData.comment;
+    commentContent.appendChild(commentLabelText);
+
+    var commentContainer = document.getElementById("commentContainer");
+    commentContainer.appendChild(commentSection);
+        });
+});
