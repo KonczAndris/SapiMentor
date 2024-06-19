@@ -587,10 +587,12 @@ function sendExamsDataToServer(data) {
             location.reload();
         } else if(data === "Too large"){
             //alert("The file is too large!");
+            hideLoadingModal()
             showErrorMessageInExam("The file is too large!\n" +
                 "The maximum file size is 6MB!");
         } else if(data === "Wrong type"){
             //alert("This type png is not supported!");
+            hideLoadingModal()
             showErrorMessageInExam("This type of png is not supported!\n"); // Egyéb hiba esetén
         }
     }).catch(error => {
@@ -604,6 +606,7 @@ function sendExamsDataToServer(data) {
 function showErrorMessageInExam(message) {
     var errorMessageElement = document.getElementById('error-message-exam-modal-content');
     errorMessageElement.innerText = message;
+    errorMessageElement.style.color = 'red';
     // További stílusok vagy műveletek hozzáadhatók a látványosság érdekében
 }
 

@@ -9,6 +9,7 @@ import com.itextpdf.layout.element.Paragraph;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.json.JSONObject;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -176,146 +178,332 @@ public class DiplomaServices {
 
 
 // oldalon a felhasznalo altal hasznalt metodus
-public String uploadDiplomaThesesPdf(MultipartFile pdf,
-                                     String name,
-                                     String topic,
-                                     String user_name,
-                                     String year,
-                                     Long user_id){
-    if(!pdf.isEmpty()) {
-        try {
+//public String uploadDiplomaThesesPdf(MultipartFile pdf,
+//                                     String name,
+//                                     String topic,
+//                                     String user_name,
+//                                     String year,
+//                                     Long user_id){
+//    if(!pdf.isEmpty()) {
+//        try {
+//
+//            if (pdf.getSize() > MAX_PDF_SIZE) {
+//                return "Too large";
+//            }
+//            String finalyKeywords = null;
+//            byte[] abstractPdfBytes_en = null;
+//            byte[] abstractPdfBytes_hu = null;
+//            StringBuilder allKeywords = new StringBuilder();
+//
+//            byte[] originalPdfBytes = pdf.getBytes();
+//
+//            ByteArrayInputStream pdfInputStream = new ByteArrayInputStream(originalPdfBytes);
+//
+//            ByteArrayOutputStream compressedPdfStream = new ByteArrayOutputStream();
+//
+//            PdfReader pdfReader = new PdfReader(pdfInputStream);
+//            PdfWriter pdfWriter = new PdfWriter(compressedPdfStream);
+//
+//            PdfDocument pdfDocument = new PdfDocument(pdfReader, pdfWriter);
+//
+//            try {
+//                String searchText = "Abstract";
+//                String searchText_HU = "Kivonat";
+//                PdfReader pdfReaderForAbstract = new PdfReader(pdf.getInputStream());
+//                int abstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReaderForAbstract, searchText);
+//
+//                if (abstractPageNumber > 0) {
+//                    PdfReader pdfReaderForAbstractText = new PdfReader(pdf.getInputStream());
+//                    String realAbstractText = findKeywordsInAbstract.getAbstractText(pdfReaderForAbstractText, abstractPageNumber);
+//
+//                    ByteArrayOutputStream out_en = new ByteArrayOutputStream();
+//                    PdfWriter writer_en = new PdfWriter(out_en);
+//                    PdfDocument pdfDoc_en = new PdfDocument(writer_en);
+//                    Document document_en = new Document(pdfDoc_en);
+//
+//                    document_en.add(new Paragraph(realAbstractText));
+//
+//                    document_en.close();
+//
+//                    // Byte tömb a PDF adatokkal
+//                    abstractPdfBytes_en = out_en.toByteArray();
+//
+//                    String abstractText = "Get 5 or 3 keywords from this text: " + realAbstractText;
+//                    abstractText = abstractText.replaceAll("[\\r\\n]+", "");
+//
+//                    //////// Itt van a GPT3-as verzio ////////////
+//
+//                    String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
+//
+//                    if(gpt3Response.contains("Error GPT-3 API")){
+//                        finalyKeywords = "No keywords found";
+//                    } else {
+//                        JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
+//
+//                        String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
+//                                .getJSONObject(0)
+//                                .getJSONObject("message")
+//                                .getString("content");
+//
+//                        /////// Idaig van a GPT3-as verzio //////////
+//
+//                        String patternString = "^\\d+\\. (.+)";
+//                        Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
+//
+//                        if (!gpt3Keywords.isEmpty()) {
+//                            Matcher matcher = pattern.matcher(gpt3Keywords);
+//                            while (matcher.find()){
+//                                allKeywords.append(matcher.group(1)).append(", ");
+//                            }
+//                            finalyKeywords = allKeywords.toString();
+//                        } else {
+//                            allKeywords.append("No keywords found");
+//                            finalyKeywords = "No keywords found";
+//                        }
+//                    }
+//                } else {
+//                    System.out.println("Abstract not found in the PDF.");
+//                }
+//
+//                /////////////////////// Magyar kivonat kinyerese /////////////////////////////////////////////////////////////////
+//                PdfReader pdfReaderForHuAbstract = new PdfReader(pdf.getInputStream());
+//                int huAbstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReaderForHuAbstract, searchText_HU);
+//                //System.out.println("Abstract page number: " + huAbstractPageNumber);
+//
+//                if (huAbstractPageNumber > 0) {
+//                    PdfReader pdfReaderForTextHU = new PdfReader(pdf.getInputStream());
+//                    String huAbstractTextForCSV = findKeywordsInAbstract.getAbstract_HU_Text(pdfReaderForTextHU, huAbstractPageNumber);
+//                    // System.out.println("Magyar kivonat: " + huAbstractTextForCSV + "\n");
+//
+//                    ByteArrayOutputStream out_hu = new ByteArrayOutputStream();
+//                    PdfWriter writer_hu = new PdfWriter(out_hu);
+//                    PdfDocument pdfDoc_hu = new PdfDocument(writer_hu);
+//                    Document document_hu = new Document(pdfDoc_hu);
+//
+//                    document_hu.add(new Paragraph(huAbstractTextForCSV));
+//
+//                    document_hu.close();
+//
+//                    // Byte tömb a PDF adatokkal
+//                    abstractPdfBytes_hu = out_hu.toByteArray();
+//
+//
+//                } else {
+//                    System.out.println("Kivonat not found in the PDF.");
+//                }
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            // A képek minőségének csökkentése 80%-ra
+//            int numPages = pdfDocument.getNumberOfPages();
+//            for (int i = 1; i <= numPages; i++) {
+//                PdfPage page = pdfDocument.getPage(i);
+//                PdfDictionary resources = page.getPdfObject().getAsDictionary(PdfName.Resources);
+//                if (resources != null) {
+//                    PdfDictionary xObject = resources.getAsDictionary(PdfName.XObject);
+//                    if (xObject != null) {
+//                        PdfDictionary imageDict = xObject.getAsDictionary(PdfName.Image);
+//                        if (imageDict != null) {
+//                            imageDict.put(PdfName.Filter, PdfName.DCTDecode);
+//                        }
+//                    }
+//                }
+//            }
+//            pdfDocument.close();
+//            pdfReader.close();
+//
+//            byte[] compressedPdfBytes = compressedPdfStream.toByteArray();
+//
+////            Diploma_Theses pdfNameAndTopic = diplomaThesesRepository.findNameAndTopic(name,topic,year);
+////            if (pdfNameAndTopic == null) {
+//                Diploma_Theses diploma_theses = new Diploma_Theses();
+//                diploma_theses.setName(name);
+//                diploma_theses.setTopic_name(topic);
+//                diploma_theses.setUser_name(user_name);
+//                diploma_theses.setYear(year);
+//                diploma_theses.setLike(0);
+//                diploma_theses.setDislike(0);
+//                diploma_theses.setKeywords(allKeywords.toString());
+//                diploma_theses.setUser_id(user_id);
+//                diploma_theses.setDiploma_theses_file(compressedPdfBytes);
+//                diploma_theses.setAbstract_file_en(abstractPdfBytes_en);
+//                diploma_theses.setAbstract_file_hu(abstractPdfBytes_hu);
+//                diplomaThesesRepository.save(diploma_theses);
+////            }
+////            else {
+////                if (pdfNameAndTopic.getName().equals(name) && pdfNameAndTopic.getTopic_name().equals(topic) && pdfNameAndTopic.getYear().equals(year)) {
+////                    pdfNameAndTopic.setAbstract_file_en(abstractPdfBytes_en);
+////                    pdfNameAndTopic.setAbstract_file_hu(abstractPdfBytes_hu);
+////                    pdfNameAndTopic.setUser_id(user_id);
+////                    diplomaThesesRepository.save(pdfNameAndTopic);
+////                } else {
+////                    Diploma_Theses diploma_theses = new Diploma_Theses();
+////                    diploma_theses.setName(name);
+////                    diploma_theses.setTopic_name(topic);
+////                    diploma_theses.setUser_name(user_name);
+////                    diploma_theses.setYear(year);
+////                    diploma_theses.setLike(0);
+////                    diploma_theses.setDislike(0);
+////                    diploma_theses.setKeywords(allKeywords.toString());
+////                    diploma_theses.setUser_id(user_id);
+////                    diploma_theses.setDiploma_theses_file(compressedPdfBytes);
+////                    diploma_theses.setAbstract_file_en(abstractPdfBytes_en);
+////                    diploma_theses.setAbstract_file_hu(abstractPdfBytes_hu);
+////                    diplomaThesesRepository.save(diploma_theses);
+////                 }
+////            }
+//
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    return null;
+//}
 
-            if (pdf.getSize() > MAX_PDF_SIZE) {
-                return "Too large";
-            }
-            String finalyKeywords = null;
-            byte[] abstractPdfBytes_en = null;
-            byte[] abstractPdfBytes_hu = null;
-            StringBuilder allKeywords = new StringBuilder();
 
-            byte[] originalPdfBytes = pdf.getBytes();
-
-            ByteArrayInputStream pdfInputStream = new ByteArrayInputStream(originalPdfBytes);
-
-            ByteArrayOutputStream compressedPdfStream = new ByteArrayOutputStream();
-
-            PdfReader pdfReader = new PdfReader(pdfInputStream);
-            PdfWriter pdfWriter = new PdfWriter(compressedPdfStream);
-
-            PdfDocument pdfDocument = new PdfDocument(pdfReader, pdfWriter);
-
+    @Async
+    @Transactional
+    public CompletableFuture<String> uploadDiplomaThesesPdf(MultipartFile pdf,
+                                                            String name,
+                                                            String topic,
+                                                            String user_name,
+                                                            String year,
+                                                            Long user_id){
+        if(!pdf.isEmpty()) {
             try {
-                String searchText = "Abstract";
-                String searchText_HU = "Kivonat";
-                PdfReader pdfReaderForAbstract = new PdfReader(pdf.getInputStream());
-                int abstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReaderForAbstract, searchText);
 
-                if (abstractPageNumber > 0) {
-                    PdfReader pdfReaderForAbstractText = new PdfReader(pdf.getInputStream());
-                    String realAbstractText = findKeywordsInAbstract.getAbstractText(pdfReaderForAbstractText, abstractPageNumber);
+                if (pdf.getSize() > MAX_PDF_SIZE) {
+                    return CompletableFuture.completedFuture("Too large");
+                }
+                String finalyKeywords = null;
+                byte[] abstractPdfBytes_en = null;
+                byte[] abstractPdfBytes_hu = null;
+                StringBuilder allKeywords = new StringBuilder();
 
-                    ByteArrayOutputStream out_en = new ByteArrayOutputStream();
-                    PdfWriter writer_en = new PdfWriter(out_en);
-                    PdfDocument pdfDoc_en = new PdfDocument(writer_en);
-                    Document document_en = new Document(pdfDoc_en);
+                byte[] originalPdfBytes = pdf.getBytes();
 
-                    document_en.add(new Paragraph(realAbstractText));
+                ByteArrayInputStream pdfInputStream = new ByteArrayInputStream(originalPdfBytes);
 
-                    document_en.close();
+                ByteArrayOutputStream compressedPdfStream = new ByteArrayOutputStream();
 
-                    // Byte tömb a PDF adatokkal
-                    abstractPdfBytes_en = out_en.toByteArray();
+                PdfReader pdfReader = new PdfReader(pdfInputStream);
+                PdfWriter pdfWriter = new PdfWriter(compressedPdfStream);
 
-                    String abstractText = "Get 5 or 3 keywords from this text: " + realAbstractText;
-                    abstractText = abstractText.replaceAll("[\\r\\n]+", "");
+                PdfDocument pdfDocument = new PdfDocument(pdfReader, pdfWriter);
 
-                    //////// Itt van a GPT3-as verzio ////////////
+                try {
+                    String searchText = "Abstract";
+                    String searchText_HU = "Kivonat";
+                    PdfReader pdfReaderForAbstract = new PdfReader(pdf.getInputStream());
+                    int abstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReaderForAbstract, searchText);
 
-                    String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
+                    if (abstractPageNumber > 0) {
+                        PdfReader pdfReaderForAbstractText = new PdfReader(pdf.getInputStream());
+                        String realAbstractText = findKeywordsInAbstract.getAbstractText(pdfReaderForAbstractText, abstractPageNumber);
 
-                    if(gpt3Response.contains("Error GPT-3 API")){
-                        finalyKeywords = "No keywords found";
-                    } else {
-                        JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
+                        ByteArrayOutputStream out_en = new ByteArrayOutputStream();
+                        PdfWriter writer_en = new PdfWriter(out_en);
+                        PdfDocument pdfDoc_en = new PdfDocument(writer_en);
+                        Document document_en = new Document(pdfDoc_en);
 
-                        String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
-                                .getJSONObject(0)
-                                .getJSONObject("message")
-                                .getString("content");
+                        document_en.add(new Paragraph(realAbstractText));
 
-                        /////// Idaig van a GPT3-as verzio //////////
+                        document_en.close();
 
-                        String patternString = "^\\d+\\. (.+)";
-                        Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
+                        // Byte tömb a PDF adatokkal
+                        abstractPdfBytes_en = out_en.toByteArray();
 
-                        if (!gpt3Keywords.isEmpty()) {
-                            Matcher matcher = pattern.matcher(gpt3Keywords);
-                            while (matcher.find()){
-                                allKeywords.append(matcher.group(1)).append(", ");
-                            }
-                            finalyKeywords = allKeywords.toString();
-                        } else {
-                            allKeywords.append("No keywords found");
+                        String abstractText = "Get 5 or 3 keywords from this text: " + realAbstractText;
+                        abstractText = abstractText.replaceAll("[\\r\\n]+", "");
+
+                        //////// Itt van a GPT3-as verzio ////////////
+
+                        String gpt3Response = gpt3Service.getKeywordsFromAbstractWithGPT3(abstractText);
+
+                        if(gpt3Response.contains("Error GPT-3 API")){
                             finalyKeywords = "No keywords found";
+                        } else {
+                            JSONObject gpt3JsonResponse = new JSONObject(gpt3Response);
+
+                            String gpt3Keywords = gpt3JsonResponse.getJSONArray("choices")
+                                    .getJSONObject(0)
+                                    .getJSONObject("message")
+                                    .getString("content");
+
+                            /////// Idaig van a GPT3-as verzio //////////
+
+                            String patternString = "^\\d+\\. (.+)";
+                            Pattern pattern = Pattern.compile(patternString, Pattern.MULTILINE);
+
+                            if (!gpt3Keywords.isEmpty()) {
+                                Matcher matcher = pattern.matcher(gpt3Keywords);
+                                while (matcher.find()){
+                                    allKeywords.append(matcher.group(1)).append(", ");
+                                }
+                                finalyKeywords = allKeywords.toString();
+                            } else {
+                                allKeywords.append("No keywords found");
+                                finalyKeywords = "No keywords found";
+                            }
+                        }
+                    } else {
+                        System.out.println("Abstract not found in the PDF.");
+                    }
+
+                    /////////////////////// Magyar kivonat kinyerese /////////////////////////////////////////////////////////////////
+                    PdfReader pdfReaderForHuAbstract = new PdfReader(pdf.getInputStream());
+                    int huAbstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReaderForHuAbstract, searchText_HU);
+                    //System.out.println("Abstract page number: " + huAbstractPageNumber);
+
+                    if (huAbstractPageNumber > 0) {
+                        PdfReader pdfReaderForTextHU = new PdfReader(pdf.getInputStream());
+                        String huAbstractTextForCSV = findKeywordsInAbstract.getAbstract_HU_Text(pdfReaderForTextHU, huAbstractPageNumber);
+                        // System.out.println("Magyar kivonat: " + huAbstractTextForCSV + "\n");
+
+                        ByteArrayOutputStream out_hu = new ByteArrayOutputStream();
+                        PdfWriter writer_hu = new PdfWriter(out_hu);
+                        PdfDocument pdfDoc_hu = new PdfDocument(writer_hu);
+                        Document document_hu = new Document(pdfDoc_hu);
+
+                        document_hu.add(new Paragraph(huAbstractTextForCSV));
+
+                        document_hu.close();
+
+                        // Byte tömb a PDF adatokkal
+                        abstractPdfBytes_hu = out_hu.toByteArray();
+
+
+                    } else {
+                        System.out.println("Kivonat not found in the PDF.");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                // A képek minőségének csökkentése 80%-ra
+                int numPages = pdfDocument.getNumberOfPages();
+                for (int i = 1; i <= numPages; i++) {
+                    PdfPage page = pdfDocument.getPage(i);
+                    PdfDictionary resources = page.getPdfObject().getAsDictionary(PdfName.Resources);
+                    if (resources != null) {
+                        PdfDictionary xObject = resources.getAsDictionary(PdfName.XObject);
+                        if (xObject != null) {
+                            PdfDictionary imageDict = xObject.getAsDictionary(PdfName.Image);
+                            if (imageDict != null) {
+                                imageDict.put(PdfName.Filter, PdfName.DCTDecode);
+                            }
                         }
                     }
-                } else {
-                    System.out.println("Abstract not found in the PDF.");
                 }
+                pdfDocument.close();
+                pdfReader.close();
 
-                /////////////////////// Magyar kivonat kinyerese /////////////////////////////////////////////////////////////////
-                PdfReader pdfReaderForHuAbstract = new PdfReader(pdf.getInputStream());
-                int huAbstractPageNumber = findKeywordsInAbstract.findAbstractPageNumber(pdfReaderForHuAbstract, searchText_HU);
-                //System.out.println("Abstract page number: " + huAbstractPageNumber);
+                byte[] compressedPdfBytes = compressedPdfStream.toByteArray();
 
-                if (huAbstractPageNumber > 0) {
-                    PdfReader pdfReaderForTextHU = new PdfReader(pdf.getInputStream());
-                    String huAbstractTextForCSV = findKeywordsInAbstract.getAbstract_HU_Text(pdfReaderForTextHU, huAbstractPageNumber);
-                    // System.out.println("Magyar kivonat: " + huAbstractTextForCSV + "\n");
-
-                    ByteArrayOutputStream out_hu = new ByteArrayOutputStream();
-                    PdfWriter writer_hu = new PdfWriter(out_hu);
-                    PdfDocument pdfDoc_hu = new PdfDocument(writer_hu);
-                    Document document_hu = new Document(pdfDoc_hu);
-
-                    document_hu.add(new Paragraph(huAbstractTextForCSV));
-
-                    document_hu.close();
-
-                    // Byte tömb a PDF adatokkal
-                    abstractPdfBytes_hu = out_hu.toByteArray();
-
-
-                } else {
-                    System.out.println("Kivonat not found in the PDF.");
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            // A képek minőségének csökkentése 80%-ra
-            int numPages = pdfDocument.getNumberOfPages();
-            for (int i = 1; i <= numPages; i++) {
-                PdfPage page = pdfDocument.getPage(i);
-                PdfDictionary resources = page.getPdfObject().getAsDictionary(PdfName.Resources);
-                if (resources != null) {
-                    PdfDictionary xObject = resources.getAsDictionary(PdfName.XObject);
-                    if (xObject != null) {
-                        PdfDictionary imageDict = xObject.getAsDictionary(PdfName.Image);
-                        if (imageDict != null) {
-                            imageDict.put(PdfName.Filter, PdfName.DCTDecode);
-                        }
-                    }
-                }
-            }
-            pdfDocument.close();
-            pdfReader.close();
-
-            byte[] compressedPdfBytes = compressedPdfStream.toByteArray();
-
-            Diploma_Theses pdfNameAndTopic = diplomaThesesRepository.findNameAndTopic(name,topic,year);
-            if (pdfNameAndTopic == null) {
                 Diploma_Theses diploma_theses = new Diploma_Theses();
                 diploma_theses.setName(name);
                 diploma_theses.setTopic_name(topic);
@@ -329,36 +517,13 @@ public String uploadDiplomaThesesPdf(MultipartFile pdf,
                 diploma_theses.setAbstract_file_en(abstractPdfBytes_en);
                 diploma_theses.setAbstract_file_hu(abstractPdfBytes_hu);
                 diplomaThesesRepository.save(diploma_theses);
-            } else {
-                if (pdfNameAndTopic.getName().equals(name) && pdfNameAndTopic.getTopic_name().equals(topic) && pdfNameAndTopic.getYear().equals(year)) {
-                    pdfNameAndTopic.setAbstract_file_en(abstractPdfBytes_en);
-                    pdfNameAndTopic.setAbstract_file_hu(abstractPdfBytes_hu);
-                    pdfNameAndTopic.setUser_id(user_id);
-                    diplomaThesesRepository.save(pdfNameAndTopic);
-                } else {
-                    Diploma_Theses diploma_theses = new Diploma_Theses();
-                    diploma_theses.setName(name);
-                    diploma_theses.setTopic_name(topic);
-                    diploma_theses.setUser_name(user_name);
-                    diploma_theses.setYear(year);
-                    diploma_theses.setLike(0);
-                    diploma_theses.setDislike(0);
-                    diploma_theses.setKeywords(allKeywords.toString());
-                    diploma_theses.setUser_id(user_id);
-                    diploma_theses.setDiploma_theses_file(compressedPdfBytes);
-                    diploma_theses.setAbstract_file_en(abstractPdfBytes_en);
-                    diploma_theses.setAbstract_file_hu(abstractPdfBytes_hu);
-                    diplomaThesesRepository.save(diploma_theses);
-                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        return null;
     }
-    return null;
-}
 
 // a CommandLineRunner altal hasznalt metodus
 public String uploadDiplomaThesesPdfByCLR(byte[] pdfBytes,

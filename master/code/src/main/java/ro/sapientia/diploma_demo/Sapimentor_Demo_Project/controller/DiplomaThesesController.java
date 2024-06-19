@@ -24,6 +24,7 @@ import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UserProfileNoti
 
 import java.security.Principal;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 @RequestMapping("/resources/diplomaTheses")
 @Controller
@@ -295,9 +296,9 @@ public class DiplomaThesesController {
             String user_name = user.getFirst_Name() + " " + user.getLast_Name();
             Long user_id = user.getId();
             try {
-                String errorMessage = diplomaServices.uploadDiplomaThesesPdf(pdf, name, topic, user_name, year, user_id);
+                CompletableFuture<String> errorMessage = diplomaServices.uploadDiplomaThesesPdf(pdf, name, topic, user_name, year, user_id);
                 if (errorMessage != null){
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(String.valueOf(errorMessage));
                 }
 
                 return ResponseEntity.ok("Success");

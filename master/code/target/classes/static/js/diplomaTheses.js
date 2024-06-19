@@ -569,45 +569,105 @@ function addLinkRow() {
     }
 }
 
-function saveDiplomaThesesDataToServer() {
-    //var tableRows = document.querySelectorAll(".table-container table tbody tr");
-    var data = [];
+// function saveDiplomaThesesDataToServer() {
+//     //var tableRows = document.querySelectorAll(".table-container table tbody tr");
+//     var data = [];
+//
+//     var pdfFile = document.getElementById("fileUpload").files[0];
+//     var pdfFileName = document.getElementById("diplomaTheses-edit").value;
+//     var pdfFileYear = document.getElementById("diplomaTheses-edit-year").value;
+//     var pdfTopic = document.getElementById("topic-selected-modal").value;
+//
+//     data.push({
+//         name: pdfFileName,
+//         pdf: pdfFile,
+//         topic: pdfTopic,
+//         year: pdfFileYear
+//     });
+//
+//     if (pdfFile == null || pdfFileName === "" || pdfFileYear === "" || pdfTopic === "") {
+//         //alert("Please fill out all fields!");
+//         showErrorMessageInDiploma("Please fill out all fields!");
+//     } else {
+//         sendDiplomaThesesDataToServer(data);
+//     }
+//
+// }
+//
+// function showLoadingModal() {
+//     var modal = document.getElementById("loading-modal");
+//     modal.style.display = "block";
+// }
+//
+// function hideLoadingModal() {
+//     var modal = document.getElementById("loading-modal");
+//     modal.style.display = "none";
+// }
+// function sendDiplomaThesesDataToServer(data) {
+//     showLoadingModal()
+//     var token = $("meta[name='_csrf']").attr("content");
+//     var header = $("meta[name='_csrf_header']").attr("content");
+//
+//     var formData = new FormData();
+//     formData.append("pdf", data[0].pdf);
+//     formData.append("name", data[0].name);
+//     formData.append("year", data[0].year);
+//     formData.append("topic", data[0].topic);
+//
+//
+//     fetch('/resources/diplomaTheses/uploadDiplomaTheses', {
+//         method: 'POST',
+//         headers: {
+//             'X-CSRF-TOKEN': token
+//         },
+//         body: formData
+//     }).then(response => {
+//         if (response.ok) {
+//             return response.text();
+//         } else {
+//             return response.text();
+//         }
+//     }).then(data => {
+//         if (data === "Success") {
+//             location.reload();
+//         } else if(data === "Too large"){
+//             showErrorMessageInExam("The file is too large!");
+//         } else if (data === "TOO LARGE FILE"){
+//             showErrorMessageInExam("The file size exceeds the maximum limit of 10 MB!"); // Egyéb hiba esetén
+//         }
+//     }).catch(error => {
+//         hideLoadingModal()
+//         console.error('An error occurred:', error);
+//     });
+//
+// }
 
-    // tableRows.forEach(function (row) {
-    //     var linkNumber = row.querySelector("td:first-child").textContent;
-    //     var linkName = row.querySelector("td:nth-child(2)").textContent;
-    //     var linkTopic = row.querySelector("td:nth-child(3)").textContent;
-    //
-    //     // Assuming you have an array for storing likes and dislikes for each row
-    //     var linkLikes = row.querySelector("td:nth-child(4)").textContent;
-    //
-    //     // Push the data into the 'data' array
-    //     data.push({
-    //         linkNumber: linkNumber,
-    //         linkName: linkName,
-    //         linkTopic: linkTopic,
-    //         linkLikes: linkLikes,
-    //     });
-    // });
+async function saveDiplomaThesesDataToServer() {
     var pdfFile = document.getElementById("fileUpload").files[0];
     var pdfFileName = document.getElementById("diplomaTheses-edit").value;
     var pdfFileYear = document.getElementById("diplomaTheses-edit-year").value;
     var pdfTopic = document.getElementById("topic-selected-modal").value;
 
-    data.push({
-        name: pdfFileName,
-        pdf: pdfFile,
-        topic: pdfTopic,
-        year: pdfFileYear
-    });
-
     if (pdfFile == null || pdfFileName === "" || pdfFileYear === "" || pdfTopic === "") {
-        //alert("Please fill out all fields!");
         showErrorMessageInDiploma("Please fill out all fields!");
-    } else {
-        sendDiplomaThesesDataToServer(data);
+        return; // Kilépés, ha nincsenek kitöltve az összes mező
     }
 
+    showLoadingModal();
+
+    var data = {
+        pdf: pdfFile,
+        name: pdfFileName,
+        year: pdfFileYear,
+        topic: pdfTopic
+    };
+
+    try {
+        await sendDiplomaThesesDataToServer(data);
+    } catch (error) {
+        console.error('An error occurred:', error);
+        hideLoadingModal();
+    }
 }
 
 function showLoadingModal() {
@@ -619,43 +679,53 @@ function hideLoadingModal() {
     var modal = document.getElementById("loading-modal");
     modal.style.display = "none";
 }
-function sendDiplomaThesesDataToServer(data) {
-    showLoadingModal()
+
+async function sendDiplomaThesesDataToServer(data) {
     var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
 
     var formData = new FormData();
-    formData.append("pdf", data[0].pdf);
-    formData.append("name", data[0].name);
-    formData.append("year", data[0].year);
-    formData.append("topic", data[0].topic);
+    formData.append("pdf", data.pdf);
+    formData.append("name", data.name);
+    formData.append("year", data.year);
+    formData.append("topic", data.topic);
 
+    try {
+        const response = await fetch('/resources/diplomaTheses/uploadDiplomaTheses', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': token
+            },
+            body: formData
+        });
 
-    fetch('/resources/diplomaTheses/uploadDiplomaTheses', {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': token
-        },
-        body: formData
-    }).then(response => {
-        if (response.ok) {
-            return response.text();
-        } else {
-            return response.text();
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-    }).then(data => {
-        if (data === "Success") {
+
+
+        const responseData = await response.text();
+
+        if (responseData === "Success") {
+            showLoadingModal();
             location.reload();
-        } else if(data === "Too large"){
+        } else if (responseData === "Too large") {
+            hideLoadingModal();
             showErrorMessageInExam("The file is too large!");
-        } else if (data === "TOO LARGE FILE"){
-            showErrorMessageInExam("The file size exceeds the maximum limit of 10 MB!"); // Egyéb hiba esetén
+        } else if (responseData === "TOO LARGE FILE") {
+            hideLoadingModal();
+            showErrorMessageInExam("The file size exceeds the maximum limit of 10 MB!");
+        } else {
+            hideLoadingModal();
+            showErrorMessageInExam("Unknown error occurred");
         }
-    }).catch(error => {
-        hideLoadingModal()
-        console.error('An error occurred:', error);
-    });
 
+    } catch (error) {
+        console.error('An error occurred:', error);
+        throw error; // Hiba továbbdobása a saveDiplomaThesesDataToServer függvény felé
+    }
+    // finally {
+    //     hideLoadingModal();
+    // }
 }
 
 //DELETE
