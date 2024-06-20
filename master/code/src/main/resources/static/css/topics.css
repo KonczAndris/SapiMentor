@@ -365,6 +365,12 @@
     margin-top: 5px;
 }
 
+.error-for-comment_Section{
+    color: red;
+    display: block;
+    margin-bottom: 2%;
+}
+
 @media (max-width: 600px) {
     .mid-topic-div, .mid-info-div, .mid-engineering-div, .mid-languages-div{
         display: flex;

@@ -5,10 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Rating;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topics_Comment;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.Topics_CommentRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.DiplomaServices;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ExamServices;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.ResourceServices;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.Topics_CommentService;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -24,17 +27,23 @@ public class SseController {
     private final ResourceServices resourceServices;
     private final ExamServices examServices;
     private final DiplomaServices diplomaServices;
+    private final Topics_CommentService topicsCommentService;
+    private final Topics_CommentRepository topicsCommentRepository;
 
     private final UserRepository userRepository;
 
     public SseController(ResourceServices resourceServices,
                          ExamServices examServices,
                          DiplomaServices diplomaServices,
-                         UserRepository userRepository) {
+                         UserRepository userRepository,
+                         Topics_CommentService topicsCommentService,
+                         Topics_CommentRepository topicsCommentRepository) {
         this.resourceServices = resourceServices;
         this.examServices = examServices;
         this.diplomaServices = diplomaServices;
         this.userRepository = userRepository;
+        this.topicsCommentService = topicsCommentService;
+        this.topicsCommentRepository = topicsCommentRepository;
     }
 
     // SSE endpoint
@@ -214,13 +223,6 @@ public class SseController {
             String comment = commentData.getComment();
             String date = commentData.getDate();
 
-//            System.out.println("ratingUserEmail: " + ratingUserEmail + " ,Id: " + ratingUserId);
-//            System.out.println("ratedUserId: " + ratedUserId);
-//            System.out.println("score: " + score);
-//            System.out.println("comment: " + comment);
-//            System.out.println("date: " + date);
-
-            //System.out.println("SSE message sent1(message): " + message);
             if (ratedUserId == null && ratingUserId == null) {
                 return ResponseEntity.badRequest().body("Invalid message");
             }
@@ -234,9 +236,6 @@ public class SseController {
                 String firstName = (String) userData[2];
                 String lastName = (String) userData[1];
 
-//                System.out.println("userImage: " + userImage);
-//                System.out.println("userName: " + userName);
-
                 Map<String, Object> userCommentData = new HashMap<>();
                 userCommentData.put("ratingUserId", ratingUserId);
                 userCommentData.put("ratedUserId", ratedUserId);
@@ -246,8 +245,6 @@ public class SseController {
                 userCommentData.put("userImage", userImage);
                 userCommentData.put("firstName", firstName);
                 userCommentData.put("lastName", lastName);
-
-                //System.out.println("userCommentData: " + userCommentData);
 
                 for (SseEmitter emitter : emitters) {
                     try {
@@ -266,5 +263,58 @@ public class SseController {
             return null;
         }
     }
+
+    @PostMapping("/sendCommentInTopics")
+    public ResponseEntity<String> sendSseMessageForCommentInTopics(@RequestBody Topics_Comment commentData,
+                                                                    Principal principal) {
+        try {
+            String userEmail = principal.getName();
+            Long userId = userRepository.findIdByEmail(userEmail);
+            String ratedTopicId = commentData.getRatedTopicId();
+            String subject = commentData.getSubject();
+            String subject_hu = commentData.getSubject_hu();
+            String comment = commentData.getComment();
+            String date = commentData.getDate();
+
+            if (ratedTopicId == null && userId == null) {
+                return ResponseEntity.badRequest().body("Invalid message");
+            }
+
+            List<Object[]> userImageAndName = userRepository.findUserImageById(userId);
+
+            if (userImageAndName != null && !userImageAndName.isEmpty()) {
+                Object[] userData = userImageAndName.get(0);
+
+                byte[] userImage = (byte[]) userData[0];
+                String firstName = (String) userData[2];
+                String lastName = (String) userData[1];
+
+                Map<String, Object> userCommentData = new HashMap<>();
+                userCommentData.put("ratingUserId", userId);
+                userCommentData.put("ratedTopicId", ratedTopicId);
+                userCommentData.put("subject", subject);
+                userCommentData.put("subject_hu", subject_hu);
+                userCommentData.put("comment", comment);
+                userCommentData.put("date", date);
+                userCommentData.put("userImage", userImage);
+                userCommentData.put("firstName", firstName);
+                userCommentData.put("lastName", lastName);
+
+                for (SseEmitter emitter : emitters) {
+                    try {
+                        emitter.send(SseEmitter.event().name("UserCommentTopics").data(userCommentData));
+                    } catch (IOException e) {
+                        //e.printStackTrace(); // Logold ki a kivételt
+                        emitters.remove(emitter);
+                    }
+                }
+            }
+            return ResponseEntity.ok("SSE message sent");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
 

@@ -203,27 +203,113 @@ document.getElementById('back-from-translation-site').addEventListener('click', 
     document.getElementById('large-languages-div').classList.add('active');
 });
 
+$(document).ready(function() {
+    var urlEndpoint = "/sse/subscribe"
+    const eventSource = new EventSource(urlEndpoint);
+
+    eventSource.onopen = function (event) {
+        console.log('SSE connection opened.');
+    };
+
+    eventSource.onerror = function (event) {
+        console.error('SSE error:', event);
+    };
+
+    eventSource.addEventListener('UserCommentTopics', function (event) {
+
+        const userCommentData = JSON.parse(event.data);
+        const ratingUserId = userCommentData.ratingUserId;
+
+        const topicDiv = document.getElementById(userCommentData.ratedTopicId);
+
+        if(topicDiv !== null) {
+            var commentSection = document.createElement('div');
+            commentSection.classList = 'comment-section';
+            commentSection.id = 'comment-section-' + ratingUserId;
+
+            var commentRow = document.createElement('div');
+            commentRow.classList = 'comment-row';
+            commentSection.appendChild(commentRow);
+
+            var commentProfileImg = document.createElement('img');
+            commentProfileImg.id = 'commentProfileImg-' + ratingUserId;
+            if (userCommentData.userImage == null || userCommentData.userImage === "") {
+                commentProfileImg.src = "/img/anonym.jpg";
+            } else {
+                commentProfileImg.src = 'data:image/jpeg;base64,' + userCommentData.userImage;
+            }
+            commentProfileImg.alt = 'Profile Image';
+            commentProfileImg.classList = 'comment-profile-image';
+            commentRow.appendChild(commentProfileImg);
+
+            var commentInfos = document.createElement('div');
+            commentInfos.classList = 'comment-infos';
+            commentRow.appendChild(commentInfos);
+
+            var commentUsernameDiv = document.createElement('div');
+            commentInfos.appendChild(commentUsernameDiv);
+
+            var commentUsername = document.createElement('p');
+            commentUsername.style.margin = '0';
+            commentUsername.textContent = userCommentData.firstName + " " + userCommentData.lastName;
+            commentUsernameDiv.appendChild(commentUsername);
+
+            var commentLabelDate = document.createElement('p');
+            commentLabelDate.classList = 'comment-label-date';
+            commentLabelDate.id = 'comment-label-date-' + ratingUserId;
+            commentLabelDate.textContent = userCommentData.date;
+            commentInfos.appendChild(commentLabelDate);
+
+            var commentContent = document.createElement('div');
+            commentContent.classList = 'comment-content';
+            commentSection.appendChild(commentContent);
+
+            var commentSubject = document.createElement('p');
+            commentSubject.classList = 'comment-subject';
+            commentContent.appendChild(commentSubject);
+
+            var commentLabelText = document.createElement('p');
+            commentLabelText.classList = 'comment-label-text';
+            commentLabelText.id = 'comment-label-text-' + ratingUserId;
+            commentLabelText.textContent = userCommentData.comment;
+            commentContent.appendChild(commentLabelText);
+
+            //var commentContainer = document.getElementById("commentContainer");
+            //commentContainer.appendChild(commentSection);
+
+            // itt maskepp van a mygroup-nal a felepites itt nincs commentContainer azert add hibat .
+        }
+    });
+});
+
+
 //COMMENTING
-function saveInfoComment() {
+function saveInfoComment(siteId) {
+    console.log("Save info comment");
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-
-    if (document.getElementById('info-comment-input').value.trim() === ''){
-        var errorMessages = document.getElementById('error-for-ratingSection');
-        errorMessages.textContent = 'Please select a rating first!';
-        errorMessages.style.display = 'block';
-        errorMessages.style.color = 'red';
-    } else {
-
-        var commentValue = document.getElementById('info-comment-input').value;
-        var englishSelectValue = document.getElementById('english-select').value;
-        var subjectValue;
+    var errorMessages = document.getElementById(siteId).querySelector('.error-for-comment_Section');
+    if (document.getElementById(siteId).querySelector('.comment-box').value.trim() === ''){
         if (localStorage.getItem('language') === 'hungarian') {
-            subjectValue = document.getElementById('hungarian-select').value;
+            errorMessages.textContent = 'Kérlek írj egy kommentet!';
+            errorMessages.style.display = 'block';
+            errorMessages.style.color = 'red';
         } else {
-            subjectValue = document.getElementById('english-select').value;
+            errorMessages.textContent = 'Please write your comment first!';
+            errorMessages.style.display = 'block';
+            errorMessages.style.color = 'red';
         }
-        var specialization = document.getElementById('info-site');
+
+    } else {
+        errorMessages.style.display = 'none';
+
+        var commentValue = document.getElementById(siteId).querySelector('.comment-box').value;
+        var englishSelectValue = document.getElementById(siteId).querySelector('.subject-select').value;
+
+
+        var subjectValue_Hu = document.getElementById(siteId).querySelector('.hungarian-select').value;
+        var subjectValue_En = document.getElementById(siteId).querySelector('.english-select').value;
+
         var currentDate = new Date();
         var formattedDate = currentDate.toLocaleDateString('hu-HU', { year: 'numeric', month: '2-digit', day: '2-digit' });
 
@@ -236,9 +322,10 @@ function saveInfoComment() {
                 'X-CSRF-TOKEN': token
             },
             body: JSON.stringify({
-                specialization: specialization,
+                ratedTopicId: siteId,
                 comment: commentValue,
-                subject: subjectValue,
+                subject: subjectValue_En,
+                subject_hu: subjectValue_Hu,
                 date: formattedDate
             })
         }).then(response => {
@@ -250,9 +337,10 @@ function saveInfoComment() {
                         'X-CSRF-TOKEN': token
                     },
                     body: JSON.stringify({
-                        specialization: specialization,
+                        ratedTopicId: siteId,
                         comment: commentValue,
-                        subject: subjectValue,
+                        subject: subjectValue_En,
+                        subject_hu: subjectValue_Hu,
                         date: formattedDate
                     })
                 }).then(response => {
@@ -279,75 +367,3 @@ function saveInfoComment() {
 
 }
 
-$(document).ready(function() {
-    var urlEndpoint = "/sse/subscribe"
-    const eventSource = new EventSource(urlEndpoint);
-
-    eventSource.onopen = function (event) {
-        console.log('SSE connection opened.');
-    };
-
-    eventSource.onerror = function (event) {
-        console.error('SSE error:', event);
-    };
-
-    eventSource.addEventListener('UserComment', function (event) {
-
-    const userCommentData = JSON.parse(event.data);
-    const commentUserId = userCommentData.commentUserId;
-
-    var commentSection = document.createElement('div');
-    commentSection.classList = 'comment-section';
-    commentSection.id = 'comment-section-' + commentUserId;
-
-    var commentRow = document.createElement('div');
-    commentRow.classList = 'comment-row';
-    commentSection.appendChild(commentRow);
-
-    var commentProfileImg = document.createElement('img');
-    commentProfileImg.id = 'commentProfileImg-' + commentUserId;
-    if (userCommentData.userImage == null || userCommentData.userImage === "") {
-                    commentProfileImg.src = "/img/anonym.jpg";
-                } else {
-                    commentProfileImg.src = 'data:image/jpeg;base64,' + userCommentData.userImage;
-                }
-    commentProfileImg.alt = 'Profile Image';
-    commentProfileImg.classList = 'comment-profile-image';
-    commentRow.appendChild(commentProfileImg);
-
-    var commentInfos = document.createElement('div');
-    commentInfos.classList = 'comment-infos';
-    commentRow.appendChild(commentInfos);
-
-    var commentUsernameDiv = document.createElement('div');
-    commentInfos.appendChild(commentUsernameDiv);
-
-    var commentUsername = document.createElement('p');
-    commentUsername.style.margin = '0';
-    commentUsername.textContent = userCommentData.firstName + " " + userCommentData.lastName;
-    commentUsernameDiv.appendChild(commentUsername);
-
-    var commentLabelDate = document.createElement('p');
-    commentLabelDate.classList = 'comment-label-date';
-    commentLabelDate.id = 'comment-label-date-' + commentUserId;
-    commentLabelDate.textContent = userCommentData.date;
-    commentInfos.appendChild(commentLabelDate);
-
-    var commentContent = document.createElement('div');
-    commentContent.classList = 'comment-content';
-    commentSection.appendChild(commentContent);
-
-    var commentSubject = document.createElement('p');
-    commentSubject.classList = 'comment-subject';
-    commentContent.appendChild(commentSubject);
-
-    var commentLabelText = document.createElement('p');
-    commentLabelText.classList = 'comment-label-text';
-    commentLabelText.id = 'comment-label-text-' + ratingUserId;
-    commentLabelText.textContent = userCommentData.comment;
-    commentContent.appendChild(commentLabelText);
-
-    var commentContainer = document.getElementById("commentContainer");
-    commentContainer.appendChild(commentSection);
-        });
-});

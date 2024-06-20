@@ -194,18 +194,10 @@ public class MyGroupService {
         List<Rating> allRatingsForThisUser = ratingRepository.findAllByRatedUserId(userId);
         ArrayList<Long> allUserId = new ArrayList<>();
         for (Rating rating : allRatingsForThisUser) {
-//            System.out.println("RatedUserId: " + rating.getRatedUserId() +
-//                    ", Score: " + rating.getScore() +
-//                    ", Comment: " + rating.getComment() +
-//                    ", Date: " + rating.getDate() +
-//                    ", Who rate : " + rating.getUserId());
             allUserId.add(rating.getUserId());
         }
 
         List<User> allSelectedUsers = userRepository.findAllByIdIn(allUserId);
-//        for (User user : allSelectedUsers) {
-//            System.out.println("User: " + user.getFirst_Name() + " " + user.getLast_Name());
-//        }
 
         model.addAttribute("allSelectedUsers", allSelectedUsers);
 

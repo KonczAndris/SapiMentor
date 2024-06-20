@@ -1,23 +1,22 @@
 package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.config.UserRegistrationDetails;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Role;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.Topics_Comment;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.model.User;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.repository.UserRepository;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.TopicService;
+import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service.Topics_CommentService;
 import ro.sapientia.diploma_demo.Sapimentor_Demo_Project.utility.UserProfileNotification;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @RequestMapping("/topics")
 @Controller
@@ -25,14 +24,17 @@ public class TopicsController {
     private final UserRepository userRepository;
     private final TopicService topicService;
     private final UserProfileNotification userProfileNotification;
+    private final Topics_CommentService topicsCommentService;
 
     @Autowired
     public TopicsController(UserRepository userRepository,
                             TopicService topicService,
-                            UserProfileNotification userProfileNotification) {
+                            UserProfileNotification userProfileNotification,
+                            Topics_CommentService topicsCommentService) {
         this.userRepository = userRepository;
         this.topicService = topicService;
         this.userProfileNotification = userProfileNotification;
+        this.topicsCommentService = topicsCommentService;
     }
 
     private void showUserRolesToDisplayTopics(Model model, Principal principal){
@@ -106,4 +108,50 @@ public class TopicsController {
             return ResponseEntity.ok("ERROR");
         }
     }
+
+    @PostMapping("/saveComment")
+    public ResponseEntity<String> saveComment(@RequestBody Topics_Comment topicsComment,
+                                              Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.ok("ERROR");
+        }
+        String userEmail = principal.getName();
+
+        try {
+            topicsCommentService.saveTopicComment(userEmail, topicsComment);
+            return ResponseEntity.ok("OK");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during saving comment!");
+        }
+    }
+
+    @GetMapping("/getSelectedTopicDetails")
+    public String showSelectedUserDetails(@RequestParam String selectedTopicId,
+                                          Model model,
+                                          Principal principal) {
+        try {
+            topicsCommentService.getSelectedTopicComments(selectedTopicId, model, principal);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
+    @GetMapping("/getSelectedUsersImages")
+    public ResponseEntity<Map<String,Object>> getSelectedUsersImages(@RequestParam String selectedTopicId,
+                                                                     Principal principal) {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            List<Object[]> selectedUserImages = topicsCommentService.getSelectedUserImages(selectedTopicId);
+
+            response.put("selectedUserImages", selectedUserImages);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 }

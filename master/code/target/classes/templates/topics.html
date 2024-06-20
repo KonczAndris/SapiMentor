@@ -330,24 +330,25 @@
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
                 </h2>
+                <div class="error-for-comment_Section" style="display: none"></div>
                 <div class="writing-section">
                     <input type="text" id="info-comment-input" placeholder="Write your comment here..." class="comment-box">
-                    <div id="error-for-ratingSection" style="display: none"></div>
+
                     <div class="comment-options">
-                        <select class="subject-select english-text" id="info-english-select">
-                            <option class="english-text" value="programming-info">Programming</option>
-                            <option class="english-text" value="algorithms-info">Data Structures and algorithms</option>
-                            <option class="english-text" value="discrete-info">Discrete mathematics</option>
-                            <option class="english-text" value="oop-info">Object-Oriented Programming</option>
-                            <option class="english-text" value="ai-info">Artificial Intelligence</option>
-                            <option class="english-text" value="databases-info">Databases</option>
-                            <option class="english-text" value="graphs-info">Graph theory</option>
-                            <option class="english-text" value="software-info">Software development</option>
-                            <option class="english-text" value="testing-info">Software testing</option>
-                            <option class="english-text" value="mobile-info">Mobile development</option>
+                        <select class="subject-select english-text english-select">
+                            <option class="english-text" value="Programming">Programming</option>
+                            <option class="english-text" value="Data Structures and algorithms">Data Structures and algorithms</option>
+                            <option class="english-text" value="Discrete mathematics">Discrete mathematics</option>
+                            <option class="english-text" value="Object-Oriented Programming">Object-Oriented Programming</option>
+                            <option class="english-text" value="Artificial Intelligence">Artificial Intelligence</option>
+                            <option class="english-text" value="Databases">Databases</option>
+                            <option class="english-text" value="Graph theory">Graph theory</option>
+                            <option class="english-text" value="Software development">Software development</option>
+                            <option class="english-text" value="Software testing">Software testing</option>
+                            <option class="english-text" value="Mobile development">Mobile development</option>
                         </select>
-                        <select class="subject-select hungarian-text" id="info-hungarian-select">
-                            <option class="hungarian-text" value="programming-info">Programozás</option>
+                        <select class="subject-select hungarian-text hungarian-select" >
+                            <option class="hungarian-text" value="Programozás">Programozás</option>
                             <option class="hungarian-text" value="algorithms-info">Adatszerkezetek és Algoritmusok</option>
                             <option class="hungarian-text" value="discrete-info">Diszkrét matematika</option>
                             <option class="hungarian-text" value="oop-info">Objektum orientált programozás</option>
@@ -358,7 +359,7 @@
                             <option class="hungarian-text" value="testing-info">Szoftvertesztelés</option>
                             <option class="hungarian-text" value="mobile-info">Mobilos alkalmazás fejlesztés</option>
                         </select>
-                        <button class="send-button green-button">
+                        <button class="send-button green-button" onclick="saveInfoComment('info-site')">
                         <span class="english-text">Comment</span>
                         <span class="hungarian-text">Hozzászólás</span>
                     </button>
@@ -453,10 +454,11 @@
                         <span class="english-text">Write comment!</span>
                         <span class="hungarian-text">Szólj hozzá!</span>
                     </h2>
+                    <div class="error-for-comment_Section" style="display: none"></div>
                     <div class="writing-section">
                         <input type="text" placeholder="Write your comment here..." class="comment-box">
                         <div class="comment-options">
-                            <select class="subject-select english-text">
+                            <select class="subject-select english-text english-select">
                                 <option class="english-text" value="programming-computer">Programming</option>
                                 <option class="english-text" value="algorithms-computer">Data Structures and Algorithms</option>
                                 <option class="english-text" value="computer-architecture-computer">Computer Architectures</option>
@@ -468,7 +470,7 @@
                                 <option class="english-text" value="artificial-intelligence-computer">Artificial Intelligence</option>
                                 <option class="english-text" value="cryptography-computer">Cryptography</option>
                             </select>
-                            <select class="subject-select hungarian-text">
+                            <select class="subject-select hungarian-text hungarian-select">
                                 <option class="hungarian-text" value="programming-computer">Programozás</option>
                                 <option class="hungarian-text" value="algorithms-computer">Adatszerkezetek és Algoritmusok</option>
                                 <option class="hungarian-text" value="computer-architecture-computer">Számítógép-architektúrák</option>
@@ -481,7 +483,7 @@
                                 <option class="hungarian-text" value="cryptography-computer">Kriptográfia</option>
                             </select>
 
-                            <button class="send-button green-button">
+                            <button class="send-button green-button" onclick="saveInfoComment('computer-site')">
                                 <span class="english-text">Comment</span>
                                 <span class="hungarian-text">Hozzászólás</span>
                             </button>
@@ -571,10 +573,11 @@
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
                 </h2>
+                <div class="error-for-comment_Section" style="display: none"></div>
                 <div class="writing-section">
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
-                        <select class="subject-select english-text">
+                        <select class="subject-select english-text english-select">
                             <option class="english-text" value="industrial-process-control-computers-automation">Industrial Process Control Computers Programming</option>
                             <option class="english-text" value="robot-control-automation">Robot Control</option>
                             <option class="english-text" value="operating-systems-computer-networks-automation">Operating Systems and Computer Networks</option>
@@ -582,7 +585,7 @@
                             <option class="english-text" value="digital-signal-processing-automation">Digital Signal Processing</option>
                             <option class="english-text" value="optimization-techniques-automation">Optimization Techniques</option>
                         </select>
-                        <select class="subject-select hungarian-text">
+                        <select class="subject-select hungarian-text hungarian-select">
                             <option class="hungarian-text" value="industrial-process-control-computers-automation">Ipari folyamatirányító számítógépek programozása</option>
                             <option class="hungarian-text" value="robot-control-automation">Robotok irányítása</option>
                             <option class="hungarian-text" value="operating-systems-computer-networks-automation">Operációs rendszerek és számítógépes hálózatok</option>
@@ -591,7 +594,7 @@
                             <option class="hungarian-text" value="optimization-techniques-automation">Optimalizálási eljárások</option>
                         </select>
 
-                        <button class="send-button green-button">
+                        <button class="send-button green-button" onclick="saveInfoComment('automation-site')">
                             <span class="english-text">Comment</span>
                             <span class="hungarian-text">Hozzászólás</span>
                         </button>
@@ -684,10 +687,11 @@
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
                 </h2>
+                <div class="error-for-comment_Section" style="display: none"></div>
                 <div class="writing-section">
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
-                        <select class="subject-select english-text">
+                        <select class="subject-select english-text english-select">
                             <option class="english-text" value="programming-machine">Programming</option>
                             <option class="english-text" value="computer-design-machine">Computer Design</option>
                             <option class="english-text" value="machining-theory-machine">Machining Theory</option>
@@ -699,7 +703,7 @@
                             <option class="english-text" value="materials-science-machine">Materials Science</option>
                             <option class="english-text" value="tool-design-machine">Tool, Fixture, and Jig Design</option>
                         </select>
-                        <select class="subject-select hungarian-text">
+                        <select class="subject-select hungarian-text hungarian-select">
                             <option class="hungarian-text" value="programming-machine">Programozás</option>
                             <option class="hungarian-text" value="computer-design-machine">Számítógépes tervezés</option>
                             <option class="hungarian-text" value="machining-theory-machine">Forgácsoláselmélet</option>
@@ -711,7 +715,7 @@
                             <option class="hungarian-text" value="materials-science-machine">Anyagtudományok</option>
                             <option class="hungarian-text" value="tool-design-machine">Szerszám-, készülék- és idomszertervezés</option>
                         </select>
-                        <button class="send-button green-button">
+                        <button class="send-button green-button" onclick="saveInfoComment('machine-site')">
                             <span class="english-text">Comment</span>
                             <span class="hungarian-text">Hozzászólás</span>
                         </button>
@@ -798,10 +802,11 @@
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
                 </h2>
+                <div class="error-for-comment_Section" style="display: none"></div>
                 <div class="writing-section">
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
-                        <select class="subject-select english-text">
+                        <select class="subject-select english-text english-select">
                             <option class="english-text" value="mechanics-mecha">Mechanics</option>
                             <option class="english-text" value="mechanisms-mecha">Mechanisms</option>
                             <option class="english-text" value="computer-aided-design-mecha">Computer-Aided Design (CAD)</option>
@@ -810,7 +815,7 @@
                             <option class="english-text" value="cnc-control-programming-mecha">CNC Control and Programming</option>
                             <option class="english-text" value="robotics-design-control-mecha">Robotics Design and Control</option>
                         </select>
-                        <select class="subject-select hungarian-text">
+                        <select class="subject-select hungarian-text hungarian-select">
                             <option class="hungarian-text" value="mechanics-mecha">Mechanika</option>
                             <option class="hungarian-text" value="mechanisms-mecha">Mechanizmusok</option>
                             <option class="hungarian-text" value="computer-aided-design-mecha">Számítógépes tervezés (CAD)</option>
@@ -821,7 +826,7 @@
                         </select>
 
 
-                        <button class="send-button green-button">
+                        <button class="send-button green-button" onclick="saveInfoComment('mecha-site')">
                             <span class="english-text">Comment</span>
                             <span class="hungarian-text">Hozzászólás</span>
                         </button>
@@ -929,10 +934,11 @@
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
                 </h2>
+                <div class="error-for-comment_Section" style="display: none"></div>
                 <div class="writing-section">
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
-                        <select class="subject-select english-text">
+                        <select class="subject-select english-text english-select">
                             <option class="english-text" value="programming-telecommunication">Programming</option>
                             <option class="english-text" value="databases-telecommunication">Databases</option>
                             <option class="english-text" value="operating-systems-telecommunication">Operating Systems</option>
@@ -951,7 +957,7 @@
                             <option class="english-text" value="optical-networks-telecommunication">Optical Networks</option>
                             <option class="english-text" value="television-broadcasting-telecommunication">Television Broadcasting</option>
                         </select>
-                        <select class="subject-select hungarian-text">
+                        <select class="subject-select hungarian-text hungarian-select">
                             <option class="hungarian-text" value="programming-telecommunication">Programozás</option>
                             <option class="hungarian-text" value="databases-telecommunication">Adatbázisok</option>
                             <option class="hungarian-text" value="operating-systems-telecommunication">Operációs rendszerek</option>
@@ -970,7 +976,7 @@
                             <option class="hungarian-text" value="optical-networks-telecommunication">Optikai hálózatok</option>
                             <option class="hungarian-text" value="television-broadcasting-telecommunication">Televíziózás</option>
                         </select>
-                        <button class="send-button green-button">
+                        <button class="send-button green-button" onclick="saveInfoComment('telecommunication-site')">
                             <span class="english-text">Comment</span>
                             <span class="hungarian-text">Hozzászólás</span>
                         </button>
@@ -1065,10 +1071,11 @@
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
                 </h2>
+                <div class="error-for-comment_Section" style="display: none"></div>
                 <div class="writing-section">
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
-                        <select class="subject-select english-text">
+                        <select class="subject-select english-text english-select">
                             <option class="english-text" value="drawing-design-landscape">Drawing and Design</option>
                             <option class="english-text" value="descriptive-geometry-landscape">Descriptive Geometry</option>
                             <option class="english-text" value="soil-science-landscape">Soil Science</option>
@@ -1082,7 +1089,7 @@
                             <option class="english-text" value="landscape-design-landscape">Landscape Design</option>
                             <option class="english-text" value="landscape-rehabilitation-landscape">Landscape Rehabilitation</option>
                         </select>
-                        <select class="subject-select hungarian-text">
+                        <select class="subject-select hungarian-text hungarian-select">
                             <option class="hungarian-text" value="drawing-design-landscape">Rajz és tervezés</option>
                             <option class="hungarian-text" value="descriptive-geometry-landscape">Ábrázoló geometria</option>
                             <option class="hungarian-text" value="soil-science-landscape">Talajtan</option>
@@ -1098,7 +1105,7 @@
                         </select>
 
 
-                        <button class="send-button green-button">
+                        <button class="send-button green-button" onclick="saveInfoComment('landscape-site')">
                             <span class="english-text">Comment</span>
                             <span class="hungarian-text">Hozzászólás</span>
                         </button>
@@ -1193,10 +1200,11 @@
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
                 </h2>
+                <div class="error-for-comment_Section" style="display: none"></div>
                 <div class="writing-section">
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
-                        <select class="subject-select english-text">
+                        <select class="subject-select english-text english-select">
                             <option value="ornamental-plant-cultivation-horticulture">Ornamental Plant Cultivation</option>
                             <option value="medicinal-plant-cultivation-horticulture">Medicinal Plant Cultivation</option>
                             <option value="fruit-cultivation-horticulture">Fruit Cultivation</option>
@@ -1209,7 +1217,7 @@
                             <option value="soil-science-agrochemistry-horticulture">Soil Science and Agrochemistry</option>
                             <option value="garden-design-horticulture">Garden Design</option>
                         </select>
-                        <select class="subject-select hungarian-text">
+                        <select class="subject-select hungarian-text hungarian-select">
                             <option value="ornamental-plant-cultivation-horticulture">Dísznövénytermesztés</option>
                             <option value="medicinal-plant-cultivation-horticulture">Gyógynövénytermesztés</option>
                             <option value="fruit-cultivation-horticulture">Gyümölcstermesztés</option>
@@ -1223,7 +1231,7 @@
                             <option value="garden-design-horticulture">Kerttervezés</option>
                         </select>
 
-                        <button class="send-button green-button">
+                        <button class="send-button green-button" onclick="saveInfoComment('horticulture-site')">
                             <span class="english-text">Comment</span>
                             <span class="hungarian-text">Hozzászólás</span>
                         </button>
@@ -1328,10 +1336,11 @@
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
                 </h2>
+                <div class="error-for-comment_Section" style="display: none"></div>
                 <div class="writing-section">
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
-                        <select class="subject-select english-text">
+                        <select class="subject-select english-text english-select">
                         <option class="english-text" value="intercultural-communication">Intercultural Communication</option>
                         <option class="english-text" value="institutional-communication">Institutional Communication</option>
                         <option class="english-text" value="communication-law-communication">Communication Law</option>
@@ -1350,7 +1359,7 @@
                         <option class="english-text" value="negotiation-techniques-communication">Negotiation Techniques</option>
                         <option class="english-text" value="consumer-behavior-communication">Consumer Behavior</option>
                     </select>
-                        <select class="subject-select hungarian-text">
+                        <select class="subject-select hungarian-text hungarian-select">
                             <option class="hungarian-text" value="intercultural-communication">Interkulturális kommunikáció</option>
                             <option class="hungarian-text" value="institutional-communication">Intézményi kommunikáció</option>
                             <option class="hungarian-text" value="communication-law-communication">Kommunikációs jog</option>
@@ -1370,7 +1379,7 @@
                             <option class="hungarian-text" value="consumer-behavior-communication">Fogyasztói magatartás</option>
                         </select>
 
-                        <button class="send-button green-button">
+                        <button class="send-button green-button" onclick="saveInfoComment('communication-site')">
                             <span class="english-text">Comment</span>
                             <span class="hungarian-text">Hozzászólás</span>
                         </button>
@@ -1458,10 +1467,11 @@
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
                 </h2>
+                <div class="error-for-comment_Section" style="display: none"></div>
                 <div class="writing-section">
                     <input type="text" placeholder="Write your comment here..." class="comment-box">
                     <div class="comment-options">
-                        <select class="subject-select english-text">
+                        <select class="subject-select english-text english-select">
                             <option class="english-text" value="english-translation">English Language and Culture</option>
                             <option class="english-text" value="german-translation">German Language and Culture</option>
                             <option class="english-text" value="romanian-translation">Romanian Language and Culture</option>
@@ -1470,7 +1480,7 @@
                             <option class="english-text" value="specialized-language-translation">Specialized Language</option>
                             <option class="english-text" value="translation-theory-translation">Translation Theory and Practice</option>
                         </select>
-                        <select class="subject-select hungarian-text">
+                        <select class="subject-select hungarian-text hungarian-select">
                             <option class="hungarian-text" value="english-translation">Angol Nyelv és Kultúra</option>
                             <option class="hungarian-text" value="german-translation">Német Nyelv és Kultúra</option>
                             <option class="hungarian-text" value="romanian-translation">Román Nyelv és Kultúra</option>
@@ -1480,7 +1490,7 @@
                             <option class="hungarian-text" value="translation-theory-translation">Fordításelmélet és -gyakorlat</option>
                         </select>
 
-                        <button class="send-button green-button">
+                        <button class="send-button green-button" onclick="saveInfoComment('translation-site')">
                             <span class="english-text">Comment</span>
                             <span class="hungarian-text">Hozzászólás</span>
                         </button>

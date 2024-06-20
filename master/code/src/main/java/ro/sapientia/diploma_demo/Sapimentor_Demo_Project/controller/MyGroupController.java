@@ -170,10 +170,6 @@ public class MyGroupController {
     public ResponseEntity<String> saveRating(@RequestBody Rating ratingRequest,
                                              Principal principal) {
         String ratingUserEmail = principal.getName();
-        Long ratedUserId = ratingRequest.getUserId();
-        int score = ratingRequest.getScore();
-        String comment = ratingRequest.getComment();
-        String date = ratingRequest.getDate();
 
         try {
             ratingService.saveRating(ratingUserEmail, ratingRequest);
@@ -231,8 +227,6 @@ public class MyGroupController {
             myGroupService.getSelectedUserComments(selectedUserId, model, principal);
             utilityForSomeCotroller.getUserRolesToDisplayMentorSelector(model, principal);
 
-            //model.addAttribute("isButtonClicked", true);
-            //model.addAttribute("showDetails", true);
             return "fragments/modal :: modal-content";
         } catch (Exception e) {
             e.printStackTrace();

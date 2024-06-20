@@ -723,9 +723,6 @@ async function sendDiplomaThesesDataToServer(data) {
         console.error('An error occurred:', error);
         throw error; // Hiba továbbdobása a saveDiplomaThesesDataToServer függvény felé
     }
-    // finally {
-    //     hideLoadingModal();
-    // }
 }
 
 //DELETE

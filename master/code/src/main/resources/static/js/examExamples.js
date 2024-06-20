@@ -579,26 +579,18 @@ function sendExamsDataToServer(data) {
             // throw new Error('Hiba történt a válaszban');
         }
     }).then(data => {
-        // ezt is andrisnak
-        //hideLoadingModal(); // Elrejtjük a modal ablakot
-        // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-        //hideLoadingModal()
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){
-            //alert("The file is too large!");
             hideLoadingModal()
             showErrorMessageInExam("The file is too large!\n" +
                 "The maximum file size is 6MB!");
         } else if(data === "Wrong type"){
-            //alert("This type png is not supported!");
             hideLoadingModal()
             showErrorMessageInExam("This type of png is not supported!\n"); // Egyéb hiba esetén
         }
     }).catch(error => {
         hideLoadingModal()
-        // ezt is andrisnak
-        //hideLoadingModal(); // Elrejtjük a modal ablakot
         console.error('Hiba történt:', error);
     });
 }
