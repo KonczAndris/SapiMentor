@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.getElementById('info-navigation-card').addEventListener('click', function() {
     document.getElementById('large-topic-div').classList.remove('active');
     document.getElementById('large-info-div').classList.add('active');
-
+    console.log("megjelenitodik az infotanszekhaz tartozo oldalak");
 });
 
 document.getElementById('engineering-navigation-card').addEventListener('click', function() {
@@ -106,6 +106,12 @@ document.getElementById('back-from-languages').addEventListener('click', functio
 document.getElementById('small-info-div').addEventListener('click', function() {
     document.getElementById('large-info-div').classList.remove('active');
     document.getElementById('info-site').classList.add('active');
+    console.log("megjelenitodik informatika szak adatai");
+    // TODO: ide kell majd az adatok lekerese (fetch keres) a backendtol az informatika szakrol
+    // (a tobbi szaknal is igy kell majd)
+    // TODO: ezt kell majd atadni a getSelectedTopicDetails es a getSelectedUsersImages a fetch keresnel
+    var selectedTopicId = document.getElementById('info-site').id
+    console.log("selectedTopicId: ", selectedTopicId);
 });
 
 document.getElementById('back-from-info-site').addEventListener('click', function() {
