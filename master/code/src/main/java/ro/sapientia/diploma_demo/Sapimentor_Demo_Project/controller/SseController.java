@@ -272,7 +272,6 @@ public class SseController {
             Long userId = userRepository.findIdByEmail(userEmail);
             String ratedTopicId = commentData.getRatedTopicId();
             String subject = commentData.getSubject();
-            String subject_hu = commentData.getSubject_hu();
             String comment = commentData.getComment();
             String date = commentData.getDate();
 
@@ -293,7 +292,6 @@ public class SseController {
                 userCommentData.put("ratingUserId", userId);
                 userCommentData.put("ratedTopicId", ratedTopicId);
                 userCommentData.put("subject", subject);
-                userCommentData.put("subject_hu", subject_hu);
                 userCommentData.put("comment", comment);
                 userCommentData.put("date", date);
                 userCommentData.put("userImage", userImage);

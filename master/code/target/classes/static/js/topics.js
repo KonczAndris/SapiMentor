@@ -110,8 +110,64 @@ document.getElementById('small-info-div').addEventListener('click', function() {
     // TODO: ide kell majd az adatok lekerese (fetch keres) a backendtol az informatika szakrol
     // (a tobbi szaknal is igy kell majd)
     // TODO: ezt kell majd atadni a getSelectedTopicDetails es a getSelectedUsersImages a fetch keresnel
-    var selectedTopicId = document.getElementById('info-site').id
+    var selectedTopicId = document.getElementById('info-site').id;
     console.log("selectedTopicId: ", selectedTopicId);
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    //var userId = button.id.split("-")[1];
+    var url = '/topics/getSelectedTopicDetails?selectedTopicId=' + selectedTopicId;
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            console.log("Response: ", response);
+            return response.text();
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }).then(data => {
+        if (data !== 'error') {
+            // TODO:
+            //document.getElementById('profileModal').innerHTML = data;
+            // const closeBtn = document.querySelector('.close-profile-modal');
+            // if (closeBtn !== null){
+            //     closeBtn.addEventListener('click', closeModal);
+            // }
+            // displayModal();
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }).catch(error => {
+        console.log("Error: ", error);
+    });
+
+    var url2 = '/topics/getSelectedUsersImages?selectedTopicId=' + selectedTopicId;
+    fetch(url2, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': token
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }).then(data => {
+        // TODO: itt kell majd a kepek megjelenitese
+        // profileimagesforSelectedUsers = data.selectedUserImages;
+        // setInterval(() => {
+        //     handlereselectedimages();
+        // }, 1000);
+    }).catch(error => {
+        console.log("Error: ", error);
+    });
 });
 
 document.getElementById('back-from-info-site').addEventListener('click', function() {
@@ -312,9 +368,12 @@ function saveInfoComment(siteId) {
         var commentValue = document.getElementById(siteId).querySelector('.comment-box').value;
         var englishSelectValue = document.getElementById(siteId).querySelector('.subject-select').value;
 
-
-        var subjectValue_Hu = document.getElementById(siteId).querySelector('.hungarian-select').value;
-        var subjectValue_En = document.getElementById(siteId).querySelector('.english-select').value;
+        var subjectValue;
+        if (localStorage.getItem('language') === 'hungarian') {
+             subjectValue = document.getElementById(siteId).querySelector('.hungarian-select').value;
+        } else {
+             subjectValue = document.getElementById(siteId).querySelector('.english-select').value;
+        }
 
         var currentDate = new Date();
         var formattedDate = currentDate.toLocaleDateString('hu-HU', { year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -330,8 +389,7 @@ function saveInfoComment(siteId) {
             body: JSON.stringify({
                 ratedTopicId: siteId,
                 comment: commentValue,
-                subject: subjectValue_En,
-                subject_hu: subjectValue_Hu,
+                subject: subjectValue,
                 date: formattedDate
             })
         }).then(response => {
@@ -345,8 +403,7 @@ function saveInfoComment(siteId) {
                     body: JSON.stringify({
                         ratedTopicId: siteId,
                         comment: commentValue,
-                        subject: subjectValue_En,
-                        subject_hu: subjectValue_Hu,
+                        subject: subjectValue,
                         date: formattedDate
                     })
                 }).then(response => {

@@ -30,14 +30,12 @@ public class Topics_CommentService {
             Long userId = userRepository.findIdByEmail(userEmail);
             String ratedTopicId = topicsComment.getRatedTopicId();
             String subject = topicsComment.getSubject();
-            String subject_hu = topicsComment.getSubject_hu();
             String comment = topicsComment.getComment();
             String date = topicsComment.getDate();
                 Topics_Comment newComment = new Topics_Comment();
                 newComment.setUserId(userId);
                 newComment.setRatedTopicId(ratedTopicId);
                 newComment.setSubject(subject);
-                newComment.setSubject_hu(subject_hu);
                 newComment.setComment(comment);
                 newComment.setDate(date);
                 return topicsCommentRepository.save(newComment);

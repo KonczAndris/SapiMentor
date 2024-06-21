@@ -20,19 +20,17 @@ public class Topics_Comment {
     private Long userId;
     private String ratedTopicId;
     private String subject;
-    private String subject_hu;
     private String comment;
     private String date;
 
     public Topics_Comment() {
     }
 
-    public Topics_Comment(Long userId, String ratedTopicId, String subject, String comment, String date, String subject_hu) {
+    public Topics_Comment(Long userId, String ratedTopicId, String subject, String comment, String date) {
         this.userId = userId;
         this.ratedTopicId = ratedTopicId;
         this.subject = subject;
         this.comment = comment;
         this.date = date;
-        this.subject_hu = subject_hu;
     }
 }
