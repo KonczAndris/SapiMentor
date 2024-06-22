@@ -74,18 +74,10 @@ public class Topics_CommentService {
         //System.out.println("allRatingsForThisUser: " + allRatingsForThisUserImages);
         ArrayList<Long> allUserId = new ArrayList<>();
         for (Topics_Comment comment : allRatingsForThisUserImages) {
-//            System.out.println("RatedUserId: " + rating.getRatedUserId() +
-//                    ", Score: " + rating.getScore() +
-//                    ", Comment: " + rating.getComment() +
-//                    ", Date: " + rating.getDate() +
-//                    ", Who rate : " + rating.getUserId());
             allUserId.add(comment.getUserId());
         }
-        List<Object[]> allSelectedUsers = userRepository.findAllSelectedUserImages(allUserId);
 
-//        for (Object[] user : allSelectedUsers) {
-//            System.out.println("User: " + user[0] + ", id: " + user[1]);
-//        }
+        List<Object[]> allSelectedUsers = userRepository.findAllSelectedUserImages(allUserId);
 
         return allSelectedUsers;
     }

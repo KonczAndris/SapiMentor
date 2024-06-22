@@ -127,15 +127,15 @@ public class TopicsController {
     }
 
     @GetMapping("/getSelectedTopicDetails")
-    public String showSelectedUserDetails(@RequestParam String selectedTopicId,
+    public ResponseEntity<String> showSelectedUserDetails(@RequestParam String selectedTopicId,
                                           Model model,
                                           Principal principal) {
         try {
             topicsCommentService.getSelectedTopicComments(selectedTopicId, model, principal);
-            return "ok";
+            return ResponseEntity.ok("OK");
         } catch (Exception e) {
             e.printStackTrace();
-            return "error";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during getting selected topic details!");
         }
     }
 
