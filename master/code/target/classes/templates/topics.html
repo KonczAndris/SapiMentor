@@ -298,10 +298,10 @@
                     <span class="hungarian-text">HOZZÁSZÓLÁSOK</span>
                 </h2>
                 <div class="divider"></div>
-                <div class="comment-section">
-                    <div class="comments">
+
+                    <div class="comments" id="comments-info">
                         <div class="comment-entry" style="display: block;">
-                            <div class="comment-section active" th:id="${'comment-section-' + data.userId}" th:each="data, status : ${allCommentsForTopics}" th:if="${data.specialization == 'info-site'}">
+                            <div class="comment-section active" th:id="${'comment-section-' + data.userId}" th:each="data, status : ${allCommentsForThisTopic}">
                                 <div class="comment-row">
                                     <img  th:id="${'commentProfileImg-' + data.userId}" th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
                                     <div class="comment-infos">
@@ -318,14 +318,13 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                         <div class="nav-arrows">
                             <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
                             <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
                         </div>
-                    </div>
 
-            </div>
                 <h2>
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>

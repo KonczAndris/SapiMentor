@@ -453,3 +453,10 @@
         width: 50%;
     }
 }
+
+.comment-section {
+    display: flex;
+}
+.comment-section.active {
+    display: flex;
+}
