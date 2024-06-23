@@ -131,7 +131,11 @@ public class TopicsController {
                                           Model model,
                                           Principal principal) {
         try {
-            topicsCommentService.getSelectedTopicComments(selectedTopicId, model, principal);
+            List<Object> allCommentDataForTopics = topicsCommentService.getSelectedTopicComments(selectedTopicId, model, principal);
+
+            System.out.println("Comment data: " + allCommentDataForTopics);
+
+
             return ResponseEntity.ok("OK");
         } catch (Exception e) {
             e.printStackTrace();
