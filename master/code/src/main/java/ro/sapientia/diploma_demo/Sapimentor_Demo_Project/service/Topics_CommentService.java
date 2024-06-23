@@ -46,7 +46,7 @@ public class Topics_CommentService {
     }
 
     @Cacheable("getSelectedTopicComments")
-    public void getSelectedTopicComments(String ratedTopicId,
+    public List<Object> getSelectedTopicComments(String ratedTopicId,
                                          Model model,
                                          Principal principal) {
         List<Topics_Comment> allCommentsForThisTopic = topicsCommentRepository.findAllByRatedTopicId(ratedTopicId);
@@ -56,6 +56,13 @@ public class Topics_CommentService {
         }
 
         List<User> allSelectedUsers = userRepository.findAllByIdIn(allUserId);
+        for (User user : allSelectedUsers) {
+            user.getId();
+            user.getFirst_Name();
+            user.getLast_Name();
+            user.getEmail();
+            System.out.println("User: " + user.getId() + " " + user.getFirst_Name() + " " + user.getLast_Name() + " " + user.getEmail());
+        }
 
         model.addAttribute("allSelectedUsers", allSelectedUsers);
 
@@ -65,8 +72,29 @@ public class Topics_CommentService {
         if (commentForThisTopic != null) {
             model.addAttribute("commentForThisTopic", commentForThisTopic);
         }
+        commentForThisTopic.getComment();
+        System.out.println("commentForThisTopic: " + commentForThisTopic.getComment());
 
         model.addAttribute("allCommentsForThisTopic", allCommentsForThisTopic);
+        System.out.println("allCommentsForThisTopic: " + allCommentsForThisTopic);
+
+        List<Object> allComments = new ArrayList<>();
+        for (User user : allSelectedUsers) {
+            for (Topics_Comment comment : allCommentsForThisTopic) {
+                if (user.getId() == comment.getUserId()) {
+                    List<Object> commentData = new ArrayList<>();
+                    commentData.add(user.getId());
+                    commentData.add(user.getFirst_Name());
+                    commentData.add(user.getLast_Name());
+                    commentData.add(comment.getDate());
+                    commentData.add(comment.getComment());
+                    commentData.add(comment.getSubject());
+                    commentData.add(comment.getRatedTopicId());
+                    allComments.add(commentData);
+                }
+            }
+        }
+        return allComments;
     }
 
     public List<Object[]> getSelectedUserImages(String topicId) {
