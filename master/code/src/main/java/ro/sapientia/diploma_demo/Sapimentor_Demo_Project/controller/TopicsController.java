@@ -147,6 +147,9 @@ public class TopicsController {
     public ResponseEntity<Map<String,Object>> getSelectedUsersImages(@RequestParam String selectedTopicId,
                                                                      Principal principal) {
         try {
+            if (principal == null) {
+                return ResponseEntity.ok(Collections.singletonMap("ERROR", "ERROR"));
+            }
             Map<String, Object> response = new HashMap<>();
             List<Object[]> selectedUserImages = topicsCommentService.getSelectedUserImages(selectedTopicId);
 

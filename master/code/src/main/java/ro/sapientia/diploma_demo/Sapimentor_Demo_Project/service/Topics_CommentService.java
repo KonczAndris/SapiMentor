@@ -32,13 +32,14 @@ public class Topics_CommentService {
             String subject = topicsComment.getSubject();
             String comment = topicsComment.getComment();
             String date = topicsComment.getDate();
-                Topics_Comment newComment = new Topics_Comment();
-                newComment.setUserId(userId);
-                newComment.setRatedTopicId(ratedTopicId);
-                newComment.setSubject(subject);
-                newComment.setComment(comment);
-                newComment.setDate(date);
-                return topicsCommentRepository.save(newComment);
+
+            Topics_Comment newComment = new Topics_Comment();
+            newComment.setUserId(userId);
+            newComment.setRatedTopicId(ratedTopicId);
+            newComment.setSubject(subject);
+            newComment.setComment(comment);
+            newComment.setDate(date);
+            return topicsCommentRepository.save(newComment);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
