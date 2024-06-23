@@ -40,9 +40,7 @@ async function onMessageReceivedNotificationInMyGroupPage(payload) {
     });
 }
 
-// ez azert hogy a valosideju ertesiteseket is megkapjuk
-// es ha frissitunk vagy ha csak siman ugy kapunk ertesitest hogy nem vagyunk
-// belepve akkor is megkapjuk az ertesitest
+
 document.addEventListener('DOMContentLoaded', () => {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -76,9 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
-
-
-
 
 // Ez azert kell hogy az oldal frissitese nelkul is egybol mindenkinel megjelenjen a comment
 $(document).ready(function() {
@@ -588,8 +583,6 @@ window.onclick = function(event) {
 };
 
 
-
-
 // itt attol fugg melyik active ugyebar arra az URL-re kell iranyitson
 function searchUsers(){
     var menteebutton =  document.querySelector('.mentee-side');
@@ -806,7 +799,6 @@ document.querySelectorAll('.topic-box input[type="checkbox"]').forEach(checkbox 
 });
 
 toggleFieldsAvailability();
-
 
 
 document.addEventListener("DOMContentLoaded", function () {

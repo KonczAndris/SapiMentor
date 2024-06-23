@@ -106,15 +106,10 @@ document.getElementById('back-from-languages').addEventListener('click', functio
 document.getElementById('small-info-div').addEventListener('click', function() {
     document.getElementById('large-info-div').classList.remove('active');
     document.getElementById('info-site').classList.add('active');
-    console.log("megjelenitodik informatika szak adatai");
-    // TODO: ide kell majd az adatok lekerese (fetch keres) a backendtol az informatika szakrol
-    // (a tobbi szaknal is igy kell majd)
-    // TODO: ezt kell majd atadni a getSelectedTopicDetails es a getSelectedUsersImages a fetch keresnel
     var selectedTopicId = document.getElementById('info-site').id;
-    console.log("selectedTopicId: ", selectedTopicId);
+
+    // Fetch selected topic details
     var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
-    //var userId = button.id.split("-")[1];
     var url = '/topics/getSelectedTopicDetails?selectedTopicId=' + selectedTopicId;
 
     fetch(url, {
@@ -123,29 +118,24 @@ document.getElementById('small-info-div').addEventListener('click', function() {
             'Content-Type': 'application/x-www-form-urlencoded',
             'X-CSRF-TOKEN': token
         }
-    }).then(response => {
-        if (response.ok) {
-            console.log("Response: ", response);
-            return response.text();
-        } else {
-            throw new Error('Something went wrong');
-        }
-    }).then(data => {
-        if (data !== 'error') {
-            // TODO:
-            //document.getElementById('profileModal').innerHTML = data;
-            // const closeBtn = document.querySelector('.close-profile-modal');
-            // if (closeBtn !== null){
-            //     closeBtn.addEventListener('click', closeModal);
-            // }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch selected topic details');
+            }
+            return response.json(); // Assuming this returns JSON data
+        })
+        .then(data => {
+            console.log('Selected topic details:', data); // Log the data for debugging
+            // Update your modal or process the data as needed
+            // Example: document.getElementById('profileModal').innerHTML = data;
             // displayModal();
-        } else {
-            throw new Error('Something went wrong');
-        }
-    }).catch(error => {
-        console.log("Error: ", error);
-    });
+        })
+        .catch(error => {
+            console.error('Error fetching selected topic details:', error);
+        });
 
+    // Fetch selected users' images
     var url2 = '/topics/getSelectedUsersImages?selectedTopicId=' + selectedTopicId;
     fetch(url2, {
         method: "GET",
@@ -153,22 +143,76 @@ document.getElementById('small-info-div').addEventListener('click', function() {
             'Content-Type': 'application/x-www-form-urlencoded',
             'X-CSRF-TOKEN': token
         }
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Something went wrong');
-        }
-    }).then(data => {
-        // TODO: itt kell majd a kepek megjelenitese
-        // profileimagesforSelectedUsers = data.selectedUserImages;
-        // setInterval(() => {
-        //     handlereselectedimages();
-        // }, 1000);
-    }).catch(error => {
-        console.log("Error: ", error);
-    });
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch selected users images');
+            }
+            return response.json(); // Assuming this returns JSON data
+        })
+        .then(data => {
+            console.log('Selected users images:', data);
+
+            const commentsDiv = document.querySelector('.comments');
+
+            // Clear existing comments if necessary
+            commentsDiv.innerHTML = '';
+
+            // Iterate through comments and append them to the commentsDiv
+            data.selectedUserImages.forEach(commentData => {
+                var commentSection = document.createElement('div');
+                commentSection.classList.add('comment-section');
+                commentSection.id = 'comment-section-' + commentData.userId;
+
+                var commentRow = document.createElement('div');
+                commentRow.classList.add('comment-row');
+                commentSection.appendChild(commentRow);
+
+                var commentProfileImg = document.createElement('img');
+                commentProfileImg.id = 'commentProfileImg-' + commentData.userId;
+                commentProfileImg.src = commentData.userImage && commentData.userImage !== "" ? 'data:image/jpeg;base64,' + commentData.userImage : "/img/anonym.jpg";
+                commentProfileImg.alt = 'Profile Image';
+                commentProfileImg.classList.add('comment-profile-image');
+                commentRow.appendChild(commentProfileImg);
+
+                var commentInfos = document.createElement('div');
+                commentInfos.classList.add('comment-infos');
+                commentRow.appendChild(commentInfos);
+
+                var commentUsername = document.createElement('p');
+                commentUsername.style.margin = '0';
+                commentUsername.textContent = commentData.firstName && commentData.lastName ? commentData.firstName + " " + commentData.lastName : "Unknown";
+                commentInfos.appendChild(commentUsername);
+
+                var commentLabelDate = document.createElement('p');
+                commentLabelDate.classList.add('comment-label-date');
+                commentLabelDate.id = 'comment-label-date-' + commentData.userId;
+                commentLabelDate.textContent = commentData.date ? commentData.date : "Unknown";
+                commentInfos.appendChild(commentLabelDate);
+
+                var commentContent = document.createElement('div');
+                commentContent.classList.add('comment-content');
+                commentSection.appendChild(commentContent);
+
+                var commentSubject = document.createElement('div');
+                commentSubject.classList.add('comment-subject');
+                commentSubject.textContent = commentData.subject ? commentData.subject : "No Subject";
+                commentContent.appendChild(commentSubject);
+
+                var commentLabelText = document.createElement('p');
+                commentLabelText.classList.add('comment-label-text');
+                commentLabelText.id = 'comment-label-text-' + commentData.userId;
+                commentLabelText.textContent = commentData.comment ? commentData.comment : "No Comment";
+                commentContent.appendChild(commentLabelText);
+
+                commentsDiv.appendChild(commentSection);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching selected users images:', error);
+        });
 });
+
 
 document.getElementById('back-from-info-site').addEventListener('click', function() {
     document.getElementById('info-site').classList.remove('active');
@@ -266,83 +310,74 @@ document.getElementById('back-from-translation-site').addEventListener('click', 
 });
 
 $(document).ready(function() {
-    var urlEndpoint = "/sse/subscribe"
+    var urlEndpoint = "/sse/subscribe";
     const eventSource = new EventSource(urlEndpoint);
 
-    eventSource.onopen = function (event) {
+    eventSource.onopen = function(event) {
         console.log('SSE connection opened.');
     };
 
-    eventSource.onerror = function (event) {
+    eventSource.onerror = function(event) {
         console.error('SSE error:', event);
     };
 
-    eventSource.addEventListener('UserCommentTopics', function (event) {
+    eventSource.addEventListener('UserCommentTopics', function(event) {
+        const commentData = JSON.parse(event.data);
+        const topicDivId = commentData.ratedTopicId;
+        const topicDiv = document.getElementById(topicDivId);
+        const commentsDiv = document.getElementById('comments-info');
 
-        const userCommentData = JSON.parse(event.data);
-        const ratingUserId = userCommentData.ratingUserId;
-
-        const topicDiv = document.getElementById(userCommentData.ratedTopicId);
-
-        if(topicDiv !== null) {
+        if (topicDiv) {
             var commentSection = document.createElement('div');
-            commentSection.classList = 'comment-section';
-            commentSection.id = 'comment-section-' + ratingUserId;
+            commentSection.classList.add('comment-section');
+            commentSection.id = 'comment-section-' + commentData.userId;
 
             var commentRow = document.createElement('div');
-            commentRow.classList = 'comment-row';
+            commentRow.classList.add('comment-row');
             commentSection.appendChild(commentRow);
 
             var commentProfileImg = document.createElement('img');
-            commentProfileImg.id = 'commentProfileImg-' + ratingUserId;
-            if (userCommentData.userImage == null || userCommentData.userImage === "") {
-                commentProfileImg.src = "/img/anonym.jpg";
-            } else {
-                commentProfileImg.src = 'data:image/jpeg;base64,' + userCommentData.userImage;
-            }
+            commentProfileImg.id = 'commentProfileImg-' + commentData.userId;
+            commentProfileImg.src = commentData.userImage && commentData.userImage !== "" ? 'data:image/jpeg;base64,' + commentData.userImage : "/img/anonym.jpg";
             commentProfileImg.alt = 'Profile Image';
-            commentProfileImg.classList = 'comment-profile-image';
+            commentProfileImg.classList.add('comment-profile-image');
             commentRow.appendChild(commentProfileImg);
 
             var commentInfos = document.createElement('div');
-            commentInfos.classList = 'comment-infos';
+            commentInfos.classList.add('comment-infos');
             commentRow.appendChild(commentInfos);
-
-            var commentUsernameDiv = document.createElement('div');
-            commentInfos.appendChild(commentUsernameDiv);
 
             var commentUsername = document.createElement('p');
             commentUsername.style.margin = '0';
-            commentUsername.textContent = userCommentData.firstName + " " + userCommentData.lastName;
-            commentUsernameDiv.appendChild(commentUsername);
+            commentUsername.textContent = commentData.firstName && commentData.lastName ? commentData.firstName + " " + commentData.lastName : "Unknown";
+            commentInfos.appendChild(commentUsername);
 
             var commentLabelDate = document.createElement('p');
-            commentLabelDate.classList = 'comment-label-date';
-            commentLabelDate.id = 'comment-label-date-' + ratingUserId;
-            commentLabelDate.textContent = userCommentData.date;
+            commentLabelDate.classList.add('comment-label-date');
+            commentLabelDate.id = 'comment-label-date-' + commentData.userId;
+            commentLabelDate.textContent = commentData.date ? commentData.date : "Unknown";
             commentInfos.appendChild(commentLabelDate);
 
             var commentContent = document.createElement('div');
-            commentContent.classList = 'comment-content';
+            commentContent.classList.add('comment-content');
             commentSection.appendChild(commentContent);
 
-            var commentSubject = document.createElement('p');
-            commentSubject.classList = 'comment-subject';
+            var commentSubject = document.createElement('div');
+            commentSubject.classList.add('comment-subject');
+            commentSubject.textContent = commentData.subject ? commentData.subject : "No Subject";
             commentContent.appendChild(commentSubject);
 
             var commentLabelText = document.createElement('p');
-            commentLabelText.classList = 'comment-label-text';
-            commentLabelText.id = 'comment-label-text-' + ratingUserId;
-            commentLabelText.textContent = userCommentData.comment;
+            commentLabelText.classList.add('comment-label-text');
+            commentLabelText.id = 'comment-label-text-' + commentData.userId;
+            commentLabelText.textContent = commentData.comment ? commentData.comment : "No Comment";
             commentContent.appendChild(commentLabelText);
 
-            //var commentContainer = document.getElementById("commentContainer");
-            //commentContainer.appendChild(commentSection);
-
-            // itt maskepp van a mygroup-nal a felepites itt nincs commentContainer azert add hibat .
+            commentsDiv.appendChild(commentSection);
         }
     });
 });
+
 
 
 //COMMENTING
