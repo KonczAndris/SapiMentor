@@ -54,29 +54,12 @@ public class Topics_CommentService {
         for (Topics_Comment comment : allCommentsForThisTopic) {
             allUserId.add(comment.getUserId());
         }
-
         List<User> allSelectedUsers = userRepository.findAllByIdIn(allUserId);
-        for (User user : allSelectedUsers) {
-            user.getId();
-            user.getFirst_Name();
-            user.getLast_Name();
-            user.getEmail();
-            System.out.println("User: " + user.getId() + " " + user.getFirst_Name() + " " + user.getLast_Name() + " " + user.getEmail());
-        }
-
-        model.addAttribute("allSelectedUsers", allSelectedUsers);
 
         String email = principal.getName();
-        Long userId = userRepository.findIdByEmail(email);
-        Topics_Comment commentForThisTopic = topicsCommentRepository.findByUserIdAndRatedTopicId(userId, ratedTopicId);
-        if (commentForThisTopic != null) {
-            model.addAttribute("commentForThisTopic", commentForThisTopic);
+        if (email == null){
+            return null;
         }
-        commentForThisTopic.getComment();
-        System.out.println("commentForThisTopic: " + commentForThisTopic.getComment());
-
-        model.addAttribute("allCommentsForThisTopic", allCommentsForThisTopic);
-        System.out.println("allCommentsForThisTopic: " + allCommentsForThisTopic);
 
         List<Object> allComments = new ArrayList<>();
         for (User user : allSelectedUsers) {

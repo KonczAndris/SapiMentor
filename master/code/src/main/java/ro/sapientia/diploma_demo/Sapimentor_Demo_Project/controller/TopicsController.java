@@ -127,19 +127,19 @@ public class TopicsController {
     }
 
     @GetMapping("/getSelectedTopicDetails")
-    public ResponseEntity<String> showSelectedUserDetails(@RequestParam String selectedTopicId,
+    public ResponseEntity<List<Object>> showSelectedUserDetails(@RequestParam String selectedTopicId,
                                           Model model,
                                           Principal principal) {
         try {
             List<Object> allCommentDataForTopics = topicsCommentService.getSelectedTopicComments(selectedTopicId, model, principal);
-
-            System.out.println("Comment data: " + allCommentDataForTopics);
-
-
-            return ResponseEntity.ok("OK");
+            if(allCommentDataForTopics == null){
+                return ResponseEntity.ok(Collections.singletonList("ERROR"));
+            } else {
+                return ResponseEntity.ok(allCommentDataForTopics);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during getting selected topic details!");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonList("Error during getting selected topic details!"));
         }
     }
 
