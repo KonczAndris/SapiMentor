@@ -103,6 +103,7 @@ document.getElementById('back-from-languages').addEventListener('click', functio
     document.getElementById('large-topic-div').classList.add('active');
 });
 
+let profileimagesforSelectedUsers = [];
 document.getElementById('small-info-div').addEventListener('click', function() {
     document.getElementById('large-info-div').classList.remove('active');
     document.getElementById('info-site').classList.add('active');
@@ -127,9 +128,58 @@ document.getElementById('small-info-div').addEventListener('click', function() {
         })
         .then(data => {
             console.log('Selected topic details:', data); // Log the data for debugging
-            // Update your modal or process the data as needed
-            // Example: document.getElementById('profileModal').innerHTML = data;
-            // displayModal();
+
+            const commentsDiv = document.getElementById('comments-info');
+
+            data.forEach(data => {
+                var commentSection = document.createElement('div');
+                commentSection.classList.add('comment-section');
+                commentSection.id = 'comment-section-' + data[0];
+
+                var commentRow = document.createElement('div');
+                commentRow.classList.add('comment-row');
+                commentSection.appendChild(commentRow);
+
+                var commentProfileImg = document.createElement('img');
+                commentProfileImg.id = 'commentProfileImg-' + data[0];
+                commentProfileImg.alt = 'Profile Image';
+                commentProfileImg.classList.add('comment-profile-image-' + data[0]);
+                commentProfileImg.classList.add('comment-profile-image');
+                commentProfileImg.src = "/img/anonym.jpg";
+                commentRow.appendChild(commentProfileImg);
+
+                var commentInfos = document.createElement('div');
+                commentInfos.classList.add('comment-infos');
+                commentRow.appendChild(commentInfos);
+
+                var commentUsername = document.createElement('p');
+                commentUsername.style.margin = '0';
+                commentUsername.textContent = data[1] && data[2] ? data[1] + " " + data[2] : "Unknown";
+                commentInfos.appendChild(commentUsername);
+
+                var commentLabelDate = document.createElement('p');
+                commentLabelDate.classList.add('comment-label-date');
+                commentLabelDate.id = 'comment-label-date-' + data[0];
+                commentLabelDate.textContent = data[3] ? data[3] : "Unknown";
+                commentInfos.appendChild(commentLabelDate);
+
+                var commentContent = document.createElement('div');
+                commentContent.classList.add('comment-content');
+                commentSection.appendChild(commentContent);
+
+                var commentSubject = document.createElement('div');
+                commentSubject.classList.add('comment-subject');
+                commentSubject.textContent = data[5] ? data[5] : "No Subject";
+                commentContent.appendChild(commentSubject);
+
+                var commentLabelText = document.createElement('p');
+                commentLabelText.classList.add('comment-label-text');
+                commentLabelText.id = 'comment-label-text-' + data[0];
+                commentLabelText.textContent = data[4] ? data[4] : "No Comment";
+                commentContent.appendChild(commentLabelText);
+
+                commentsDiv.appendChild(commentSection);
+            });
         })
         .catch(error => {
             console.error('Error fetching selected topic details:', error);
@@ -152,66 +202,33 @@ document.getElementById('small-info-div').addEventListener('click', function() {
         })
         .then(data => {
             console.log('Selected users images:', data);
-
-            const commentsDiv = document.querySelector('.comments');
-
-            // Clear existing comments if necessary
-            commentsDiv.innerHTML = '';
-
-            // Iterate through comments and append them to the commentsDiv
-            data.selectedUserImages.forEach(commentData => {
-                var commentSection = document.createElement('div');
-                commentSection.classList.add('comment-section');
-                commentSection.id = 'comment-section-' + commentData.userId;
-
-                var commentRow = document.createElement('div');
-                commentRow.classList.add('comment-row');
-                commentSection.appendChild(commentRow);
-
-                var commentProfileImg = document.createElement('img');
-                commentProfileImg.id = 'commentProfileImg-' + commentData.userId;
-                commentProfileImg.src = commentData.userImage && commentData.userImage !== "" ? 'data:image/jpeg;base64,' + commentData.userImage : "/img/anonym.jpg";
-                commentProfileImg.alt = 'Profile Image';
-                commentProfileImg.classList.add('comment-profile-image');
-                commentRow.appendChild(commentProfileImg);
-
-                var commentInfos = document.createElement('div');
-                commentInfos.classList.add('comment-infos');
-                commentRow.appendChild(commentInfos);
-
-                var commentUsername = document.createElement('p');
-                commentUsername.style.margin = '0';
-                commentUsername.textContent = commentData.firstName && commentData.lastName ? commentData.firstName + " " + commentData.lastName : "Unknown";
-                commentInfos.appendChild(commentUsername);
-
-                var commentLabelDate = document.createElement('p');
-                commentLabelDate.classList.add('comment-label-date');
-                commentLabelDate.id = 'comment-label-date-' + commentData.userId;
-                commentLabelDate.textContent = commentData.date ? commentData.date : "Unknown";
-                commentInfos.appendChild(commentLabelDate);
-
-                var commentContent = document.createElement('div');
-                commentContent.classList.add('comment-content');
-                commentSection.appendChild(commentContent);
-
-                var commentSubject = document.createElement('div');
-                commentSubject.classList.add('comment-subject');
-                commentSubject.textContent = commentData.subject ? commentData.subject : "No Subject";
-                commentContent.appendChild(commentSubject);
-
-                var commentLabelText = document.createElement('p');
-                commentLabelText.classList.add('comment-label-text');
-                commentLabelText.id = 'comment-label-text-' + commentData.userId;
-                commentLabelText.textContent = commentData.comment ? commentData.comment : "No Comment";
-                commentContent.appendChild(commentLabelText);
-
-                commentsDiv.appendChild(commentSection);
-            });
+            profileimagesforSelectedUsers = data.selectedUserImages;
+            setInterval(() => {
+                handlereselectedimages();
+            }, 1000);
         })
         .catch(error => {
             console.error('Error fetching selected users images:', error);
         });
 });
+
+function handlereselectedimages() {
+    for (let i = 0; i < profileimagesforSelectedUsers.length; i++) {
+        const commentprofileData = profileimagesforSelectedUsers[i];
+        const commentprofileImage = commentprofileData[0];
+        const commentprofileId = commentprofileData[1];
+
+        // Get all elements with the class 'comment-profile-image-' + commentprofileId
+        let commentedProfileImgs = document.getElementsByClassName('comment-profile-image-' + commentprofileId);
+
+        // Convert HTMLCollection to array to use forEach (if needed, for modern browsers)
+        Array.from(commentedProfileImgs).forEach(commentedProfileImg => {
+            if (commentprofileImage && commentedProfileImg) {
+                commentedProfileImg.src = 'data:image/jpeg;base64,' + commentprofileImage;
+            }
+        });
+    }
+}
 
 
 document.getElementById('back-from-info-site').addEventListener('click', function() {

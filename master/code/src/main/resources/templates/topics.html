@@ -300,24 +300,7 @@
                 <div class="divider"></div>
 
                     <div class="comments" id="comments-info">
-                        <div class="comment-entry" style="display: block;">
-                            <div class="comment-section active" th:id="${'comment-section-' + data.userId}" th:each="data, status : ${allCommentsForThisTopic}">
-                                <div class="comment-row">
-                                    <img  th:id="${'commentProfileImg-' + data.userId}" th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
-                                    <div class="comment-infos">
-                                        <div th:each="user : ${allSelectedUsers}">
-                                            <p style="margin: 0" th:if="${user.id == data.userId}" th:text="${user.last_Name + ' ' + user.first_Name}"></p>
-                                        </div>
-                                        <p class="comment-label-date" th:id="${'comment-label-date-' + data.userId}" th:text="${data.date}"></p>
-                                    </div>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-subject" th:text="${data.subject}">
-                                    </div>
-                                    <p class="comment-label-text" th:id="${'comment-label-text-' + data.userId}" th:text="${data.comment}"></p>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
 
                         <div class="nav-arrows">
