@@ -303,11 +303,6 @@
 
                     </div>
 
-                        <div class="nav-arrows">
-                            <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
-                            <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
-                        </div>
-
                 <h2>
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
@@ -390,48 +385,23 @@
                     </div>
                 </div>
                 <div class="right-info-site">
-                    <div class="description-box">
+                <div class="description-box">
     <span class="english-text">
         The Computer Science program is a 4-year full-time undergraduate course. It is recommended for you if you are fascinated by computers and want to understand how they can perform complex tasks; you are interested not only in programming but also in the internal structure of computers and operating systems; and you enjoy programming not only for computers but also for other computing devices (smartphones, tablets, microcontrollers, signal processors, programmable logic controllers). Career opportunities include software designer or programmer, system integrator or tester, network designer and implementer, designer and implementer of microprocessor circuits and devices, system administrator, educator, and researcher.
     </span>
-                        <span class="hungarian-text">
+    <span class="hungarian-text">
         A Számítástechnika szak egy 4 éves nappali alapképzés. Neked ajánljuk, ha érdekelnek a számítógépek és azt szeretnéd megérteni, hogyan képesek bonyolult feladatokat elvégezni; nem csak programozni tanulnál, hanem a számítógépek belső felépítése és az operációs rendszerek is érdekelnek; szívesen programoznál számítógépek mellett egyéb számítástechnikai eszközöket is (okostelefonok, táblagépek, mikrovezérlők, jelfeldolgozó processzorok, programozható logikai vezérlők). Elhelyezkedési lehetőségek: szoftvertervező vagy programozó, rendszerintegrátor vagy rendszertesztelő, hálózatok tervezője és kivitelezője, mikroprocesszoros áramkörök és eszközök tervezője és kivitelezője, rendszergazda, oktató, kutató.
     </span>
-                    </div>
+                </div>
                     <h2>
                         <span class="english-text">COMMENTS</span>
                         <span class="hungarian-text">HOZZÁSZÓLÁSOK</span>
                     </h2>
                     <div class="divider"></div>
-                    <div class="comment-section">
-                        <div class="comments">
-                            <div class="comment-entry" style="display: block;">
-                                <div class="comment-section active">
-                                    <div class="comment-row">
-                                        <img  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
-                                        <div class="comment-infos">
-                                            <div>
-                                                <p style="margin: 0">First Name Last Name</p>
-                                            </div>
-                                            <p class="comment-label-date">2024.11.10</p>
-                                        </div>
-                                    </div>
-                                    <div class="comment-content">
-                                        <div class="comment-subject">
-                                            Subject
-                                        </div>
-                                        <p class="comment-label-text"> TESZT </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="nav-arrows">
-                                <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
-                                <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
-                            </div>
-                        </div>
+                    <div class="comments" id="comments-computer">
 
                     </div>
+
                     <h2>
                         <span class="english-text">Write comment!</span>
                         <span class="hungarian-text">Szólj hozzá!</span>
@@ -469,13 +439,13 @@
                                 <span class="english-text">Comment</span>
                                 <span class="hungarian-text">Hozzászólás</span>
                             </button>
-                        </div>
                     </div>
+                </div>
                 </div>
         </div>
 <!--COMPUTER-SCIENCE-SITE-->
 <!--AUTOMATION-SCIENCE-SITE-->
-        <div class="computer-site" id="automation-site">
+        <div class="automation-site" id="automation-site">
             <button class="green-button" id="back-from-automation-site">
                 <img th:src="@{/img/back-to-topics.png}" alt="Icon">
                 <span class="english-text">Back to Topics</span>
@@ -522,33 +492,7 @@
                     <span class="hungarian-text">HOZZÁSZÓLÁSOK</span>
                 </h2>
                 <div class="divider"></div>
-                <div class="comment-section">
-                    <div class="comments">
-                        <div class="comment-entry" style="display: block;">
-                            <div class="comment-section active">
-                                <div class="comment-row">
-                                    <img  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
-                                    <div class="comment-infos">
-                                        <div>
-                                            <p style="margin: 0">First Name Last Name</p>
-                                        </div>
-                                        <p class="comment-label-date">2024.11.10</p>
-                                    </div>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-subject">
-                                        Subject
-                                    </div>
-                                    <p class="comment-label-text"> TESZT </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="nav-arrows">
-                            <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
-                            <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
-                        </div>
-                    </div>
+                <div class="comments" id="comments-automation">
 
                 </div>
                 <h2>
@@ -583,9 +527,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
 <!--MACHINE-MANUFACTURING-SITE-->
-        <div class="computer-site" id="machine-site">
+        <div class="machine-site" id="machine-site">
             <button class="green-button" id="back-from-machine-site">
                 <img th:src="@{/img/back-to-topics.png}" alt="Icon">
                 <span class="english-text">Back to Topics</span>
@@ -636,35 +580,11 @@
                     <span class="hungarian-text">HOZZÁSZÓLÁSOK</span>
                 </h2>
                 <div class="divider"></div>
-                <div class="comment-section">
-                    <div class="comments">
-                        <div class="comment-entry" style="display: block;">
-                            <div class="comment-section active">
-                                <div class="comment-row">
-                                    <img  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
-                                    <div class="comment-infos">
-                                        <div>
-                                            <p style="margin: 0">First Name Last Name</p>
-                                        </div>
-                                        <p class="comment-label-date">2024.11.10</p>
-                                    </div>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-subject">
-                                        Subject
-                                    </div>
-                                    <p class="comment-label-text"> TESZT </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="nav-arrows">
-                            <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
-                            <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
-                        </div>
-                    </div>
+                <div class="comments" id="comments-machine">
 
                 </div>
+
+
                 <h2>
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
@@ -706,7 +626,7 @@
             </div>
         </div>
 <!--MECHA-SITE-->
-        <div class="computer-site" id="mecha-site">
+        <div class="mecha-site" id="mecha-site">
             <button class="green-button" id="back-from-mecha-site">
                 <img th:src="@{/img/back-to-topics.png}" alt="Icon">
                 <span class="english-text">Back to Topics</span>
@@ -751,35 +671,11 @@
                     <span class="hungarian-text">HOZZÁSZÓLÁSOK</span>
                 </h2>
                 <div class="divider"></div>
-                <div class="comment-section">
-                    <div class="comments">
-                        <div class="comment-entry" style="display: block;">
-                            <div class="comment-section active">
-                                <div class="comment-row">
-                                    <img  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
-                                    <div class="comment-infos">
-                                        <div>
-                                            <p style="margin: 0">First Name Last Name</p>
-                                        </div>
-                                        <p class="comment-label-date">2024.11.10</p>
-                                    </div>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-subject">
-                                        Subject
-                                    </div>
-                                    <p class="comment-label-text"> TESZT </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="nav-arrows">
-                            <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
-                            <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
-                        </div>
-                    </div>
+                <div class="comments" id="comments-mecha">
 
                 </div>
+
+
                 <h2>
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
@@ -816,9 +712,8 @@
                 </div>
             </div>
         </div>
-
 <!--TELECOMMUNICATION-SITE-->
-        <div class="computer-site" id="telecommunication-site">
+        <div class="telecommunication-site" id="telecommunication-site">
             <button class="green-button" id="back-from-telecommunication-site">
                 <img th:src="@{/img/back-to-topics.png}" alt="Icon">
                 <span class="english-text">Back to Topics</span>
@@ -883,35 +778,11 @@
                     <span class="hungarian-text">HOZZÁSZÓLÁSOK</span>
                 </h2>
                 <div class="divider"></div>
-                <div class="comment-section">
-                    <div class="comments">
-                        <div class="comment-entry" style="display: block;">
-                            <div class="comment-section active">
-                                <div class="comment-row">
-                                    <img  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
-                                    <div class="comment-infos">
-                                        <div>
-                                            <p style="margin: 0">First Name Last Name</p>
-                                        </div>
-                                        <p class="comment-label-date">2024.11.10</p>
-                                    </div>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-subject">
-                                        Subject
-                                    </div>
-                                    <p class="comment-label-text"> TESZT </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="nav-arrows">
-                            <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
-                            <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
-                        </div>
-                    </div>
+                <div class="comments" id="comments-telecommunication">
 
                 </div>
+
+
                 <h2>
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
@@ -967,7 +838,7 @@
             </div>
         </div>
 <!--LANDSCAPE-MANUFACTURING-SITE-->
-        <div class="computer-site" id="landscape-site">
+        <div class="landscape-site" id="landscape-site">
             <button class="green-button" id="back-from-landscape-site">
                 <img th:src="@{/img/back-to-topics.png}" alt="Icon">
                 <span class="english-text">Back to Topics</span>
@@ -1020,35 +891,8 @@
                     <span class="hungarian-text">HOZZÁSZÓLÁSOK</span>
                 </h2>
                 <div class="divider"></div>
-                <div class="comment-section">
-                    <div class="comments">
-                        <div class="comment-entry" style="display: block;">
-                            <div class="comment-section active">
-                                <div class="comment-row">
-                                    <img  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
-                                    <div class="comment-infos">
-                                        <div>
-                                            <p style="margin: 0">First Name Last Name</p>
-                                        </div>
-                                        <p class="comment-label-date">2024.11.10</p>
-                                    </div>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-subject">
-                                        Subject
-                                    </div>
-                                    <p class="comment-label-text"> TESZT </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="nav-arrows">
-                            <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
-                            <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
-                        </div>
-                    </div>
-
-                </div>
+                <div class="comments" id="comments-landscape">
+            </div>
                 <h2>
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
@@ -1096,7 +940,7 @@
             </div>
         </div>
 <!--HORTICULTURE-MANUFACTURING-SITE-->
-        <div class="computer-site" id="horticulture-site">
+        <div class="horticulture-site" id="horticulture-site">
             <button class="green-button" id="back-from-horticulture-site">
                 <img th:src="@{/img/back-to-topics.png}" alt="Icon">
                 <span class="english-text">Back to Topics</span>
@@ -1149,35 +993,11 @@
                     <span class="hungarian-text">HOZZÁSZÓLÁSOK</span>
                 </h2>
                 <div class="divider"></div>
-                <div class="comment-section">
-                    <div class="comments">
-                        <div class="comment-entry" style="display: block;">
-                            <div class="comment-section active">
-                                <div class="comment-row">
-                                    <img  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
-                                    <div class="comment-infos">
-                                        <div>
-                                            <p style="margin: 0">First Name Last Name</p>
-                                        </div>
-                                        <p class="comment-label-date">2024.11.10</p>
-                                    </div>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-subject">
-                                        Subject
-                                    </div>
-                                    <p class="comment-label-text"> TESZT </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="nav-arrows">
-                            <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
-                            <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
-                        </div>
-                    </div>
+                <div class="comments" id="comments-horticulture">
 
                 </div>
+
+
                 <h2>
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
@@ -1222,7 +1042,7 @@
             </div>
         </div>
 <!--COMMUNICATION-SITE-->
-        <div class="computer-site" id="communication-site">
+        <div class="communication-site" id="communication-site">
             <button class="green-button" id="back-from-communication-site">
                 <img th:src="@{/img/back-to-topics.png}" alt="Icon">
                 <span class="english-text">Back to Topics</span>
@@ -1285,35 +1105,11 @@
                     <span class="hungarian-text">HOZZÁSZÓLÁSOK</span>
                 </h2>
                 <div class="divider"></div>
-                <div class="comment-section">
-                    <div class="comments">
-                        <div class="comment-entry" style="display: block;">
-                            <div class="comment-section active">
-                                <div class="comment-row">
-                                    <img  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
-                                    <div class="comment-infos">
-                                        <div>
-                                            <p style="margin: 0">First Name Last Name</p>
-                                        </div>
-                                        <p class="comment-label-date">2024.11.10</p>
-                                    </div>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-subject">
-                                        Subject
-                                    </div>
-                                    <p class="comment-label-text"> TESZT </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="nav-arrows">
-                            <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
-                            <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
-                        </div>
-                    </div>
+                <div class="comments" id="comments-communication">
 
                 </div>
+
+
                 <h2>
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
@@ -1371,7 +1167,7 @@
         </div>
 <!--COMMUNICATION-SITE-->
 <!--TRANSLATION-SITE-->
-        <div class="computer-site" id="translation-site">
+        <div class="translation-site" id="translation-site">
             <button class="green-button" id="back-from-translation-site">
                 <img th:src="@{/img/back-to-topics.png}" alt="Icon">
                 <span class="english-text">Back to Topics</span>
@@ -1416,35 +1212,11 @@
                     <span class="hungarian-text">HOZZÁSZÓLÁSOK</span>
                 </h2>
                 <div class="divider"></div>
-                <div class="comment-section">
-                    <div class="comments">
-                        <div class="comment-entry" style="display: block;">
-                            <div class="comment-section active">
-                                <div class="comment-row">
-                                    <img  th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
-                                    <div class="comment-infos">
-                                        <div>
-                                            <p style="margin: 0">First Name Last Name</p>
-                                        </div>
-                                        <p class="comment-label-date">2024.11.10</p>
-                                    </div>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-subject">
-                                        Subject
-                                    </div>
-                                    <p class="comment-label-text"> TESZT </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="nav-arrows">
-                            <button class="navigate-button blue-button" onclick="showPreviousCommentSection()">←</button>
-                            <button class="navigate-button blue-button" onclick="showNextCommentSection()">→</button>
-                        </div>
-                    </div>
+                <div class="comments" id="comments-translation">
 
                 </div>
+
+
                 <h2>
                     <span class="english-text">Write comment!</span>
                     <span class="hungarian-text">Szólj hozzá!</span>
