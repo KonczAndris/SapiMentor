@@ -206,7 +206,7 @@ document.getElementById('small-info-div').addEventListener('click', function() {
             profileimagesforSelectedUsers = data.selectedUserImages;
             setInterval(() => {
                 handlereselectedimages();
-            }, 1000);
+            }, 300);
         })
         .catch(error => {
             console.error('Error fetching selected users images:', error);
