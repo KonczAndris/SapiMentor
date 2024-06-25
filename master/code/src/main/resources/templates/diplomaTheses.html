@@ -364,8 +364,8 @@
                   <div class="form-group-edit">
                     <div class="detail-row">
                       <p class="detail-label">
-                        <span class="english-text">Name:</span>
-                        <span class="hungarian-text">Név:</span></p>
+                        <span class="english-text">Author's name:</span>
+                        <span class="hungarian-text">Szerző neve:</span></p>
                       <input type="text" class="edit-input" th:id="'diplomaTheses-edit-modify-' + ${diploma.id}" placeholder="" required
                              autofocus="autofocus" th:value="${diploma.name}" th:oninput="'validateModifiedName(\'' + ${diploma.id} + '\')'">
                       <div class="info-icon" data-tooltip="">
@@ -482,8 +482,8 @@
       <div class="form-group-edit">
         <div class="detail-row">
           <p class="detail-label">
-            <span class="english-text">Name:</span>
-            <span class="hungarian-text">Név:</span></p>
+            <span class="english-text">Author's name:</span>
+            <span class="hungarian-text">Szerző neve:</span></p>
           <input type="text" class="edit-input" id="diplomaTheses-edit" placeholder="" required
                  autofocus="autofocus" th:oninput="validateName()">
           <div class="info-icon" data-tooltip="">
