@@ -130,6 +130,7 @@ document.getElementById('small-info-div').addEventListener('click', function() {
             console.log('Selected topic details:', data); // Log the data for debugging
 
             const commentsDiv = document.getElementById('comments-info');
+            commentsDiv.innerHTML = '';
 
             data.forEach(data => {
                 var commentSection = document.createElement('div');
@@ -231,10 +232,13 @@ function handlereselectedimages() {
     }
 }
 
-
 document.getElementById('back-from-info-site').addEventListener('click', function() {
-    window.location.href = "/topics";
+    document.getElementById('info-site').classList.remove('active');
+    document.getElementById('large-info-div').classList.add('active');
 });
+// document.getElementById('back-from-info-site').addEventListener('click', function() {
+//     window.location.href = "/topics";
+// });
 
 document.getElementById('small-computer-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
@@ -262,6 +266,7 @@ document.getElementById('small-computer-div').addEventListener('click', function
             console.log('Selected topic details:', data); // Log the data for debugging
 
             const commentsDiv = document.getElementById('comments-computer');
+            commentsDiv.innerHTML = '';
 
             data.forEach(data => {
                 var commentSection = document.createElement('div');
@@ -338,7 +343,7 @@ document.getElementById('small-computer-div').addEventListener('click', function
             profileimagesforSelectedUsers = data.selectedUserImages;
             setInterval(() => {
                 handlereselectedimages();
-            }, 1000);
+            }, 300);
         })
         .catch(error => {
             console.error('Error fetching selected users images:', error);
@@ -346,8 +351,13 @@ document.getElementById('small-computer-div').addEventListener('click', function
 });
 
 document.getElementById('back-from-computer-site').addEventListener('click', function() {
-    window.location.href = "/topics";
+    document.getElementById('computer-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
 });
+
+// document.getElementById('back-from-computer-site').addEventListener('click', function() {
+//     window.location.href = "/topics";
+// });
 
 document.getElementById('small-automation-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
@@ -375,6 +385,7 @@ document.getElementById('small-automation-div').addEventListener('click', functi
             console.log('Selected topic details:', data); // Log the data for debugging
 
             const commentsDiv = document.getElementById('comments-automation');
+            commentsDiv.innerHTML = '';
 
             data.forEach(data => {
                 var commentSection = document.createElement('div');
@@ -451,7 +462,7 @@ document.getElementById('small-automation-div').addEventListener('click', functi
             profileimagesforSelectedUsers = data.selectedUserImages;
             setInterval(() => {
                 handlereselectedimages();
-            }, 1000);
+            }, 300);
         })
         .catch(error => {
             console.error('Error fetching selected users images:', error);
@@ -459,8 +470,13 @@ document.getElementById('small-automation-div').addEventListener('click', functi
 });
 
 document.getElementById('back-from-automation-site').addEventListener('click', function() {
-    window.location.href = "/topics";
+    document.getElementById('automation-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
 });
+
+// document.getElementById('back-from-automation-site').addEventListener('click', function() {
+//     window.location.href = "/topics";
+// });
 
 document.getElementById('small-machine-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
@@ -488,6 +504,7 @@ document.getElementById('small-machine-div').addEventListener('click', function(
             console.log('Selected topic details:', data); // Log the data for debugging
 
             const commentsDiv = document.getElementById('comments-machine');
+            commentsDiv.innerHTML = '';
 
             data.forEach(data => {
                 var commentSection = document.createElement('div');
@@ -564,7 +581,7 @@ document.getElementById('small-machine-div').addEventListener('click', function(
             profileimagesforSelectedUsers = data.selectedUserImages;
             setInterval(() => {
                 handlereselectedimages();
-            }, 1000);
+            }, 300);
         })
         .catch(error => {
             console.error('Error fetching selected users images:', error);
@@ -572,8 +589,13 @@ document.getElementById('small-machine-div').addEventListener('click', function(
 });
 
 document.getElementById('back-from-machine-site').addEventListener('click', function() {
-    window.location.href = "/topics";
+    document.getElementById('machine-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
 });
+
+// document.getElementById('back-from-machine-site').addEventListener('click', function() {
+//     window.location.href = "/topics";
+// });
 
 document.getElementById('small-mecha-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
@@ -601,6 +623,7 @@ document.getElementById('small-mecha-div').addEventListener('click', function() 
             console.log('Selected topic details:', data); // Log the data for debugging
 
             const commentsDiv = document.getElementById('comments-mecha');
+            commentsDiv.innerHTML = '';
 
             data.forEach(data => {
                 var commentSection = document.createElement('div');
@@ -677,7 +700,7 @@ document.getElementById('small-mecha-div').addEventListener('click', function() 
             profileimagesforSelectedUsers = data.selectedUserImages;
             setInterval(() => {
                 handlereselectedimages();
-            }, 1000);
+            }, 300);
         })
         .catch(error => {
             console.error('Error fetching selected users images:', error);
@@ -685,8 +708,13 @@ document.getElementById('small-mecha-div').addEventListener('click', function() 
 });
 
 document.getElementById('back-from-mecha-site').addEventListener('click', function() {
-    window.location.href = "/topics";
+    document.getElementById('mecha-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
 });
+
+// document.getElementById('back-from-mecha-site').addEventListener('click', function() {
+//     window.location.href = "/topics";
+// });
 
 document.getElementById('small-telecommunication-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
@@ -714,6 +742,7 @@ document.getElementById('small-telecommunication-div').addEventListener('click',
             console.log('Selected topic details:', data); // Log the data for debugging
 
             const commentsDiv = document.getElementById('comments-telecommunication');
+            commentsDiv.innerHTML = '';
 
             data.forEach(data => {
                 var commentSection = document.createElement('div');
@@ -790,7 +819,7 @@ document.getElementById('small-telecommunication-div').addEventListener('click',
             profileimagesforSelectedUsers = data.selectedUserImages;
             setInterval(() => {
                 handlereselectedimages();
-            }, 1000);
+            }, 300);
         })
         .catch(error => {
             console.error('Error fetching selected users images:', error);
@@ -798,8 +827,13 @@ document.getElementById('small-telecommunication-div').addEventListener('click',
 });
 
 document.getElementById('back-from-telecommunication-site').addEventListener('click', function() {
-    window.location.href = "/topics";
+    document.getElementById('telecommunication-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
 });
+
+// document.getElementById('back-from-telecommunication-site').addEventListener('click', function() {
+//     window.location.href = "/topics";
+// });
 
 document.getElementById('small-landscape-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
@@ -827,6 +861,7 @@ document.getElementById('small-landscape-div').addEventListener('click', functio
             console.log('Selected topic details:', data); // Log the data for debugging
 
             const commentsDiv = document.getElementById('comments-landscape');
+            commentsDiv.innerHTML = '';
 
             data.forEach(data => {
                 var commentSection = document.createElement('div');
@@ -903,7 +938,7 @@ document.getElementById('small-landscape-div').addEventListener('click', functio
             profileimagesforSelectedUsers = data.selectedUserImages;
             setInterval(() => {
                 handlereselectedimages();
-            }, 1000);
+            }, 300);
         })
         .catch(error => {
             console.error('Error fetching selected users images:', error);
@@ -911,8 +946,13 @@ document.getElementById('small-landscape-div').addEventListener('click', functio
 });
 
 document.getElementById('back-from-landscape-site').addEventListener('click', function() {
-    window.location.href = "/topics";
+    document.getElementById('landscape-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
 });
+
+// document.getElementById('back-from-landscape-site').addEventListener('click', function() {
+//     window.location.href = "/topics";
+// });
 
 document.getElementById('small-horticulture-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
@@ -940,6 +980,7 @@ document.getElementById('small-horticulture-div').addEventListener('click', func
             console.log('Selected topic details:', data); // Log the data for debugging
 
             const commentsDiv = document.getElementById('comments-horticulture');
+            commentsDiv.innerHTML = '';
 
             data.forEach(data => {
                 var commentSection = document.createElement('div');
@@ -1016,7 +1057,7 @@ document.getElementById('small-horticulture-div').addEventListener('click', func
             profileimagesforSelectedUsers = data.selectedUserImages;
             setInterval(() => {
                 handlereselectedimages();
-            }, 1000);
+            }, 300);
         })
         .catch(error => {
             console.error('Error fetching selected users images:', error);
@@ -1024,8 +1065,13 @@ document.getElementById('small-horticulture-div').addEventListener('click', func
 });
 
 document.getElementById('back-from-horticulture-site').addEventListener('click', function() {
-    window.location.href = "/topics";
+    document.getElementById('horticulture-site').classList.remove('active');
+    document.getElementById('large-engineering-div').classList.add('active');
 });
+
+// document.getElementById('back-from-horticulture-site').addEventListener('click', function() {
+//     window.location.href = "/topics";
+// });
 
 document.getElementById('small-communication-div').addEventListener('click', function() {
     document.getElementById('large-languages-div').classList.remove('active');
@@ -1053,6 +1099,7 @@ document.getElementById('small-communication-div').addEventListener('click', fun
             console.log('Selected topic details:', data); // Log the data for debugging
 
             const commentsDiv = document.getElementById('comments-communication');
+            commentsDiv.innerHTML = '';
 
             data.forEach(data => {
                 var commentSection = document.createElement('div');
@@ -1129,7 +1176,7 @@ document.getElementById('small-communication-div').addEventListener('click', fun
             profileimagesforSelectedUsers = data.selectedUserImages;
             setInterval(() => {
                 handlereselectedimages();
-            }, 1000);
+            }, 300);
         })
         .catch(error => {
             console.error('Error fetching selected users images:', error);
@@ -1137,8 +1184,13 @@ document.getElementById('small-communication-div').addEventListener('click', fun
 });
 
 document.getElementById('back-from-communication-site').addEventListener('click', function() {
-    window.location.href = "/topics";
+    document.getElementById('communication-site').classList.remove('active');
+    document.getElementById('large-languages-div').classList.add('active');
 });
+
+// document.getElementById('back-from-communication-site').addEventListener('click', function() {
+//     window.location.href = "/topics";
+// });
 
 document.getElementById('small-translation-div').addEventListener('click', function() {
     document.getElementById('large-languages-div').classList.remove('active');
@@ -1166,6 +1218,7 @@ document.getElementById('small-translation-div').addEventListener('click', funct
             console.log('Selected topic details:', data); // Log the data for debugging
 
             const commentsDiv = document.getElementById('comments-translation');
+            commentsDiv.innerHTML = '';
 
             data.forEach(data => {
                 var commentSection = document.createElement('div');
@@ -1242,7 +1295,7 @@ document.getElementById('small-translation-div').addEventListener('click', funct
             profileimagesforSelectedUsers = data.selectedUserImages;
             setInterval(() => {
                 handlereselectedimages();
-            }, 1000);
+            }, 300);
         })
         .catch(error => {
             console.error('Error fetching selected users images:', error);
@@ -1250,8 +1303,13 @@ document.getElementById('small-translation-div').addEventListener('click', funct
 });
 
 document.getElementById('back-from-translation-site').addEventListener('click', function() {
-    window.location.href = "/topics";
+    document.getElementById('translation-site').classList.remove('active');
+    document.getElementById('large-languages-div').classList.add('active');
 });
+
+// document.getElementById('back-from-translation-site').addEventListener('click', function() {
+//     window.location.href = "/topics";
+// });
 
 
 $(document).ready(function() {
@@ -1393,18 +1451,18 @@ function saveInfoComment(siteId) {
     } else {
         errorMessages.style.display = 'none';
 
-        var commentValue = document.getElementById(siteId).querySelector('.comment-box').value;
-        var englishSelectValue = document.getElementById(siteId).querySelector('.subject-select').value;
+        let commentValue = document.getElementById(siteId).querySelector('.comment-box').value;
+        let englishSelectValue = document.getElementById(siteId).querySelector('.subject-select').value;
 
-        var subjectValue;
+        let subjectValue;
         if (localStorage.getItem('language') === 'hungarian') {
              subjectValue = document.getElementById(siteId).querySelector('.hungarian-select').value;
         } else {
              subjectValue = document.getElementById(siteId).querySelector('.english-select').value;
         }
 
-        var currentDate = new Date();
-        var formattedDate = currentDate.toLocaleDateString('hu-HU', { year: 'numeric', month: '2-digit', day: '2-digit' });
+        let currentDate = new Date();
+        let formattedDate = currentDate.toLocaleDateString('hu-HU', { year: 'numeric', month: '2-digit', day: '2-digit' });
 
         const sseUrl = "/sse/sendCommentInTopics";
 
@@ -1436,7 +1494,20 @@ function saveInfoComment(siteId) {
                     })
                 }).then(response => {
                     if (response.ok) {
-
+                        scrollToBottomInTopicsComment(siteId);
+                        if (localStorage.getItem('language') === 'hungarian') {
+                            const hungarianSelect = document.getElementById(siteId).querySelector('.hungarian-select');
+                            if (hungarianSelect instanceof HTMLSelectElement) {
+                                hungarianSelect.selectedIndex = 0;
+                                document.getElementById(siteId).querySelector('.comment-box').value = '';
+                            }
+                        } else {
+                            const englishSelect = document.getElementById(siteId).querySelector('.english-select');
+                            if (englishSelect instanceof HTMLSelectElement) {
+                                englishSelect.selectedIndex = 0;
+                                document.getElementById(siteId).querySelector('.comment-box').value = '';
+                            }
+                        }
                     } else {
                         throw new Error('Error in SSE fetch');
                     }
@@ -1456,6 +1527,11 @@ function saveInfoComment(siteId) {
         });
     }
 
+}
+
+function scrollToBottomInTopicsComment(siteId) {
+    let commentsDiv = document.getElementById(siteId).querySelector('.comments');
+    commentsDiv.scrollTop = commentsDiv.scrollHeight;
 }
 
 
