@@ -159,11 +159,8 @@ describe('Profile page modals', () => {
 
             addTopicBtn.click();
 
-            // Assert that the error message is displayed
             const errorMessage = document.getElementById('error-message-for-skills');
             expect(getComputedStyle(errorMessage).display).toBe('block');
         });
-
     });
-
 });

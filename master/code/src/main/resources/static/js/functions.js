@@ -940,7 +940,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
 // Mentor or Mentee check at MyGroup redirection
 function notMenteeOrMentor() {
     var alertModal = document.createElement('div');
@@ -997,8 +996,11 @@ function hideLoader() {
     }
 }
 
-// Show the loader
-loader.style.display = 'block';
+if (loader) {
+    loader.style.display = 'block';
+} else {
+    console.error('Loader element not found.');
+}
 
 // Call hideLoader function after window load event
 window.addEventListener('load', hideLoader);
@@ -1043,11 +1045,6 @@ if (window.location.href.includes("profile")){
     window.onload = showTopicsAndSkillsInModal();
 }
 
-if (typeof module !== 'undefined') {
-    // Jest testing exports
-    module.exports = {setupModal, setupMentorModal, setupUploadModal, setupSkillsModal, validatePhone, validateFirstName, validateLastName, validateYear, validateSpecialization, checkValidationAndSetOpacity, toggleDropdown};
-}
-
 function scrollToBottomInProfilePage() {
     var commentSection = document.getElementById('comment-section-container');
     commentSection.style.display = 'block';
@@ -1056,5 +1053,13 @@ function scrollToBottomInProfilePage() {
     }
 }
 
-document.getElementById('showCommentsButton').addEventListener('click', scrollToBottomInProfilePage);
+document.addEventListener('DOMContentLoaded', function() {
+    var showCommentsButton = document.getElementById('showCommentsButton');
+    if (showCommentsButton) {
+        showCommentsButton.addEventListener('click', scrollToBottomInProfilePage);
+    } else {
+        console.error('Element with id "showCommentsButton" not found.');
+    }
+});
 
+module.exports = {setupModal, setupMentorModal, setupUploadModal, setupSkillsModal, validatePhone, validateFirstName, validateLastName, validateYear, validateSpecialization, checkValidationAndSetOpacity, toggleDropdown};

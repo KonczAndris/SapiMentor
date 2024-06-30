@@ -135,6 +135,5 @@ setPlaceholdersBasedOnLanguage();
 
 
 // Jest testing exports
-if (module === undefined) {
-    module.exports = {validateFirstName, validateLastName, validateEmail, validatePassword};
-}
+module.exports = {validateFirstName, validateLastName, validateEmail, validatePassword};
+

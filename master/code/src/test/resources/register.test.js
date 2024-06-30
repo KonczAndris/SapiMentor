@@ -9,7 +9,6 @@ const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
 const { window } = new JSDOM(htmlContent);
 
 const { validateFirstName, validateLastName, validateEmail, validatePassword } = require('./../../main/resources/static/js/register.js');
-require('./../../main/resources/static/js/register.js');
 
 // Register page load testing
 describe('Register page loading', () => {
