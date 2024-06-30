@@ -13,39 +13,11 @@ public class MyCustomSessionInformationExpiredStrategy implements InvalidSession
 
     private UserRepository userRepository;
 
-    //    @Override
-//    public void onExpiredSessionDetected(SessionInformationExpiredEvent event)
-//            throws IOException, ServletException {
-//        System.out.println("Session expired");
-//        String email = event.getSessionInformation().getPrincipal().toString();
-//        User user = userRepository.findByEmail(email);
-//
-//        // Ellenőrizze, hogy a felhasználó ne legyen null, mielőtt hozzáférne az attribútumokhoz.
-//        if (user != null) {
-//            user.setStatus(0);
-//            userRepository.save(user);
-//        }
-//    }
     @Override
     public void onInvalidSessionDetected(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         //modifyUserStatus(request.getUserPrincipal().getName());
         response.sendRedirect("/login?igen");
     }
-
-//    @Override
-//    public void onExpiredSessionDetected(SessionInformationExpiredEvent event)
-//            throws IOException, ServletException {
-//        String email = event.getSessionInformation().getPrincipal().toString();
-//        modifyUserStatus(email);
-//    }
-//
-//    private void modifyUserStatus(String email) {
-//        User user = userRepository.findByEmail(email);
-//        if (user != null) {
-//            user.setStatus(0);
-//            userRepository.save(user);
-//        }
-//    }
 
 }

@@ -35,8 +35,6 @@ public class UserLoginControllerE2ETest {
 
     @Test
     public void testLogin() throws Exception {
-
-        // Szimulált HTTP kérés küldése
         mockMvc.perform(post("/login").param("username", "szotyori.csongor@student.ms.sapientia.ro")
                 .param("password", "proba123"))
                 .andExpect(status().is3xxRedirection())
@@ -45,7 +43,6 @@ public class UserLoginControllerE2ETest {
 
     @Test
     public void testProcessForgotPassword() throws Exception {
-        // Szimulált HTTP kérés küldése
         mockMvc.perform(post("/forgot-password").param("email", "szotyori.csongor@student.ms.sapientia.ro"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/forgotPassword?success"))
@@ -60,8 +57,6 @@ public class UserLoginControllerE2ETest {
         // Mock token létrehozása
         ConfirmationToken mockToken = new ConfirmationToken();
         mockToken.setToken(token);
-
-        // Teszt: HTTP POST kérés szimulálása a resetPassword végponton
         mockMvc.perform(MockMvcRequestBuilders.post("/reset-password")
                         .param("token", token)
                         .param("password", password))
@@ -73,8 +68,6 @@ public class UserLoginControllerE2ETest {
     public void testIfTokenIsInvalidResetPassword() throws Exception {
         String token = "asdasd";
         String password = "proba123";
-
-        // Teszt: HTTP POST kérés szimulálása a resetPassword végponton
         mockMvc.perform(MockMvcRequestBuilders.post("/reset-password")
                         .param("token", token)
                         .param("password", password))

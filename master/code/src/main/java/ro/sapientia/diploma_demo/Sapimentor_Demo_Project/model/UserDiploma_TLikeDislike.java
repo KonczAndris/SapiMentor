@@ -25,11 +25,9 @@ public class UserDiploma_TLikeDislike{
         @JoinColumn(name = "diploma_id")
         private Diploma_Theses diplomaTheses;
 
-        // itt ha 0 akkor inactive es ha 1 akkor active
         @Column(name = "diploma_like_status")
         private Integer like = 0;
 
-        // itt ha 0 akkor inactive es ha 1 akkor active
         @Column(name = "diploma_dislike_status")
         private Integer dislike = 0;
 

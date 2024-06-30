@@ -82,7 +82,6 @@ public class findKeywordsInAbstract {
 
     public int findAbstractPageNumber(PdfReader pdfReader, String searchText) throws IOException {
         PdfDocument pdfDocument = new PdfDocument(pdfReader);
-        //int numberOfPages = pdfDocument.getNumberOfPages();
 
         for (int page = 4; page <= 15; page++) {
             PdfPage pdfPage = pdfDocument.getPage(page);
@@ -97,7 +96,6 @@ public class findKeywordsInAbstract {
 
     public int findAbstractPageNumberForBenedekSzab2021CALC(PdfReader pdfReader, String searchText) throws IOException {
         PdfDocument pdfDocument = new PdfDocument(pdfReader);
-        //int numberOfPages = pdfDocument.getNumberOfPages();
 
         for (int page = 9; page <= 15; page++) {
             PdfPage pdfPage = pdfDocument.getPage(page);
@@ -195,23 +193,20 @@ public class findKeywordsInAbstract {
         for (String line : lines) {
             if (foundKeywords) {
                 resultBuilder.append(line.trim());
-                break; // Kilépünk a ciklusból, miután megtaláltuk a sorokat a "Keywords:" után
+                break;
             }
 
             if (line.startsWith("Keywords:")
                     || line.startsWith("Key words:")
                     || line.startsWith("Keywords—")
                     || line.startsWith("Keyword:")) {
-                // Ha megtaláljuk a "Keywords:" sort, beállítjuk a foundKeywords változót igazra
                 foundKeywords = true;
                 String keywords = line.replace("Keywords:", "")
                         .replace("Key words:", "")
                         .replace("Keywords—", "").trim();
-                // Ebben az esetben a Keywords: sort is hozzáadjuk a visszatérési értékhez
                 resultBuilder.append(keywords);
             }
         }
-
         return resultBuilder.toString().trim();
     }
 

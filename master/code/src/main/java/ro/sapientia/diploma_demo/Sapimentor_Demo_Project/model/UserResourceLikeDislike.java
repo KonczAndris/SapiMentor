@@ -25,11 +25,9 @@ public class UserResourceLikeDislike {
     @JoinColumn(name = "resource_id")
     private Resources resources;
 
-    // itt ha 0 akkor inactive es ha 1 akkor active
     @Column(name = "resource_like_status")
     private Integer like = 0;
 
-    // itt ha 0 akkor inactive es ha 1 akkor active
     @Column(name = "resource_dislike_status")
     private Integer dislike = 0;
 

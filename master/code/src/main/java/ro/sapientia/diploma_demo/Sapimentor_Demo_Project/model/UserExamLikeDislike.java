@@ -25,11 +25,9 @@ public class UserExamLikeDislike {
     @JoinColumn(name = "exam_id")
     private Exams exams;
 
-    // itt ha 0 akkor inactive es ha 1 akkor active
     @Column(name = "exam_like_status")
     private Integer like = 0;
 
-    // itt ha 0 akkor inactive es ha 1 akkor active
     @Column(name = "exam_dislike_status")
     private Integer dislike = 0;
 

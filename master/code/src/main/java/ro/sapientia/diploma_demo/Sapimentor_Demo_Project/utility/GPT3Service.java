@@ -18,8 +18,6 @@ public class GPT3Service {
     }
 
     public String getKeywordsFromAbstractWithGPT3(String userMessage) {
-        //System.out.println("User message: " + userMessage);
-
         // Elokeszitjuk a lekerdezesi torzset
         String requestBodyToGPT3 = String.format(
                 "{\"model\":\"gpt-3.5-turbo\",\"messages\":[{\"role\":\"system\",\"content\":\"You are a helpful assistant.\"},{\"role\":\"user\",\"content\":\"%s\"}]}",
@@ -37,7 +35,6 @@ public class GPT3Service {
                     .bodyToMono(String.class)
                     .block();
 
-            //System.out.println("API response: " + response);
             return gpt3Response;
         } catch (WebClientResponseException e) {
             System.err.println("API error response: " + e.getResponseBodyAsString());

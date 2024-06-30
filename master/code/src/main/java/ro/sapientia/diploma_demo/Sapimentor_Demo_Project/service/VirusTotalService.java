@@ -15,22 +15,15 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class VirusTotalService {
 
-    //@Value("${virustotal.api.key}")
     private final String apiKey = "7806c278ec2b1b0cf2a451eaf26d0a4e76d317569281c351640c9cee147dfb66";
-    //private final String virusTotalApiUrl = "https://www.virustotal.com/api/v2/url/report?apikey={apiKey}&resource={url}";
     private final RestTemplate restTemplate;
 
     public VirusTotalService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    // A VirusTotal API v3-at hasznalom mert a v2 mar nem tamogatott.
-
     public String checkUrlSafety(String url) {
         try {
-            // itt a requestUrl-ben megadott URL-re kell POST kérést küldeni a VirusTotal API-nak
-            // A requestUrl-ben megadott URL-t a "url" paraméterben kell megadni.
-            // ez a resz azt csinalja, hogy a requestUrl-ben megadott URL-re POST kerest kuldd a VirusTotal API-nak
             String requestUrl = "https://www.virustotal.com/api/v3/urls";
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(requestUrl))
@@ -41,7 +34,6 @@ public class VirusTotalService {
                     .build();
 
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            //System.out.println("Response body: " + response.body());
 
             // itt a response body-bol kell kinyerni az "analysisId"-t
             String analysisId = extractAnalysisId(response.body());
@@ -53,13 +45,9 @@ public class VirusTotalService {
                     if ("completed".equals(analysisStatus)) {
                         break;
                     }
-                    // ha az analysis status meg nem completed, akkor varunk egy kicsit
                     TimeUnit.SECONDS.sleep(3);
                 }
             }
-
-            // itt a response body-bol kinyert "analysisId"-t kell hasznalni a safety ellenorzeshez
-            //String safetyResult = checkSafety(analysisId);
 
             return checkSafety(analysisId);
         } catch (Exception e) {
@@ -67,39 +55,6 @@ public class VirusTotalService {
             return "Hiba történt az URL ellenőrzése közben";
         }
     }
-
-        // itt a parhuzamos tipusu keres van megvalositva
-//    private CompletableFuture<String> getAnalysisStatus(String analysisId) throws JSONException {
-//        String requestUrl = "https://www.virustotal.com/api/v3/analyses/" + analysisId;
-//        HttpRequest request = HttpRequest.newBuilder()
-//                .uri(URI.create(requestUrl))
-//                .header("accept", "application/json")
-//                .header("x-apikey", apiKey)
-//                .method("GET", HttpRequest.BodyPublishers.noBody())
-//                .build();
-//
-//        CompletableFuture<HttpResponse<String>> responseFuture = HttpClient.newHttpClient().sendAsync(request, HttpResponse.BodyHandlers.ofString());
-//
-//        return responseFuture.handle((response, throwable) -> {
-//            if (throwable != null) {
-//                throwable.printStackTrace();
-//                return "error";
-//            } else {
-//                try {
-//                    JSONObject jsonObject = new JSONObject(response.body());
-//
-//                    JSONObject dataObject = jsonObject.getJSONObject("data");
-//                    System.out.println("Analysis status1: " + dataObject.getString("attributes"));
-//                    return dataObject.getJSONObject("attributes").getString("status");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    return "error";
-//                }
-//            }
-//        });
-//    }
-
-
 
     //itt a response body-bol kinyerem az "analysisId"-t
     private String extractAnalysisId(String responseBody) {
@@ -109,12 +64,10 @@ public class VirusTotalService {
 
             // A "data" objektumból az "id" kulcs értéke a keresett "analysisId".
             JSONObject dataObject = jsonObject.getJSONObject("data");
-            //String analysisId = dataObject.getString("id");
-
             return dataObject.getString("id");
         } catch (JSONException e) {
             e.printStackTrace();
-            return null; // Vagy valamilyen hiba kezelése, például null visszaadása
+            return null;
         }
     }
 
@@ -131,8 +84,6 @@ public class VirusTotalService {
                     .build();
 
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            //System.out.println("Safety Response body: " + response.body());
-
             return response.body();
         } catch (Exception e) {
             e.printStackTrace();
@@ -154,7 +105,6 @@ public class VirusTotalService {
             JSONObject jsonObject = new JSONObject(response.body());
 
             JSONObject dataObject = jsonObject.getJSONObject("data");
-            //System.out.println("Analysis status: " + dataObject.getString("attributes"));
             return dataObject.getJSONObject("attributes").getString("status");
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,30 +113,3 @@ public class VirusTotalService {
     }
 
 }
-
-
-
-//package ro.sapientia.diploma_demo.Sapimentor_Demo_Project.service;
-//
-//import org.springframework.stereotype.Service;
-//import org.springframework.web.client.RestTemplate;
-//
-//@Service
-//public class VirusTotalService {
-//
-//    //@Value("${virustotal.api.key}")
-//    private final String apiKey = "7806c278ec2b1b0cf2a451eaf26d0a4e76d317569281c351640c9cee147dfb66";
-//    private final String virusTotalApiUrl = "https://www.virustotal.com/vtapi/v2/url/report?apikey={apiKey}&resource={url}";
-//    private final RestTemplate restTemplate;
-//
-//    public VirusTotalService(RestTemplate restTemplate) {
-//        this.restTemplate = restTemplate;
-//    }
-//
-//    public String checkUrlSafety(String url) {
-//        String urlToCheck = url.replace("http://", "").replace("https://", "");
-//        String apiUrl = virusTotalApiUrl.replace("{apiKey}", apiKey).replace("{url}", urlToCheck);
-//        String response = restTemplate.getForObject(apiUrl, String.class);
-//        return response;
-//    }
-//}

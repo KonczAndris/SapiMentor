@@ -11,9 +11,6 @@
 #ENTRYPOINT ["java","-jar","Sapimentor_Demo_Project.jar"]
 
 
-
-# Ez az aws EC2-hez kell:
-# Itt kompiláljuk a kódot és csomagoljuk be az alkalmazást
 FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /code
 COPY pom.xml .

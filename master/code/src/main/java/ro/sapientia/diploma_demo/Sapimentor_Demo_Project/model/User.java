@@ -57,7 +57,8 @@ public class User {
             )
     private Collection<Role> roles;
 
-    @JsonManagedReference // Forward irányú referencia
+    // Forward irányú referencia
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Profile_Topics> skills = new ArrayList<>();
 
@@ -182,19 +183,14 @@ public class User {
 
     @Transactional
     public List<Integer> removeRoleFromUser(User user, String roleName) {
-        // Keresd meg a User objektumot a user_id alapján
-
             Set<Role> rolesToRemove = new HashSet<>();
             List<Integer> removedRoles = new ArrayList<>();
-            // Végigmenj a Role-okon és gyűjtsd össze azokat, amiket törölni kell
             for (Role role : user.getRoles()) {
                 if (role.getName().equals(roleName)) {
                     rolesToRemove.add(role);
                     removedRoles.add(role.getId());
                 }
             }
-
-            // Távolítsd el a gyűjtött Role-okat
             user.getRoles().removeAll(rolesToRemove);
             return removedRoles;
     }

@@ -31,39 +31,28 @@ public class UserResourceLikeDislikeService {
         this.userRepository = userRepository;
     }
 
-    // itt allitom at a like statuszt aktivra vagyis 1-re
     public void ChangeLikeStatusToActive(Long resourceId, Long userId) {
-        // itt meg keresem a resource-t, hogy letezike-e
         Resources resource_Id = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
-        // itt meg keresem a user-t, hogy letezik-e
         User user_Id = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
-//        System.out.println("resource_Id: " + resource_Id.getId());
-//        System.out.println("user_Id: " + user_Id.getId());
         UserResourceLikeDislike existingactivelike = userResourceLikeDislikeRepository.findByUserAndResources(user_Id, resource_Id);
-        //System.out.println("existingactivelike: " + existingactivelike);
 
         if(existingactivelike == null){
             UserResourceLikeDislike newactivelike = new UserResourceLikeDislike();
             newactivelike.setUser(user_Id);
             newactivelike.setResources(resource_Id);
             newactivelike.setLike(1);
-            //newactivelike.setDislike(0);
             userResourceLikeDislikeRepository.save(newactivelike);
         } else {
             existingactivelike.setLike(1);
-            //existingactivelike.setDislike(0);
             userResourceLikeDislikeRepository.save(existingactivelike);
         }
     }
 
-    // itt allitom at a like statuszt inaktivra vagyis 0-ra
     public void ChangeLikeStatusToInactive(Long resourceId, Long userId) {
-        // itt meg keresem a resource-t, hogy letezike-e
         Resources resource_Id = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
-        // itt meg keresem a user-t, hogy letezik-e
         User user_Id = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
@@ -74,22 +63,16 @@ public class UserResourceLikeDislikeService {
             newinactivelike.setUser(user_Id);
             newinactivelike.setResources(resource_Id);
             newinactivelike.setLike(0);
-            //newinactivelike.setDislike(0);
             userResourceLikeDislikeRepository.save(newinactivelike);
         } else {
             existinginactivelike.setLike(0);
-            //existinginactivelike.setDislike(0);
             userResourceLikeDislikeRepository.save(existinginactivelike);
         }
     }
 
-
-    // itt allitom at a dislike statuszt aktivra vagyis 1-re
     public void ChangeDislikeStatusToActive(Long resourceId, Long userId) {
-        // itt meg keresem a resource-t, hogy letezike-e
         Resources resource_Id = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
-        // itt meg keresem a user-t, hogy letezik-e
         User user_Id = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
@@ -99,22 +82,17 @@ public class UserResourceLikeDislikeService {
             UserResourceLikeDislike newactivedislike = new UserResourceLikeDislike();
             newactivedislike.setUser(user_Id);
             newactivedislike.setResources(resource_Id);
-            //newactivedislike.setLike(0);
             newactivedislike.setDislike(1);
             userResourceLikeDislikeRepository.save(newactivedislike);
         } else {
-            //existingactivedislike.setLike(0);
             existingactivedislike.setDislike(1);
             userResourceLikeDislikeRepository.save(existingactivedislike);
         }
     }
 
-    //itt allitom at a dislike statuszt inaktivra vagyis 0-ra
     public void ChangeDislikeStatusToInactive(Long resourceId, Long userId) {
-        // itt meg keresem a resource-t, hogy letezike-e
         Resources resource_Id = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
-        // itt meg keresem a user-t, hogy letezik-e
         User user_Id = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
@@ -124,21 +102,17 @@ public class UserResourceLikeDislikeService {
             UserResourceLikeDislike newinactivedislike = new UserResourceLikeDislike();
             newinactivedislike.setUser(user_Id);
             newinactivedislike.setResources(resource_Id);
-            //newinactivedislike.setLike(0);
             newinactivedislike.setDislike(0);
             userResourceLikeDislikeRepository.save(newinactivedislike);
         } else {
-            //existinginactivedislike.setLike(0);
             existinginactivedislike.setDislike(0);
             userResourceLikeDislikeRepository.save(existinginactivedislike);
         }
     }
 
     public void ChangeLikeStatusToActiveAndDislikeToInactive(Long resourceId, Long userId){
-        // itt meg keresem a resource-t, hogy letezike-e
         Resources resource_Id = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
-        // itt meg keresem a user-t, hogy letezik-e
         User user_Id = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
@@ -159,10 +133,8 @@ public class UserResourceLikeDislikeService {
     }
 
     public void ChangeDislikeStatusToActiveAndLikeToInactive(Long resourceId, Long userId){
-        // itt meg keresem a resource-t, hogy letezike-e
         Resources resource_Id = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
-        // itt meg keresem a user-t, hogy letezik-e
         User user_Id = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
@@ -182,40 +154,32 @@ public class UserResourceLikeDislikeService {
         }
     }
 
-    // itt kerem le a like statuszt
     @Cacheable(value = "likeStatus")
     public String getLikeStatus(Long resourceId, Long userId){
-        // itt meg keresem a resource-t, hogy letezike-e
         Resources resource_Id = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
-        // itt meg keresem a user-t, hogy letezik-e
         User user_Id = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
         UserResourceLikeDislike existinglike = userResourceLikeDislikeRepository.findByUserAndResources(user_Id, resource_Id);
 
         if (existinglike != null){
-            //System.out.println("existinglike: " + existinglike.getLike());
             return existinglike.getLike().toString();
         } else {
             return "0";
         }
     }
 
-    // itt kerem le a dislike statuszt
     @Cacheable(value = "dislikeStatus")
     public String getDislikeStatus(Long resourceId, Long userId){
-        // itt meg keresem a resource-t, hogy letezike-e
         Resources resource_Id = resourcesRepository.findById(resourceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with ID: " + resourceId));
-        // itt meg keresem a user-t, hogy letezik-e
         User user_Id = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
         UserResourceLikeDislike existingdislike = userResourceLikeDislikeRepository.findByUserAndResources(user_Id, resource_Id);
 
         if (existingdislike != null){
-            //System.out.println("existingdislike: " + existingdislike.getLike());
             return existingdislike.getDislike().toString();
         } else {
             return "0";
@@ -223,24 +187,19 @@ public class UserResourceLikeDislikeService {
     }
 
     public List<UserLikeAndDislikeData> getLikeAndDislikeStatus(Long userId){
-        // itt meg keresem a user-t, hogy letezik-e
         User user_Id = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
         List<LinksLikeDislikeDTO> userLikesAndDislikes = userResourceLikeDislikeRepository.findAllByUserId(user_Id);
-        //System.out.println("userLikesAndDislikes: " + userLikesAndDislikes.size());
         List<UserLikeAndDislikeData> ResourcesLikeAndDislikeDataList = new ArrayList<>();
 
         for (LinksLikeDislikeDTO userLikeAndDislike : userLikesAndDislikes) {
-            //System.out.println("userLikeAndDislike: " + userLikeAndDislike);
             Long resourceId = userLikeAndDislike.getResource_id();
             Long userId1 = userLikeAndDislike.getUser_id();
             int like = userLikeAndDislike.getLike();
             int dislike = userLikeAndDislike.getDislike();
             UserLikeAndDislikeData userLikeAndDislikeData = new UserLikeAndDislikeData(resourceId,userId1 , like, dislike);
-            //System.out.println("UserId: " + userId);
             ResourcesLikeAndDislikeDataList.add(userLikeAndDislikeData);
-            //System.out.println("likeAndDislikeDataList: " + ResourcesLikeAndDislikeDataList);
         }
         return ResourcesLikeAndDislikeDataList;
     }

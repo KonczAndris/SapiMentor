@@ -42,14 +42,11 @@ public class SessionListener implements ApplicationListener<HttpSessionDestroyed
         System.out.println("Session destroyed3: " + email);
         Long userId = userRepository.findIdByEmail(email);
         if (userId != null) {
-            // Ha igen, akkor frissítjük a státuszát
             userRepository.updateUserStatusByIdToOffline(userId, 0);
-
             // Értesítés küldése a felhasználó státuszfrissítésről
             webSocketController.sendUserStatusUpdate(userId, 0, null, false);
             System.out.println("Ertesites kuldese a felhasznalo statuszfrissitesrol: " + userId);
         } else {
-            // Ha nem, akkor hibát dobunk
             throw new RuntimeException("Don't find user with this email address: " + email);
         }
         System.out.println("Session destroyed4: " + email);

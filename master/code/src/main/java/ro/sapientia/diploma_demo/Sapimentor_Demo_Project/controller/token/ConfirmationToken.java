@@ -37,14 +37,4 @@ public class ConfirmationToken {
         this.token = token;
         this.expirationTime = TokenExpirationTime.getTokenExpirationTime();
     }
-
-    //ez a regi ez mar nem kell mert meg van az utility-ben
-//    public Date getTokenExpirationTime() {
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(new Date().getTime());
-//        //elvileg nem kell csak a mysql-ben irja be rosszul az idot
-//        //calendar.add(Calendar.HOUR, EXPIRATION_HOUR_TIME);
-//        calendar.add(Calendar.MINUTE, EXPIRATION_MINUTE_TIME);
-//        return new Date(calendar.getTime().getTime());
-//    }
 }

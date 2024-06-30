@@ -10,7 +10,6 @@ public class MyGroupProfileDetailDTO {
     private String lastName;
     private Long id;
 
-    // Konstruktor és getter-setter metódusok
     public MyGroupProfileDetailDTO() {
     }
 
