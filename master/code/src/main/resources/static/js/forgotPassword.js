@@ -63,6 +63,5 @@ function setPlaceholdersBasedOnLanguage() {
 
 setPlaceholdersBasedOnLanguage();
 
-
 // Jest testing exports
 module.exports = {validateEmail};

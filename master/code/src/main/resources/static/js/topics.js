@@ -4,16 +4,12 @@ let stompClient = null;
 let IdForUserInTopicsPage = null;
 function connectToWebSocketForTopicsPage() {
     var elementToGetTopicsUserId = document.querySelector('[id^="userIdForTopicsPage-"]');
-    // console.log("elementToGetUserId: ", elementToGetUserId);
     IdForUserInTopicsPage = elementToGetTopicsUserId.id.split("-")[1];
-    // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
 
     if(window.location.href.includes("http://")){
         var socket = new SockJS('/ws');
-        console.log("sima ws-t hasznal");
     }else {
         var socket = new SockJS('https://' + window.location.host + '/ws');
-        console.log("wss-t hasznal");
     }
     stompClient = Stomp.over(socket);
 
@@ -108,110 +104,7 @@ document.getElementById('small-info-div').addEventListener('click', function() {
     document.getElementById('large-info-div').classList.remove('active');
     document.getElementById('info-site').classList.add('active');
     var selectedTopicId = document.getElementById('info-site').id;
-
-    // Fetch selected topic details
-    var token = $("meta[name='_csrf']").attr("content");
-    var url = '/topics/getSelectedTopicDetails?selectedTopicId=' + selectedTopicId;
-
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected topic details');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected topic details:', data); // Log the data for debugging
-
-            const commentsDiv = document.getElementById('comments-info');
-            commentsDiv.innerHTML = '';
-
-            data.forEach(data => {
-                var commentSection = document.createElement('div');
-                commentSection.classList.add('comment-section');
-                commentSection.id = 'comment-section-' + data[0];
-
-                var commentRow = document.createElement('div');
-                commentRow.classList.add('comment-row');
-                commentSection.appendChild(commentRow);
-
-                var commentProfileImg = document.createElement('img');
-                commentProfileImg.id = 'commentProfileImg-' + data[0];
-                commentProfileImg.alt = 'Profile Image';
-                commentProfileImg.classList.add('comment-profile-image-' + data[0]);
-                commentProfileImg.classList.add('comment-profile-image');
-                commentProfileImg.src = "/img/anonym.jpg";
-                commentRow.appendChild(commentProfileImg);
-
-                var commentInfos = document.createElement('div');
-                commentInfos.classList.add('comment-infos');
-                commentRow.appendChild(commentInfos);
-
-                var commentUsername = document.createElement('p');
-                commentUsername.style.margin = '0';
-                commentUsername.textContent = data[1] && data[2] ? data[1] + " " + data[2] : "Unknown";
-                commentInfos.appendChild(commentUsername);
-
-                var commentLabelDate = document.createElement('p');
-                commentLabelDate.classList.add('comment-label-date');
-                commentLabelDate.id = 'comment-label-date-' + data[0];
-                commentLabelDate.textContent = data[3] ? data[3] : "Unknown";
-                commentInfos.appendChild(commentLabelDate);
-
-                var commentContent = document.createElement('div');
-                commentContent.classList.add('comment-content');
-                commentSection.appendChild(commentContent);
-
-                var commentSubject = document.createElement('div');
-                commentSubject.classList.add('comment-subject');
-                commentSubject.textContent = data[5] ? data[5] : "No Subject";
-                commentContent.appendChild(commentSubject);
-
-                var commentLabelText = document.createElement('p');
-                commentLabelText.classList.add('comment-label-text');
-                commentLabelText.id = 'comment-label-text-' + data[0];
-                commentLabelText.textContent = data[4] ? data[4] : "No Comment";
-                commentContent.appendChild(commentLabelText);
-
-                commentsDiv.appendChild(commentSection);
-            });
-            updateCommentSubjects();
-        })
-        .catch(error => {
-            console.error('Error fetching selected topic details:', error);
-        });
-
-    // Fetch selected users' images
-    var url2 = '/topics/getSelectedUsersImages?selectedTopicId=' + selectedTopicId;
-    fetch(url2, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected users images');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected users images:', data);
-            profileimagesforSelectedUsers = data.selectedUserImages;
-            setInterval(() => {
-                handlereselectedimages();
-            }, 300);
-        })
-        .catch(error => {
-            console.error('Error fetching selected users images:', error);
-        });
+    fetchTopicDetails('comments-info', selectedTopicId);
 });
 
 function handlereselectedimages() {
@@ -236,118 +129,12 @@ document.getElementById('back-from-info-site').addEventListener('click', functio
     document.getElementById('info-site').classList.remove('active');
     document.getElementById('large-info-div').classList.add('active');
 });
-// document.getElementById('back-from-info-site').addEventListener('click', function() {
-//     window.location.href = "/topics";
-// });
 
 document.getElementById('small-computer-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
     document.getElementById('computer-site').classList.add('active');
     var selectedTopicId = document.getElementById('computer-site').id;
-
-    // Fetch selected topic details
-    var token = $("meta[name='_csrf']").attr("content");
-    var url = '/topics/getSelectedTopicDetails?selectedTopicId=' + selectedTopicId;
-
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected topic details');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected topic details:', data); // Log the data for debugging
-
-            const commentsDiv = document.getElementById('comments-computer');
-            commentsDiv.innerHTML = '';
-
-            data.forEach(data => {
-                var commentSection = document.createElement('div');
-                commentSection.classList.add('comment-section');
-                commentSection.id = 'comment-section-' + data[0];
-
-                var commentRow = document.createElement('div');
-                commentRow.classList.add('comment-row');
-                commentSection.appendChild(commentRow);
-
-                var commentProfileImg = document.createElement('img');
-                commentProfileImg.id = 'commentProfileImg-' + data[0];
-                commentProfileImg.alt = 'Profile Image';
-                commentProfileImg.classList.add('comment-profile-image-' + data[0]);
-                commentProfileImg.classList.add('comment-profile-image');
-                commentProfileImg.src = "/img/anonym.jpg";
-                commentRow.appendChild(commentProfileImg);
-
-                var commentInfos = document.createElement('div');
-                commentInfos.classList.add('comment-infos');
-                commentRow.appendChild(commentInfos);
-
-                var commentUsername = document.createElement('p');
-                commentUsername.style.margin = '0';
-                commentUsername.textContent = data[1] && data[2] ? data[1] + " " + data[2] : "Unknown";
-                commentInfos.appendChild(commentUsername);
-
-                var commentLabelDate = document.createElement('p');
-                commentLabelDate.classList.add('comment-label-date');
-                commentLabelDate.id = 'comment-label-date-' + data[0];
-                commentLabelDate.textContent = data[3] ? data[3] : "Unknown";
-                commentInfos.appendChild(commentLabelDate);
-
-                var commentContent = document.createElement('div');
-                commentContent.classList.add('comment-content');
-                commentSection.appendChild(commentContent);
-
-                var commentSubject = document.createElement('div');
-                commentSubject.classList.add('comment-subject');
-                commentSubject.textContent = data[5] ? data[5] : "No Subject";
-                commentContent.appendChild(commentSubject);
-
-                var commentLabelText = document.createElement('p');
-                commentLabelText.classList.add('comment-label-text');
-                commentLabelText.id = 'comment-label-text-' + data[0];
-                commentLabelText.textContent = data[4] ? data[4] : "No Comment";
-                commentContent.appendChild(commentLabelText);
-
-                commentsDiv.appendChild(commentSection);
-            });
-            updateCommentSubjects();
-        })
-        .catch(error => {
-            console.error('Error fetching selected topic details:', error);
-        });
-
-    // Fetch selected users' images
-    var url2 = '/topics/getSelectedUsersImages?selectedTopicId=' + selectedTopicId;
-    fetch(url2, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected users images');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected users images:', data);
-            profileimagesforSelectedUsers = data.selectedUserImages;
-            setInterval(() => {
-                handlereselectedimages();
-            }, 300);
-        })
-        .catch(error => {
-            console.error('Error fetching selected users images:', error);
-        });
+    fetchTopicDetails('comments-computer', selectedTopicId);
 });
 
 document.getElementById('back-from-computer-site').addEventListener('click', function() {
@@ -355,118 +142,11 @@ document.getElementById('back-from-computer-site').addEventListener('click', fun
     document.getElementById('large-engineering-div').classList.add('active');
 });
 
-// document.getElementById('back-from-computer-site').addEventListener('click', function() {
-//     window.location.href = "/topics";
-// });
-
 document.getElementById('small-automation-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
     document.getElementById('automation-site').classList.add('active');
     var selectedTopicId = document.getElementById('automation-site').id;
-
-    // Fetch selected topic details
-    var token = $("meta[name='_csrf']").attr("content");
-    var url = '/topics/getSelectedTopicDetails?selectedTopicId=' + selectedTopicId;
-
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected topic details');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected topic details:', data); // Log the data for debugging
-
-            const commentsDiv = document.getElementById('comments-automation');
-            commentsDiv.innerHTML = '';
-
-            data.forEach(data => {
-                var commentSection = document.createElement('div');
-                commentSection.classList.add('comment-section');
-                commentSection.id = 'comment-section-' + data[0];
-
-                var commentRow = document.createElement('div');
-                commentRow.classList.add('comment-row');
-                commentSection.appendChild(commentRow);
-
-                var commentProfileImg = document.createElement('img');
-                commentProfileImg.id = 'commentProfileImg-' + data[0];
-                commentProfileImg.alt = 'Profile Image';
-                commentProfileImg.classList.add('comment-profile-image-' + data[0]);
-                commentProfileImg.classList.add('comment-profile-image');
-                commentProfileImg.src = "/img/anonym.jpg";
-                commentRow.appendChild(commentProfileImg);
-
-                var commentInfos = document.createElement('div');
-                commentInfos.classList.add('comment-infos');
-                commentRow.appendChild(commentInfos);
-
-                var commentUsername = document.createElement('p');
-                commentUsername.style.margin = '0';
-                commentUsername.textContent = data[1] && data[2] ? data[1] + " " + data[2] : "Unknown";
-                commentInfos.appendChild(commentUsername);
-
-                var commentLabelDate = document.createElement('p');
-                commentLabelDate.classList.add('comment-label-date');
-                commentLabelDate.id = 'comment-label-date-' + data[0];
-                commentLabelDate.textContent = data[3] ? data[3] : "Unknown";
-                commentInfos.appendChild(commentLabelDate);
-
-                var commentContent = document.createElement('div');
-                commentContent.classList.add('comment-content');
-                commentSection.appendChild(commentContent);
-
-                var commentSubject = document.createElement('div');
-                commentSubject.classList.add('comment-subject');
-                commentSubject.textContent = data[5] ? data[5] : "No Subject";
-                commentContent.appendChild(commentSubject);
-
-                var commentLabelText = document.createElement('p');
-                commentLabelText.classList.add('comment-label-text');
-                commentLabelText.id = 'comment-label-text-' + data[0];
-                commentLabelText.textContent = data[4] ? data[4] : "No Comment";
-                commentContent.appendChild(commentLabelText);
-
-                commentsDiv.appendChild(commentSection);
-            });
-            updateCommentSubjects();
-        })
-        .catch(error => {
-            console.error('Error fetching selected topic details:', error);
-        });
-
-    // Fetch selected users' images
-    var url2 = '/topics/getSelectedUsersImages?selectedTopicId=' + selectedTopicId;
-    fetch(url2, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected users images');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected users images:', data);
-            profileimagesforSelectedUsers = data.selectedUserImages;
-            setInterval(() => {
-                handlereselectedimages();
-            }, 300);
-        })
-        .catch(error => {
-            console.error('Error fetching selected users images:', error);
-        });
+    fetchTopicDetails('comments-automation', selectedTopicId);
 });
 
 document.getElementById('back-from-automation-site').addEventListener('click', function() {
@@ -474,118 +154,11 @@ document.getElementById('back-from-automation-site').addEventListener('click', f
     document.getElementById('large-engineering-div').classList.add('active');
 });
 
-// document.getElementById('back-from-automation-site').addEventListener('click', function() {
-//     window.location.href = "/topics";
-// });
-
 document.getElementById('small-machine-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
     document.getElementById('machine-site').classList.add('active');
     var selectedTopicId = document.getElementById('machine-site').id;
-
-    // Fetch selected topic details
-    var token = $("meta[name='_csrf']").attr("content");
-    var url = '/topics/getSelectedTopicDetails?selectedTopicId=' + selectedTopicId;
-
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected topic details');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected topic details:', data); // Log the data for debugging
-
-            const commentsDiv = document.getElementById('comments-machine');
-            commentsDiv.innerHTML = '';
-
-            data.forEach(data => {
-                var commentSection = document.createElement('div');
-                commentSection.classList.add('comment-section');
-                commentSection.id = 'comment-section-' + data[0];
-
-                var commentRow = document.createElement('div');
-                commentRow.classList.add('comment-row');
-                commentSection.appendChild(commentRow);
-
-                var commentProfileImg = document.createElement('img');
-                commentProfileImg.id = 'commentProfileImg-' + data[0];
-                commentProfileImg.alt = 'Profile Image';
-                commentProfileImg.classList.add('comment-profile-image-' + data[0]);
-                commentProfileImg.classList.add('comment-profile-image');
-                commentProfileImg.src = "/img/anonym.jpg";
-                commentRow.appendChild(commentProfileImg);
-
-                var commentInfos = document.createElement('div');
-                commentInfos.classList.add('comment-infos');
-                commentRow.appendChild(commentInfos);
-
-                var commentUsername = document.createElement('p');
-                commentUsername.style.margin = '0';
-                commentUsername.textContent = data[1] && data[2] ? data[1] + " " + data[2] : "Unknown";
-                commentInfos.appendChild(commentUsername);
-
-                var commentLabelDate = document.createElement('p');
-                commentLabelDate.classList.add('comment-label-date');
-                commentLabelDate.id = 'comment-label-date-' + data[0];
-                commentLabelDate.textContent = data[3] ? data[3] : "Unknown";
-                commentInfos.appendChild(commentLabelDate);
-
-                var commentContent = document.createElement('div');
-                commentContent.classList.add('comment-content');
-                commentSection.appendChild(commentContent);
-
-                var commentSubject = document.createElement('div');
-                commentSubject.classList.add('comment-subject');
-                commentSubject.textContent = data[5] ? data[5] : "No Subject";
-                commentContent.appendChild(commentSubject);
-
-                var commentLabelText = document.createElement('p');
-                commentLabelText.classList.add('comment-label-text');
-                commentLabelText.id = 'comment-label-text-' + data[0];
-                commentLabelText.textContent = data[4] ? data[4] : "No Comment";
-                commentContent.appendChild(commentLabelText);
-
-                commentsDiv.appendChild(commentSection);
-            });
-            updateCommentSubjects();
-        })
-        .catch(error => {
-            console.error('Error fetching selected topic details:', error);
-        });
-
-    // Fetch selected users' images
-    var url2 = '/topics/getSelectedUsersImages?selectedTopicId=' + selectedTopicId;
-    fetch(url2, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected users images');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected users images:', data);
-            profileimagesforSelectedUsers = data.selectedUserImages;
-            setInterval(() => {
-                handlereselectedimages();
-            }, 300);
-        })
-        .catch(error => {
-            console.error('Error fetching selected users images:', error);
-        });
+    fetchTopicDetails('comments-machine', selectedTopicId);
 });
 
 document.getElementById('back-from-machine-site').addEventListener('click', function() {
@@ -593,118 +166,11 @@ document.getElementById('back-from-machine-site').addEventListener('click', func
     document.getElementById('large-engineering-div').classList.add('active');
 });
 
-// document.getElementById('back-from-machine-site').addEventListener('click', function() {
-//     window.location.href = "/topics";
-// });
-
 document.getElementById('small-mecha-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
     document.getElementById('mecha-site').classList.add('active');
     var selectedTopicId = document.getElementById('mecha-site').id;
-
-    // Fetch selected topic details
-    var token = $("meta[name='_csrf']").attr("content");
-    var url = '/topics/getSelectedTopicDetails?selectedTopicId=' + selectedTopicId;
-
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected topic details');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected topic details:', data); // Log the data for debugging
-
-            const commentsDiv = document.getElementById('comments-mecha');
-            commentsDiv.innerHTML = '';
-
-            data.forEach(data => {
-                var commentSection = document.createElement('div');
-                commentSection.classList.add('comment-section');
-                commentSection.id = 'comment-section-' + data[0];
-
-                var commentRow = document.createElement('div');
-                commentRow.classList.add('comment-row');
-                commentSection.appendChild(commentRow);
-
-                var commentProfileImg = document.createElement('img');
-                commentProfileImg.id = 'commentProfileImg-' + data[0];
-                commentProfileImg.alt = 'Profile Image';
-                commentProfileImg.classList.add('comment-profile-image-' + data[0]);
-                commentProfileImg.classList.add('comment-profile-image');
-                commentProfileImg.src = "/img/anonym.jpg";
-                commentRow.appendChild(commentProfileImg);
-
-                var commentInfos = document.createElement('div');
-                commentInfos.classList.add('comment-infos');
-                commentRow.appendChild(commentInfos);
-
-                var commentUsername = document.createElement('p');
-                commentUsername.style.margin = '0';
-                commentUsername.textContent = data[1] && data[2] ? data[1] + " " + data[2] : "Unknown";
-                commentInfos.appendChild(commentUsername);
-
-                var commentLabelDate = document.createElement('p');
-                commentLabelDate.classList.add('comment-label-date');
-                commentLabelDate.id = 'comment-label-date-' + data[0];
-                commentLabelDate.textContent = data[3] ? data[3] : "Unknown";
-                commentInfos.appendChild(commentLabelDate);
-
-                var commentContent = document.createElement('div');
-                commentContent.classList.add('comment-content');
-                commentSection.appendChild(commentContent);
-
-                var commentSubject = document.createElement('div');
-                commentSubject.classList.add('comment-subject');
-                commentSubject.textContent = data[5] ? data[5] : "No Subject";
-                commentContent.appendChild(commentSubject);
-
-                var commentLabelText = document.createElement('p');
-                commentLabelText.classList.add('comment-label-text');
-                commentLabelText.id = 'comment-label-text-' + data[0];
-                commentLabelText.textContent = data[4] ? data[4] : "No Comment";
-                commentContent.appendChild(commentLabelText);
-
-                commentsDiv.appendChild(commentSection);
-            });
-            updateCommentSubjects();
-        })
-        .catch(error => {
-            console.error('Error fetching selected topic details:', error);
-        });
-
-    // Fetch selected users' images
-    var url2 = '/topics/getSelectedUsersImages?selectedTopicId=' + selectedTopicId;
-    fetch(url2, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected users images');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected users images:', data);
-            profileimagesforSelectedUsers = data.selectedUserImages;
-            setInterval(() => {
-                handlereselectedimages();
-            }, 300);
-        })
-        .catch(error => {
-            console.error('Error fetching selected users images:', error);
-        });
+    fetchTopicDetails('comments-mecha', selectedTopicId);
 });
 
 document.getElementById('back-from-mecha-site').addEventListener('click', function() {
@@ -712,118 +178,11 @@ document.getElementById('back-from-mecha-site').addEventListener('click', functi
     document.getElementById('large-engineering-div').classList.add('active');
 });
 
-// document.getElementById('back-from-mecha-site').addEventListener('click', function() {
-//     window.location.href = "/topics";
-// });
-
 document.getElementById('small-telecommunication-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
     document.getElementById('telecommunication-site').classList.add('active');
     var selectedTopicId = document.getElementById('telecommunication-site').id;
-
-    // Fetch selected topic details
-    var token = $("meta[name='_csrf']").attr("content");
-    var url = '/topics/getSelectedTopicDetails?selectedTopicId=' + selectedTopicId;
-
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected topic details');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected topic details:', data); // Log the data for debugging
-
-            const commentsDiv = document.getElementById('comments-telecommunication');
-            commentsDiv.innerHTML = '';
-
-            data.forEach(data => {
-                var commentSection = document.createElement('div');
-                commentSection.classList.add('comment-section');
-                commentSection.id = 'comment-section-' + data[0];
-
-                var commentRow = document.createElement('div');
-                commentRow.classList.add('comment-row');
-                commentSection.appendChild(commentRow);
-
-                var commentProfileImg = document.createElement('img');
-                commentProfileImg.id = 'commentProfileImg-' + data[0];
-                commentProfileImg.alt = 'Profile Image';
-                commentProfileImg.classList.add('comment-profile-image-' + data[0]);
-                commentProfileImg.classList.add('comment-profile-image');
-                commentProfileImg.src = "/img/anonym.jpg";
-                commentRow.appendChild(commentProfileImg);
-
-                var commentInfos = document.createElement('div');
-                commentInfos.classList.add('comment-infos');
-                commentRow.appendChild(commentInfos);
-
-                var commentUsername = document.createElement('p');
-                commentUsername.style.margin = '0';
-                commentUsername.textContent = data[1] && data[2] ? data[1] + " " + data[2] : "Unknown";
-                commentInfos.appendChild(commentUsername);
-
-                var commentLabelDate = document.createElement('p');
-                commentLabelDate.classList.add('comment-label-date');
-                commentLabelDate.id = 'comment-label-date-' + data[0];
-                commentLabelDate.textContent = data[3] ? data[3] : "Unknown";
-                commentInfos.appendChild(commentLabelDate);
-
-                var commentContent = document.createElement('div');
-                commentContent.classList.add('comment-content');
-                commentSection.appendChild(commentContent);
-
-                var commentSubject = document.createElement('div');
-                commentSubject.classList.add('comment-subject');
-                commentSubject.textContent = data[5] ? data[5] : "No Subject";
-                commentContent.appendChild(commentSubject);
-
-                var commentLabelText = document.createElement('p');
-                commentLabelText.classList.add('comment-label-text');
-                commentLabelText.id = 'comment-label-text-' + data[0];
-                commentLabelText.textContent = data[4] ? data[4] : "No Comment";
-                commentContent.appendChild(commentLabelText);
-
-                commentsDiv.appendChild(commentSection);
-            });
-            updateCommentSubjects();
-        })
-        .catch(error => {
-            console.error('Error fetching selected topic details:', error);
-        });
-
-    // Fetch selected users' images
-    var url2 = '/topics/getSelectedUsersImages?selectedTopicId=' + selectedTopicId;
-    fetch(url2, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected users images');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected users images:', data);
-            profileimagesforSelectedUsers = data.selectedUserImages;
-            setInterval(() => {
-                handlereselectedimages();
-            }, 300);
-        })
-        .catch(error => {
-            console.error('Error fetching selected users images:', error);
-        });
+    fetchTopicDetails('comments-telecommunication', selectedTopicId);
 });
 
 document.getElementById('back-from-telecommunication-site').addEventListener('click', function() {
@@ -831,118 +190,11 @@ document.getElementById('back-from-telecommunication-site').addEventListener('cl
     document.getElementById('large-engineering-div').classList.add('active');
 });
 
-// document.getElementById('back-from-telecommunication-site').addEventListener('click', function() {
-//     window.location.href = "/topics";
-// });
-
 document.getElementById('small-landscape-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
     document.getElementById('landscape-site').classList.add('active');
     var selectedTopicId = document.getElementById('landscape-site').id;
-
-    // Fetch selected topic details
-    var token = $("meta[name='_csrf']").attr("content");
-    var url = '/topics/getSelectedTopicDetails?selectedTopicId=' + selectedTopicId;
-
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected topic details');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected topic details:', data); // Log the data for debugging
-
-            const commentsDiv = document.getElementById('comments-landscape');
-            commentsDiv.innerHTML = '';
-
-            data.forEach(data => {
-                var commentSection = document.createElement('div');
-                commentSection.classList.add('comment-section');
-                commentSection.id = 'comment-section-' + data[0];
-
-                var commentRow = document.createElement('div');
-                commentRow.classList.add('comment-row');
-                commentSection.appendChild(commentRow);
-
-                var commentProfileImg = document.createElement('img');
-                commentProfileImg.id = 'commentProfileImg-' + data[0];
-                commentProfileImg.alt = 'Profile Image';
-                commentProfileImg.classList.add('comment-profile-image-' + data[0]);
-                commentProfileImg.classList.add('comment-profile-image');
-                commentProfileImg.src = "/img/anonym.jpg";
-                commentRow.appendChild(commentProfileImg);
-
-                var commentInfos = document.createElement('div');
-                commentInfos.classList.add('comment-infos');
-                commentRow.appendChild(commentInfos);
-
-                var commentUsername = document.createElement('p');
-                commentUsername.style.margin = '0';
-                commentUsername.textContent = data[1] && data[2] ? data[1] + " " + data[2] : "Unknown";
-                commentInfos.appendChild(commentUsername);
-
-                var commentLabelDate = document.createElement('p');
-                commentLabelDate.classList.add('comment-label-date');
-                commentLabelDate.id = 'comment-label-date-' + data[0];
-                commentLabelDate.textContent = data[3] ? data[3] : "Unknown";
-                commentInfos.appendChild(commentLabelDate);
-
-                var commentContent = document.createElement('div');
-                commentContent.classList.add('comment-content');
-                commentSection.appendChild(commentContent);
-
-                var commentSubject = document.createElement('div');
-                commentSubject.classList.add('comment-subject');
-                commentSubject.textContent = data[5] ? data[5] : "No Subject";
-                commentContent.appendChild(commentSubject);
-
-                var commentLabelText = document.createElement('p');
-                commentLabelText.classList.add('comment-label-text');
-                commentLabelText.id = 'comment-label-text-' + data[0];
-                commentLabelText.textContent = data[4] ? data[4] : "No Comment";
-                commentContent.appendChild(commentLabelText);
-
-                commentsDiv.appendChild(commentSection);
-            });
-            updateCommentSubjects();
-        })
-        .catch(error => {
-            console.error('Error fetching selected topic details:', error);
-        });
-
-    // Fetch selected users' images
-    var url2 = '/topics/getSelectedUsersImages?selectedTopicId=' + selectedTopicId;
-    fetch(url2, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected users images');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected users images:', data);
-            profileimagesforSelectedUsers = data.selectedUserImages;
-            setInterval(() => {
-                handlereselectedimages();
-            }, 300);
-        })
-        .catch(error => {
-            console.error('Error fetching selected users images:', error);
-        });
+    fetchTopicDetails('comments-landscape', selectedTopicId);
 });
 
 document.getElementById('back-from-landscape-site').addEventListener('click', function() {
@@ -950,118 +202,12 @@ document.getElementById('back-from-landscape-site').addEventListener('click', fu
     document.getElementById('large-engineering-div').classList.add('active');
 });
 
-// document.getElementById('back-from-landscape-site').addEventListener('click', function() {
-//     window.location.href = "/topics";
-// });
 
 document.getElementById('small-horticulture-div').addEventListener('click', function() {
     document.getElementById('large-engineering-div').classList.remove('active');
     document.getElementById('horticulture-site').classList.add('active');
     var selectedTopicId = document.getElementById('horticulture-site').id;
-
-    // Fetch selected topic details
-    var token = $("meta[name='_csrf']").attr("content");
-    var url = '/topics/getSelectedTopicDetails?selectedTopicId=' + selectedTopicId;
-
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected topic details');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected topic details:', data); // Log the data for debugging
-
-            const commentsDiv = document.getElementById('comments-horticulture');
-            commentsDiv.innerHTML = '';
-
-            data.forEach(data => {
-                var commentSection = document.createElement('div');
-                commentSection.classList.add('comment-section');
-                commentSection.id = 'comment-section-' + data[0];
-
-                var commentRow = document.createElement('div');
-                commentRow.classList.add('comment-row');
-                commentSection.appendChild(commentRow);
-
-                var commentProfileImg = document.createElement('img');
-                commentProfileImg.id = 'commentProfileImg-' + data[0];
-                commentProfileImg.alt = 'Profile Image';
-                commentProfileImg.classList.add('comment-profile-image-' + data[0]);
-                commentProfileImg.classList.add('comment-profile-image');
-                commentProfileImg.src = "/img/anonym.jpg";
-                commentRow.appendChild(commentProfileImg);
-
-                var commentInfos = document.createElement('div');
-                commentInfos.classList.add('comment-infos');
-                commentRow.appendChild(commentInfos);
-
-                var commentUsername = document.createElement('p');
-                commentUsername.style.margin = '0';
-                commentUsername.textContent = data[1] && data[2] ? data[1] + " " + data[2] : "Unknown";
-                commentInfos.appendChild(commentUsername);
-
-                var commentLabelDate = document.createElement('p');
-                commentLabelDate.classList.add('comment-label-date');
-                commentLabelDate.id = 'comment-label-date-' + data[0];
-                commentLabelDate.textContent = data[3] ? data[3] : "Unknown";
-                commentInfos.appendChild(commentLabelDate);
-
-                var commentContent = document.createElement('div');
-                commentContent.classList.add('comment-content');
-                commentSection.appendChild(commentContent);
-
-                var commentSubject = document.createElement('div');
-                commentSubject.classList.add('comment-subject');
-                commentSubject.textContent = data[5] ? data[5] : "No Subject";
-                commentContent.appendChild(commentSubject);
-
-                var commentLabelText = document.createElement('p');
-                commentLabelText.classList.add('comment-label-text');
-                commentLabelText.id = 'comment-label-text-' + data[0];
-                commentLabelText.textContent = data[4] ? data[4] : "No Comment";
-                commentContent.appendChild(commentLabelText);
-
-                commentsDiv.appendChild(commentSection);
-            });
-            updateCommentSubjects();
-        })
-        .catch(error => {
-            console.error('Error fetching selected topic details:', error);
-        });
-
-    // Fetch selected users' images
-    var url2 = '/topics/getSelectedUsersImages?selectedTopicId=' + selectedTopicId;
-    fetch(url2, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected users images');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected users images:', data);
-            profileimagesforSelectedUsers = data.selectedUserImages;
-            setInterval(() => {
-                handlereselectedimages();
-            }, 300);
-        })
-        .catch(error => {
-            console.error('Error fetching selected users images:', error);
-        });
+    fetchTopicDetails('comments-horticulture', selectedTopicId);
 });
 
 document.getElementById('back-from-horticulture-site').addEventListener('click', function() {
@@ -1069,118 +215,11 @@ document.getElementById('back-from-horticulture-site').addEventListener('click',
     document.getElementById('large-engineering-div').classList.add('active');
 });
 
-// document.getElementById('back-from-horticulture-site').addEventListener('click', function() {
-//     window.location.href = "/topics";
-// });
-
 document.getElementById('small-communication-div').addEventListener('click', function() {
     document.getElementById('large-languages-div').classList.remove('active');
     document.getElementById('communication-site').classList.add('active');
     var selectedTopicId = document.getElementById('communication-site').id;
-
-    // Fetch selected topic details
-    var token = $("meta[name='_csrf']").attr("content");
-    var url = '/topics/getSelectedTopicDetails?selectedTopicId=' + selectedTopicId;
-
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected topic details');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected topic details:', data); // Log the data for debugging
-
-            const commentsDiv = document.getElementById('comments-communication');
-            commentsDiv.innerHTML = '';
-
-            data.forEach(data => {
-                var commentSection = document.createElement('div');
-                commentSection.classList.add('comment-section');
-                commentSection.id = 'comment-section-' + data[0];
-
-                var commentRow = document.createElement('div');
-                commentRow.classList.add('comment-row');
-                commentSection.appendChild(commentRow);
-
-                var commentProfileImg = document.createElement('img');
-                commentProfileImg.id = 'commentProfileImg-' + data[0];
-                commentProfileImg.alt = 'Profile Image';
-                commentProfileImg.classList.add('comment-profile-image-' + data[0]);
-                commentProfileImg.classList.add('comment-profile-image');
-                commentProfileImg.src = "/img/anonym.jpg";
-                commentRow.appendChild(commentProfileImg);
-
-                var commentInfos = document.createElement('div');
-                commentInfos.classList.add('comment-infos');
-                commentRow.appendChild(commentInfos);
-
-                var commentUsername = document.createElement('p');
-                commentUsername.style.margin = '0';
-                commentUsername.textContent = data[1] && data[2] ? data[1] + " " + data[2] : "Unknown";
-                commentInfos.appendChild(commentUsername);
-
-                var commentLabelDate = document.createElement('p');
-                commentLabelDate.classList.add('comment-label-date');
-                commentLabelDate.id = 'comment-label-date-' + data[0];
-                commentLabelDate.textContent = data[3] ? data[3] : "Unknown";
-                commentInfos.appendChild(commentLabelDate);
-
-                var commentContent = document.createElement('div');
-                commentContent.classList.add('comment-content');
-                commentSection.appendChild(commentContent);
-
-                var commentSubject = document.createElement('div');
-                commentSubject.classList.add('comment-subject');
-                commentSubject.textContent = data[5] ? data[5] : "No Subject";
-                commentContent.appendChild(commentSubject);
-
-                var commentLabelText = document.createElement('p');
-                commentLabelText.classList.add('comment-label-text');
-                commentLabelText.id = 'comment-label-text-' + data[0];
-                commentLabelText.textContent = data[4] ? data[4] : "No Comment";
-                commentContent.appendChild(commentLabelText);
-
-                commentsDiv.appendChild(commentSection);
-            });
-            updateCommentSubjects();
-        })
-        .catch(error => {
-            console.error('Error fetching selected topic details:', error);
-        });
-
-    // Fetch selected users' images
-    var url2 = '/topics/getSelectedUsersImages?selectedTopicId=' + selectedTopicId;
-    fetch(url2, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRF-TOKEN': token
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch selected users images');
-            }
-            return response.json(); // Assuming this returns JSON data
-        })
-        .then(data => {
-            console.log('Selected users images:', data);
-            profileimagesforSelectedUsers = data.selectedUserImages;
-            setInterval(() => {
-                handlereselectedimages();
-            }, 300);
-        })
-        .catch(error => {
-            console.error('Error fetching selected users images:', error);
-        });
+    fetchTopicDetails('comments-communication', selectedTopicId);
 });
 
 document.getElementById('back-from-communication-site').addEventListener('click', function() {
@@ -1188,16 +227,15 @@ document.getElementById('back-from-communication-site').addEventListener('click'
     document.getElementById('large-languages-div').classList.add('active');
 });
 
-// document.getElementById('back-from-communication-site').addEventListener('click', function() {
-//     window.location.href = "/topics";
-// });
 
 document.getElementById('small-translation-div').addEventListener('click', function() {
     document.getElementById('large-languages-div').classList.remove('active');
     document.getElementById('translation-site').classList.add('active');
     var selectedTopicId = document.getElementById('translation-site').id;
+    fetchTopicDetails('comments-translation', selectedTopicId);
+});
 
-    // Fetch selected topic details
+function fetchTopicDetails(divName, selectedTopicId){
     var token = $("meta[name='_csrf']").attr("content");
     var url = '/topics/getSelectedTopicDetails?selectedTopicId=' + selectedTopicId;
 
@@ -1212,12 +250,12 @@ document.getElementById('small-translation-div').addEventListener('click', funct
             if (!response.ok) {
                 throw new Error('Failed to fetch selected topic details');
             }
-            return response.json(); // Assuming this returns JSON data
+            return response.json();
         })
         .then(data => {
-            console.log('Selected topic details:', data); // Log the data for debugging
+            console.log('Selected topic details:', data);
 
-            const commentsDiv = document.getElementById('comments-translation');
+            const commentsDiv = document.getElementById(divName);
             commentsDiv.innerHTML = '';
 
             data.forEach(data => {
@@ -1275,7 +313,6 @@ document.getElementById('small-translation-div').addEventListener('click', funct
             console.error('Error fetching selected topic details:', error);
         });
 
-    // Fetch selected users' images
     var url2 = '/topics/getSelectedUsersImages?selectedTopicId=' + selectedTopicId;
     fetch(url2, {
         method: "GET",
@@ -1288,7 +325,7 @@ document.getElementById('small-translation-div').addEventListener('click', funct
             if (!response.ok) {
                 throw new Error('Failed to fetch selected users images');
             }
-            return response.json(); // Assuming this returns JSON data
+            return response.json();
         })
         .then(data => {
             console.log('Selected users images:', data);
@@ -1300,16 +337,12 @@ document.getElementById('small-translation-div').addEventListener('click', funct
         .catch(error => {
             console.error('Error fetching selected users images:', error);
         });
-});
+}
 
 document.getElementById('back-from-translation-site').addEventListener('click', function() {
     document.getElementById('translation-site').classList.remove('active');
     document.getElementById('large-languages-div').classList.add('active');
 });
-
-// document.getElementById('back-from-translation-site').addEventListener('click', function() {
-//     window.location.href = "/topics";
-// });
 
 
 $(document).ready(function() {
@@ -1968,13 +1001,10 @@ function updateCommentSubjects() {
         }
     };
 
-    // Az összes .comment-subject elem kiválasztása
     const commentSubjects = document.querySelectorAll('.comment-subject');
-
     commentSubjects.forEach(subjectElement => {
         const text = subjectElement.textContent.trim();
 
-        // Végigmegyünk a szótár kulcsain és értékein
         for (const [key, value] of Object.entries(subjects)) {
             if (text === key) {
 

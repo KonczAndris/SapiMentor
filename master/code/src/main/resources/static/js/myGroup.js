@@ -4,9 +4,7 @@ let stompClient = null;
 let IdForUserInMyGroupPage = null;
 function connectToWebSocketForMyGroupPage() {
     var elementToGetMyGroupUserId = document.querySelector('[id^="userIdForMyGroupPage-"]');
-    // console.log("elementToGetUserId: ", elementToGetUserId);
     IdForUserInMyGroupPage = elementToGetMyGroupUserId.id.split("-")[1];
-    // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
 
     if(window.location.href.includes("http://")){
         var socket = new SockJS('/ws');
@@ -26,8 +24,7 @@ function onConnectedForMyGroupPage() {
 }
 
 function onErrorInMyGroupPage(error) {
-    //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    //connectingElement.style.color = 'red';
+
 }
 
 async function onMessageReceivedNotificationInMyGroupPage(payload) {
@@ -75,12 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// Ez azert kell hogy az oldal frissitese nelkul is egybol mindenkinel megjelenjen a comment
 $(document).ready(function() {
-    // SSE
     var urlEndpoint = "/sse/subscribe"
-
-    //itt az eventsource a szerver oldalon lévő végpontot figyeli
     const eventSource = new EventSource(urlEndpoint);
 
     eventSource.onopen = function (event) {
@@ -93,26 +86,18 @@ $(document).ready(function() {
 
     if(!window.location.href.includes("profile")) {
         eventSource.addEventListener('UserComment', function (event) {
-
             const userCommentData = JSON.parse(event.data);
             const ratingUserId = userCommentData.ratingUserId;
-            //console.log("Az ID: " + ratingUserId);
-            //console.log("Received UserComment:", userCommentData);
             const userProfileModal = document.getElementById('profileMainModal_' + userCommentData.ratedUserId);
-            //console.log("User profile modal: ", userProfileModal);
-
             if(userProfileModal !== null) {
-                // console.log("User profile modal found");
                 var commentSection = document.createElement('div');
                 commentSection.classList = 'comment-section'
                 commentSection.id = 'comment-section-' + ratingUserId;
-                //console.log("A Comment-Section: " + commentSection);
 
                 var commentRow = document.createElement('div');
                 commentRow.classList = 'comment-row';
                 commentSection.appendChild(commentRow);
 
-                // Profile image
                 var commentProfileImg = document.createElement('img');
                 commentProfileImg.id = 'commentProfileImg-' + ratingUserId;
                 if (userCommentData.userImage == null || userCommentData.userImage === "") {
@@ -123,13 +108,11 @@ $(document).ready(function() {
                 commentProfileImg.alt = 'Profile Image';
                 commentProfileImg.classList = 'comment-profile-image';
                 commentRow.appendChild(commentProfileImg);
-                //
 
                 var commentInfos = document.createElement('div');
                 commentInfos.classList = 'comment-infos';
                 commentRow.appendChild(commentInfos);
 
-                // User Name
                 var commentUsernameDiv = document.createElement('div');
                 commentInfos.appendChild(commentUsernameDiv);
 
@@ -137,9 +120,7 @@ $(document).ready(function() {
                 commentUsername.style.margin = '0';
                 commentUsername.textContent = userCommentData.firstName + " " + userCommentData.lastName;
                 commentUsernameDiv.appendChild(commentUsername);
-                //
 
-                // Date
                 var commentLabelDate = document.createElement('p');
                 commentLabelDate.classList = 'comment-label-date';
                 commentLabelDate.id = 'comment-label-date-' + ratingUserId;
@@ -151,7 +132,6 @@ $(document).ready(function() {
                 commentRating.id = 'comment-rating-' + ratingUserId;
                 commentInfos.appendChild(commentRating);
 
-                //Star 5
                 var commentStar5 = document.createElement('input');
                 commentStar5.type = 'radio';
                 commentStar5.id = 'comment-star5_' + ratingUserId;
@@ -171,9 +151,6 @@ $(document).ready(function() {
                 commentStar5Label.innerHTML = '&#9733';
                 commentRating.appendChild(commentStar5Label);
 
-                //
-
-                //Star 4
                 var commentStar4 = document.createElement('input');
                 commentStar4.type = 'radio';
                 commentStar4.id = 'comment-star4_' + ratingUserId;
@@ -193,9 +170,6 @@ $(document).ready(function() {
                 commentStar4Label.innerHTML = '&#9733';
                 commentRating.appendChild(commentStar4Label);
 
-                //
-
-                //Star 3
                 var commentStar3 = document.createElement('input');
                 commentStar3.type = 'radio';
                 commentStar3.id = 'comment-star3_' + ratingUserId;
@@ -215,9 +189,6 @@ $(document).ready(function() {
                 commentStar3Label.innerHTML = '&#9733';
                 commentRating.appendChild(commentStar3Label);
 
-                //
-
-                //Star 2
                 var commentStar2 = document.createElement('input');
                 commentStar2.type = 'radio';
                 commentStar2.id = 'comment-star2_' + ratingUserId;
@@ -237,9 +208,6 @@ $(document).ready(function() {
                 commentStar2Label.innerHTML = '&#9733';
                 commentRating.appendChild(commentStar2Label);
 
-                //
-
-                //Star 1
                 var commentStar1 = document.createElement('input');
                 commentStar1.type = 'radio';
                 commentStar1.id = 'comment-star1_' + ratingUserId;
@@ -258,8 +226,6 @@ $(document).ready(function() {
                 }
                 commentStar1Label.innerHTML = '&#9733';
                 commentRating.appendChild(commentStar1Label);
-
-                //
 
                 var commentContent = document.createElement('div');
                 commentContent.classList = 'comment-content';
@@ -276,28 +242,22 @@ $(document).ready(function() {
             }
         });
     } else {
-        console.log("Profile oldalon vagyunk");
         eventSource.addEventListener('UserComment', function (event) {
 
             const userCommentData = JSON.parse(event.data);
             const ratingUserId = userCommentData.ratingUserId;
-            //console.log("Az ID: " + ratingUserId);
-            //console.log("Received UserComment:", userCommentData);
+
             const userProfileContainer = document.getElementById('profile-container-Id_' + userCommentData.ratedUserId);
-            //console.log("User profile modal: ", userProfileContainer);
 
             if(userProfileContainer !== null) {
-                // console.log("User profile modal found");
                 var commentSection = document.createElement('div');
                 commentSection.classList = 'comment-section'
                 commentSection.id = 'comment-section-' + ratingUserId;
-                //console.log("A Comment-Section: " + commentSection);
 
                 var commentRow = document.createElement('div');
                 commentRow.classList = 'comment-row';
                 commentSection.appendChild(commentRow);
 
-                // Profile image
                 var commentProfileImg = document.createElement('img');
                 commentProfileImg.id = 'commentProfileImg-' + ratingUserId;
                 if (userCommentData.userImage == null || userCommentData.userImage === "") {
@@ -308,13 +268,11 @@ $(document).ready(function() {
                 commentProfileImg.alt = 'Profile Image';
                 commentProfileImg.classList = 'comment-profile-image';
                 commentRow.appendChild(commentProfileImg);
-                //
 
                 var commentInfos = document.createElement('div');
                 commentInfos.classList = 'comment-infos';
                 commentRow.appendChild(commentInfos);
 
-                // User Name
                 var commentUsernameDiv = document.createElement('div');
                 commentInfos.appendChild(commentUsernameDiv);
 
@@ -322,9 +280,7 @@ $(document).ready(function() {
                 commentUsername.style.margin = '0';
                 commentUsername.textContent = userCommentData.firstName + " " + userCommentData.lastName;
                 commentUsernameDiv.appendChild(commentUsername);
-                //
 
-                // Date
                 var commentLabelDate = document.createElement('p');
                 commentLabelDate.classList = 'comment-label-date';
                 commentLabelDate.id = 'comment-label-date-' + ratingUserId;
@@ -336,7 +292,6 @@ $(document).ready(function() {
                 commentRating.id = 'comment-rating-' + ratingUserId;
                 commentInfos.appendChild(commentRating);
 
-                //Star 5
                 var commentStar5 = document.createElement('input');
                 commentStar5.type = 'radio';
                 commentStar5.id = 'comment-star5_' + ratingUserId;
@@ -356,9 +311,6 @@ $(document).ready(function() {
                 commentStar5Label.innerHTML = '&#9733';
                 commentRating.appendChild(commentStar5Label);
 
-                //
-
-                //Star 4
                 var commentStar4 = document.createElement('input');
                 commentStar4.type = 'radio';
                 commentStar4.id = 'comment-star4_' + ratingUserId;
@@ -378,9 +330,6 @@ $(document).ready(function() {
                 commentStar4Label.innerHTML = '&#9733';
                 commentRating.appendChild(commentStar4Label);
 
-                //
-
-                //Star 3
                 var commentStar3 = document.createElement('input');
                 commentStar3.type = 'radio';
                 commentStar3.id = 'comment-star3_' + ratingUserId;
@@ -400,9 +349,6 @@ $(document).ready(function() {
                 commentStar3Label.innerHTML = '&#9733';
                 commentRating.appendChild(commentStar3Label);
 
-                //
-
-                //Star 2
                 var commentStar2 = document.createElement('input');
                 commentStar2.type = 'radio';
                 commentStar2.id = 'comment-star2_' + ratingUserId;
@@ -422,9 +368,6 @@ $(document).ready(function() {
                 commentStar2Label.innerHTML = '&#9733';
                 commentRating.appendChild(commentStar2Label);
 
-                //
-
-                //Star 1
                 var commentStar1 = document.createElement('input');
                 commentStar1.type = 'radio';
                 commentStar1.id = 'comment-star1_' + ratingUserId;
@@ -443,8 +386,6 @@ $(document).ready(function() {
                 }
                 commentStar1Label.innerHTML = '&#9733';
                 commentRating.appendChild(commentStar1Label);
-
-                //
 
                 var commentContent = document.createElement('div');
                 commentContent.classList = 'comment-content';
@@ -461,8 +402,6 @@ $(document).ready(function() {
             }
         });
     }
-
-
 });
 
 if(document.getElementById("favorites") !== null) {
@@ -471,17 +410,16 @@ if(document.getElementById("favorites") !== null) {
     });
 }
 
-// Function to show the filter container
 function showFilterContainer() {
     var searchDiv = document.getElementById("searchDiv");
     var searchButton = document.getElementById("myFilterBtn");
 
     if (searchDiv.style.display === "none" || searchDiv.style.display === "") {
         searchDiv.style.display = "flex";
-        searchButton.style.display = "none"; // Hide the button when left div is displayed
+        searchButton.style.display = "none";
     } else {
         searchDiv.style.display = "none";
-        searchButton.style.display = "block"; // Show the button when left div is not displayed
+        searchButton.style.display = "block";
     }
 }
 
@@ -498,7 +436,6 @@ function cancelFilterWindow() {
     }
 }
 
-// Function to handle window resize
 function handleWindowResize() {
     var searchDiv = document.getElementById("searchDiv");
     var searchButton = document.getElementById("myFilterBtn");
@@ -511,7 +448,6 @@ function handleWindowResize() {
     }
 }
 
-// Add event listener for window resize
 var isWindowSizeBelowThreshold = window.innerWidth <= 600;
 
 window.addEventListener("resize", function() {
@@ -524,12 +460,9 @@ window.addEventListener("resize", function() {
     }
 });
 
-// Initial check on page load
 handleWindowResize();
 
 let selectedSide = '';
-
-
 function selectSide(side) {
     if (selectedSide === side) {
         selectedSide = '';
@@ -582,8 +515,6 @@ window.onclick = function(event) {
     }
 };
 
-
-// itt attol fugg melyik active ugyebar arra az URL-re kell iranyitson
 function searchUsers(){
     var menteebutton =  document.querySelector('.mentee-side');
     var mentorbutton =  document.querySelector('.mentor-side');
@@ -591,23 +522,18 @@ function searchUsers(){
     var header = $("meta[name='_csrf_header']").attr("content");
 
     if (menteebutton.classList.contains('active')) {
-        // showLoadingModal();
         window.location.href = "/myGroup/mentees";
     } else if (mentorbutton.classList.contains('active')) {
-        // showLoadingModal();
         window.location.href = "/myGroup/mentors";
     }
 }
 
-
-// profilkepek megjelenitese
 let profileimages = [];
 document.addEventListener('DOMContentLoaded', function() {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
     var currentURL = window.location.href;
-    //console.log("Current URL: ", currentURL);
     var MainInformationPage = document.getElementById("information-box");
     var mentorbutton =  document.querySelector('.mentor-side');
     var menteebutton =  document.querySelector('.mentee-side');
@@ -619,8 +545,6 @@ document.addEventListener('DOMContentLoaded', function() {
         rating.forEach(function (element) {
            element.style.display = "none";
         });
-        // lekerni a mentee-k profilkepeit
-        //console.log("Helloka menteek");
         fetch("/myGroup/mentees/getallmenteeprofileimage", {
             method: "GET",
             headers: {
@@ -643,8 +567,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (currentURL.includes("myGroup/mentors")) {
         MainInformationPage.style.display = "none";
 
-        // lekerni a mentorok profilkepeit
-        //console.log("Helloka mentorok");
         fetch("/myGroup/mentors/getallmentorprofileimage", {
             method: "GET",
             headers: {
@@ -659,7 +581,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             profileimages = data.profileimagesandid;
-            //console.log("Igen: " + profileimages);
             handlereprofileimages();
         }).catch(error => {
             console.log("Error: ", error);
@@ -671,8 +592,7 @@ document.addEventListener('DOMContentLoaded', function() {
         rating.forEach(function (element) {
             element.style.display = "none";
         });
-        // lekerni a mentee-k profilkepeit
-        //console.log("Helloka menteek");
+
         fetch("/myGroup/mentees/getallmenteeprofileimage", {
             method: "GET",
             headers: {
@@ -687,7 +607,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             profileimages = data.profileimagesandid;
-            //console.log("Igen: " + profileimages);
             handlereprofileimages();
         }).catch(error => {
             console.log("Error: ", error);
@@ -695,8 +614,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (currentURL.includes("myGroup/mentors/filtered")) {
         MainInformationPage.style.display = "none";
 
-        // lekerni a mentorok profilkepeit
-        //console.log("Helloka mentorok");
         fetch("/myGroup/mentors/getallmentorprofileimage", {
             method: "GET",
             headers: {
@@ -711,7 +628,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             profileimages = data.profileimagesandid;
-            //console.log("Igen: " + profileimages);
             handlereprofileimages();
         }).catch(error => {
             console.log("Error: ", error);
@@ -720,29 +636,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function handlereprofileimages() {
-
-    //console.log("Profile images hossz : ", profileimages.length);
     for (let i = 0; i < profileimages.length; i++) {
         //console.log("Profile images : ", profileimages[i]);
         const profilData = profileimages[i];
         const profilImage = profilData[0];
         const profilId = profilData[1];
 
-        //console.log("Profil image: ", profilImage);
-        //console.log("Profil id: ", profilId);
-
         var profileImg  = document.getElementById('myGroupProfileImg-' + profilId);
-        //console.log("Profile image: ", profileImg);
         if (profilImage != null && profileImg != null ) {
             profileImg.src = 'data:image/jpeg;base64,' + profilImage;
         }
-
     }
 }
 
 function showLoadingModal() {
     var modal = document.getElementById("loading-modal");
-    modal.style.display = "block"; // Megjelenítjük a modal ablakot
+    modal.style.display = "block";
 }
 
 function isRoleSelected() {
@@ -804,20 +713,16 @@ toggleFieldsAvailability();
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelector('.profile-modal-background').style.display = 'none';
 
-    var selectedSkillsByTopic = {};  // Objektum, amely tárolja a kiválasztott skill-eket témánként
+    var selectedSkillsByTopic = {};
 
-    // Get all topic checkboxes
     var topicCheckboxes = document.querySelectorAll('.topic-checkbox');
 
-    // Add click event listener to each topic checkbox
     topicCheckboxes.forEach(function (checkbox) {
         checkbox.addEventListener('click', function () {
             var selectedTopic = checkbox.value;
 
-            // Check if the topic is checked or unchecked
             var isChecked = checkbox.hasAttribute('checked') || checkbox.checked;
             if (isChecked) {
-                // Initialize the selectedSkillsByTopic entry if not exists
                 if (!selectedSkillsByTopic[selectedTopic]) {
                     selectedSkillsByTopic[selectedTopic] = [];
                 }
@@ -825,52 +730,40 @@ document.addEventListener("DOMContentLoaded", function () {
                 updateSkillsVisibility(selectedSkillsByTopic);
                 var skillCheckboxes = document.querySelectorAll('.skill-checkbox');
                 skillCheckboxes.forEach(function (skillCheckbox) {
-                    // Add click event listener to each skill checkbox
                     skillCheckbox.addEventListener('click', function () {
                         var selectedtopic = skillCheckbox.parentNode;
-                        //console.log("Selected topic1: ", selectedtopic);
                         var igen = selectedtopic.id;
-                        //console.log("Selected topic2: ", igen.split("-")[2]);
                         if (igen.split("-")[2] === selectedTopic){
                             var selectedSkill = skillCheckbox.value;
                             var isChecked = skillCheckbox.hasAttribute('checked') || skillCheckbox.checked;
 
                             if (isChecked) {
-                                // Add the selected skill to the corresponding topic
                                 if (!selectedSkillsByTopic[selectedTopic].includes(selectedSkill)) {
                                     selectedSkillsByTopic[selectedTopic].push(selectedSkill);
                                 }
                             } else {
-                                // Remove the selected skill from the corresponding topic
                                 var skillIndex = selectedSkillsByTopic[selectedTopic].indexOf(selectedSkill);
                                 if (skillIndex !== -1) {
                                     selectedSkillsByTopic[selectedTopic].splice(skillIndex, 1);
                                 }
                             }
                         }
-
-
-                        // Toggle visibility of the skills based on the current selected topics
                         updateSkillsVisibility(selectedSkillsByTopic);
                     });
                 });
             } else {
-                // Remove the entry for the unselected topic
                 delete selectedSkillsByTopic[selectedTopic];
                 updateSkillsVisibility(selectedSkillsByTopic);
             }
         });
     });
 
-    // Function to toggle visibility of skills based on selected topics
     function updateSkillsVisibility(selectedSkillsByTopic) {
-        // Hide all skill checkboxes
         var skillCheckboxes = document.querySelectorAll('.skill-checkboxx');
         skillCheckboxes.forEach(function (skillCheckbox) {
             skillCheckbox.style.display = 'none';
         });
 
-        // Show skill checkboxes related to the selected topics
         Object.keys(selectedSkillsByTopic).forEach(function (topic) {
             var relatedSkillCheckboxes = document.querySelectorAll('#skill-checkboxx-' + topic);
             relatedSkillCheckboxes.forEach(function (relatedCheckbox) {
@@ -880,7 +773,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function sendSearchDataToServer() {
-        // Convert the data to JSON
         var searchData = {
             selectedSkillsByTopic: selectedSkillsByTopic
         };
@@ -889,24 +781,14 @@ document.addEventListener("DOMContentLoaded", function () {
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
 
-        // igy megkapom a kivalasztott skill-eket es topicokat is
-        // ha nincs kivalasztva semmi akkor csak siman a mentee/mentor oldalra iranyitson
-        // ha van kivalasztva valami akkor pedig a kereses oldalra iranyitson
         if (Object.keys(selectedSkillsByTopic).length === 0) {
-            console.log("Nincs kiválasztva semmi");
-
 
             if (menteebutton.classList.contains('active')) {
-                // showLoadingModal();
                 window.location.href = "/myGroup/mentees";
             } else if (mentorbutton.classList.contains('active')) {
-                // showLoadingModal();
                 window.location.href = "/myGroup/mentors";
             } else {
-                //Meg kell jelenitse hogy valamelyiket muszaj kivalasztani
-                // es esetleg azt a mentor/mentee div-nek adjon piros keretet
                 alert("Hibat kell megjelenitsen, ")
-                //window.location.href = "/myGroup/myCustomGroup";
             }
         } else {
             if (menteebutton.classList.contains('active')) {
@@ -915,7 +797,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     return `${encodeURIComponent(topic)}=${skills}`;
                 }).join('&');
                 const url = `/myGroup/mentees/filtered?${queryString}`;
-                // showLoadingModal();
                 window.location.href = url;
 
             } else if (mentorbutton.classList.contains('active')) {
@@ -924,28 +805,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     return `${encodeURIComponent(topic)}=${skills}`;
                 }).join('&');
                 const url = `/myGroup/mentors/filtered?${queryString}`;
-                // showLoadingModal();
                 window.location.href = url;
             }
-
         }
     }
 
     var searchButton = document.getElementById('search-button');
     searchButton.addEventListener('click', function () {
-        // Send selected data to the server when the "Search" button is clicked
         sendSearchDataToServer();
     });
 });
 
-
-// Get the button element by its class name
 const profileButtons = document.querySelectorAll('.profile-button-watch');
 const profileModal = document.getElementById('profileModal');
 const profileImageButtons = document.querySelectorAll('.rounded-image');
 
-
-// Function to display the modal
 function displayModal() {
     var currentURL = window.location.href;
     if (profileModal !== null) {
@@ -1115,10 +989,8 @@ function handlereselectedimages() {
         if (commentprofileImage != null && commentedProfileImg != null ) {
             commentedProfileImg.src = 'data:image/jpeg;base64,' + commentprofileImage;
         }
-
     }
 }
-
 
 window.addEventListener('click', function(event) {
     if (event.target === profileModal) {
@@ -1137,7 +1009,6 @@ function showHeartIcons() {
         console.log("Favorite id: ", idValue);
 
         var parentCell = favoriteId.parentElement;
-        //console.log("Parent cell: ", parentCell);
         var checkedHeart = parentCell.querySelector('.checked-heart');
         var uncheckedHeart = parentCell.querySelector('.unchecked-heart');
 
@@ -1154,7 +1025,6 @@ function showHeartIcons() {
         }
 
         var parentCellId = parentCell.id.split("-")[2];
-        //console.log("Parent cell id: ", parentCellId);
         var favoriteButton = document.getElementById('favoriteButton-' + parentCellId);
 
         favoriteButton.addEventListener('click', function() {
@@ -1166,7 +1036,6 @@ function showHeartIcons() {
                         alert("You are not a mentor,so you can't add this mentee to your favorites!");
                     } else {
 
-                        //console.log("Hozzaadom a kedvencekhez");
                         uncheckedHeart.style.display = 'none';
                         checkedHeart.style.display = 'inline';
                         uncheckedHeart.classList.remove('active');
@@ -1197,8 +1066,6 @@ function showHeartIcons() {
                             console.log("Error: ", error);
                         });
                     }
-
-
                 }
                 else if (checkedHeart.classList.contains('active')) {
                     const sureButton = document.getElementById('sureButton-' + parentCellId);
@@ -1243,7 +1110,6 @@ function showHeartIcons() {
                             console.log("Error: ", error);
                         });
 
-                        // Hide the sure-modal after the action is performed
                         const profileButtonContainerSure = document.getElementById('profile-button-container-sure-' + parentCellId);
                         if (profileButtonContainerSure) {
                             profileButtonContainerSure.style.display = 'none';
@@ -1252,7 +1118,6 @@ function showHeartIcons() {
                     });
 
                     cancelButton.addEventListener('click', () => {
-                        // Hide the sure-modal without performing any action
                         if (profileButtonContainerSure) {
                             profileButtonContainerSure.style.display = 'none';
                             profileButtonContainer.style.display = 'flex';
@@ -1284,10 +1149,7 @@ if (favoriteButton !== null) {
             }
         }).then(data => {
             if (data === 'ok') {
-                console.log("Sikeres mentes");
-
-                // Átirányítás a kedvencek oldalára
-                window.location.href = '/myGroup/favorites'; // Változtasd az útvonalat az oldalad szerkezetének megfelelően
+                window.location.href = '/myGroup/favorites';
             } else {
                 throw new Error('Something went wrong');
             }
@@ -1297,20 +1159,15 @@ if (favoriteButton !== null) {
     });
 }
 
-
-
 function showRateSection() {
     document.getElementById('ratingSection').style.display = 'block';
     var isChecked = false;
     var ratedRating = document.querySelectorAll('input[name="selectrating"]');
-    console.log("Rated rating: ", ratedRating);
-
     ratedRating.forEach(function (element) {
         if (element.checked){
             isChecked = true;
         }
     });
-    console.log("Is checked: ", isChecked);
 
     var ratedButton = document.getElementById('save-rating');
 
@@ -1336,8 +1193,6 @@ function saveRating() {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
-
-    // Az input mezőkből kiolvasott adatok
     if (document.querySelector('input[name="selectrating"]:checked') === null){
         var errorMessages = document.getElementById('error-for-ratingSection');
         errorMessages.textContent = 'Please select a rating first!';
@@ -1345,13 +1200,9 @@ function saveRating() {
         errorMessages.style.color = 'red';
     } else {
         var rating = document.querySelector('input[name="selectrating"]:checked').value;
-        //console.log("Rating: ", rating);
         var comment = document.getElementById('commentInput').value;
-
-
         var profileModalElement = document.querySelector('[id*="profileMainModal_"]');
         var userId = profileModalElement.id.split("_")[1];
-
         var currentDate = new Date();
         var formattedDate = currentDate.toLocaleDateString('hu-HU', { year: 'numeric', month: '2-digit', day: '2-digit' });
         const sseUrl = "/sse/sendCommentInMyGroup";
@@ -1414,10 +1265,6 @@ function saveRating() {
                     var floatRating = parseFloat(rating);
                     var floatLastCheckedValue = parseFloat(lastCheckedValue);
                     var avg = (floatLastCheckedValue + floatRating)/2;
-                    console.log('Az új átlag érték: ' + avg);
-
-
-                    // Beállítjuk az új átlag értéknek megfelelően a csillagokat
                     for (var i = 1; i <= 5; i++) {
                         var starInput = currentRatingDiv.querySelector('input[value="' + i + '"]');
                         var starLabel = currentRatingDiv.querySelector('label[for="star' + i + '"]');
@@ -1446,25 +1293,18 @@ function saveRating() {
             console.log("Error: ", error);
         });
     }
-
 }
-
 
 function cancelRating() {
     document.getElementById('ratingSection').style.display = 'none';
 }
 
 function rateWithStars(rating) {
-    // Get all  star elements
     var stars = document.querySelectorAll('.rating-rate .modal-rating-star-rate label');
-
-    // Loop through each star and apply the color based on the rating
     for (var i = 0; i < stars.length; i++) {
         if (i + 1 <= rating) {
-            // If the star's index is less than or equal to the selected rating, make it gold
             stars[i].style.color = 'gold';
         } else {
-            // Otherwise, make it grey
             stars[i].style.color = 'grey';
         }
     }
@@ -1476,22 +1316,15 @@ var currentCommentIndex = 0;
 function showNextCommentSection() {
     let commentSections = document.querySelectorAll('.comment-section');
     let currentCommentSection = commentSections[currentCommentIndex];
-
-    // Elrejtjük az aktuális elemet
     if (currentCommentSection) {
         currentCommentSection.classList.remove('active');
     }
-
-    // Növeljük a kiválasztott indexet
     currentCommentIndex++;
-
-    // Megjelenítjük a következő elemet
     let nextCommentSection = commentSections[currentCommentIndex];
 
     if (nextCommentSection) {
         nextCommentSection.classList.add('active');
     } else {
-        // Ha nincs további elem, visszaállunk az alapértelmezett elemre
         currentCommentIndex = 0;
         commentSections[currentCommentIndex].classList.add('active');
     }
@@ -1500,30 +1333,21 @@ function showNextCommentSection() {
 function showPreviousCommentSection() {
     let commentSections = document.querySelectorAll('.comment-section');
     let currentCommentSection = commentSections[currentCommentIndex];
-
-    // Elrejtjük az aktuális elemet
     if (currentCommentSection) {
         currentCommentSection.classList.remove('active');
     }
-
-    // Csökkentjük a kiválasztott indexet
     currentCommentIndex--;
 
-    // Megjelenítjük az előző elemet
     let previousCommentSection = commentSections[currentCommentIndex];
-
     if (previousCommentSection) {
         previousCommentSection.classList.add('active');
     } else {
-        // Ha nincs előző elem, visszaugrunk az utolsó elemre
         currentCommentIndex = commentSections.length - 1;
         commentSections[currentCommentIndex].classList.add('active');
     }
 }
 
-// Az oldal betöltésekor hívódik meg
 document.addEventListener('DOMContentLoaded', function () {
-    // Csak az első elem kapja meg az active osztályt
     let commentSections = document.querySelectorAll('.comment-section');
     commentSections.forEach(function (section, index) {
         if (index === 0) {
@@ -1606,13 +1430,10 @@ function scrollToBottomInMyGroupPage() {
         commentSection.style.display = 'block';  // Show the comment section if it is hidden
     }
 
-    // Check if the comment section exists
     if (commentSection) {
-        // Scroll to the bottom of the comment section
         commentSection.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
 }
 
-// Attach the function to the button click event
 document.getElementById('showCommentsButton').addEventListener('click', scrollToBottomInMyGroupPage);
 

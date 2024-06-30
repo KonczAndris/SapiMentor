@@ -107,7 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// Language placeholder text
 function setPlaceholdersBasedOnLanguage() {
     document.addEventListener('DOMContentLoaded', function() {
     const firstNameInput = document.getElementById('firstName');
@@ -132,7 +131,6 @@ function setPlaceholdersBasedOnLanguage() {
     });
 }
 
-// Hívjuk meg a függvényt az oldal betöltésekor
 setPlaceholdersBasedOnLanguage();
 
 

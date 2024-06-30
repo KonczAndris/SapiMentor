@@ -3,12 +3,10 @@ document.getElementById("searchMyGroup").addEventListener("click", function () {
     window.location.href = "/myGroup";
 });
 
-// itt kezdodik a chat funkcio megvalositasa
 
 const chatPage = document.querySelector('#chat-page');
 const messageForm = document.querySelector('#messageForm');
 const messageInput = document.querySelector('#message-input');
-//const connectingElement = document.querySelector('.connecting');
 const chatArea = document.querySelector('#chat-box');
 
 let stompClient = null;
@@ -19,7 +17,6 @@ let selectedUserId = null;
 function connectToWebSocket() {
     var element = document.querySelector('[id^="large-message-box-for-"]');
     IdForUser = element.id.substring('large-message-box-for-'.length);
-   // console.log("Itt mar az userId: " + IdForUser);
 
     if(window.location.href.includes("http://")){
         var socket = new SockJS('/ws');
@@ -58,14 +55,7 @@ async function userItemClick(event) {
 
     var selectedUser = clickedUser.getAttribute('id');
     selectedUserId = selectedUser.substring('user-'.length);
-    // const divelement = clickedUser.querySelector('.username-messenger');
-    // divelement.style.color = 'white';
-    // console.log("selectedUserName: ", divelement);
-   // console.log("selectedUserId: ", selectedUserId);
 
-
-
-    // Elrejtjük az összes üzenet-fejlécet
     document.querySelectorAll('.right-message-box .chat-header').forEach(header => {
         header.style.display = 'none';
     });
@@ -75,14 +65,12 @@ async function userItemClick(event) {
         selectedHeader.style.display = 'block';
     }
 
-
     fetchAndDisplayUserChat().then();
 
     const nbrMsg = clickedUser.querySelector('.nbr-msg-messenger');
     nbrMsg.classList.add('hiddenMsg');
     nbrMsg.textContent = '0';
 
-    // itt ha rakattint a userre akkor a readOrNot-ot 1-re allitjuk mivel elolvasta
     fetch('/myGroup/favorites/updateReadOrNotStatus', {
         method: 'POST',
         headers: {
@@ -100,26 +88,18 @@ async function userItemClick(event) {
             throw new Error('Error in SSE fetch');
         }
     }).then(data => {
-       // console.log("data: ", data);
         if(data === 'OK') {
-            //console.log("Sikeres modositas");
         } else if (data === 'ERROR') {
-           // console.log("Sikertelen modositas");
         }
     }).catch(error => {
         console.log("Error: ", error);
     });
-
     showHeartIcons(selectedUserId);
-
 }
 
 function displayMessage(senderId, content) {
-
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message');
-    // console.log("senderId a display-nel: ", senderId);
-    // console.log("IdForUser a display-nel: ", IdForUser);
     if (senderId.toString() === IdForUser) {
         messageContainer.classList.add('my-message');
     } else {
@@ -151,29 +131,18 @@ async function fetchAndDisplayUserChat() {
     chatArea.appendChild(infoContainer);
 
     userChat.forEach(chat => {
-        //console.log("chat: ", chat);
         displayMessage(chat.senderId, chat.content);
     });
 }
 
 function onError(error) {
-    //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    //connectingElement.style.color = 'red';
 }
 
 async function onMessageReceived(payload) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-
-    //await findAndDisplayConnectedUsers();
-   // console.log('Message received', payload);
     const message = JSON.parse(payload.body);
-    //console.log("Message Received tole :" + selectedUserId)
-    //console.log("Message Received tole itt a masik:" + message.senderId)
-
-    // ha belep ide akkor a read_Or_not-ot 1 -re allitjuk mivel elolvasta
     if (selectedUserId && selectedUserId === message.senderId.toString()) {
-        //console.log("Belep ide a displayMessage-be")
         displayMessage(message.senderId, message.content);
         chatArea.scrollTop = chatArea.scrollHeight;
 
@@ -194,11 +163,8 @@ async function onMessageReceived(payload) {
                 throw new Error('Error in SSE fetch');
             }
         }).then(data => {
-            //console.log("data: ", data);
             if(data === 'OK') {
-                //console.log("Sikeres modositas");
             } else if (data === 'ERROR') {
-                //console.log("Sikertelen modositas");
             }
         }).catch(error => {
             console.log("Error: ", error);
@@ -212,9 +178,7 @@ async function onMessageReceived(payload) {
     }
 
     const notifiedUser = document.querySelector(`#${'user-' + message.senderId}`);
-    //console.log("notifiedUser: ", notifiedUser);
     if (notifiedUser && !notifiedUser.classList.contains('active')) {
-       // console.log("Belep a notifiedUser-be")
         const nbrMsg = notifiedUser.querySelector('.nbr-msg-messenger');
         nbrMsg.classList.remove('hiddenMsg');
         nbrMsg.textContent = '';
@@ -228,11 +192,6 @@ async function onMessageReceived(payload) {
         user.classList.add('user');
         user.id = 'user-' + message.senderId;
         user.addEventListener('click', userItemClick);
-        // var favoriteId = document.createElement('span');
-        // favoriteId.classList.add('favorite-id');
-        // favoriteId.textContent = message.senderId;
-        // favoriteId.style.display = 'none';
-        // user.appendChild(favoriteId);
         var userImgContainer = document.createElement('div');
         userImgContainer.classList.add('user-img-container');
         var userImage = document.createElement('img');
@@ -251,22 +210,17 @@ async function onMessageReceived(payload) {
                 throw new Error('Something went wrong');
             }
         }).then(data =>{
-            //console.log(data.selectedUserImg[0][0]);
             if (data.selectedUserImg === null) {
                 userImage.src = "/img/anonym.jpg";
             } else {
                 userImage.src = 'data:image/jpeg;base64,' + data.selectedUserImg[0][0];
             }
-            //console.log("Kep: " + userImage);
             userName.textContent = data.selectedUserImg[0][1] + " " + data.selectedUserImg[0][2];
             userName.style.color = 'rgb(20,115,100)'
         }).catch(error => {
             console.log("Error: ", error);
         });
 
-        // var userStatus = document.createElement('div');
-        // userStatus.classList.add('user-status');
-        // userStatus.classList.add('online');
         var nbrMsg = document.createElement('span');
         nbrMsg.classList.add('nbr-msg-messenger');
         nbrMsg.textContent = '';
@@ -276,13 +230,6 @@ async function onMessageReceived(payload) {
         userImgContainer.appendChild(userImage);
         userImgContainer.appendChild(nbrMsg);
         user.appendChild(userName);
-        //user.appendChild(userStatus);
-
-        // var chatBox = document.querySelector('.chat-box');
-        // chatBox.appendChild(userInfo);
-
-
-        // letre hozom a chat-header-t
         var chatPage = document.querySelector('#chat-page');
         console.log("chatPage: ", chatPage);
 
@@ -347,8 +294,6 @@ async function onMessageReceived(payload) {
         sureButton.appendChild(profileButtonIconSure);
         profileButtonContainerSure.appendChild(cancelButton);
         cancelButton.appendChild(profileButtonIconCancel);
-
-
     }
 }
 
@@ -364,11 +309,9 @@ function handleUserStatusUpdate(userId, status) {
 }
 
 function sendMessage() {
-    // Get the message input value
     var messageInput = $('#message-input').emojioneArea();
     var messageText = messageInput[0].emojioneArea.getText().trim();
 
-    // Check if the message is not empty
     if (messageText !== '' && stompClient) {
         const chatMessage = {
             senderId: IdForUser,
@@ -378,11 +321,7 @@ function sendMessage() {
         };
         stompClient.send("/app/chat", {}, JSON.stringify(chatMessage));
         displayMessage(IdForUser, messageText);
-
-        // Clear the EmojioneArea text
         messageInput[0].emojioneArea.setText('');
-
-        // Optional: Set focus back on the EmojioneArea
         messageInput[0].emojioneArea.editor.focus();
     }
     scrollToBottom();
@@ -393,44 +332,16 @@ function scrollToBottom() {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// idaig tart a chat funkcio megvalositasa
 $(document).ready(function () {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-
-
-    // fetch('/myGroup/favorites/updateUserStatusToOnline', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded',
-    //         'X-CSRF-TOKEN': token
-    //     }
-    // }).then(response => {
-    //     if (response.ok) {
-    //         return response.text();
-    //     } else {
-    //         throw new Error('Something went wrong');
-    //     }
-    // }).then(data => {
-    //     if (data === 'ok') {
-    //         //console.log("Sikeres modositas");
-    //     } else {
-    //         throw new Error('Something went wrong');
-    //     }
-    // }).catch(error => {
-    //     console.log("Error: ", error);
-    // });
-
-    // Emojik beszúrása az input mezőbe
     $('#message-input').emojioneArea({
         pickerPosition: 'top',
         tonesStyle: 'bullet',
         events: {
-            // Amikor egy emoji kerül kiválasztásra, illeszd be az input mezőbe
             emojibtn_click: function (button, event) {
                 $('#message-input').emojioneArea('insert', button.html());
             },
-            // Az Enter lenyomását figyeljük meg
             keydown: function (editor, event) {
                 if (event.which === 13 && !event.shiftKey) {
                     event.preventDefault();
@@ -440,19 +351,14 @@ $(document).ready(function () {
         }
     });
 
-    // Egyéb műveletek, pl. üzenet elküldése gombra kattintáskor
     $('#send-button').click(function () {
         sendMessage();
     });
 
-    // Emoji gomb funkciója
     $('#emoji-button').click(function () {
         $('#message-input').emojioneArea('toggle');
     });
-
-    // WebSocket kapcsolat létrehozása
     connectToWebSocket();
-
 
     fetch(`/myGroup/favorites/readOrnot?userId=${IdForUser}`, {
         method: 'GET',
@@ -467,23 +373,14 @@ $(document).ready(function () {
             throw new Error('Something went wrong');
         }
     }).then(data => {
-        //console.log("dataigennem: ", data.chatMessageReadOrNotList);
         if (data.chatMessageReadOrNotList !== null) {
             for (var i = 0; i < data.chatMessageReadOrNotList.length; i++){
-                //console.log("senderId: ", data.chatMessageReadOrNotList[i][0]);
-                //console.log("recipientId: ", data.chatMessageReadOrNotList[i][1]);
-                //console.log("readOrNot: ", data.chatMessageReadOrNotList[i][2]);
-                //console.log("readOrNot: ");
                 var senderUserId = data.chatMessageReadOrNotList[i][0];
                 var recipientUserId = data.chatMessageReadOrNotList[i][1];
                 var readOrNot = data.chatMessageReadOrNotList[i][2];
-                // ha 0 akkor nincs elolvasva es akkor
-                // ilyenkor meg kell jeleniteni a felhasznalot
                 if (readOrNot === 0) {
                     const notifiedUserElement = document.querySelector(`#${'user-' + senderUserId}`);
-                   // console.log("notifiedUser: ", notifiedUserElement);
                     if (notifiedUserElement && !notifiedUserElement.classList.contains('active')) {
-                        //console.log("Belep a notifiedUser-be")
                         const nbrMsg = notifiedUserElement.querySelector('.nbr-msg-messenger');
                         nbrMsg.classList.remove('hiddenMsg');
                         nbrMsg.textContent = '';
@@ -497,8 +394,6 @@ $(document).ready(function () {
                         userElement.classList.add('user');
                         userElement.id = 'user-' + senderUserId;
                         userElement.addEventListener('click', userItemClick);
-
-
                         var chatHeaderElement = document.getElementById('chat-page');
                         var chatHeaderDiv = document.createElement('div');
                         chatHeaderDiv.classList.add('chat-header');
@@ -560,8 +455,6 @@ $(document).ready(function () {
                         profileButtonIconCancelElement.src = "/img/cancel-icon.png";
                         profileButtonIconCancelElement.alt = "Sure";
                         cancelButtonElement.appendChild(profileButtonIconCancelElement);
-
-
                         var userImageContainerElement = document.createElement('div');
                         userImageContainerElement.classList.add('user-img-container');
                         var userImageElement = document.createElement('img');
@@ -580,22 +473,15 @@ $(document).ready(function () {
                                 throw new Error('Something went wrong');
                             }
                         }).then(data =>{
-                            //console.log(data.selectedUserImg[0][0]);
                             if (data.selectedUserImg[0][0] === null) {
                                 userImageElement.src = "/img/anonym.jpg";
                             } else {
                                 userImageElement.src = 'data:image/jpeg;base64,' + data.selectedUserImg[0][0];
                             }
-                            //console.log("Kep: " + userImageElement);
                             userName.textContent = data.selectedUserImg[0][1] + " " + data.selectedUserImg[0][2];
-                            //userName.style.color = 'rgb(25, 150, 114)'
                         }).catch(error => {
                             console.log("Error: ", error);
                         });
-
-                        // var userStatus = document.createElement('div');
-                        // userStatus.classList.add('user-status');
-                        // userStatus.classList.add('online');
                         var nbrMsg = document.createElement('span');
                         nbrMsg.classList.add('nbr-msg-messenger');
                         nbrMsg.textContent = '';
@@ -606,8 +492,6 @@ $(document).ready(function () {
                         userImageContainerElement.appendChild(userImageElement);
                         userImageContainerElement.appendChild(nbrMsg);
                         userElement.appendChild(userName);
-
-                        // letre hozom a chat-header-t
                     }
                 }
             }
@@ -622,23 +506,14 @@ $(document).ready(function () {
 function showHeartIcons(favoriteUserId) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-    //var favoriteIds = document.querySelector('.favorite-id');
     var favoriteId = document.getElementById('favoriteId-' + favoriteUserId);
     console.log("favoriteId: ", favoriteId);
 
     if (favoriteId === null) {
         favoriteId = document.getElementById('user-' + favoriteUserId);
     }
-    //var favoriteId = elementForFavoriteId.id.substring('favoriteId-'.length);
-    console.log("favoriteIdElement: ", favoriteId);
-
-    //favoriteIds.forEach(function(favoriteId) {
         var idValue = parseInt(favoriteId.textContent);
-        console.log("Favorite id: ", idValue);
-
         var parentCell = favoriteId.parentElement;
-        console.log("Parent cell: ", parentCell);
-
         var checkedHeart = parentCell.querySelector('.checked-heart');
         var uncheckedHeart = parentCell.querySelector('.unchecked-heart');
 
@@ -654,16 +529,10 @@ function showHeartIcons(favoriteUserId) {
             checkedHeart.style.display = 'inline';
         }
 
-
         var parentCellId = parentCell.id.split("-")[2];
-        console.log("Parent cell id: ", parentCellId);
         var favoriteButton = document.getElementById('favoriteButton-' + parentCellId);
-        console.log("Favorite button: ", favoriteButton);
-
         favoriteButton.addEventListener('click', function() {
-            //console.log("Favorite " + parentCellId + " button clicked");
             if (uncheckedHeart.classList.contains('active')) {
-                //console.log("Hozzaadom a kedvencekhez");
                 uncheckedHeart.style.display = 'none';
                 checkedHeart.style.display = 'inline';
                 uncheckedHeart.classList.remove('active');
@@ -693,7 +562,6 @@ function showHeartIcons(favoriteUserId) {
                 }).catch(error => {
                     console.log("Error: ", error);
                 });
-
             }
 
             else if (checkedHeart.classList.contains('active')) {
@@ -707,7 +575,6 @@ function showHeartIcons(favoriteUserId) {
                 }
 
                 sureButton.addEventListener('click', () => {
-                    console.log("Kiveszem a kedvencek kozul");
                     uncheckedHeart.style.display = 'inline';
                     checkedHeart.style.display = 'none';
                     checkedHeart.classList.remove('active');
@@ -739,7 +606,6 @@ function showHeartIcons(favoriteUserId) {
                         console.log("Error: ", error);
                     });
 
-                    // Hide the sure-modal after the action is performed
                     const profileButtonContainerSure = document.getElementById('profile-button-container-sure-' + parentCellId);
                     if (profileButtonContainerSure) {
                         profileButtonContainerSure.style.display = 'none';
@@ -748,16 +614,13 @@ function showHeartIcons(favoriteUserId) {
                 });
 
                 cancelButton.addEventListener('click', () => {
-                    // Hide the sure-modal without performing any action
                     if (profileButtonContainerSure) {
                         profileButtonContainerSure.style.display = 'none';
                         profileButtonContainer.style.display = 'flex';
                     }
                 });
             }
-
         });
-    //});
 }
 
 window.onload = function() {

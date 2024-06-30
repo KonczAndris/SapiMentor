@@ -62,7 +62,7 @@ body {
 .profile-page .modal-content-skills, .profile-page .modal-content-upload, .profile-page .modal-content-mentor,
 .alertModal-content, .myGroup-page .left-search-box, .myGroup-page #favorites, .favorites-page #searchMyGroup,
 .resources-page #examExamples, .resources-page #diplomaTheses, .exams-page #resources, .exams-page #diplomaTheses,
-.diploma-page #resources, .diploma-page #exams, .diploma-page #examExamples{
+.diploma-page #resources, .diploma-page #exams, .diploma-page #examExamples, .user, .exams-page .modal-content-users{
     background-color: rgb(34, 75, 63) !important;
     border: none !important;
 }

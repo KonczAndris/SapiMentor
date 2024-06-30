@@ -134,8 +134,6 @@
 
         </div>
         <!-- MENU BAR END-->
-
-<!--     SEARCH DIV START -->
         <div class="open-search-buttons">
             <button id="myFilterBtn" class="green-button" onclick="showFilterContainer()">
                 <span class="english-text">OPEN THE SEARCH MENU</span>
@@ -190,7 +188,6 @@
                 </div>
 
                 <div class="button-box">
-<!--                    <button class="search-button" id="search-button" th:onclick="searchUsers()">Search</button>-->
                     <button class="search-button green-button" id="search-button">
                         <span class="english-text">Search</span>
                         <span class="hungarian-text">Keresés</span>
@@ -267,15 +264,12 @@
                             <label th:for="${'star1_' + pic.id}" th:style="${averageRatingsByUserId[pic.id] >= 0.5} ? 'color: gold;' : ''">&#9733;</label>
                         </div>
                         <span class="myGroupName" th:text="${pic.lastName + ' ' + pic.firstName}"></span>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="profile-modal-background" id="profileModal" >
-
+    <div class="profile-modal-background" id="profileModal">
     </div>
 
 </div>

@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SapiMentor</title>
-<!--        <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
     <link rel="preload" th:href="@{/css/favorites.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" th:href="@{/css/favorites.css}"></noscript>
@@ -136,18 +134,14 @@
 
         </div>
         <!-- MENU BAR END-->
-
         <div id="loading-modal" class="modal">
             <div class="modal-content">
                 <img class="loading-gif" th:src="@{/gif/preload.gif.gif}" alt="Loading..." />
             </div>
         </div>
 
-        <!--     SEARCH DIV START -->
         <div class="large-message-box" th:id="${'large-message-box-for-' + userId}">
-
             <div class="left-message-box">
-
                 <div class="user" th:id="${'user-' + favoriteUser.id}" th:each="favoriteUser : ${allFavoritesUser}" th:onclick="userItemClick(event)">
                     <div class="user-status" th:classappend="${favoriteUser.status == 0 ? 'offline' : 'online'}"></div>
                     <div class="user-img-container messeger-pic-box">
@@ -157,14 +151,11 @@
                         <img th:unless="${favoriteUser.favoriteProfileImageBase64 != ''}"
                              th:src="@{/img/anonym.jpg}" alt="Profile Image">
                         <span class="nbr-msg-messenger hiddenMsg"></span>
-
                     </div>
                     <span class="username-messenger" th:text="${favoriteUser.fullName}" ></span>
-                    <!-- Példa online státuszra -->
                 </div>
                 <div class="message-request-box"></div>
             </div>
-
 
             <div class="right-message-box">
                 <div class="chat-container" id="chat-page">
@@ -202,39 +193,32 @@
                         </div>
                     </div>
 
-
-                    <!--Itt lesznek a szovegek-->
                     <div class="chat-box" id="chat-box">
                     </div>
 
                     <div class="chat-input-box">
-                    <!--Itt kell nekem a chat et-->
                     <form id="messageForm" name="messageForm"  style="display: none">
-
                             <input type="text" id="message-input" placeholder="Type a message..." maxlength="500" >
                             <button id="emoji-button">😊</button>
                             <button type="button" class="green-button" id="send-button">
                                 <span class="english-text">Send</span>
                                 <span class="hungarian-text">Elküld</span>&nbsp;
                             </button>
-
                     </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!--        SEARCH DIV END-->
-
     </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
-    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js}"></script>
-    <script th:src="@{/js/functions.js}"></script>
-    <script th:src="@{/js/favorites.js}"></script>
-    <script th:src="@{/js/localLanguageSettings.js}"></script>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js}"></script>
+<script th:src="@{/js/functions.js}"></script>
+<script th:src="@{/js/favorites.js}"></script>
+<script th:src="@{/js/localLanguageSettings.js}"></script>
 
 </body>
 

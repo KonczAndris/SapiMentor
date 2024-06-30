@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SapiMentor</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
-
   <link rel="preload" th:href="@{/css/diplomaTheses.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" th:href="@{/css/diplomaTheses.css}"></noscript>
-
   <link rel="stylesheet" type="text/css" th:href="@{/css/diplomaTheses.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/languages.css}">
   <script th:src="@{/js/localThemeSettings.js}"></script>
@@ -66,7 +64,6 @@
         </a></p>
     </div>
     <div class="form-group" >
-<!--         th:if="${not userRolesToDisplayResources.contains('ADMIN')}">-->
       <p class="menu-function">
         <a th:onclick="${not userRolesToDisplayResources.contains('MENTOR') and not userRolesToDisplayResources.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
           <span class="english-text">My Group</span>
@@ -151,10 +148,8 @@
           </a>
         </div>
       </div>
-
     </div>
     <!-- MENU BAR END-->
-
 
     <!-- SEARCH BUTTON BAR START-->
     <div class="open-search-buttons">
@@ -170,9 +165,7 @@
     <!-- FILTER BAR START-->
     <div class="filter-container">
       <div class="filter-ddowns">
-        <!-- ⓘ Icon -->
         <span class="info-icon-btn" onclick="openInfoModal()">ⓘ</span>
-
         <!-- The Modal -->
         <div id="infoModal" class="info-modal">
           <!-- Modal content -->
@@ -354,7 +347,6 @@
             <td style="display: none;">
               <span id="tagWords" th:text="${diploma.keywords}"></span>
             </td>
-
 
             <!-- MODIFY MODAL START -->
             <div id="diplomaThesesModifyModal" th:id="'diplomaThesesModifyModal-' + ${diploma.id}" class="modal-diplomaTheses">
@@ -565,13 +557,10 @@
       </div>
 
       <div class="func-buttons-modal">
-        <!--<form id="diplomaTheses-form"  th:action="@{/saveResourceLinks}" method="post" >-->
-        <!--<input type="hidden" name="diplomaThesesDataItems" id="diplomaThesesDataItems" value="">-->
         <button type="submit" class="upload-button-modal blue-button" id="upload-button-modal" th:onclick="saveDiplomaThesesDataToServer()" >
           <span class="english-text">Upload</span>
           <span class="hungarian-text">Feltölt</span>
         </button>
-        <!--</form>-->
         <button class="cancel-button-modal close-diplomaTheses red-button">
           <span class="english-text">Cancel</span>
           <span class="hungarian-text">Mégse</span>
@@ -581,7 +570,6 @@
   </div>
   <!-- RESOURCE MODAL END -->
 
-
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
@@ -590,5 +578,4 @@
 <script th:src="@{/js/functions.js}"></script>
 <script th:src="@{/js/localLanguageSettings.js}"></script>
 </body>
-
 </html>

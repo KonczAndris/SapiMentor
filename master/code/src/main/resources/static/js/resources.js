@@ -4,19 +4,14 @@ let IdForUserInLinksPage = null;
 
 function connectToWebSocketForLinksPage() {
     var elementToGetLinksUserId = document.querySelector('[id^="userIdForLinksPage-"]');
-    // console.log("elementToGetUserId: ", elementToGetUserId);
     IdForUserInLinksPage = elementToGetLinksUserId.id.split("-")[1];
-    // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
 
     if(window.location.href.includes("http://")){
         var socket = new SockJS('/ws');
-        console.log("sima ws-t hasznal");
     }else {
         var socket = new SockJS('https://' + window.location.host + '/ws');
-        console.log("wss-t hasznal");
     }
     stompClient = Stomp.over(socket);
-
     stompClient.connect({}, onConnectedForLinksPage, onErrorInLinksPage);
 }
 
@@ -25,8 +20,7 @@ function onConnectedForLinksPage() {
 }
 
 function onErrorInLinksPage(error) {
-    //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    //connectingElement.style.color = 'red';
+
 }
 
 async function onMessageReceivedNotificationInLinksPage(payload) {
@@ -39,9 +33,6 @@ async function onMessageReceivedNotificationInLinksPage(payload) {
     });
 }
 
-// ez azert hogy a valosideju ertesiteseket is megkapjuk
-// es ha frissitunk vagy ha csak siman ugy kapunk ertesitest hogy nem vagyunk
-// belepve akkor is megkapjuk az ertesitest
 document.addEventListener('DOMContentLoaded', () => {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -120,7 +111,6 @@ function closeDropdown(selectedItem) {
     dropdownContent.classList.remove("active");
 }
 
-// ez az uj amivel bezarja a dropdownot
 function closeDropdownTopics(selectedItem) {
     var dropdownContent = document.getElementById("topic-myDropdown");
     dropdownContent.style.display = "none";
@@ -202,40 +192,6 @@ function adjustLayout() {
 
 adjustLayout();
 window.addEventListener("resize", adjustLayout);
-
-// function setupResourceModal() {
-//     var modal = document.getElementById("myResourceModal");
-//
-//     if (modal) {
-//         var btn1 = document.getElementById("upload-upload");
-//         var span = document.getElementsByClassName("close-resource")[0];
-//
-//         if (btn1) {
-//             btn1.onclick = function() {
-//                 modal.style.display = "flex";
-//             }
-//         }
-//
-//         if (span) {
-//             span.onclick = function() {
-//                 modal.style.display = "none";
-//             }
-//         }
-//     }
-// }
-//
-// function closeModalOnClickOutside() {
-//     var modal1 = document.getElementById("myResourceModal");
-//
-//     window.addEventListener("click", function(event) {
-//         if (event.target == modal1) {
-//             modal1.style.display = "none";
-//         }
-//     });
-// }
-//
-// setupResourceModal();
-// closeModalOnClickOutside();
 
 function setupModifyResourceModal(resourceId) {
     console.log("resourceId: " + resourceId);
@@ -390,7 +346,6 @@ function closeModifyModal(id) {
     }
 }
 
-//NEW
 var linkCounter = 0;
 function addLinkRow() {
     try {
@@ -400,15 +355,10 @@ function addLinkRow() {
 
         if (selectedTopic !== "" && selectedLink !== "" && selectedName !== "") {
             var tableContainer = document.querySelector(".table-container table tbody");
-
-            // Create a new row
             var row = document.createElement("tr");
-
-            // Create cells for the row
             var linkNumber = document.createElement("td");
             linkNumber.textContent = linkCounter;
 
-            // Create a clickable link (anchor) for linkName
             var linkName = document.createElement("td");
             var linkNameAnchor = document.createElement("a");
             linkNameAnchor.textContent = selectedName;
@@ -426,7 +376,6 @@ function addLinkRow() {
 
             var linkButtons = document.createElement("td");
 
-            // Create Like and Dislike buttons
             var likeButton = document.createElement("button");
             likeButton.textContent = "Like";
             likeButton.className = "like-button-link";
@@ -435,11 +384,9 @@ function addLinkRow() {
             dislikeButton.textContent = "Dislike";
             dislikeButton.className = "dislike-button-link";
 
-            // Append Like and Dislike buttons to the linkButtons cell
             linkButtons.appendChild(likeButton);
             linkButtons.appendChild(dislikeButton);
 
-            // Append cells to the row
             row.appendChild(linkNumber);
             row.appendChild(linkName);
             row.appendChild(linkTopic);
@@ -447,10 +394,8 @@ function addLinkRow() {
             row.appendChild(linkLikes);
             row.appendChild(linkButtons);
 
-            // Append the row to the table
             tableContainer.appendChild(row);
 
-            // Increment the linkCounter (assuming linkCounter is declared and initialized)
             linkCounter++;
         }
     } catch (error) {
@@ -480,19 +425,16 @@ function saveResourceDataToServer() {
 
 function showLoadingModal() {
     var modal = document.getElementById("loading-modal");
-    modal.style.display = "block"; // Megjelenítjük a modal ablakot
+    modal.style.display = "block";
 }
 
-// ezt is andrisnak
 function hideLoadingModal() {
     var modal = document.getElementById("loading-modal");
-    modal.style.display = "none"; // Elrejtjük a modal ablakot
+    modal.style.display = "none";
 }
 
-// link feltoltese a szerverre (JSON)
 function sendResourcesDataToServer(data) {
-    // ezt is andrisnak
-    showLoadingModal(); // Megjelenítjük a modal ablakot
+    showLoadingModal();
 
     var resourcesUploadDataItems = JSON.stringify(data);
 
@@ -511,43 +453,32 @@ function sendResourcesDataToServer(data) {
             return response.text();
         } else {
             return response.text();
-            // throw new Error('Hiba történt a válaszban');
         }
     }).then(data => {
-        //hideLoadingModal(); // Elrejtjük a modal ablakot
-        // Kell kezelni a valaszt es megjeleniteni a hibauzeneteket
-        //console.log(data);
-        // itt kell majd andrisnak megmondani hogy mit csinaljon
+
         if (data === "Success") {
             location.reload();
         } else if (data === "NotSafe") {
             showErrorMessage("The link is not safe!");
         } else {
             showErrorMessage("An error occurred." +
-                " Please try again later."); // Egyéb hiba esetén
+                " Please try again later.");
         }
 
     }).catch(error => {
-            // ezt is andrisnak
-            hideLoadingModal(); // Elrejtjük a modal ablakot
+            hideLoadingModal();
             console.error('Hiba történt:', error);
     });
 }
 
-// Funkció a piros szöveg megjelenítésére
 function showErrorMessage(message) {
     var errorMessageElement = document.getElementById('error-message-modal-content');
     errorMessageElement.innerText = message;
-    // További stílusok vagy műveletek hozzáadhatók a látványosság érdekében
 }
 
 function sendDataToServer(data) {
     var resourceDataItems = JSON.stringify(data);
     document.getElementById("resourceDataItems").value = resourceDataItems;
-    //console.log(resourceDataItems);
-
-
-    // Most küldd el az űrlapot
     document.getElementById("resource-form").submit();
 }
 
@@ -618,21 +549,15 @@ function sendLikeOrDislike(resourceId, action) {
     })
         .then(response => {
             if (response.ok) {
-                // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
-                // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
                 fetch(sseUrl, {
                     method: 'POST',
-                    body: JSON.stringify({message: `${action}:${resourceId}`}), // Konvertáljuk JSON formátumra
+                    body: JSON.stringify({message: `${action}:${resourceId}`}),
                     headers: {
-                        'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
+                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
                     },
                 })
                 response.text().then(data => {
-                    // Kezeld itt a szöveget (data)
-                    //console.log('sendLikeOrDislike Response:', data);
-                    //console.log(data);
-                    // Például: frissítheted a DOM-ot adataink alapján
                 }).catch(error => {
                     console.error('Error:', error);
                 });
@@ -641,9 +566,6 @@ function sendLikeOrDislike(resourceId, action) {
             }
         })
         .then(data => {
-            //console.log('Response:', data);
-            // A válaszban érkező adatokat kezelheted itt (opcionális)
-            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
         })
         .catch(error => {
             console.error('Error:', error);
@@ -653,10 +575,9 @@ function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(resourceId, action) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
-    const sseUrl = "/sse/sendLikeOrDislike"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
+    const sseUrl = "/sse/sendLikeOrDislike";
 
     const url = `/resources/${action}?resourceId=${resourceId}`;
-    //console.log("URL: " + url);
     fetch(url, {
         method: 'POST',
         headers: {
@@ -666,21 +587,15 @@ function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(resourceId, action) {
     })
         .then(response => {
             if (response.ok) {
-                // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
-                // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
                 fetch(sseUrl, {
                     method: 'POST',
-                    body: JSON.stringify({message: `${action}:${resourceId}`}), // Konvertáljuk JSON formátumra
+                    body: JSON.stringify({message: `${action}:${resourceId}`}),
                     headers: {
-                        'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
+                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
                     },
                 })
                 response.text().then(data => {
-                    // Kezeld itt a szöveget (data)
-                    //console.log('sendLikeOrDislike Response:', data);
-                    //console.log(data);
-                    // Például: frissítheted a DOM-ot adataink alapján
                 }).catch(error => {
                     console.error('Error:', error);
                 });
@@ -689,9 +604,6 @@ function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(resourceId, action) {
             }
         })
         .then(data => {
-            //console.log('Response:', data);
-            // A válaszban érkező adatokat kezelheted itt (opcionális)
-            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
         })
         .catch(error => {
             console.error('Error:', error);
@@ -701,10 +613,7 @@ function setLikeOrDislikeStatusToActiveOrInactive(resourceId, action) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
-    //const sseUrl = "/sse/sendLikeOrDislike"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
-
     const url = `/resources/${action}?resourceId=${resourceId}`;
-    //console.log("URL: " + url);
     fetch(url, {
         method: 'POST',
         headers: {
@@ -713,116 +622,68 @@ function setLikeOrDislikeStatusToActiveOrInactive(resourceId, action) {
         },
     }).then(response => {
         if (response.ok) {
-            //console.log(response.text());
             return response.text();
         } else {
             throw new Error('Request failed');
         }
     }).then(data => {
-        //console.log(data);
     }).catch(error => {
         console.error('Error:', error);
     });
 }
 
 function handleLikeButtonClick(likeButton) {
-    // Az adott sor azonosítójának megszerzése
     const rowId = likeButton.closest('tr').id;
     const resourceId = rowId.replace('resource-row-', '');
-    //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setLikeToActive');
     if (likeButton.classList.contains('like-button-link-active')) {
-        // Like visszavonása
         sendLikeOrDislike(resourceId, 'revokelike');
 
         likeButton.classList.remove('like-button-link-active');
-        // Távolítsuk el az aktív like gomb állapotát a helyi tárolóból is
         setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setLikeToInactive');
-        //localStorage.removeItem(`likeButtonState_${UserId}_${resourceId}`);
     } else {
         const activeDislikeButton = document.querySelector(`#${rowId} .dislike-button-link.dislike-button-link-active`);
         if (activeDislikeButton) {
             activeDislikeButton.classList.remove('dislike-button-link-active');
-            //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setDislikeToInactive');
-            //localStorage.removeItem(`dislikeButtonState_${UserId}_${resourceId}`);
             sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(resourceId, 'likeResourceAndRevokeDislike');
-            // Módosítsuk az osztályt a "like-button-link-active"-ra
             likeButton.classList.add('like-button-link-active');
-
 
             setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setLikeToActiveAndDislikeToInactive');
-            // Mentsük el az aktív like gomb állapotát a helyi tárolóban
-            //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setLikeToActive');
-            //localStorage.setItem(`likeButtonState_${UserId}_${resourceId}`, 'active');
         } else {
-            // Like küldése a szervernek
             sendLikeOrDislike(resourceId, 'like');
-
-            // Módosítsuk az osztályt a "like-button-link-active"-ra
             likeButton.classList.add('like-button-link-active');
-
-            // Mentsük el az aktív like gomb állapotát a helyi tárolóban
             setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setLikeToActive');
-            //localStorage.setItem(`likeButtonState_${UserId}_${resourceId}`, 'active');
         }
     }
 }
 
 function handleDislikeButtonClick(dislikeButton) {
-    // Az adott sor azonosítójának megszerzése
     const rowId = dislikeButton.closest('tr').id;
     const resourceId = rowId.replace('resource-row-', '');
-
-    // Ellenőrizze, hogy az adott sorban már van aktív like gomb
-    // const activeLikeButton = document.querySelector(`#${rowId} .like-button-link.like-button-link-active`);
-    // if (activeLikeButton) {
-    //     sendRevokeLikeOrDislike(resourceId, 'revokelike');
-    //     activeLikeButton.classList.remove('like-button-link-active');
-    //     localStorage.removeItem(`likeButtonState_${resourceId}`);
-    // }
-    //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setDislikeToActive');
     if (dislikeButton.classList.contains('dislike-button-link-active')) {
         // Dislike visszavonása
         sendLikeOrDislike(resourceId, 'revokedislike');
 
         dislikeButton.classList.remove('dislike-button-link-active');
-        // Távolítsuk el az aktív dislike gomb állapotát a helyi tárolóból is
         setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setDislikeToInactive');
-        //localStorage.removeItem(`dislikeButtonState_${UserId}_${resourceId}`);
     } else {
         const activeLikeButton = document.querySelector(`#${rowId} .like-button-link.like-button-link-active`);
         if (activeLikeButton) {
             activeLikeButton.classList.remove('like-button-link-active');
-
-            // itt a kozosbe kicserelni ezt a meghivast
-            //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setLikeToInactive');
-            //localStorage.removeItem(`likeButtonState_${UserId}_${resourceId}`);
             sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(resourceId, 'dislikeResourceAndRevokeLike');
-            // Módosítsuk az osztályt a "dislike-button-link-active"-ra
             dislikeButton.classList.add('dislike-button-link-active');
-
             setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setDislikeToActiveAndLikeToInactive');
-
-            // Mentsük el az aktív dislike gomb állapotát a helyi tárolóban
-            //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setDislikeToActive');
-            //localStorage.setItem(`dislikeButtonState_${UserId}_${resourceId}`, 'active');
         } else {
-            // Dislike küldése a szervernek
             sendLikeOrDislike(resourceId, 'dislike');
-
-            // Módosítsuk az osztályt a "dislike-button-link-active"-ra
             dislikeButton.classList.add('dislike-button-link-active');
-
-            // Mentsük el az aktív dislike gomb állapotát a helyi tárolóban
             setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setDislikeToActive');
-            //localStorage.setItem(`dislikeButtonState_${UserId}_${resourceId}`, 'active');
-            }}}
+        }
+    }
+}
 
 $(document).ready(async function () {
     $(document).trigger('myCustomLoadEvent');
 
-    // SSE
     var urlEndpoint = "/sse/subscribe";
-    //itt az eventsource a szerver oldalon lévő végpontot figyeli
     const eventSource = new EventSource(urlEndpoint);
 
     eventSource.onopen = function (event) {
@@ -842,30 +703,23 @@ $(document).ready(async function () {
         dislikeCountElement.textContent = data.dislike;
     });
 
-// A like gomb eseménykezelője
     document.querySelectorAll('.like-button-link').forEach(likeButton => {
         likeButton.addEventListener('click', () => {
             handleLikeButtonClick(likeButton);
         });
     });
 
-// A dislike gomb eseménykezelője
     document.querySelectorAll('.dislike-button-link').forEach(dislikeButton => {
         dislikeButton.addEventListener('click', () => {
             handleDislikeButtonClick(dislikeButton);
         });
     });
-
-
 })
 
-// NEGYEDIK VERZIO (vegleges)
-// lekerni az osszes like es dislike allasat az adatbazisbol
 let likeAndDislikeStatuses = [];
 document.addEventListener('DOMContentLoaded', function () {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-    //const url = `/resources/${action}?resourceId=${resourceId}`
     fetch("/resources/getLikeAndDislikeStatuses", {
         method: 'GET',
         headers: {
@@ -882,7 +736,6 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             likeAndDislikeStatuses = data.likeanddislike;
             handleLikeAndDislikeStatuses();
-            //console.log(likeAndDislikeStatuses);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -890,91 +743,21 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function handleLikeAndDislikeStatuses() {
-    // Itt már rendelkezésre állnak az adatok
-    //console.log(likeAndDislikeStatuses);
-
-    // Most már kezelheted az adatokat
     for (let i = 0; i < likeAndDislikeStatuses.length; i++) {
         const likeAndDislikeData = likeAndDislikeStatuses[i];
         const resourceId = likeAndDislikeData.resourceId;
         const like = likeAndDislikeData.like;
         const dislike = likeAndDislikeData.dislike;
-
-        // Itt kezeld az adatokat vagy végezz velük bármit, amit szeretnél
-        //console.log(`Resource ID: ${resourceId}, Like: ${like}, Dislike: ${dislike}`);
         const likeCountElement = document.querySelector(`#resource-row-${resourceId} .like-button-link`);
         const dislikeCountElement = document.querySelector(`#resource-row-${resourceId} .dislike-button-link`);
-        //console.log(likeCountElement);
-        //console.log(dislikeCountElement);
         if (like === 1) {
             likeCountElement.classList.add('like-button-link-active');
         } else if (dislike === 1) {
             dislikeCountElement.classList.add('dislike-button-link-active');
         }
-
     }
 }
 
-// // HARMADIK VERZIO
-// $(document).on('myCustomLoadEvent', function () {
-//     console.log('Saját oldalbetöltési esemény kiváltva.');
-//     function getLikeAndDislikeStatus(resourceId, action) {
-//         return new Promise((resolve, reject) => {
-//             var token = $("meta[name='_csrf']").attr("content");
-//             var header = $("meta[name='_csrf_header']").attr("content");
-//             const url = `/resources/${action}?resourceId=${resourceId}`;
-//             fetch(url, {
-//                 method: 'GET',
-//                 headers: {
-//                     'Content-Type': 'application/x-www-form-urlencoded',
-//                     'X-CSRF-TOKEN': token
-//                     //'Cache-Control': 'no-cache'
-//                 }
-//             }).then(response => {
-//                 if (response.ok) {
-//                     return response.text();
-//                 } else {
-//                     throw new Error('Request failed');
-//                 }
-//             }).then(data => {
-//                 console.log("Data: ",data)
-//                 resolve(data);
-//             }).catch(error => {
-//                 console.error('Error:', error);
-//                 reject(error);
-//             });
-//         });
-//     }
-//
-//
-//         const likeButtons = document.querySelectorAll('.like-button-link');
-//         for (const likeButton of likeButtons) {
-//             const rowId = likeButton.closest('tr').id;
-//             const resourceId = rowId.replace('resource-row-', '');
-//             getLikeAndDislikeStatus(resourceId, 'getLikeStatus').then(likeStatusData => {
-//                 console.log('likeStatusData: ', likeStatusData);
-//                 if (likeStatusData === '1') {
-//                     likeButton.classList.add('like-button-link-active');
-//                 }
-//             });
-//         }
-//
-//         const dislikeButtons = document.querySelectorAll('.dislike-button-link');
-//         for (const dislikeButton of dislikeButtons) {
-//             const rowId = dislikeButton.closest('tr').id;
-//             const resourceId = rowId.replace('resource-row-', '');
-//             getLikeAndDislikeStatus(resourceId, 'getDislikeStatus').then(dislikeStatusData => {
-//                 console.log('dislikeStatusData: ', dislikeStatusData);
-//                 if (dislikeStatusData === '1') {
-//                     dislikeButton.classList.add('dislike-button-link-active');
-//                 }
-//             });
-//         }
-// });
-
-
-
-// SEARCH:
 document.addEventListener("DOMContentLoaded", function () {
     const table = document.querySelector(".link-table");
     const tableBody = table.querySelector("tbody");
@@ -1086,7 +869,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-let originalRows = []; // Változó az eredeti sorok tárolásához
+let originalRows = [];
 
 function saveOriginalRows() {
     const table = document.getElementById('dataTable');
@@ -1117,123 +900,119 @@ function restoreOriginalTable() {
     });
 }
 
-function searchTable() {
-    if (originalRows.length === 0) {
-        saveOriginalRows();
-    } else {
-        restoreOriginalTable();
-    }
-
-    const input = document.getElementById('filter-input');
-    const filter = input.value.toUpperCase();
-    const selectedValues = [];
-    const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
-
-    checkboxes.forEach((checkbox) => {
-        selectedValues.push(checkbox.value);
-    });
-
-    const table = document.getElementById('dataTable');
-    const rows = table.getElementsByTagName('tr');
-    const filteredRows = [];
-
-    for (let i = 1; i < rows.length; i++) {
-        const cells = rows[i].getElementsByTagName('td');
-        let nameFound = false;
-        let topicFound = false;
-
-        const cell = cells[1];
-
-        if (cell) {
-            const cellText = cell.textContent || cell.innerText;
-            if (cellText.toUpperCase().indexOf(filter) > -1) {
-                nameFound = true;
-            }
-        }
-
-        const topicCell = cells[2];
-
-        if (topicCell) {
-            const cellContent = topicCell.textContent || topicCell.innerText;
-            if (selectedValues.includes(cellContent.trim())) {
-                topicFound = true;
-            }
-        }
-
-        if (nameFound && topicFound) {
-            filteredRows.push(rows[i]);
-            rows[i].style.display = '';
-        } else {
-            rows[i].style.display = 'none';
-        }
-    }
-
-    const rowsPerPage = 20;
-    let currentPage = 1;
-
-        function updatePageCounter() {
-            const pageCount = Math.ceil(filteredRows.length / rowsPerPage);
-            document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
-        }
-
-        function showRowsForCurrentPage() {
-            const startIdx = (currentPage - 1) * rowsPerPage;
-            const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
-
-            filteredRows.forEach((row, index) => {
-                if (index >= startIdx && index < endIdx) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        }
-
-        function setPage(page) {
-            currentPage = page;
-            showRowsForCurrentPage();
-            updatePageCounter();
-        }
-
-        updatePageCounter();
-        showRowsForCurrentPage();
-
-
-        document.getElementById("next-page-button").addEventListener("click", () => {
-            if (currentPage < Math.ceil(filteredRows.length / rowsPerPage)) {
-                setPage(currentPage + 1);
-            }
-            else{
-                setPage(1);
-            }
-        });
-
-        document.getElementById("prev-page-button").addEventListener("click", () => {
-            if (currentPage > 1) {
-                setPage(currentPage - 1);
-            }
-            else    {
-                setPage(Math.ceil(filteredRows.length / rowsPerPage));
-            }
-        });
-}
+// function searchTable() {
+//     if (originalRows.length === 0) {
+//         saveOriginalRows();
+//     } else {
+//         restoreOriginalTable();
+//     }
+//
+//     const input = document.getElementById('filter-input');
+//     const filter = input.value.toUpperCase();
+//     const selectedValues = [];
+//     const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
+//
+//     checkboxes.forEach((checkbox) => {
+//         selectedValues.push(checkbox.value);
+//     });
+//
+//     const table = document.getElementById('dataTable');
+//     const rows = table.getElementsByTagName('tr');
+//     const filteredRows = [];
+//
+//     for (let i = 1; i < rows.length; i++) {
+//         const cells = rows[i].getElementsByTagName('td');
+//         let nameFound = false;
+//         let topicFound = false;
+//
+//         const cell = cells[1];
+//
+//         if (cell) {
+//             const cellText = cell.textContent || cell.innerText;
+//             if (cellText.toUpperCase().indexOf(filter) > -1) {
+//                 nameFound = true;
+//             }
+//         }
+//
+//         const topicCell = cells[2];
+//
+//         if (topicCell) {
+//             const cellContent = topicCell.textContent || topicCell.innerText;
+//             if (selectedValues.includes(cellContent.trim())) {
+//                 topicFound = true;
+//             }
+//         }
+//
+//         if (nameFound && topicFound) {
+//             filteredRows.push(rows[i]);
+//             rows[i].style.display = '';
+//         } else {
+//             rows[i].style.display = 'none';
+//         }
+//     }
+//
+//     const rowsPerPage = 20;
+//     let currentPage = 1;
+//
+//         function updatePageCounter() {
+//             const pageCount = Math.ceil(filteredRows.length / rowsPerPage);
+//             document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
+//         }
+//
+//         function showRowsForCurrentPage() {
+//             const startIdx = (currentPage - 1) * rowsPerPage;
+//             const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
+//
+//             filteredRows.forEach((row, index) => {
+//                 if (index >= startIdx && index < endIdx) {
+//                     row.style.display = "";
+//                 } else {
+//                     row.style.display = "none";
+//                 }
+//             });
+//         }
+//
+//         function setPage(page) {
+//             currentPage = page;
+//             showRowsForCurrentPage();
+//             updatePageCounter();
+//         }
+//
+//         updatePageCounter();
+//         showRowsForCurrentPage();
+//
+//
+//         document.getElementById("next-page-button").addEventListener("click", () => {
+//             if (currentPage < Math.ceil(filteredRows.length / rowsPerPage)) {
+//                 setPage(currentPage + 1);
+//             }
+//             else{
+//                 setPage(1);
+//             }
+//         });
+//
+//         document.getElementById("prev-page-button").addEventListener("click", () => {
+//             if (currentPage > 1) {
+//                 setPage(currentPage - 1);
+//             }
+//             else    {
+//                 setPage(Math.ceil(filteredRows.length / rowsPerPage));
+//             }
+//         });
+// }
 
 document.getElementById('search-button').addEventListener('click', () => {
-    //document.getElementById('search-button').click();
     searchInResourcesTable();
-    //searchTable();
 });
 
 function searchInResourcesTable() {
-    // ide a loading modalt
     showLoadingModal();
 
     const searchinput = document.getElementById('filter-input');
     const filter = searchinput.value.toLowerCase();
     const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
     const selectedValues = Array.from(checkboxes).map(checkbox => checkbox.value.trim().toUpperCase());
-    // console.log("Keresési szöveg: " + filter);
-    // console.log("Mik vonnak bepipalva: " + selectedValues);
+
     const queryString = 'filter=' + encodeURIComponent(filter) + '&selectedTopics=' + encodeURIComponent(selectedValues.join(','));
     fetch('/resources/filtered?' + queryString, {
         method: 'GET',
@@ -1247,7 +1026,6 @@ function searchInResourcesTable() {
             throw new Error('Request failed');
         }
     }).then(data => {
-        //console.log(data);
         window.location.href = '/resources/filtered?' + queryString;
 
     }).catch(error => {

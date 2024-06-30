@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
-  <!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
   <link rel="stylesheet" type="text/css" th:href="@{../css/index.css}">
   <link rel="preload" th:href="@{../css/myGroup.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" th:href="@{../css/myGroup.css}"></noscript>
@@ -11,17 +9,15 @@
   <link rel="stylesheet" type="text/css" th:href="@{../css/languages.css}">
   <title>Title</title>
 </head>
+
 <body>
 <div th:fragment="modal-content" class="profile-modal" th:id="${'profileMainModal_' + uId}"  >
   <span class="close-profile-modal">&times;</span>
-
   <div class="profile-modal-left-box">
-
     <button th:onclick="'redirectToFavorites(' + ${uId} + ')'" class="btn btn-success blue-button" id="modal-contact-button"
             th:classappend="${not userRolesToDisplayMentorSelector.contains('MENTEE') ? 'notmentee' : ''} + ${not userRolesToDisplayMentorSelector.contains('MENTOR') ? 'notmentor' : ''}">
       <span class="english-text">Send a message</span>
     </button>
-
 
     <div class="image-container">
       <img th:if="${profileImageForMyGroupBase64 != ''}"
@@ -50,14 +46,10 @@
       </div>
 
       <div class="interaction-buttons" th:if="${userRolesToDisplayMentorSelector.contains('MENTEE')}">
-        <!-- RATE button -->
         <button id="rating-button" class="blue-button" onclick="showRateSection()"> RATE </button>
 
-        <!-- Rating Section -->
         <div id="ratingSection" style="display: none;">
-
           <div id="error-for-ratingSection" style="display: none"></div>
-
           <div class="rating-rate modal-rating-star-rate" id="rate_star_by_user">
             <input type="radio" id="ratestar5" name="selectrating" value="5" th:checked="${ratingForThisUser != null and ratingForThisUser.score >= 4.5}" onclick="rateWithStars(5)"/>
             <label for="ratestar5" th:style="${ratingForThisUser != null and ratingForThisUser.score >= 4.5} ? 'color: gold;' : ''">&#9733;</label>
@@ -71,7 +63,6 @@
             <label for="ratestar1" th:style="${ratingForThisUser != null and ratingForThisUser.score >= 0.5} ? 'color: gold;' : ''">&#9733;</label>
           </div>
           <textarea id="commentInput" maxlength="500" placeholder="Write your comment..." th:text="${ratingForThisUser != null ? ratingForThisUser.comment : ''}"></textarea>
-          <!-- SAVE and CANCEL buttons for rating -->
           <button id="save-rating" class="green-button" onclick="saveRating()" >SAVE</button>
           <button id="cancel-rating" class="red-button" onclick="cancelRating()">CANCEL</button>
         </div>
@@ -79,11 +70,9 @@
     </div>
   </div>
 
-
   <div class="profile-modal-right-box" >
 
     <div class="profile-right">
-      <!-- ABOUT CONTAINER  START -->
       <div class="section">
         <h2>ABOUT</h2>
         <!-- ABOUT INFO START -->
@@ -115,7 +104,6 @@
         </div>
         <!-- ABOUT INFO END -->
       </div>
-      <!-- ABOUT CONTAINER  END -->
 
       <!-- SKILLS CONTAINER START -->
       <div class="section">
@@ -149,15 +137,10 @@
 
           <div id="commentsDiv" class="comments">
               <div class="comment-entry" id="commentContainer" style="display: block;">
-                <!-- Innen az sse-nel -->
-
                 <div class="comment-section active" th:id="${'comment-section-' + data.userId}" th:each="data, status : ${allRatingsForThisUser}">
                   <div class="comment-row">
-
                     <img  th:id="${'commentProfileImg-' + data.userId}" th:src="@{/img/anonym.jpg}" alt="Profile Image" class="comment-profile-image">
-
                     <div class="comment-infos">
-
                       <div th:each="user : ${allSelectedUsers}">
                         <p style="margin: 0" th:if="${user.id == data.userId}" th:text="${user.last_Name + ' ' + user.first_Name}"></p>
                       </div>
@@ -176,18 +159,13 @@
                         <input type="radio" th:id="${'comment-star1_'+data.userId}" name="rating" value="1" th:checked="${data.score >= 0.5}" disabled />
                         <label th:for="${'comment-star1_' + data.userId}" th:style="${data.score >= 0.5} ? 'color: gold;' : ''" >&#9733;</label>
                       </div>
-
                     </div>
-
                   </div>
 
                   <div class="comment-content">
                     <p class="comment-label-text" th:id="${'comment-label-text-' + data.userId}" th:text="${data.comment}"></p>
                   </div>
-
                 </div>
-
-                <!-- Idaig -->
               </div>
 
               <div class="nav-arrows">
@@ -196,13 +174,10 @@
               </div>
           </div>
             <!-- COMMENT INFO END -->
-
       </div>
       <!-- COMMENT CONTAINER END -->
     </div>
-
   </div>
-
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

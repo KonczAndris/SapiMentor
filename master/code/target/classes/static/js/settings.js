@@ -8,13 +8,10 @@ function connectToWebSocketForSettingsPage() {
 
     if(window.location.href.includes("http://")){
         var socket = new SockJS('/ws');
-        console.log("sima ws-t hasznal");
     }else {
         var socket = new SockJS('https://' + window.location.host + '/ws');
-        console.log("wss-t hasznal");
     }
     stompClient = Stomp.over(socket);
-
     stompClient.connect({}, onConnectedForSettingsPage, onErrorInSettingsPage);
 }
 
@@ -23,8 +20,6 @@ function onConnectedForSettingsPage() {
 }
 
 function onErrorInSettingsPage(error) {
-    //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    //connectingElement.style.color = 'red';
 }
 
 async function onMessageReceivedNotificationInSettingsPage(payload) {
@@ -68,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }).catch((error) => {
         console.log("Error:" + error);
     });
-
 });
 
 
@@ -108,41 +102,29 @@ function startDeactivatingUser() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Select all span elements with class checkmark-setting
     var spanElements = document.querySelectorAll('.checkmark-setting');
-
-    // Iterate over each span element
     spanElements.forEach(function(span) {
-        // Add click event listener to the span element
         span.addEventListener('click', function () {
-            // Get the associated checkbox element
             var checkboxId = this.previousElementSibling.id;
             var checkboxElement = document.getElementById(checkboxId);
-
-            // Simulate a click on the checkbox element
             checkboxElement.click();
         });
     });
 });
 
-// Get all checkboxes within the language and theme divs
 const languageCheckboxes = document.querySelectorAll('.language-div .topic-checkbox');
 const themeCheckboxes = document.querySelectorAll('.theme-div .topic-checkbox');
 
-// Function to handle checking only one checkbox within a category
-// Function to handle checking only one checkbox within a category
 function handleCheckboxCheck(checkboxes) {
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             if (this.checked) {
-                // Uncheck other checkboxes within the same category
                 checkboxes.forEach(otherCheckbox => {
                     if (otherCheckbox !== this) {
                         otherCheckbox.checked = false;
                     }
                 });
             } else {
-                // If only one checkbox is checked, prevent unchecking it
                 const checkedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
                 if (checkedCount === 0) {
                     this.checked = true;
@@ -152,36 +134,31 @@ function handleCheckboxCheck(checkboxes) {
     });
 }
 
-// Call the function for language and theme checkboxes
 handleCheckboxCheck(languageCheckboxes);
 handleCheckboxCheck(themeCheckboxes);
 
 const darkCheckbox = document.getElementById('dark');
 const saveSettingsButton = document.getElementById('saveSettings');
 
-// Function to apply or remove the dark theme
 function applyDarkTheme() {
     if (darkCheckbox.checked) {
         const darkThemeLink = document.createElement('link');
         darkThemeLink.rel = 'stylesheet';
         darkThemeLink.href = '/css/darkTheme.css';
-        darkThemeLink.id = 'darkTheme'; // Add an ID to the link element for easier removal later
+        darkThemeLink.id = 'darkTheme';
         document.head.appendChild(darkThemeLink);
-        // Save dark theme state locally
         localStorage.setItem('theme', 'dark');
     } else {
         const darkThemeLink = document.getElementById('darkTheme');
         if (darkThemeLink) {
-            darkThemeLink.remove(); // Remove the dark theme CSS
+            darkThemeLink.remove();
         }
-        // Remove dark theme state from local storage
         localStorage.removeItem('theme');
     }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     const lightCheckbox = document.getElementById('light');
-// Check if dark theme was selected previously and apply it
 if (localStorage.getItem('theme') === 'dark') {
     darkCheckbox.checked = true;
     applyDarkTheme();
@@ -200,28 +177,26 @@ else{
 const hungarianCheckbox = document.getElementById('hungarian');
 const englishCheckbox = document.getElementById('english');
 
-// Function to apply language settings
 function applyLanguageSettings() {
     const hungarianTextElements = document.querySelectorAll('.hungarian-text');
     const englishTextElements = document.querySelectorAll('.english-text');
 
     if (hungarianCheckbox.checked) {
         hungarianTextElements.forEach(element => {
-            element.style.display = 'inline'; // Show Hungarian text
+            element.style.display = 'inline';
         });
         englishTextElements.forEach(element => {
-            element.style.display = 'none'; // Hide English text
+            element.style.display = 'none';
         });
         // Save language preference locally
         localStorage.setItem('language', 'hungarian');
     } else {
         hungarianTextElements.forEach(element => {
-            element.style.display = 'none'; // Hide Hungarian text
+            element.style.display = 'none';
         });
         englishTextElements.forEach(element => {
-            element.style.display = 'inline'; // Show English text
+            element.style.display = 'inline';
         });
-        // Save language preference locally
         localStorage.setItem('language', 'english');
     }
 }
@@ -246,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (localStorage.getItem('theme') === 'dark') {
             showPreLoadModal();
         }
-        location.reload(); // Reload the page
+        location.reload();
     });
 } );
 
@@ -267,7 +242,6 @@ function setPlaceholdersBasedOnLanguage() {
     } });
 }
 
-// Hívjuk meg a függvényt az oldal betöltésekor
 setPlaceholdersBasedOnLanguage();
 
 // Jest testing exports

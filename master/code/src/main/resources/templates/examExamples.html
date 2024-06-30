@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <title>SapiMentor</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
     <link rel="preload" th:href="@{/css/examExamples.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -18,9 +16,7 @@
 </head>
 
 <body class="exams-page">
-
 <div id="preloader"> </div>
-
 <div class="taskbar">
     <a href="/" th:href="@{/profile}">
         <div class="user-img-container">
@@ -65,7 +61,6 @@
                 </a></p>
         </div>
         <div class="form-group" >
-<!--             th:if="${not userRolesToDisplayResources.contains('ADMIN')}">-->
             <p class="menu-function">
                 <a th:onclick="${not userRolesToDisplayResources.contains('MENTOR') and not userRolesToDisplayResources.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon">
                     <span class="english-text">My Group</span>
@@ -145,11 +140,8 @@
                     </a>
                 </div>
             </div>
-
         </div>
         <!-- MENU BAR END-->
-
-
         <!-- SEARCH BUTTON BAR START-->
         <div class="open-search-buttons">
             <button class="search-button green-button" id="myFilterBtn" onclick="showFilterContainer()">
@@ -350,7 +342,6 @@
                                     <span class="hungarian-text">Nem</span>
                                 </button>
                             </div>
-
                         </div>
                     </div>
                     <!-- DELETE MODAL END -->
@@ -395,9 +386,9 @@
                             <span class="hungarian-text">Kiválaszt</span>
                         </button>
                         <input type="text" class="edit-input" id="examExampleFileName-edit" placeholder=".jpg, .pdf" required autofocus="autofocus" readonly>
-                    </div> </div>
+                    </div>
+                </div>
             </div>
-
 
             <div class="form-group-edit">
                 <div class="detail-row">
@@ -438,13 +429,10 @@
             </div>
 
             <div class="func-buttons-modal">
-                <!--<form id="examExamples-form"  th:action="@{/saveResourceLinks}" method="post" >-->
-                <!--<input type="hidden" name="examExamplesDataItems" id="examExamplesDataItems" value="">-->
                 <button type="submit" class="upload-button-modal blue-button" id="upload-button-modal" th:onclick="saveExamExamplesDataToServer()" >
                     <span class="english-text">Upload</span>
                     <span class="hungarian-text">Feltölt</span>
                 </button>
-                <!--</form>-->
                 <button class="cancel-button-modal close-examExamples red-button">
                     <span class="english-text">Cancel</span>
                     <span class="hungarian-text">Mégse</span>

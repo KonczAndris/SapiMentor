@@ -488,6 +488,13 @@ a{
     bottom: 0;
 }
 
+.link-table th {
+    position: sticky;
+    top: 0;
+    background-color: rgb(22, 175, 132); /* Background color for the sticky header */
+    z-index: 1; /* Ensure the header is above the other cells */
+}
+
 /*RESPONSIVE DESIGN*/
 @media (max-width: 1000px) {
     .menu-function-profile{
@@ -600,12 +607,4 @@ a{
         display: flex;
         flex-direction: column;
     }
-}
-
-
-.link-table th {
-    position: sticky;
-    top: 0;
-    background-color: rgb(22, 175, 132); /* Background color for the sticky header */
-    z-index: 1; /* Ensure the header is above the other cells */
 }

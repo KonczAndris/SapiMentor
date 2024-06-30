@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
         imageUploadInput.click();
     });
 
-    // ezt javitottam !!!!!!!!!!!!!!!!!
     if (imageUploadInput !== null) {
         imageUploadInput.addEventListener('change', function (event) {
             const selectedImage = event.target.files[0];
@@ -137,7 +136,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ezt javitottam !!!!!!!!!!!!!!!!!
     if (document.getElementById('upload-save') !== null) {
         document.getElementById('upload-save').addEventListener('click', function (event) {
             var token = $("meta[name='_csrf']").attr("content");
@@ -169,7 +167,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-
     document.querySelector('.close-upload').addEventListener('click', function () {
         uploadModal.style.display = 'none';
     });
@@ -195,7 +192,6 @@ function setupMentorModal() {
     var mentorBtn = document.getElementById("myMentorBtn");
     var mentorClose = document.getElementsByClassName("close-mentor")[0];
 
-    // javitottam !!!!!!!!!!!!!!!!!
     if (mentorBtn !== null) {
         mentorBtn.onclick = function() {
             mentorModal.style.display = "flex";
@@ -219,9 +215,7 @@ function updateRoleStatus(){
         selectedRolesLabels.forEach(function(label) {
             let associatedInputValue = label.querySelector('input[name="role"]').value;
             associatedInputs.push(associatedInputValue);
-            //console.log(associatedInputValue);
         });
-        console.log("associatedInputs: " +  associatedInputs.toString());
 
         fetch('/deleteUserRoleStatus', {
             method: 'POST',
@@ -254,7 +248,7 @@ function updateRoleStatus(){
                 .then(data => {
                     console.log(data.message);
                     if (data.message === "NEM_MASOD") {
-                        showErrorMessageInProfile("The user must be at least 2 years\n" +
+                        showErrorMessageInProfile("The user must be a 2nd year student at least\n" +
                             " to change their role.");
                     } else if (data.message === "MODOSITVA") {
                         location.reload();
@@ -316,7 +310,6 @@ function setupModal() {
         });
     }
 
-    // Add event listener to the close button to hide the modal
     if (span && modal) {
         span.addEventListener("click", function() {
             modal.style.display = "none";
@@ -514,9 +507,6 @@ function deleteTopicAndSkills(topicId) {
         type: "POST",
         url: "/deleteTopicAndSkills",
         data: { topicId: topicId },
-        // beforeSend: function (xhr) {
-        //     xhr.setRequestHeader(header, token);
-        // },
         success: function (response) {
             console.log("Sikeres törlés: " + response);
         },
@@ -860,14 +850,14 @@ function showTopicsAndSkillsInModal() {
                 tableContainer.appendChild(row);
                 tableContainer.appendChild(topicSkills);
 
-                topicCounter++; // Növeljük az egyedi azonosító számot
+                topicCounter++;
             });
         })
         .catch(function (error) {
             console.error("Hiba történt az adatok lekérése közben:", error);
         });
 }
-// itt javitottam !!!!!!!!!!!!!!!!!
+
 document.addEventListener('DOMContentLoaded', function() {
     var errorMessageForSkills = document.getElementById('error-message-for-skills');
     if (errorMessageForSkills !== null){
@@ -1060,15 +1050,11 @@ if (typeof module !== 'undefined') {
 
 function scrollToBottomInProfilePage() {
     var commentSection = document.getElementById('comment-section-container');
-    commentSection.style.display = 'block';  // Megnyitja a komment szekciót, ha szükséges
-
-    // Ellenőrzi, hogy a commentSection létezik-e
+    commentSection.style.display = 'block';
     if (commentSection) {
-        // Görgetés az elem aljára
         commentSection.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
 }
 
-// Kapcsolja össze a függvényt a gomb nyomásával
 document.getElementById('showCommentsButton').addEventListener('click', scrollToBottomInProfilePage);
 

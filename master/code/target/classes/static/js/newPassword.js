@@ -8,7 +8,6 @@ function validatePassword() {
     var isValidFormat = passwordValue.length >= 8 && passwordValue.length <= 20;
     var doPasswordsMatch = passwordValue === confirmPasswordValue;
 
-
     if (isValidFormat ) {
         passwordInput.classList.remove("highlight");
 
@@ -25,7 +24,6 @@ function validatePassword() {
         confirmPasswordInput.classList.add("highlight");
         changePasswordBtn.disabled = true;
     }
-
 }
 
 function validateConfirmPassword() {
@@ -98,7 +96,6 @@ function confirmpasswordToggleVisibility(inputId, iconId) {
     }
 }
 
-// Language placeholder text
 function setPlaceholdersBasedOnLanguage() {
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirm-password');

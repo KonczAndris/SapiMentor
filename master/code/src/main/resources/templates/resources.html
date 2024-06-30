@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SapiMentor</title>
-<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
     <link rel="preload" th:href="@{/css/resources.css}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" th:href="@{/css/resources.css}"></noscript>
@@ -64,7 +62,6 @@
                </a></p>
        </div>
        <div class="form-group" >
-<!--            th:if="${not userRolesToDisplayResources.contains('ADMIN')}">-->
            <p class="menu-function">
                <a th:onclick="${not userRolesToDisplayResources.contains('MENTOR') and not userRolesToDisplayResources.contains('MENTEE')} ? 'notMenteeOrMentor()' : 'redirectToMyGroup()'"> <img th:src="@{/img/myGroup.png}" alt="Icon" class="menu-icon"><span class="english-text">My Group</span>
                    <span class="hungarian-text">Csoportom</span>

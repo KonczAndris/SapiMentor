@@ -4,19 +4,14 @@ let stompClient = null;
 let IdForUserInExmasPage = null;
 function connectToWebSocketForExmasPage() {
     var elementToGetExmasUserId = document.querySelector('[id^="userIdForExamsPage-"]');
-    // console.log("elementToGetUserId: ", elementToGetUserId);
     IdForUserInExmasPage = elementToGetExmasUserId.id.split("-")[1];
-    // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
 
     if(window.location.href.includes("http://")){
         var socket = new SockJS('/ws');
-        console.log("sima ws-t hasznal");
     }else {
         var socket = new SockJS('https://' + window.location.host + '/ws');
-        console.log("wss-t hasznal");
     }
     stompClient = Stomp.over(socket);
-
     stompClient.connect({}, onConnectedForExmasPage, onErrorInExmasPage);
 }
 
@@ -25,8 +20,6 @@ function onConnectedForExmasPage() {
 }
 
 function onErrorInExmasPage(error) {
-    //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    //connectingElement.style.color = 'red';
 }
 
 async function onMessageReceivedNotificationInExmasPage(payload) {
@@ -39,9 +32,7 @@ async function onMessageReceivedNotificationInExmasPage(payload) {
     });
 }
 
-// ez azert hogy a valosideju ertesiteseket is megkapjuk
-// es ha frissitunk vagy ha csak siman ugy kapunk ertesitest hogy nem vagyunk
-// belepve akkor is megkapjuk az ertesitest
+
 document.addEventListener('DOMContentLoaded', () => {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -162,7 +153,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-
 function toggleDropdown() {
     const checkboxContainer = document.getElementById("topic-myCheckboxes");
 
@@ -170,7 +160,6 @@ function toggleDropdown() {
         checkboxContainer.style.display = "none";
     } else {
         checkboxContainer.style.display = "flex";
-
     }
 }
 
@@ -187,7 +176,6 @@ function cancelFilterWindow(){
     const openSearchButtons = document.querySelector(".open-search-buttons");
     filterContainer.style.display = "none";
     openSearchButtons.style.display = "flex";
-
 }
 
 let isWindowAbove1000 = window.innerWidth > 1000;
@@ -210,43 +198,7 @@ function adjustLayout() {
 adjustLayout();
 window.addEventListener("resize", adjustLayout);
 
-// function setupExamExamplesModal() {
-//     var modal = document.getElementById("examExamplesModal");
-//     if (modal) {
-//         var btn1 = document.getElementById("upload-upload");
-//         var span = document.getElementsByClassName("close-examExamples")[0];
-//
-//         if (btn1) {
-//             btn1.onclick = function() {
-//                 modal.style.display = "flex";
-//             }
-//         }
-//
-//         if (span) {
-//             span.onclick = function() {
-//                 modal.style.display = "none";
-//             }
-//         }
-//
-//     }
-// }
-// setupExamExamplesModal();
-//
-//
-// function closeModalOnClickOutside() {
-//     var modal1 = document.getElementById("examExamplesModal");
-//
-//     window.addEventListener("click", function(event) {
-//         if (event.target == modal1) {
-//             modal1.style.display = "none";
-//         }
-//     });
-// }
-//
-// closeModalOnClickOutside();
-
 function setupModifyExamsModal(examId) {
-    console.log("examId: " + examId);
     var modalId = "examExamplesModifyModal-" + examId;
     var modal = document.getElementById(modalId);
 
@@ -258,7 +210,6 @@ function setupModifyExamsModal(examId) {
 }
 
 function setupDeleteExamsModal(examId) {
-    console.log("examId: " + examId);
     var modalId = "examExamplesDeleteModal-" + examId;
     var modal = document.getElementById(modalId);
 
@@ -317,7 +268,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -348,23 +298,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function setupSkillsModal() {
     var modal = document.getElementById("examExamplesModal");
-
     var btn1 = document.getElementById("upload-upload");
     var btn2 = document.getElementById("upload-hidden");
     var span = document.getElementsByClassName("close-examExamples")[0];
-
     if (btn1) {
         btn1.onclick = function() {
             modal.style.display = "flex";
         }
     }
-
     if (btn2) {
         btn2.onclick = function() {
             modal.style.display = "flex";
         }
     }
-
     if (span) {
         span.onclick = function() {
             modal.style.display = "none";
@@ -377,13 +323,11 @@ function closeModal() {
     modal.style.display = 'none';
 }
 
-// Add click event listener to the "Cancel" button
 var cancelButton = document.querySelector('.cancel-button-modal.close-examExamples');
 cancelButton.addEventListener('click', closeModal);
 
 function closeModalOnClickOutside() {
     var modal1 = document.getElementById("examExamplesModal");
-
     window.addEventListener("click", function(event) {
         if (event.target == modal1) {
             modal1.style.display = "none";
@@ -436,21 +380,16 @@ function validateModifiedName(examId) {
     }
 }
 
-// Function to handle file selection and update the input field
 document.getElementById("fileUpload").addEventListener("change", function() {
     const fileInput = document.getElementById("fileUpload");
     const fileNameInput = document.getElementById("examExampleFileName-edit");
 
     if (fileInput.files.length > 0) {
-        // Get the selected file
         const selectedFile = fileInput.files[0];
-
-        // Update the input field with the file name
         fileNameInput.value = selectedFile.name;
     }
 });
 
-// Function to trigger the file input when the upload button is clicked
 document.getElementById("fileUploadButton").addEventListener("click", function() {
     const fileInput = document.getElementById("fileUpload");
     fileInput.click();
@@ -459,22 +398,17 @@ document.getElementById("fileUploadButton").addEventListener("click", function()
 var linkCounter = 0;
 function addLinkRow() {
     try {
-        // var selectedFile = ...
         var selectedFileName = document.getElementById("examExampleFileName-edit").value;
         var selectedName = document.getElementById("examExampleName-edit").value;
         var selectedTopic = document.getElementById("topic-selected-modal").value;
 
         if (selectedTopic !== "" && selectedFileName !== "" && selectedName !== "") {
             var tableContainer = document.querySelector(".table-container table tbody");
-
-            // Create a new row
             var row = document.createElement("tr");
 
-            // Create cells for the row
             var linkNumber = document.createElement("td");
             linkNumber.textContent = linkCounter;
 
-            // Create a clickable link (anchor) for linkName
             var linkName = document.createElement("td");
             linkName = selectedName;
 
@@ -489,7 +423,6 @@ function addLinkRow() {
 
             var linkButtons = document.createElement("td");
 
-            // Create Like and Dislike buttons
             var likeButton = document.createElement("button");
             likeButton.textContent = "Like";
             likeButton.className = "like-button-link";
@@ -502,12 +435,10 @@ function addLinkRow() {
             downloadButton.textContent = "Download";
             downloadButton.className = "download-button";
 
-            // Append Like and Dislike buttons to the linkButtons cell
             linkButtons.appendChild(likeButton);
             linkButtons.appendChild(dislikeButton);
             linkButtons.appendChild(downloadButton);
 
-            // Append cells to the row
             row.appendChild(linkNumber);
             row.appendChild(linkName);
             row.appendChild(linkTopic);
@@ -515,10 +446,8 @@ function addLinkRow() {
             row.appendChild(linkLikes);
             row.appendChild(linkButtons);
 
-            // Append the row to the table
             tableContainer.appendChild(row);
 
-            // Increment the linkCounter (assuming linkCounter is declared and initialized)
             linkCounter++;
         }
     } catch (error) {
@@ -544,22 +473,18 @@ function saveExamExamplesDataToServer() {
     } else {
         sendExamsDataToServer(data);
     }
-    //console.log(data);
-    // sendExamsDataToServer(data);
+
 }
-// ezt is andrisnak
 function showLoadingModal() {
     var modal = document.getElementById("loading-modal");
-    modal.style.display = "block"; // Megjelenítjük a modal ablakot
+    modal.style.display = "block";
 }
 
-// ezt is andrisnak
 function hideLoadingModal() {
     var modal = document.getElementById("loading-modal");
-    modal.style.display = "none"; // Elrejtjük a modal ablakot
+    modal.style.display = "none";
 }
 function sendExamsDataToServer(data) {
-    // ide kell majd hogy behozza a toltokepernyot
     showLoadingModal();
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -568,10 +493,6 @@ function sendExamsDataToServer(data) {
     formData.append("image", data[0].image);
     formData.append("name", data[0].name);
     formData.append("topic", data[0].topic);
-    //console.log(formData);
-    // for (var pair of formData.entries()) {
-    //     console.log(pair[0] + ': ' + pair[1]);
-    // }
 
     fetch('/resources/examExamples/uploadExams', {
         method: 'POST',
@@ -584,7 +505,6 @@ function sendExamsDataToServer(data) {
             return response.text();
         } else {
             return response.text();
-            // throw new Error('Hiba történt a válaszban');
         }
     }).then(data => {
         if (data === "Success") {
@@ -595,7 +515,7 @@ function sendExamsDataToServer(data) {
                 "The maximum file size is 6MB!");
         } else if(data === "Wrong type"){
             hideLoadingModal()
-            showErrorMessageInExam("This type of png is not supported!\n"); // Egyéb hiba esetén
+            showErrorMessageInExam("This type of png is not supported!\n");
         }
     }).catch(error => {
         hideLoadingModal()
@@ -607,21 +527,17 @@ function showErrorMessageInExam(message) {
     var errorMessageElement = document.getElementById('error-message-exam-modal-content');
     errorMessageElement.innerText = message;
     errorMessageElement.style.color = 'red';
-    // További stílusok vagy műveletek hozzáadhatók a látványosság érdekében
 }
 
-//NEW
 var examImageContainer = document.querySelector(".exam-image-image-container");
 var examImageModal = document.querySelector(".exam-image-modal");
 var examImageCloseButton = document.querySelector(".exam-image-close-button");
 
-
-// Eltároljuk az összes sor és modális ablak elemet
 const examImageContainers = document.querySelectorAll('.exam-image-image-container');
 const examImageModals = document.querySelectorAll('.exam-image-modal');
 const examImageZooms = document.querySelectorAll('.zoom-icon');
 const examNameIds = document.querySelectorAll('#exam-name-id');
-// Az egyes sorokhoz rendelt modális ablakok kezelése
+
 for (let i = 0; i < examImageContainers.length; i++) {
     const examImageContainer = examImageContainers[i];
     const examImageModal = examImageModals[i];
@@ -629,33 +545,25 @@ for (let i = 0; i < examImageContainers.length; i++) {
     const examNameId = examNameIds[i];
 
     examNameId.addEventListener("click", function() {
-            //console.log("Igen2 "+ examImageModal.id);
             if (examImageModal.id.includes("ItIsNotAnImage")) {
-                //console.log("Igen");
                 getExamImgPdf(examImageModal.id.split("-")[1]);
                 examImageModal.style.cursor = "pointer";
             } else {
-                //console.log("Nem");
                 examImageModal.style.display = "block";
                 examImageModal.style.cursor = "default";
             }
     });
 
     examImageZoom.addEventListener("click", function() {
-        //console.log("Igen2 "+ examImageModal.id);
         if (examImageModal.id.includes("ItIsNotAnImage")) {
-            //console.log("Igen");
             getExamImgPdf(examImageModal.id.split("-")[1]);
             examImageModal.style.cursor = "pointer";
         } else {
-            //console.log("Nem");
             examImageModal.style.display = "block";
             examImageModal.style.cursor = "default";
         }
     });
 
-
-    // Az egyes modális ablakok elrejtése, ha a modális ablakon kívülre kattintunk
     window.addEventListener("click", function(event) {
         if (event.target === examImageModal) {
             examImageModal.style.display = "none";
@@ -663,18 +571,12 @@ for (let i = 0; i < examImageContainers.length; i++) {
     });
 }
 
-
-
-
-// Like Dislike buttons
 function sendLikeOrDislike(examId, action) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
-    const sseUrl = "/sse/sendLikeOrDislikeForExam"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
-
+    const sseUrl = "/sse/sendLikeOrDislikeForExam";
     const url = `/resources/examExamples/${action}?examId=${examId}`;
-    //console.log("URL: " + url);
     fetch(url, {
         method: 'POST',
         headers: {
@@ -684,21 +586,15 @@ function sendLikeOrDislike(examId, action) {
     })
         .then(response => {
             if (response.ok) {
-                // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
-                // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
                 fetch(sseUrl, {
                     method: 'POST',
-                    body: JSON.stringify({message: `${action}:${examId}`}), // Konvertáljuk JSON formátumra
+                    body: JSON.stringify({message: `${action}:${examId}`}),
                     headers: {
-                        'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
+                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
                     },
                 })
                 response.text().then(data => {
-                    // Kezeld itt a szöveget (data)
-                    //console.log('sendLikeOrDislike Response:', data);
-                    //console.log(data);
-                    // Például: frissítheted a DOM-ot adataink alapján
                 }).catch(error => {
                     console.error('Error:', error);
                 });
@@ -707,9 +603,6 @@ function sendLikeOrDislike(examId, action) {
             }
         })
         .then(data => {
-            //console.log('Response:', data);
-            // A válaszban érkező adatokat kezelheted itt (opcionális)
-            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
         })
         .catch(error => {
             console.error('Error:', error);
@@ -720,10 +613,9 @@ function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(examId, action) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
-    const sseUrl = "/sse/sendLikeOrDislikeForExam"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
+    const sseUrl = "/sse/sendLikeOrDislikeForExam";
 
     const url = `/resources/examExamples/${action}?examId=${examId}`;
-    //console.log("URL: " + url);
     fetch(url, {
         method: 'POST',
         headers: {
@@ -733,21 +625,15 @@ function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(examId, action) {
     })
         .then(response => {
             if (response.ok) {
-                // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
-                // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
                 fetch(sseUrl, {
                     method: 'POST',
-                    body: JSON.stringify({message: `${action}:${examId}`}), // Konvertáljuk JSON formátumra
+                    body: JSON.stringify({message: `${action}:${examId}`}),
                     headers: {
-                        'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
+                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
                     },
                 })
                 response.text().then(data => {
-                    // Kezeld itt a szöveget (data)
-                    //console.log('sendLikeOrDislike Response:', data);
-                    //console.log(data);
-                    // Például: frissítheted a DOM-ot adataink alapján
                 }).catch(error => {
                     console.error('Error:', error);
                 });
@@ -756,9 +642,6 @@ function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(examId, action) {
             }
         })
         .then(data => {
-            //console.log('Response:', data);
-            // A válaszban érkező adatokat kezelheted itt (opcionális)
-            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
         })
         .catch(error => {
             console.error('Error:', error);
@@ -768,11 +651,7 @@ function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(examId, action) {
 function setLikeOrDislikeStatusToActiveOrInactive(examId, action) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-
-    //const sseUrl = "/sse/sendLikeOrDislike"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
-
     const url = `/resources/examExamples/${action}?examId=${examId}`;
-    //console.log("URL: " + url);
     fetch(url, {
         method: 'POST',
         headers: {
@@ -781,108 +660,59 @@ function setLikeOrDislikeStatusToActiveOrInactive(examId, action) {
         },
     }).then(response => {
         if (response.ok) {
-            //console.log(response.text());
             return response.text();
         } else {
             throw new Error('Request failed');
         }
     }).then(data => {
-        //console.log(data);
     }).catch(error => {
         console.error('Error:', error);
     });
 }
 
 function handleLikeButtonClick(likeButton) {
-    // Az adott sor azonosítójának megszerzése
     const rowId = likeButton.closest('tr').id;
     const examId = rowId.replace('exam-row-', '');
-    //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setLikeToActive');
     if (likeButton.classList.contains('like-button-link-active')) {
-        // Like visszavonása
         sendLikeOrDislike(examId, 'revokelike');
 
         likeButton.classList.remove('like-button-link-active');
-        // Távolítsuk el az aktív like gomb állapotát a helyi tárolóból is
         setLikeOrDislikeStatusToActiveOrInactive(examId, 'setLikeToInactive');
-        //localStorage.removeItem(`likeButtonState_${UserId}_${resourceId}`);
     } else {
         const activeDislikeButton = document.querySelector(`#${rowId} .dislike-button-link.dislike-button-link-active`);
         if (activeDislikeButton) {
             activeDislikeButton.classList.remove('dislike-button-link-active');
-            //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setDislikeToInactive');
-            //localStorage.removeItem(`dislikeButtonState_${UserId}_${resourceId}`);
             sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(examId, 'likeExamAndRevokeDislike');
-            // Módosítsuk az osztályt a "like-button-link-active"-ra
             likeButton.classList.add('like-button-link-active');
-
-
             setLikeOrDislikeStatusToActiveOrInactive(examId, 'setLikeToActiveAndDislikeToInactive');
-            // Mentsük el az aktív like gomb állapotát a helyi tárolóban
-            //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setLikeToActive');
-            //localStorage.setItem(`likeButtonState_${UserId}_${resourceId}`, 'active');
         } else {
-            // Like küldése a szervernek
             sendLikeOrDislike(examId, 'like');
-
-            // Módosítsuk az osztályt a "like-button-link-active"-ra
             likeButton.classList.add('like-button-link-active');
-
-            // Mentsük el az aktív like gomb állapotát a helyi tárolóban
             setLikeOrDislikeStatusToActiveOrInactive(examId, 'setLikeToActive');
-            //localStorage.setItem(`likeButtonState_${UserId}_${resourceId}`, 'active');
         }
     }
 }
 
 function handleDislikeButtonClick(dislikeButton) {
-    // Az adott sor azonosítójának megszerzése
     const rowId = dislikeButton.closest('tr').id;
     const examId = rowId.replace('exam-row-', '');
 
-    // Ellenőrizze, hogy az adott sorban már van aktív like gomb
-    // const activeLikeButton = document.querySelector(`#${rowId} .like-button-link.like-button-link-active`);
-    // if (activeLikeButton) {
-    //     sendRevokeLikeOrDislike(resourceId, 'revokelike');
-    //     activeLikeButton.classList.remove('like-button-link-active');
-    //     localStorage.removeItem(`likeButtonState_${resourceId}`);
-    // }
-    //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setDislikeToActive');
     if (dislikeButton.classList.contains('dislike-button-link-active')) {
-        // Dislike visszavonása
         sendLikeOrDislike(examId, 'revokedislike');
-
         dislikeButton.classList.remove('dislike-button-link-active');
-        // Távolítsuk el az aktív dislike gomb állapotát a helyi tárolóból is
         setLikeOrDislikeStatusToActiveOrInactive(examId, 'setDislikeToInactive');
-        //localStorage.removeItem(`dislikeButtonState_${UserId}_${resourceId}`);
     } else {
         const activeLikeButton = document.querySelector(`#${rowId} .like-button-link.like-button-link-active`);
         if (activeLikeButton) {
             activeLikeButton.classList.remove('like-button-link-active');
 
-            // itt a kozosbe kicserelni ezt a meghivast
-            //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setLikeToInactive');
-            //localStorage.removeItem(`likeButtonState_${UserId}_${resourceId}`);
             sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(examId, 'dislikeExamAndRevokeLike');
-            // Módosítsuk az osztályt a "dislike-button-link-active"-ra
             dislikeButton.classList.add('dislike-button-link-active');
-
             setLikeOrDislikeStatusToActiveOrInactive(examId, 'setDislikeToActiveAndLikeToInactive');
-
-            // Mentsük el az aktív dislike gomb állapotát a helyi tárolóban
-            //setLikeOrDislikeStatusToActiveOrInactive(resourceId, 'setDislikeToActive');
-            //localStorage.setItem(`dislikeButtonState_${UserId}_${resourceId}`, 'active');
         } else {
-            // Dislike küldése a szervernek
             sendLikeOrDislike(examId, 'dislike');
-
-            // Módosítsuk az osztályt a "dislike-button-link-active"-ra
             dislikeButton.classList.add('dislike-button-link-active');
-
-            // Mentsük el az aktív dislike gomb állapotát a helyi tárolóban
             setLikeOrDislikeStatusToActiveOrInactive(examId, 'setDislikeToActive');
-            //localStorage.setItem(`dislikeButtonState_${UserId}_${resourceId}`, 'active');
         }
     }}
 
@@ -902,10 +732,6 @@ $(document).ready(async function () {
         const likeCountElement = document.querySelector(`#exam-row-${rowId} #likeButton`);
         const dislikeCountElement = document.querySelector(`#exam-row-${rowId} #dislikeButton`);
 
-        //console.log('Received SSE message:', data.rowId);
-        // Itt frissitsd a like/dislike ertekeket a DOM-ban
-        //const likeDislikeCountElement = document.querySelector(`#resource-row-${rowId} .like-dislike-count`);
-        //console.log(likeDislikeCountElement);
         likeCountElement.textContent = data.like;
         dislikeCountElement.textContent = data.dislike;
     });
@@ -923,7 +749,6 @@ $(document).ready(async function () {
     });
 })
 
-// NEGYEDIK VERZIO (vegleges)
 let likeAndDislikeStatuses = [];
 document.addEventListener('DOMContentLoaded', function () {
     var token = $("meta[name='_csrf']").attr("content");
@@ -953,28 +778,20 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function handleLikeAndDislikeStatuses() {
-    // Itt már rendelkezésre állnak az adatok
-    //console.log(likeAndDislikeStatuses);
-
-    // Most már kezelheted az adatokat
     for (let i = 0; i < likeAndDislikeStatuses.length; i++) {
         const likeAndDislikeData = likeAndDislikeStatuses[i];
         const examId = likeAndDislikeData.resourceId;
         const like = likeAndDislikeData.like;
         const dislike = likeAndDislikeData.dislike;
 
-        // Itt kezeld az adatokat vagy végezz velük bármit, amit szeretnél
-        //console.log(`Exam ID: ${examId}, Like: ${like}, Dislike: ${dislike}`);
         const likeCountElement = document.querySelector(`#exam-row-${examId} .like-button-link`);
         const dislikeCountElement = document.querySelector(`#exam-row-${examId} .dislike-button-link`);
-        //console.log(likeCountElement);
-        //console.log(dislikeCountElement);
+
         if (like === 1) {
             likeCountElement.classList.add('like-button-link-active');
         } else if (dislike === 1) {
             dislikeCountElement.classList.add('dislike-button-link-active');
         }
-
     }
 }
 
@@ -982,7 +799,6 @@ let examimages = [];
 document.addEventListener('DOMContentLoaded', function () {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-    //const url = `/resources/${action}?resourceId=${resourceId}`
     fetch("/resources/examExamples/getallexamimage", {
         method: 'GET',
         headers: {
@@ -997,11 +813,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
         .then(data => {
-            //console.log(data.igenigen);
             examimages = data.examimagesandid;
             console.log(examimages);
             handlerexmaimages();
-            //console.log(likeAndDislikeStatuses);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -1011,11 +825,8 @@ document.addEventListener('DOMContentLoaded', function () {
 function handlerexmaimages() {
     for (let i = 0; i < examimages.length; i++) {
         const examsData = examimages[i];
-        //console.log(likeAndDislikeData[1]);
         const image = examsData[0];
         const examId = examsData[1];
-
-        //console.log(base64Image);
         var modal = document.getElementById('myModal-' + examId);
         var modalImg = document.getElementById('modalImg-' + examId);
 
@@ -1026,11 +837,8 @@ function handlerexmaimages() {
                 modal.id = modal.id + '-' +'ItIsNotAnImage';
             }
         }
-
-
     }
 }
-
 
 $(document).ready(function() {
     $(".dynamic-resize").each(function() {
@@ -1102,7 +910,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-let originalRows = []; // Változó az eredeti sorok tárolásához
+let originalRows = [];
 
 function saveOriginalRows() {
     const table = document.querySelector(".link-table");
@@ -1123,7 +931,6 @@ function restoreOriginalTable() {
                 handleLikeButtonClick(likeButton);
             });
         }
-
         const dislikeButton = clonedRow.querySelector('.dislike-button-link');
         if (dislikeButton) {
             dislikeButton.addEventListener('click', () => {
@@ -1131,151 +938,143 @@ function restoreOriginalTable() {
             });
         }
     });
-
 }
 
-function searchTable() {
-    if (originalRows.length === 0) {
-        saveOriginalRows();
-    } else {
-        restoreOriginalTable();
-    }
-
-    const input = document.getElementById('filter-input');
-    const filter = input.value.toUpperCase();
-    const selectedValues = [];
-    const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
-
-    checkboxes.forEach((checkbox) => {
-        selectedValues.push(checkbox.value);
-    });
-
-    const table = document.getElementById('dataTable');
-    const rows = table.getElementsByTagName('tr');
-    const filteredRows = [];
-
-    for (let i = 1; i < rows.length; i++) {
-        const cells = rows[i].getElementsByTagName('td');
-        let nameFound = false;
-        let topicFound = false;
-
-        const cell = cells[1];
-
-        if (cell) {
-            const cellText = cell.textContent || cell.innerText;
-            if (cellText.toUpperCase().indexOf(filter) > -1) {
-                nameFound = true;
-            }
-        }
-
-        const topicCell = cells[2];
-
-        if (topicCell) {
-            const cellContent = topicCell.textContent || topicCell.innerText;
-            if (selectedValues.includes(cellContent.trim())) {
-                topicFound = true;
-            }
-        }
-
-        if (nameFound && topicFound) {
-            filteredRows.push(rows[i]);
-            rows[i].style.display = '';
-        } else {
-            rows[i].style.display = 'none';
-        }
-    }
-    const rowsPerPage = 20;
-    let currentPage = 1;
-
-    // itt kell viccelodni
-    filteredRows.forEach(row => {
-        const examImageContainer = row.querySelector('.exam-image-image-container');
-        const examImageModal = row.querySelector('.exam-image-modal');
-        const examId = row.id.split('-')[1];
-
-        examImageContainer.addEventListener("click", function() {
-            if (examImageModal.id.includes("ItIsNotAnImage")) {
-                getExamImgPdf(examImageModal.id.split("-")[1]);
-            } else {
-                //console.log("Nem");
-                examImageModal.style.display = "block";
-                examImageModal.style.cursor = "default";
-            }
-            
-            var modalImg = document.getElementById('modalImg-' + examId);
-            modalImg.src = 'data:image/jpeg;base64,' + examimages.find(data => data[1] === examId)[0];
-        });
-
-        window.addEventListener("click", function(event) {
-            if (event.target === examImageModal) {
-                examImageModal.style.display = "none";
-            }
-        });
-    });
-
-    function updatePageCounter() {
-        const pageCount = Math.ceil(filteredRows.length / rowsPerPage);
-        document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
-    }
-
-    function showRowsForCurrentPage() {
-        const startIdx = (currentPage - 1) * rowsPerPage;
-        const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
-
-        filteredRows.forEach((row, index) => {
-            if (index >= startIdx && index < endIdx) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
-
-    function setPage(page) {
-        currentPage = page;
-        showRowsForCurrentPage();
-        updatePageCounter();
-    }
-
-    updatePageCounter();
-    showRowsForCurrentPage();
-
-
-    document.getElementById("next-page-button").addEventListener("click", () => {
-        if (currentPage < Math.ceil(filteredRows.length / rowsPerPage)) {
-            setPage(currentPage + 1);
-        }
-        else{
-            setPage(1);
-        }
-    });
-
-    document.getElementById("prev-page-button").addEventListener("click", () => {
-        if (currentPage > 1) {
-            setPage(currentPage - 1);
-        }
-        else    {
-            setPage(Math.ceil(filteredRows.length / rowsPerPage));
-        }
-    });
-}
+// function searchTable() {
+//     if (originalRows.length === 0) {
+//         saveOriginalRows();
+//     } else {
+//         restoreOriginalTable();
+//     }
+//
+//     const input = document.getElementById('filter-input');
+//     const filter = input.value.toUpperCase();
+//     const selectedValues = [];
+//     const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
+//
+//     checkboxes.forEach((checkbox) => {
+//         selectedValues.push(checkbox.value);
+//     });
+//
+//     const table = document.getElementById('dataTable');
+//     const rows = table.getElementsByTagName('tr');
+//     const filteredRows = [];
+//
+//     for (let i = 1; i < rows.length; i++) {
+//         const cells = rows[i].getElementsByTagName('td');
+//         let nameFound = false;
+//         let topicFound = false;
+//
+//         const cell = cells[1];
+//
+//         if (cell) {
+//             const cellText = cell.textContent || cell.innerText;
+//             if (cellText.toUpperCase().indexOf(filter) > -1) {
+//                 nameFound = true;
+//             }
+//         }
+//
+//         const topicCell = cells[2];
+//
+//         if (topicCell) {
+//             const cellContent = topicCell.textContent || topicCell.innerText;
+//             if (selectedValues.includes(cellContent.trim())) {
+//                 topicFound = true;
+//             }
+//         }
+//
+//         if (nameFound && topicFound) {
+//             filteredRows.push(rows[i]);
+//             rows[i].style.display = '';
+//         } else {
+//             rows[i].style.display = 'none';
+//         }
+//     }
+//     const rowsPerPage = 20;
+//     let currentPage = 1;
+//
+//     filteredRows.forEach(row => {
+//         const examImageContainer = row.querySelector('.exam-image-image-container');
+//         const examImageModal = row.querySelector('.exam-image-modal');
+//         const examId = row.id.split('-')[1];
+//
+//         examImageContainer.addEventListener("click", function() {
+//             if (examImageModal.id.includes("ItIsNotAnImage")) {
+//                 getExamImgPdf(examImageModal.id.split("-")[1]);
+//             } else {
+//                 examImageModal.style.display = "block";
+//                 examImageModal.style.cursor = "default";
+//             }
+//
+//             var modalImg = document.getElementById('modalImg-' + examId);
+//             modalImg.src = 'data:image/jpeg;base64,' + examimages.find(data => data[1] === examId)[0];
+//         });
+//
+//         window.addEventListener("click", function(event) {
+//             if (event.target === examImageModal) {
+//                 examImageModal.style.display = "none";
+//             }
+//         });
+//     });
+//
+//     function updatePageCounter() {
+//         const pageCount = Math.ceil(filteredRows.length / rowsPerPage);
+//         document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
+//     }
+//
+//     function showRowsForCurrentPage() {
+//         const startIdx = (currentPage - 1) * rowsPerPage;
+//         const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
+//
+//         filteredRows.forEach((row, index) => {
+//             if (index >= startIdx && index < endIdx) {
+//                 row.style.display = "";
+//             } else {
+//                 row.style.display = "none";
+//             }
+//         });
+//     }
+//
+//     function setPage(page) {
+//         currentPage = page;
+//         showRowsForCurrentPage();
+//         updatePageCounter();
+//     }
+//
+//     updatePageCounter();
+//     showRowsForCurrentPage();
+//
+//
+//     document.getElementById("next-page-button").addEventListener("click", () => {
+//         if (currentPage < Math.ceil(filteredRows.length / rowsPerPage)) {
+//             setPage(currentPage + 1);
+//         }
+//         else{
+//             setPage(1);
+//         }
+//     });
+//
+//     document.getElementById("prev-page-button").addEventListener("click", () => {
+//         if (currentPage > 1) {
+//             setPage(currentPage - 1);
+//         }
+//         else    {
+//             setPage(Math.ceil(filteredRows.length / rowsPerPage));
+//         }
+//     });
+// }
 
 document.getElementById('search-button').addEventListener('click', () => {
-    //document.getElementById('search-button').click();
     searchInExamExamples();
-    //searchTable();
 });
 
 function searchInExamExamples() {
-    // ide a loading modalt
     showLoadingModal();
 
     const searchinput = document.getElementById('filter-input');
     const filter = searchinput.value.trim().toLowerCase();
     const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
     const selectedValues = Array.from(checkboxes).map(checkbox => checkbox.value.trim().toUpperCase());
-    // console.log("Keresési szöveg: " + filter);
-    // console.log("Kiválasztott témák: " + selectedValues);
     const queryString = 'filter=' + encodeURIComponent(filter) + '&selectedTopics=' + encodeURIComponent(selectedValues.join(','));
     fetch('/resources/examExamples/filtered?' + queryString, {
         method: 'GET',
@@ -1289,7 +1088,6 @@ function searchInExamExamples() {
             throw new Error('Request failed');
         }
     }).then(data => {
-        //console.log(data);
         window.location.href = '/resources/examExamples/filtered?' + queryString;
     }).catch(error => {
         console.error('Error:', error);
@@ -1334,7 +1132,7 @@ function listSuggestions() {
 
                     suggestionItem.addEventListener('click', function() {
                         input.value = span.textContent;
-                        suggestionList.style.display = 'none'; // Ajánlatlista elrejtése kattintás után
+                        suggestionList.style.display = 'none';
                     });
 
                     suggestionList.appendChild(suggestionItem);
@@ -1355,7 +1153,6 @@ document.getElementById('filter-input').addEventListener('input', listSuggestion
 
 let examPDF = [];
 function getExamImgPdf(examId) {
-    console.log('Kattintottál az examImageContainer elemre!'+examId);
 
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -1379,16 +1176,12 @@ function getExamImgPdf(examId) {
             for (let i = 0; i < data.length; i++) {
                 const id = data[i][0];
                 const examExamplesFile = data[i][1];
-                console.log(id); // exam ID
-                console.log(examExamplesFile); // exam fájl
                 examPDF.push({
                     id: id,
                     examExamplesFile: examExamplesFile
                 });
             }
             hideLoadingModal()
-            // examPDF = data.diploma;
-            //console.log(diplomaPDF);
             handlerexamPDFs();
         })
         .catch(error => {
@@ -1405,20 +1198,15 @@ function handlerexamPDFs() {
         console.log("PDF ADAT:" + PDF)
         console.log("Exam ID:" + examId)
 
-        // A base64 kódolt adatok dekódolása
         var binaryPDF = atob(PDF);
         var arrayPDF = new Uint8Array(binaryPDF.length);
         for (var j = 0; j < binaryPDF.length; j++) {
             arrayPDF[j] = binaryPDF.charCodeAt(j);
         }
 
-        // Blob létrehozása a PDF adatokból
         var pdfBlob = new Blob([arrayPDF], { type: 'application/pdf;charset=utf-8' });
-        // Blob URL létrehozása
         var blobUrl = URL.createObjectURL(pdfBlob);
-        //console.log(blobUrl);
 
-        //console.log(base64Image);
         var modal = document.getElementById('myExModal-' + examId);
         var modalPDF = document.getElementById('modalExPDF-' + examId);
         var modalPDFMobile = document.getElementById('modalExPDFMobile-' + examId);
@@ -1426,46 +1214,34 @@ function handlerexamPDFs() {
         console.log("Igen123: " + modalPDF);
         console.log("Igen124: " + modal);
 
-        // modal.style.display = 'block';
-        // modalPDF.src = blobUrl;
-        // modalPDF.href = blobUrl;
-        // modalPDF.click();
-        //console.log(modalPDF.src);
-
         if (isMobileOrTabletScreen()) {
-            // Mobil eszköz esetén
             modalPDFMobile.href = blobUrl;
             modalPDFMobile.click();
         } else {
-            // Nem mobil eszköz esetén
             modal.style.display = 'block';
             modalPDF.src = blobUrl;
-            // Adj hozzá egy eseménykezelőt az iframe-hez, hogy megakadályozza az újratöltést, ha a modális ablakon belül kattintasz, de az iframe-en kívül
             modalPDF.addEventListener("click", function(event) {
                 if (event.target.tagName !== 'IFRAME') {
                     event.stopPropagation();
                 }
             });
 
-            // Adj hozzá egy eseménykezelőt a modális ablakhoz, hogy megakadályozza az újratöltést, ha a modális ablakon belül kattintasz, de semmire sem
             modal.addEventListener("click", function(event) {
                 if (event.target !== modalPDF && event.target !== modalPDFMobile) {
                     event.stopPropagation();
                 }
             });
 
-            // Adj hozzá egy eseménykezelőt az "x" ikonhoz, hogy bezárja a modális ablakot
             closeModalBtn.addEventListener("click", function() {
                 modal.style.display = 'none';
             });
         }
-
     }
     examPDF = [];
 }
 
 function isMobileOrTabletScreen() {
-    return window.innerWidth <= 1024; // Például, 767 pixel vagy alatta van mobilnak tekintve
+    return window.innerWidth <= 1024;
 }
 
 // MODIFY
@@ -1563,7 +1339,3 @@ document.addEventListener('click', function(event) {
         suggestionList.style.display = 'none';
     }
 });
-
-
-
-

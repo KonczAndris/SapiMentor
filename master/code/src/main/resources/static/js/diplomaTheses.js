@@ -4,19 +4,14 @@ let stompClient = null;
 let IdForUserInDiplomaThesesPage = null;
 function connectToWebSocketForDiplomaThesesPage() {
     var elementToGetDiplomaThesesUserId = document.querySelector('[id^="userIdForDiplomaThesesPage-"]');
-    // console.log("elementToGetUserId: ", elementToGetUserId);
     IdForUserInDiplomaThesesPage = elementToGetDiplomaThesesUserId.id.split("-")[1];
-    // console.log("IdForUserInIndexPage: ", IdForUserInIndexPage);
 
     if(window.location.href.includes("http://")){
         var socket = new SockJS('/ws');
-        console.log("sima ws-t hasznal");
     }else {
         var socket = new SockJS('https://' + window.location.host + '/ws');
-        console.log("wss-t hasznal");
     }
     stompClient = Stomp.over(socket);
-
     stompClient.connect({}, onConnectedForDiplomaThesesPage, onErrorInDiplomaThesesPage);
 }
 
@@ -25,8 +20,6 @@ function onConnectedForDiplomaThesesPage() {
 }
 
 function onErrorInDiplomaThesesPage(error) {
-    //connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    //connectingElement.style.color = 'red';
 }
 
 async function onMessageReceivedNotificationInDiplomaThesesPage(payload) {
@@ -100,7 +93,6 @@ function toggleFilterDropdown() {
     dropdownContent.classList.toggle("active");
 }
 
-
 function closeDropdown(selectedItem) {
     var dropdownContent = document.getElementById("filter-myDropdown");
     dropdownContent.classList.remove("active");
@@ -122,7 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
         dropBtn.addEventListener('click', resetInputValue);
     }
 });
-
 
 function cancelFilterWindow(){
     const filterContainer = document.querySelector(".filter-container");
@@ -161,7 +152,6 @@ function toggleDiplomaDropdown() {
         checkboxContainer.style.display = "none";
     } else {
         checkboxContainer.style.display = "flex";
-
     }
 }
 
@@ -178,7 +168,6 @@ function cancelFilterWindow(){
     const openSearchButtons = document.querySelector(".open-search-buttons");
     filterContainer.style.display = "none";
     openSearchButtons.style.display = "flex";
-
 }
 
 let isWindowAbove1000 = window.innerWidth > 1000;
@@ -198,52 +187,21 @@ function adjustLayout() {
     }
 }
 
-
 adjustLayout();
 window.addEventListener("resize", adjustLayout);
 
-
-// function setupDiplomaThesesModal() {
-//     var modal = document.getElementById("diplomaThesesModal");
-//
-//     if (modal) {
-//         var btn1 = document.getElementById("upload-upload");
-//         var span = document.getElementsByClassName("close-diplomaTheses")[0];
-//
-//         if (btn1) {
-//             btn1.onclick = function () {
-//                 modal.style.display = "flex";
-//             }
-//         }
-//
-//         if (span) {
-//             span.onclick = function () {
-//                 modal.style.display = "none";
-//             }
-//         }
-//     }
-// }
-//
-// setupDiplomaThesesModal();
-
 function setupModifyDiplomaThesesModal(diplomaId) {
-    console.log("diplomaId: " + diplomaId);
     var modalId = "diplomaThesesModifyModal-" + diplomaId;
     var modal = document.getElementById(modalId);
-    console.log("modal: " + modal);
-    console.log("modalId: " + modalId);
 
     if (modal) {
         var btnId = "modifyIcon";
         var btn1 = document.getElementById(btnId);
-        console.log("btn1: " + btn1);
-        console.log("btnId: " + btnId);
         modal.style.display = "flex";
     }
 }
 
 function setupDeleteDiplomaThesesModal(diplomaId) {
-    console.log("diplomaId: " + diplomaId);
     var modalId = "diplomaThesesDeleteModal-" + diplomaId;
     var modal = document.getElementById(modalId);
 
@@ -282,7 +240,6 @@ function closeDropdownTopics(selectedItem) {
 function closeDropdownModifyTopics(diplomaId, selectedItem) {
     var dropdownContentId = "topic-myDropdown-modify-" + diplomaId;
     var dropdownContent = document.getElementById(dropdownContentId);
-
     dropdownContent.style.display = "none";
 }
 
@@ -353,7 +310,6 @@ function validateModifiedName(diplomaId) {
         modifyButton.style.cursor = "pointer";
     }
 }
-
 
 document.addEventListener("DOMContentLoaded", function () {
     const dropdownLinks = document.querySelectorAll(".topic-dropdown-content a");
@@ -466,10 +422,7 @@ document.getElementById("fileUpload").addEventListener("change", function() {
     const fileNameInput = document.getElementById("diplomaThesesFileName-edit");
 
     if (fileInput.files.length > 0) {
-        // Get the selected file
         const selectedFile = fileInput.files[0];
-
-        // Update the input field with the file name
         fileNameInput.value = selectedFile.name;
     }
 });
@@ -485,7 +438,6 @@ document.addEventListener("DOMContentLoaded", function() {
 var linkCounter = 0;
 function addLinkRow() {
     try {
-        // var selectedFile = ...
         var selectedFileName = document.getElementById("diplomaThesesFileName-edit").value;
         var selectedName = document.getElementById("diplomaThesesName-edit").value;
         var selectedYear = document.getElementById("diplomaTheses-edit-year").value;
@@ -493,15 +445,9 @@ function addLinkRow() {
 
         if (selectedTopic !== "" && selectedFileName !== "" && selectedName !== "" && selectedYear !== "") {
             var tableContainer = document.querySelector(".table-container table tbody");
-
-            // Create a new row
             var row = document.createElement("tr");
-
-            // Create cells for the row
             var linkNumber = document.createElement("td");
             linkNumber.textContent = linkCounter;
-
-            // Create a clickable link (anchor) for linkName
             var linkName = document.createElement("td");
             linkName = selectedName;
 
@@ -519,7 +465,6 @@ function addLinkRow() {
 
             var linkButtons = document.createElement("td");
 
-            // Create Like and Dislike buttons
             var likeButton = document.createElement("button");
             likeButton.textContent = "Like";
             likeButton.className = "like-button-link";
@@ -532,12 +477,10 @@ function addLinkRow() {
             downloadButton.textContent = "Download";
             downloadButton.className = "download-button";
 
-            // Append Like and Dislike buttons to the linkButtons cell
             linkButtons.appendChild(likeButton);
             linkButtons.appendChild(dislikeButton);
             linkButtons.appendChild(downloadButton);
 
-            // Append cells to the row
             row.appendChild(linkNumber);
             row.appendChild(linkName);
             row.appendChild(linkYear);
@@ -545,11 +488,7 @@ function addLinkRow() {
             row.appendChild(linkUser);
             row.appendChild(linkLikes);
             row.appendChild(linkButtons);
-
-            // Append the row to the table
             tableContainer.appendChild(row);
-
-            // Increment the linkCounter (assuming linkCounter is declared and initialized)
             linkCounter++;
         }
     } catch (error) {
@@ -557,78 +496,6 @@ function addLinkRow() {
     }
 }
 
-// function saveDiplomaThesesDataToServer() {
-//     //var tableRows = document.querySelectorAll(".table-container table tbody tr");
-//     var data = [];
-//
-//     var pdfFile = document.getElementById("fileUpload").files[0];
-//     var pdfFileName = document.getElementById("diplomaTheses-edit").value;
-//     var pdfFileYear = document.getElementById("diplomaTheses-edit-year").value;
-//     var pdfTopic = document.getElementById("topic-selected-modal").value;
-//
-//     data.push({
-//         name: pdfFileName,
-//         pdf: pdfFile,
-//         topic: pdfTopic,
-//         year: pdfFileYear
-//     });
-//
-//     if (pdfFile == null || pdfFileName === "" || pdfFileYear === "" || pdfTopic === "") {
-//         //alert("Please fill out all fields!");
-//         showErrorMessageInDiploma("Please fill out all fields!");
-//     } else {
-//         sendDiplomaThesesDataToServer(data);
-//     }
-//
-// }
-//
-// function showLoadingModal() {
-//     var modal = document.getElementById("loading-modal");
-//     modal.style.display = "block";
-// }
-//
-// function hideLoadingModal() {
-//     var modal = document.getElementById("loading-modal");
-//     modal.style.display = "none";
-// }
-// function sendDiplomaThesesDataToServer(data) {
-//     showLoadingModal()
-//     var token = $("meta[name='_csrf']").attr("content");
-//     var header = $("meta[name='_csrf_header']").attr("content");
-//
-//     var formData = new FormData();
-//     formData.append("pdf", data[0].pdf);
-//     formData.append("name", data[0].name);
-//     formData.append("year", data[0].year);
-//     formData.append("topic", data[0].topic);
-//
-//
-//     fetch('/resources/diplomaTheses/uploadDiplomaTheses', {
-//         method: 'POST',
-//         headers: {
-//             'X-CSRF-TOKEN': token
-//         },
-//         body: formData
-//     }).then(response => {
-//         if (response.ok) {
-//             return response.text();
-//         } else {
-//             return response.text();
-//         }
-//     }).then(data => {
-//         if (data === "Success") {
-//             location.reload();
-//         } else if(data === "Too large"){
-//             showErrorMessageInExam("The file is too large!");
-//         } else if (data === "TOO LARGE FILE"){
-//             showErrorMessageInExam("The file size exceeds the maximum limit of 10 MB!"); // Egyéb hiba esetén
-//         }
-//     }).catch(error => {
-//         hideLoadingModal()
-//         console.error('An error occurred:', error);
-//     });
-//
-// }
 
 async function saveDiplomaThesesDataToServer() {
     var pdfFile = document.getElementById("fileUpload").files[0];
@@ -638,11 +505,9 @@ async function saveDiplomaThesesDataToServer() {
 
     if (pdfFile == null || pdfFileName === "" || pdfFileYear === "" || pdfTopic === "") {
         showErrorMessageInDiploma("Please fill out all fields!");
-        return; // Kilépés, ha nincsenek kitöltve az összes mező
+        return;
     }
-
     showLoadingModal();
-
     var data = {
         pdf: pdfFile,
         name: pdfFileName,
@@ -653,7 +518,6 @@ async function saveDiplomaThesesDataToServer() {
     try {
         await sendDiplomaThesesDataToServer(data);
     } catch (error) {
-        console.error('An error occurred:', error);
         hideLoadingModal();
     }
 }
@@ -689,10 +553,7 @@ async function sendDiplomaThesesDataToServer(data) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-
-
         const responseData = await response.text();
-
         if (responseData === "Success") {
             showLoadingModal();
             location.reload();
@@ -709,7 +570,7 @@ async function sendDiplomaThesesDataToServer(data) {
 
     } catch (error) {
         console.error('An error occurred:', error);
-        throw error; // Hiba továbbdobása a saveDiplomaThesesDataToServer függvény felé
+        throw error;
     }
 }
 
@@ -751,10 +612,6 @@ function saveModifiedDiplomaThesesDataToServer(diplomaId) {
     const pdfTopicId = "topic-dropbtn-modal-modify-" + diplomaId;
     const pdfTopicElement = document.getElementById(pdfTopicId);
     const pdfTopicValue = pdfTopicElement.innerText;
-    // console.log("pdfFileName: " + pdfFileName);
-    // console.log("pdfFileYear: " + pdfFileYear);
-    // console.log("pdfTopic: " + pdfTopicValue);
-    // console.log("diplomaId: " + diplomaId);
 
     data.push({
         name: pdfFileName,
@@ -768,7 +625,6 @@ function saveModifiedDiplomaThesesDataToServer(diplomaId) {
     } else {
         sendModifiedDiplomaThesesDataToServer(data);
     }
-
 }
 
 function sendModifiedDiplomaThesesDataToServer(data) {
@@ -794,7 +650,6 @@ function sendModifiedDiplomaThesesDataToServer(data) {
             return response.text();
         }
     }).then(data => {
-        //hideLoadingModal()
         if (data === "Success") {
             location.reload();
         } else if(data === "Too large"){
@@ -811,7 +666,6 @@ function sendModifiedDiplomaThesesDataToServer(data) {
 function showErrorMessageInDiploma(message) {
     var errorMessageElement = document.getElementById('error-message-diploma-modal-content');
     errorMessageElement.innerText = message;
-    // További stílusok vagy műveletek hozzáadhatók a látványosság érdekében
 }
 
 var pdfImageContainer = document.querySelector(".pdf-image-image-container");
@@ -819,7 +673,6 @@ var pdfImageModal = document.querySelector(".pdf-image-modal");
 var pdfEnImageContainer = document.querySelector(".pdf-en-abstract-image-container");
 var pdfEnImageModal = document.querySelector(".pdf-en-abstract-image-modal");
 
-// Like és Dislike buttons
 function sendLikeOrDislike(diplomaId, action) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -838,21 +691,15 @@ function sendLikeOrDislike(diplomaId, action) {
         .then(response => {
             if (response.ok) {
                 console.log("Lassu vagyok");
-                // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
-                // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
                 fetch(sseUrl, {
                     method: 'POST',
-                    body: JSON.stringify({message: `${action}:${diplomaId}`}), // Konvertáljuk JSON formátumra
+                    body: JSON.stringify({message: `${action}:${diplomaId}`}),
                     headers: {
-                        'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
+                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
                     },
                 })
                 response.text().then(data => {
-                    // Kezeld itt a szöveget (data)
-                    //console.log('sendLikeOrDislike Response:', data);
-                    //console.log(data);
-                    // Például: frissítheted a DOM-ot adataink alapján
                 }).catch(error => {
                     console.error('Error:', error);
                 });
@@ -861,9 +708,6 @@ function sendLikeOrDislike(diplomaId, action) {
             }
         })
         .then(data => {
-            //console.log('Response:', data);
-            // A válaszban érkező adatokat kezelheted itt (opcionális)
-            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
         })
         .catch(error => {
             console.error('Error:', error);
@@ -875,9 +719,7 @@ function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(diplomaId, action) {
     var header = $("meta[name='_csrf_header']").attr("content");
 
     const sseUrl = "/sse/sendLikeOrDislikeForDiploma"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
-
     const url = `/resources/diplomaTheses/${action}?diplomaId=${diplomaId}`;
-    //console.log("URL: " + url);
     fetch(url, {
         method: 'POST',
         headers: {
@@ -887,21 +729,15 @@ function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(diplomaId, action) {
     })
         .then(response => {
             if (response.ok) {
-                // Sikeres kérés esetén elküldjük egy SSE üzenetet a like/dislike értékről
-                // Az üzenetet most a SSE URL-re küldjük, ami a szerver oldalon kezeli majd
                 fetch(sseUrl, {
                     method: 'POST',
-                    body: JSON.stringify({message: `${action}:${diplomaId}`}), // Konvertáljuk JSON formátumra
+                    body: JSON.stringify({message: `${action}:${diplomaId}`}),
                     headers: {
-                        'Content-Type': 'application/json', // Módosítottuk a Content-Type-t
+                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
                     },
                 })
                 response.text().then(data => {
-                    // Kezeld itt a szöveget (data)
-                    //console.log('sendLikeOrDislike Response:', data);
-                    //console.log(data);
-                    // Például: frissítheted a DOM-ot adataink alapján
                 }).catch(error => {
                     console.error('Error:', error);
                 });
@@ -910,9 +746,6 @@ function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(diplomaId, action) {
             }
         })
         .then(data => {
-            //console.log('Response:', data);
-            // A válaszban érkező adatokat kezelheted itt (opcionális)
-            // Például: frissítheted a DOM-ot a legfrissebb like/dislike értékekkel
         })
         .catch(error => {
             console.error('Error:', error);
@@ -922,11 +755,7 @@ function sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(diplomaId, action) {
 function setLikeOrDislikeStatusToActiveOrInactive(diplomaId, action) {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-
-    //const sseUrl = "/sse/sendLikeOrDislike"; // Módosítottuk a SSE URL-t sendLikeOrDislike-re
-
     const url = `/resources/diplomaTheses/${action}?diplomaId=${diplomaId}`;
-    //console.log("URL: " + url);
     fetch(url, {
         method: 'POST',
         headers: {
@@ -935,25 +764,21 @@ function setLikeOrDislikeStatusToActiveOrInactive(diplomaId, action) {
         },
     }).then(response => {
         if (response.ok) {
-            //console.log(response.text());
             return response.text();
         } else {
             throw new Error('Request failed');
         }
     }).then(data => {
-        //console.log(data);
     }).catch(error => {
         console.error('Error:', error);
     });
 }
 
 function handleLikeButtonClick(likeButton) {
-    console.log("likeButtonelso", likeButton);
     const rowId = likeButton.closest('tr').id;
     const diplomaId = rowId.replace('diploma-row-', '');
     if (likeButton.classList.contains('like-button-link-active')) {
         sendLikeOrDislike(diplomaId, 'revokelike');
-
         likeButton.classList.remove('like-button-link-active');
         setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setLikeToInactive');
     } else {
@@ -962,7 +787,6 @@ function handleLikeButtonClick(likeButton) {
             activeDislikeButton.classList.remove('dislike-button-link-active');
             sendLikeAndRevokeDislikeOrDislikeAndRevokeLike(diplomaId, 'likeDiplomaAndRevokeDislike');
             likeButton.classList.add('like-button-link-active');
-
             setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setLikeToActiveAndDislikeToInactive');
         } else {
             sendLikeOrDislike(diplomaId, 'like');
@@ -976,13 +800,9 @@ function handleDislikeButtonClick(dislikeButton) {
     const rowId = dislikeButton.closest('tr').id;
     const diplomaId = rowId.replace('diploma-row-', '');
     if (dislikeButton.classList.contains('dislike-button-link-active')) {
-        // Dislike visszavonása
         sendLikeOrDislike(diplomaId, 'revokedislike');
-
         dislikeButton.classList.remove('dislike-button-link-active');
-        // Távolítsuk el az aktív dislike gomb állapotát a helyi tárolóból is
         setLikeOrDislikeStatusToActiveOrInactive(diplomaId, 'setDislikeToInactive');
-        //localStorage.removeItem(`dislikeButtonState_${UserId}_${resourceId}`);
     } else {
         const activeLikeButton = document.querySelector(`#${rowId} .like-button-link.like-button-link-active`);
         if (activeLikeButton) {
@@ -1000,12 +820,8 @@ function handleDislikeButtonClick(dislikeButton) {
 if (typeof jQuery !== 'undefined') {
 $(document).ready(async function () {
     $(document).trigger('myCustomLoadEvent');
-
-    // SSE
     var urlEndpoint = "/sse/subscribe";
-    //itt az eventsource a szerver oldalon lévő végpontot figyeli
     const eventSource = new EventSource(urlEndpoint);
-
     eventSource.onopen = function (event) {
         console.log('SSE connection opened.');
     };
@@ -1019,11 +835,6 @@ $(document).ready(async function () {
         const rowId = data.rowId;
         const likeCountElement = document.querySelector(`#diploma-row-${rowId} #likeButton`);
         const dislikeCountElement = document.querySelector(`#diploma-row-${rowId} #dislikeButton`);
-
-        //console.log('Received SSE message:', data.rowId);
-        // Itt frissitsd a like/dislike ertekeket a DOM-ban
-        //const likeDislikeCountElement = document.querySelector(`#resource-row-${rowId} .like-dislike-count`);
-        //console.log(likeDislikeCountElement);
         likeCountElement.textContent = data.like;
         dislikeCountElement.textContent = data.dislike;
     });
@@ -1039,9 +850,7 @@ $(document).ready(async function () {
             handleDislikeButtonClick(dislikeButton);
         });
     });
-
 });
-
 } else {
     console.warn('jQuery is not defined. Skipping jQuery-dependent code.');
 }
@@ -1063,10 +872,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (!response.ok) {
             throw new Error('Request failed');
         }
-
         const data = await response.json();
         likeAndDislikeStatuses = data.likeanddislike;
-        //console.log(likeAndDislikeStatuses);
         handleLikeAndDislikeStatuses();
     } catch (error) {
         console.error('Error:', error);
@@ -1074,23 +881,15 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 function handleLikeAndDislikeStatuses() {
-    // Itt már rendelkezésre állnak az adatok
-    //console.log(likeAndDislikeStatuses);
-
-    // Most már kezelheted az adatokat
     for (let i = 0; i < likeAndDislikeStatuses.length; i++) {
         const likeAndDislikeData = likeAndDislikeStatuses[i];
         const diplomaId = likeAndDislikeData.resourceId;
         const like = likeAndDislikeData.like;
         const dislike = likeAndDislikeData.dislike;
 
-
-        // Itt kezeld az adatokat vagy végezz velük bármit, amit szeretnél
-        //console.log(`Resource ID: ${resourceId}, Like: ${like}, Dislike: ${dislike}`);
         const likeCountElement = document.querySelector(`#diploma-row-${diplomaId} .like-button-link`);
         const dislikeCountElement = document.querySelector(`#diploma-row-${diplomaId} .dislike-button-link`);
-        //console.log(likeCountElement);
-        //console.log(dislikeCountElement);
+
         if(likeCountElement !== null || dislikeCountElement !== null) {
             if (like === 1) {
                 likeCountElement.classList.add('like-button-link-active');
@@ -1098,12 +897,8 @@ function handleLikeAndDislikeStatuses() {
                 dislikeCountElement.classList.add('dislike-button-link-active');
             }
         }
-
-
     }
 }
-
-// pdf megnyitasahoz /////////////////////////////////////////////////////////
 
 let diplomaPDF = [];
 function getDiplomaId (diplomaId) {
@@ -1144,7 +939,6 @@ function getDiplomaId (diplomaId) {
         });
 }
 
-// Function to display the modal
 function showNoteModal() {
     const modal = document.getElementById('notificationModal');
     modal.style.display = 'block';
@@ -1221,7 +1015,7 @@ function getDiplomaEnAbstractId (diplomaId) {
         .catch(error => {
             hideLoadingModal()
             console.error('Error:', error);
-            // TODO: Egy modalt jelenitsen meg hogy nem nyithato meg a pdf jelenleg probalja meg ujra kesobb
+            showNoteModal();
         });
 }
 
@@ -1291,7 +1085,7 @@ function getDiplomaHunAbstractId (diplomaId) {
         .catch(error => {
             hideLoadingModal()
             console.error('Error:', error);
-            // TODO: Egy modalt jelenitsen meg hogy nem nyithato meg a pdf jelenleg probalja meg ujra kesobb
+            showNoteModal();
         });
 }
 
@@ -1330,9 +1124,6 @@ function isMobileOrTabletScreen() {
 }
 
 
-
-// Az eseménykezelő, ami bezárja a modalt a bezáró gombra kattintva
-// Bezáró gomb eseménykezelője a modal bezárására
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('close-pdf-modal-btn')) {
         const modalId = event.target.closest('.pdf-image-modal').id;
@@ -1396,7 +1187,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-let originalRows = []; // Változó az eredeti sorok tárolásához
+let originalRows = [];
 
 function saveOriginalRows() {
     const table = document.getElementById('dataTable');
@@ -1427,8 +1218,6 @@ function restoreOriginalTable() {
     });
 }
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
     const checkbox = document.querySelector('.tags-checkbox');
     const filterInput = document.querySelector('.filter-input');
@@ -1444,190 +1233,139 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-async function searchTable() {
-    if (originalRows.length === 0) {
-        saveOriginalRows();
-    } else {
-        restoreOriginalTable();
-    }
+// async function searchTable() {
+//     if (originalRows.length === 0) {
+//         saveOriginalRows();
+//     } else {
+//         restoreOriginalTable();
+//     }
+//
+//     const input = document.getElementById('filter-input');
+//     const filter = input.value.toUpperCase();
+//     const selectedValues = [];
+//     const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
+//     const tagCheckbox = document.querySelector('.tags-checkbox');
+//
+//     function isCheckboxChecked() {
+//         return tagCheckbox.checked;
+//     }
+//
+//
+//     checkboxes.forEach((checkbox) => {
+//         selectedValues.push(checkbox.value);
+//     });
+//
+//     const table = document.getElementById('dataTable');
+//     const rows = table.getElementsByTagName('tr');
+//     const filteredRows = [];
+//
+//
+//     for (let i = 1; i < rows.length; i++) {
+//         const cells = rows[i].getElementsByTagName('td');
+//         const tagCells = rows[i].getElementsByTagName('td');
+//         let nameFound = false;
+//         let topicFound = false;
+//
+//         const cell = cells[1];
+//         const tagCell = cells[7];
+//
+//         if (cell) {
+//             const cellText = cell.textContent || cell.innerText;
+//             if (cellText.toUpperCase().indexOf(filter) > -1) {
+//                 nameFound = true;
+//             }
+//         }
+//
+//         if (isCheckboxChecked()) {
+//             if (tagCell) {
+//                 const cellText = tagCell.textContent || tagCell.innerText;
+//                 if (cellText.toUpperCase().indexOf(filter) > -1) {
+//                     nameFound = true;
+//                 }
+//             }
+//         }
+//
+//         const topicCell = cells[3];
+//
+//         if (topicCell) {
+//             const cellContent = topicCell.textContent || topicCell.innerText;
+//             if (selectedValues.includes(cellContent.trim())) {
+//                 topicFound = true;
+//             }
+//         }
+//
+//         if (nameFound && topicFound) {
+//             filteredRows.push(rows[i]);
+//             rows[i].style.display = '';
+//         } else {
+//             rows[i].style.display = 'none';
+//         }
+//     }
+//     const rowsPerPage = 20;
+//     let currentPage = 1;
+//
+//     function updatePageCounter() {
+//         const pageCount = Math.ceil(filteredRows.length / rowsPerPage);
+//         document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
+//     }
+//
+//     function showRowsForCurrentPage() {
+//         const startIdx = (currentPage - 1) * rowsPerPage;
+//         const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
+//
+//         filteredRows.forEach((row, index) => {
+//             if (index >= startIdx && index < endIdx) {
+//                 row.style.display = "";
+//             } else {
+//                 row.style.display = "none";
+//             }
+//         });
+//     }
+//
+//     function setPage(page) {
+//         currentPage = page;
+//         showRowsForCurrentPage();
+//         updatePageCounter();
+//     }
+//
+//     updatePageCounter();
+//     showRowsForCurrentPage();
+//
+//     document.getElementById("next-page-button").addEventListener("click", () => {
+//         if (currentPage < Math.ceil(filteredRows.length / rowsPerPage)) {
+//             setPage(currentPage + 1);
+//         } else {
+//             setPage(1);
+//         }
+//     });
+//
+//     document.getElementById("prev-page-button").addEventListener("click", () => {
+//         if (currentPage > 1) {
+//             setPage(currentPage - 1);
+//         } else {
+//             setPage(Math.ceil(filteredRows.length / rowsPerPage));
+//         }
+//     });
+//
+//     await new Promise(resolve => setTimeout(resolve, 200));
+//
+//     hideLoadingModal();
+// }
 
-    const input = document.getElementById('filter-input');
-    const filter = input.value.toUpperCase();
-    const selectedValues = [];
-    const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
-    const tagCheckbox = document.querySelector('.tags-checkbox');
-
-    function isCheckboxChecked() {
-        return tagCheckbox.checked;
-    }
-
-
-    checkboxes.forEach((checkbox) => {
-        selectedValues.push(checkbox.value);
-    });
-
-    const table = document.getElementById('dataTable');
-    const rows = table.getElementsByTagName('tr');
-    const filteredRows = [];
-
-
-    for (let i = 1; i < rows.length; i++) {
-        const cells = rows[i].getElementsByTagName('td');
-        const tagCells = rows[i].getElementsByTagName('td');
-        let nameFound = false;
-        let topicFound = false;
-
-        const cell = cells[1];
-        const tagCell = cells[7];
-
-        if (cell) {
-            const cellText = cell.textContent || cell.innerText;
-            if (cellText.toUpperCase().indexOf(filter) > -1) {
-                nameFound = true;
-            }
-        }
-
-        if (isCheckboxChecked()) {
-            if (tagCell) {
-                const cellText = tagCell.textContent || tagCell.innerText;
-                if (cellText.toUpperCase().indexOf(filter) > -1) {
-                    nameFound = true;
-                }
-            }
-        }
-
-        const topicCell = cells[3];
-
-        if (topicCell) {
-            const cellContent = topicCell.textContent || topicCell.innerText;
-            if (selectedValues.includes(cellContent.trim())) {
-                topicFound = true;
-            }
-        }
-
-        if (nameFound && topicFound) {
-            filteredRows.push(rows[i]);
-            rows[i].style.display = '';
-        } else {
-            rows[i].style.display = 'none';
-        }
-    }
-    const rowsPerPage = 20;
-    let currentPage = 1;
-
-    function updatePageCounter() {
-        const pageCount = Math.ceil(filteredRows.length / rowsPerPage);
-        document.getElementById("page-counter").textContent = `Page ${currentPage} of ${pageCount}`;
-    }
-
-    function showRowsForCurrentPage() {
-        const startIdx = (currentPage - 1) * rowsPerPage;
-        const endIdx = Math.min(startIdx + rowsPerPage, rows.length);
-
-        filteredRows.forEach((row, index) => {
-            if (index >= startIdx && index < endIdx) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
-
-    function setPage(page) {
-        currentPage = page;
-        showRowsForCurrentPage();
-        updatePageCounter();
-    }
-
-    updatePageCounter();
-    showRowsForCurrentPage();
-
-    document.getElementById("next-page-button").addEventListener("click", () => {
-        if (currentPage < Math.ceil(filteredRows.length / rowsPerPage)) {
-            setPage(currentPage + 1);
-        } else {
-            setPage(1);
-        }
-    });
-
-    document.getElementById("prev-page-button").addEventListener("click", () => {
-        if (currentPage > 1) {
-            setPage(currentPage - 1);
-        } else {
-            setPage(Math.ceil(filteredRows.length / rowsPerPage));
-        }
-    });
-
-    await new Promise(resolve => setTimeout(resolve, 200)); // Várakozás az eseményfolyamat ciklus végéig
-
-    hideLoadingModal();
-}
-
-// Search function for testing
-function searchTableForTesting(input, table, selectedValues) {
-    const filter = input.value.toUpperCase();
-    const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
-
-
-    const rows = table.getElementsByTagName('tr');
-    const filteredRows = [];
-
-    for (let i = 1; i < rows.length; i++) {
-        const cells = rows[i].getElementsByTagName('td');
-        let nameFound = false;
-        let topicFound = false;
-
-        const cell = cells[1];
-
-        if (cell) {
-            const cellText = cell.textContent || cell.innerText;
-            if (cellText.toUpperCase().indexOf(filter) > -1) {
-                nameFound = true;
-            }
-        }
-
-        const topicCell = cells[3];
-
-        if (topicCell) {
-            const cellContent = topicCell.textContent || topicCell.innerText;
-            if (selectedValues.includes(cellContent.trim())) {
-                topicFound = true;
-            }
-        }
-
-        if (nameFound && topicFound) {
-            filteredRows.push(rows[i]);
-            rows[i].style.display = '';
-        } else {
-            rows[i].style.display = 'none';
-        }
-    }
-}
-
-//document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('search-button').addEventListener('click', () => {
-        //document.getElementById('search-button').click();
-        //showLoadingModal();
-        //setTimeout(searchTable, 50);
-        searchInDiplomaThesesTable();
-    });
-//});
-
+document.getElementById('search-button').addEventListener('click', () => {
+    searchInDiplomaThesesTable();
+});
 
 function searchInDiplomaThesesTable() {
-    // ide a loading modalt
     showLoadingModal();
-
     const searchInput = document.getElementById('filter-input');
     const filter = searchInput.value.trim().toLowerCase();
     const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
     const selectedValues = Array.from(checkboxes).map(checkbox => checkbox.value.trim().toUpperCase());
     const tagCheckbox = document.querySelector('.tags-checkbox');
 
-
     if(tagCheckbox.checked === false) {
         const queryString = 'name=' + encodeURIComponent(filter) + '&selectedTopics=' + encodeURIComponent(selectedValues.join(','));
-        //console.log("Nevszerinti kereses");
         fetch ('/resources/diplomaTheses/filteredByName?' + queryString, {
             method: 'GET',
             headers: {
@@ -1648,7 +1386,6 @@ function searchInDiplomaThesesTable() {
         })
     } else {
         const queryString = 'keyword=' + encodeURIComponent(filter) + '&selectedTopics=' + encodeURIComponent(selectedValues.join(','));
-        //console.log("Kulcsszoszerinti kereses");
         fetch ('/resources/diplomaTheses/filteredByKeyword?' + queryString, {
             method: 'GET',
             headers: {
@@ -1661,7 +1398,6 @@ function searchInDiplomaThesesTable() {
                 throw new Error('Request failed');
             }
         }).then(data => {
-            //console.log(data);
             window.location.href = '/resources/diplomaTheses/filteredByKeyword?' + queryString;
         }).catch(error => {
             console.error('Error:', error);
@@ -1675,7 +1411,7 @@ function listSuggestions() {
     const checkboxes = document.querySelectorAll('#topic-myCheckboxes input[type="checkbox"]:checked');
     const selectedValues = Array.from(checkboxes).map(checkbox => checkbox.value.trim().toUpperCase());
     const suggestionList = document.getElementById('suggestion-list');
-    suggestionList.innerHTML = ''; // Törli a korábbi sugalmakat
+    suggestionList.innerHTML = '';
 
     let suggestionCount = 0;
 
@@ -1698,18 +1434,14 @@ function listSuggestions() {
             const topicText = topicCell.textContent.trim().toUpperCase();
 
             if (nameText.includes(filter) && selectedValues.includes(topicText)) {
-                // Ha mindkét feltétel teljesül, hozzáadja az ajánlatot a listához
                 const span = nameCell.querySelector('span');
                 if (span) {
                     const suggestionItem = document.createElement('div');
                     suggestionItem.textContent = span.textContent;
-
-                    // Az ajánlatokra kattintva beállítja az input mező értékét
                     suggestionItem.addEventListener('click', function() {
                         input.value = span.textContent;
-                        suggestionList.style.display = 'none'; // Ajánlatlista elrejtése kattintás után
+                        suggestionList.style.display = 'none';
                     });
-
                     suggestionList.appendChild(suggestionItem);
                     suggestionCount++;
                 }
@@ -1721,8 +1453,6 @@ function listSuggestions() {
         suggestionList.style.display = 'none';
         return;
     }
-
-    // Megjeleníti a sugalmakat
     suggestionList.style.display = 'block';
 }
 
@@ -1731,53 +1461,47 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-// Get the modal
 var infoModal = document.getElementById("infoModal");
 
-// Function to open the modal
 function openInfoModal() {
     infoModal.style.display = "block";
 }
 
-// Function to close the modal
 function closeInfoModal() {
     infoModal.style.display = "none";
 }
 
-// Close the modal when clicked outside of it
 window.onclick = function(event) {
     if (event.target == infoModal) {
         closeInfoModal();
     }
 }
 
-var currentPage = 1; // Initial page
+var currentPage = 1;
 
 function nextInfoPage() {
-    var paragraphs = document.querySelectorAll('.info-modal-content p'); // Select all <p> elements
+    var paragraphs = document.querySelectorAll('.info-modal-content p');
     if (currentPage < paragraphs.length) {
-        paragraphs[currentPage - 1].style.display = 'none'; // Hide current page
-        currentPage++; // Increment page number
-        paragraphs[currentPage - 1].style.display = 'block'; // Show next page
+        paragraphs[currentPage - 1].style.display = 'none';
+        currentPage++;
+        paragraphs[currentPage - 1].style.display = 'block';
     } else {
-        // If reached the last page, cycle back to the first page
-        paragraphs[paragraphs.length - 1].style.display = 'none'; // Hide last page
-        currentPage = 1; // Set current page to 1
-        paragraphs[currentPage - 1].style.display = 'block'; // Show first page
+        paragraphs[paragraphs.length - 1].style.display = 'none';
+        currentPage = 1;
+        paragraphs[currentPage - 1].style.display = 'block';
     }
 }
 
 function prevInfoPage() {
-    var paragraphs = document.querySelectorAll('.info-modal-content p'); // Select all <p> elements
+    var paragraphs = document.querySelectorAll('.info-modal-content p');
     if (currentPage > 1) {
-        paragraphs[currentPage - 1].style.display = 'none'; // Hide current page
-        currentPage--; // Decrement page number
-        paragraphs[currentPage - 1].style.display = 'block'; // Show previous page
+        paragraphs[currentPage - 1].style.display = 'none';
+        currentPage--;
+        paragraphs[currentPage - 1].style.display = 'block';
     } else {
-        // If reached the first page, cycle back to the last page
-        paragraphs[0].style.display = 'none'; // Hide first page
-        currentPage = paragraphs.length; // Set current page to the last page
-        paragraphs[currentPage - 1].style.display = 'block'; // Show last page
+        paragraphs[0].style.display = 'none';
+        currentPage = paragraphs.length;
+        paragraphs[currentPage - 1].style.display = 'block';
     }
 }
 
@@ -1787,9 +1511,4 @@ document.addEventListener('click', function(event) {
         suggestionList.style.display = 'none';
     }
 });
-
-if (typeof module !== 'undefined') {
-    // Jest testing exports
-    module.exports = {searchTableForTesting};
-}
 
