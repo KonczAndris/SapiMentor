@@ -635,10 +635,6 @@ tr {
     background-color: #FFCCCC;
 }
 
-.sortable{
-    cursor: pointer;
-}
-
 .message-modal-content-container {
     text-align: center;
     margin-bottom: 9px;
@@ -683,6 +679,10 @@ tr {
 #modifyIcon{
     display: inline-block;
     transform: scaleX(-1);
+    cursor: pointer;
+}
+
+#deleteIcon{
     cursor: pointer;
 }
 

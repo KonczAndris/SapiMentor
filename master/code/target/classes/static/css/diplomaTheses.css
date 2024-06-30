@@ -12,6 +12,13 @@ button{
     align-items: center;
 }
 
+.navigate-button{
+    width: 70px;
+    height: 20px;
+    margin: 10px;
+}
+
+
 /* MENU BAR START */
 .resource-menu {
     width: 100%;
@@ -429,6 +436,11 @@ button{
     margin-left: auto;
 }
 
+.info-image{
+    border-radius: 20%;
+    padding: 20px;
+}
+
 .info-tooltip {
     position: absolute;
     color: white;
@@ -730,10 +742,6 @@ tr {
     opacity: 1;
 }
 
-.sortable{
-    cursor: pointer;
-}
-
 .close-pdf-modal-btn {
     position: fixed;
     top: 20px;
@@ -878,6 +886,11 @@ tr {
 .highlight {
     background-color: #FFCCCC;
 }
+
+#deleteIcon{
+    cursor: pointer;
+}
+
 /*RESPONSIVE DESIGN*/
 @media screen and (max-width: 1000px) {
     .filter-container {
@@ -1038,4 +1051,3 @@ tr {
         max-height: 90%;
     }
 }
-

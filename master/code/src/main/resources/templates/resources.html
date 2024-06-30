@@ -230,6 +230,8 @@
                     <td><a th:href="${resource.link}" target="_blank" th:text="${resource.name}" style="color: #2196F3"></a>
                         <span id="modifyIcon" class="modify-icon" th:onclick="'setupModifyResourceModal(' + ${resource.id} + ')'"
                               th:if="${linksUserId == resource.user_id or userRolesToDisplayResources.contains('ADMIN')}">&#9999;&#65039;</span>
+                        <span id="deleteIcon" class="modify-icon" th:onclick="'setupDeleteResourceModal(' + ${resource.id} + ')'"
+                              th:if="${linksUserId == resource.user_id or userRolesToDisplayResources.contains('ADMIN')}">🗑️</span>
                         </td>
                     <td th:text="${resource.topic_name}"></td>
                     <td th:text="${resource.user_name}"></td>
@@ -301,11 +303,6 @@
                                     <span class="english-text">Modify</span>
                                     <span class="hungarian-text">Módosít</span>
                                 </button>
-                                <button class="cancel-button-modal-modify close-resource-modify red-button" id="modify-modal-delete"
-                                        th:onclick="'deleteResourcesData(\'' + ${resource.id} + '\')'">
-                                    <span class="english-text">Delete</span>
-                                    <span class="hungarian-text">Töröl</span>
-                                </button>
                                 <button class="cancel-button-modal-modify close-resource-modify red-button" th:onclick="'closeModifyModal(\'resourceModifyModal-' + ${resource.id} + '\')'">
                                     <span class="english-text">Cancel</span>
                                     <span class="hungarian-text">Mégse</span>
@@ -313,7 +310,27 @@
                             </div>
                         </div>
                     </div>
-                    <!-- RESOURCE MODAL END -->
+                    <!-- MODIFY MODAL END -->
+                    <!-- DELETE MODAL START -->
+                    <div id="resourceDeleteModal" class="modal-resource" th:id="'resourceDeleteModal-' + ${resource.id}">
+                        <div class="modal-content-resource">
+                            <br>
+                            <span class="english-text">Are you sure you want to delete the selected link?</span>
+                            <span class="hungarian-text">Biztos törölni szeretnéd a kiválasztott linket?</span>
+                            <div class="func-buttons-modal">
+                                <button class="cancel-button-modal-modify close-resource-modify green-button" id="modify-modal-delete"
+                                        th:onclick="'deleteResourcesData(\'' + ${resource.id} + '\')'">
+                                    <span class="english-text">Yes</span>
+                                    <span class="hungarian-text">Igen</span>
+                                </button>
+                                <button class="cancel-button-modal-modify close-resource-modify red-button" th:onclick="'closeModifyModal(\'resourceDeleteModal-' + ${resource.id} + '\')'">
+                                    <span class="english-text">Nem</span>
+                                    <span class="hungarian-text">No</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- DELETE MODAL END -->
                 </tr>
 
                 </tbody>
@@ -333,7 +350,6 @@
         <!-- LINK TABLE END -->
     </div>
 
-<!--Valahogy igy kene megcsinalni Andrisnak is-->
     <div id="loading-modal" class="modal">
         <div class="modal-content">
             <img class="loading-gif" th:src="@{/gif/preload.gif}" alt="Loading..." />
@@ -343,7 +359,6 @@
     <!-- RESOURCE MODAL START -->
     <div id="resourceModal" class="modal-resource">
         <div class="modal-content-resource">
-            <!-- Új rész hozzáadása a modalhoz -->
             <div class="message-modal-content-container">
                 <p class="error-message-modal-content" id="error-message-modal-content"></p>
             </div>
@@ -397,8 +412,6 @@
                             <a th:each="topic : ${topics}" th:text="${topic.topic}" href="#"
                                th:attr="onclick='closeDropdownTopics(\'' + ${topic.topic} + '\')'"></a>
                         </div>
-
-
                     </div>
                 </div>
             </div>

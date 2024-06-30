@@ -713,10 +713,6 @@ tr {
     opacity: 1;
 }
 
-.sortable{
-    cursor: pointer;
-}
-
 .message-exam-modal-content-container {
     text-align: center;
     margin-bottom: 9px;
@@ -766,6 +762,46 @@ tr {
 .highlight {
     background-color: #FFCCCC;
 }
+
+#deleteIcon{
+    cursor: pointer;
+}
+
+.pdf-image-modal-exams {
+    display: none;
+    position: fixed;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+
+}
+
+.pdf-image-modal-content-exams {
+    width: 50%;
+    height: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.close-pdf-modal-btn-exams {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+    z-index: 10000;
+}
+
+.close-pdf-modal-btn-exams:hover {
+    color: #999;
+}
+
 
 /* RESPONSIVE DESIGN*/
 @media screen and (max-width: 1000px) {
@@ -925,40 +961,3 @@ tr {
     }
 }
 
-
-/*Ez itt ujjjjjj*/
-
-.pdf-image-modal-exams {
-    display: none;
-    position: fixed;
-    top: -20%;
-    left: -20%;
-    width: 140%;
-    height: 140%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 9999;
-
-}
-
-.pdf-image-modal-content-exams {
-    width: 50%;
-    height: 70%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.close-pdf-modal-btn-exams {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    font-size: 24px;
-    cursor: pointer;
-    color: #fff;
-    z-index: 10000;
-}
-
-.close-pdf-modal-btn-exams:hover {
-    color: #999;
-}

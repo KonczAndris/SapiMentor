@@ -242,29 +242,17 @@ function setupModifyDiplomaThesesModal(diplomaId) {
     }
 }
 
-// function closeModalOnClickOutside() {
-//     var modal1 = document.getElementById("diplomaThesesModal");
-//
-//     window.addEventListener("click", function(event) {
-//         if (event.target == modal1) {
-//             modal1.style.display = "none";
-//         }
-//     });
-// }
+function setupDeleteDiplomaThesesModal(diplomaId) {
+    console.log("diplomaId: " + diplomaId);
+    var modalId = "diplomaThesesDeleteModal-" + diplomaId;
+    var modal = document.getElementById(modalId);
 
-// closeModalOnClickOutside();
-//
-// function closeModifyModalOnClickOutside() {
-//     var modal1 = document.getElementById("diplomaThesesModifyModal");
-//
-//     window.addEventListener("click", function(event) {
-//         if (event.target == modal1) {
-//             modal1.style.display = "none";
-//         }
-//     });
-// }
-//
-// closeModifyModalOnClickOutside();
+    if (modal) {
+        var btnId = "deleteIcon";
+        var btn1 = document.getElementById(btnId);
+        modal.style.display = "flex";
+    }
+}
 
 function toggleDropdownModal() {
     var dropdown = document.getElementById("topic-myDropdown");
@@ -1152,11 +1140,21 @@ function getDiplomaId (diplomaId) {
         })
         .catch(error => {
             hideLoadingModal()
-            console.error('Error:', error);
-            // TODO: Egy modalt jelenitsen meg hogy nem nyithato meg a pdf jelenleg probalja meg ujra kesobb
+            showNoteModal();
         });
 }
 
+// Function to display the modal
+function showNoteModal() {
+    const modal = document.getElementById('notificationModal');
+    modal.style.display = 'block';
+}
+
+function closeNoteModal() {
+    const modal = document.getElementById('notificationModal');
+    modal.style.display = 'none';
+    console.log("closeNoteModal");
+}
 
 function handlerdiplomaPDFs() {
     for (let i = 0; i < diplomaPDF.length; i++) {
@@ -1693,7 +1691,7 @@ function listSuggestions() {
     for (let i = 1; i < rows.length && suggestionCount < 5; i++) {
         const cells = rows[i].getElementsByTagName('td');
         const nameCell = cells[1];
-        const topicCell = cells[3];
+        const topicCell = cells[5];
 
         if (nameCell && topicCell) {
             const nameText = nameCell.textContent.trim().toUpperCase();
@@ -1719,7 +1717,6 @@ function listSuggestions() {
         }
     }
 
-    // Ha nincs találat, üres üzenet jelenik meg
     if (suggestionCount === 0) {
         suggestionList.style.display = 'none';
         return;
@@ -1733,53 +1730,6 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('filter-input').addEventListener('input', listSuggestions);
 });
 
-document.querySelectorAll('.sortable').forEach(headerCell => {
-    headerCell.addEventListener('click', () => {
-        const table = document.getElementById('dataTable');
-        const tbody = table.querySelector('tbody');
-        const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
-        const rows = Array.from(tbody.querySelectorAll('tr'));
-
-        const sortType = headerCell.dataset.sort || 'string';
-        const column = headerCell.dataset.column;
-
-        const currentSortOrder = headerCell.getAttribute('data-order');
-        const isAscending = currentSortOrder === 'asc';
-
-        const sortedRows = rows.sort((a, b) => {
-            let valueA = a.children[headerIndex].innerText.trim();
-            let valueB = b.children[headerIndex].innerText.trim();
-
-            if (column === 'likes') {
-                valueA = parseFloat(valueA.split(' ')[0]); // Csak a like szám
-                valueB = parseFloat(valueB.split(' ')[0]); // Csak a like szám
-            } else if (sortType === 'number') {
-                valueA = parseFloat(valueA);
-                valueB = parseFloat(valueB);
-            }
-
-            // Kis- és nagybetűk figyelmen kívül hagyása az ABC szerinti rendezésnél
-            if (typeof valueA === 'string' && typeof valueB === 'string') {
-                return isAscending ? valueA.localeCompare(valueB, 'en', { sensitivity: 'base' }) : valueB.localeCompare(valueA, 'en', { sensitivity: 'base' });
-            }
-
-            if (isAscending) {
-                return valueA > valueB ? 1 : -1;
-            } else {
-                return valueA < valueB ? 1 : -1;
-            }
-        });
-
-        // Fordítsa meg a rendezési sorrendet
-        headerCell.setAttribute('data-order', isAscending ? 'desc' : 'asc');
-
-        // Törölje a rendezetlen sorokat és tegye a rendezetteket a tbody-ba
-        tbody.innerHTML = '';
-        sortedRows.forEach(row => {
-            tbody.appendChild(row);
-        });
-    });
-});
 
 // Get the modal
 var infoModal = document.getElementById("infoModal");

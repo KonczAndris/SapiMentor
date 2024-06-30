@@ -10,11 +10,29 @@
     }
 }
 
+.right{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.creators-info{
+    color: grey;
+    width:80%;
+    text-align: center;
+    margin: 15px;
+    border: solid 1px grey;
+    border-radius: 50px;
+    padding: 15px;
+    cursor: default;
+    user-select: none;
+}
+
 .large-settings-div{
     display: flex;
     width: 90%;
     padding: 5%;
-    margin: 50px;
+    /* margin: 50px; */
     border-radius: 50px;
 }
 
@@ -286,6 +304,29 @@ h2 {
     width: 30px;
     vertical-align:middle;
     margin-right: 0 !important;
+}
+
+.sapi-sites-box{
+    margin: 30px;
+    display: flex;
+}
+
+.sapi-sites-box a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:15px;
+}
+
+
+.sapi-sites-box img{
+    height: 40px;
+    width: 40px;
+}
+
+.sapi-sites-box img:hover{
+    transform: scale(1.35);
+    transition: all 0.2s ease;
 }
 
 @media (max-width: 800px) {

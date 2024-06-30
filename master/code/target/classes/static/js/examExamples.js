@@ -249,14 +249,22 @@ function setupModifyExamsModal(examId) {
     console.log("examId: " + examId);
     var modalId = "examExamplesModifyModal-" + examId;
     var modal = document.getElementById(modalId);
-    console.log("modal: " + modal);
-    console.log("modalId: " + modalId);
 
     if (modal) {
         var btnId = "modifyIcon";
         var btn1 = document.getElementById(btnId);
-        console.log("btn1: " + btn1);
-        console.log("btnId: " + btnId);
+        modal.style.display = "flex";
+    }
+}
+
+function setupDeleteExamsModal(examId) {
+    console.log("examId: " + examId);
+    var modalId = "examExamplesDeleteModal-" + examId;
+    var modal = document.getElementById(modalId);
+
+    if (modal) {
+        var btnId = "deleteIcon";
+        var btn1 = document.getElementById(btnId);
         modal.style.display = "flex";
     }
 }
@@ -1345,79 +1353,6 @@ function listSuggestions() {
 
 document.getElementById('filter-input').addEventListener('input', listSuggestions);
 
-document.querySelectorAll('.sortable').forEach(headerCell => {
-    headerCell.addEventListener('click', () => {
-        const table = document.getElementById('dataTable');
-        const tbody = table.querySelector('tbody');
-        const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
-        const rows = Array.from(tbody.querySelectorAll('tr'));
-
-        const sortType = headerCell.dataset.sort || 'string';
-        const column = headerCell.dataset.column;
-
-        const currentSortOrder = headerCell.getAttribute('data-order');
-        const isAscending = currentSortOrder === 'asc';
-
-        const sortedRows = rows.sort((a, b) => {
-            let valueA = a.children[headerIndex].innerText.trim();
-            let valueB = b.children[headerIndex].innerText.trim();
-
-            if (headerIndex === 0) {
-                valueA = parseInt(valueA);
-                valueB = parseInt(valueB);
-            }
-
-            if (column === 'likes') {
-                valueA = parseFloat(valueA.split(' ')[0]); // Csak a like szám
-                valueB = parseFloat(valueB.split(' ')[0]); // Csak a like szám
-            } else if (sortType === 'number') {
-                valueA = parseFloat(valueA);
-                valueB = parseFloat(valueB);
-            }
-
-            // Kis- és nagybetűk figyelmen kívül hagyása az ABC szerinti rendezésnél
-            if (typeof valueA === 'string' && typeof valueB === 'string') {
-                return isAscending ? valueA.localeCompare(valueB, 'en', { sensitivity: 'base' }) : valueB.localeCompare(valueA, 'en', { sensitivity: 'base' });
-            }
-
-            if (isAscending) {
-                return valueA > valueB ? 1 : -1;
-            } else {
-                return valueA < valueB ? 1 : -1;
-            }
-        });
-
-        // Fordítsa meg a rendezési sorrendet
-        headerCell.setAttribute('data-order', isAscending ? 'desc' : 'asc');
-
-        // Törölje a rendezetlen sorokat és tegye a rendezetteket a tbody-ba
-        tbody.innerHTML = '';
-        sortedRows.forEach(row => {
-            tbody.appendChild(row);
-        });
-    });
-});
-
-// // A kép megnyitásáért felelős függvény
-// function openImageModal(event) {
-//     const clickedImage = event.target; // A kattintott kép elem
-//     const modal = clickedImage.nextElementSibling; // A kép melletti modális elem
-//
-//     // Ellenőrizze, hogy a kattintott elem valóban egy kép-e
-//     if (clickedImage.tagName === 'IMG' && modal.classList.contains('exam-image-modal')) {
-//         modal.style.display = "block";
-//     } else {
-//         console.error('The clicked element is not an image or the modal is not found.');
-//     }
-// }
-//
-// // Kép megnyitásának eseménykezelője
-// document.querySelectorAll('.exam-image-image-container').forEach(imageContainer => {
-//     imageContainer.addEventListener("click", openImageModal);
-// });
-
-
-//// proba ///////////////
 let examPDF = [];
 function getExamImgPdf(examId) {
     console.log('Kattintottál az examImageContainer elemre!'+examId);

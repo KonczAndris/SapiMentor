@@ -170,9 +170,12 @@
           <span class="hungarian-text">Fiók deaktiválása</span>
         </button>
         </div>
-
-      </div>
-
+        <div class="sapi-sites-box">
+        <a href="https://ms.sapientia.ro/hu/"> <img th:src="@{/img/settings-sapi.png}" alt="Icon" class="menu-icon"> </a>
+        <a href="https://moodle.ms.sapientia.ro/"> <img th:src="@{/img/settings-moodle.png}" alt="Icon" class="menu-icon"></a>
+        <a href="https://host.sdakft.hu/semtehw/login.aspx"> <img th:src="@{/img/settings-neptun.png}" alt="Icon" class="menu-icon"> </a>
+        </div>
+        </div>
       <div class="right-settings-div">
 
         <div class="divider-container">
@@ -185,19 +188,11 @@
         </div>
 
         <div class="contact-div">
-
           <p> <img th:src="@{/img/settings-email.png}" class="setting-icon"> <strong>
             <span class="english-text">Email: </span>
             <span class="hungarian-text">Email cím: </span> </strong> sapimentor@gmail.com
           </p>
-
-<!--           <p> <img th:src="@{/img/settings-phone.png}" class="setting-icon"> <strong>-->
-<!--             <span class="english-text">Phone:</span>-->
-<!--             <span class="hungarian-text">Telefonszám:</span>-->
-<!--             </strong> +1234567890-->
-<!--           </p>-->
-
-           <p> <img th:src="@{/img/settings-address.png}" class="setting-icon"> <strong>
+           <p><img th:src="@{/img/settings-address.png}" class="setting-icon"> <strong>
              <span class="english-text">Address:</span>
              <span class="hungarian-text">Cím:</span>
            </strong>
@@ -225,8 +220,10 @@
         </div>
 
       </div>
-
     </div>
+
+    <span class="english-text creators-info">© This website was created by <b>Koncz András</b> and <b>Szotyori Csongor-Botond</b> as their diploma project at the Faculty of Computer Science, Sapientia University Marosvásárhely, in 2024. </span>
+    <span class="hungarian-text creators-info">© Ezt a weboldalt <b>Koncz András</b> és <b>Szotyori Csongor</b> készítette a Marosvásárhelyi Sapientia Egyetem számítástechnika szakán, 2024-ben az államvizsgájuk keretében.</span>
 
     <!-- Modal -->
     <div id="deactivateModal" class="modal">

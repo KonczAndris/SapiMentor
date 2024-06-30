@@ -154,7 +154,7 @@ button{
     height: 95%;
     background: transparent;
     animation: transitionIn 0.75s;
-    padding-top: 5px;
+    padding-top: 20px;
     overflow-y: auto;
 }
 
@@ -503,6 +503,7 @@ a{
         flex-direction: column;
         height:100%;
         display: block;
+        padding-top: 5px;
     }
 
     .right{

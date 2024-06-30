@@ -296,6 +296,8 @@
                 <span id="zoomIcon" class="zoom-icon" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'">&#128269;</span>
                 <span id="modifyIcon" class="zoom-icon" th:onclick="'setupModifyDiplomaThesesModal(' + ${diploma.id} + ')'"
                       th:if="${diplomathesesUserId == diploma.user_id or userRolesToDisplayResources.contains('ADMIN')}">&#9999;&#65039;</span>
+                <span id="deleteIcon" class="zoom-icon" th:onclick="'setupDeleteDiplomaThesesModal(' + ${diploma.id} + ')'"
+                      th:if="${diplomathesesUserId == diploma.user_id or userRolesToDisplayResources.contains('ADMIN')}">🗑️</span>
 
                 <div class="pdf-image-modal" th:id="'myModal-' + ${diploma.id}">
                   <span class="close-pdf-modal-btn" th:id="'closeModalBtn-' + ${diploma.id}">&times;</span>
@@ -421,11 +423,6 @@
                       <span class="english-text">Modify</span>
                       <span class="hungarian-text">Módosít</span>
                     </button>
-                    <button class="cancel-button-modal-modify close-diplomaTheses-modify red-button" id="modify-modal-delete"
-                            th:onclick="'deleteDiplomaThesesData(\'' + ${diploma.id} + '\')'">
-                      <span class="english-text">Delete</span>
-                      <span class="hungarian-text">Töröl</span>
-                    </button>
                     <button class="cancel-button-modal-modify close-diplomaTheses-modify red-button" th:onclick="'closeModifyModal(\'diplomaThesesModifyModal-' + ${diploma.id} + '\')'">
                       <span class="english-text">Cancel</span>
                       <span class="hungarian-text">Mégse</span>
@@ -434,10 +431,45 @@
                 </div>
               </div>
               <!-- MODIFY MODAL END -->
+            <!-- DELETE MODAL START -->
+            <div id="diplomaThesesDeleteModal" th:id="'diplomaThesesDeleteModal-' + ${diploma.id}" class="modal-diplomaTheses">
+              <div class="modal-content-diplomaTheses">
+                <br>
+                <span class="english-text">Are you sure you want to delete the selected diploma thesis document?</span>
+                <span class="hungarian-text">Biztos törölni szeretnéd a kiválasztott diplomadolgozat dokumentumot?</span>
+
+                <div class="func-buttons-modal">
+                  <button class="cancel-button-modal-modify close-diplomaTheses-modify green-button" id="modify-modal-delete"
+                          th:onclick="'deleteDiplomaThesesData(\'' + ${diploma.id} + '\')'">
+                    <span class="english-text">Yes</span>
+                    <span class="hungarian-text">Igen</span>
+                  </button>
+                  <button class="cancel-button-modal-modify close-diplomaTheses-modify red-button" th:onclick="'closeModifyModal(\'diplomaThesesDeleteModal-' + ${diploma.id} + '\')'">
+                    <span class="english-text">No</span>
+                    <span class="hungarian-text">Nem</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- DELETE MODAL END -->
           </tr>
         </tbody>
       </table>
     </div>
+    <!-- NOTE MODAL START -->
+    <div id="notificationModal" class="modal-diplomaTheses">
+      <div class="modal-content-diplomaTheses">
+        <br>
+        <span class="english-text">The selected file cannot be opened at the moment. Please try again later!</span>
+        <span class="hungarian-text">A kiválasztott fájl jelenleg nem megnyitható. Kérjük, próbáld újra később!</span>
+          <button class="cancel-button-modal-modify close-diplomaTheses-modify green-button" id="note-modal-close"
+                  onclick="closeNoteModal()">
+            <span class="english-text">Okay</span>
+            <span class="hungarian-text">Rendben</span>
+          </button>
+      </div>
+    </div>
+    <!-- DELETE MODAL END -->
     <div class="pagination-container">
       <button id="prev-page-button">
         <span class="english-text">Previous</span>
