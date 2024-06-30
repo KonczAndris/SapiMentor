@@ -155,13 +155,9 @@ public class UserServiceImpl implements UserService{
                 if (image.getSize() > MAX_IMAGE_SIZE) {
                     return "The uploaded image is too large. Please choose a smaller image.";
                 }
-
-
                 byte[] originalImageBytes = image.getBytes();
-                // Skálázom a képet a megadott méretekre
                 BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(originalImageBytes));
 
-                // ez az uj verzio
                 if (originalImage != null) {
                     int minDimension = Math.min(originalImage.getWidth(), originalImage.getHeight());
                     int x = (originalImage.getWidth() - minDimension) / 2;
@@ -191,7 +187,6 @@ public class UserServiceImpl implements UserService{
             }
 
         }
-        //A regi verzional ez a sor nem kell !!!!
         return null;
     }
 

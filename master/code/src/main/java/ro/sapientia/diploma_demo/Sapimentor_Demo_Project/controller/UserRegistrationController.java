@@ -47,7 +47,6 @@ public class UserRegistrationController {
                 return "redirect:/register?emailError";
             }
             User user = userService.save(registrationDto);
-            //System.out.println("User: " + user.getEmail() + " has been registered successfully");
             sendRegistrationCompleteEventAsync(user, request);
         } catch (DataIntegrityViolationException ex) {
             return "redirect:/register?duplicateError";
@@ -73,7 +72,4 @@ public class UserRegistrationController {
         return "redirect:/login?verificationError";
     }
 
-//    public String appUrl(HttpServletRequest request) {
-//        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-//    } //ezzel a fuggvennyel tudja a regisztracio utan a linket megjeleniteni
 }

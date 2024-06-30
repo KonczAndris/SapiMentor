@@ -15,7 +15,6 @@ public class CSVFileWriter {
             writer.writeAll(data);
         } catch (IOException e) {
             e.printStackTrace();
-            // Itt lehet kezelni az esetleges hibákat
         }
     }
 

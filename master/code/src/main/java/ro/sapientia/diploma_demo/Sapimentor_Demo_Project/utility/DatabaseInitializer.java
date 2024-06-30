@@ -184,7 +184,6 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
     }
 
-    // Ellenőrizzük, hogy van-e már bejegyzés a Topic táblában
     private boolean dataAlreadyLoaded() {
         return topicRepository.count() > 0;
     }

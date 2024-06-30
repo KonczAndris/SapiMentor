@@ -83,7 +83,6 @@ public class Topics_CommentService {
 
     public List<Object[]> getSelectedUserImages(String topicId) {
         List<Topics_Comment> allRatingsForThisUserImages = topicsCommentRepository.findAllByRatedUserId(topicId);
-        //System.out.println("allRatingsForThisUser: " + allRatingsForThisUserImages);
         ArrayList<Long> allUserId = new ArrayList<>();
         for (Topics_Comment comment : allRatingsForThisUserImages) {
             allUserId.add(comment.getUserId());

@@ -31,8 +31,6 @@ public class UserExamLikeDislikeService {
         this.userRepository = userRepository;
     }
 
-    // TODO: beallitani a like statuszat aktivra
-    // itt allitom at a like statuszt aktivra vagyis 1-re
     public void ChangeLikeStatusToActive(Long examId, Long userId) {
 
         UserExamLikeDislike userExamLikeStatus = userExamLikeDislikeRepository.findByUserAndExamsId(userId, examId)
@@ -52,8 +50,6 @@ public class UserExamLikeDislikeService {
         }
     }
 
-    // TODO: beallitani a like statuszat inaktivra
-    // itt allitom at a like statuszt inaktivra vagyis 0-ra
     public void ChangeLikeStatusToInactive(Long examId, Long userId) {
         UserExamLikeDislike userExamLikeStatus = userExamLikeDislikeRepository.findByUserAndExamsId(userId, examId)
                 .orElse(null);
@@ -69,8 +65,6 @@ public class UserExamLikeDislikeService {
         }
     }
 
-    // TODO: beallitani a dislike statuszat aktivra
-    // itt allitom at a dislike statuszt aktivra vagyis 1-re
     public void ChangeDislikeStatusToActive(Long examId, Long userId) {
         UserExamLikeDislike userExamDislikeStatus = userExamLikeDislikeRepository.findByUserAndExamsId(userId, examId)
                 .orElse(null);
@@ -89,8 +83,6 @@ public class UserExamLikeDislikeService {
         }
     }
 
-    // TODO: beallitani a dislike statuszat inaktivra
-    //itt allitom at a dislike statuszt inaktivra vagyis 0-ra
     public void ChangeDislikeStatusToInactive(Long examId, Long userId) {
         UserExamLikeDislike userExamDislikeStatus = userExamLikeDislikeRepository.findByUserAndExamsId(userId, examId)
                 .orElse(null);
@@ -105,7 +97,6 @@ public class UserExamLikeDislikeService {
         }
     }
 
-    // TODO: beallitani a like statuszat aktivra es a dislike statuszat inaktivra
     public void ChangeLikeStatusToActiveAndDislikeToInactive(Long examId, Long userId) {
         UserExamLikeDislike userExamLikeAndDislikeStatus = userExamLikeDislikeRepository.findByUserAndExamsId(userId, examId)
                 .orElse(null);
@@ -122,7 +113,6 @@ public class UserExamLikeDislikeService {
         }
     }
 
-    // TODO: beallitani a dislike statuszat aktivra es a like statuszat inaktivra
     public void ChangeDislikeStatusToActiveAndLikeToInactive(Long examId, Long userId) {
         UserExamLikeDislike userExamLikeAndDislikeStatus = userExamLikeDislikeRepository.findByUserAndExamsId(userId, examId)
                 .orElse(null);
@@ -139,8 +129,6 @@ public class UserExamLikeDislikeService {
         }
     }
 
-    // TODO: lekerni a like statuszt
-    // itt kerem le a like statuszt
     @Cacheable("getLikeStatus")
     public String getLikeStatus(Long examId, Long userId){
         Exams exam_Id = examsRepository.findById(examId)
@@ -158,8 +146,6 @@ public class UserExamLikeDislikeService {
         }
     }
 
-    // TODO: lekerni a dislike statuszt
-    // itt kerem le a dislike statuszt
     @Cacheable("getDislikeStatus")
     public String getDislikeStatus(Long examId, Long userId){
         Exams exam_Id = examsRepository.findById(examId)
@@ -171,14 +157,12 @@ public class UserExamLikeDislikeService {
         UserExamLikeDislike existingdislike = userExamLikeDislikeRepository.findByUserAndExams(user_Id, exam_Id);
 
         if (existingdislike != null){
-            //System.out.println("existingdislike: " + existingdislike.getLike());
             return existingdislike.getDislike().toString();
         } else {
             return "0";
         }
     }
 
-    // TODO: lekerni a like es dislike statuszt
     @Cacheable(value = "getLikeAndDislikeStatus")
     public List<UserLikeAndDislikeData> getLikeAndDislikeStatus(Long userId) {
         User user_Id = userRepository.findById(userId)

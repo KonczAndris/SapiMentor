@@ -28,7 +28,7 @@ public interface UserExamLikeDislikeRepository extends JpaRepository<UserExamLik
     void updateLikeAndDislike(@Param("userExamLikeAndDislikeStatus") UserExamLikeDislike userExamLikeAndDislikeStatus);
 
     UserExamLikeDislike findByUserAndExams(User userId, Exams examId);
-//    List<UserExamLikeDislike> findAllByUser(User userId);
+
     @Query("SELECT new ro.sapientia.diploma_demo.Sapimentor_Demo_Project.controller.dto.ExamsLikeDislikeDTO(e.id, e.user.id, e.exams.id, e.like, e.dislike) FROM UserExamLikeDislike e WHERE e.user = :userId")
     List<ExamsLikeDislikeDTO> findAllByUserId(User userId);
 

@@ -51,24 +51,12 @@ public class UtilityForSomeCotroller {
     }
 
     public void showTopicsToMyGroupPage(Model model){
-        // Itt lekérem a témákat a service segítségével
         List<Topic> topics = topicService.getAllTopics();
-        //System.out.println("Topics: " + topics);
-//        for (Topic topic : topics) {
-//            System.out.println("Topic: " + topic.getTopic() + " : " );
-//            for (Skill skill : topic.getSkills()) {
-//                System.out.println("Skill: " + skill.getSkill());
-//            }
-//        }
         model.addAttribute("topics", topics);
     }
 
     public void showSkillsToMyGroupPage(Model model){
         List<Skill> skills = skillService.getAllSkills();
-        //System.out.println("Skills: " + skills.toString());
-//        for (Skill skill : skills) {
-//            System.out.println("Skill: " + skill.getSkill() + " : " + skill.getTopic().getTopic());
-//        }
         model.addAttribute("skills", skills);
     }
 

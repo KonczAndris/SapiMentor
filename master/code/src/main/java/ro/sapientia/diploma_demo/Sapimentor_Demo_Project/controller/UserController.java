@@ -53,7 +53,6 @@ public class UserController {
 
         String email = principal.getName();
 
-        // Uj megoldas (probalkozas)
         Long userId = userRepository.findIdByEmail(email);
         Collection<Role> roles = userRepository.findRolesByUserId(userId);
 
@@ -61,7 +60,6 @@ public class UserController {
         List<String> rolesToDisplayUsers = new ArrayList<>();
         boolean hasOtherRole = false;
 
-        // Uj megoldas (probalkozas)
         for (Role role : roles){
             if(!role.getName().equals("USER")){
                 rolesToDisplayUsers.add(role.getName());
@@ -74,13 +72,11 @@ public class UserController {
         }
 
         String rolesAsString = String.join(",", rolesToDisplayUsers);
-        //System.out.println("Roles: " + rolesAsString);
         model.addAttribute("userRolesToDisplayUsers", rolesAsString);
     }
 
     private void showTopicsToDisplayUsers(Model model,
                                           Principal principal) {
-        // Itt lekérem a témákat a service segítségével
         List<Topic> topics = topicService.getAllTopics();
         model.addAttribute("topics", topics);
     }
@@ -147,7 +143,7 @@ public class UserController {
     private String[] splitFilter(String filter) {
         int spaceIndex = filter.indexOf(' ');
         if (spaceIndex == -1) {
-            return new String[] { filter };  // Nincs szóköz, az egész filter egy név
+            return new String[] { filter };
         }
         String firstName = filter.substring(0, spaceIndex);
         String lastName = filter.substring(spaceIndex + 1);
@@ -246,7 +242,6 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The user is not logged in!");
             }
             if (userServiceImpl.deleteSelectedUser(user_id).equals("DELETED")){
-                //System.out.println("Deleted: successfully");
                 return ResponseEntity.ok("DELETED");
             } else {
                 return ResponseEntity.ok("NOTDELETED");

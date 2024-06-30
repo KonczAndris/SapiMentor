@@ -43,13 +43,11 @@ public class UserLoginController {
         if (user.isEmpty() || !user.get().isEnabled()){
             return  "redirect:/forgotPassword?not_found";
         }
-//        System.out.println(user.get().getEmail());
         String passwordResetToken = UUID.randomUUID().toString();
-//        System.out.println(passwordResetToken);
+
         passwordResetTokenServiceInterface.createPasswordResetTokenForUser(user.get(), passwordResetToken);
         //send password reset verification email to the user
         String url = Url.getApplicationUrl(request)+"/newPassword?token="+passwordResetToken;
-//        System.out.println(url);
         try {
             eventListener.sendPasswordResetVerificationEmail(user.get(),url);
         } catch (MessagingException | UnsupportedEncodingException e) {
@@ -68,10 +66,8 @@ public class UserLoginController {
     public String resetPassword(HttpServletRequest request){
         String theToken = request.getParameter("token");
         String password = request.getParameter("password");
-//        System.out.println(theToken);
-//        System.out.println(password);
+
         String tokenVerificationResult = passwordResetTokenServiceInterface.validatePasswordResetToken(theToken);
-//        System.out.println(tokenVerificationResult);
         if (!tokenVerificationResult.equalsIgnoreCase("valid")){
             return "redirect:/login?invalid_token";
         }

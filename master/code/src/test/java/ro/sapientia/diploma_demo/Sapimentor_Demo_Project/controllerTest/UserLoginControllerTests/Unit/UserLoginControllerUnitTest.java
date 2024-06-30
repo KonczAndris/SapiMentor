@@ -34,7 +34,6 @@ public class UserLoginControllerUnitTest {
         Model model = new ExtendedModelMap();
         String result = userLoginController.showNewPasswordForm(token, model);
         assertEquals("newPassword", result);
-        // itt azt teszteljuk hogy a model megfeleloen mukodik-e
         assertEquals(token, model.getAttribute("token"));
         System.out.println(model);
     }

@@ -20,14 +20,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ResourceServicesIntegrationTest {
-
-
-
-    // @Mock
     @Autowired
     private ResourcesRepository resourcesRepository;
 
-//    @InjectMocks
     @Autowired
     private ResourceServices resourceServices;
 
@@ -119,8 +114,6 @@ public class ResourceServicesIntegrationTest {
             System.out.println("Name:" + resource.getName()
             + " Id: " + resource.getId());
         }
-        //System.out.println("actualResources: " + actualResources);
-
         // Then
         assertThat(actualResources.size()).isEqualTo(expectedResources.size());
     }

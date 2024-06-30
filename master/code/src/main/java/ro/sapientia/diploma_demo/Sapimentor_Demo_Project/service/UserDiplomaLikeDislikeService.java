@@ -32,7 +32,6 @@ public class UserDiplomaLikeDislikeService {
     }
 
 
-    // TODO: Implement ChangeLikeStatusToActive
     public void ChangeLikeStatusToActive(Long diplomaId, Long userId) {
 
         UserDiploma_TLikeDislike userDiploma_TLikeStatus = userDiplomaLikeDislikeRepository.findByUserAndDiplomaThesesId(userId, diplomaId)
@@ -52,7 +51,6 @@ public class UserDiplomaLikeDislikeService {
         }
     }
 
-    // TODO: Implement ChangeLikeStatusToInactive
     public void ChangeLikeStatusToInactive(Long diplomaId, Long userId) {
         UserDiploma_TLikeDislike userDiploma_TLikeStatus = userDiplomaLikeDislikeRepository.findByUserAndDiplomaThesesId(userId, diplomaId)
                 .orElse(null);
@@ -67,7 +65,6 @@ public class UserDiplomaLikeDislikeService {
         }
     }
 
-    // TODO: Implement ChangeDislikeStatusToActive
     public void ChangeDislikeStatusToActive(Long diplomaId, Long userId) {
         UserDiploma_TLikeDislike userDiploma_TDislikeStatus = userDiplomaLikeDislikeRepository.findByUserAndDiplomaThesesId(userId, diplomaId)
                 .orElse(null);
@@ -86,7 +83,6 @@ public class UserDiplomaLikeDislikeService {
             }
     }
 
-    // TODO: Implement ChangeDislikeStatusToInactive
     public void ChangeDislikeStatusToInactive(Long diplomaId, Long userId) {
         UserDiploma_TLikeDislike userDiploma_TDislikeStatus = userDiplomaLikeDislikeRepository.findByUserAndDiplomaThesesId(userId, diplomaId)
                 .orElse(null);
@@ -101,7 +97,6 @@ public class UserDiplomaLikeDislikeService {
         }
     }
 
-    // TODO: Implement ChangeLikeStatusToActiveAndDislikeToInactive
     public void ChangeLikeStatusToActiveAndDislikeToInactive(Long diplomaId, Long userId) {
         UserDiploma_TLikeDislike userDiploma_TLikeAndDislikeStatus = userDiplomaLikeDislikeRepository.findByUserAndDiplomaThesesId(userId, diplomaId)
                 .orElse(null);
@@ -118,7 +113,6 @@ public class UserDiplomaLikeDislikeService {
         }
     }
 
-    // TODO: Implement ChangeDislikeStatusToActiveAndLikeToInactive
     public void ChangeDislikeStatusToActiveAndLikeToInactive(Long diplomaId, Long userId) {
         UserDiploma_TLikeDislike userDiploma_TLikeAndDislikeStatus = userDiplomaLikeDislikeRepository.findByUserAndDiplomaThesesId(userId, diplomaId)
                 .orElse(null);
@@ -135,9 +129,6 @@ public class UserDiplomaLikeDislikeService {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // TODO: Implement getLikeStatus
     @Cacheable(value = "likeStatus")
     public String getLikeStatus(Long diplomaId, Long userId) {
         Diploma_Theses diploma_Id = diplomaThesesRepository.findById(diplomaId)
@@ -155,7 +146,6 @@ public class UserDiplomaLikeDislikeService {
             }
     }
 
-    // TODO: Implement getDislikeStatus
     @Cacheable(value = "dislikeStatus")
     public String getDislikeStatus(Long diplomaId, Long userId) {
         Diploma_Theses diploma_Id = diplomaThesesRepository.findById(diplomaId)
@@ -173,16 +163,13 @@ public class UserDiplomaLikeDislikeService {
             }
     }
 
-    // TODO: Implement getLikeAndDislikeStatus
     @Cacheable(value = "getDiplomaLikeAndDislikeStatus")
     public List<UserLikeAndDislikeData> getLikeAndDislikeStatus(Long userId) {
         User user_Id = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
-        //System.out.println("user_Id: " + user_Id.getId());
         List<Diploma_TLikeDislike_DTO> userLikeAndDislikes = userDiplomaLikeDislikeRepository.findAllByUserId(user_Id);
 
-        //System.out.println("userLikeAndDislikes: " + userLikeAndDislikes);
         List<UserLikeAndDislikeData> DiplomaThesesLikeAndDislikeDataList = new ArrayList<>();
 
         for (Diploma_TLikeDislike_DTO userLikeAndDislike : userLikeAndDislikes) {
@@ -191,10 +178,8 @@ public class UserDiplomaLikeDislikeService {
             int like = userLikeAndDislike.getLike();
             int dislike = userLikeAndDislike.getDislike();
             UserLikeAndDislikeData userlikeAndDislikeData = new UserLikeAndDislikeData(diplomaId, userId1, like, dislike);
-            //System.out.println("Igen:" + userlikeAndDislikeData);
             DiplomaThesesLikeAndDislikeDataList.add(userlikeAndDislikeData);
         }
-        //System.out.println("DiplomaThesesLikeAndDislikeDataList: " + DiplomaThesesLikeAndDislikeDataList);
         return DiplomaThesesLikeAndDislikeDataList;
     }
 }

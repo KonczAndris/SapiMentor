@@ -41,7 +41,6 @@ public class TopicsController {
 
         String email = principal.getName();
 
-        // Uj megoldas (probalkozas)
         Long userId = userRepository.findIdByEmail(email);
         Collection<Role> roles = userRepository.findRolesByUserId(userId);
 
@@ -49,7 +48,6 @@ public class TopicsController {
         List<String> rolesToDisplayResources = new ArrayList<>();
         boolean hasOtherRole = false;
 
-        // Uj megoldas (probalkozas)
         for (Role role : roles){
             if(!role.getName().equals("USER")){
                 rolesToDisplayResources.add(role.getName());

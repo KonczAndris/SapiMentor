@@ -25,11 +25,9 @@ public class TopicService {
 
     public List<Skill> getSkillsByTopic(String selectedTopic) {
         Topic topic = topicRepository.findByTopic(selectedTopic);
-        //System.out.println("Topic: " + topic);
         if (topic != null) {
             return topic.getSkills();
         }
-        // Ha a témát nem találjuk, akkor null értékkel térünk vissza
         return null;
     }
 
