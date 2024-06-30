@@ -64,13 +64,9 @@ public class ProfileController {
         if (principal == null) {
             return "redirect:/login";
         }
-        String email = principal.getName(); // Bejelentkezett felhasználó neve
-
-        // Felhasználó lekérdezése az adatbázisból a felhasználónév alapján
+        String email = principal.getName();
         User user = userRepository.findByEmail(email);
-
         UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
-        //System.out.println("UJ ERTEK" + userRegistrationDetails);
 
         List<String> rolesToDisplay = new ArrayList<>();
         boolean hasOtherRoles = false;
@@ -89,25 +85,16 @@ public class ProfileController {
         String rolesAsString = String.join(", ", rolesToDisplay);
         model.addAttribute("userRolesToDisplay", rolesAsString);
 
-
-        // Itt lekérem a témákat a service segítségével
         List<Topic> topics = topicService.getAllTopics();
 
         List<Profile_Topics> userTopics = profileTopicsRepository.findByUserId(user.getId());
 
         if (!userTopics.isEmpty()) {
-            //System.out.println("User topics: " + userTopics);
-            //System.out.println("User topics: " + userTopics.get(0).getTags());
             model.addAttribute("userTopics", userTopics);
         }
 
-
-        //Profil kep megjelenitese
-        // A profil kép byte tömbje
         byte[] profileImageBytes = user.getProfileImage();
-        // A profil kép Base64 kódolása
 
-        //A regi verzional ez a sor nem kell !!!!
         if (errorMessage != null) {
             model.addAttribute("errorMessage", errorMessage);
         }
@@ -118,7 +105,7 @@ public class ProfileController {
         } else {
             model.addAttribute("profileImageBase64", "");
         }
-        // A témákat hozzáadod a modellhez
+
         model.addAttribute("topics", topics);
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
 
@@ -157,16 +144,11 @@ public class ProfileController {
                                   @RequestParam("year") Integer year,
                                   @RequestParam("phoneNumber") String phoneNumber,
                                   Principal principal) {
-        // Bejelentkezett felhasználó neve
-        String email = principal.getName(); // Bejelentkezett felhasználó neve
-        //System.out.println(phoneNumber);
 
+        String email = principal.getName();
+        userService.saveProfileData(email,firstName, lastName, specialization, year, phoneNumber);
 
-
-                // Adatok mentése a szolgáltatás segítségével
-                userService.saveProfileData(email,firstName, lastName, specialization, year, phoneNumber);
-
-        return "redirect:/profile";// Visszatérés a profil oldalra
+        return "redirect:/profile";
     }
 
     @PostMapping("/profile/upload-profile-image")
@@ -175,7 +157,6 @@ public class ProfileController {
                                      Model model) {
         String username = principal.getName();
 
-        //A regi verzional ez a sor es az if nem kell !!!!
         String errorMessage = userService.uploadProfileImage(username, image);
         if (errorMessage != null) {
             model.addAttribute("errorMessage", errorMessage);
@@ -187,7 +168,6 @@ public class ProfileController {
         UserRegistrationDetails userRegistrationDetails = new UserRegistrationDetails(user);
         model.addAttribute("userRegistrationDetails", userRegistrationDetails);
 
-        //System.out.println("User details after upload: " + userRegistrationDetails);
         return "profile";
     }
 
@@ -195,71 +175,48 @@ public class ProfileController {
     @GetMapping("/getSkills")
     @ResponseBody
     public List<Skill> getSkillsByTopic(@RequestParam String selectedTopic) {
-        //System.out.println("Selected topic: " + selectedTopic);
         return topicService.getSkillsByTopic(selectedTopic);
     }
 
     @GetMapping("/getUserTopicsAndSkills")
     @ResponseBody
     public List<Profile_Topics> getUserTopicsAndSkills(Principal principal) {
-        // Bejelentkezett felhasználó neve
         String email = principal.getName();
         User user = userRepository.findByEmail(email);
         List<Profile_Topics> userTopicsAndSkills = profileTopicsRepository.findByUserId(user.getId());
-        //System.out.println("User topics: " + userTopics);
+
         return userTopicsAndSkills;
     }
 
-
-
-    //holnap innen folytatni es megcsinalni a mentest plusz  megjeleniteni az adatokat a /profile oldalon
     @PostMapping("/saveProfileTopics")
     public ResponseEntity<String> saveProfileTopics(String profileTopicsDataItems,
                                     Principal principal) {
         //ez a objectMapper a json stringet alakitja at objektumokka
         ObjectMapper objectMapper = new ObjectMapper();
-        //System.out.println("HELLO");
-//        System.out.println("Profile topics data items: " + profileTopicsDataItems);
+
         try {
             // JSON string deszerializálása objektumokká
             Profile_Topics_DataItem[] dataItems = objectMapper.readValue(profileTopicsDataItems, Profile_Topics_DataItem[].class);
-//            System.out.println("Data items: " + dataItems);
 
             for (Profile_Topics_DataItem dataItem : dataItems) {
                 String id = dataItem.getId();
                 String topic = dataItem.getTopic();
                 List<String> skills = dataItem.getSkills();
-//                System.out.println("Id: " + id);
-//                System.out.println("Topic: " + topic);
-//                System.out.println("Skills: " + skills);
 
                 if(!id.equals("")){
-                    //Frissiti az adatokat a Profile_Topics entitasban
-                    //Es frissiti az adatokat az adatbazisban is
-                    //System.out.println("ID NEM NULL");
                     Profile_Topics existingProfileTopic = profileTopicsRepository.findById(Long.parseLong(id)).orElse(null);
                     if(existingProfileTopic != null){
-                        //System.out.println("Existing profile topic: " + existingProfileTopic);
                         existingProfileTopic.setTopic(topic);
                         existingProfileTopic.setTags(skills);
                         profileTopicsRepository.save(existingProfileTopic);
                     }
-
                 }else{
-                    //System.out.println("ID NULL");
-                    // Mentsd el az adatokat a Profile_Topics entitásban
                     Profile_Topics profileTopics = new Profile_Topics();
                     profileTopics.setTopic(topic);
                     profileTopics.setTags(skills);
-                    //System.out.println("Profile topics: " + profileTopics.getTopic());
-
-                    // Hozd létre az összekapcsolást a felhasználóval (amelyet a Principal-ból kaphatsz meg)
-                    // Bejelentkezett felhasználó neve
                     String email = principal.getName();
                     User user = userRepository.findByEmail(email);
                     profileTopics.setUser(user);
-
-                    // Mentsd el a Profile_Topics entitást az adatbázisban
                     profileTopicsRepository.save(profileTopics);
                 }
             }
@@ -270,8 +227,7 @@ public class ProfileController {
         }
     }
 
-    
-    @CrossOrigin(origins = "http://localhost:8080") // Engedélyezi a CORS-t csak a http://localhost:8080 eredetű kérések számára
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/deleteTopicAndSkills")
     public ResponseEntity<String> deleteTopicAndSkills(@RequestParam("topicId") Long topicId) {
         try {
@@ -279,14 +235,13 @@ public class ProfileController {
             if(topicToDelete != null){
                 profileTopicsRepository.delete(topicToDelete);
             }else{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("A témát nem találtuk.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The topic does not exist!");
             }
 
-            //System.out.println("Topic id " + topicId + " torolve");
             return ResponseEntity.ok("Sikeres törlés");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hiba történt a törlés során");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during deleting topic!");
         }
     }
 
@@ -294,14 +249,12 @@ public class ProfileController {
     @PostMapping("/updateUserRoleStatus")
     public ResponseEntity<String> updateUserRoleStatus(String selectedRole,
                                                        Principal principal) throws JsonProcessingException {
-        //System.out.println("Selected role: " + selectedRole);
         String email = principal.getName();
         Long userId = userRepository.findByEmail(email).getId();
 
         if(!userService.isAtLeastSecondYear(userId)){
-            //System.out.println("Nem masodik ev");
             Map<String, String> responsee = new HashMap<>();
-            responsee.put("message", "NEM_MASOD"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
+            responsee.put("message", "NEM_MASOD");
             return ResponseEntity.ok(new ObjectMapper().writeValueAsString(responsee));
         }else{
             User user = userRepository.findByEmail(email);
@@ -322,7 +275,7 @@ public class ProfileController {
 
         // Az eredmény JSON objektum létrehozása
          Map<String, String> response = new HashMap<>();
-         response.put("message", "MODOSITVA"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
+         response.put("message", "MODOSITVA");
 
         // JSON objektum visszaadása a ResponseEntity segítségével
         return ResponseEntity.ok(new ObjectMapper().writeValueAsString(response));
@@ -345,16 +298,12 @@ public class ProfileController {
                 // Törölje el a kiválasztott szerepet a User objektumból
                 removedRoles.addAll(user.removeRoleFromUser(user, removableRole));
             }
-            //System.out.println("Removed role1: " + removedRoles);
         } else if (selectedRoleToDelete.length() == 6) {
-            // Ha egy szerep van kiválasztva, akkor azt is törölje
             removedRoles.addAll(user.removeRoleFromUser(user, selectedRoleToDelete.trim()));
-            //System.out.println("Removed roles2: " + removedRoles);
         }
 
         userRepository.save(user);
 
-        // Most a removedRoles listában tárolt szerepekhez férhetsz hozzá
         for (Integer removedRole : removedRoles) {
             System.out.println("Removed role: " + removedRole);
             roleRepository.updateRolesStatusByIdCustom(removedRole);
@@ -362,7 +311,7 @@ public class ProfileController {
 
         // Az eredmény JSON objektum létrehozása
         Map<String, String> response = new HashMap<>();
-        response.put("message", "TOROLVE"); // Ezt az üzenetet jelenítheted meg a kliensoldalon
+        response.put("message", "TOROLVE");
 
         // JSON objektum visszaadása a ResponseEntity segítségével
         return ResponseEntity.ok(new ObjectMapper().writeValueAsString(response));

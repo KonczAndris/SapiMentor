@@ -89,7 +89,6 @@ public class MyGroupController {
         utilityForSomeCotroller.showSkillsToMyGroupPage(model);
         utilityForSomeCotroller.showProfileImageAndName(model, principal);
         showUserRolesToDisplayMyGroup(model, principal);
-//        model.addAttribute("ButtonClicked", false);
 
         return "myGroup";
     }
@@ -105,7 +104,6 @@ public class MyGroupController {
         utilityForSomeCotroller.showProfileImageAndName(model, principal);
         showUserRolesToDisplayMyGroup(model, principal);
 
-        // ez helyett esetleg a hosszu menet
         myGroupService.getAllMeneesDetails(model, principal);
         utilityForSomeCotroller.getUserRolesToDisplayMentorSelector(model, principal);
 
@@ -124,7 +122,6 @@ public class MyGroupController {
         utilityForSomeCotroller.showProfileImageAndName(model, principal);
         showUserRolesToDisplayMyGroup(model, principal);
 
-        // ez helyett esetleg a hosszu menet
         myGroupService.getAllMentorsDetails(model, principal);
         utilityForSomeCotroller.getUserRolesToDisplayMentorSelector(model, principal);
 
@@ -260,7 +257,6 @@ public class MyGroupController {
             if (principal == null) {
                 return "redirect:/login";
             }
-            //System.out.println("searchData: " + params);
 
             utilityForSomeCotroller.showTopicsToMyGroupPage(model);
             utilityForSomeCotroller.showSkillsToMyGroupPage(model);
@@ -283,7 +279,6 @@ public class MyGroupController {
             if (principal == null) {
                 return "redirect:/login";
             }
-            //System.out.println("searchData: " + params);
 
             utilityForSomeCotroller.showTopicsToMyGroupPage(model);
             utilityForSomeCotroller.showSkillsToMyGroupPage(model);
