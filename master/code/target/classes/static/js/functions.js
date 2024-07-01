@@ -54,6 +54,11 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("topics-info-box").addEventListener("click", function () {
+        window.location.href = "/topics";
+    });
+});
+document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("profile-mini-info-box").addEventListener("click", function () {
         window.location.href = "/profile";
     });
@@ -978,20 +983,16 @@ function redirectToMyGroup() {
     window.location.href = "/myGroup";
 }
 
-//Preload
 const loader = document.getElementById('preloader');
 let loaderStartTime = Date.now();
 
-// Function to hide the loader
 function hideLoader() {
     const elapsedTime = Date.now() - loaderStartTime;
     const minimumDisplayTime = 1200;
 
-    // Check if the loader has been displayed for at least 2 seconds
     if (elapsedTime >= minimumDisplayTime) {
         loader.style.display = 'none';
     } else {
-        // If the minimum time hasn't elapsed yet, wait until it does
         setTimeout(hideLoader, minimumDisplayTime - elapsedTime);
     }
 }
