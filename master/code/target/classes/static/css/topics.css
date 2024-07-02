@@ -123,7 +123,7 @@
     margin-left: 5px;
 }
 
-#back-from-info, #back-from-engineering, #back-from-languages, #back-from-info-site, #back-from-computer-site,
+#back-from-engineering, #back-from-info-site, #back-from-computer-site,
 #back-from-automation-site, #back-from-machine-site, #back-from-mecha-site, #back-from-telecommunication-site,
 #back-from-landscape-site, #back-from-horticulture-site, #back-from-communication-site, #back-from-translation-site{
     display: flex;
@@ -133,6 +133,21 @@
     position: absolute;
     top: 0;
     margin: 10px 10px 10px 25px;
+    align-content: center;
+    color:white;
+    font-size: 18px;
+    align-items: center;
+    background: rgb(22, 175, 132);
+}
+
+#back-from-info, #back-from-languages{
+    display: flex;
+    width: 200px;
+    /* height: 40px; */
+    border-radius: 25px;
+    /*position: absolute;*/
+    top: 0;
+    margin: -120px 10px 10px 25px;
     align-content: center;
     color:white;
     font-size: 18px;
