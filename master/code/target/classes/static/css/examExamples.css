@@ -961,3 +961,9 @@ tr {
     }
 }
 
+
+.non-clickable {
+    pointer-events: none;
+    cursor: default;
+}
+

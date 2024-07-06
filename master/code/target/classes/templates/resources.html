@@ -224,7 +224,7 @@
 
                 <tr th:each="resource, stat : ${resourcesData}" th:id="'resource-row-' + ${resource.id}">
                     <td th:text="${stat.index + 1}"></td>
-                    <td><a th:href="${resource.link}" target="_blank" th:text="${resource.name}" style="color: #2196F3"></a>
+                    <td><a th:href="${resource.link}" target="_blank" th:text="${resource.name}" style="color: #2196F3" th:class="${userRolesToDisplayResources.contains('GUEST')} ? 'non-clickable'"></a>
                         <span id="modifyIcon" class="modify-icon" th:onclick="'setupModifyResourceModal(' + ${resource.id} + ')'"
                               th:if="${linksUserId == resource.user_id or userRolesToDisplayResources.contains('ADMIN')}">&#9999;&#65039;</span>
                         <span id="deleteIcon" class="modify-icon" th:onclick="'setupDeleteResourceModal(' + ${resource.id} + ')'"

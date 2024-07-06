@@ -227,8 +227,8 @@
                     <td th:text="${stat.index + 1}"></td>
                     <td class="image-container-column">
                         <div class="exam-image-image-container">
-                            <span id="exam-name-id" th:text="${exam.name}"></span>
-                            <span id="zoomIcon" class="zoom-icon">&#128269;</span>
+                            <span id="exam-name-id" th:text="${exam.name}" th:class="${userRolesToDisplayResources.contains('GUEST')} ? 'non-clickable'"></span>
+                            <span id="zoomIcon" class="zoom-icon" th:if="${not userRolesToDisplayResources.contains('GUEST')}">&#128269;</span>
                             <span id="modifyIcon" class="modify-icon" th:onclick="'setupModifyExamsModal(' + ${exam.id} + ')'"
                                   th:if="${examsUserId == exam.user_id or userRolesToDisplayResources.contains('ADMIN')}">&#9999;&#65039;</span>
                             <span id="deleteIcon" class="modify-icon" th:onclick="'setupDeleteExamsModal(' + ${exam.id} + ')'"

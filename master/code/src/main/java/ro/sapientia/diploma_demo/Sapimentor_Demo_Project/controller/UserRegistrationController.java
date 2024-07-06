@@ -43,7 +43,7 @@ public class UserRegistrationController {
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto,
                                       final HttpServletRequest request){
         try {
-            if (!registrationDto.getEmail().endsWith("@student.ms.sapientia.ro")){
+            if (!registrationDto.getEmail().endsWith("@student.ms.sapientia.ro")) {
                 return "redirect:/register?emailError";
             }
             User user = userService.save(registrationDto);

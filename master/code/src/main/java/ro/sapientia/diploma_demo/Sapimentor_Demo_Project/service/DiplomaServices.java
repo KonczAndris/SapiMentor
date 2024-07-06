@@ -416,8 +416,13 @@ public class DiplomaServices {
                         // Byte tömb a PDF adatokkal
                         abstractPdfBytes_en = out_en.toByteArray();
 
+                        System.out.println("Abstract text: " + realAbstractText);
                         String abstractText = "Get 5 or 3 keywords from this text: " + realAbstractText;
-                        abstractText = abstractText.replaceAll("[\\r\\n]+", "");
+                        abstractText = abstractText.replaceAll("[\\r\\n]+", "")
+                                .replace("\"", "\\\"")
+                                .replace("'", "\\'")
+                                .replace("`", "\\`");
+                        System.out.println("Abstract text for GPT-3: " + abstractText);
 
                         //////// Itt van a GPT3-as verzio ////////////
 

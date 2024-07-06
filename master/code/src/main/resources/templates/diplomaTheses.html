@@ -237,7 +237,7 @@
           <span class="english-text">Cancel</span>
           <span class="hungarian-text">Mégse</span>
         </button>
-        <button type="button" class="upload-hidden btn btn-success blue-button" id="upload-upload" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE') or userRolesToDisplayResources.contains('ADMIN')}">
+        <button type="button" class="upload-hidden btn btn-success blue-button" id="upload-upload" th:if="${userRolesToDisplayResources.contains('MENTOR') or userRolesToDisplayResources.contains('MENTEE') or userRolesToDisplayResources.contains('ADMIN')  or userRolesToDisplayResources.contains('GUEST')}">
           <img th:src="@{/img/uploadimg.png}" alt="Icon" class="menu-icon"></button>
       </div>
     </div>
@@ -285,12 +285,12 @@
 
             <td class="pdf-container-column">
               <div class="pdf-image-image-container">
-                <span th:text="${diploma.name}" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'"></span>
-                <span id="zoomIcon" class="zoom-icon" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'">&#128269;</span>
+                <span th:text="${diploma.name}" th:onclick="${not userRolesToDisplayResources.contains('GUEST')} ? 'getDiplomaId(' + ${diploma.id} + ')' : ''"></span>
+                <span id="zoomIcon" class="zoom-icon" th:if="${not userRolesToDisplayResources.contains('GUEST')}" th:onclick="'getDiplomaId(' + ${diploma.id} + ')'">&#128269;</span>
                 <span id="modifyIcon" class="zoom-icon" th:onclick="'setupModifyDiplomaThesesModal(' + ${diploma.id} + ')'"
-                      th:if="${diplomathesesUserId == diploma.user_id or userRolesToDisplayResources.contains('ADMIN')}">&#9999;&#65039;</span>
+                      th:if="${diplomathesesUserId == diploma.user_id or userRolesToDisplayResources.contains('ADMIN') or userRolesToDisplayResources.contains('GUEST')}">&#9999;&#65039;</span>
                 <span id="deleteIcon" class="zoom-icon" th:onclick="'setupDeleteDiplomaThesesModal(' + ${diploma.id} + ')'"
-                      th:if="${diplomathesesUserId == diploma.user_id or userRolesToDisplayResources.contains('ADMIN')}">🗑️</span>
+                      th:if="${diplomathesesUserId == diploma.user_id or userRolesToDisplayResources.contains('ADMIN') or userRolesToDisplayResources.contains('GUEST')}">🗑️</span>
 
                 <div class="pdf-image-modal" th:id="'myModal-' + ${diploma.id}">
                   <span class="close-pdf-modal-btn" th:id="'closeModalBtn-' + ${diploma.id}">&times;</span>
